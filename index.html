@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <!--<script src="./src/jsBridge.js"></script>-->
+    <script src='src/helpers/jquery-3.2.1.min.js'></script>
+    <script src="src/helpers/webServiceUtil.js"></script>
+    <script src="https://www.maaee.com/Excoord_PhoneService/js/jsbridge.js?v=18"></script>
+    <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+        if (!window.Promise) {
+            document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+        }
+    </script>
+    <link rel="stylesheet" href="/dist/index.css?v=0.1">
+</head>
+<body>
+<div id="example"/>
+<script src="https://as.alipayobjects.com/g/component/??react/15.3.2/react.min.js,react/15.3.2/react-dom.min.js"></script>
+<script src="/dist/shared.js?v=1.1.7"></script>
+<script src="/dist/index.js?v=0.0.1"></script>
+</body>
+</html>

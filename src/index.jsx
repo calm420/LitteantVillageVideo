@@ -10,6 +10,18 @@ const AppSystem = (location, cb) => {
     }, 'AppSystem')
 };
 
+const LoginScanner = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/LoginScanner').default)
+    }, 'LoginScanner')
+};
+
+const Login = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/littleAntNoteSystem/Login').default)
+    }, 'Login')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -22,6 +34,10 @@ class Index extends React.Component {
                     <li><Link to="/s1">ListView + Carousel</Link></li>
                     <li><Link to="/AppSystem"
                     style={{fontSize: '24px'}}>AppSystem</Link></li>
+                    <li><Link to="/LoginScanner"
+                    style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
+                    <li><Link to="/Login"
+                    style={{fontSize: '24px'}}>二维码登录页</Link></li>
                 </ul>
             </div>
         );
@@ -34,6 +50,8 @@ ReactDOM.render(
             <IndexRoute component={Index}/>
             <Route path="s1" component={Stage1}/>
             <Route path="AppSystem" getComponent={AppSystem}/>
+            <Route path="LoginScanner" getComponent={LoginScanner}/>
+            <Route path="Login" getComponent={Login}/>
         </Route>
     </Router>
     ,

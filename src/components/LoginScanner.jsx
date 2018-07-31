@@ -10,6 +10,7 @@ export default class LoginScanner extends React.Component {
         this.state = {
             title: '欢迎登录小蚂蚁平台',
             open: false,
+            accessUser:'',
         };
     }
 
@@ -17,18 +18,26 @@ export default class LoginScanner extends React.Component {
         //mobile项目全局禁用原生下拉刷新
         document.title="欢迎登录小蚂蚁平台";
         Bridge.setRefreshAble("false");
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var uuid = searchArray[0].split('=')[1];
+        var accessUser = searchArray[1].split('=')[1];
+        console.log(accessUser,"access");
+        this.setState({uuid,accessUser});
     }
 
     /**
      * 二维码登录
      */
     allowLoginLittleVideoSystem=()=>{
+        console.log(this.state.accessUser);
         var param = {
             "method": 'allowLoginLittleVideoSystem',
            /* "uuid": this.state.uuid,
             "uid": this.state.uid*/
-            "uuid": "8330bdee-149a-40aa-8329-a63c8aa305fd",
-            "uid": 1
+            "uuid": this.state.uuid,
+            "uid": this.state.accessUser
         };
 
         WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {

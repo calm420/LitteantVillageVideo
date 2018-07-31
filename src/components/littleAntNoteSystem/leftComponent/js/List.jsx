@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tabs} from 'antd-mobile';
+import {Tabs,Toast} from 'antd-mobile';
 import '../css/List.less'
 
 const tabs = [
@@ -11,12 +11,48 @@ export default class List extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            tabsIndex:0,
         };
     }
 
     componentWillMount() {
 
+    }
+
+    dong(cc) {
+       switch (cc){
+           case "init":
+               this.setState({
+                   tabsIndex: 1,
+               },()=>{
+                   // console.log(this.state.tabsIndex)
+                   this.getListData(this.state.tabsIndex);
+               });
+               break;
+       }
+    }
+
+
+    getListData(type){  //0  1
+        var param = {
+            "method": 'getArticleInfoListByStatus',
+            "userId": 1,
+            "status": Math.abs(type - 1),
+            pageNo:'-1'
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result)
+                if (result.success) {
+
+                } else {
+                    Toast.fail("chaungjianshibai");
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
     onChange(key, index) {
@@ -33,6 +69,7 @@ export default class List extends React.Component {
                       animated={false}
                       useOnPan={false}
                       onChange={this.onChange}
+                      page={this.state.tabsIndex}
                 >
                     <div>1</div>
                     <div>2</div>

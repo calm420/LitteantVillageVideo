@@ -38,6 +38,7 @@ export default class Login extends React.Component {
                     var data = info.data;
                     var uuid = data.uuid;
                     var user = data.user;
+                    sessionStorage.setItem("loginUser",JSON.stringify(user));
                     location.hash="AppSystem";
                     /*if(uuid == machineId){
                         location.hash="AppSystem";

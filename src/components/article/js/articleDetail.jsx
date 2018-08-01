@@ -32,6 +32,7 @@ export default class articleDetail extends React.Component {
     }
 
 
+
     /**
      * 按文章id获取详情信息
      * **/
@@ -46,6 +47,11 @@ export default class articleDetail extends React.Component {
                 if (result.success) {
                     this.setState({
                         data: result.response
+                    },()=>{
+                        $(".ql-image").click(function(e){
+                            console.log(123);
+                            console.log(e);
+                        });
                     })
                     //文章阅读量+1
                     this.addArticleReadCount()

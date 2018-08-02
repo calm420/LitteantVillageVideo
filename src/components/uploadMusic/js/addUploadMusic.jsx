@@ -1,8 +1,8 @@
 import React from 'react';
 import {} from 'antd-mobile';
-import '../css/uploadMusic.less'
+import '../css/addUploadMusic.less'
 
-export default class uploadMusic extends React.Component {
+export default class addUploadMusic extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -14,8 +14,8 @@ export default class uploadMusic extends React.Component {
 
     render() {
         return (
-            <div id="uploadMusic">
-                uploadMusic
+            <div id="addUploadMusic">
+                addUploadMusic
             </div>
         );
     }

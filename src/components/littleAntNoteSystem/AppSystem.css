@@ -1,0 +1,34 @@
+(node) util.print is deprecated. Use console.log instead.
+#AppSystem {
+  height: 100%;
+}
+#AppSystem #main {
+  height: 100%;
+}
+#AppSystem #main .left {
+  width: 30%;
+  height: 100%;
+  background: red;
+  float: left;
+  display: table;
+  text-align: center;
+}
+#AppSystem #main .right {
+  height: 100%;
+  background: yellow;
+  text-align: center;
+}
+#AppSystem .logo {
+  width: 50%;
+  text-align: left;
+}
+#AppSystem .headPic {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+#AppSystem .userName {
+  margin: 0 10px;
+}

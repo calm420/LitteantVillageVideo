@@ -42,10 +42,16 @@ const EditorDemo = (location, cb) => {
     }, 'EditorDemo')
 };
 
-const uploadMusic = (location, cb) => {
+const uploadMusicList = (location, cb) => {
     require.ensure([], require => {
-        cb(null, require('./components/uploadMusic/js/uploadMusic').default)
-    }, 'uploadMusic')
+        cb(null, require('./components/uploadMusic/js/uploadMusicList').default)
+    }, 'uploadMusicList')
+};
+
+const addUploadMusic = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/uploadMusic/js/addUploadMusic').default)
+    }, 'addUploadMusic')
 };
 
 import './index.less';
@@ -70,8 +76,8 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>二维码登录页</Link></li>
                     <li><Link to="/EditorDemo"
                               style={{fontSize: '24px'}}>editorDemo</Link></li>
-                    <li><Link to="/uploadMusic"
-                              style={{fontSize: '24px'}}>uploadMusic</Link></li>
+                    <li><Link to="/uploadMusicList"
+                              style={{fontSize: '24px'}}>uploadMusicList</Link></li>
                 </ul>
             </div>
         );
@@ -89,7 +95,8 @@ ReactDOM.render(
             <Route path="LoginScanner" getComponent={LoginScanner}/>
             <Route path="Login" getComponent={Login}/>
             <Route path="EditorDemo" getComponent={EditorDemo}/>
-            <Route path="uploadMusic" getComponent={uploadMusic}/>
+            <Route path="uploadMusicList" getComponent={uploadMusicList}/>
+            <Route path="addUploadMusic" getComponent={addUploadMusic}/>
         </Route>
     </Router>
     ,

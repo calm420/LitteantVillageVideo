@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListView, WingBlank, WhiteSpace, Card, Modal, Toast} from 'antd-mobile';
+import {ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem} from 'antd-mobile';
 import '../css/uploadMusicList.less'
 
 var musicList;
@@ -164,10 +164,77 @@ export default class uploadMusicList extends React.Component {
         });
     }
 
+    uploadMp3() {
+
+    }
+
+    uploadImage() {
+
+    }
+
+    imgPreview() {
+
+    }
+
+    mp3Preview() {
+
+    }
+
     editModelShow(data) {
         console.log(data);
         $('.updateModel').slideDown()
         $('.tagAddPanel_bg').show()
+
+        var editDiv = <div className="listCont">
+            <div>
+                <InputItem
+                    className="add_element"
+                    placeholder="请输入音乐名"
+                    // value={addMusicList.state.addMusicList[i].musicName}
+                    // onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
+                >
+                    <div>音乐</div>
+                </InputItem>
+            </div>
+            <div className="line_public flex_container"></div>
+            <div>
+                <InputItem
+                    className="add_element"
+                    placeholder="请输入歌手名"
+                    // value={addMusicList.state.addMusicList[i].musicMan}
+                    // onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
+                >
+                    <div>歌手</div>
+                </InputItem>
+            </div>
+            <div className="line_public flex_container"></div>
+            <div className="my_flex sameBack">
+                    <span className="textTitle">上传封面
+                        <p style={{margin: 0, height: 5}}></p>
+                        <span className="uploadSupport">(jpg格式)</span>
+                    </span>
+                <div className="upload_file">
+                    <img onClick={musicList.imgPreview.bind(this, data.cover)}
+                         className="imgTag" src={data.cover}/>
+                    <div className="icon_pointer" onClick={musicList.uploadImage.bind(this,)}>修改</div>
+                </div>
+
+            </div>
+            <div className="line_public flex_container"></div>
+            <div className="my_flex sameBack">
+                    <span className="textTitle">上传音乐
+                        <p style={{margin: 0, height: 5}}></p>
+                        <span className="uploadSupport">(MP3格式)</span>
+                    </span>
+                <div className="upload_file">
+                    <div onClick={musicList.mp3Preview.bind(this,)}
+                         className="musicIcon"/>
+                    <div className="icon_pointer" onClick={musicList.uploadMp3.bind(this,)}>修改</div>
+                </div>
+            </div>
+        </div>
+
+        this.setState({editDiv})
     }
 
     exitAddTags() {
@@ -225,7 +292,7 @@ export default class uploadMusicList extends React.Component {
                 </div>
                 <div className='updateModel' style={{display: 'none'}}>
                     <div>
-
+                        {this.state.editDiv}
                     </div>
                     <div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>

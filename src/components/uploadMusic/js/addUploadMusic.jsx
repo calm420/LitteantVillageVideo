@@ -15,8 +15,8 @@ export default class addUploadMusic extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             addMusicList: [{
-                musicUrl: 'zhangmenshiting.qianqian.com/data2/music/1901e7bf853ef3541875cc62e708ef72/599521805/599521805.mp3?xcode=74eec0bce2ee44c4d1823dca873f4874',
-                cover: 'http://60.205.86.217/upload5/2017-10-25/11/2e5ae3f3-b549-4d25-9aed-c3abfa28ba6a.jpg?size=100x100',
+                musicUrl: '',
+                cover: '',
                 musicName: '',
                 musicMan: '',
                 userId: uid
@@ -81,8 +81,25 @@ export default class addUploadMusic extends React.Component {
     /**
      * 音乐上传
      */
-    uploadMp3() {
-        console.log('uploadMp3');
+    uploadMp3(index, event) {
+        event.stopPropagation()
+        var data = {
+            method: 'selectMp3',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            let newArr = {};
+            let item = res.split("?");
+            newArr.picPath = item[0],
+                newArr.picName = item[1].split("=")[1]
+
+            addMusicList.state.addMusicList[index].musicUrl = newArr.picPath
+
+            addMusicList.buildAddList()
+
+        }, function (error) {
+            console.log(error);
+        });
     }
 
     /**
@@ -104,7 +121,7 @@ export default class addUploadMusic extends React.Component {
                         value={addMusicList.state.addMusicList[i].musicName}
                         onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
                     >
-                        <div>音乐:</div>
+                        <div>音乐</div>
                     </InputItem>
                 </div>
                 <div className="line_public flex_container"></div>
@@ -115,12 +132,12 @@ export default class addUploadMusic extends React.Component {
                         value={addMusicList.state.addMusicList[i].musicMan}
                         onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
                     >
-                        <div>歌手:</div>
+                        <div>歌手</div>
                     </InputItem>
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="my_flex sameBack">
-                    <span className="textTitle">上传封面:
+                    <span className="textTitle">上传封面
                         <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(jpg格式)</span>
                     </span>
@@ -138,16 +155,16 @@ export default class addUploadMusic extends React.Component {
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="my_flex sameBack">
-                    <span className="textTitle">上传音乐:
+                    <span className="textTitle">上传音乐
                         <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(MP3格式)</span>
                     </span>
-                    {addMusicList.state.addMusicList[i].cover.length == 0 ?
+                    {addMusicList.state.addMusicList[i].musicUrl.length == 0 ?
                         <button className="uploadBtn" onClick={addMusicList.uploadMp3.bind(this, i)}>上传音乐</button>
                         :
                         <div className="upload_file">
-                            <img onClick={addMusicList.mp3Preview.bind(this, addMusicList.state.addMusicList[i])}
-                                 className="imgTag"/>
+                            <div onClick={addMusicList.mp3Preview.bind(this, addMusicList.state.addMusicList[i])}
+                                 className="musicIcon"/>
                             <div className="icon_pointer" onClick={addMusicList.uploadMp3.bind(this, i)}>修改</div>
                         </div>
 
@@ -232,25 +249,25 @@ export default class addUploadMusic extends React.Component {
         var listArr = addMusicList.state.addMusicList
 
         for (var i = 0; i < listArr.length; i++) {
-            if (listArr[i].cover.length == 0 || listArr[i].musicUrl.length == 0) {
+            if (listArr[i].cover.length == 0 || listArr[i].musicUrl.length == 0 || listArr[i].musicName.length == 0 || listArr[i].musicMan.length == 0) {
                 submitFlag = false
                 break
             }
         }
 
         if (!submitFlag) {
-            Toast.fail('请上传音乐及封面', 2)
+            Toast.fail('存在空值请检查', 2)
             return
         }
 
-        listArr.forEach(function (v, i) {
+        /*listArr.forEach(function (v, i) {
             if (v.musicName.length == 0) {
                 v.musicName = '未知'
             }
             if (v.musicMan.length == 0) {
                 v.musicMan = '未知'
             }
-        })
+        })*/
 
         console.log(listArr);
 
@@ -262,8 +279,15 @@ export default class addUploadMusic extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = result.response;
-                    console.log(arr);
+
+                    Toast.success('成功');
+                    //关闭当前窗口，并刷新上一个页面
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 }
             },
             onError: function (error) {

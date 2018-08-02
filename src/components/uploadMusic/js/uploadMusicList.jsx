@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import {ListView, WingBlank, WhiteSpace, Card} from 'antd-mobile';
 import '../css/uploadMusicList.less'
 
 var musicList;
@@ -7,8 +7,14 @@ var musicList;
 export default class uploadMusicList extends React.Component {
     constructor(props) {
         super(props);
+        const dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
+        this.initData = [];
         musicList = this;
         this.state = {
+            dataSource: dataSource.cloneWithRows(this.initData),
+            defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
         };
     }
@@ -27,15 +33,37 @@ export default class uploadMusicList extends React.Component {
      * 获取音乐列表
      */
     getVideoMusicList() {
+        var _this = this;
+        const dataBlob = {};
         var param = {
             "method": 'getVideoMusicList',
-            "pn": -1,
+            "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
-                    console.log(arr);
+                    // var pager = result.pager;
+                    for (let i = 0; i < arr.length; i++) {
+                        var topic = arr[i];
+                        dataBlob[`${i}`] = topic;
+                    }
+                    var isLoading = false;
+                    // if (arr.length > 0) {
+                    //     if (pager.pageCount == 1 && pager.rsCount < 30) {
+                    //         isLoading = false;
+                    //     } else {
+                    //         isLoading = true;
+                    //     }
+                    // } else {
+                    //     isLoading = false;
+                    // }
+                    _this.initData = _this.initData.concat(arr);
+                    _this.setState({
+                        dataSource: _this.state.dataSource.cloneWithRows(_this.initData),
+                        isLoadingLeft: isLoading,
+                        refreshing: false
+                    })
                 }
             },
             onError: function (error) {
@@ -59,12 +87,37 @@ export default class uploadMusicList extends React.Component {
         });
     }
 
+    showDelAlert() {
+
+    }
+
     render() {
+
+        var _this = this
+
+        const row = (rowData, sectionID, rowID) => {
+
+            console.log(rowData);
+
+            return (
+                <WingBlank size="lg">
+                    <WhiteSpace size="lg"/>
+                    <Card>
+                        <img src={rowData.cover} alt=""/>
+                        <span>歌曲:{rowData.musicName}</span>
+                        <span>歌手:{rowData.musicMan}</span>
+                        <span>删除</span>
+                        <span>编辑</span>
+                    </Card>
+                </WingBlank>
+            )
+        };
+
         return (
             <div id="uploadMusicList" style={{height: musicList.state.clientHeight}}>
                 <div className='tableDiv' style={{height: musicList.state.clientHeight}}>
                     {/*这是列表数据,包括添加按钮*/}
-                    {/*<ListView
+                    <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
@@ -81,13 +134,9 @@ export default class uploadMusicList extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: bindDing.state.clientHeight,
+                            height: musicList.state.clientHeight,
                         }}
-                        pullToRefresh={<PullToRefresh
-                            onRefresh={this.onRefresh}
-                            distanceToRefresh={80}
-                        />}
-                    />*/}
+                    />
                     <div className='addBunton' onClick={this.addRing}>
                         <img src={require("../img/addBtn.png")}/>
                     </div>

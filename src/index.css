@@ -339,3 +339,32 @@ hr {
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
+/*删除弹窗*/
+.am-modal-content .am-modal-title {
+  color: #333 !important;
+  line-height: 22px;
+  font-size: 17px!important;
+}
+.am-modal-content .am-modal-input input {
+  padding-left: 6px;
+}
+.am-modal-content .am-modal-button {
+  font-size: 16px !important;
+  height: 45px !important;
+  line-height: 45px !important;
+  color: #108ee9 !important;
+}
+.am-modal-content .am-modal-header {
+  padding: 6px 15px 5px !important;
+}
+.am-modal-content .am-modal-button-group-h .am-modal-button:last-child::before,
+.am-modal-content .am-modal-button-group-h::before {
+  background-color: #dfdfdf !important;
+}
+.am-modal-content .am-modal-body {
+  padding: 0 15px 12px !important;
+}
+.am-list-item .am-list-line .am-list-content,
+.am-list-item .am-input-label {
+  color: #333 !important;
+}

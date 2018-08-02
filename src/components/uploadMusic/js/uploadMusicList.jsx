@@ -250,13 +250,18 @@ export default class uploadMusicList extends React.Component {
 
             return (
                 <WingBlank size="lg">
-                    <WhiteSpace size="lg"/>
                     <Card>
-                        <img src={rowData.cover} alt=""/>
-                        <span>歌曲:{rowData.musicName}</span>
-                        <span>歌手:{rowData.musicMan}</span>
-                        <span onClick={this.showDelAlert.bind(this, rowData.musicId)}>删除</span>
-                        <span onClick={this.editSong.bind(this, rowData.musicId)}>编辑</span>
+                        <div className="my_flex item line_public">
+                            <img src={rowData.cover} alt=""/>
+                            <div className="textCont">
+                                <div className="textOver">歌曲:{rowData.musicName}</div>
+                                <div className="textOver">歌手:{rowData.musicMan}</div>
+                                <div>
+                                    <span className="modifyBtn_common" onClick={this.editSong.bind(this, rowData.musicId)}></span>
+                                    <span className="deleteBtn_common" onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
+                                </div>
+                            </div>
+                        </div>
                     </Card>
                 </WingBlank>
             )

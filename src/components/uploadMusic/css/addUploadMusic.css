@@ -81,7 +81,7 @@
   font-size: 12px;
 }
 #addUploadMusic .listCont .upload_file .imgTag {
-  max-width: 100%;
+  width: 100%;
   height: 100%;
 }
 #addUploadMusic .listCont .upload_file .musicIcon {

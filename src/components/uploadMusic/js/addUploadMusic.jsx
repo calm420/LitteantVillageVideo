@@ -1,20 +1,25 @@
 import React from 'react';
-import {Button, Toast, InputItem, Icon} from 'antd-mobile';
+import {Button, Toast, InputItem, Icon, Modal} from 'antd-mobile';
 import '../css/addUploadMusic.less'
 
 var addMusicList;
+const alert = Modal.alert;
 
 export default class addUploadMusic extends React.Component {
     constructor(props) {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var uid = locationSearch.split("&")[0].split("=")[1];
         super(props);
         addMusicList = this;
         this.state = {
             clientHeight: document.body.clientHeight,
             addMusicList: [{
-                musicUrl: '',
-                cover: '',
+                musicUrl: 'zhangmenshiting.qianqian.com/data2/music/1901e7bf853ef3541875cc62e708ef72/599521805/599521805.mp3?xcode=74eec0bce2ee44c4d1823dca873f4874',
+                cover: 'http://60.205.86.217/upload5/2017-10-25/11/2e5ae3f3-b549-4d25-9aed-c3abfa28ba6a.jpg?size=100x100',
                 musicName: '',
                 musicMan: '',
+                userId: uid
             }]
         };
     }
@@ -52,14 +57,15 @@ export default class addUploadMusic extends React.Component {
         listArr.forEach(function (v, i) {
             arr.push(<div className="listCont">
                 {/*删除按钮*/}
-                <div className="icon_delete" ></div>
+                <div className="icon_delete" onClick={addMusicList.showListAlert.bind(this, i)}
+                     style={{display: listArr.length == 1 ? 'none' : 'block'}}></div>
 
                 <div>
                     <InputItem
                         className="add_element"
                         placeholder="请输入音乐名"
-                        // value={v.pageNoValue}
-                        // onChange={_this.inputOnChange.bind(this, i)}
+                        value={addMusicList.state.addMusicList[i].musicName}
+                        onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
                     >
                         <div>音乐:</div>
                     </InputItem>
@@ -69,8 +75,8 @@ export default class addUploadMusic extends React.Component {
                     <InputItem
                         className="add_element"
                         placeholder="请输入歌手名"
-                        // value={v.pageNoValue}
-                        // onChange={_this.inputOnChange.bind(this, i)}
+                        value={addMusicList.state.addMusicList[i].musicMan}
+                        onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
                     >
                         <div>歌手:</div>
                     </InputItem>
@@ -116,12 +122,23 @@ export default class addUploadMusic extends React.Component {
     }
 
     /**
-     * 保存音乐信息
+     * 输入框改变的回调
+     * @param type  musicName=歌名  musicMan=歌手
+     * @param index
+     * @param value
      */
-    batchVideoMusic() {
-        // public boolean batchVideoMusic(String videoMusicsJson) throws Exception
+    inputOnChange = (type, index, value) => {
+        if (type == 'musicName') {
+            addMusicList.state.addMusicList[index].musicName = value
+        } else if (type == 'musicMan') {
+            addMusicList.state.addMusicList[index].musicMan = value
+        }
+        addMusicList.buildAddList()
     }
 
+    /**
+     * 添加音乐
+     */
     addList = () => {
         if (this.state.addMusicList.length == 10) {
             Toast.fail('最大只允许一次上传十个音乐', 2)
@@ -132,8 +149,90 @@ export default class addUploadMusic extends React.Component {
             cover: '',
             musicName: '',
             musicMan: '',
+            userId: addMusicList.state.uid
         })
         this.buildAddList()
+    }
+
+    /**
+     * 删除音乐model
+     * @param src
+     * @param id
+     * @param event
+     */
+    showListAlert = (v) => {
+
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.delList(v)},
+
+        ], phone);
+    }
+
+    /**
+     * 删除音乐项
+     * @param index
+     * @returns {function()}
+     */
+    delList(index) {
+        this.state.addMusicList.splice(index, 1);
+        this.buildAddList()
+    }
+
+    /**
+     * 保存音乐信息
+     */
+    batchVideoMusic() {
+        var submitFlag = true;
+        var listArr = addMusicList.state.addMusicList
+
+        for (var i = 0; i < listArr.length; i++) {
+            if (listArr[i].cover.length == 0 || listArr[i].musicUrl.length == 0) {
+                submitFlag = false
+                break
+            }
+        }
+
+        if (!submitFlag) {
+            Toast.fail('请上传音乐及封面', 2)
+            return
+        }
+
+        listArr.forEach(function (v, i) {
+            if (v.musicName.length == 0) {
+                v.musicName = '未知'
+            }
+            if (v.musicMan.length == 0) {
+                v.musicMan = '未知'
+            }
+        })
+
+        console.log(listArr);
+
+        var param = {
+            "method": 'batchVideoMusic',
+            "videoMusicsJson": JSON.stringify(listArr),
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    var arr = result.response;
+                    console.log(arr);
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     render() {
@@ -142,7 +241,7 @@ export default class addUploadMusic extends React.Component {
                 <div className="addList">
                     {this.state.addListArr}
                     <div className="addBtn sameBack" onClick={this.addList}>
-                        <span>添加音乐<Icon type="plus" /></span>
+                        <span>添加音乐<Icon type="plus"/></span>
                     </div>
                 </div>
 

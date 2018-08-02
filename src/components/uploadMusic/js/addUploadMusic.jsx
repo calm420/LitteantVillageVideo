@@ -109,8 +109,8 @@ export default class addUploadMusic extends React.Component {
                         <button className="uploadBtn" onClick={addMusicList.uploadImage.bind(this, i)}>上传音乐</button>
                         :
                         <div className="upload_file">
-                            <img onClick={addMusicList.imgPreview.bind(this, addMusicList.state.addMusicList[i])}
-                                 className="imgTag"/>
+                            <div onClick={addMusicList.imgPreview.bind(this, addMusicList.state.addMusicList[i])}
+                                 className="musicIcon"/>
                             <div className="icon_pointer" onClick={addMusicList.uploadImage.bind(this, i)}>修改</div>
                         </div>
 

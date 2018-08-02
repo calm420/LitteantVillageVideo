@@ -1,4 +1,9 @@
-(node) util.print is deprecated. Use console.log instead.
+#uploadMusicList .item img {
+  width: 68px;
+}
+#uploadMusicList .item .textCont {
+  width: calc(100% - 78px);
+}
 #uploadMusicList .addBunton {
   width: 3rem;
   height: 3rem;
@@ -9,3 +14,4 @@
 #uploadMusicList .addBunton img {
   width: 100%;
 }
+/*# sourceMappingURL=uploadMusicList.css.map */

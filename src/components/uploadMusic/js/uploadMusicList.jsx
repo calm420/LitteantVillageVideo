@@ -103,11 +103,16 @@ export default class uploadMusicList extends React.Component {
                 <WingBlank size="lg">
                     <WhiteSpace size="lg"/>
                     <Card>
-                        <img src={rowData.cover} alt=""/>
-                        <span>歌曲:{rowData.musicName}</span>
-                        <span>歌手:{rowData.musicMan}</span>
-                        <span>删除</span>
-                        <span>编辑</span>
+                        <div className="my_flex item">
+                            <img src={rowData.cover} alt=""/>
+                            <div className="textCont">
+                                <div>歌曲:{rowData.musicName}</div>
+                                <div>歌手:{rowData.musicMan}</div>
+                                <span className="deleteBtn_common">删除</span>
+                                <span className="modifyBtn_common">编辑</span>
+                            </div>
+                        </div>
+
                     </Card>
                 </WingBlank>
             )

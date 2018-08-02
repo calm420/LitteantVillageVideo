@@ -17,6 +17,9 @@
 #addUploadMusic .listCont:first-child {
   margin-top: 0;
 }
+#addUploadMusic .listCont .am-list-item .am-input-control input {
+  width: 88%;
+}
 #addUploadMusic .listCont .icon_delete {
   background: url("../img/del_group.png") no-repeat;
   font-size: 0;

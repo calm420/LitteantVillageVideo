@@ -12,6 +12,7 @@
 #addUploadMusic .listCont {
   background-color: #fff;
   margin-top: 10px;
+  position: relative;
 }
 #addUploadMusic .listCont:first-child {
   margin-top: 0;

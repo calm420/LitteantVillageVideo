@@ -1,8 +1,9 @@
 import React from 'react';
-import {ListView, WingBlank, WhiteSpace, Card} from 'antd-mobile';
+import {ListView, WingBlank, WhiteSpace, Card, Modal, Toast} from 'antd-mobile';
 import '../css/uploadMusicList.less'
 
 var musicList;
+const alert = Modal.alert;
 
 export default class uploadMusicList extends React.Component {
     constructor(props) {
@@ -87,8 +88,91 @@ export default class uploadMusicList extends React.Component {
         });
     }
 
-    showDelAlert() {
+    /**
+     * 显示删除model
+     * @param id
+     */
+    showDelAlert(id) {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定移除吗?', '', [
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.deleteVideoMusic(id)},
 
+        ], phone);
+    }
+
+    /**
+     * 删除音乐信息
+     */
+    deleteVideoMusic(id) {
+        var _this = this;
+
+        var param = {
+            "method": 'deleteVideoMusic',
+            "videoMusicId": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    Toast.success('删除成功', 1)
+                    //删除本地数据
+                    musicList.state.dataSource = [];
+                    musicList.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    musicList.initData.forEach(function (v, i) {
+                        if (id == v.musicId) {
+                            musicList.initData.splice(i, 1);
+                        }
+                    });
+                    musicList.setState({
+                        dataSource: musicList.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    /**
+     * bianji音乐信息
+     */
+    editSong(id) {
+        var _this = this
+        var param = {
+            "method": 'getVideoMusicById',
+            "videoMusicId": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    _this.editModelShow(result.response)
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
+    editModelShow(data) {
+        console.log(data);
+        $('.updateModel').slideDown()
+        $('.tagAddPanel_bg').show()
+    }
+
+    exitAddTags() {
+        $('.updateModel').slideUp()
+        $('.tagAddPanel_bg').hide()
     }
 
     render() {
@@ -97,22 +181,20 @@ export default class uploadMusicList extends React.Component {
 
         const row = (rowData, sectionID, rowID) => {
 
-            console.log(rowData);
-
             return (
                 <WingBlank size="lg">
-                    <WhiteSpace size="lg"/>
                     <Card>
-                        <div className="my_flex item">
+                        <div className="my_flex item line_public">
                             <img src={rowData.cover} alt=""/>
                             <div className="textCont">
-                                <div>歌曲:{rowData.musicName}</div>
-                                <div>歌手:{rowData.musicMan}</div>
-                                <span className="deleteBtn_common">删除</span>
-                                <span className="modifyBtn_common">编辑</span>
+                                <div className="textOver">歌曲:{rowData.musicName}</div>
+                                <div className="textOver">歌手:{rowData.musicMan}</div>
+                                <div>
+                                    <span className="modifyBtn_common" onClick={this.editSong.bind(this, rowData.musicId)}></span>
+                                    <span className="deleteBtn_common" onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
+                                </div>
                             </div>
                         </div>
-
                     </Card>
                 </WingBlank>
             )
@@ -146,9 +228,17 @@ export default class uploadMusicList extends React.Component {
                         <img src={require("../img/addBtn.png")}/>
                     </div>
                 </div>
-                <div className='updateModel' style={{height: musicList.state.clientHeight / 2, display: 'none'}}>
+                <div className='updateModel' style={{display: 'none'}}>
+                    <div>
 
+                    </div>
+                    <div className="bottomBox">
+                        <span className="close" onClick={this.exitAddTags}>取消</span>
+                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
+                    </div>
                 </div>
+
+                <div className="tagAddPanel_bg"></div>
             </div>
         );
     }

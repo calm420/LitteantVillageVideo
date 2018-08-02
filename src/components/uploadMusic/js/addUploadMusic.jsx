@@ -15,8 +15,8 @@ export default class addUploadMusic extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             addMusicList: [{
-                musicUrl: '',
-                cover: '',
+                musicUrl: 'zhangmenshiting.qianqian.com/data2/music/1901e7bf853ef3541875cc62e708ef72/599521805/599521805.mp3?xcode=74eec0bce2ee44c4d1823dca873f4874',
+                cover: 'http://60.205.86.217/upload5/2017-10-25/11/2e5ae3f3-b549-4d25-9aed-c3abfa28ba6a.jpg?size=100x100',
                 musicName: '',
                 musicMan: '',
                 userId: uid
@@ -199,8 +199,8 @@ export default class addUploadMusic extends React.Component {
             return
         }
         this.state.addMusicList.push({
-            musicUrl: '',
-            cover: '',
+            musicUrl: 'zhangmenshiting.qianqian.com/data2/music/1901e7bf853ef3541875cc62e708ef72/599521805/599521805.mp3?xcode=74eec0bce2ee44c4d1823dca873f4874',
+            cover: 'http://60.205.86.217/upload5/2017-10-25/11/2e5ae3f3-b549-4d25-9aed-c3abfa28ba6a.jpg?size=100x100',
             musicName: '',
             musicMan: '',
             userId: addMusicList.state.uid

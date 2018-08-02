@@ -37,15 +37,52 @@ export default class addUploadMusic extends React.Component {
     /**
      * 封面预览
      */
-    imgPreview() {
+    imgPreview(src) {
+        var dataObj = {};
+        dataObj.method = 'showImage';
+        dataObj.url = src;
+        dataObj.currentUrl = src;
+        Bridge.callHandler(dataObj, null, function (error) {
+            console.log(error);
+        })
+    }
 
+    /**
+     * mp3预览
+     */
+    mp3Preview() {
+        console.log('mp3Preview');
     }
 
     /**
      * 封面上传
      */
-    uploadImage() {
+    uploadImage(index, event) {
+        event.stopPropagation()
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            let newArr = {};
+            let item = res.split("?");
+            newArr.picPath = item[0],
+                newArr.picName = item[1].split("=")[1]
 
+            addMusicList.state.addMusicList[index].cover = newArr.picPath
+
+            addMusicList.buildAddList()
+
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    /**
+     * 音乐上传
+     */
+    uploadMp3() {
+        console.log('uploadMp3');
     }
 
     /**
@@ -91,7 +128,7 @@ export default class addUploadMusic extends React.Component {
                         <button className="uploadBtn" onClick={addMusicList.uploadImage.bind(this, i)}>上传封面</button>
                         :
                         <div className="upload_file">
-                            <img onClick={addMusicList.imgPreview.bind(this, addMusicList.state.addMusicList[i])}
+                            <img onClick={addMusicList.imgPreview.bind(this, addMusicList.state.addMusicList[i].cover)}
                                  className="imgTag" src={addMusicList.state.addMusicList[i].cover}/>
                             <div className="icon_pointer" onClick={addMusicList.uploadImage.bind(this, i)}>修改</div>
                         </div>
@@ -106,12 +143,12 @@ export default class addUploadMusic extends React.Component {
                         <span className="uploadSupport">(MP3格式)</span>
                     </span>
                     {addMusicList.state.addMusicList[i].cover.length == 0 ?
-                        <button className="uploadBtn" onClick={addMusicList.uploadImage.bind(this, i)}>上传音乐</button>
+                        <button className="uploadBtn" onClick={addMusicList.uploadMp3.bind(this, i)}>上传音乐</button>
                         :
                         <div className="upload_file">
-                            <img onClick={addMusicList.imgPreview.bind(this, addMusicList.state.addMusicList[i])}
+                            <img onClick={addMusicList.mp3Preview.bind(this, addMusicList.state.addMusicList[i])}
                                  className="imgTag"/>
-                            <div className="icon_pointer" onClick={addMusicList.uploadImage.bind(this, i)}>修改</div>
+                            <div className="icon_pointer" onClick={addMusicList.uploadMp3.bind(this, i)}>修改</div>
                         </div>
 
                     }
@@ -137,7 +174,7 @@ export default class addUploadMusic extends React.Component {
     }
 
     /**
-     * 添加音乐
+     * 添加音乐项
      */
     addList = () => {
         if (this.state.addMusicList.length == 10) {

@@ -1,20 +1,44 @@
 #uploadMusicList {
+  .am-list-view-scrollview-content{
+    width: 100%;
+  }
   .am-card{
-    min-height: 88px;
+    min-height: auto;
+    padding-bottom: 0;
   }
   .item{
-    padding: 10px 0;
+    padding: 15px;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -khtml-align-items: center;
+    align-items: center;
       img{
-        width: 68px;
-        height: 68px;
+        width: 44px;
+        height: 44px;
         margin-right: 15px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
       }
     .textCont{
-      width: calc(~"100% - 78px");
+      width: calc(~"100% - 59px");
       color: #333;
       font-size: 16px;
-      &>div:first-child{
-        margin-bottom: 10px;
+      .singer{
+        margin-top: 10px;
+        position: relative;
+        .textOver{
+          width: calc(~"100% - 65px");
+        }
+        .icon{
+          position: absolute;
+          right: -8px;
+          top:2px;
+          height: 18px;
+          line-height: 18px;
+        }
       }
     }
   }
@@ -35,7 +59,7 @@
     position: absolute;
     bottom: 0;
     z-index: 999;
-    height: 70%;
+    height: 329px;
   }
 
   .tagAddPanel_bg {
@@ -72,5 +96,96 @@
     font-size: 1.5em;
     background: #fff;
     color: #F56A55;
+  }
+
+  .listCont{
+    background-color: #fff;
+    margin-top: 10px;
+    position: relative;
+    .sameBack{
+      background-color: #fff;
+      padding: 15px;
+      font-size: 16px;
+      color: #666;
+    }
+    &:first-child{
+      margin-top: 0;
+    }
+
+    .icon_delete{
+      background: url("../img/del_group.png") no-repeat;
+      font-size: 0;
+      width: 34px;
+      height: 32px;
+      background-size: 100%;
+      border: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
+
+    .am-list-item .am-input-label{
+      color: #666 !important;
+      font-size: 16px;
+    }
+
+    .am-list-item .am-input-label.am-input-label-5{
+      width: 70px;
+      margin-right: 4px;
+      text-align: right;
+      padding-right: 15px;
+    }
+
+    .textTitle {
+      width: 70px;
+      margin-right: 4px;
+      text-align: right;
+      padding-right: 15px;
+      .uploadSupport {
+        font-size: 14px;
+        color: #888;
+      }
+    }
+
+    .uploadBtn {
+      background: url("../img/addPic.png") no-repeat;
+      font-size: 0;
+      width: 68px;
+      height: 68px;
+      background-size: 100%;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .upload_file {
+      width: 68px;
+      height: 68px;
+      text-align: center;
+      background-color: #eee;
+      position: relative;
+      .icon_pointer {
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 4px 0;
+        border-radius: 0 0 2px 2px;
+        text-align: center;
+        font-size: 12px;
+      }
+      .imgTag {
+        width: 100%;
+        height: 100%;
+      }
+      .musicIcon{
+        background: url("../img/musicIcon.png") no-repeat;
+        background-size: 100%;
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 }

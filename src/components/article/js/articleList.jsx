@@ -174,7 +174,7 @@ export default class articleList extends React.Component {
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             if (image.length == 1) {  //图片一张
-                dom = <div>
+                dom = <div className="item">
                     <div className="leftBox">
                         <div className="title">{rowData.articleTitle}</div>
                         <div className="bottom">
@@ -194,7 +194,7 @@ export default class articleList extends React.Component {
                                        src={image[i]}
                                        alt=""/>)
                 }
-                dom = <div>
+                dom = <div className="item">
                     <div className="title">{rowData.articleTitle}</div>
                     <div className="images">{imageDom}</div>
                     <div className="bottom">
@@ -206,7 +206,7 @@ export default class articleList extends React.Component {
             } else {                //图片没有
                 var videoFlag = false;
                 if (videoFlag) { //有视频
-                    dom = <div>
+                    dom = <div className="item">
                         <div className="title">{rowData.articleTitle}</div>
                         <div className="images">
                             <div className="videoBox">
@@ -222,7 +222,7 @@ export default class articleList extends React.Component {
                         </div>
                     </div>
                 } else {  //图片没有 视频也没有
-                    dom = <div>
+                    dom = <div className="item">
                         <div className="title">{rowData.articleTitle}</div>
                         <div className="bottom">
                             <div className="read">阅读量:{rowData.readCount}</div>

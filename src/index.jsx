@@ -76,7 +76,7 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>二维码登录页</Link></li>
                     <li><Link to="/EditorDemo"
                               style={{fontSize: '24px'}}>editorDemo</Link></li>
-                    <li><Link to="/uploadMusicList"
+                    <li><Link to="/uploadMusicList?ident=23836"
                               style={{fontSize: '24px'}}>uploadMusicList</Link></li>
                 </ul>
             </div>

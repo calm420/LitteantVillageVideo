@@ -67,7 +67,7 @@ export default class addUploadMusic extends React.Component {
                         value={addMusicList.state.addMusicList[i].musicName}
                         onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
                     >
-                        <div>音乐:</div>
+                        <div>音乐</div>
                     </InputItem>
                 </div>
                 <div className="line_public flex_container"></div>
@@ -78,12 +78,12 @@ export default class addUploadMusic extends React.Component {
                         value={addMusicList.state.addMusicList[i].musicMan}
                         onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
                     >
-                        <div>歌手:</div>
+                        <div>歌手</div>
                     </InputItem>
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="my_flex sameBack">
-                    <span className="textTitle">上传封面:
+                    <span className="textTitle">上传封面
                         <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(jpg格式)</span>
                     </span>
@@ -101,7 +101,7 @@ export default class addUploadMusic extends React.Component {
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="my_flex sameBack">
-                    <span className="textTitle">上传音乐:
+                    <span className="textTitle">上传音乐
                         <p style={{margin: 0, height: 5}}></p>
                         <span className="uploadSupport">(MP3格式)</span>
                     </span>

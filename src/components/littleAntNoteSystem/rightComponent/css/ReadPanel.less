@@ -52,7 +52,7 @@
       height: 178px;
       background: #F5F6FA;
       .am-image-picker{
-        height: 110px;
+        height: 100%;
       }
       .am-image-picker-list .am-image-picker-upload-btn{
         background: url("../img/add_img.png") no-repeat;
@@ -129,6 +129,30 @@
     margin:0;
     width: 100%;
     height: 100%;
+
+  }
+  .am-image-picker{
+    position: relative;
+  }
+  .am-flexbox{
+    display: block !important;
+  }
+  .am-image-picker-list{
+    overflow: hidden;
+    position: absolute;
+    left:0;
+    top: 0;
+  }
+  .am-flexbox-item {
+    width: 100%;
+    height: 100%;
+  }
+  .am-image-picker-list .am-image-picker-upload-btn input{
+    width: 100%;
+  }
+  .image .am-image-picker-list .am-image-picker-upload-btn {
+    left: 50%;
+    margin-left: -32px !important;
   }
   .quill{
     height: calc(~"100% - 115px");

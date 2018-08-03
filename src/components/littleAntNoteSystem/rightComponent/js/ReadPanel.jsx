@@ -362,16 +362,19 @@ export default class ReadPanel extends React.Component {
                                 {/*src="https://dxlfb468n8ekd.cloudfront.net/gsc/ICCVKO/13/ad/59/13ad5999c49548458440bfe7353f49c9/images/page3/u92.png?token=0121f9711e3571df8e85906ef4bd8f15"*/}
                                 {/*alt=""/>*/}
                                 {/*<div>*/}
-                                <ImagePicker
-                                    files={files}
-                                    onChange={this.onChange}
-                                    onImageClick={(index, fs) => console.log(index, fs)}
-                                    multiple={false}
-                                    selectable={files.length < 1}
-                                    accept="image/gif,image/jpeg,image/jpg,image/png"
-                                />
+                                <div style={files.length > 0 ? {height: '100%' } : {height: 110 }}>
+                                    <ImagePicker
+                                        files={files}
+                                        onChange={this.onChange}
+                                        onImageClick={(index, fs) => console.log(index, fs)}
+                                        multiple={false}
+                                        selectable={files.length < 1}
+                                        accept="image/gif,image/jpeg,image/jpg,image/png"
+                                    />
+                                </div>
+
                                 {/*</div>*/}
-                                <div className="img_text">请添加新闻列表页展示图(支持jpg ,png图片，建议尺寸)</div>
+                                <div className="img_text" style={files.length > 0 ? {display: 'none'} : {display: "block"}}>请添加新闻列表页展示图(支持jpg ,png图片，建议尺寸)</div>
                             </div>
                         </div>
                         <div className="edit_cont">

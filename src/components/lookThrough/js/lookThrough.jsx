@@ -134,7 +134,9 @@ export default class lookThrough extends React.Component {
                                     {
                                         v.littleVideoInfo ?
                                             <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
+                                                <img style={{width:"50px",height:"50px"}} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt=""/>
                                                 <span>类型：短视频</span>
+                                                
                                                 <div>
                                                     <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
                                                     <div>上传时间：{WebServiceUtil.formatYMD(v.littleVideoInfo.createTime)}</div>
@@ -143,6 +145,8 @@ export default class lookThrough extends React.Component {
                                             :
                                             v.articleInfo ?
                                                 <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
+                                                    <img style={{width:"50px",height:"50px"}} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt=""/>
+                                                    
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
@@ -171,6 +175,7 @@ export default class lookThrough extends React.Component {
                                     {
                                         v.littleVideoInfo ?
                                             <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
+                                                <img style={{width:"50px",height:"50px"}} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt=""/>
                                                 <span>类型：短视频</span>
                                                 <div>
                                                     <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
@@ -180,6 +185,8 @@ export default class lookThrough extends React.Component {
                                             :
                                             v.articleInfo ?
                                                 <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId,v.type, v.auditId)}>
+                                                    <img style={{width:"50px",height:"50px"}} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt=""/>
+                                                    
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>

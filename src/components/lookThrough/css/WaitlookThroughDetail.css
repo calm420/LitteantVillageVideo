@@ -16,12 +16,12 @@
 #waitLookThrough .title {
   font-size: 18px;
   line-height: 20px;
+  margin-bottom: 15px;
 }
 #waitLookThrough .topMsg {
   font-size: 12px;
   height: 28px;
   line-height: 28px;
-  margin-bottom: 15px;
 }
 #waitLookThrough .topMsg span {
   vertical-align: top;
@@ -43,6 +43,12 @@
 #waitLookThrough .topMsg .time {
   color: #999;
   margin: 0 10px;
+}
+#waitLookThrough .textCont {
+  margin-top: 15px;
+  font-size: 15px;
+  color: #333;
+  line-height: 22px;
 }
 #waitLookThrough .textCont video {
   max-width: 100%;

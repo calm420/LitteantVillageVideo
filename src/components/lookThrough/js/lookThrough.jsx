@@ -131,7 +131,7 @@ export default class lookThrough extends React.Component {
                     {
                         calm.state.waitLookThroughData.map((v, i) => {
                             return (
-                                <div className="line_public">
+                                <div>
                                     {
                                         v.littleVideoInfo ?
                                             <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
@@ -156,25 +156,14 @@ export default class lookThrough extends React.Component {
 
                                                 </div>
                                                 :
-                                                v.articleInfo ?
-                                                    <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
-                                                        <img style={{ width: "50px", height: "50px" }} src={v.articleInfo.userInfo ? v.articleInfo.userInfo.avatar : ""} alt="" />
-                                                        <span>类型：自媒体文章</span>
-                                                        <div>
-                                                            <div>标题：{v.articleInfo.articleTitle}</div>
-                                                            <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
-                                                            <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
-                                                        </div>
-                                                    </div>
-                                                    :
                                                     v.discussInfo ?
-                                                    <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.discussInfoId, v.type)}>
-                                                        <img style={{ width: "50px", height: "50px" }} src={v.discussInfo.discussUser ? v.discussInfo.discussUser.avatar : ""} alt="" />
-                                                        <span>类型：评论</span>
-                                                        <div>
-                                                            <div>内容：{v.discussInfo.discussContent}</div>
-                                                            <div>作者：{v.discussInfo.discussUser ? v.discussInfo.discussUser.userName : ""}</div>
-                                                            <div>评论时间：{WebServiceUtil.formatYMD(v.discussInfo.createTime)}</div>
+                                                    <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, v.discussInfoId, v.type)}>
+                                                        <img className='photo' src={v.discussInfo.discussUser ? v.discussInfo.discussUser.avatar : ""} alt="" />
+                                                        <div className='right'>
+                                                            <span className='author'>{v.discussInfo.discussUser ? v.discussInfo.discussUser.userName : ""}</span>
+                                                            <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
+                                                            <div className='title'>{v.discussInfo.discussContent}</div>
+                                                            <div className='time'>{WebServiceUtil.formatYMD(v.discussInfo.createTime)}</div>
                                                         </div>
                                                     </div>:
                                                     ""
@@ -194,7 +183,7 @@ export default class lookThrough extends React.Component {
                     {
                         calm.state.alreadyLookThroudhData.map((v, i) => {
                             return (
-                                <div className="line_public">
+                                <div>
                                     {
                                         v.littleVideoInfo ?
                                             <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
@@ -213,31 +202,20 @@ export default class lookThrough extends React.Component {
                                                     <div className="right">
                                                         <span className='author'>{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</span>
                                                         <span  className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
-                                                        <div className='title'>题：{v.articleInfo.articleTitle}</div>
+                                                        <div className='title'>{v.articleInfo.articleTitle}</div>
                                                         <div className='time'>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
 
                                                     </div>
                                                 </div>
                                                 :
-                                                v.articleInfo ?
-                                                    <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId, v.type, v.auditId)}>
-                                                        <img style={{ width: "50px", height: "50px" }} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt="" />
-                                                        <span>类型：自媒体文章</span>
-                                                        <div>
-                                                            <div>标题：{v.articleInfo.articleTitle}</div>
-                                                            <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
-                                                            <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
-                                                        </div>
-                                                    </div>
-                                                    :
                                                     v.discussInfo ?
-                                                    <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.discussInfoId, v.type, v.auditId)}>
-                                                        <img style={{ width: "50px", height: "50px" }} src={v.discussInfo.discussUser ? v.discussInfo.discussUser.avatar : ""} alt="" />
-                                                        <span>类型：评论</span>
-                                                        <div>
-                                                            <div>内容：{v.discussInfo.discussContent}</div>
-                                                            <div>作者：{v.discussInfo.discussUser ? v.discussInfo.discussUser.userName : ""}</div>
-                                                            <div>上传时间：{WebServiceUtil.formatYMD(v.discussInfo.createTime)}</div>
+                                                    <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, v.discussInfoId, v.type, v.auditId)}>
+                                                        <img className='photo' src={v.discussInfo.discussUser ? v.discussInfo.discussUser.avatar : ""} alt="" />
+                                                        <div className='right'>
+                                                            <span className='author'>{v.discussInfo.discussUser ? v.discussInfo.discussUser.userName : ""}</span>
+                                                            <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
+                                                            <div className='title'>{v.discussInfo.discussContent}</div>
+                                                            <div className='time'>{WebServiceUtil.formatYMD(v.discussInfo.createTime)}</div>
                                                         </div>
                                                     </div>:
                                                     ""

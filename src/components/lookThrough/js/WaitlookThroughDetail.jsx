@@ -158,7 +158,7 @@ export default class WaitlookThroughDetail extends React.Component {
                     {
                         calm.state.type == 0 ?
                             <div className="sameBack">
-                                <div className='title'>标题：{calm.state.data.articleTitle}</div>
+                                <div className='title'>{calm.state.data.articleTitle}</div>
                                 <div className='topMsg'>
                                     <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt=""/>
                                     <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>

@@ -302,14 +302,18 @@ hr {
   color: #999 !important;
 }
 .am-button-warning {
-  background-color: #F56A55 !important;
+  background-color: #4285F4 !important;
 }
 .am-button-primary,
 .am-button {
   border-radius: 2px !important;
 }
 .am-button::before {
-  border-color: #F56A55 !important;
+  border-color: #4285F4 !important;
+}
+.am-button {
+  height: 45px !important;
+  line-height: 45px !important;
 }
 .textOver {
   overflow: hidden;

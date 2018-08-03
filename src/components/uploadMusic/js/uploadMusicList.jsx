@@ -17,6 +17,7 @@ export default class uploadMusicList extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
+            editData: []
         };
     }
 
@@ -155,7 +156,8 @@ export default class uploadMusicList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    _this.editModelShow(result.response)
+                    _this.setState({editData: result.response})
+                    _this.editModelShow()
                 }
             },
             onError: function (error) {
@@ -180,8 +182,24 @@ export default class uploadMusicList extends React.Component {
 
     }
 
-    editModelShow(data) {
-        console.log(data);
+    /**
+     * 输入框改变的回调
+     * @param type  musicName=歌名  musicMan=歌手
+     * @param index
+     * @param value
+     */
+    inputOnChange = (type, index, value) => {
+        if (type == 'musicName') {
+            musicList.state.addMusicList[index].musicName = value
+        } else if (type == 'musicMan') {
+            musicList.state.addMusicList[index].musicMan = value
+        }
+    }
+
+    editModelShow() {
+        var data = this.state.editData
+        console.log(data);        // musicList.buildAddList()
+
         $('.updateModel').slideDown()
         $('.tagAddPanel_bg').show()
 
@@ -190,8 +208,8 @@ export default class uploadMusicList extends React.Component {
                 <InputItem
                     className="add_element"
                     placeholder="请输入音乐名"
-                    // value={addMusicList.state.addMusicList[i].musicName}
-                    // onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
+                    value={data.musicName}
+                    onChange={musicList.inputOnChange.bind(this, 'musicName', data.musicName)}
                 >
                     <div>音乐</div>
                 </InputItem>
@@ -201,8 +219,8 @@ export default class uploadMusicList extends React.Component {
                 <InputItem
                     className="add_element"
                     placeholder="请输入歌手名"
-                    // value={addMusicList.state.addMusicList[i].musicMan}
-                    // onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
+                    value={data.musicMan}
+                    onChange={musicList.inputOnChange.bind(this, 'musicMan', data.musicMan)}
                 >
                     <div>歌手</div>
                 </InputItem>
@@ -257,8 +275,10 @@ export default class uploadMusicList extends React.Component {
                                 <div className="textOver">歌曲:{rowData.musicName}</div>
                                 <div className="textOver">歌手:{rowData.musicMan}</div>
                                 <div>
-                                    <span className="modifyBtn_common" onClick={this.editSong.bind(this, rowData.musicId)}></span>
-                                    <span className="deleteBtn_common" onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
+                                    <span className="modifyBtn_common"
+                                          onClick={this.editSong.bind(this, rowData.musicId)}></span>
+                                    <span className="deleteBtn_common"
+                                          onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
                                 </div>
                             </div>
                         </div>

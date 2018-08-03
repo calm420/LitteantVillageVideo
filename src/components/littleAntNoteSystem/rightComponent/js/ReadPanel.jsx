@@ -367,7 +367,7 @@ export default class ReadPanel extends React.Component {
                                     onChange={this.onChange}
                                     onImageClick={(index, fs) => console.log(index, fs)}
                                     multiple={false}
-                                    selectable={files.length < 1}
+                                    selectable={files.length < 3}
                                     accept="image/gif,image/jpeg,image/jpg,image/png"
                                 />
                                 {/*</div>*/}

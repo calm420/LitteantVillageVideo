@@ -372,7 +372,6 @@ export default class ReadPanel extends React.Component {
                                         accept="image/gif,image/jpeg,image/jpg,image/png"
                                     />
                                 </div>
-
                                 {/*</div>*/}
                                 <div className="img_text" style={files.length > 0 ? {display: 'none'} : {display: "block"}}>请添加新闻列表页展示图(支持jpg ,png图片，建议尺寸)</div>
                             </div>

@@ -50,8 +50,15 @@ export default class addUploadMusic extends React.Component {
     /**
      * mp3预览
      */
-    mp3Preview() {
-        console.log('mp3Preview');
+    mp3Preview(v) {
+
+        var data = {
+            method: 'playAudio',
+            url: v.musicUrl
+        };
+        Bridge.callHandler(data, null, function (error) {
+
+        });
     }
 
     /**

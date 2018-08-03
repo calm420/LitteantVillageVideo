@@ -89,7 +89,10 @@ export default class Login extends React.Component {
     render() {
         return (
             <div id="Login">
-                扫码登录
+                <div className="ThinkChange_cont empty_center">
+                    <div className="ThinkChange"></div>
+                    <div className="ThinkChange_text">扫码登录</div>
+                </div>
                 {this.state.loginImg}
             </div>
         );

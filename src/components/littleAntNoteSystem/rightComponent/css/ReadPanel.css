@@ -145,7 +145,7 @@
   margin-left: -32px !important;
 }
 #ReadPanel .quill {
-  height: calc(100% - 115px);
+  height: calc(100% - 65px);
 }
 #ReadPanel .quill .ql-container.ql-snow {
   height: calc(100% - 55px);

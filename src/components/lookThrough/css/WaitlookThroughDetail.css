@@ -1,5 +1,13 @@
+#waitLookThrough {
+  font-size: 16px;
+  color: #333;
+}
 #waitLookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
+}
+#waitLookThrough .sameBack {
+  background-color: #fff;
+  padding: 0 15px;
 }
 #waitLookThrough .isDangerArea .am-list {
   overflow: hidden;

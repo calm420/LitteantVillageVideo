@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Button } from 'antd-mobile';
 import "../css/WaitlookThroughDetail.less"
 const RadioItem = Radio.RadioItem;
 var calm;
@@ -125,10 +125,12 @@ export default class WaitlookThroughDetail extends React.Component {
         ];
         const { isPass } = this.state;
         return (
-            <div id="waitLookThrough">
+            <div id="waitLookThrough" style={{
+                height: document.body.clientHeight
+            }}>
                 {
                     calm.state.type == 0 ?
-                        <div>
+                        <div className="sameBack">
                             <div>类型：自媒体文章</div>
                             <div>标题：{calm.state.data.articleTitle}</div>
                             <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
@@ -137,7 +139,7 @@ export default class WaitlookThroughDetail extends React.Component {
                         </div>
                         :
                         calm.state.type == 1 ?
-                            <div>
+                            <div className="sameBack">
                                 <div>类型：短视频</div>
                                 <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
                                 <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>
@@ -162,7 +164,7 @@ export default class WaitlookThroughDetail extends React.Component {
                         ))}
                     </List>
                 </div>
-                <div>审核说明:
+                <div className="sameBack">审核说明:
                 <List>
                         <TextareaItem
                             rows={3}
@@ -173,7 +175,10 @@ export default class WaitlookThroughDetail extends React.Component {
                         />
                 </List>
                 </div>
-                <button onClick={_this.submit}>提交</button>
+                <div className="submitBtn">
+                    <Button type='warning' onClick={_this.submit}>提交</Button>
+                </div>
+
             </div>
 
         )

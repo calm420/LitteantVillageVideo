@@ -137,7 +137,9 @@ export default class AlreadylookThroughDetail extends React.Component {
         ];
         const { isPass } = this.state;
         return (
-            <div id="alreadyLookThrough">
+            <div id="alreadyLookThrough" style={{
+                height: document.body.clientHeight
+            }}>
                 {
                     calm.state.type == 0 ?
                         <div>

@@ -1,13 +1,37 @@
-(node) util.print is deprecated. Use console.log instead.
+#articleDetail {
+  color: #333;
+  background-color: #fff;
+}
+#articleDetail .inner {
+  padding: 10px 15px;
+}
+#articleDetail .inner iframe {
+  margin: 10px 0;
+  width: 100%;
+}
+#articleDetail .title {
+  font-size: 18px;
+  line-height: 22px;
+  word-break: break-all;
+}
+#articleDetail .at {
+  font-size: 12px;
+  margin: 10px 0;
+}
 #articleDetail .at .author {
   display: inline-block;
   padding-right: 10px;
 }
 #articleDetail .at .createTime {
   display: inline-block;
+  color: #999;
 }
 #articleDetail .content {
-  margin: 20px;
+  font-size: 15px;
+}
+#articleDetail .content p {
+  margin: 0;
+  line-height: 1.5;
 }
 #articleDetail .ql-image {
   max-width: 100%;

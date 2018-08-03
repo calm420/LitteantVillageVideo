@@ -155,7 +155,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                             <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime)}</span>
                                             <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
                                         </div>
-                                        <div className='textCont'>{calm.state.data.articleInfo.articleContent}</div>
+                                        <div className='textCont'  dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
                                         <div className='review'>
                                                 <div className='line_public'>
                                                     <span className='title'>审核人：</span>

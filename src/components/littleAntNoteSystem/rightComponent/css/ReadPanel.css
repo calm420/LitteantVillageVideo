@@ -37,11 +37,9 @@
   font-size: 24px;
 }
 #ReadPanel .headBox .title .am-list-item.am-input-item {
-  height: 100%;
-}
-#ReadPanel .headBox .title .am-list-item.am-input-item {
   padding-top: 25px;
   padding-left: 25px;
+  height: 149px;
 }
 #ReadPanel .headBox .title .am-list-item.am-list-item-middle .am-list-line {
   align-items: flex-start;
@@ -51,8 +49,11 @@
   display: inline-block;
   box-sizing: border-box;
   width: 261px;
-  height: 178px;
+  height: 174px;
   background: #F5F6FA;
+}
+#ReadPanel .headBox .image .am-image-picker-list .am-image-picker-item .am-image-picker-item-content {
+  border-radius: 0;
 }
 #ReadPanel .headBox .image .am-image-picker {
   height: 100%;
@@ -64,6 +65,7 @@
   margin: 0;
   background-size: 100% 100%;
   border: none;
+  cursor: pointer;
 }
 #ReadPanel .headBox .image .img_text {
   padding: 0 40px;
@@ -139,6 +141,7 @@
 }
 #ReadPanel .am-image-picker-list .am-image-picker-upload-btn input {
   width: 100%;
+  cursor: pointer;
 }
 #ReadPanel .image .am-image-picker-list .am-image-picker-upload-btn {
   left: 50%;

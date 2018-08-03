@@ -132,9 +132,11 @@
 #alreadyLookThrough .review > div {
   padding: 15px;
   overflow: hidden;
+  position: relative;
 }
 #alreadyLookThrough .review .title {
   color: #666;
+  font-size: 15px;
 }
 #alreadyLookThrough .review .time {
   float: right;
@@ -142,4 +144,23 @@
 #alreadyLookThrough .review .reCont {
   padding-top: 10px;
   line-height: 20px;
+}
+#alreadyLookThrough .review .reBtn {
+  width: 82px;
+  height: 32px;
+  line-height: 32px;
+  color: #638BB7;
+  border: 1px #638BB7 solid;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  text-align: center;
+  font-size: 13px;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -17px;
+}
+#alreadyLookThrough .review .pass {
+  color: #4CAF00;
 }

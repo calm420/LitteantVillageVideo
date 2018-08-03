@@ -146,7 +146,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                             {
                                 calm.state.data.articleInfo ?
                                     <div>
-                                        <img style={{ width: "50px", height: "50px" }} src={calm.state.data.articleInfo.userInfo.avatar} alt="" />
+                                        <img style={{ width: "50px", height: "50px" }} src={calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.avatar : ""} alt="" />
                                         <div>类型：自媒体文章</div>
                                         <div>标题：{calm.state.data.articleInfo.articleTitle}</div>
                                         <div>作者：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</div>
@@ -169,7 +169,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                 {
                                     calm.state.data.littleVideoInfo ?
                                         <div>
-                                            <img style={{ width: "50px", height: "50px" }} src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
+                                            <img style={{ width: "50px", height: "50px" }} src={calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.avatar : ""} alt="" />
                                             <div>类型：短视频</div>
                                             <div>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</div>
                                             <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</div>
@@ -204,17 +204,21 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 <div>作者：{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</div>
                                                 <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</div>
                                                 <div>内容：
-                                {calm.state.data.discussInfo.discussContent}
+                                                    {calm.state.data.discussInfo.discussContent}
+                                                    <div>审核人：{calm.state.data.discussInfo.auditorUser ? calm.state.data.discussInfo.discussUser.userName : ""}</div>
+                                                    <div>审核时间：{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</div>
+                                                    <div>审核说明：{calm.state.data.auditInfo.auditMark}</div>
+                                                    <div>审核结果：{calm.state.data.auditInfo.isPass == 0 ? "通过" : "未通过"}</div>
                                                 </div>
                                             </div>
                                             : ""
-                                }
+                                    }
                                 </div>
                                 :
                                 ""
 
 
-                                
+
                 }
                 <div className="submitBtn" style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                     <Button type='warning' onClick={calm.showAlert}>重新审核</Button>

@@ -1,0 +1,38 @@
+#Login {
+  height: 100%;
+  background: url("img/login_bg.png") no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  overflow: hidden;
+}
+#Login .ThinkChange_cont {
+  text-align: center;
+}
+#Login .ThinkChange_cont .ThinkChange_text {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 48px;
+}
+#Login .ThinkChange_cont .ThinkChange {
+  width: 200px;
+  height: 200px;
+  background: url("img/ThinkChange.gif") no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+}
+#Login #main {
+  height: 100%;
+}
+#Login #main .left {
+  width: 300px;
+  height: 100%;
+  background: red;
+  float: left;
+  display: table;
+  text-align: center;
+}
+#Login #main .right {
+  height: 100%;
+  background: yellow;
+  text-align: center;
+}

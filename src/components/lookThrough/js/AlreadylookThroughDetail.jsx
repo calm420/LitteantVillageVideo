@@ -140,18 +140,21 @@ export default class AlreadylookThroughDetail extends React.Component {
             <div id="alreadyLookThrough" style={{
                 height: document.body.clientHeight
             }}>
+                <div className="content">
                 {
                     calm.state.type == 0 ?
-                        <div className="content">
+                        <div>
                             {
                                 calm.state.data.articleInfo ?
-                                    <div>
-                                        <img style={{ width: "50px", height: "50px" }} src={calm.state.data.articleInfo.userInfo.avatar} alt="" />
-                                        <div>类型：自媒体文章</div>
-                                        <div>标题：{calm.state.data.articleInfo.articleTitle}</div>
-                                        <div>作者：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</div>
-                                        <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime)}</div>
-                                        <div>内容：{calm.state.data.articleInfo.articleContent}</div>
+                                    <div className='sameBack'>
+                                        <div className='title'>{calm.state.data.articleInfo.articleTitle}</div>
+                                        <div className='topMsg'>
+                                            <img className="photo" src={calm.state.data.articleInfo.userInfo.avatar} alt="" />
+                                            <span className='author'>{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
+                                            <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime)}</span>
+                                            <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
+                                        </div>
+                                        <div className='textCont'>内容：{calm.state.data.articleInfo.articleContent}</div>
                                         <div>审核人：{calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}</div>
                                         <div>审核时间：{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</div>
                                         <div>审核说明：{calm.state.data.auditInfo.auditMark}</div>
@@ -165,27 +168,45 @@ export default class AlreadylookThroughDetail extends React.Component {
                         </div>
                         :
                         calm.state.type == 1 ?
-                            <div className="content">
+                            <div>
                                 {
                                     calm.state.data.littleVideoInfo ?
                                         <div>
-                                            <img style={{ width: "50px", height: "50px" }} src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
-                                            <div>类型：短视频</div>
-                                            <div>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</div>
-                                            <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</div>
-                                            <div>内容：
-                                                <video
-                                                    style={{ width: "100%" }}
-                                                    controls="controls"
-                                                    preload="auto"
-                                                    src={calm.state.data.littleVideoInfo.videoPath}
-                                                    autoPlay>
-                                                </video>
+                                            <div className='sameBack'>
+                                                <div className='topMsg'>
+                                                    <img className="photo" src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
+                                                    <span className='author'>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</span>
+                                                    <span className='time'>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</span>
+                                                    <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")}/></span>
+                                                </div>
+                                                <div className='textCont'>
+                                                    <video
+                                                        style={{ width: "100%" }}
+                                                        controls="controls"
+                                                        preload="auto"
+                                                        src={calm.state.data.littleVideoInfo.videoPath}
+                                                        autoPlay>
+                                                    </video>
+                                                </div>
                                             </div>
-                                            <div>审核人：{calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}</div>
-                                            <div>审核时间：{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</div>
-                                            <div>审核说明：{calm.state.data.auditInfo.auditMark}</div>
-                                            <div>审核结果：{calm.state.data.auditInfo.isPass == 0 ? "通过" : "未通过"}</div>
+
+                                            <div className='review'>
+                                                <div className='line_public'>
+                                                    <span className='title'>审核人：</span>
+                                                    {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
+                                                    <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</span></div>
+                                                <div className='line_public'>
+                                                    <span className='title'>审核说明：</span>
+                                                    <div className='reCont'>
+                                                        无
+                                                    {calm.state.data.auditInfo.auditMark}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <span className='title'>审核结果：</span>
+                                                    {calm.state.data.auditInfo.isPass == 0 ? "通过" : "未通过"}
+                                                </div>
+                                            </div>
                                         </div>
                                         :
                                         ""
@@ -199,12 +220,15 @@ export default class AlreadylookThroughDetail extends React.Component {
                                     {
                                         calm.state.data.discussInfo ?
                                             <div className="sameBack">
-                                                <img style={{ width: "50px", height: "50px" }} src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
-                                                <div>类型：评论</div>
-                                                <div>作者：{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</div>
-                                                <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</div>
-                                                <div>内容：
-                                {calm.state.data.discussInfo.discussContent}
+
+                                                <div className='topMsg'>
+                                                    <img className="photo" src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
+                                                    <span className='author'>{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</span>
+                                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</span>
+                                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
+                                                </div>
+                                                <div className='textCont'>
+                                                    {calm.state.data.discussInfo.discussContent}
                                                 </div>
                                             </div>
                                             : ""
@@ -216,36 +240,38 @@ export default class AlreadylookThroughDetail extends React.Component {
 
                                 
                 }
+                    <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                        <div className="isDangerArea">
+                            <List renderHeader={() => '审核：'}>
+                                {data2.map(i => (
+                                    <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
+                                        {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                    </RadioItem>
+                                ))}
+                            </List>
+                        </div>
+                        <div className="sameBack description">审核说明:
+                            <List>
+                                <TextareaItem
+                                    rows={3}
+                                    placeholder="请在此处输入审核的说明／不通过的原因"
+                                    onChange={v => _this.setState({
+                                        textareaValue: v
+                                    })}
+                                    value={calm.state.textareaValue}
+                                />
+                            </List>
+                        </div>
+                        <div className="submitBtn">
+                            <Button type='warning' onClick={_this.submit}>提交</Button>
+                        </div>
+
+                    </div>
+                </div>
                 <div className="submitBtn" style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                     <Button type='warning' onClick={calm.showAlert}>重新审核</Button>
                 </div>
-                <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
-                    <div className="isDangerArea">
-                        <List renderHeader={() => '审核：'}>
-                            {data2.map(i => (
-                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
-                                    {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
-                                </RadioItem>
-                            ))}
-                        </List>
-                    </div>
-                    <div className="content">审核说明:
-                     <List>
-                            <TextareaItem
-                                rows={3}
-                                placeholder="请在此处输入审核的说明／不通过的原因"
-                                onChange={v => _this.setState({
-                                    textareaValue: v
-                                })}
-                                value={calm.state.textareaValue}
-                            />
-                        </List>
-                    </div>
-                    <div className="submitBtn">
-                        <Button type='warning' onClick={_this.submit}>提交</Button>
-                    </div>
 
-                </div>
             </div>
         )
     }

@@ -239,7 +239,7 @@ export default class List extends React.Component {
                 <div style={
                     this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
                 } className="row">
-                    <div className="title">{rowData.articleTitle}</div>
+                    <div className="title text_hidden">{rowData.articleTitle}</div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
                         <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>
@@ -259,7 +259,7 @@ export default class List extends React.Component {
                 <div style={
                     this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
                 } className="row">
-                    <div className="title">{rowData.articleTitle}</div>
+                    <div className="title text_hidden">{rowData.articleTitle}</div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
                         <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>
@@ -314,12 +314,7 @@ export default class List extends React.Component {
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSourceForDraft}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{
-                                    paddingTop: 5,
-                                    paddingBottom: 0,
-                                    textAlign: 'center',
-                                    background: '#f4f4f4'
-                                }}>
+                                <div  className="loading_text">
                                     {this.state.isLoadingLeft ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={rowForDraft}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

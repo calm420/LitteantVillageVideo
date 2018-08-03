@@ -345,44 +345,54 @@ export default class ReadPanel extends React.Component {
                     点击 "<a onClick={this.changeWrite.bind(this)}>写文章</a>"，创建一篇新文章
                 </div>
                 <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
-                    <div className="headBox">
-                        <div className="title">
-                            <InputItem
-                                clear
-                                placeholder="请输入标题"
-                                onChange={this.inputChange.bind(this)}
-                                value={this.state.title_editor}
-                            ></InputItem>
-                            {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
+                    <div className="write_article_cont">
+                        <div className="empty_draft empty_center"><span>暂无草稿</span></div>
+                        <div className="headBox">
+                            <div className="title">
+                                <InputItem
+                                    clear
+                                    placeholder="请输入标题"
+                                    onChange={this.inputChange.bind(this)}
+                                    value={this.state.title_editor}
+                                ></InputItem>
+                                {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
+                            </div>
+                            <div className="image">
+                                {/*<img*/}
+                                {/*src="https://dxlfb468n8ekd.cloudfront.net/gsc/ICCVKO/13/ad/59/13ad5999c49548458440bfe7353f49c9/images/page3/u92.png?token=0121f9711e3571df8e85906ef4bd8f15"*/}
+                                {/*alt=""/>*/}
+                                {/*<div>*/}
+                                <ImagePicker
+                                    files={files}
+                                    onChange={this.onChange}
+                                    onImageClick={(index, fs) => console.log(index, fs)}
+                                    multiple={false}
+                                    selectable={files.length < 1}
+                                    accept="image/gif,image/jpeg,image/jpg,image/png"
+                                />
+                                {/*</div>*/}
+                                <div className="img_text">请添加新闻列表页展示图(支持jpg ,png图片，建议尺寸)</div>
+                            </div>
                         </div>
-                        <div className="image">
-                            {/*<img*/}
-                            {/*src="https://dxlfb468n8ekd.cloudfront.net/gsc/ICCVKO/13/ad/59/13ad5999c49548458440bfe7353f49c9/images/page3/u92.png?token=0121f9711e3571df8e85906ef4bd8f15"*/}
-                            {/*alt=""/>*/}
-                            {/*<div>*/}
-                            <ImagePicker
-                                files={files}
-                                onChange={this.onChange}
-                                onImageClick={(index, fs) => console.log(index, fs)}
-                                selectable={files.length < 3}
-                                accept="image/gif,image/jpeg,image/jpg,image/png"
+                        <div className="edit_cont">
+                            <ReactQuill
+                                placeholder="请输入正文"
+                                theme={this.state.theme}
+                                onChange={this.handleChange}
+                                value={this.state.editorHtml}
+                                modules={this.state.modules}
+                                formats={this.state.formats}
+                                bounds={'.app'}
                             />
-                            {/*</div>*/}
+
                         </div>
                     </div>
-                    <div className="edit_cont">
-                        <ReactQuill
-                            theme={this.state.theme}
-                            onChange={this.handleChange}
-                            value={this.state.editorHtml}
-                            modules={this.state.modules}
-                            formats={this.state.formats}
-                            bounds={'.app'}
-                        />
-                        <div className="edit_btn">
-                            <button onClick={this.getHTML.bind(this, 0)}>保存</button>
-                            <button onClick={this.getHTML.bind(this, 1)}>发布</button>
+                    <div className="edit_btn">
+                        <div className="edit_btn_cont">
+                            <button onClick={this.getHTML.bind(this, 0)} className="Preview">保存</button>
+                            <button onClick={this.getHTML.bind(this, 1)} className="publish">发布</button>
                         </div>
+
                     </div>
                 </div>
 

@@ -42,6 +42,37 @@ const EditorDemo = (location, cb) => {
     }, 'EditorDemo')
 };
 
+
+
+
+/**
+ * 审核列表
+ */
+const lookThrough = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/lookThrough/js/lookThrough').default)
+    }, 'EditorDemo')
+};
+
+
+ /**
+  * 未审核详情
+  */
+ const WaitlookThroughDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/lookThrough/js/WaitlookThroughDetail').default)
+    }, 'EditorDemo')
+};
+
+ /**
+  * 已审核详情
+  */
+ const AlreadylookThroughDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/lookThrough/js/AlreadylookThroughDetail').default)
+    }, 'EditorDemo')
+ };
+ 
 const uploadMusicList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/uploadMusic/js/uploadMusicList').default)
@@ -82,6 +113,8 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>二维码登录页</Link></li>
                     <li><Link to="/EditorDemo"
                               style={{fontSize: '24px'}}>editorDemo</Link></li>
+                    <li><Link to="/lookThrough?auditorId=1"
+                              style={{fontSize: '24px'}}>审核列表</Link></li>
                     <li><Link to="/uploadMusicList?ident=23836"
                               style={{fontSize: '24px'}}>uploadMusicList</Link></li>
                     <li>
@@ -105,6 +138,9 @@ ReactDOM.render(
             <Route path="LoginScanner" getComponent={LoginScanner}/>
             <Route path="Login" getComponent={Login}/>
             <Route path="EditorDemo" getComponent={EditorDemo}/>
+            <Route path="lookThrough" getComponent={lookThrough}/>
+            <Route path="WaitlookThroughDetail" getComponent={WaitlookThroughDetail}/>
+            <Route path="AlreadylookThroughDetail" getComponent={AlreadylookThroughDetail}/>
             <Route path="uploadMusicList" getComponent={uploadMusicList}/>
             <Route path="addUploadMusic" getComponent={addUploadMusic}/>
             <Route path="weArrPayment" getComponent={weArrPayment}/>

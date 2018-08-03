@@ -1,0 +1,17 @@
+(node) util.print is deprecated. Use console.log instead.
+#lookThrough .am-list-view-scrollview-content {
+  width: 100%;
+}
+#lookThrough .am-tabs-default-bar-tab {
+  font-size: 17px;
+  color: #676C6F ;
+}
+#lookThrough .am-tabs-default-bar-tab-active {
+  color: #4285F4;
+}
+#lookThrough .item {
+  background-color: #fff;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #333;
+}

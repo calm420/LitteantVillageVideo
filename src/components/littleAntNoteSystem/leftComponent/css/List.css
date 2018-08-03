@@ -1,38 +1,84 @@
 (node) util.print is deprecated. Use console.log instead.
-#List .row {
-  background: silver;
-  border-bottom: 1px solid black;
+#List .am-list-body {
+  background: transparent;
 }
-#List .row .title {
-  font-weight: 900;
+#List .row {
+  background: transparent;
+  border-bottom: 1px solid #E5E5E5 ;
+  padding: 15px;
+  color: #333;
   text-align: left;
 }
+#List .row .title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  width: 100%;
+}
 #List .row .row_bottom {
-  text-align: right;
+  font-size: 12px;
 }
 #List .row .row_bottom .time {
   display: inline-block;
   text-align: left;
   box-sizing: border-box;
   padding-right: 50px;
+  font-family: Helvetica;
 }
 #List .row .row_bottom .oper {
   display: inline-block;
   box-sizing: border-box;
   position: relative;
-  margin-right: 5px;
+  background: url("../img/menu_more.png") no-repeat;
+  width: 19px;
+  height: 8px;
+  background-size: 100% 100%;
+  border: none;
+  vertical-align: middle;
+  top: 3px;
+  float: right;
+  cursor: pointer;
 }
 #List .row .row_bottom .oper .operBox {
-  width: 50px;
+  width: 96px;
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 15px;
+  left: 100%;
   background: white;
+  -webkit-transform: translate(-100%, 0%);
+  -ms-transform: translate(-100%, 0%);
   transform: translate(-100%, 0%);
   text-align: center;
   z-index: 1;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0 2px 4px 0 #DADFF7;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #666;
 }
 #List .row .row_bottom .oper .operBox .operBox_row {
-  padding: 5px 0px;
+  padding: 10px 0px;
+  border-bottom: 1px solid #eee;
+}
+#List .row .row_bottom .oper .operBox .operBox_row i {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 10px;
+}
+#List .row .row_bottom .oper .operBox .operBox_row .menu_del {
+  background: url("../img/menu_del.png") no-repeat;
+  background-size: 100% 100%;
+}
+#List .row .row_bottom .oper .operBox .operBox_row .menu_edit {
+  background: url("../img/menu_edit.png") no-repeat;
+  background-size: 100% 100%;
+}
+#List .row .row_bottom .oper .operBox .operBox_row span {
+  position: relative;
+  top: -2px;
+}
+#List .row .row_bottom .oper .operBox_row:last-child {
+  border-bottom: none;
+}
+#List .row .select {
+  background: #E8F1FF;
 }

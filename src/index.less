@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -440,10 +441,19 @@ hr {
   }
 }
 
+.loading_text {
+  padding-top: 5px;
+  padding-bottom: 0px;
+  text-align: center;
+  background: transparent;
+}
 .am-list-item .am-list-line .am-list-content, .am-list-item .am-input-label {
   color: #333 !important;
 }
 
 .am-card::before{
   display: none;
+}
+.am-list-view-scrollview-content{
+  width: 100%;
 }

@@ -45,7 +45,8 @@ export default class AppSystem extends React.Component {
                     rightContent={[
                         <img className="headPic" src={this.state.user.pic} alt=""/>,
                         <div className="userName">{this.state.user.name}</div>,
-                        <div className="cancellation">退出</div>,
+                        <div className="user_line"></div>,
+                        <div className="cancellation"><i className="user_exit"></i><span>退出</span></div>,
                     ]}
                 >
                     {/*<div className="logo">校园自媒体</div>*/}

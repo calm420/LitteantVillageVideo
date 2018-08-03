@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast,Modal } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Modal, Button } from 'antd-mobile';
 import "../css/AlreadylookThroughDetail.less"
 
 const RadioItem = Radio.RadioItem;
@@ -142,7 +142,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             }}>
                 {
                     calm.state.type == 0 ?
-                        <div>
+                        <div  className="content">
                             <div>类型：自媒体文章</div>
                             {
                                 calm.state.data.articleInfo ?
@@ -164,7 +164,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                         </div>
                         :
                         calm.state.type == 1 ?
-                            <div>
+                            <div  className="content">
                                 <div>类型：短视频</div>
                                 {
                                     calm.state.data.littleVideoInfo ?
@@ -173,7 +173,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                             <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</div>
                                             <div>内容：
                                                 <video 
-                                                    style={{width:"300px"}} 
+                                                    style={{width:"100%"}}
                                                     controls="controls" 
                                                     preload="auto"  
                                                     src={calm.state.data.littleVideoInfo.videoPath} 
@@ -194,8 +194,8 @@ export default class AlreadylookThroughDetail extends React.Component {
                             :
                             ""
                 }
-                <div style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
-                    <span onClick={calm.showAlert}>重新审核</span>
+                <div className="submitBtn" style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
+                    <Button type='warning' onClick={calm.showAlert}>重新审核</Button>
                 </div>
                 <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                     <div className="isDangerArea">
@@ -207,7 +207,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                             ))}
                         </List>
                     </div>
-                    <div >审核说明:
+                    <div className="content">审核说明:
                      <List>
                             <TextareaItem
                                 rows={3}
@@ -219,7 +219,10 @@ export default class AlreadylookThroughDetail extends React.Component {
                             />
                         </List>
                     </div>
-                    <button onClick={_this.submit}>提交</button>
+                    <div className="submitBtn">
+                        <Button type='warning' onClick={_this.submit}>提交</Button>
+                    </div>
+
                 </div>
             </div>
         )

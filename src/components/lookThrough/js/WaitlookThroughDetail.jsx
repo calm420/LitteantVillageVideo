@@ -147,7 +147,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                     <video 
                                         controls="controls" 
                                         preload="auto"  
-                                        style={{objectFit: "fill",width:"300px"}} 
+                                        style={{objectFit: "fill",width:"100%"}}
                                         src={calm.state.data.videoPath}>
                                     </video>
                                 </div>

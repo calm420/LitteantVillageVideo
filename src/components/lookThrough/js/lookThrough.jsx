@@ -24,6 +24,15 @@ export default class lookThrough extends React.Component {
         calm.getArticleAndLittleVideoIsNo();
         calm.getArticleAndLittleVideo();
 
+        window.addEventListener('scroll',calm.scrollHandle);
+    }
+    componentWillMount(){
+        window.addEventListener('scroll',calm.scrollHandle);
+        
+    }
+    scrollHandler() {
+        console.log("出发了滚动事件")
+        console.log(window.pageYOffset)
     }
 
     /**
@@ -78,7 +87,7 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type+"&auditorId="+calm.state.auditorId);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
         var data = {
             method: 'openNewPage',
             url: url
@@ -101,6 +110,7 @@ export default class lookThrough extends React.Component {
         });
     }
     render() {
+
         var _this = this;
         const tabs = [
             { title: '待审核' },
@@ -130,7 +140,7 @@ export default class lookThrough extends React.Component {
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
-                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName:""}</div>
+                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
                                                         <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
                                                     </div>
                                                 </div>
@@ -158,11 +168,11 @@ export default class lookThrough extends React.Component {
                                             </div>
                                             :
                                             v.articleInfo ?
-                                                <div onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId,v.type, v.auditId)}>
+                                                <div onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId, v.type, v.auditId)}>
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
-                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName :""}</div>
+                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
                                                         <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
                                                     </div>
                                                 </div>

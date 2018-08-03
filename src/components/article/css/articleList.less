@@ -1,12 +1,40 @@
 #articleList {
+  .am-list-view-scrollview-content{
+    width: 100%;
+  }
+  .am-tabs-default-bar-tab{
+    font-size: 17px;
+    color: #676C6F ;
+  }
+  .am-tabs-default-bar-tab-active{
+    color: #4285F4;
+  }
   .leftBox {
-    width: 70%;
+    width: 60%;
+    margin-right: 10%;
     display: inline-block;
   }
+  .item{
+    padding: 15px;
+  }
   .title {
-    font-weight: 900;
+    font-size: 15px;
+    color: #333;
+    line-height: 20px;
+    margin-bottom: 10px;
+    word-break: break-all;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
   .bottom {
+    font-size: 12px;
+    color: #999;
+    &>div{
+      margin-right: 10px;
+    }
     .read {
       display: inline-block;
     }
@@ -19,11 +47,13 @@
   }
   .rightBox {
     width: 30%;
-    height: 100%;
+    height: 70px;
     display: inline-block;
+    vertical-align: top;
+    text-align: right;
     img {
-      width: 100%;
       height: 100%;
+      max-width: 100%;
       vertical-align: middle;
     }
   }
@@ -31,8 +61,10 @@
   .images {
     img {
       display: inline-block;
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
+      margin-bottom: 10px;
+      margin-right: 10px;
     }
   }
 

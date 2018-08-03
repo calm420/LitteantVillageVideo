@@ -1,0 +1,125 @@
+#addUploadMusic {
+  .addList{
+    height: calc(~"100% - 77px");
+    overflow-y: auto;
+  }
+
+  .sameBack{
+    background-color: #fff;
+    padding: 15px;
+    font-size: 16px;
+    color: #666;
+  }
+
+  .listCont{
+    background-color: #fff;
+    margin-top: 10px;
+    position: relative;
+    &:first-child{
+      margin-top: 0;
+    }
+    .am-list-item .am-input-control input{
+      width: 88%;
+    }
+    .icon_delete{
+      background: url("../img/del_group.png") no-repeat;
+      font-size: 0;
+      width: 34px;
+      height: 32px;
+      background-size: 100%;
+      border: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
+
+    .am-list-item .am-input-label{
+      color: #666 !important;
+      font-size: 16px;
+    }
+
+    .am-list-item .am-input-label.am-input-label-5{
+      width: 70px;
+      margin-right: 4px;
+      text-align: right;
+      padding-right: 15px;
+    }
+
+    .textTitle {
+      width: 70px;
+      margin-right: 4px;
+      text-align: right;
+      padding-right: 15px;
+      .uploadSupport {
+        font-size: 14px;
+        color: #888;
+      }
+    }
+
+    .uploadBtn {
+      background: url("../img/addPic.png") no-repeat;
+      font-size: 0;
+      width: 68px;
+      height: 68px;
+      background-size: 100%;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .upload_file {
+      width: 68px;
+      height: 68px;
+      text-align: center;
+      background-color: #eee;
+      position: relative;
+      .icon_pointer {
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 4px 0;
+        border-radius: 0 0 2px 2px;
+        text-align: center;
+        font-size: 12px;
+      }
+      .imgTag {
+        width: 100%;
+        height: 100%;
+      }
+      .musicIcon{
+        background: url("../img/musicIcon.png") no-repeat;
+        background-size: 100%;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .addBtn{
+    text-align: center;
+    font-size: 16px;
+    color: #638bb7;
+    line-height: 30px;
+    padding: 7px 15px;
+    margin-top: 15px;
+    span{
+      margin: 0 auto;
+      position: relative;
+      width: 80px;
+      padding-left: 20px;
+      display: block;
+    }
+    .am-icon-md {
+      width: 18px;
+      height: 18px;
+      margin-right: 3px;
+      position: absolute;
+      left: 0;
+      top: 5px;
+    }
+  }
+
+}

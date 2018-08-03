@@ -1,0 +1,86 @@
+#articleList .am-list-view-scrollview-content {
+  width: 100%;
+}
+#articleList .am-tabs-default-bar-tab {
+  font-size: 17px;
+  color: #676C6F ;
+}
+#articleList .am-tabs-default-bar-tab-active {
+  color: #4285F4;
+}
+#articleList .leftBox {
+  width: 60%;
+  margin-right: 10%;
+  display: inline-block;
+}
+#articleList .item {
+  padding: 15px;
+}
+#articleList .title {
+  font-size: 15px;
+  color: #333;
+  line-height: 20px;
+  margin-bottom: 10px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+#articleList .bottom {
+  font-size: 12px;
+  color: #999;
+}
+#articleList .bottom > div {
+  margin-right: 10px;
+}
+#articleList .bottom .read {
+  display: inline-block;
+}
+#articleList .bottom .like {
+  display: inline-block;
+}
+#articleList .bottom .time {
+  display: inline-block;
+}
+#articleList .rightBox {
+  width: 30%;
+  height: 70px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: right;
+}
+#articleList .rightBox img {
+  height: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+}
+#articleList .images img {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+#articleList .videoBox {
+  position: relative;
+}
+#articleList .videoBox video {
+  padding-left: 25px;
+}
+#articleList .videoBox .videoMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 176px;
+}
+#articleList .videoBox .playImg {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -6,8 +6,8 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 export default class ReadPanel extends React.Component {
     constructor(props) {
         super(props);
-        var loginUserStr = sessionStorage.getItem("loginUser");
-        var loginUser = JSON.parse(loginUserStr);
+        // var loginUserStr = sessionStorage.getItem("loginUser");
+        // var loginUser = JSON.parse(loginUserStr);
         this.state = {
             title: 'app',
             open: false,
@@ -38,8 +38,9 @@ export default class ReadPanel extends React.Component {
             files: [], //图片数组
             title: '',  //标题
             user: {
-                articleTitle: 'wei ming ming',
-                userId: loginUser.colUid,
+                articleTitle: '未命名',
+                // userId: loginUser.colUid,
+                userId: 3,
                 schoolId: 1,
                 gradeId: 1,
                 status: 0,// 0草稿 1 发布
@@ -69,57 +70,36 @@ export default class ReadPanel extends React.Component {
     }
 
     getHTML(type) {
+
+
+        // console.log(this.state.editorHtml);
+        // return;
         var warn = "";
         if (this.state.title == '') {
-            warn = "biaoti!!!!!"
-        } else if (this.state.files.length <= 0) {
-            warn = "tupian!!!!!"
+            warn = "请输入标题!"
+        } else if ((this.state.editorHtml == '' || this.state.editorHtml == '<p><br></p>') && type == 1) {
+            warn = "请输入内容!"
         }
         if (warn != "") {
             Toast.info(warn);
             return;
         }
-        var array = this.state.editor.getContents().ops;
+        var array = [];
         var requestArray = [];
         var files = this.state.files;
-        // this.props.submit('123aswdfg')
-        for(var k in files){
-            var $Blob = this.getBlobBydataURI(files[k].url, 'image/jpeg');
-            var formData = new FormData();
-            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
-            requestArray.push(
-                new Promise(function (resolve, reject) {
-                    $.ajax({
-                        type: "POST",
-                        url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
-                        enctype: 'multipart/form-data',
-                        data: formData,
-                        // 告诉jQuery不要去处理发送的数据
-                        processData: false,
-                        // 告诉jQuery不要去设置Content-Type请求头
-                        contentType: false,
-                        success: (responseStr) => {
-                            // arrayImage.push(responseStr);
-                            // console.log(arrayImage);
-                            resolve({
-                                type:'local',
-                                url:responseStr
-                            });
-                        },
-                        error: function (responseStr) {
-                            // console.log(responseStr);
-                            reject("一个失败的URL");
-                        }
-                    });
-                }));
+        if(this.state.editor){
+            array = this.state.editor.getContents().ops;
         }
 
-        // return;
-        // console.log(this.state.editor.getContents());
+        console.log(files,'保存发布的方法中files')
+        var editorArray = [],localArray = [];
 
-        for (var k in array) {
-            if (array[k].insert && array[k].insert.image) {
-                var $Blob = this.getBlobBydataURI(array[k].insert.image, 'image/jpeg');
+        for(var i=0;i< files.length;i++){
+            console.log(files[i].url,'上传图片的路径')
+            if(files[i].url.substring(0,4) == 'http'){   //判断是否是线上图片
+                localArray.push(files[i].url);
+            }else{
+                var $Blob = this.getBlobBydataURI(files[i].url, 'image/jpeg');
                 var formData = new FormData();
                 formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
                 requestArray.push(
@@ -137,7 +117,7 @@ export default class ReadPanel extends React.Component {
                                 // arrayImage.push(responseStr);
                                 // console.log(arrayImage);
                                 resolve({
-                                    type:'editor',
+                                    type:'local',
                                     url:responseStr
                                 });
                             },
@@ -148,11 +128,50 @@ export default class ReadPanel extends React.Component {
                         });
                     }));
             }
+
+        }
+
+        for(var k=0;k < array.length;k++){
+            if (array[k].insert && array[k].insert.image) {
+                console.log(array[k].insert.image,'html内部的图片')
+                if(array[k].insert.image.substring(0,4) == "http"){  //判断是否是线上图片
+                    editorArray.push(array[k].insert.image);
+                }else{
+                    var $Blob = this.getBlobBydataURI(array[k].insert.image, 'image/jpeg');
+                    var formData = new FormData();
+                    formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+                    requestArray.push(
+                        new Promise(function (resolve, reject) {
+                            $.ajax({
+                                type: "POST",
+                                url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
+                                enctype: 'multipart/form-data',
+                                data: formData,
+                                // 告诉jQuery不要去处理发送的数据
+                                processData: false,
+                                // 告诉jQuery不要去设置Content-Type请求头
+                                contentType: false,
+                                success: (responseStr) => {
+                                    // arrayImage.push(responseStr);
+                                    // console.log(arrayImage);
+                                    resolve({
+                                        type:'editor',
+                                        url:responseStr
+                                    });
+                                },
+                                error: function (responseStr) {
+                                    // console.log(responseStr);
+                                    reject("一个失败的URL");
+                                }
+                            });
+                        }));
+                }
+            }
         }
         // console.log(requestArray,'requestArray');
         Promise.all(requestArray).then((values) => {
             console.log(values,'values');
-            var editorArray = [],localArray = [];
+
             for(var k in values){
                 if(values[k].type == 'local'){
                     localArray.push(values[k].url);
@@ -193,9 +212,11 @@ export default class ReadPanel extends React.Component {
             onResponse: result => {
                 console.log(result,'updateArticleInfo')
                 if (result.success) {
-
+                    Toast.info(type==0?'保存成功':'发布成功')
+                    this.initEditor();
+                    this.props.submit(Math.abs(type-1))
                 } else {
-                    Toast.fail("chaungjianshibai");
+                    Toast.fail("保存/发布失败");
                 }
             },
             onError: function (error) {
@@ -218,10 +239,10 @@ export default class ReadPanel extends React.Component {
                         writeFlag: !this.state.writeFlag,
                         artId: result.response,
                     }, () => {
-                        this.props.submit('init')
+                        this.props.submit('init',this.state.artId)
                     })
                 } else {
-                    Toast.fail("chaungjianshibai");
+                    Toast.fail("创建失败");
                 }
             },
             onError: function (error) {
@@ -243,6 +264,77 @@ export default class ReadPanel extends React.Component {
             title: val
         })
     }
+
+    //初始化编辑框
+    initEditor(){
+        this.setState({
+            title:'未命名',
+            files: [],
+            editorHtml:'',
+            writeFlag:false,
+            artId: null,
+        },()=>{
+            console.warn('file状态已归为:')
+            console.log(this.state.files);
+        })
+    }
+
+    //接受来自list => appSystem 的消息
+    accept(type,data){
+        // console.log(type);
+        switch(type){
+            case "编辑":
+                console.log('进入编辑');
+                this.getArticleInfoById(data);
+                break;
+        }
+        // console.log(data,'in ReadPanel');
+
+    }
+
+    //根据文章id获取文章
+    getArticleInfoById(artId) {
+        var param = {
+            "method": 'getArticleInfoById',
+            "articleId": artId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result,'根据id获取文章')
+                if (result.success) {
+                    var data = result.response;
+                    var images = result.response.articleImgArray;
+                    var file = [];
+                    console.log(images,'images')
+                    if(images){
+                        console.log('进入images循环')
+                        for(var i=0;i< images.length;i++){
+                            file.push({url:images[i]});
+                            console.log('运行了'+(i+1)+"次")
+                        }
+                    }
+
+                    console.log(file,'file');
+                    // console.log(data,'根据id获取文章')
+                    this.setState({
+                        writeFlag:true,
+                        title: data.articleTitle,
+                        editorHtml:data.articleContent || '',
+                        files:file,
+                        artId: data.articleId
+                    })
+                } else {
+                    Toast.fail("获取文章失败");
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+
+    }
+
+
 
     render() {
         const {files} = this.state;

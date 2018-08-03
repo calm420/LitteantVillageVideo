@@ -32,6 +32,7 @@ export default class articleDetail extends React.Component {
     }
 
 
+
     /**
      * 按文章id获取详情信息
      * **/
@@ -46,6 +47,11 @@ export default class articleDetail extends React.Component {
                 if (result.success) {
                     this.setState({
                         data: result.response
+                    },()=>{
+                        $(".ql-image").click(function(e){
+                            console.log(123);
+                            console.log(e);
+                        });
                     })
                     //文章阅读量+1
                     this.addArticleReadCount()
@@ -88,13 +94,16 @@ export default class articleDetail extends React.Component {
             <div id="articleDetail" style={{
                 height: document.body.clientHeight
             }}>
-                <div className="title">{this.state.data.articleTitle}</div>
-                <div className="at">
-                    <div className="author">作者: {this.state.data.articleTitle}</div>
-                    <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
+                <div className="inner">
+                    <div className="title">{this.state.data.articleTitle}</div>
+                    <div className="at">
+                        <div className="author">{this.state.data.articleTitle}</div>
+                        <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
+                    </div>
+                    <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}>
+                    </div>
                 </div>
-                <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}>
-                </div>
+
             </div>
         );
     }

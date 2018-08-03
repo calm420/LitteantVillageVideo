@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -80,7 +81,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #F46A55;
+  color: #f46a55;
 }
 .line_item {
   height: 8px;
@@ -267,28 +268,6 @@ hr {
   background-color: #F56A55;
   opcity: 0.3;
 }
-/*班牌内页返回首页*/
-.navBar {
-  font-size: .89rem;
-  color: #2a3350;
-  font-weight: bold;
-  height: 2.22rem;
-  line-height: 2.22rem;
-  border-bottom: .05rem #f4f4f4 solid;
-  padding: 0 .56rem;
-}
-.navBar span {
-  display: inline-block;
-}
-.navBar .icon {
-  margin: 0 .56rem;
-  background: url("components/classCardSystem/imgs/backArrow.png") no-repeat;
-  width: 0.47rem;
-  height: 0.81rem;
-  background-size: 100% 100%;
-  position: relative;
-  top: 1px;
-}
 .home_content {
   width: calc(100% - 1.66rem);
   padding: 0.83rem;
@@ -338,12 +317,34 @@ hr {
   text-overflow: ellipsis;
   display: block;
 }
+.line_public {
+  position: relative;
+}
+.line_public:after {
+  content: '';
+  position: absolute;
+  background-color: #eeeeee;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
 .deleteBtn_common {
   float: right;
   display: block;
   width: 14px;
   height: 14px;
-  background: url("components/classCardSystemBackstage/imgs/icon_delete.png") no-repeat center center;
+  background: url("components/uploadMusic/img/icon_delete.png") no-repeat;
   background-size: 14px;
   padding: 0 8px;
   margin-right: 4px;
@@ -353,9 +354,13 @@ hr {
   display: block;
   width: 14px;
   height: 14px;
-  background: url("components/classCardSystemBackstage/imgs/icon_modify.png") no-repeat center center;
+  background: url("components/uploadMusic/img/icon_modify.png") no-repeat;
   background-size: 14px;
   padding: 0 8px;
+}
+.am-list-body::before,
+.am-list-body::after {
+  display: none !important;
 }
 /*删除弹窗*/
 .am-modal-content .am-modal-title {
@@ -386,158 +391,6 @@ hr {
 .am-list-item .am-input-label {
   color: #333 !important;
 }
-.line_public {
-  position: relative;
-}
-.line_public:after {
-  content: '';
-  position: absolute;
-  background-color: #eeeeee;
-  display: block;
-  z-index: 1;
-  top: auto;
-  right: 15px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1PX;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-}
-.lineTop_public {
-  position: relative;
-}
-.lineTop_public:after {
-  content: '';
-  position: absolute;
-  background-color: #e5e5e5;
-  display: block;
-  z-index: 1;
-  top: 0;
-  right: 15px;
-  bottom: auto;
-  left: 0;
-  width: 100%;
-  height: 1PX;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-}
-.noticeMsg_common {
-  background: #eee url("components/classCardSystemBackstage/imgs/noticeIcon.png") no-repeat 30px 9px;
-  background-size: 18px;
-  font-size: 15px;
-  color: #666;
-  line-height: 18px;
-  padding: 11px 10px 11px 57px;
-}
-/* 首页通知 */
-.notify_contModal {
-  width: 26.31rem !important;
-  height: 23.67rem;
-  margin: auto;
-}
-.notify_contModal .am-modal-close {
-  top: 15px;
-}
-.notify_contModal .am-modal-content {
-  padding-top: 0 !important;
-}
-.notify_contModal .am-modal-header {
-  padding: 2.06rem 0 0.33rem 0 !important;
-  border-bottom: 0.05rem solid #f35454;
-  margin: 0 2.22rem;
-}
-.notify_contModal .am-modal-title {
-  color: #191c26!important;
-  font-size: 0.72rem!important;
-  font-weight: bold;
-}
-.notify_contModal .am-modal-content .am-modal-body {
-  padding: 0.56rem 0 2.22rem 0 !important;
-  height: 17.36rem;
-  font-size: 0.61rem;
-  color: #565c72;
-  text-align: left;
-}
-.notify_contModal .am-modal-content .am-modal-body .cont {
-  height: 100%;
-  padding: 0 2.22rem 0 2.22rem;
-  overflow-x: hidden;
-  overflow-y: auto;
-  line-height: 1.3rem;
-}
-/*首页通知end*/
-/* 公共空页面图start */
-.emptyPage_content {
-  position: relative;
-  height: calc(100% - 4rem);
-}
-.emptyPage_icon {
-  width: 10.86rem;
-  height: 7.36rem;
-  margin-bottom: 0.36rem;
-  display: inline-block;
-  margin-top: -0.5rem;
-}
-.emptyPage_text {
-  font-size: 0.7rem;
-  color: #959ab1;
-  text-align: center;
-}
-.emptyPage_publicImg {
-  background: url("components/classCardSystem/imgs/icon_emptypage.png") no-repeat;
-  background-size: 100%;
-}
-/* 公共空页面图end */
-/*班牌屏幕适配*/
-@media only screen and (min-width: 768px) and (max-width: 799px) {
-  html {
-    font-size: 14.5px !important;
-  }
-}
-@media only screen and (min-width: 800px) and (max-width: 1023px) {
-  html {
-    font-size: 15px !important;
-  }
-}
-@media only screen and (min-width: 1024px) and (max-width: 1499px) {
-  html {
-    font-size: 20px !important;
-  }
-}
-@media only screen and (min-width: 1500px) and (max-width: 1919px) {
-  html {
-    font-size: 28px !important;
-  }
-}
-@media only screen and (min-width: 1920px) {
-  html {
-    font-size: 36px !important;
-  }
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 12px;
-  }
-  /* 这是针对缺省样式 (必须的) */
-  ::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 9px;
-    -webkit-border-radius: 9px;
-  }
-  /* 滑块颜色 */
-  ::-webkit-scrollbar-button {
-    background-color: initial;
-  }
-  /* 滑轨两头的监听按钮颜色 */
-  /* ::-webkit-scrollbar-corner {
-        background-color: none;
-  } 横向滚动条和纵向滚动条相交处尖角的颜色 */
+.am-card::before {
+  display: none;
 }

@@ -140,7 +140,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             <div id="alreadyLookThrough" style={{
                 height: document.body.clientHeight
             }}>
-                <div className="content">
+                <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
                 {
                     calm.state.type == 0 ?
                         <div>
@@ -169,7 +169,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </div>
                                                 <div>
                                                     <span className='title'>审核结果：</span>
-                                                    {calm.state.data.auditInfo.isPass == 0 ? <span>通过</span> : <span>未通过</span>}
+                                                    {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
                                                 </div>
 
                                             </div>
@@ -217,7 +217,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </div>
                                                 <div>
                                                     <span className='title'>审核结果：</span>
-                                                    {calm.state.data.auditInfo.isPass == 0 ? <span>通过</span> : <span>未通过</span>}
+                                                    {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
                                                 </div>
 
                                             </div>
@@ -233,34 +233,38 @@ export default class AlreadylookThroughDetail extends React.Component {
                                 <div>
                                     {
                                         calm.state.data.discussInfo ?
-                                            <div className="sameBack">
-                                                <div className='topMsg'>
-                                                    <img className="photo" src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
-                                                    <span className='author'>{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</span>
-                                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</span>
-                                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
-                                                </div>
-                                                <div className='textCont'>
-                                                    {calm.state.data.discussInfo.discussContent}
+                                            <div>
+                                                <div className="sameBack">
+                                                    <div className='topMsg'>
+                                                        <img className="photo" src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
+                                                        <span className='author'>{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</span>
+                                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</span>
+                                                        <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
+                                                    </div>
+                                                    <div className='textCont'>
+                                                        {calm.state.data.discussInfo.discussContent}
 
-                                                </div>
-                                                <div className='review'>
-                                                <div className='line_public'>
-                                                    <span className='title'>审核人：</span>
-                                                    {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
-                                                    <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</span></div>
-                                                <div className='line_public'>
-                                                    <span className='title'>审核说明：</span>
-                                                    <div className='reCont'>
-                                                    {calm.state.data.auditInfo.auditMark ?calm.state.data.auditInfo.auditMark : "无" }
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <span className='title'>审核结果：</span>
-                                                    {calm.state.data.auditInfo.isPass == 0 ? <span>通过</span> : <span>未通过</span>}
+                                                <div className='review'>
+                                                    <div className='line_public'>
+                                                        <span className='title'>审核人：</span>
+                                                        {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
+                                                        <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</span></div>
+                                                    <div className='line_public'>
+                                                        <span className='title'>审核说明：</span>
+                                                        <div className='reCont'>
+                                                            {calm.state.data.auditInfo.auditMark ?calm.state.data.auditInfo.auditMark : "无" }
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <span className='title'>审核结果：</span>
+                                                        {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
+                                                        <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
+                                                            重新审核
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-                                            </div>
                                             </div>
                                             : ""
                                     }
@@ -299,9 +303,7 @@ export default class AlreadylookThroughDetail extends React.Component {
 
                     </div>
                 </div>
-                <div className="submitBtn" style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
-                    <Button type='warning' onClick={calm.showAlert}>重新审核</Button>
-                </div>
+
 
             </div>
         )

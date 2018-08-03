@@ -251,6 +251,7 @@ export default class articleList extends React.Component {
                       useOnPan={false}
                       onChange={this.onChange.bind(this)}
                       tabBarPosition={'top'}
+                      // tabBarUnderlineStyle={{width:'15px'}}
                 >
                     <div style={{
                         height: document.documentElement.clientHeight - 43.5,

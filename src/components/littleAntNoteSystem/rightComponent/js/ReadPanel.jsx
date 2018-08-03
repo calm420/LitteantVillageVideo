@@ -36,7 +36,7 @@ export default class ReadPanel extends React.Component {
             ],
             writeFlag: false,
             files: [], //图片数组
-            title: '',  //标题
+            title_editor: '',  //标题
             user: {
                 articleTitle: '未命名',
                 // userId: loginUser.colUid,
@@ -75,7 +75,7 @@ export default class ReadPanel extends React.Component {
         // console.log(this.state.editorHtml);
         // return;
         var warn = "";
-        if (this.state.title == '') {
+        if (this.state.title_editor == '') {
             warn = "请输入标题!"
         } else if ((this.state.editorHtml == '' || this.state.editorHtml == '<p><br></p>') && type == 1) {
             warn = "请输入内容!"
@@ -191,7 +191,7 @@ export default class ReadPanel extends React.Component {
             var converter = new QuillDeltaToHtmlConverter(array, cfg);
             var html = converter.convert();
 
-            console.log(this.state.title, 'biaoti');
+            console.log(this.state.title_editor, 'biaoti');
             console.log(this.state.artId, 'artId');
             console.log(localArray.join(','),'localArray');
             console.log(html);
@@ -203,7 +203,7 @@ export default class ReadPanel extends React.Component {
         var param = {
             "method": 'updateArticleInfo',
             "articleId": this.state.artId,
-            "articleTitle": this.state.title,
+            "articleTitle": this.state.title_editor,
             "articleImgs": imgArray,
             "articleContent": html,
             "status": type,
@@ -238,6 +238,7 @@ export default class ReadPanel extends React.Component {
                     this.setState({
                         writeFlag: !this.state.writeFlag,
                         artId: result.response,
+                        title_editor:'未命名'
                     }, () => {
                         this.props.submit('init',this.state.artId)
                     })
@@ -261,14 +262,14 @@ export default class ReadPanel extends React.Component {
 
     inputChange(val) {
         this.setState({
-            title: val
+            title_editor: val
         })
     }
 
     //初始化编辑框
     initEditor(){
         this.setState({
-            title:'未命名',
+            title_editor:'未命名',
             files: [],
             editorHtml:'',
             writeFlag:false,
@@ -318,7 +319,7 @@ export default class ReadPanel extends React.Component {
                     // console.log(data,'根据id获取文章')
                     this.setState({
                         writeFlag:true,
-                        title: data.articleTitle,
+                        title_editor: data.articleTitle,
                         editorHtml:data.articleContent || '',
                         files:file,
                         artId: data.articleId
@@ -340,17 +341,17 @@ export default class ReadPanel extends React.Component {
         const {files} = this.state;
         return (
             <div id="ReadPanel">
-                <div style={!this.state.writeFlag ? {display: 'inline-block'} : {display: "none"}}>
-                    点击 <a onClick={this.changeWrite.bind(this)}>写文章</a>
+                <div className="click_head" style={!this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
+                    点击 "<a onClick={this.changeWrite.bind(this)}>写文章</a>"，创建一篇新文章
                 </div>
-                <div style={this.state.writeFlag ? {display: 'inline-block'} : {display: "none"}}>
+                <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
                     <div className="headBox">
                         <div className="title">
                             <InputItem
                                 clear
                                 placeholder="请输入标题"
                                 onChange={this.inputChange.bind(this)}
-                                value={this.state.title}
+                                value={this.state.title_editor}
                             ></InputItem>
                             {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
                         </div>
@@ -369,7 +370,7 @@ export default class ReadPanel extends React.Component {
                             {/*</div>*/}
                         </div>
                     </div>
-                    <div>
+                    <div className="edit_cont">
                         <ReactQuill
                             theme={this.state.theme}
                             onChange={this.handleChange}
@@ -378,8 +379,10 @@ export default class ReadPanel extends React.Component {
                             formats={this.state.formats}
                             bounds={'.app'}
                         />
-                        <button onClick={this.getHTML.bind(this, 0)}>保存</button>
-                        <button onClick={this.getHTML.bind(this, 1)}>发布</button>
+                        <div className="edit_btn">
+                            <button onClick={this.getHTML.bind(this, 0)}>保存</button>
+                            <button onClick={this.getHTML.bind(this, 1)}>发布</button>
+                        </div>
                     </div>
                 </div>
 

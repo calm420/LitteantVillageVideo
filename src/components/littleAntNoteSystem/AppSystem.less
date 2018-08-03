@@ -1,20 +1,34 @@
 #AppSystem {
   height: 100%;
+  overflow: hidden;
   #main {
-    height: 100%;
+    height: calc(~"100% - 54px");
     .left {
-      width: 30%;
+      width: 250px;
       height: 100%;
-      background: red;
+      background: #F5F7FF ;
       float: left;
       display: table;
       text-align: center;
+      .am-tabs-default-bar-tab{
+        height: 52px;
+        line-height: 52px;
+        font-size: 16px;
+        cursor: pointer;
+        color: #333;
+      }
+      .am-tabs-default-bar-tab-active{
+        color: #4380EB;
+      }
+      .am-tabs-default-bar-underline{
+        border-color: #4380EB;
+      }
     }
 
     .right {
-      //width: 70%;
+      margin-left: 250px;
       height: 100%;
-      background: yellow;
+      background: #fff;
       text-align: center;
     }
   }
@@ -24,14 +38,63 @@
     text-align: left;
   }
   .headPic {
-    width: 30px;
-    height: 30px;
+    width: 44px;
+    height: 44px;
     display: inline-block;
     vertical-align: middle;
     border-radius: 50%;
   }
   .userName{
-    margin: 0 10px
+    margin: 0 0 0 12px
   }
-
+  .user_line{
+    height: 14px;
+    position: relative;
+    width: 1px;
+    margin: 0 25px;
+  }
+  .user_line:after {
+    content: "";
+    pointer-events: none;
+    box-sizing: border-box;
+    border: none;
+    border-left: 1px solid #F1F1F1;
+    height: 100%;
+    -webkit-transform: scaleX(0.5);
+    -ms-transform: scaleX(0.5);
+    transform: scaleX(0.5);
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .user_exit{
+    background: url("./img/icon_exit.png") no-repeat;
+    width: 18px;
+    height: 18px;
+    background-size: 100% 100%;
+    margin-right: 10px;
+    display: inline-block;
+  }
+  .cancellation{
+    span, i{
+      vertical-align: middle;
+    }
+  }
+  .am-navbar{
+    height: 54px;
+    background-color: #4380eb;
+  }
+  .am-navbar-left {
+    padding-left: 50px;
+    font-size: 18px;
+    font-weight: normal;
+  }
+  .am-navbar-right{
+    font-size: 14px;
+    margin-right: 50px;
+  }
 }

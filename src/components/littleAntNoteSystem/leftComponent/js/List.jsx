@@ -237,17 +237,17 @@ export default class List extends React.Component {
             // console.log(rowData);
             return (
                 <div style={
-                    this.state.editorId == rowData.articleId?{background:"skyblue"}:{}
+                    this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
                 } className="row">
                     <div className="title">{rowData.articleTitle}</div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
-                        <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>...
+                        <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>
                             <div className="operBox" style={
                                 this.state.showOperId == rowData.articleId ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <div className="operBox_row" onClick={this.openEditor.bind(this,rowData.articleId)}>编辑</div>
-                                <div className="operBox_row" onClick={this.deleteArticle.bind(this,rowData.articleId)}>删除</div>
+                                <div className="operBox_row" onClick={this.openEditor.bind(this,rowData.articleId)}><i className="menu_edit"></i><span>编辑</span></div>
+                                <div className="operBox_row" onClick={this.deleteArticle.bind(this,rowData.articleId)}><i className="menu_del"></i><span>删除</span></div>
                             </div>
                         </button>
                     </div>
@@ -257,17 +257,17 @@ export default class List extends React.Component {
         const rowForDraft = (rowData) => {
             return (
                 <div style={
-                    this.state.editorId == rowData.articleId?{background:"skyblue"}:{}
+                    this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
                 } className="row">
                     <div className="title">{rowData.articleTitle}</div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
-                        <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>...
+                        <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>
                             <div className="operBox" style={
                                 this.state.showOperId == rowData.articleId ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <div className="operBox_row" onClick={this.openEditor.bind(this,rowData.articleId)}>编辑</div>
-                                <div className="operBox_row" onClick={this.deleteArticle.bind(this,rowData.articleId)}>删除</div>
+                                <div className="operBox_row" onClick={this.openEditor.bind(this,rowData.articleId)}><i className="menu_edit"></i><span>编辑</span></div>
+                                <div className="operBox_row" onClick={this.deleteArticle.bind(this,rowData.articleId)}><i className="menu_del"></i><span>删除</span></div>
                             </div>
                         </button>
                     </div>
@@ -290,12 +290,7 @@ export default class List extends React.Component {
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{
-                                    paddingTop: 5,
-                                    paddingBottom: 0,
-                                    textAlign: 'center',
-                                    background: '#f4f4f4'
-                                }}>
+                                <div className="loading_text">
                                     {this.state.isLoadingLeft ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

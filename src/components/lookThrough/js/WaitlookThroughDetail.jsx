@@ -31,6 +31,8 @@ export default class WaitlookThroughDetail extends React.Component {
 
         } else if (type == 1) {
             calm.getLittleVideoById(id)
+        }else if (type == 2){
+            calm.getDiscussInfoById(id)
         }
     }
     /**
@@ -65,8 +67,30 @@ export default class WaitlookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                if (result.success) {
+                    calm.setState({
+                        data: result.response
+                    })
+                }
+            },
+            onError: function (error) {
+                // Toast.fail(error, 1);
+            }
+        });
+    }
 
-                console.log(result,"re")
+    /**
+     * 获取评论数据
+     */
+    getDiscussInfoById(id){
+        var param = {
+            "method": 'getDiscussInfoById',
+            "discussId": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+
+                console.log(result,"pppl")
                 if (result.success) {
                     calm.setState({
                         data: result.response
@@ -157,7 +181,18 @@ export default class WaitlookThroughDetail extends React.Component {
                                 </div>
                             </div>
                             :
-                            ""
+                            calm.state.type == 2 ?
+                            <div className="sameBack">
+                                <img style={{width:"50px",height:"50px"}} src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
+                                <div>类型：评论</div>
+                                <div>作者：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</div>
+                                <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>
+                                <div>内容：
+                                {calm.state.data.discussContent}
+                                </div>
+                            </div>
+                            :""
+
                 }
                 <div className="isDangerArea">
                     <List renderHeader={() => '审核：'}>

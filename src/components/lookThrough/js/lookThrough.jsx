@@ -10,7 +10,7 @@ export default class lookThrough extends React.Component {
         calm = this;
         this.state = {
             waitLookThroughData: [],
-            alreadyLookThroudhData: []
+            alreadyLookThroudhData: [],
         }
     }
     componentDidMount() {
@@ -25,11 +25,11 @@ export default class lookThrough extends React.Component {
         calm.getArticleAndLittleVideoIsNo();
         calm.getArticleAndLittleVideo();
 
-        window.addEventListener('scroll',calm.scrollHandle);
+        window.addEventListener('scroll', calm.scrollHandle);
     }
-    componentWillMount(){
-        window.addEventListener('scroll',calm.scrollHandle);
-        
+    componentWillMount() {
+        window.addEventListener('scroll', calm.scrollHandle);
+
     }
     scrollHandler() {
         console.log("出发了滚动事件")
@@ -126,82 +126,99 @@ export default class lookThrough extends React.Component {
                         height: document.documentElement.clientHeight - 43.5,
                         backgroundColor: '#f4f4f4'
                     }}>
-                    {/* 未审核 */}
-                    {
-                        calm.state.waitLookThroughData.map((v, i) => {
-                            return (
-                                <div>
-                                    {
-                                        v.littleVideoInfo ?
-                                            <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
-                                                <img style={{width:"50px",height:"50px"}} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt=""/>
-                                                <span>类型：短视频</span>
-                                                
-                                                <div>
-                                                    <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
-                                                    <div>上传时间：{WebServiceUtil.formatYMD(v.littleVideoInfo.createTime)}</div>
-                                                </div>
-                                            </div>
-                                            :
-                                            v.articleInfo ?
-                                                <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
-                                                    <img style={{width:"50px",height:"50px"}} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt=""/>
-                                                    
-                                                    <span>类型：自媒体文章</span>
+                        {/* 未审核 */}
+                        {
+                            calm.state.waitLookThroughData.map((v, i) => {
+                                return (
+                                    <div>
+                                        {
+                                            v.littleVideoInfo ?
+                                                <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
+                                                    <img style={{ width: "50px", height: "50px" }} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt="" />
+                                                    <span>类型：短视频</span>
                                                     <div>
-                                                        <div>标题：{v.articleInfo.articleTitle}</div>
-                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
-                                                        <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
+                                                        <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
+                                                        <div>上传时间：{WebServiceUtil.formatYMD(v.littleVideoInfo.createTime)}</div>
                                                     </div>
                                                 </div>
                                                 :
-                                                ""
-                                    }
-                                </div>
+                                                v.articleInfo ?
+                                                    <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
+                                                        <img style={{ width: "50px", height: "50px" }} src={v.articleInfo.userInfo ? v.articleInfo.userInfo.avatar : ""} alt="" />
+                                                        <span>类型：自媒体文章</span>
+                                                        <div>
+                                                            <div>标题：{v.articleInfo.articleTitle}</div>
+                                                            <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
+                                                            <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
+                                                        </div>
+                                                    </div>
+                                                    :
+                                                    v.discussInfo ?
+                                                    <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.discussInfoId, v.type)}>
+                                                        <img style={{ width: "50px", height: "50px" }} src={v.discussInfo.discussUser ? v.discussInfo.discussUser.avatar : ""} alt="" />
+                                                        <span>类型：评论</span>
+                                                        <div>
+                                                            <div>内容：{v.discussInfo.discussContent}</div>
+                                                            <div>作者：{v.discussInfo.discussUser ? v.discussInfo.discussUser.userName : ""}</div>
+                                                            <div>评论时间：{WebServiceUtil.formatYMD(v.discussInfo.createTime)}</div>
+                                                        </div>
+                                                    </div>:
+                                                    ""
+                                        }
+                                    </div>
 
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
                     </div>
                     {/* 已经审核 */}
                     <div style={{
                         height: document.documentElement.clientHeight - 43.5,
                         backgroundColor: '#f4f4f4'
                     }}>
-                    {
-                        calm.state.alreadyLookThroudhData.map((v, i) => {
-                            return (
-                                <div className="line_public">
-                                    {
-                                        v.littleVideoInfo ?
-                                            <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
-                                                <img style={{width:"50px",height:"50px"}} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt=""/>
-                                                <span>类型：短视频</span>
-                                                <div>
-                                                    <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
-                                                    <div>上传时间：{WebServiceUtil.formatYMD(v.littleVideoInfo.createTime)}</div>
-                                                </div>
-                                            </div>
-                                            :
-                                            v.articleInfo ?
-                                                <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId,v.type, v.auditId)}>
-                                                    <img style={{width:"50px",height:"50px"}} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt=""/>
-                                                    
-                                                    <span>类型：自媒体文章</span>
+                        {
+                            calm.state.alreadyLookThroudhData.map((v, i) => {
+                                console.log(v)
+                                return (
+                                    <div className="line_public">
+                                        {
+                                            v.littleVideoInfo ?
+                                                <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
+                                                    <img style={{ width: "50px", height: "50px" }} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt="" />
+                                                    <span>类型：短视频</span>
                                                     <div>
-                                                        <div>标题：{v.articleInfo.articleTitle}</div>
-                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
-                                                        <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
+                                                        <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
+                                                        <div>上传时间：{WebServiceUtil.formatYMD(v.littleVideoInfo.createTime)}</div>
                                                     </div>
                                                 </div>
-
                                                 :
-                                                ""
-                                    }
-                                </div>
-                            )
-                        })
-                    }
+                                                v.articleInfo ?
+                                                    <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId, v.type, v.auditId)}>
+                                                        <img style={{ width: "50px", height: "50px" }} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt="" />
+                                                        <span>类型：自媒体文章</span>
+                                                        <div>
+                                                            <div>标题：{v.articleInfo.articleTitle}</div>
+                                                            <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
+                                                            <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
+                                                        </div>
+                                                    </div>
+                                                    :
+                                                    v.discussInfo ?
+                                                    <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.discussInfoId, v.type, v.auditId)}>
+                                                        <img style={{ width: "50px", height: "50px" }} src={v.discussInfo.discussUser ? v.discussInfo.discussUser.avatar : ""} alt="" />
+                                                        <span>类型：评论</span>
+                                                        <div>
+                                                            <div>内容：{v.discussInfo.discussContent}</div>
+                                                            <div>作者：{v.discussInfo.discussUser ? v.discussInfo.discussUser.userName : ""}</div>
+                                                            <div>上传时间：{WebServiceUtil.formatYMD(v.discussInfo.createTime)}</div>
+                                                        </div>
+                                                    </div>:
+                                                    ""
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </Tabs>
             </div>

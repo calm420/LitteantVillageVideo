@@ -75,7 +75,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         var param = {
             "method": 'updateAUditInfo',
             "auditInfoJson": {
-                auditId:calm.state.auditId,
+                auditId: calm.state.auditId,
                 targetId: calm.state.id,
                 targetType: calm.state.type,
                 isPass: calm.state.isPass,
@@ -103,7 +103,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         });
     }
 
- 
+
     /**
      * 获取已经修改的数据
      */
@@ -120,7 +120,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 if (result.success) {
                     calm.setState({
                         data: result.response,
-                        textareaValue:result.response.auditInfo ? result.response.auditInfo.auditMark : ""
+                        textareaValue: result.response.auditInfo ? result.response.auditInfo.auditMark : ""
                     })
                 }
             },
@@ -142,11 +142,11 @@ export default class AlreadylookThroughDetail extends React.Component {
             }}>
                 {
                     calm.state.type == 0 ?
-                        <div  className="content">
+                        <div className="content">
                             {
                                 calm.state.data.articleInfo ?
                                     <div>
-                                        <img style={{width:"50px",height:"50px"}} src={calm.state.data.articleInfo.userInfo.avatar} alt=""/>
+                                        <img style={{ width: "50px", height: "50px" }} src={calm.state.data.articleInfo.userInfo.avatar} alt="" />
                                         <div>类型：自媒体文章</div>
                                         <div>标题：{calm.state.data.articleInfo.articleTitle}</div>
                                         <div>作者：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</div>
@@ -165,20 +165,20 @@ export default class AlreadylookThroughDetail extends React.Component {
                         </div>
                         :
                         calm.state.type == 1 ?
-                            <div  className="content">
+                            <div className="content">
                                 {
                                     calm.state.data.littleVideoInfo ?
                                         <div>
-                                            <img style={{width:"50px",height:"50px"}} src={calm.state.data.littleVideoInfo.userInfo.avatar} alt=""/>
+                                            <img style={{ width: "50px", height: "50px" }} src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
                                             <div>类型：短视频</div>
                                             <div>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</div>
                                             <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</div>
                                             <div>内容：
-                                                <video 
-                                                    style={{width:"100%"}}
-                                                    controls="controls" 
-                                                    preload="auto"  
-                                                    src={calm.state.data.littleVideoInfo.videoPath} 
+                                                <video
+                                                    style={{ width: "100%" }}
+                                                    controls="controls"
+                                                    preload="auto"
+                                                    src={calm.state.data.littleVideoInfo.videoPath}
                                                     autoPlay>
                                                 </video>
                                             </div>
@@ -194,7 +194,27 @@ export default class AlreadylookThroughDetail extends React.Component {
 
                             </div>
                             :
-                            ""
+                            calm.state.type == 2 ?
+                                <div>
+                                    {
+                                        calm.state.data.discussInfo ?
+                                            <div className="sameBack">
+                                                <img style={{ width: "50px", height: "50px" }} src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
+                                                <div>类型：评论</div>
+                                                <div>作者：{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</div>
+                                                <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</div>
+                                                <div>内容：
+                                {calm.state.data.discussInfo.discussContent}
+                                                </div>
+                                            </div>
+                                            : ""
+                                }
+                                </div>
+                                :
+                                ""
+
+
+                                
                 }
                 <div className="submitBtn" style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                     <Button type='warning' onClick={calm.showAlert}>重新审核</Button>

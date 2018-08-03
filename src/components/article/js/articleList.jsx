@@ -253,7 +253,7 @@ export default class articleList extends React.Component {
                       tabBarPosition={'top'}
                 >
                     <div style={{
-                        height: document.documentElement.clientHeight,
+                        height: document.documentElement.clientHeight - 43.5,
                         backgroundColor: '#f4f4f4'
                     }}>
                         {/*推荐*/}
@@ -281,7 +281,7 @@ export default class articleList extends React.Component {
                     </div>
 
                     <div style={{
-                        height: document.documentElement.clientHeight,
+                        height: document.documentElement.clientHeight - 43.5,
                         backgroundColor: '#f4f4f4'
                     }}>
                         {/*热点*/}

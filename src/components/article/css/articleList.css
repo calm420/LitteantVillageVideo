@@ -1,3 +1,6 @@
+#articleList .am-list-view-scrollview-content {
+  width: 100%;
+}
 #articleList .am-tabs-default-bar-tab {
   font-size: 17px;
   color: #676C6F ;
@@ -17,7 +20,13 @@
   font-size: 15px;
   color: #333;
   line-height: 20px;
-  padding-bottom: 10px;
+  margin-bottom: 10px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 #articleList .bottom {
   font-size: 12px;
@@ -75,4 +84,3 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-

@@ -12,7 +12,7 @@ var localUrl = "192.168.50.72";    //跳转地址http:
 // //小蚂蚁webService地址
 const apiWebServiceURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
 
-const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_For_Education/webservice";
+const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_LittleVideoApiServer/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
 const mobileURLOfLocal = "http://" + localUrl + ":8091/#/";
@@ -24,12 +24,6 @@ const OldManBraceletURLOfLocals = "http://" + localDomain + ":9010/Excoord_OldMa
 // const OldManBraceletURLOfLocals = "http://192.168.50.15:9010/Excoord_OldManBracelet/webservice";
 const OldManBraceletURLOfRemote = "http://www.maaee.com:6010/Excoord_OldManBracelet/webservice";
 var OldManBraceletURL = isDebug ? OldManBraceletURLOfLocals : OldManBraceletURLOfRemote;
-
-//AR支付
-const ArPaymentURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
-const ArPaymentURLOfRemote = "http://www.maaee.com:6010/Excoord_LittleVideoApiServer/webservice";
-var ArPaymentURL = isDebug ? ArPaymentURLOfLocals : ArPaymentURLOfRemote;
-
 
 function WebServiceUtil() {
 
@@ -55,27 +49,6 @@ WebServiceUtil.requestLittleAntApi = function (data, listener) {
         }
     });
 }
-
-/**
- * 不带请求头的ajax
- * arpayment
- * @param data
- * @param listener
- */
-WebServiceUtil.requestArPaymentApi = function (data, listener) {
-    $.ajax({
-        type: "post",
-        url: ArPaymentURL,
-        data: {params: data},
-        dataType: "json",
-        success: function (result) {
-            listener.onResponse(result);
-        }, error: function (error) {
-            listener.onError(error);
-        }
-    });
-}
-
 
 /**
  * 请求头的ajax

@@ -1,5 +1,12 @@
+(node) util.print is deprecated. Use console.log instead.
 #alreadyLookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
+}
+#alreadyLookThrough .content {
+  background-color: #fff;
+  padding: 0 15px;
+  font-size: 16px;
+  color: #333;
 }
 #alreadyLookThrough .isDangerArea .am-list {
   overflow: hidden;

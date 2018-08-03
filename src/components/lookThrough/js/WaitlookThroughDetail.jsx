@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Button } from 'antd-mobile';
 import "../css/WaitlookThroughDetail.less"
 const RadioItem = Radio.RadioItem;
 var calm;
@@ -41,7 +41,7 @@ export default class WaitlookThroughDetail extends React.Component {
             "method": 'getArticleInfoById',
             "articleId": id,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     calm.setState({
@@ -63,8 +63,10 @@ export default class WaitlookThroughDetail extends React.Component {
             "method": 'getLittleVideoById',
             "videoId": id,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+
+                console.log(result,"re")
                 if (result.success) {
                     calm.setState({
                         data: result.response
@@ -99,7 +101,7 @@ export default class WaitlookThroughDetail extends React.Component {
                 auditorId: calm.state.auditorId
             },
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
@@ -125,10 +127,13 @@ export default class WaitlookThroughDetail extends React.Component {
         ];
         const { isPass } = this.state;
         return (
-            <div id="waitLookThrough">
+            <div id="waitLookThrough" style={{
+                height: document.body.clientHeight
+            }}>
                 {
                     calm.state.type == 0 ?
-                        <div>
+                        <div className="sameBack">
+                            <img style={{width:"50px",height:"50px"}} src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt=""/>
                             <div>类型：自媒体文章</div>
                             <div>标题：{calm.state.data.articleTitle}</div>
                             <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
@@ -137,7 +142,8 @@ export default class WaitlookThroughDetail extends React.Component {
                         </div>
                         :
                         calm.state.type == 1 ?
-                            <div>
+                            <div className="sameBack">
+                                <img style={{width:"50px",height:"50px"}} src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
                                 <div>类型：短视频</div>
                                 <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
                                 <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>
@@ -145,7 +151,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                     <video 
                                         controls="controls" 
                                         preload="auto"  
-                                        style={{objectFit: "fill",width:"300px"}} 
+                                        style={{objectFit: "fill",width:"100%"}}
                                         src={calm.state.data.videoPath}>
                                     </video>
                                 </div>
@@ -162,7 +168,7 @@ export default class WaitlookThroughDetail extends React.Component {
                         ))}
                     </List>
                 </div>
-                <div>审核说明:
+                <div className="sameBack">审核说明:
                 <List>
                         <TextareaItem
                             rows={3}
@@ -173,7 +179,10 @@ export default class WaitlookThroughDetail extends React.Component {
                         />
                 </List>
                 </div>
-                <button onClick={_this.submit}>提交</button>
+                <div className="submitBtn">
+                    <Button type='warning' onClick={_this.submit}>提交</Button>
+                </div>
+
             </div>
 
         )

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Tabs, WhiteSpace } from 'antd-mobile';
+import '../css/lookThrough.less';
 
 var calm;
 export default class lookThrough extends React.Component {
@@ -43,7 +44,7 @@ export default class lookThrough extends React.Component {
             "method": 'getArticleAndLittleVideoIsNo',
             "pageNo": -1,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "带审核");
 
@@ -68,7 +69,7 @@ export default class lookThrough extends React.Component {
             "method": 'getArticleAndLittleVideo',
             "pageNo": -1,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "一审核");
                 if (result.success) {
@@ -117,9 +118,14 @@ export default class lookThrough extends React.Component {
             { title: '已审核' },
         ];
         return (
-            <div>
-                <WhiteSpace />
+            <div id="lookThrough" style={{
+                height: document.body.clientHeight
+            }}>
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} >
+                    <div style={{
+                        height: document.documentElement.clientHeight - 43.5,
+                        backgroundColor: '#f4f4f4'
+                    }}>
                     {/* 未审核 */}
                     {
                         calm.state.waitLookThroughData.map((v, i) => {
@@ -127,7 +133,7 @@ export default class lookThrough extends React.Component {
                                 <div>
                                     {
                                         v.littleVideoInfo ?
-                                            <div onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
+                                            <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
                                                 <span>类型：短视频</span>
                                                 <div>
                                                     <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
@@ -136,7 +142,7 @@ export default class lookThrough extends React.Component {
                                             </div>
                                             :
                                             v.articleInfo ?
-                                                <div onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
+                                                <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
@@ -152,14 +158,19 @@ export default class lookThrough extends React.Component {
                             )
                         })
                     }
+                    </div>
                     {/* 已经审核 */}
+                    <div style={{
+                        height: document.documentElement.clientHeight - 43.5,
+                        backgroundColor: '#f4f4f4'
+                    }}>
                     {
                         calm.state.alreadyLookThroudhData.map((v, i) => {
                             return (
-                                <div>
+                                <div className="line_public">
                                     {
                                         v.littleVideoInfo ?
-                                            <div onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
+                                            <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
                                                 <span>类型：短视频</span>
                                                 <div>
                                                     <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
@@ -168,7 +179,7 @@ export default class lookThrough extends React.Component {
                                             </div>
                                             :
                                             v.articleInfo ?
-                                                <div onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId, v.type, v.auditId)}>
+                                                <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId,v.type, v.auditId)}>
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
@@ -184,7 +195,7 @@ export default class lookThrough extends React.Component {
                             )
                         })
                     }
-
+                    </div>
                 </Tabs>
             </div>
         )

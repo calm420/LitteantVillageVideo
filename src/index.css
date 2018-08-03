@@ -1,9 +1,9 @@
-(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
+  -webkit-font-smoothing: antialiased;
 }
 body {
   overflow: auto !important;
@@ -81,7 +81,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -387,6 +387,12 @@ hr {
 .am-modal-content .am-modal-body {
   padding: 0 15px 12px !important;
 }
+.loading_text {
+  padding-top: 5px;
+  padding-bottom: 15px;
+  text-align: center;
+  background: transparent;
+}
 .am-list-item .am-list-line .am-list-content,
 .am-list-item .am-input-label {
   color: #333 !important;
@@ -394,3 +400,21 @@ hr {
 .am-card::before {
   display: none;
 }
+.am-list-view-scrollview-content {
+  width: 100%;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 12px;
+}
+/* 这是针对缺省样式 (必须的) */
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+}
+/* 滑块颜色 */
+::-webkit-scrollbar-button {
+  background-color: initial;
+}
+/* 滑轨两头的监听按钮颜色 */

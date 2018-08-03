@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -440,6 +441,12 @@ hr {
   }
 }
 
+.loading_text {
+  padding-top: 5px;
+  padding-bottom: 15px;
+  text-align: center;
+  background: transparent;
+}
 .am-list-item .am-list-line .am-list-content, .am-list-item .am-input-label {
   color: #333 !important;
 }
@@ -447,3 +454,21 @@ hr {
 .am-card::before{
   display: none;
 }
+.am-list-view-scrollview-content{
+  width: 100%;
+}
+::-webkit-scrollbar{
+  width: 6px;
+  height:12px;
+} /* 这是针对缺省样式 (必须的) */
+
+
+::-webkit-scrollbar-thumb{
+  background-color: #ccc;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+} /* 滑块颜色 */
+
+::-webkit-scrollbar-button{
+  background-color: initial;
+} /* 滑轨两头的监听按钮颜色 */

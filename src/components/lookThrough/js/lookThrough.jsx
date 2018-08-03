@@ -25,6 +25,15 @@ export default class lookThrough extends React.Component {
         calm.getArticleAndLittleVideoIsNo();
         calm.getArticleAndLittleVideo();
 
+        window.addEventListener('scroll',calm.scrollHandle);
+    }
+    componentWillMount(){
+        window.addEventListener('scroll',calm.scrollHandle);
+        
+    }
+    scrollHandler() {
+        console.log("出发了滚动事件")
+        console.log(window.pageYOffset)
     }
 
     /**
@@ -35,7 +44,7 @@ export default class lookThrough extends React.Component {
             "method": 'getArticleAndLittleVideoIsNo',
             "pageNo": -1,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "带审核");
 
@@ -60,7 +69,7 @@ export default class lookThrough extends React.Component {
             "method": 'getArticleAndLittleVideo',
             "pageNo": -1,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "一审核");
                 if (result.success) {
@@ -79,7 +88,7 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type+"&auditorId="+calm.state.auditorId);
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
         var data = {
             method: 'openNewPage',
             url: url
@@ -102,6 +111,7 @@ export default class lookThrough extends React.Component {
         });
     }
     render() {
+
         var _this = this;
         const tabs = [
             { title: '待审核' },
@@ -120,11 +130,13 @@ export default class lookThrough extends React.Component {
                     {
                         calm.state.waitLookThroughData.map((v, i) => {
                             return (
-                                <div>
+                                <div className="line_public">
                                     {
                                         v.littleVideoInfo ?
                                             <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.littleVideoInfoID, v.type)}>
+                                                <img style={{width:"50px",height:"50px"}} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt=""/>
                                                 <span>类型：短视频</span>
+                                                
                                                 <div>
                                                     <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
                                                     <div>上传时间：{WebServiceUtil.formatYMD(v.littleVideoInfo.createTime)}</div>
@@ -133,10 +145,12 @@ export default class lookThrough extends React.Component {
                                             :
                                             v.articleInfo ?
                                                 <div className="item" onClick={_this.toWaitLookThrough.bind(this, v.articleInfoId, v.type)}>
+                                                    <img style={{width:"50px",height:"50px"}} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt=""/>
+                                                    
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
-                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName:""}</div>
+                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
                                                         <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
                                                     </div>
                                                 </div>
@@ -161,6 +175,7 @@ export default class lookThrough extends React.Component {
                                     {
                                         v.littleVideoInfo ?
                                             <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.littleVideoInfoID, v.type, v.auditId)}>
+                                                <img style={{width:"50px",height:"50px"}} src={v.littleVideoInfo ? v.littleVideoInfo.userInfo.avatar : ""} alt=""/>
                                                 <span>类型：短视频</span>
                                                 <div>
                                                     <div>作者：{v.littleVideoInfo.userInfo.userName}</div>
@@ -170,10 +185,12 @@ export default class lookThrough extends React.Component {
                                             :
                                             v.articleInfo ?
                                                 <div className="item" onClick={_this.toAlreadyLookThrough.bind(this, v.articleInfoId,v.type, v.auditId)}>
+                                                    <img style={{width:"50px",height:"50px"}} src={v.articleInfo ? v.articleInfo.userInfo.avatar : ""} alt=""/>
+                                                    
                                                     <span>类型：自媒体文章</span>
                                                     <div>
                                                         <div>标题：{v.articleInfo.articleTitle}</div>
-                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName :""}</div>
+                                                        <div>作者：{v.articleInfo.userInfo ? v.articleInfo.userInfo.userName : ""}</div>
                                                         <div>上传时间：{WebServiceUtil.formatYMD(v.articleInfo.createTime)}</div>
                                                     </div>
                                                 </div>

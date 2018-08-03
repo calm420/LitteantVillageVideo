@@ -323,7 +323,7 @@ hr {
 .line_public:after {
   content: '';
   position: absolute;
-  background-color: #eeeeee;
+  background-color: #e5e5e5;
   display: block;
   z-index: 1;
   top: auto;

@@ -41,7 +41,7 @@ export default class WaitlookThroughDetail extends React.Component {
             "method": 'getArticleInfoById',
             "articleId": id,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     calm.setState({
@@ -63,8 +63,10 @@ export default class WaitlookThroughDetail extends React.Component {
             "method": 'getLittleVideoById',
             "videoId": id,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+
+                console.log(result,"re")
                 if (result.success) {
                     calm.setState({
                         data: result.response
@@ -99,7 +101,7 @@ export default class WaitlookThroughDetail extends React.Component {
                 auditorId: calm.state.auditorId
             },
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
@@ -131,6 +133,7 @@ export default class WaitlookThroughDetail extends React.Component {
                 {
                     calm.state.type == 0 ?
                         <div className="sameBack">
+                            <img style={{width:"50px",height:"50px"}} src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt=""/>
                             <div>类型：自媒体文章</div>
                             <div>标题：{calm.state.data.articleTitle}</div>
                             <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
@@ -140,6 +143,7 @@ export default class WaitlookThroughDetail extends React.Component {
                         :
                         calm.state.type == 1 ?
                             <div className="sameBack">
+                                <img style={{width:"50px",height:"50px"}} src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
                                 <div>类型：短视频</div>
                                 <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
                                 <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>

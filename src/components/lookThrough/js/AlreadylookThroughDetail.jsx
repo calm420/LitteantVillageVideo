@@ -83,7 +83,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 auditorId: 3
             },
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
@@ -114,13 +114,13 @@ export default class AlreadylookThroughDetail extends React.Component {
             "auditId": auditId,
             "type": type
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result)
                 if (result.success) {
                     calm.setState({
                         data: result.response,
-                        // textareaValue:result.response.auditInfo ? result.response.auditInfo.auditMark : ""
+                        textareaValue:result.response.auditInfo ? result.response.auditInfo.auditMark : ""
                     })
                 }
             },
@@ -143,10 +143,11 @@ export default class AlreadylookThroughDetail extends React.Component {
                 {
                     calm.state.type == 0 ?
                         <div  className="content">
-                            <div>类型：自媒体文章</div>
                             {
                                 calm.state.data.articleInfo ?
                                     <div>
+                                        <img style={{width:"50px",height:"50px"}} src={calm.state.data.articleInfo.userInfo.avatar} alt=""/>
+                                        <div>类型：自媒体文章</div>
                                         <div>标题：{calm.state.data.articleInfo.articleTitle}</div>
                                         <div>作者：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</div>
                                         <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime)}</div>
@@ -165,10 +166,11 @@ export default class AlreadylookThroughDetail extends React.Component {
                         :
                         calm.state.type == 1 ?
                             <div  className="content">
-                                <div>类型：短视频</div>
                                 {
                                     calm.state.data.littleVideoInfo ?
                                         <div>
+                                            <img style={{width:"50px",height:"50px"}} src={calm.state.data.littleVideoInfo.userInfo.avatar} alt=""/>
+                                            <div>类型：短视频</div>
                                             <div>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</div>
                                             <div>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</div>
                                             <div>内容：

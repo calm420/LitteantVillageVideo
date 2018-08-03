@@ -42,6 +42,18 @@ const EditorDemo = (location, cb) => {
     }, 'EditorDemo')
 };
 
+const uploadMusicList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/uploadMusic/js/uploadMusicList').default)
+    }, 'uploadMusicList')
+};
+
+const addUploadMusic = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/uploadMusic/js/addUploadMusic').default)
+    }, 'addUploadMusic')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -53,17 +65,19 @@ class Index extends React.Component {
                 <ul role="nav">
                     <li><Link to="/s1">ListView + Carousel</Link></li>
                     <li><Link to="/AppSystem"
-                    style={{fontSize: '24px'}}>AppSystem</Link></li>
+                              style={{fontSize: '24px'}}>AppSystem</Link></li>
                     <li><Link to="/articleList?userId=1"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
                     <li><Link to="/articleDetail"
                               style={{fontSize: '24px'}}>文章详情</Link></li>
                     <li><Link to="/LoginScanner"
-                    style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
+                              style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
                     <li><Link to="/Login"
-                    style={{fontSize: '24px'}}>二维码登录页</Link></li>
+                              style={{fontSize: '24px'}}>二维码登录页</Link></li>
                     <li><Link to="/EditorDemo"
                               style={{fontSize: '24px'}}>editorDemo</Link></li>
+                    <li><Link to="/uploadMusicList?ident=23836"
+                              style={{fontSize: '24px'}}>uploadMusicList</Link></li>
                 </ul>
             </div>
         );
@@ -81,6 +95,8 @@ ReactDOM.render(
             <Route path="LoginScanner" getComponent={LoginScanner}/>
             <Route path="Login" getComponent={Login}/>
             <Route path="EditorDemo" getComponent={EditorDemo}/>
+            <Route path="uploadMusicList" getComponent={uploadMusicList}/>
+            <Route path="addUploadMusic" getComponent={addUploadMusic}/>
         </Route>
     </Router>
     ,

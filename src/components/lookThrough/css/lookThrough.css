@@ -1,4 +1,14 @@
-(node) util.print is deprecated. Use console.log instead.
+#lookThrough {
+  color: #333;
+}
+#lookThrough .textOver3 {
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 #lookThrough .am-list-view-scrollview-content {
   width: 100%;
 }
@@ -11,7 +21,51 @@
 }
 #lookThrough .item {
   background-color: #fff;
-  padding: 10px 15px;
+  margin: 10px 15px;
+  padding: 15px;
   font-size: 16px;
   color: #333;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+#lookThrough .item .right {
+  width: calc(100% - 38px);
+}
+#lookThrough .item .author {
+  color: #666;
+  font-size: 13px;
+  line-height: 17px;
+}
+#lookThrough .item .photo {
+  width: 28px;
+  height: 28px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+#lookThrough .item .type {
+  margin-left: 10px;
+}
+#lookThrough .item .type img {
+  width: 48px;
+  height: 17px;
+  vertical-align: bottom;
+}
+#lookThrough .item .title {
+  font-size: 15px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-top: 10px;
+  line-height: 20px;
+}
+#lookThrough .item .time {
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
 }

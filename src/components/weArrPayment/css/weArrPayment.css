@@ -1,0 +1,45 @@
+(node) util.print is deprecated. Use console.log instead.
+#weArrPayment .payContent .personCenter {
+  z-index: 999;
+  height: 200px;
+  background-color: #f7cdff;
+  margin: 20px;
+  border-radius: 10px;
+}
+#weArrPayment .payContent .personCenter .userImg {
+  border-radius: 50%;
+}
+#weArrPayment .payContent .personCenter .userName {
+  color: #FFFFFF;
+  font-weight: 900;
+}
+#weArrPayment .payContent .personCenter h5 {
+  text-align: center;
+}
+#weArrPayment .payContent .rechargeAmount .payBall {
+  width: 80px;
+  height: 80px;
+  background-color: yellow;
+  border-radius: 50%;
+  z-index: 999;
+}
+#weArrPayment .payContent .paymentMode {
+  z-index: 999;
+}
+#weArrPayment .payContent .payNow {
+  width: 140px;
+  height: 41px;
+  background-color: yellow;
+  border-radius: 10px 10px 10px 10px;
+  z-index: 999;
+}
+#weArrPayment .payContent #payIframe {
+  z-index: 1;
+  float: left;
+}
+#weArrPayment .paySuccess {
+  display: none;
+}
+#weArrPayment .payBtnClick {
+  color: red;
+}

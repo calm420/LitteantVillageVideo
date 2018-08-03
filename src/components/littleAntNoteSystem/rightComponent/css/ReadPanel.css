@@ -1,37 +1,178 @@
 (node) util.print is deprecated. Use console.log instead.
 #ReadPanel {
   display: inline-block;
-  width: 70%;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
+}
+#ReadPanel .click_head {
+  height: 52px;
+  box-shadow: 0 2px 3px 0 rgba(179, 179, 179, 0.5);
+  font-size: 14px;
+  color: #666;
+  line-height: 52px;
+}
+#ReadPanel .click_head a {
+  color: #4380EB;
+  font-size: 16px;
+  cursor: pointer;
 }
 #ReadPanel .headBox {
   width: 100%;
-  height: 70px;
+  height: 178px;
+  padding-top: 30px;
 }
 #ReadPanel .headBox .title {
-  width: 50%;
+  width: calc(100% - 281px);
   display: inline-block;
   box-sizing: border-box;
   float: left;
-  height: 70px;
+  height: 174px;
+  background: #F5F6FA;
+}
+#ReadPanel .headBox .title .am-list-item {
+  background: transparent;
+}
+#ReadPanel .headBox .title .am-list-item .am-input-control input {
+  color: #333;
+  font-size: 24px;
 }
 #ReadPanel .headBox .title .am-list-item.am-input-item {
   height: 100%;
+}
+#ReadPanel .headBox .title .am-list-item.am-input-item {
+  padding-top: 25px;
+  padding-left: 25px;
+}
+#ReadPanel .headBox .title .am-list-item.am-list-item-middle .am-list-line {
+  align-items: flex-start;
 }
 #ReadPanel .headBox .image {
   float: right;
   display: inline-block;
   box-sizing: border-box;
-  width: 50%;
-  height: 70px;
-  background: salmon;
+  width: 261px;
+  height: 178px;
+  background: #F5F6FA;
 }
 #ReadPanel .headBox .image .am-image-picker {
-  height: 70px;
+  height: 110px;
+}
+#ReadPanel .headBox .image .am-image-picker-list .am-image-picker-upload-btn {
+  background: url("../img/add_img.png") no-repeat;
+  width: 54px;
+  height: 54px;
+  margin: 0;
+  background-size: 100% 100%;
+  border: none;
+}
+#ReadPanel .headBox .image .img_text {
+  padding: 0 40px;
+  color: #666;
+  line-height: 20px;
+}
+#ReadPanel .write_article {
+  margin: 0;
+  height: 100%;
+  position: relative;
+}
+#ReadPanel .write_article_cont {
+  margin: 0 75px;
+  height: calc(100% - 85px );
+  position: relative;
+}
+#ReadPanel .edit_cont {
+  margin-top: 30px;
+  height: calc(100% - 238px);
+  position: relative;
+}
+#ReadPanel .edit_btn {
+  height: 54px;
+  background: #F7F8FC;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #E5E5E5;
+  text-align: right;
+}
+#ReadPanel .edit_btn .edit_btn_cont {
+  padding: 0 75px;
+  margin-top: 8px;
+}
+#ReadPanel .edit_btn .edit_btn_cont button {
+  border-radius: 2px;
+  border: none;
+  font-size: 16px;
+  margin-left: 50px;
+  cursor: pointer;
+}
+#ReadPanel .edit_btn .edit_btn_cont .publish {
+  background: #4380EB;
+  color: #fff;
+  padding: 10px 25px;
+}
+#ReadPanel .edit_btn .edit_btn_cont .Preview {
+  color: #333;
+  background: transparent;
 }
 #ReadPanel .am-image-picker-list,
 #ReadPanel .am-image-picker-list .am-flexbox {
   padding: 0;
   margin: 0;
   width: 100%;
+  height: 100%;
+}
+#ReadPanel .quill {
+  height: calc(100% - 115px);
+}
+#ReadPanel .quill .ql-container.ql-snow {
+  height: calc(100% - 55px);
+}
+#ReadPanel .quill .ql-editor {
+  font-size: 16px;
+  color: #333;
+  line-height: 23px;
+}
+#ReadPanel .ql-toolbar.ql-snow,
+#ReadPanel .ql-container.ql-snow {
+  background: #F5F6FA;
+  padding: 10px;
+  border: none;
+  margin-bottom: 10px;
+}
+#ReadPanel input::-webkit-input-placeholder,
+#ReadPanel textarea::-webkit-input-placeholder,
+#ReadPanel ReactQuill::-webkit-input-placeholder {
+  color: #999;
+}
+#ReadPanel input:-moz-placeholder,
+#ReadPanel textarea:-moz-placeholder,
+#ReadPanel ReactQuill:-moz-placeholder {
+  color: #999;
+}
+#ReadPanel input::-moz-placeholder,
+#ReadPanel textarea::-moz-placeholder,
+#ReadPanel ReactQuill::-moz-placeholder {
+  color: #999;
+}
+#ReadPanel input:-ms-input-placeholder,
+#ReadPanel textarea:-ms-input-placeholder,
+#ReadPanel ReactQuill:-ms-input-placeholder {
+  color: #999;
+}
+#ReadPanel .empty_draft {
+  background: url("../img/empty_draft.png") no-repeat;
+  width: 233px;
+  height: 200px;
+  background-size: 100% 100% ;
+  color: #999;
+}
+#ReadPanel .empty_draft span {
+  padding-top: 240px;
+  display: inline-block;
+  padding-left: 50px;
+}
+#ReadPanel .am-image-picker-list .am-image-picker-upload-btn:before,
+#ReadPanel .am-image-picker-list .am-image-picker-upload-btn:after {
+  background: transparent;
 }

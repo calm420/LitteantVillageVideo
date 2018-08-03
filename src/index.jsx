@@ -85,6 +85,12 @@ const addUploadMusic = (location, cb) => {
     }, 'addUploadMusic')
 };
 
+const weArrPayment = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/weArrPayment/js/weArrPayment').default)
+    }, 'weArrPayment')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -111,6 +117,10 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>审核列表</Link></li>
                     <li><Link to="/uploadMusicList?ident=23836"
                               style={{fontSize: '24px'}}>uploadMusicList</Link></li>
+                    <li>
+                        <Link
+                            to="/weArrPayment" style={{fontSize: '24px'}}>充值</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -133,6 +143,7 @@ ReactDOM.render(
             <Route path="AlreadylookThroughDetail" getComponent={AlreadylookThroughDetail}/>
             <Route path="uploadMusicList" getComponent={uploadMusicList}/>
             <Route path="addUploadMusic" getComponent={addUploadMusic}/>
+            <Route path="weArrPayment" getComponent={weArrPayment}/>
         </Route>
     </Router>
     ,

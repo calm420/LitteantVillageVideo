@@ -17,6 +17,7 @@ export default class uploadMusicList extends React.Component {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
+            editData: {}
         };
     }
 
@@ -144,7 +145,7 @@ export default class uploadMusicList extends React.Component {
     }
 
     /**
-     * bianji音乐信息
+     * 编辑音乐信息
      */
     editSong(id) {
         var _this = this
@@ -155,7 +156,8 @@ export default class uploadMusicList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    _this.editModelShow(result.response)
+                    _this.setState({editData: result.response})
+                    _this.editModelShow(true)
                 }
             },
             onError: function (error) {
@@ -164,34 +166,112 @@ export default class uploadMusicList extends React.Component {
         });
     }
 
-    uploadMp3() {
+    /**
+     * 音乐上传
+     */
+    uploadMp3(event) {
+        event.stopPropagation()
+        var data = {
+            method: 'selectMp3',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            let newArr = {};
+            let item = res.split("?");
+            newArr.picPath = item[0],
+                newArr.picName = item[1].split("=")[1]
 
+            musicList.state.editData.musicUrl = newArr.picPath
+
+            musicList.editModelShow(false)
+
+        }, function (error) {
+            console.log(error);
+        });
     }
 
-    uploadImage() {
+    /**
+     * 封面上传
+     */
+    uploadImage(event) {
 
+        event.stopPropagation()
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            let newArr = {};
+            let item = res.split("?");
+            newArr.picPath = item[0],
+                newArr.picName = item[1].split("=")[1]
+
+            musicList.state.editData.cover = newArr.picPath
+            musicList.editModelShow(false)
+
+        }, function (error) {
+            console.log(error);
+        });
     }
 
-    imgPreview() {
-
+    /**
+     * 封面预览
+     */
+    imgPreview(src) {
+        var dataObj = {};
+        dataObj.method = 'showImage';
+        dataObj.url = src;
+        dataObj.currentUrl = src;
+        Bridge.callHandler(dataObj, null, function (error) {
+            console.log(error);
+        })
     }
 
-    mp3Preview() {
+    /**
+     * mp3预览
+     */
+    mp3Preview(src) {
 
+        var data = {
+            method: 'playAudio',
+            url: src
+        };
+        Bridge.callHandler(data, null, function (error) {
+
+        });
     }
 
-    editModelShow(data) {
-        console.log(data);
-        $('.updateModel').slideDown()
-        $('.tagAddPanel_bg').show()
+    /**
+     * 输入框改变的回调
+     * @param type  musicName=歌名  musicMan=歌手
+     * @param index
+     * @param value
+     */
+    inputOnChange = (type, value) => {
+        var data = this.state.editData
+        if (type == 'musicName') {
+            data.musicName = value
+        } else if (type == 'musicMan') {
+            data.musicMan = value
+        }
+        musicList.editModelShow(false)
+    }
+
+    editModelShow(falg) {
+        var data = this.state.editData
+
+        if (falg) {
+            $('.updateModel').slideDown()
+            $('.tagAddPanel_bg').show()
+        }
 
         var editDiv = <div className="listCont">
             <div>
                 <InputItem
                     className="add_element"
                     placeholder="请输入歌曲名称"
-                    // value={addMusicList.state.addMusicList[i].musicName}
-                    // onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
+                    value={data.musicName}
+                    onChange={musicList.inputOnChange.bind(this, 'musicName')}
                 >
                     <div>歌曲名称</div>
                 </InputItem>
@@ -201,8 +281,8 @@ export default class uploadMusicList extends React.Component {
                 <InputItem
                     className="add_element"
                     placeholder="请输入歌手名称"
-                    // value={addMusicList.state.addMusicList[i].musicMan}
-                    // onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
+                    value={data.musicMan}
+                    onChange={musicList.inputOnChange.bind(this, 'musicMan')}
                 >
                     <div>歌手名称</div>
                 </InputItem>
@@ -227,7 +307,7 @@ export default class uploadMusicList extends React.Component {
                         <span className="uploadSupport">(MP3格式)</span>
                     </span>
                 <div className="upload_file">
-                    <div onClick={musicList.mp3Preview.bind(this,)}
+                    <div onClick={musicList.mp3Preview.bind(this, data.musicUrl)}
                          className="musicIcon"/>
                     <div className="icon_pointer" onClick={musicList.uploadMp3.bind(this,)}>修改</div>
                 </div>
@@ -242,6 +322,44 @@ export default class uploadMusicList extends React.Component {
         $('.tagAddPanel_bg').hide()
     }
 
+    addTagsForSure() {
+        var data = musicList.state.editData
+
+        var param = {
+            "method": 'updateVideoMusic',
+            "videoMusicId": data.musicId,
+            "videoMusicDatas": JSON.stringify(data)
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    Toast.success('修改成功', 1)
+                    $('.updateModel').slideUp()
+                    $('.tagAddPanel_bg').hide()
+                    //更改本地数据
+
+                    musicList.state.dataSource = [];
+                    musicList.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    musicList.initData.forEach(function (item, index) {
+                        if (data.musicId == item.musicId) {
+                            // item = data   对象的拷贝
+                            musicList.initData.splice(index, 1, data);
+                        }
+                    });
+                    musicList.setState({
+                        dataSource: musicList.state.dataSource.cloneWithRows(musicList.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
+
     render() {
 
         var _this = this
@@ -249,23 +367,25 @@ export default class uploadMusicList extends React.Component {
         const row = (rowData, sectionID, rowID) => {
 
             return (
-                    <Card>
-                        <div className="my_flex item line_public">
-                            <img src={rowData.cover} alt=""/>
-                            <div className="textCont">
-                                <div className="textOver">歌曲名称：{rowData.musicName}</div>
-                                <div className="singer">
-                                    <div className="textOver">歌手名称：{rowData.musicMan}</div>
-                                    <div className="icon">
-                                        <span className="modifyBtn_common" onClick={this.editSong.bind(this, rowData.musicId)}></span>
-                                        <span className="deleteBtn_common" onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
-                                    </div>
+                <Card>
+                    <div className="my_flex item line_public">
+                        <img src={rowData.cover} alt=""/>
+                        <div className="textCont">
+                            <div className="textOver">歌曲名称：{rowData.musicName}</div>
+                            <div className="singer">
+                                <div className="textOver">歌手名称：{rowData.musicMan}</div>
+                                <div className="icon">
+                                    <span className="modifyBtn_common"
+                                          onClick={this.editSong.bind(this, rowData.musicId)}></span>
+                                    <span className="deleteBtn_common"
+                                          onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
                                 </div>
-
                             </div>
 
                         </div>
-                    </Card>
+
+                    </div>
+                </Card>
             )
         };
 

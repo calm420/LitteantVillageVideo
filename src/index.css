@@ -4,6 +4,7 @@ body {
   height: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial;
+  -webkit-font-smoothing: antialiased;
 }
 body {
   overflow: auto !important;
@@ -387,10 +388,19 @@ hr {
 .am-modal-content .am-modal-body {
   padding: 0 15px 12px !important;
 }
+.loading_text {
+  padding-top: 5px;
+  padding-bottom: 0px;
+  text-align: center;
+  background: transparent;
+}
 .am-list-item .am-list-line .am-list-content,
 .am-list-item .am-input-label {
   color: #333 !important;
 }
 .am-card::before {
   display: none;
+}
+.am-list-view-scrollview-content {
+  width: 100%;
 }

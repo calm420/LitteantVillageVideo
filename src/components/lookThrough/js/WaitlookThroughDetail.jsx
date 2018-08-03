@@ -158,14 +158,14 @@ export default class WaitlookThroughDetail extends React.Component {
                     {
                         calm.state.type == 0 ?
                             <div className="sameBack">
-                                <div className='title'>标题：{calm.state.data.articleTitle}</div>
+                                <div className='title'>{calm.state.data.articleTitle}</div>
                                 <div className='topMsg'>
                                     <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt=""/>
                                     <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
                                     <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
                                     <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
                                 </div>
-                                <div className='textCont'>{calm.state.data.articleContent}</div>
+                                <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
                             </div>
                             :
                             calm.state.type == 1 ?

@@ -3,12 +3,63 @@
         display: none;
     }
     .content{
-        background-color: #fff;
-        padding: 0 15px;
-        font-size: 16px;
         color: #333;
+        height: calc(~"100% - 75px");
+        overflow-y: auto;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+    .sameBack{
+        background-color: #fff;
+        padding: 15px;
+    }
+    .title{
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 15px;
+    }
+    .topMsg{
+        font-size: 12px;
+        height: 28px;
+        line-height: 28px;
+        span{
+            vertical-align: top;
+            display: inline-block;
+        }
+        .photo{
+            width: 28px;
+            height: 28px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .type{
+            img{
+                width: 48px;
+                height: 17px;
+                vertical-align: middle;
+            }
+        }
+        .time{
+            color: #999;
+            margin: 0 10px;
+        }
+    }
+    .textCont{
+        margin-top: 15px;
+        font-size: 15px;
+        color: #333;
+        line-height: 22px;
+        word-break: break-all;
+        video{
+            max-width: 100%;
+        }
+
     }
     .isDangerArea {
+        margin: 15px 0 10px;
+        background-color: #fff;
         .am-list {
             overflow: hidden;
         }
@@ -23,7 +74,7 @@
             color: #666 !important;
             font-size: 16px;
             padding-left: 24px;
-            line-height: 32px;
+            line-height: 36px;
             vertical-align: bottom;
         }
         .am-list-body {
@@ -46,27 +97,55 @@
             width: 88px;
         }
         .am-radio-inner:after {
-            border: 0;
-            width: 8px;
-            height: 8px;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-            background-color: #F56A55;
-            top: 50%;
-            left: 50%;
-            margin-top: -4px;
-            margin-left: -4px;
+            width: 5px;
+            height: 11px;
+            border-width: 0 1px 1px 0;
+            top: 0;
+
         }
         .am-radio-inner {
-            border: 1px #F56A55 solid;
-            width: 16px;
-            height: 16px;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
+            border: 1px #999999 solid;
+            width: 18px;
+            height: 18px;
             background-color: #fff;
             left: 0 !important;
+        }
+        .am-radio-checked .am-radio-inner{
+            border: 1px #4285F4 solid;
+        }
+        .am-list-header{
+            padding: 16px 15px;
+        }
+    }
+    .description{
+        font-size: 15px;
+        color: #666;
+        .am-list .am-list-item.am-textarea-item{
+            padding: 0;
+        }
+        textarea{
+            font-size: 13px;
+            line-height: 18px;
+            color: #333;
+        }
+    }
+    .review{
+        background-color: #fff;
+        font-size: 15px;
+        margin-top: 10px;
+        &>div{
+            padding:15px;
+            overflow: hidden;
+        }
+        .title{
+            color: #666;
+        }
+        .time{
+            float: right;
+        }
+        .reCont{
+            padding-top: 10px;
+            line-height: 20px;
         }
     }
 }

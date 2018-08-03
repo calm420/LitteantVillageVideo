@@ -207,22 +207,22 @@ export default class uploadMusicList extends React.Component {
             <div>
                 <InputItem
                     className="add_element"
-                    placeholder="请输入音乐名"
+                    placeholder="请输入歌曲名称"
                     value={data.musicName}
                     onChange={musicList.inputOnChange.bind(this, 'musicName', data.musicName)}
                 >
-                    <div>音乐</div>
+                    <div>歌曲名称</div>
                 </InputItem>
             </div>
             <div className="line_public flex_container"></div>
             <div>
                 <InputItem
                     className="add_element"
-                    placeholder="请输入歌手名"
+                    placeholder="请输入歌手名称"
                     value={data.musicMan}
                     onChange={musicList.inputOnChange.bind(this, 'musicMan', data.musicMan)}
                 >
-                    <div>歌手</div>
+                    <div>歌手名称</div>
                 </InputItem>
             </div>
             <div className="line_public flex_container"></div>
@@ -267,23 +267,25 @@ export default class uploadMusicList extends React.Component {
         const row = (rowData, sectionID, rowID) => {
 
             return (
-                <WingBlank size="lg">
-                    <Card>
-                        <div className="my_flex item line_public">
-                            <img src={rowData.cover} alt=""/>
-                            <div className="textCont">
-                                <div className="textOver">歌曲:{rowData.musicName}</div>
-                                <div className="textOver">歌手:{rowData.musicMan}</div>
-                                <div>
+                <Card>
+                    <div className="my_flex item line_public">
+                        <img src={rowData.cover} alt=""/>
+                        <div className="textCont">
+                            <div className="textOver">歌曲名称：{rowData.musicName}</div>
+                            <div className="singer">
+                                <div className="textOver">歌手名称：{rowData.musicMan}</div>
+                                <div className="icon">
                                     <span className="modifyBtn_common"
                                           onClick={this.editSong.bind(this, rowData.musicId)}></span>
                                     <span className="deleteBtn_common"
                                           onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
                                 </div>
                             </div>
+
                         </div>
-                    </Card>
-                </WingBlank>
+
+                    </div>
+                </Card>
             )
         };
 
@@ -295,7 +297,7 @@ export default class uploadMusicList extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 40, textAlign: 'center'}}>
+                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

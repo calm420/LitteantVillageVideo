@@ -117,22 +117,22 @@ export default class addUploadMusic extends React.Component {
                 <div>
                     <InputItem
                         className="add_element"
-                        placeholder="请输入音乐名"
+                        placeholder="请输入歌曲名称"
                         value={addMusicList.state.addMusicList[i].musicName}
                         onChange={addMusicList.inputOnChange.bind(this, 'musicName', i)}
                     >
-                        <div>音乐</div>
+                        <div>歌曲名称</div>
                     </InputItem>
                 </div>
                 <div className="line_public flex_container"></div>
                 <div>
                     <InputItem
                         className="add_element"
-                        placeholder="请输入歌手名"
+                        placeholder="请输入歌手名称"
                         value={addMusicList.state.addMusicList[i].musicMan}
                         onChange={addMusicList.inputOnChange.bind(this, 'musicMan', i)}
                     >
-                        <div>歌手</div>
+                        <div>歌手名称</div>
                     </InputItem>
                 </div>
                 <div className="line_public flex_container"></div>

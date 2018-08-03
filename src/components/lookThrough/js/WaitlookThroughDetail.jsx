@@ -31,6 +31,8 @@ export default class WaitlookThroughDetail extends React.Component {
 
         } else if (type == 1) {
             calm.getLittleVideoById(id)
+        }else if (type == 2){
+            calm.getDiscussInfoById(id)
         }
     }
     /**
@@ -41,7 +43,7 @@ export default class WaitlookThroughDetail extends React.Component {
             "method": 'getArticleInfoById',
             "articleId": id,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     calm.setState({
@@ -63,8 +65,32 @@ export default class WaitlookThroughDetail extends React.Component {
             "method": 'getLittleVideoById',
             "videoId": id,
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                if (result.success) {
+                    calm.setState({
+                        data: result.response
+                    })
+                }
+            },
+            onError: function (error) {
+                // Toast.fail(error, 1);
+            }
+        });
+    }
+
+    /**
+     * 获取评论数据
+     */
+    getDiscussInfoById(id){
+        var param = {
+            "method": 'getDiscussInfoById',
+            "discussId": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+
+                console.log(result,"pppl")
                 if (result.success) {
                     calm.setState({
                         data: result.response
@@ -99,7 +125,7 @@ export default class WaitlookThroughDetail extends React.Component {
                 auditorId: calm.state.auditorId
             },
         };
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
@@ -128,52 +154,74 @@ export default class WaitlookThroughDetail extends React.Component {
             <div id="waitLookThrough" style={{
                 height: document.body.clientHeight
             }}>
-                {
-                    calm.state.type == 0 ?
-                        <div className="sameBack">
-                            <div>类型：自媒体文章</div>
-                            <div>标题：{calm.state.data.articleTitle}</div>
-                            <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
-                            <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>
-                            <div>内容：{calm.state.data.articleContent}</div>
-                        </div>
-                        :
-                        calm.state.type == 1 ?
+                <div className="content">
+                    {
+                        calm.state.type == 0 ?
                             <div className="sameBack">
-                                <div>类型：短视频</div>
-                                <div>作者：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
-                                <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>
-                                <div>内容：
-                                    <video 
-                                        controls="controls" 
-                                        preload="auto"  
-                                        style={{objectFit: "fill",width:"100%"}}
-                                        src={calm.state.data.videoPath}>
-                                    </video>
+                                <div className='title'>标题：{calm.state.data.articleTitle}</div>
+                                <div className='topMsg'>
+                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt=""/>
+                                    <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                    <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
                                 </div>
+                                <div className='textCont'>{calm.state.data.articleContent}</div>
                             </div>
                             :
-                            ""
+                            calm.state.type == 1 ?
+                                <div className="sameBack">
+                                     <div className='topMsg'>
+                                        <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
+                                        <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                        <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")}/></span>
+                                     </div>
+                                     <div className="textCont">
+                                        <video
+                                            controls="controls"
+                                            preload="auto"
+                                            style={{objectFit: "fill",width:"100%"}}
+                                            src={calm.state.data.videoPath}>
+                                        </video>
+                                    </div>
+                                </div>
+                                :
+                                calm.state.type == 2 ?
+                            <div className="sameBack">
+                                <img style={{width:"50px",height:"50px"}} src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
+                                <div>类型：评论</div>
+                                <div>作者：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</div>
+                                <div>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</div>
+                                <div>内容：
+                                {calm.state.data.discussContent}
+                                </div>
+                            </div>
+                            :""
+                            
                 }
-                <div className="isDangerArea">
-                    <List renderHeader={() => '审核：'}>
-                        {data2.map(i => (
-                            <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
-                            </RadioItem>
-                        ))}
+                
+                    <div className="isDangerArea">
+                        <List renderHeader={() => '审核：'}>
+                            {data2.map(i => (
+                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                    {i.label}
+                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                </RadioItem>
+                            ))}
+                        </List>
+                    </div>
+                    <div className="sameBack description">审核说明:
+                    <List>
+                            <TextareaItem
+                                rows={3}
+                                placeholder="请在此处输入审核的说明／不通过的原因"
+                                onChange={v => _this.setState({
+                                    textareaValue: v
+                                })}
+                            />
+
                     </List>
-                </div>
-                <div className="sameBack">审核说明:
-                <List>
-                        <TextareaItem
-                            rows={3}
-                            placeholder="请在此处输入审核的说明／不通过的原因"
-                            onChange={v => _this.setState({
-                                textareaValue: v
-                            })}
-                        />
-                </List>
+                    </div>
                 </div>
                 <div className="submitBtn">
                     <Button type='warning' onClick={_this.submit}>提交</Button>

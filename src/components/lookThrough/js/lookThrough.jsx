@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Tabs, WhiteSpace, ListView } from 'antd-mobile';
 import '../css/lookThrough.less';
 
@@ -35,15 +34,15 @@ export default class lookThrough extends React.Component {
             auditorId
         })
         calm.getArticleAndLittleVideoIsNo();
-        window.addEventListener('scroll', calm.scrollHandle);
+        // window.addEventListener('scroll', calm.scrollHandle);
     }
     componentWillMount() {
-        window.addEventListener('scroll', calm.scrollHandle);
+        // window.addEventListener('scroll', calm.scrollHandle);
     }
-    scrollHandler() {
-        console.log("出发了滚动事件")
-        console.log(window.pageYOffset)
-    }
+    // scrollHandler() {
+    //     console.log("出发了滚动事件")
+    //     console.log(window.pageYOffset)
+    // }
 
     /**
      * 未审核列表
@@ -114,9 +113,8 @@ export default class lookThrough extends React.Component {
             }
         });
     }
-
     /**
-     *  ListView数据全部渲染完毕的回调
+     *  带审核的ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
         console.log('触底事件')
@@ -136,7 +134,7 @@ export default class lookThrough extends React.Component {
     };
 
     /**
-    *  ListView数据全部渲染完毕的回调
+    *  已审核的ListView数据全部渲染完毕的回调
     */
     onEndReached2 = (event) => {
         console.log('触底事件')
@@ -193,7 +191,6 @@ export default class lookThrough extends React.Component {
             }, () => {
                 calm.getArticleAndLittleVideo();
             })
-
         }
         if (val.value == 0) {
             calm.initDataSource = [];
@@ -250,7 +247,6 @@ export default class lookThrough extends React.Component {
                     }
                 </div>
             )
-
         }
 
         const row2 = (rowData, sectionID, rowID) => {
@@ -265,7 +261,6 @@ export default class lookThrough extends React.Component {
                                     <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
-
                             </div>
                             :
                             rowData.articleInfo ?
@@ -276,10 +271,7 @@ export default class lookThrough extends React.Component {
                                         <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                         <div className='time'>上传时间：{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
-
-
                                     </div>
-
                                 </div>
                                 :
                                 rowData.articleInfo ?

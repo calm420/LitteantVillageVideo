@@ -5,7 +5,7 @@ import {SimpleWebsocketConnection} from '../../../helpers/simple_websocket_conne
 
 var weArr_Payment;
 window.simpleMS = null;
-const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt=""/>;
+const myImg = src => <img src={require('../img/weixin.png')} className="spe am-icon am-icon-md" alt=""/>;
 window.orderNoNoom = null;
 
 export default class weArrPayment extends React.Component {
@@ -17,7 +17,7 @@ export default class weArrPayment extends React.Component {
             userId: 23836,
             channel: 'alipayjs',    //支付方式
             rechargeType: 0,    //消费类型
-            payPrice: 25,   //消费金额
+            payPrice: 80,   //消费金额
             successDisPlay: true
         };
 
@@ -117,15 +117,13 @@ export default class weArrPayment extends React.Component {
     changeRechargeType = (type) => {
         console.log(type)
         if (type == 0) {
-            this.setState({payPrice: 25})
+            this.setState({payPrice: 80})
             $(".payBall").removeClass('active')
             $('#theFirst').addClass('active')
         } else if (type == 1) {
-            this.setState({payPrice: 80})
+            this.setState({payPrice: 150})
             $(".payBall").removeClass('active')
             $('#theSecond').addClass('active')
-        } else if (type == 2) {
-            this.setState({payPrice: 150})
         }
         this.setState({rechargeType: type})
     }
@@ -153,14 +151,10 @@ export default class weArrPayment extends React.Component {
                         <div className='title'>充值金额<span>（购买会员后可玩转AR教材）</span></div>
                         <div className="my_flex">
                             <div id="theFirst" className='payBall active' onClick={this.changeRechargeType.bind(this, 0)}>
-                                <div>一个月</div>
-                                <span>25</span>元
-                            </div>
-                            <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
                                 <div>六个月</div>
                                 <span>80</span>元
                             </div>
-                            <div className='payBall' onClick={this.changeRechargeType.bind(this, 2)}>
+                            <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
                                 <div>一年</div>
                                 <span>150</span>元
                             </div>
@@ -186,8 +180,8 @@ export default class weArrPayment extends React.Component {
                     </div>
                 </div>
                 <Result
-                    className='paySuccess'
-                    img={myImg(this.state.channel == "alipayjs" ? 'https://gw.alipayobjects.com/zos/rmsportal/pdFARIqkrKEGVVEwotFe.svg':"")}
+                    className={this.state.channel+" paySuccess"}
+                    img={myImg(this.state.channel == "alipayjs" ? '../img/alipay.png':"../img/weixin.png")}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

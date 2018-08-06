@@ -1,6 +1,15 @@
 #lookThrough {
   color: #333;
 }
+#lookThrough .am-tabs-pane-wrap {
+  overflow: hidden;
+}
+#lookThrough .am-list-body {
+  background-color: #f4f4f4;
+}
+#lookThrough .list-view-section-body > div:last-child .item {
+  margin-bottom: 0 ;
+}
 #lookThrough .textOver3 {
   word-break: break-all;
   overflow: hidden;

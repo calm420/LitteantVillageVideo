@@ -1,11 +1,11 @@
-#uploadMusicList .am-list-view-scrollview-content {
+#uploadvideoList .am-list-view-scrollview-content {
   width: 100%;
 }
-#uploadMusicList .am-card {
+#uploadvideoList .am-card {
   min-height: auto;
   padding-bottom: 0;
 }
-#uploadMusicList .item {
+#uploadvideoList .item {
   padding: 15px;
   -webkit-align-items: center;
   -moz-align-items: center;
@@ -14,7 +14,7 @@
   -khtml-align-items: center;
   align-items: center;
 }
-#uploadMusicList .item img {
+#uploadvideoList .item img {
   width: 44px;
   height: 44px;
   margin-right: 15px;
@@ -22,36 +22,36 @@
   -moz-border-radius: 50%;
   border-radius: 50%;
 }
-#uploadMusicList .item .textCont {
+#uploadvideoList .item .textCont {
   width: calc(100% - 59px);
   color: #333;
   font-size: 16px;
 }
-#uploadMusicList .item .textCont .singer {
+#uploadvideoList .item .textCont .singer {
   margin-top: 10px;
   position: relative;
 }
-#uploadMusicList .item .textCont .singer .textOver {
+#uploadvideoList .item .textCont .singer .textOver {
   width: calc(100% - 65px);
 }
-#uploadMusicList .item .textCont .singer .icon {
+#uploadvideoList .item .textCont .singer .icon {
   position: absolute;
   right: -8px;
   top: 2px;
   height: 18px;
   line-height: 18px;
 }
-#uploadMusicList .addBunton {
+#uploadvideoList .addBunton {
   width: 3rem;
   height: 3rem;
   position: absolute;
   right: 2.5rem;
   bottom: 2.5rem;
 }
-#uploadMusicList .addBunton img {
+#uploadvideoList .addBunton img {
   width: 100%;
 }
-#uploadMusicList .updateModel {
+#uploadvideoList .updateModel {
   width: 100%;
   background-color: #f4f4f4;
   position: absolute;
@@ -59,7 +59,7 @@
   z-index: 999;
   height: 329px;
 }
-#uploadMusicList .tagAddPanel_bg {
+#uploadvideoList .tagAddPanel_bg {
   background: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 100%;
@@ -70,44 +70,44 @@
   left: 0;
   display: none;
 }
-#uploadMusicList .bottomBox {
+#uploadvideoList .bottomBox {
   display: flex;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
 }
-#uploadMusicList .bottomBox span {
+#uploadvideoList .bottomBox span {
   flex: 1;
   text-align: center;
   font-size: 14px;
   padding: 1rem;
   display: inline-block;
 }
-#uploadMusicList .bottomBox .bind {
+#uploadvideoList .bottomBox .bind {
   background: #F56A55;
   color: #fff;
 }
-#uploadMusicList .close {
+#uploadvideoList .close {
   font-size: 1.5em;
   background: #fff;
   color: #F56A55;
 }
-#uploadMusicList .listCont {
+#uploadvideoList .listCont {
   background-color: #fff;
   margin-top: 10px;
   position: relative;
 }
-#uploadMusicList .listCont .sameBack {
+#uploadvideoList .listCont .sameBack {
   background-color: #fff;
   padding: 15px;
   font-size: 16px;
   color: #666;
 }
-#uploadMusicList .listCont:first-child {
+#uploadvideoList .listCont:first-child {
   margin-top: 0;
 }
-#uploadMusicList .listCont .icon_delete {
+#uploadvideoList .listCont .icon_delete {
   background: url("../img/del_group.png") no-repeat;
   font-size: 0;
   width: 34px;
@@ -119,27 +119,27 @@
   top: 0;
   z-index: 1;
 }
-#uploadMusicList .listCont .am-list-item .am-input-label {
+#uploadvideoList .listCont .am-list-item .am-input-label {
   color: #666 !important;
   font-size: 16px;
 }
-#uploadMusicList .listCont .am-list-item .am-input-label.am-input-label-5 {
+#uploadvideoList .listCont .am-list-item .am-input-label.am-input-label-5 {
   width: 70px;
   margin-right: 4px;
   text-align: right;
   padding-right: 15px;
 }
-#uploadMusicList .listCont .textTitle {
+#uploadvideoList .listCont .textTitle {
   width: 70px;
   margin-right: 4px;
   text-align: right;
   padding-right: 15px;
 }
-#uploadMusicList .listCont .textTitle .uploadSupport {
+#uploadvideoList .listCont .textTitle .uploadSupport {
   font-size: 14px;
   color: #888;
 }
-#uploadMusicList .listCont .uploadBtn {
+#uploadvideoList .listCont .uploadBtn {
   background: url("../img/addPic.png") no-repeat;
   font-size: 0;
   width: 68px;
@@ -148,14 +148,14 @@
   border: 0;
   cursor: pointer;
 }
-#uploadMusicList .listCont .upload_file {
+#uploadvideoList .listCont .upload_file {
   width: 68px;
   height: 68px;
   text-align: center;
   background-color: #eee;
   position: relative;
 }
-#uploadMusicList .listCont .upload_file .icon_pointer {
+#uploadvideoList .listCont .upload_file .icon_pointer {
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
   position: absolute;
@@ -167,11 +167,11 @@
   text-align: center;
   font-size: 12px;
 }
-#uploadMusicList .listCont .upload_file .imgTag {
+#uploadvideoList .listCont .upload_file .imgTag {
   width: 100%;
   height: 100%;
 }
-#uploadMusicList .listCont .upload_file .musicIcon {
+#uploadvideoList .listCont .upload_file .musicIcon {
   background: url("../img/musicIcon.png") no-repeat;
   background-size: 100%;
   width: 100%;

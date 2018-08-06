@@ -70,7 +70,7 @@
     }
     .rechargeAmount {
       .payBall {
-        width: 33.3%;
+        width: 50%;
         border: 1px #4285f4 solid;
         border-radius: 4px;
         color: #666;
@@ -220,9 +220,24 @@
   }
   .paySuccess {
     display: none;
+    &.am-result .am-result-title {
+      color: #1AAD18;
+      margin-top: 18px;
+      font-size: 22px;
+    }
+    .am-result-message {
+      color: #000;
+      font-size: 21px;
+      letter-spacing: 1px;
+    }
+    &.alipayjs.am-result .am-result-title{
+      color: #4285f4;
+    }
+    .am-icon-md{
+      width: 100%;
+      height: 100%;
+    }
   }
-  .payBtnClick {
-    color: red;
-  }
+
 
 }

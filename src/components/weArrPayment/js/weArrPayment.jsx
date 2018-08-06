@@ -5,7 +5,7 @@ import {SimpleWebsocketConnection} from '../../../helpers/simple_websocket_conne
 
 var weArr_Payment;
 window.simpleMS = null;
-const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt=""/>;
+const myImg = src => <img src={require('../img/weixin.png')} className="spe am-icon am-icon-md" alt=""/>;
 window.orderNoNoom = null;
 
 export default class weArrPayment extends React.Component {
@@ -180,8 +180,8 @@ export default class weArrPayment extends React.Component {
                     </div>
                 </div>
                 <Result
-                    className='paySuccess'
-                    img={myImg(this.state.channel == "alipayjs" ? 'https://gw.alipayobjects.com/zos/rmsportal/pdFARIqkrKEGVVEwotFe.svg':"")}
+                    className={this.state.channel+" paySuccess"}
+                    img={myImg(this.state.channel == "alipayjs" ? '../img/alipay.png':"../img/weixin.png")}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

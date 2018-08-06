@@ -1,33 +1,159 @@
 #weArrPayment {
+  background-color: #fff;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  .M15{
+    margin: 0 15px;
+  }
   .payContent {
+    padding-top: 15px;
+    .title{
+      font-size: 17px;
+      color: #333;
+      padding: 30px 0 15px;
+      span{
+        color: #999;
+        font-size: 12px;
+        margin-left: 5px;
+      }
+    }
     .personCenter {
       z-index: 999;
-      height: 200px;
-      background-color: #f7cdff;
-      margin: 20px;
-      border-radius: 10px;
+      height:150px;
+      background:url("../img/person_bg.png") no-repeat;
+      background-size: cover;
+      border-radius: 5px;
+      .topCont{
+        position: relative;
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        height: calc(~"100% - 80px");
+      }
       .userImg {
+        width: 64px;
+        height: 64px;
+        border: 1px #fff solid;
         border-radius: 50%;
       }
       .userName {
         color: #FFFFFF;
-        font-weight: 900;
-      }
-      h5 {
+        font-size: 18px;
         text-align: center;
+      }
+      .photoDiv{
+        position: absolute;
+        left: 50%;
+        top:20px;
+        margin-left: -33px;
+        width: calc(~"50% + 33px");
+      }
+      .msg{
+        color: #fff;
+        font-size: 10px;
+        background:rgba(255,255,255,0.46) url("../img/icon_start.png") no-repeat;
+        -webkit-border-radius: 10px 3px 3px 10px;
+        -moz-border-radius: 10px 3px 3px 10px;
+        border-radius: 10px 3px 3px 10px;
+        height: 20px;
+        line-height: 20px;
+        position: absolute;
+        left: 45px;
+        bottom: 2px;
+        padding-left: 22px;
+        padding-right: 5px;
+        &.vip{
+          background:rgba(255,255,255,0.46) url("../img/icon_startVip.png") no-repeat;
+        }
       }
     }
     .rechargeAmount {
       .payBall {
-        width: 80px;
-        height: 80px;
-        background-color: yellow;
-        border-radius: 50%;
-        z-index: 999;
+        width: 33.3%;
+        border: 1px #4285f4 solid;
+        border-radius: 4px;
+        color: #666;
+        font-size: 15px;
+        text-align: center;
+        padding: 10px  5px;
+        margin-right: 15px;
+        &.active{
+          background-color: #4285f4;
+          color: #fff;
+          span{
+            color: #fff;
+          }
+        }
+        &:last-child{
+          margin-right: 0;
+        }
+        div{
+          margin-bottom: 10px;
+        }
+        span{
+          color: #ee6058;
+          font-size: 18px;
+          letter-spacing: 1px;
+        }
       }
     }
     .paymentMode {
-      z-index: 999;
+      padding-bottom: 15px;
+      .payBtn{
+        font-size: 15px;
+        color: #333;
+        padding-left: 34px;
+        height: 24px;
+        line-height: 24px;
+        margin-left: 15px;
+        margin-right: 15px;
+        overflow: hidden;
+        position: relative;
+        i{
+          border: 1px #999999 solid;
+          width: 16px;
+          height: 16px;
+          position: absolute;
+          display: inline-block;
+          right:0;
+          top:50%;
+          margin-top: -8px;
+        }
+      }
+      #alipayjs{
+        background: url("../img/icon_alipay.png") no-repeat;
+        background-size: 24px;
+        margin-bottom: 20px;
+        margin-top: 10px
+      }
+      #wxpayjs{
+        background: url("../img/icon_weixin.png") no-repeat;
+        background-size: 24px;
+      }
+      .payBtnClick{
+        i{
+          background-color: #4285f4;
+          border: 1px #4285f4 solid;
+          &::after {
+            display: block;
+            position: absolute;
+            right: 5px;
+            z-index: 999;
+            width: 5px;
+            height: 11px;
+            border-width: 0 1px 1px 0;
+            border-color: #fff;
+            top: 0;
+            border-style: solid;
+            content: ' ';
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
+
+      }
     }
     .payNow {
       width: 140px;
@@ -41,10 +167,62 @@
       float: left;
     }
   }
+  .payConfirm{
+      height: 46px;
+      line-height: 46px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
+      z-index: 99;
+      &:before {
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: 0;
+        right: 15px;
+        bottom: auto;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 50% 100%;
+        -ms-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }
+    .payTitle{
+      display: inline-block;
+      font-size: 14px;
+      color: #666;
+      padding-left: 10px;
+      box-sizing: border-box;
+      width: calc(~"100% - 160px");
+      span{
+        color: #4285f4;
+      }
+      .num{
+        font-size: 20px;
+      }
+    }
+    .payNow{
+      background-color: #4285f4;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      width: 160px;
+      display: inline-block;
+    }
+  }
   .paySuccess {
     display: none;
   }
   .payBtnClick {
     color: red;
   }
+
 }

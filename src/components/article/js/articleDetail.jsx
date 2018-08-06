@@ -102,6 +102,12 @@ export default class articleDetail extends React.Component {
                     </div>
                     <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}>
                     </div>
+                    <div className="content_bottom">
+                        <div className="like">
+                            <img src="../images/before.png" alt=""/>
+                            <img src="../images/after.png" alt=""/>
+                        </div>
+                    </div>
                 </div>
 
             </div>

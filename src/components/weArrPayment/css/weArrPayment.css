@@ -9,6 +9,8 @@
 }
 #weArrPayment .payContent {
   padding-top: 15px;
+  height: calc(100% - 70px);
+  overflow-y: auto;
 }
 #weArrPayment .payContent .title {
   font-size: 17px;
@@ -91,7 +93,7 @@
   margin-right: 0;
 }
 #weArrPayment .payContent .rechargeAmount .payBall div {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 #weArrPayment .payContent .rechargeAmount .payBall span {
   color: #ee6058;
@@ -205,6 +207,7 @@
 }
 #weArrPayment .payConfirm .payTitle .num {
   font-size: 20px;
+  vertical-align: bottom;
 }
 #weArrPayment .payConfirm .payNow {
   background-color: #4285f4;
@@ -216,6 +219,9 @@
 }
 #weArrPayment .paySuccess {
   display: none;
+  position: absolute;
+  left: 0;
+  top: 20%;
 }
 #weArrPayment .paySuccess.am-result .am-result-title {
   color: #1AAD18;

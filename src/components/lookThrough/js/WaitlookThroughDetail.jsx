@@ -24,14 +24,14 @@ export default class WaitlookThroughDetail extends React.Component {
         var type = searchArray[1].split('=')[1];
         var auditorId = searchArray[2].split('=')[1];
         calm.setState({
-            id, type,auditorId
+            id, type, auditorId
         })
         if (type == 0) {
             calm.getArticleInfoById(id)
 
         } else if (type == 1) {
             calm.getLittleVideoById(id)
-        }else if (type == 2){
+        } else if (type == 2) {
             calm.getDiscussInfoById(id)
         }
     }
@@ -82,7 +82,7 @@ export default class WaitlookThroughDetail extends React.Component {
     /**
      * 获取评论数据
      */
-    getDiscussInfoById(id){
+    getDiscussInfoById(id) {
         var param = {
             "method": 'getDiscussInfoById',
             "discussId": id,
@@ -90,7 +90,7 @@ export default class WaitlookThroughDetail extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
 
-                console.log(result,"pppl")
+                console.log(result, "pppl")
                 if (result.success) {
                     calm.setState({
                         data: result.response
@@ -160,48 +160,46 @@ export default class WaitlookThroughDetail extends React.Component {
                             <div className="sameBack">
                                 <div className='title'>{calm.state.data.articleTitle}</div>
                                 <div className='topMsg'>
-                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt=""/>
+                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
                                     <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
                                     <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                    <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
+                                    <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                 </div>
                                 <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
                             </div>
                             :
                             calm.state.type == 1 ?
                                 <div className="sameBack">
-                                     <div className='topMsg'>
-                                        <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
+                                    <div className='topMsg'>
+                                        <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
                                         <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
                                         <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                        <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")}/></span>
-                                     </div>
-                                     <div className="textCont">
+                                        <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                    </div>
+                                    <div className="textCont">
                                         <video
                                             controls="controls"
                                             preload="auto"
-                                            style={{objectFit: "fill",width:"100%"}}
+                                            style={{ objectFit: "fill", width: "100%" }}
                                             src={calm.state.data.videoPath}>
                                         </video>
                                     </div>
                                 </div>
                                 :
                                 calm.state.type == 2 ?
-                            <div className="sameBack">
-                                <div className='topMsg'>
-                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
-                                    <span className='author'>作者：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
-                                    <span className='time'>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
-                                </div>
-                                <div className="textCont">
-                                {calm.state.data.discussContent}
-                                </div>
-                            </div>
-                            :""
-                            
-                }
-                
+                                    <div className="sameBack">
+                                        <div className='topMsg'>
+                                            <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
+                                            <span className='author'>作者：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
+                                            <span className='time'>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                            <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                        </div>
+                                        <div className="textCont">
+                                            {calm.state.data.discussContent}
+                                        </div>
+                                    </div>
+                                    : ""
+                    }
                     <div className="isDangerArea">
                         <List renderHeader={() => '审核：'}>
                             {data2.map(i => (
@@ -221,14 +219,12 @@ export default class WaitlookThroughDetail extends React.Component {
                                     textareaValue: v
                                 })}
                             />
-
-                    </List>
+                        </List>
                     </div>
                 </div>
                 <div className="submitBtn">
                     <Button type='warning' onClick={_this.submit}>提交</Button>
                 </div>
-
             </div>
 
         )

@@ -168,7 +168,7 @@ export default class weArrPayment extends React.Component {
         var _this = this;
         return (
             <div id="weArrPayment">
-                <div style={{display: this.state.successDisPlay ? 'block' : 'none'}}>
+                <div style={{display: this.state.successDisPlay ? 'block' : 'none',height:'100%'}}>
                     <div className='payContent'>
                     <div className='personCenter M15'>
                         <div className="topCont">

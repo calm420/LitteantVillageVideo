@@ -17,6 +17,13 @@ const articleList = (location, cb) => {
     }, 'articleList')
 };
 
+//我的文章列表
+const myArticleList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/article/js/myArticleList').default)
+    }, 'myArticleList')
+};
+
 //文章详情
 const articleDetail = (location, cb) => {
     require.ensure([], require => {
@@ -121,8 +128,8 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
                     <li><Link to="/articleList?userId=3"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
-                    <li><Link to="/articleDetail"
-                              style={{fontSize: '24px'}}>文章详情</Link></li>
+                    <li><Link to="/myArticleList?userId=3"
+                              style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
                               style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
                     <li><Link to="/Login"
@@ -166,6 +173,7 @@ ReactDOM.render(
             <Route path="weArrPayment" getComponent={weArrPayment}/>
             <Route path="addUploadVideo" getComponent={addUploadVideo}/>
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
+            <Route path="myArticleList" getComponent={myArticleList} />
         </Route>
     </Router>
     ,

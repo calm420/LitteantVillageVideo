@@ -25,7 +25,7 @@ export default class addUploadVideo extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '添加'
+        document.title = '添加视频'
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -51,7 +51,6 @@ export default class addUploadVideo extends React.Component {
      * mp3预览
      */
     mp3Preview(v) {
-
         var data = {
             method: 'playAudio',
             url: v.musicUrl

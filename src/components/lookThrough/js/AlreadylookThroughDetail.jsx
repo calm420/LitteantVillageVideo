@@ -153,17 +153,16 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 <div className='topMsg'>
                                                     <img className="photo" src={calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.avatar : ""} alt="" />
                                                     <span className='author'>{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
-                                                    <span className='time'>{calm.state.data.articleInfo.createTime?WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime):""}</span>
+                                                    <span className='time'>{calm.state.data.articleInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime) : ""}</span>
                                                     <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                                 </div>
                                                 <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleInfo.articleContent }}></div>
-
                                             </div>
                                             <div className='review'>
                                                 <div className='line_public'>
                                                     <span className='title'>审核人：</span>
                                                     {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
-                                                    <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime):""}</span></div>
+                                                    <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
                                                 <div className='line_public'>
                                                     <span className='title'>审核说明：</span>
                                                     <div className='reCont'>
@@ -194,7 +193,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                     <div className='topMsg'>
                                                         <img className="photo" src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
                                                         <span className='author'>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</span>
-                                                        <span className='time'>上传时间：{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime):""}</span>
+                                                        <span className='time'>上传时间：{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
                                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                     </div>
                                                     <div className='textCont'>
@@ -211,7 +210,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                     <div className='line_public'>
                                                         <span className='title'>审核人：</span>
                                                         {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
-                                                        <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime):""}</span></div>
+                                                        <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
                                                     <div className='line_public'>
                                                         <span className='title'>审核说明：</span>
                                                         <div className='reCont'>
@@ -223,9 +222,8 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                         {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
                                                         <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                             重新审核
+                                                        </div>
                                                     </div>
-                                                    </div>
-
                                                 </div>
                                             </div>
                                             :
@@ -249,14 +247,13 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                         </div>
                                                         <div className='textCont'>
                                                             {calm.state.data.discussInfo.discussContent}
-
                                                         </div>
                                                     </div>
                                                     <div className='review'>
                                                         <div className='line_public'>
                                                             <span className='title'>审核人：</span>
                                                             {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
-                                                            <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime):""}</span></div>
+                                                            <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
                                                         <div className='line_public'>
                                                             <span className='title'>审核说明：</span>
                                                             <div className='reCont'>
@@ -277,9 +274,6 @@ export default class AlreadylookThroughDetail extends React.Component {
                                     </div>
                                     :
                                     ""
-
-
-
                     }
                     <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                         <div className="isDangerArea">

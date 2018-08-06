@@ -4,6 +4,7 @@ var isDebugLocal = true;
 var localUrl = "192.168.50.72";    //跳转地址http:
 
 
+
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
 // //云校的远程服务器地址
@@ -156,9 +157,9 @@ WebServiceUtil.formatAllTime = function (nS) {
     var year = da.getFullYear();
     var month = da.getMonth() + 1;
     var date = da.getDate();
-    var hour = da.getHours() + ":";
-    var minutes = da.getMinutes() + ":";
-    var sencond = da.getSeconds();
+    var hour = (da.getHours() < 10 ? '0'+(da.getHours()) : da.getHours()) + ":";
+    var minutes = (da.getMinutes() < 10 ? '0'+(da.getMinutes()) : da.getMinutes())+ ":";
+    var sencond = (da.getSeconds() < 10 ? '0'+(da.getSeconds()) : da.getSeconds());
     var dayStr = [year, month, date].join('-');
     var dateStr = dayStr + " " + hour + minutes + sencond;
     return dateStr;

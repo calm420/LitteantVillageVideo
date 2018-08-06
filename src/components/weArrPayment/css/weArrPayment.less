@@ -8,6 +8,8 @@
   }
   .payContent {
     padding-top: 15px;
+    height: calc(~'100% - 70px');
+    overflow-y: auto;
     .title{
       font-size: 17px;
       color: #333;
@@ -89,7 +91,7 @@
           margin-right: 0;
         }
         div{
-          margin-bottom: 10px;
+          margin-bottom: 8px;
         }
         span{
           color: #ee6058;
@@ -207,6 +209,7 @@
       }
       .num{
         font-size: 20px;
+        vertical-align: bottom;
       }
     }
     .payNow{
@@ -220,6 +223,9 @@
   }
   .paySuccess {
     display: none;
+    position: absolute;
+    left: 0;
+    top: 20%;
     &.am-result .am-result-title {
       color: #1AAD18;
       margin-top: 18px;

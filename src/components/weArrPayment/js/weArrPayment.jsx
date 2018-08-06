@@ -75,7 +75,6 @@ export default class weArrPayment extends React.Component {
             "userLocation": '',
             "payType": 0,
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
@@ -100,6 +99,7 @@ export default class weArrPayment extends React.Component {
      * @param type
      */
     changeChannel = (type) => {
+        console.log(type)
         this.setState({channel: type})
         var arr = document.getElementsByClassName('payBtn')
         for (var i = 0; i < arr.length; i++) {
@@ -115,10 +115,15 @@ export default class weArrPayment extends React.Component {
      * @param rechargeType
      */
     changeRechargeType = (type) => {
+        console.log(type)
         if (type == 0) {
             this.setState({payPrice: 25})
+            $(".payBall").removeClass('active')
+            $('#theFirst').addClass('active')
         } else if (type == 1) {
             this.setState({payPrice: 80})
+            $(".payBall").removeClass('active')
+            $('#theSecond').addClass('active')
         } else if (type == 2) {
             this.setState({payPrice: 150})
         }
@@ -126,55 +131,63 @@ export default class weArrPayment extends React.Component {
     }
 
     render() {
-
         var _this = this;
-
         return (
             <div id="weArrPayment">
-                <div className='payContent' style={{display: this.state.successDisPlay ? 'block' : 'none'}}>
-                    <div className='personCenter'>
-                        <div>
-                            <img
-                                className='userImg'
-                                src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                                alt=""/>
-                            <span className='userName'>brotherXu</span>
-                            <span className='userName'>13天后到期</span>
+                <div style={{display: this.state.successDisPlay ? 'block' : 'none'}}>
+                    <div className='payContent'>
+                    <div className='personCenter M15'>
+                        <div className="topCont">
+                            <div className='photoDiv'>
+                                <img
+                                    className='userImg'
+                                    src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
+                                    alt=""/>
+                                <span className='msg vip'>13天后到期</span>
+                                <span className='msg' style={{display:'none'}}>您还不是VIP会员</span>
+                            </div>
                         </div>
-                        <h5>购买会员后可玩转AR</h5>
+                        <div className='userName textOver'>brotherXu</div>
                     </div>
-                    <div className='rechargeAmount'>
-                        <div className='payBall' onClick={this.changeRechargeType.bind(this, 0)}>
-                            <span>1个月</span>
-                            <span>25元</span>
+                    <div className='rechargeAmount M15'>
+                        <div className='title'>充值金额<span>（购买会员后可玩转AR教材）</span></div>
+                        <div className="my_flex">
+                            <div id="theFirst" className='payBall active' onClick={this.changeRechargeType.bind(this, 0)}>
+                                <div>一个月</div>
+                                <span>25</span>元
+                            </div>
+                            <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
+                                <div>六个月</div>
+                                <span>80</span>元
+                            </div>
+                            <div className='payBall' onClick={this.changeRechargeType.bind(this, 2)}>
+                                <div>一年</div>
+                                <span>150</span>元
+                            </div>
                         </div>
-                        <div className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
-                            <span>6个月</span>
-                            <span>80元</span>
-                        </div>
-                        <div className='payBall' onClick={this.changeRechargeType.bind(this, 2)}>
-                            <span>1年</span>
-                            <span>150元</span>
-                        </div>
+
                     </div>
-                    <div className='paymentMode'>
-                        请选择支付方式
-                        <span className='payBtn payBtnClick'
+                    <div className='paymentMode line_public'>
+                        <div className='title M15'>支付方式</div>
+                        <div className='payBtn payBtnClick'
                               id='alipayjs'
-                              onClick={this.changeChannel.bind(this, 'alipayjs')}>支付宝支付</span>
-                        <span id='wxpayjs' className='payBtn'
-                              onClick={this.changeChannel.bind(this, 'wxpayjs')}>微信支付</span>
-                    </div>
-                    <div className='payNow' onClick={this.createRechargeInfo}>
-                        立即充值
+                              onClick={this.changeChannel.bind(this, 'alipayjs')}>支付宝支付<i></i></div>
+                        <div id='wxpayjs' className='payBtn'
+                              onClick={this.changeChannel.bind(this, 'wxpayjs')}>微信支付<i></i></div>
                     </div>
 
                     <iframe id="pay_Iframe" src="" frameborder="0" style={{display: 'none'}}></iframe>
                 </div>
-
+                    <div className='payConfirm'>
+                        <span className='payTitle'>需支付：<span>￥</span><span className='num'>{this.state.payPrice}</span></span>
+                        <span className='payNow' onClick={this.createRechargeInfo}>
+                            确定支付
+                        </span>
+                    </div>
+                </div>
                 <Result
                     className='paySuccess'
-                    img={myImg('https://gw.alipayobjects.com/zos/rmsportal/pdFARIqkrKEGVVEwotFe.svg')}
+                    img={myImg(this.state.channel == "alipayjs" ? 'https://gw.alipayobjects.com/zos/rmsportal/pdFARIqkrKEGVVEwotFe.svg':"")}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

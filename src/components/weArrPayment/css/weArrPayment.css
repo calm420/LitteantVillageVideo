@@ -1,29 +1,156 @@
+#weArrPayment {
+  background-color: #fff;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+#weArrPayment .M15 {
+  margin: 0 15px;
+}
+#weArrPayment .payContent {
+  padding-top: 15px;
+}
+#weArrPayment .payContent .title {
+  font-size: 17px;
+  color: #333;
+  padding: 30px 0 15px;
+}
+#weArrPayment .payContent .title span {
+  color: #999;
+  font-size: 12px;
+  margin-left: 5px;
+}
 #weArrPayment .payContent .personCenter {
   z-index: 999;
-  height: 200px;
-  background-color: #f7cdff;
-  margin: 20px;
-  border-radius: 10px;
+  height: 150px;
+  background: url("../img/person_bg.png") no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+}
+#weArrPayment .payContent .personCenter .topCont {
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: calc(100% - 80px);
 }
 #weArrPayment .payContent .personCenter .userImg {
+  width: 64px;
+  height: 64px;
+  border: 1px #fff solid;
   border-radius: 50%;
 }
 #weArrPayment .payContent .personCenter .userName {
   color: #FFFFFF;
-  font-weight: 900;
-}
-#weArrPayment .payContent .personCenter h5 {
+  font-size: 18px;
   text-align: center;
 }
+#weArrPayment .payContent .personCenter .photoDiv {
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  margin-left: -33px;
+  width: calc(50% + 33px);
+}
+#weArrPayment .payContent .personCenter .msg {
+  color: #fff;
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.46) url("../img/icon_start.png") no-repeat;
+  -webkit-border-radius: 10px 3px 3px 10px;
+  -moz-border-radius: 10px 3px 3px 10px;
+  border-radius: 10px 3px 3px 10px;
+  height: 20px;
+  line-height: 20px;
+  position: absolute;
+  left: 45px;
+  bottom: 2px;
+  padding-left: 22px;
+  padding-right: 5px;
+}
+#weArrPayment .payContent .personCenter .msg.vip {
+  background: rgba(255, 255, 255, 0.46) url("../img/icon_startVip.png") no-repeat;
+}
 #weArrPayment .payContent .rechargeAmount .payBall {
-  width: 80px;
-  height: 80px;
-  background-color: yellow;
-  border-radius: 50%;
-  z-index: 999;
+  width: 33.3%;
+  border: 1px #4285f4 solid;
+  border-radius: 4px;
+  color: #666;
+  font-size: 15px;
+  text-align: center;
+  padding: 10px  5px;
+  margin-right: 15px;
+}
+#weArrPayment .payContent .rechargeAmount .payBall.active {
+  background-color: #4285f4;
+  color: #fff;
+}
+#weArrPayment .payContent .rechargeAmount .payBall.active span {
+  color: #fff;
+}
+#weArrPayment .payContent .rechargeAmount .payBall:last-child {
+  margin-right: 0;
+}
+#weArrPayment .payContent .rechargeAmount .payBall div {
+  margin-bottom: 10px;
+}
+#weArrPayment .payContent .rechargeAmount .payBall span {
+  color: #ee6058;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 #weArrPayment .payContent .paymentMode {
+  padding-bottom: 15px;
+}
+#weArrPayment .payContent .paymentMode .payBtn {
+  font-size: 15px;
+  color: #333;
+  padding-left: 34px;
+  height: 24px;
+  line-height: 24px;
+  margin-left: 15px;
+  margin-right: 15px;
+  overflow: hidden;
+  position: relative;
+}
+#weArrPayment .payContent .paymentMode .payBtn i {
+  border: 1px #999999 solid;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+}
+#weArrPayment .payContent .paymentMode #alipayjs {
+  background: url("../img/icon_alipay.png") no-repeat;
+  background-size: 24px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+#weArrPayment .payContent .paymentMode #wxpayjs {
+  background: url("../img/icon_weixin.png") no-repeat;
+  background-size: 24px;
+}
+#weArrPayment .payContent .paymentMode .payBtnClick i {
+  background-color: #4285f4;
+  border: 1px #4285f4 solid;
+}
+#weArrPayment .payContent .paymentMode .payBtnClick i::after {
+  display: block;
+  position: absolute;
+  right: 5px;
   z-index: 999;
+  width: 5px;
+  height: 11px;
+  border-width: 0 1px 1px 0;
+  border-color: #fff;
+  top: 0;
+  border-style: solid;
+  content: ' ';
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 #weArrPayment .payContent .payNow {
   width: 140px;
@@ -35,6 +162,57 @@
 #weArrPayment .payContent #payIframe {
   z-index: 1;
   float: left;
+}
+#weArrPayment .payConfirm {
+  height: 46px;
+  line-height: 46px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 99;
+}
+#weArrPayment .payConfirm:before {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  top: 0;
+  right: 15px;
+  bottom: auto;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#weArrPayment .payConfirm .payTitle {
+  display: inline-block;
+  font-size: 14px;
+  color: #666;
+  padding-left: 10px;
+  box-sizing: border-box;
+  width: calc(100% - 160px);
+}
+#weArrPayment .payConfirm .payTitle span {
+  color: #4285f4;
+}
+#weArrPayment .payConfirm .payTitle .num {
+  font-size: 20px;
+}
+#weArrPayment .payConfirm .payNow {
+  background-color: #4285f4;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  width: 160px;
+  display: inline-block;
 }
 #weArrPayment .paySuccess {
   display: none;

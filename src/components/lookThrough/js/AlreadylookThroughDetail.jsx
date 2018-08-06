@@ -141,74 +141,24 @@ export default class AlreadylookThroughDetail extends React.Component {
                 height: document.body.clientHeight
             }}>
                 <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
-                {
-                    calm.state.type == 0 ?
-                        <div>
-                            {
-                                calm.state.data.articleInfo ?
-                                    <div>
-                                        <div className='sameBack'>
-                                            <div className='title'>{calm.state.data.articleInfo.articleTitle}</div>
-                                            <div className='topMsg'>
-                                                <img className="photo" src={calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.avatar:""} alt="" />
-                                                <span className='author'>{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
-                                                <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime)}</span>
-                                                <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")}/></span>
-                                            </div>
-                                            <div className='textCont'  dangerouslySetInnerHTML={{ __html: calm.state.data.articleInfo.articleContent }}></div>
-
-                                        </div>
-
-                                        <div className='review'>
-                                            <div className='line_public'>
-                                            <span className='title'>审核人：</span>
-                                        {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
-                                            <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</span></div>
-                                            <div className='line_public'>
-                                            <span className='title'>审核说明：</span>
-                                            <div className='reCont'>
-                                            {calm.state.data.auditInfo.auditMark ?calm.state.data.auditInfo.auditMark : "无" }
-                                            </div>
-                                            </div>
-                                            <div>
-                                                <span className='title'>审核结果：</span>
-                                                 {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
-                                                <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
-                                                    重新审核
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    :
-                                    ""
-
-                            }
-
-                        </div>
-                        :
-                        calm.state.type == 1 ?
+                    {
+                        // 自媒体文章
+                        calm.state.type == 0 ?
                             <div>
                                 {
-                                    calm.state.data.littleVideoInfo ?
+                                    calm.state.data.articleInfo ?
                                         <div>
                                             <div className='sameBack'>
+                                                <div className='title'>{calm.state.data.articleInfo.articleTitle}</div>
                                                 <div className='topMsg'>
-                                                    <img className="photo" src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
-                                                    <span className='author'>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</span>
-                                                    <span className='time'>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</span>
-                                                    <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")}/></span>
+                                                    <img className="photo" src={calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.avatar : ""} alt="" />
+                                                    <span className='author'>{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
+                                                    <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime)}</span>
+                                                    <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                                 </div>
-                                                <div className='textCont'>
-                                                    <video
-                                                        style={{ width: "100%" }}
-                                                        controls="controls"
-                                                        preload="auto"
-                                                        src={calm.state.data.littleVideoInfo.videoPath}
-                                                        autoPlay>
-                                                    </video>
-                                                </div>
-                                            </div>
+                                                <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleInfo.articleContent }}></div>
 
+                                            </div>
                                             <div className='review'>
                                                 <div className='line_public'>
                                                     <span className='title'>审核人：</span>
@@ -217,7 +167,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 <div className='line_public'>
                                                     <span className='title'>审核说明：</span>
                                                     <div className='reCont'>
-                                                    {calm.state.data.auditInfo.auditMark ?calm.state.data.auditInfo.auditMark : "无" }
+                                                        {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                     </div>
                                                 </div>
                                                 <div>
@@ -225,33 +175,36 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                     {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
                                                     <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                         重新审核
-                                                    </div>
                                                 </div>
-
+                                                </div>
                                             </div>
                                         </div>
                                         :
                                         ""
-
                                 }
-
                             </div>
                             :
-                            calm.state.type == 2 ?
+                            // 短视频
+                            calm.state.type == 1 ?
                                 <div>
                                     {
-                                        calm.state.data.discussInfo ?
+                                        calm.state.data.littleVideoInfo ?
                                             <div>
-                                                <div className="sameBack">
+                                                <div className='sameBack'>
                                                     <div className='topMsg'>
-                                                        <img className="photo" src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
-                                                        <span className='author'>{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</span>
-                                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</span>
-                                                        <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")}/></span>
+                                                        <img className="photo" src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
+                                                        <span className='author'>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</span>
+                                                        <span className='time'>上传时间：{WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime)}</span>
+                                                        <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                     </div>
                                                     <div className='textCont'>
-                                                        {calm.state.data.discussInfo.discussContent}
-
+                                                        <video
+                                                            style={{ width: "100%" }}
+                                                            controls="controls"
+                                                            preload="auto"
+                                                            src={calm.state.data.littleVideoInfo.videoPath}
+                                                            autoPlay>
+                                                        </video>
                                                     </div>
                                                 </div>
                                                 <div className='review'>
@@ -262,7 +215,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                     <div className='line_public'>
                                                         <span className='title'>审核说明：</span>
                                                         <div className='reCont'>
-                                                            {calm.state.data.auditInfo.auditMark ?calm.state.data.auditInfo.auditMark : "无" }
+                                                            {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                         </div>
                                                     </div>
                                                     <div>
@@ -270,19 +223,64 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                         {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
                                                         <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                             重新审核
+                                                    </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            :
+                                            ""
+
+                                    }
+
+                                </div>
+                                :
+                                calm.state.type == 2 ?
+                                    <div>
+                                        {
+                                            calm.state.data.discussInfo ?
+                                                <div>
+                                                    <div className="sameBack">
+                                                        <div className='topMsg'>
+                                                            <img className="photo" src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
+                                                            <span className='author'>{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</span>
+                                                            <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</span>
+                                                            <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                                        </div>
+                                                        <div className='textCont'>
+                                                            {calm.state.data.discussInfo.discussContent}
+
+                                                        </div>
+                                                    </div>
+                                                    <div className='review'>
+                                                        <div className='line_public'>
+                                                            <span className='title'>审核人：</span>
+                                                            {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
+                                                            <span className='time'>{WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime)}</span></div>
+                                                        <div className='line_public'>
+                                                            <span className='title'>审核说明：</span>
+                                                            <div className='reCont'>
+                                                                {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <span className='title'>审核结果：</span>
+                                                            {calm.state.data.auditInfo.isPass == 0 ? <span className="pass">通过</span> : <span>未通过</span>}
+                                                            <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
+                                                                重新审核
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            : ""
-                                    }
-                                </div>
-                                :
-                                ""
+                                                : ""
+                                        }
+                                    </div>
+                                    :
+                                    ""
 
 
 
-                }
+                    }
                     <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                         <div className="isDangerArea">
                             <List renderHeader={() => '审核：'}>

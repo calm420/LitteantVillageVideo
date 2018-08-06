@@ -17,7 +17,7 @@ export default class weArrPayment extends React.Component {
             userId: 23836,
             channel: 'alipayjs',    //支付方式
             rechargeType: 0,    //消费类型
-            payPrice: 25,   //消费金额
+            payPrice: 80,   //消费金额
             successDisPlay: true
         };
 
@@ -75,7 +75,6 @@ export default class weArrPayment extends React.Component {
             "userLocation": '',
             "payType": 0,
         };
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
@@ -100,6 +99,7 @@ export default class weArrPayment extends React.Component {
      * @param type
      */
     changeChannel = (type) => {
+        console.log(type)
         this.setState({channel: type})
         var arr = document.getElementsByClassName('payBtn')
         for (var i = 0; i < arr.length; i++) {
@@ -115,20 +115,21 @@ export default class weArrPayment extends React.Component {
      * @param rechargeType
      */
     changeRechargeType = (type) => {
+        console.log(type)
         if (type == 0) {
-            this.setState({payPrice: 25})
-        } else if (type == 1) {
             this.setState({payPrice: 80})
-        } else if (type == 2) {
+            $(".payBall").removeClass('active')
+            $('#theFirst').addClass('active')
+        } else if (type == 1) {
             this.setState({payPrice: 150})
+            $(".payBall").removeClass('active')
+            $('#theSecond').addClass('active')
         }
         this.setState({rechargeType: type})
     }
 
     render() {
-
         var _this = this;
-
         return (
             <div id="weArrPayment">
                 <div style={{display: this.state.successDisPlay ? 'block' : 'none'}}>
@@ -149,11 +150,11 @@ export default class weArrPayment extends React.Component {
                     <div className='rechargeAmount M15'>
                         <div className='title'>充值金额<span>（购买会员后可玩转AR教材）</span></div>
                         <div className="my_flex">
-                            <div className='payBall active' onClick={this.changeRechargeType.bind(this, 1)}>
+                            <div id="theFirst" className='payBall active' onClick={this.changeRechargeType.bind(this, 0)}>
                                 <div>六个月</div>
                                 <span>80</span>元
                             </div>
-                            <div className='payBall' onClick={this.changeRechargeType.bind(this, 2)}>
+                            <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
                                 <div>一年</div>
                                 <span>150</span>元
                             </div>
@@ -172,7 +173,7 @@ export default class weArrPayment extends React.Component {
                     <iframe id="pay_Iframe" src="" frameborder="0" style={{display: 'none'}}></iframe>
                 </div>
                     <div className='payConfirm'>
-                        <span className='payTitle'>需支付：<span>￥</span><span className='num'>149</span></span>
+                        <span className='payTitle'>需支付：<span>￥</span><span className='num'>{this.state.payPrice}</span></span>
                         <span className='payNow' onClick={this.createRechargeInfo}>
                             确定支付
                         </span>
@@ -180,7 +181,7 @@ export default class weArrPayment extends React.Component {
                 </div>
                 <Result
                     className='paySuccess'
-                    img={myImg('https://gw.alipayobjects.com/zos/rmsportal/pdFARIqkrKEGVVEwotFe.svg')}
+                    img={myImg(this.state.channel == "alipayjs" ? 'https://gw.alipayobjects.com/zos/rmsportal/pdFARIqkrKEGVVEwotFe.svg':"")}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

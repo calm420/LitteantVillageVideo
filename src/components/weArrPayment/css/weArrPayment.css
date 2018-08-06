@@ -71,7 +71,7 @@
   background: rgba(255, 255, 255, 0.46) url("../img/icon_startVip.png") no-repeat;
 }
 #weArrPayment .payContent .rechargeAmount .payBall {
-  width: 33.3%;
+  width: 50%;
   border: 1px #4285f4 solid;
   border-radius: 4px;
   color: #666;

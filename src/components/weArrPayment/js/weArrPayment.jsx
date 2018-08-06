@@ -149,11 +149,7 @@ export default class weArrPayment extends React.Component {
                     <div className='rechargeAmount M15'>
                         <div className='title'>充值金额<span>（购买会员后可玩转AR教材）</span></div>
                         <div className="my_flex">
-                            <div className='payBall active' onClick={this.changeRechargeType.bind(this, 0)}>
-                                <div>一个月</div>
-                                <span>25</span>元
-                            </div>
-                            <div className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
+                            <div className='payBall active' onClick={this.changeRechargeType.bind(this, 1)}>
                                 <div>六个月</div>
                                 <span>80</span>元
                             </div>

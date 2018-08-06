@@ -233,7 +233,7 @@
   font-size: 21px;
   letter-spacing: 1px;
 }
-#weArrPayment .paySuccess#alipayjs.am-result .am-result-title {
+#weArrPayment .paySuccess.alipayjs.am-result .am-result-title {
   color: #4285f4;
 }
 #weArrPayment .paySuccess .am-icon-md {

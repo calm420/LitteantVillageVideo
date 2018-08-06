@@ -299,7 +299,6 @@ export default class articleDetail extends React.Component {
                         <div className="commit">
                             <div className="">
                                 <TextareaItem
-                                    title="评论内容"
                                     placeholder="请输入评论内容"
                                     data-seed="logId"
                                     ref={el => this.autoFocusInst = el}

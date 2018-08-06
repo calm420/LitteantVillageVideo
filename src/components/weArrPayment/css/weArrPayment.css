@@ -216,6 +216,9 @@
 }
 #weArrPayment .paySuccess {
   display: none;
+  position: absolute;
+  left: 0;
+  top: 20%;
 }
 #weArrPayment .paySuccess.am-result .am-result-title {
   color: #1AAD18;

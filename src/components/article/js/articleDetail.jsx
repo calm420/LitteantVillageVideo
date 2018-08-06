@@ -291,10 +291,10 @@ export default class articleDetail extends React.Component {
                     </div>
                     <div className="content_bottom" >
                         <div className="like" onClick={this.likeFlag.bind(this)} style={
-                            this.state.likeFlag?{borderColor:'#1296db'}:{borderColor:'#8a8a8a'}
+                            this.state.likeFlag?{borderColor:'#999'}:{borderColor:'#4285F4'}
                         }>
-                            {/*<img src={require("../images/before.png")} alt=""/>*/}
-                            <img src={this.state.likeFlag?require("../images/after.png"):require("../images/before.png")} alt=""/>
+                            <img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>
+                            <span>124984984</span>
                         </div>
                         <div className="commit">
                             <div className="">

@@ -1,5 +1,5 @@
 var isDebug = true;
-var localDomain = "192.168.50.71";   //请求地址
+var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.72";    //跳转地址http:
 
@@ -115,6 +115,20 @@ WebServiceUtil.formatYMD = function (nS) {
     var month = da.getMonth() + 1;
     var date = da.getDate();
     var ymdStr = [year, month, date].join('-');
+    return ymdStr;
+};
+
+/**
+ * 时间戳日
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatD = function (nS) {
+    var da = new Date(parseInt(nS));
+    var year = da.getFullYear();
+    var month = da.getMonth() + 1;
+    var date = da.getDate();
+    var ymdStr = [date];
     return ymdStr;
 };
 

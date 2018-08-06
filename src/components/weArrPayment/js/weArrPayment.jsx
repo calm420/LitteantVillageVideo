@@ -18,7 +18,8 @@ export default class weArrPayment extends React.Component {
             channel: 'alipayjs',    //支付方式
             rechargeType: 0,    //消费类型
             payPrice: 25,   //消费金额
-            successDisPlay: true
+            successDisPlay: true,
+            userData:{}
         };
 
     }
@@ -31,8 +32,40 @@ export default class weArrPayment extends React.Component {
 
     componentDidMount() {
         this.simpleListener()
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var userId = searchArray[0].split('=')[1];
+        this.getLittleVideoUserById(userId)
     }
-
+    /**
+     * 获取用户信息
+     */
+    getLittleVideoUserById = (userId)=>{
+        var param = {
+            "method": 'getLittleVideoUserById',
+            "uid": userId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result,"re")
+                if (result.msg == '调用成功' || result.success) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        this.setState({
+                            userData:result.response
+                        })
+                    } else {
+                        Toast.fail('失败,1')
+                    }
+                } else {
+                    Toast.fail('失败,1')
+                }
+            },
+            onError: function (error) {
+                // Toast.info('获取列表失败', error);
+            }
+        });
+    }
     /**
      * 消息监听
      */
@@ -141,13 +174,18 @@ export default class weArrPayment extends React.Component {
                             <div className='photoDiv'>
                                 <img
                                     className='userImg'
-                                    src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
+                                    src={this.state.userData.avatar ? this.state.userData.avatar + "?size=100x100" : ""}
                                     alt=""/>
-                                <span className='msg vip'>13天后到期</span>
-                                <span className='msg' style={{display:'none'}}>您还不是VIP会员</span>
+                                {
+                                    this.state.userData.vIP ? <span className='msg vip'>{WebServiceUtil.formatD(this.state.userData.rechargeEndtime)}天后到期</span>
+                                    :
+                                    <span className='msg'>您还不是VIP会员</span>
+                                }
+                                
+                               
                             </div>
                         </div>
-                        <div className='userName textOver'>brotherXu</div>
+                        <div className='userName textOver'>{this.state.userData.userName}</div>
                     </div>
                     <div className='rechargeAmount M15'>
                         <div className='title'>充值金额<span>（购买会员后可玩转AR教材）</span></div>

@@ -119,7 +119,7 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>uploadMusicList</Link></li>
                     <li>
                         <Link
-                            to="/weArrPayment" style={{fontSize: '24px'}}>充值</Link>
+                            to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
                     </li>
                 </ul>
             </div>

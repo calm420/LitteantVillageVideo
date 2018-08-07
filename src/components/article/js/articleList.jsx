@@ -98,7 +98,7 @@ export default class articleList extends React.Component {
     toDetail(id) {
         console.log(id);
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId );
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId +"&type=1");
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -254,7 +254,7 @@ export default class articleList extends React.Component {
                       // tabBarUnderlineStyle={{width:'15px'}}
                 >
                     <div style={{
-                        height: document.documentElement.clientHeight - 43.5,
+                        height: document.documentElement.clientHeight - 46,
                         backgroundColor: '#f4f4f4'
                     }}>
                         {/*推荐*/}
@@ -275,14 +275,14 @@ export default class articleList extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={{
-                                height: document.body.clientHeight - 43.5,
+                                height: document.body.clientHeight - 46,
                             }}
                         />
 
                     </div>
 
                     <div style={{
-                        height: document.documentElement.clientHeight - 43.5,
+                        height: document.documentElement.clientHeight - 46,
                         backgroundColor: '#f4f4f4'
                     }}>
                         {/*热点*/}
@@ -303,7 +303,7 @@ export default class articleList extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={{
-                                height: document.body.clientHeight - 43.5,
+                                height: document.body.clientHeight - 46,
                             }}
                         />
                     </div>

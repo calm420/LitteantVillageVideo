@@ -144,10 +144,10 @@ class Index extends React.Component {
                         <Link
                             to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
                     </li>
-                    {/*<li>*/}
-                        {/*<Link*/}
-                            {/*to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>*/}
-                    {/*</li>*/}
+                    {/* <li>
+                        <Link
+                            to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
+                    </li> */}
                 </ul>
             </div>
         );

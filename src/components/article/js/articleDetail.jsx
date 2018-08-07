@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView,TextareaItem, Button, List, Picker, Tag
+    Toast, DatePicker, ListView,TextareaItem, Button, List, Picker, Tag, Icon
 } from 'antd-mobile';
 import '../css/articleDetail.less';
 const Item = List.Item;
@@ -38,9 +38,11 @@ export default class articleDetail extends React.Component {
         var searchArray = locationSearch.split("&");
         var artId = searchArray[0].split('=')[1];
         var userId = searchArray[1].split('=')[1];
+        var type = searchArray[2].split('=')[1];
         this.setState({
             artId: artId,
             userId:userId,
+            type
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -266,8 +268,17 @@ export default class articleDetail extends React.Component {
             }
         });
     }
-
-
+    /**
+     * 返回
+     */
+    goBack=()=>{
+        if(theLike.state.type == 1){
+        location.href = "http://192.168.50.72:8091/#/articleList?userId="+this.state.userId;
+        }
+        if(theLike.state.type == 3){
+            location.href = "http://192.168.50.72:8091/#/myArticleList?userId="+this.state.userId;
+        }
+    }
     //评论框输入事件
     commitChange(val){
         this.setState({
@@ -275,15 +286,13 @@ export default class articleDetail extends React.Component {
         })
     }
 
-
-
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
                     <List className="listCont line_public ">
-                        <Item align="top" thumb={rowData.discussUser.avatar} multipleLine>
-                            {rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>
+                        <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar:""} multipleLine>
+                            {rowData.discussUser ? rowData.discussUser.userName:""} <Brief>{rowData.discussContent}</Brief>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
                             {/*{rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>*/}
@@ -295,17 +304,18 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail">
+                <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div>
                 <div className="inner">
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>
                         <div className="at">
-                            <div className="author">{this.state.data.articleTitle}</div>
+                            <div className="author">{this.state.data.userInfo ? this.state.data.userInfo.userName:""}</div>
                             <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
                         </div>
                         <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>
                         <div className="content_bottom" >
                             <div className="like" onClick={this.likeFlag.bind(this)} style={
-                                this.state.likeFlag?{borderColor:'#999',color:'#999'}:{borderColor:'#4285F4',color:'#4285F4'}
+                                this.state.likeFlag?{borderColor:'#999',color:'#999'}:{borderColor:'#FE5C50',color:'#FE5C50'}
                             }>
                                 <div className={this.state.likeFlag?'noLike':'likeActive'}>
                                     {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
@@ -345,9 +355,7 @@ export default class articleDetail extends React.Component {
                                 onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                                style={{
-                                    height: document.body.clientHeight,
-                                }}
+
                             />
 
                 </div>

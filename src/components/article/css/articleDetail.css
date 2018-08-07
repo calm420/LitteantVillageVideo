@@ -1,9 +1,30 @@
 #articleDetail {
   color: #333;
+  background-color: #f4f4f4;
+}
+#articleDetail .goBack {
+  height: 44px;
+  line-height: 44px;
+  background-color: #fff;
+  position: relative;
+}
+#articleDetail .goBack svg {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  margin-top: -15px;
+}
+#articleDetail .goBack .am-icon-md {
+  width: 30px;
+  height: 30px;
+  color: #666;
 }
 #articleDetail .p15 {
   padding: 10px 15px;
   background-color: #fff;
+}
+#articleDetail .inner {
+  padding-bottom: 50px;
 }
 #articleDetail .inner iframe {
   margin: 10px 0;
@@ -49,13 +70,13 @@
   text-align: center;
 }
 #articleDetail .content_bottom .like .noLike {
-  background: url("../images/praise.png") no-repeat left 11px;
+  background: url("../images/praise.png") no-repeat left 10px;
   background-size: 16px;
   display: inline-block;
   padding-left: 25px;
 }
 #articleDetail .content_bottom .like .likeActive {
-  background: url("../images/praise_active.png") no-repeat left 11px;
+  background: url("../images/praise_active.png") no-repeat left 10px;
   background-size: 16px;
   display: inline-block;
   padding-left: 25px;
@@ -70,9 +91,18 @@
   vertical-align: top;
   padding-left: 10px;
 }
+#articleDetail .commentList .am-list-view-scrollview-content {
+  position: relative !important;
+}
+#articleDetail .commentList .am-list-footer {
+  background: #f4f4f4;
+}
 #articleDetail .commentList .list-view-section-body {
   padding: 0 15px;
   border-top: 1px #e5e5e5 solid;
+}
+#articleDetail .commentList .list-view-section-body > div:last-child .line_public::after {
+  display: none;
 }
 #articleDetail .commentList .listCont .am-list-content {
   color: #666 !important;
@@ -114,7 +144,7 @@
   width: 100%;
 }
 #articleDetail .commit .am-list-item {
-  padding: 8px 15px;
+  padding: 10px 15px;
   min-height: auto;
 }
 #articleDetail .commit .am-textarea-item {
@@ -134,4 +164,5 @@
   padding: 0 10px;
   width: 100%;
   box-sizing: border-box;
+  color: #333;
 }

@@ -278,24 +278,27 @@ export default class articleDetail extends React.Component {
         };
         // var articleContent = this.state.data.articleContent
         return (
-            <div id="articleDetail" style={{
-                height: document.body.clientHeight
-            }}>
+            <div id="articleDetail">
                 <div className="inner">
-                    <div className="title">{this.state.data.articleTitle}</div>
-                    <div className="at">
-                        <div className="author">{this.state.data.userInfo.userName}</div>
-                        <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
-                    </div>
-                    <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}>
-                    </div>
-                    <div className="content_bottom" >
-                        <div className="like" onClick={this.likeFlag.bind(this)} style={
-                            this.state.likeFlag?{borderColor:'#999'}:{borderColor:'#4285F4'}
-                        }>
-                            <img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>
-                            <span>124984984</span>
+                    <div className="p15">
+                        <div className="title">{this.state.data.articleTitle}</div>
+                        <div className="at">
+                            <div className="author">{this.state.data.userInfo.userName}</div>
+                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
                         </div>
+                        <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>
+                        <div className="content_bottom" >
+                            <div className="like" onClick={this.likeFlag.bind(this)} style={
+                                this.state.likeFlag?{borderColor:'#999',color:'#999'}:{borderColor:'#4285F4',color:'#4285F4'}
+                            }>
+                                <div className={this.state.likeFlag?'noLike':'likeActive'}>
+                                    {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
+                                    123
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                         <div className="commit">
                             <div className="">
                                 <TextareaItem
@@ -310,7 +313,7 @@ export default class articleDetail extends React.Component {
                                 />
                                 <Button type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>
                             </div>
-
+                        </div>
                             <ListView
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -319,7 +322,7 @@ export default class articleDetail extends React.Component {
                                         {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                                     </div>)}
                                 renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                className="am-list"
+                                className="am-list commentList"
                                 pageSize={30}    //每次事件循环（每帧）渲染的行数
                                 //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                                 scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
@@ -331,8 +334,7 @@ export default class articleDetail extends React.Component {
                                     height: document.body.clientHeight,
                                 }}
                             />
-                        </div>
-                    </div>
+
                 </div>
 
             </div>

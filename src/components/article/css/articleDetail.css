@@ -41,7 +41,7 @@
   width: 120px;
   height: 40px;
   line-height: 40px;
-  margin: 20px auto;
+  margin: 20px auto 15px;
   border: 1px solid #999;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -70,20 +70,68 @@
   vertical-align: top;
   padding-left: 10px;
 }
-#articleDetail .commentList .am-list-item {
+#articleDetail .commentList .list-view-section-body {
+  padding: 0 15px;
+  border-top: 1px #e5e5e5 solid;
+}
+#articleDetail .commentList .listCont .am-list-content {
+  color: #666 !important;
+  font-size: 13px;
+  line-height: 17px;
+}
+#articleDetail .commentList .listCont .am-list-brief {
+  font-size: 15px;
+  word-break: break-all;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  color: #333;
+  line-height: 20px;
+}
+#articleDetail .commentList .listCont .am-list-item {
   -webkit-align-items: inherit;
   -moz-align-items: inherit;
   -ms-align-items: inherit;
   -o-align-items: inherit;
   -khtml-align-items: inherit;
   align-items: inherit;
+  padding: 15px 0;
 }
-#articleDetail .commentList .am-list-item img {
+#articleDetail .commentList .listCont .am-list-item img {
   width: 28px;
   height: 28px;
   vertical-align: top;
   border-radius: 50%;
 }
-#articleDetail .commentList .am-list-item .am-list-line-multiple {
+#articleDetail .commentList .listCont .am-list-item .am-list-line-multiple {
   padding: 0;
+}
+#articleDetail .commit {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  width: 100%;
+}
+#articleDetail .commit .am-list-item {
+  padding: 8px 15px;
+  min-height: auto;
+}
+#articleDetail .commit .am-textarea-item {
+  background-color: #fff;
+}
+#articleDetail .commit .am-textarea-control {
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+#articleDetail .commit .am-textarea-control textarea {
+  font-size: 13px;
+  line-height: 17px;
+  max-height: 51px;
+  overflow-y: auto;
+  padding: 0 10px;
+  width: 100%;
+  box-sizing: border-box;
 }

@@ -280,10 +280,13 @@ export default class articleDetail extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <List renderHeader={() => '评论内容'} className="my-list">
-                        <Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>
+                    <List className="listCont line_public ">
+                        <Item align="top" thumb={rowData.discussUser.avatar} multipleLine>
                             {rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>
                         </Item>
+                        {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
+                            {/*{rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>*/}
+                        {/*</Item>*/}
                     </List>
                 </div>
             )
@@ -318,8 +321,6 @@ export default class articleDetail extends React.Component {
                                     data-seed="logId"
                                     ref={el => this.autoFocusInst = el}
                                     autoHeight
-                                    rows={4}
-                                    count={100}
                                     value={this.state.commitText}
                                     onChange={this.commitChange.bind(this)}
                                 />

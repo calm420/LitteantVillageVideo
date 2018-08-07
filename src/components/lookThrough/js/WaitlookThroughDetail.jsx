@@ -190,8 +190,8 @@ export default class WaitlookThroughDetail extends React.Component {
                                     <div className="sameBack">
                                         <div className='topMsg'>
                                             <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                            <span className='author'>作者：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
-                                            <span className='time'>上传时间：{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                            <span className='author'>{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
+                                            <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
                                             <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
                                         </div>
                                         <div className="textCont">

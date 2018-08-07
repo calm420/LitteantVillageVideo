@@ -265,10 +265,8 @@ export default class articleDetail extends React.Component {
             }
         });
     }
-    
-    goBack=()=>{
-        location.href = "http://192.168.50.72:8091/#/articleList?userId="+this.state.userId;
-    }
+
+
     //评论框输入事件
     commitChange(val){
         this.setState({
@@ -276,14 +274,15 @@ export default class articleDetail extends React.Component {
         })
     }
 
+
+
     render() {
-        var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
                     <List className="listCont line_public ">
-                        <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar:""} multipleLine>
-                            {rowData.discussUser ? rowData.discussUser.userName:""} <Brief>{rowData.discussContent}</Brief>
+                        <Item align="top" thumb={rowData.discussUser.avatar} multipleLine>
+                            {rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
                             {/*{rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>*/}
@@ -295,12 +294,11 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail">
-            <div><span onClick={_this.goBack}>返回</span></div>
                 <div className="inner">
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>
                         <div className="at">
-                            <div className="author">{this.state.data.userInfo ? this.state.data.userInfo.userName:""}</div>
+                            <div className="author">{this.state.data.userInfo.userName}</div>
                             <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
                         </div>
                         <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>
@@ -346,7 +344,9 @@ export default class articleDetail extends React.Component {
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                                 useBodyScroll={true}
-
+                                // style={{
+                                //     height: document.body.clientHeight,
+                                // }}
                             />
 
                 </div>

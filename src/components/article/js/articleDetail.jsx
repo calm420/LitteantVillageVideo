@@ -76,10 +76,19 @@ export default class articleDetail extends React.Component {
                 console.log(result,'评论列表');
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
-                    this.initDataSource = this.initDataSource.concat(result.response);
+                    if(this.initDataSource.length == 0 && result.response.length == 0){
+                        this.initDataSource = this.initDataSource.concat([{
+                            // avatar:null,
+                            // teacher:{},
+                            demoFlag:true,
+                        }])
+                    }else{
+                        this.initDataSource = this.initDataSource.concat(result.response);
+                    }
+                    // this.initDataSource = this.initDataSource.concat(result.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading:true
+                        isLoading:false
                     })
                     if (this.initDataSource.length == result.pager.rsCount) {
                         this.setState({
@@ -279,7 +288,9 @@ export default class articleDetail extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div>
+                <div style={
+                    rowData.demoFlag?{display:'none'}:{}
+                }>
                     <List className="listCont line_public ">
                         <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar:""} multipleLine>
                             {rowData.discussUser ? rowData.discussUser.userName:""} <Brief>{rowData.discussContent}</Brief>

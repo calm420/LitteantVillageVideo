@@ -325,7 +325,7 @@ export default class articleDetail extends React.Component {
                         </div>
                     </div>
                         <div className="commit">
-                            <div className="">
+                            <div>
                                 <TextareaItem
                                     placeholder="请输入评论内容"
                                     data-seed="logId"

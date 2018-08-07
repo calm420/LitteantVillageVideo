@@ -421,6 +421,29 @@ hr {
 .am-list-body::before,.am-list-body::after,.am-list-line::after{
   display: none !important;
 }
+.am-tabs-default-bar-top .am-tabs-default-bar-underline{
+  display: none;
+}
+.am-tabs-default-bar-tab-active{
+  position: relative;
+    &::before{
+      content: '';
+      position: absolute;
+      background-color: #4285F4;
+      display: block;
+      z-index: 1;
+      top: auto;
+      right: 15px;
+      bottom: 1px;
+      left: 50%;
+      width: 16px;
+      height: 2.5PX;
+      margin-left: -8px;
+      -webkit-border-radius: 1px;
+      -moz-border-radius: 1px;
+      border-radius: 1px;
+    }
+}
 /*删除弹窗*/
 .am-modal-content {
   .am-modal-title {

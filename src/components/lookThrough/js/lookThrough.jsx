@@ -60,7 +60,7 @@ export default class lookThrough extends React.Component {
                     calm.initDataSource = calm.initDataSource.concat(result.response);
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
-                        isLoading: true
+                        isLoading: false
                     })
                     if (calm.initDataSource.length == result.pager.rsCount) {
                         calm.setState({

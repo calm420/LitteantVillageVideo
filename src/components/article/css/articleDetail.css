@@ -100,6 +100,9 @@
   padding: 0 15px;
   border-top: 1px #e5e5e5 solid;
 }
+#articleDetail .commentList .list-view-section-body > div:last-child .line_public::after {
+  display: none;
+}
 #articleDetail .commentList .listCont .am-list-content {
   color: #666 !important;
   font-size: 13px;

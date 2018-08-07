@@ -144,7 +144,7 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+                console.log(result,"detail");
                 if (result.success) {
                     this.setState({
                         data: result.response
@@ -230,7 +230,7 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+                console.log(result,"pinglun");
                 if (result.success) {
                     Toast.info('评论成功!',1);
                     this.initDataSource = [];
@@ -294,7 +294,9 @@ export default class articleDetail extends React.Component {
                             this.state.likeFlag?{borderColor:'#1296db'}:{borderColor:'#8a8a8a'}
                         }>
                             <img src={this.state.likeFlag?require("../images/after.png"):require("../images/before.png")} alt=""/>
+
                         </div>
+                        {this.state.data.likeCount}
                         <div className="commit">
                             <div className="">
                                 <TextareaItem

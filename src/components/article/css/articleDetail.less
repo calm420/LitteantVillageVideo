@@ -77,11 +77,22 @@
   .commentList{
     .list-view-section-body{
       padding: 0 15px;
-      border-top: 1px #ddd solid;
+      border-top: 1px #e5e5e5 solid;
     }
     .listCont{
-      .am-list-body{
-
+      .am-list-content{
+        color: #666 !important;
+        font-size: 13px;
+        line-height: 17px;
+      }
+      .am-list-brief{
+        font-size: 15px;
+        word-break: break-all;
+        overflow: visible;
+        text-overflow: unset;
+        white-space: normal;
+        color: #333;
+        line-height: 20px;
       }
       .am-list-item {
         -webkit-align-items: inherit;
@@ -110,5 +121,27 @@
     bottom: 0;
     z-index: 99;
     width: 100%;
+    .am-list-item{
+      padding: 8px 15px;
+      min-height: auto;
+    }
+    .am-textarea-item{
+      background-color: #fff;
+    }
+    .am-textarea-control{
+      background-color: #f3f3f3;
+      border-radius: 4px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      textarea{
+        font-size: 13px;
+        line-height: 17px;
+        max-height: 51px;
+        overflow-y: auto;
+        padding: 0 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
   }
 }

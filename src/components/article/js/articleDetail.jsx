@@ -50,7 +50,7 @@ export default class articleDetail extends React.Component {
         })
 
 
-        $(document).keydown(function(event) {
+        $("#text").keydown(function(event) {
             console.log(this, "this")
             if (event.keyCode == 13) {
                 // alert('你按下了Enter');
@@ -231,6 +231,7 @@ export default class articleDetail extends React.Component {
 
     //评论
     saveDiscussInfo(){
+        console.log(theLike.state.commitText,'commitText')
         if(theLike.state.commitText == ''){
             Toast.info('请输入评论内容!',1)
             return;
@@ -327,6 +328,7 @@ export default class articleDetail extends React.Component {
                         <div className="commit">
                             <div>
                                 <TextareaItem
+                                    id="text"
                                     placeholder="请输入评论内容"
                                     data-seed="logId"
                                     ref={el => this.autoFocusInst = el}

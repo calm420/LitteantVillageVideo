@@ -98,7 +98,7 @@ export default class articleList extends React.Component {
     toDetail(id) {
         console.log(id);
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId );
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId +"&type=1");
             var data = {
                 method: 'openNewPage',
                 url: url

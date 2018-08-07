@@ -38,9 +38,11 @@ export default class articleDetail extends React.Component {
         var searchArray = locationSearch.split("&");
         var artId = searchArray[0].split('=')[1];
         var userId = searchArray[1].split('=')[1];
+        var type = searchArray[2].split('=')[1];
         this.setState({
             artId: artId,
             userId:userId,
+            type
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -265,8 +267,17 @@ export default class articleDetail extends React.Component {
             }
         });
     }
-
-
+    /**
+     * 返回
+     */
+    goBack=()=>{
+        if(theLike.state.type == 1){
+        location.href = "http://192.168.50.72:8091/#/articleList?userId="+this.state.userId;
+        }
+        if(theLike.state.type == 3){
+            location.href = "http://192.168.50.72:8091/#/myArticleList?userId="+this.state.userId;
+        }
+    }
     //评论框输入事件
     commitChange(val){
         this.setState({
@@ -274,15 +285,13 @@ export default class articleDetail extends React.Component {
         })
     }
 
-
-
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
                     <List className="listCont line_public ">
-                        <Item align="top" thumb={rowData.discussUser.avatar} multipleLine>
-                            {rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>
+                        <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar:""} multipleLine>
+                            {rowData.discussUser ? rowData.discussUser.userName:""} <Brief>{rowData.discussContent}</Brief>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
                             {/*{rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>*/}
@@ -294,11 +303,12 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail">
+                <div><span onClick={theLike.goBack}>返回</span></div>
                 <div className="inner">
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>
                         <div className="at">
-                            <div className="author">{this.state.data.userInfo.userName}</div>
+                            <div className="author">{this.state.data.userInfo ? this.state.data.userInfo.userName:""}</div>
                             <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
                         </div>
                         <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>

@@ -130,12 +130,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         });
     }
 
-     /**
-     * 返回
-     */
-    goBack=()=>{
-        location.href = "http://192.168.50.72:8091/#/lookThrough?auditId="+calm.state.auditId;
-    }
+
     render() {
         var _this = this;
         const data2 = [

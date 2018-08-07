@@ -1,7 +1,8 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.15";   //请求地址
-var isDebugLocal = false;
-var localUrl = "192.168.50.72";    //跳转地址http:
+var isDebugLocal = true;
+var localUrl = "192.168.50.39";    //跳转地址http:
+
 
 
 // //云校本地测试webService地址
@@ -16,8 +17,8 @@ const apiWebServiceURLOfLocals = "http://" + localDomain + ":6012/Excoord_Little
 const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_LittleVideoApiServer/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
-const mobileURLOfLocal = "http://" + localUrl + ":8091/#/";
-const mobileURLOfRemote = "http://jiaoxue.maaee.com:8091/#/";
+const mobileURLOfLocal = "http://" + localUrl + ":8094/#/";
+const mobileURLOfRemote = "http://jiaoxue.maaee.com:8094/#/";
 
 
 //老人健康手环地址

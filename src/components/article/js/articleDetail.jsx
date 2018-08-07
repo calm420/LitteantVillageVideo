@@ -42,7 +42,7 @@ export default class articleDetail extends React.Component {
         this.setState({
             artId: artId,
             userId:userId,
-            type
+            type:type,
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -268,17 +268,7 @@ export default class articleDetail extends React.Component {
             }
         });
     }
-    /**
-     * 返回
-     */
-    goBack=()=>{
-        if(theLike.state.type == 1){
-        location.href = "http://192.168.50.72:8091/#/articleList?userId="+this.state.userId;
-        }
-        if(theLike.state.type == 3){
-            location.href = "http://192.168.50.72:8091/#/myArticleList?userId="+this.state.userId;
-        }
-    }
+   
     //评论框输入事件
     commitChange(val){
         this.setState({
@@ -304,7 +294,6 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail" style={{height:document.body.clientHeight}}>
-                {/* <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div> */}
                 <div className="inner">
                         <div className="commit">
                             <div>
@@ -362,7 +351,6 @@ export default class articleDetail extends React.Component {
                                     height: document.body.clientHeight - 97,
                                 }}
                             />
-
 
                 </div>
 

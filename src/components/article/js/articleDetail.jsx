@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView,TextareaItem, Button, List, Picker, Tag
+    Toast, DatePicker, ListView,TextareaItem, Button, List, Picker, Tag, Icon
 } from 'antd-mobile';
 import '../css/articleDetail.less';
 const Item = List.Item;
@@ -303,7 +303,7 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail">
-                <div><span onClick={theLike.goBack}>返回</span></div>
+                <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div>
                 <div className="inner">
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>

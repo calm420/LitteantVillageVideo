@@ -42,7 +42,7 @@ export default class articleDetail extends React.Component {
         this.setState({
             artId: artId,
             userId:userId,
-            type
+            type:type,
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -303,13 +303,7 @@ export default class articleDetail extends React.Component {
         };
         // var articleContent = this.state.data.articleContent
         return (
-<<<<<<< HEAD
-            <div id="articleDetail">
-                {/* <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div> */}
-=======
             <div id="articleDetail" style={{height:document.body.clientHeight}}>
-                <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div>
->>>>>>> 95faec0354069a6e094132dde07c9d3237e7217b
                 <div className="inner">
                         <div className="commit">
                             <div>
@@ -367,7 +361,6 @@ export default class articleDetail extends React.Component {
                                     height: document.body.clientHeight - 97,
                                 }}
                             />
-
 
                 </div>
 

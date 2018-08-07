@@ -113,6 +113,15 @@ const uploadvideoList = (location, cb) => {
     }, 'uploadvideoList')
 };
 
+/*
+* 我的收藏
+* */
+const myCollection = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/collection/js/myCollection').default)
+    }, 'myCollection')
+};
+
 
 import './index.less';
 
@@ -148,6 +157,10 @@ class Index extends React.Component {
                         <Link
                             to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/myCollection?userId=1" style={{fontSize: '24px'}}>我的收藏</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -174,6 +187,8 @@ ReactDOM.render(
             <Route path="addUploadVideo" getComponent={addUploadVideo}/>
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
             <Route path="myArticleList" getComponent={myArticleList} />
+            <Route path="myCollection" getComponent={myCollection} />
+
         </Route>
     </Router>
     ,

@@ -1,10 +1,11 @@
 import React from 'react';
-import {Drawer, NavBar,Icon} from 'antd-mobile';
+import {Drawer, NavBar, Radio, Toast, Modal} from 'antd-mobile';
+
+
 import './AppSystem.less'
 import List from './leftComponent/js/List'
 import ReadPanel from './rightComponent/js/ReadPanel'
-
-
+const alert = Modal.alert;
 export default class AppSystem extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +40,33 @@ export default class AppSystem extends React.Component {
         this.refs.listToReadPanel.accept(type, data)
     }
 
+
+    /**
+     * 重新审核弹出框
+     */
+    showAlert = (event) => {
+        event.stopPropagation()
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定退出登录吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.exit() },
+
+        ], phone);
+    }
+
+    exit(){
+        sessionStorage.removeItem("loginUser");
+        location.hash="Login"
+    }
     render() {
+        var _this = this;
         return (
             <div id="AppSystem">
                 {/*顶部banner*/}
@@ -51,7 +78,7 @@ export default class AppSystem extends React.Component {
                         <img className="headPic" src={this.state.user.pic} alt=""/>,
                         <div className="userName">{this.state.user.name}</div>,
                         <div className="user_line"></div>,
-                        <div className="cancellation"><i className="user_exit"></i><span>退出</span></div>,
+                        <div className="cancellation"><i className="user_exit"></i><span onClick={_this.showAlert}>退出</span></div>,
                     ]}
                 >
                     {/*<div className="logo">校园自媒体</div>*/}

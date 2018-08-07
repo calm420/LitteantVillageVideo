@@ -5,6 +5,9 @@
   padding: 10px 15px;
   background-color: #fff;
 }
+#articleDetail .inner {
+  padding-bottom: 50px;
+}
 #articleDetail .inner iframe {
   margin: 10px 0;
   width: 100%;

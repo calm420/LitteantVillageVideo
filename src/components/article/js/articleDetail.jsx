@@ -285,8 +285,9 @@ export default class articleDetail extends React.Component {
         })
     }
 
+
+
     render() {
-        var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
@@ -304,7 +305,7 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail">
-            <div><span onClick={_this.goBack}>返回</span></div>
+                <div><span onClick={theLike.goBack}>返回</span></div>
                 <div className="inner">
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>
@@ -354,9 +355,10 @@ export default class articleDetail extends React.Component {
                                 onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                                style={{
-                                    height: document.body.clientHeight,
-                                }}
+                                useBodyScroll={true}
+                                // style={{
+                                //     height: document.body.clientHeight,
+                                // }}
                             />
 
                 </div>

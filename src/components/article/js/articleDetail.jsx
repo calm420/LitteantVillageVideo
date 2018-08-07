@@ -295,7 +295,7 @@ export default class articleDetail extends React.Component {
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>
                         <div className="at">
-                            <div className="author">{this.state.data.userInfo.userName}</div>
+                            <div className="author">{this.state.data.articleTitle}</div>
                             <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
                         </div>
                         <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>

@@ -51,14 +51,14 @@
       border-radius: 20px;
       text-align: center;
       .noLike{
-        background: url("../images/praise.png") no-repeat left 11px;
+        background: url("../images/praise.png") no-repeat left 10px;
         background-size: 16px;
         display: inline-block;
         padding-left: 25px;
 
       }
       .likeActive{
-        background: url("../images/praise_active.png") no-repeat left 11px;
+        background: url("../images/praise_active.png") no-repeat left 10px;
         background-size: 16px;
         display: inline-block;
         padding-left: 25px;
@@ -76,6 +76,12 @@
     }
   }
   .commentList{
+    .am-list-view-scrollview-content{
+      position: relative !important;
+    }
+    .am-list-footer{
+      background: #f4f4f4;
+    }
     .list-view-section-body{
       padding: 0 15px;
       border-top: 1px #e5e5e5 solid;

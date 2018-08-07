@@ -43,7 +43,7 @@
       width: 120px;
       height: 40px;
       line-height: 40px;
-      margin: 20px auto;
+      margin: 20px auto 15px;
       border: 1px solid #999;
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
@@ -75,24 +75,40 @@
     }
   }
   .commentList{
-    .am-list-item {
-      -webkit-align-items: inherit;
-      -moz-align-items: inherit;
-      -ms-align-items: inherit;
-      -o-align-items: inherit;
-      -khtml-align-items: inherit;
-      align-items: inherit;
-      img {
-        width: 28px;
-        height: 28px;
-        vertical-align: top;
-        border-radius: 50%;
+    .list-view-section-body{
+      padding: 0 15px;
+      border-top: 1px #ddd solid;
+    }
+    .listCont{
+      .am-list-body{
+
       }
-      .am-list-line-multiple{
-        padding: 0;
+      .am-list-item {
+        -webkit-align-items: inherit;
+        -moz-align-items: inherit;
+        -ms-align-items: inherit;
+        -o-align-items: inherit;
+        -khtml-align-items: inherit;
+        align-items: inherit;
+        padding: 15px 0;
+        img {
+          width: 28px;
+          height: 28px;
+          vertical-align: top;
+          border-radius: 50%;
+        }
+        .am-list-line-multiple{
+          padding: 0;
+        }
       }
     }
 
-
+  }
+  .commit{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    width: 100%;
   }
 }

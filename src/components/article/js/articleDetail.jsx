@@ -268,7 +268,7 @@ export default class articleDetail extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <List renderHeader={() => '评论内容'} className="my-list">
+                    <List className="listCont line_public ">
                         <Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>
                             {rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>
                         </Item>

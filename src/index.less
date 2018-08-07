@@ -421,6 +421,9 @@ hr {
 .am-list-body::before,.am-list-body::after,.am-list-line::after{
   display: none !important;
 }
+.am-list-line{
+  border: 0 !important;
+}
 .am-tabs-default-bar-top .am-tabs-default-bar-underline{
   display: none;
 }
@@ -443,6 +446,26 @@ hr {
       -moz-border-radius: 1px;
       border-radius: 1px;
     }
+}
+/* 返回 */
+.goBack{
+  height: 44px;
+  line-height: 44px;
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  svg{
+    position: absolute;
+    left: 4px;
+    top:50%;
+    margin-top: -15px;
+  }
+  .am-icon-md{
+    width: 30px;
+    height: 30px;
+    color: #666;
+  }
 }
 /*删除弹窗*/
 .am-modal-content {

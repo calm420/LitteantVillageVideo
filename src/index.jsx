@@ -68,7 +68,7 @@ const lookThrough = (location, cb) => {
  const WaitlookThroughDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/lookThrough/js/WaitlookThroughDetail').default)
-    }, 'EditorDemo')
+    }, 'WaitlookThroughDetail')
 };
 
  /**
@@ -77,7 +77,7 @@ const lookThrough = (location, cb) => {
  const AlreadylookThroughDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/lookThrough/js/AlreadylookThroughDetail').default)
-    }, 'EditorDemo')
+    }, 'AlreadylookThroughDetail')
  };
  
 const uploadMusicList = (location, cb) => {
@@ -97,6 +97,22 @@ const weArrPayment = (location, cb) => {
         cb(null, require('./components/weArrPayment/js/weArrPayment').default)
     }, 'weArrPayment')
 };
+
+
+/**
+ *上传视频
+ */
+const addUploadVideo = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/uploadVideo/js/addUploadVideo').default)
+    }, 'addUploadVideo')
+};
+const uploadvideoList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/uploadVideo/js/uploadvideoList').default)
+    }, 'uploadvideoList')
+};
+
 
 import './index.less';
 
@@ -126,7 +142,11 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>uploadMusicList</Link></li>
                     <li>
                         <Link
-                            to="/weArrPayment" style={{fontSize: '24px'}}>充值</Link>
+                            to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
                     </li>
                 </ul>
             </div>
@@ -151,6 +171,8 @@ ReactDOM.render(
             <Route path="uploadMusicList" getComponent={uploadMusicList}/>
             <Route path="addUploadMusic" getComponent={addUploadMusic}/>
             <Route path="weArrPayment" getComponent={weArrPayment}/>
+            <Route path="addUploadVideo" getComponent={addUploadVideo}/>
+            <Route path="uploadvideoList" getComponent={uploadvideoList}/>
             <Route path="myArticleList" getComponent={myArticleList} />
         </Route>
     </Router>

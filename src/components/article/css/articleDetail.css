@@ -7,6 +7,9 @@
 #articleDetail .am-list-item {
   padding: 0;
 }
+#articleDetail .am-list-item .am-list-line .am-list-content {
+  white-space: inherit !important;
+}
 #articleDetail .p15 {
   padding: 10px 15px;
   background-color: #fff;
@@ -41,6 +44,11 @@
 #articleDetail .content p {
   margin: 0;
   line-height: 1.5;
+}
+#articleDetail .content img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
 }
 #articleDetail .ql-image {
   max-width: 100%;

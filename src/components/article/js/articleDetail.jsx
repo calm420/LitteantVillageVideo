@@ -285,8 +285,6 @@ export default class articleDetail extends React.Component {
         })
     }
 
-
-
     render() {
         const row = (rowData, sectionID, rowID) => {
             return (

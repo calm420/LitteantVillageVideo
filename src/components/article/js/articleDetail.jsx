@@ -303,30 +303,16 @@ export default class articleDetail extends React.Component {
         };
         // var articleContent = this.state.data.articleContent
         return (
+<<<<<<< HEAD
             <div id="articleDetail">
                 {/* <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div> */}
+=======
+            <div id="articleDetail" style={{height:document.body.clientHeight}}>
+                <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div>
+>>>>>>> 95faec0354069a6e094132dde07c9d3237e7217b
                 <div className="inner">
-                    <div className="p15">
-                        <div className="title">{this.state.data.articleTitle}</div>
-                        <div className="at">
-                            <div className="author">{this.state.data.userInfo ? this.state.data.userInfo.userName:""}</div>
-                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
-                        </div>
-                        <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>
-                        <div className="content_bottom" >
-                            <div className="like" onClick={this.likeFlag.bind(this)} style={
-                                this.state.likeFlag?{borderColor:'#999',color:'#999'}:{borderColor:'#FE5C50',color:'#FE5C50'}
-                            }>
-                                <div className={this.state.likeFlag?'noLike':'likeActive'}>
-                                    {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
-                                    {this.state.data.likeCount}
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                         <div className="commit">
-                            <div className="">
+                            <div>
                                 <TextareaItem
                                     id="text"
                                     placeholder="请输入评论内容"
@@ -342,6 +328,27 @@ export default class articleDetail extends React.Component {
                             <ListView
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                renderSectionHeader={sectionData => (
+                                    <div className="p15">
+                                        <div className="title">{this.state.data.articleTitle}</div>
+                                        <div className="at">
+                                            <div className="author">{this.state.data.userInfo ? this.state.data.userInfo.userName:""}</div>
+                                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
+                                        </div>
+                                        <div className="content" dangerouslySetInnerHTML={{__html:this.state.data.articleContent}}></div>
+                                        <div className="content_bottom" >
+                                            <div className="like" onClick={this.likeFlag.bind(this)} style={
+                                                this.state.likeFlag?{borderColor:'#999',color:'#999'}:{borderColor:'#FE5C50',color:'#FE5C50'}
+                                            }>
+                                                <div className={this.state.likeFlag?'noLike':'likeActive'}>
+                                                    {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
+                                                    {this.state.data.likeCount}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 renderFooter={() => (
                                     <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                                         {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
@@ -355,8 +362,12 @@ export default class articleDetail extends React.Component {
                                 onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
                                 initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                                 scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-
+                                // useBodyScroll={true}
+                                style={{
+                                    height: document.body.clientHeight - 97,
+                                }}
                             />
+
 
                 </div>
 

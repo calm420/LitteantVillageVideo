@@ -9,11 +9,14 @@ const Brief = Item.Brief;
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
+
+var theLike;
 export default class articleDetail extends React.Component {
 
     constructor(props) {
         super(props);
         this.initDataSource = [];
+        theLike = this;
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initDataSource),
             defaultPageNo: 1,
@@ -44,6 +47,15 @@ export default class articleDetail extends React.Component {
             this.getDiscussInfoList();
         })
 
+
+        $(document).keydown(function(event) {
+            console.log(this, "this")
+            if (event.keyCode == 13) {
+                // alert('你按下了Enter');
+                theLike.saveDiscussInfo();
+
+            }
+        })
     }
 
 
@@ -51,7 +63,7 @@ export default class articleDetail extends React.Component {
     /**
      * 获取评论列表
      * **/
-    getDiscussInfoList() {
+    getDiscussInfoList(){
         var param = {
             "method": 'getDiscussInfoList',
             "videoId": this.state.artId,
@@ -217,32 +229,32 @@ export default class articleDetail extends React.Component {
 
     //评论
     saveDiscussInfo(){
-        if(this.state.commitText == ''){
+        if(theLike.state.commitText == ''){
             Toast.info('请输入评论内容!',1)
             return;
         }
         var param = {
             "method": 'saveDiscussInfo',
-            "targetId": this.state.artId,
+            "targetId": theLike.state.artId,
             "targetType": 0,
-            "discussContent": this.state.commitText,
-            "userId": this.state.userId
+            "discussContent": theLike.state.commitText,
+            "userId": theLike.state.userId
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result,"pinglun");
                 if (result.success) {
                     Toast.info('评论成功!',1);
-                    this.initDataSource = [];
-                    this.setState({
-                        dataSource: dataSource.cloneWithRows(this.initDataSource),
+                    theLike.initDataSource = [];
+                    theLike.setState({
+                        dataSource: dataSource.cloneWithRows(theLike.initDataSource),
                         defaultPageNo: 1,
                         clientHeight: document.body.clientHeight,
                         isLoading: true,
                         hasMore: true,
                         commitText:''
                     },()=>{
-                        this.getDiscussInfoList();
+                        theLike.getDiscussInfoList();
                     })
                 }else{
                     Toast.info('评论失败!',1);
@@ -311,7 +323,7 @@ export default class articleDetail extends React.Component {
                                     value={this.state.commitText}
                                     onChange={this.commitChange.bind(this)}
                                 />
-                                <Button type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>
+                                {/*<Button type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>*/}
                             </div>
                         </div>
                             <ListView

@@ -5,10 +5,6 @@ var calm;
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
-const tabs = [
-    { title: '待审核', value: "0" },
-    { title: '已审核', value: "1" },
-];
 export default class myCollection extends React.Component {
     constructor(props) {
         super(props);

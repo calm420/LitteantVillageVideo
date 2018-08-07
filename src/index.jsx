@@ -113,18 +113,15 @@ const uploadvideoList = (location, cb) => {
     }, 'uploadvideoList')
 };
 
-
-/**
- * 收藏
- * @param {}} location 
- * @param {*} cb 
- */
+/*
+* 我的收藏
+* */
 const myCollection = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/collection/js/myCollecton').default)
-    }, 'myCollection')
-};
+    }, 'uploadvideoList')
 
+}
 
 
 import './index.less';
@@ -160,17 +157,13 @@ class Index extends React.Component {
                     {/* <li>
                         <Link
                             to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
-<<<<<<< HEAD
                     </li>
-                   
+                    */}
+
                     <li>
                         <Link
-                            to="/myCollection?ident=1" style={{fontSize: '24px'}}>收藏</Link>
+                            to="/myCollection?userId=1" style={{fontSize: '24px'}}>我的收藏</Link>
                     </li>
-                   
-=======
-                    </li> */}
->>>>>>> b407f0d78ea05fcdba6a1a9bf7b3eb9c9d8c0b90
                 </ul>
             </div>
         );

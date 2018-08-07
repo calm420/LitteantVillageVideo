@@ -42,7 +42,7 @@ export default class articleDetail extends React.Component {
         this.setState({
             artId: artId,
             userId:userId,
-            type
+            type:type,
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -362,7 +362,6 @@ export default class articleDetail extends React.Component {
                                     height: document.body.clientHeight - 97,
                                 }}
                             />
-
 
                 </div>
 

@@ -144,7 +144,7 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+                console.log(result,"detail");
                 if (result.success) {
                     this.setState({
                         data: result.response
@@ -230,7 +230,7 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+                console.log(result,"pinglun");
                 if (result.success) {
                     Toast.info('评论成功!',1);
                     this.initDataSource = [];
@@ -293,7 +293,7 @@ export default class articleDetail extends React.Component {
                             }>
                                 <div className={this.state.likeFlag?'noLike':'likeActive'}>
                                     {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
-                                    123
+                                    {this.state.data.likeCount}
                                 </div>
 
                             </div>

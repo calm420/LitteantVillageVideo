@@ -84,3 +84,6 @@
   vertical-align: top;
   border-radius: 50%;
 }
+#articleDetail .commentList .am-list-item .am-list-line-multiple {
+  padding: 0;
+}

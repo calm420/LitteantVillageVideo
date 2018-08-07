@@ -38,9 +38,11 @@ export default class articleDetail extends React.Component {
         var searchArray = locationSearch.split("&");
         var artId = searchArray[0].split('=')[1];
         var userId = searchArray[1].split('=')[1];
+        var type = searchArray[2].split('=')[1];
         this.setState({
             artId: artId,
             userId:userId,
+            type
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -265,9 +267,16 @@ export default class articleDetail extends React.Component {
             }
         });
     }
-    
+    /**
+     * 返回
+     */
     goBack=()=>{
+        if(theLike.state.type == 1){
         location.href = "http://192.168.50.72:8091/#/articleList?userId="+this.state.userId;
+        }
+        if(theLike.state.type == 3){
+            location.href = "http://192.168.50.72:8091/#/myArticleList?userId="+this.state.userId;
+        }
     }
     //评论框输入事件
     commitChange(val){

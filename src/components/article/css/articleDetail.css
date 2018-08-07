@@ -1,5 +1,6 @@
 #articleDetail {
   color: #333;
+  background-color: #f4f4f4;
 }
 #articleDetail .goBack {
   height: 44px;
@@ -143,7 +144,7 @@
   width: 100%;
 }
 #articleDetail .commit .am-list-item {
-  padding: 8px 15px;
+  padding: 10px 15px;
   min-height: auto;
 }
 #articleDetail .commit .am-textarea-item {
@@ -163,4 +164,5 @@
   padding: 0 10px;
   width: 100%;
   box-sizing: border-box;
+  color: #333;
 }

@@ -192,8 +192,8 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 <div className='sameBack'>
                                                     <div className='topMsg'>
                                                         <img className="photo" src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
-                                                        <span className='author'>作者：{calm.state.data.littleVideoInfo.userInfo.userName}</span>
-                                                        <span className='time'>上传时间：{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
+                                                        <span className='author'>{calm.state.data.littleVideoInfo.userInfo.userName}</span>
+                                                        <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
                                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                     </div>
                                                     <div className='textCont'>

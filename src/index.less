@@ -301,7 +301,7 @@ hr {
   width: 100%;
   box-sizing: border-box;
   z-index: 99;
-  border-radius: 2px;
+  border-radius: 4px;
   .am-button-primary {
     background-color: #F56A55;
     border: 1PX solid #F56A55;
@@ -354,7 +354,7 @@ hr {
 }
 
 .am-button-primary, .am-button {
-  border-radius: 2px !important;
+  border-radius: 4px !important;
 }
 
 .am-button::before {
@@ -394,7 +394,10 @@ hr {
     transform: scaleY(0.5);
   }
 }
-
+.am-tabs-default-bar-tab{
+  height: 46px !important;
+  line-height: 46px !important;
+}
 .deleteBtn_common {
   float: right;
   display: block;
@@ -415,7 +418,7 @@ hr {
   padding: 0 8px;
 }
 
-.am-list-body::before,.am-list-body::after{
+.am-list-body::before,.am-list-body::after,.am-list-line::after{
   display: none !important;
 }
 /*删除弹窗*/

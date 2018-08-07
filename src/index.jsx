@@ -157,9 +157,10 @@ class Index extends React.Component {
                         <Link
                             to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link
                             to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
+<<<<<<< HEAD
                     </li>
                    
                     <li>
@@ -167,6 +168,9 @@ class Index extends React.Component {
                             to="/myCollection?ident=1" style={{fontSize: '24px'}}>收藏</Link>
                     </li>
                    
+=======
+                    </li> */}
+>>>>>>> b407f0d78ea05fcdba6a1a9bf7b3eb9c9d8c0b90
                 </ul>
             </div>
         );

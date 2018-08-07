@@ -1,9 +1,30 @@
 #articleDetail {
   color: #333;
+  background-color: #f4f4f4;
+}
+#articleDetail .goBack {
+  height: 44px;
+  line-height: 44px;
+  background-color: #fff;
+  position: relative;
+}
+#articleDetail .goBack svg {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  margin-top: -15px;
+}
+#articleDetail .goBack .am-icon-md {
+  width: 30px;
+  height: 30px;
+  color: #666;
+}
+#articleDetail .p15 {
+  padding: 10px 15px;
   background-color: #fff;
 }
 #articleDetail .inner {
-  padding: 10px 15px;
+  padding-bottom: 50px;
 }
 #articleDetail .inner iframe {
   margin: 10px 0;
@@ -38,16 +59,110 @@
   max-height: 100%;
 }
 #articleDetail .content_bottom .like {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto;
-  border: 3px solid #ccc;
-  padding: 5px 20px;
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  margin: 20px auto 15px;
+  border: 1px solid #999;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+  text-align: center;
+}
+#articleDetail .content_bottom .like .noLike {
+  background: url("../images/praise.png") no-repeat left 10px;
+  background-size: 16px;
+  display: inline-block;
+  padding-left: 25px;
+}
+#articleDetail .content_bottom .like .likeActive {
+  background: url("../images/praise_active.png") no-repeat left 10px;
+  background-size: 16px;
+  display: inline-block;
+  padding-left: 25px;
 }
 #articleDetail .content_bottom .like img {
+  width: 16px;
+  height: 16px;
+  margin-left: 20px;
+  margin-top: 6px;
+}
+#articleDetail .content_bottom .like span {
+  vertical-align: top;
+  padding-left: 10px;
+}
+#articleDetail .commentList .am-list-view-scrollview-content {
+  position: relative !important;
+}
+#articleDetail .commentList .am-list-footer {
+  background: #f4f4f4;
+}
+#articleDetail .commentList .list-view-section-body {
+  padding: 0 15px;
+  border-top: 1px #e5e5e5 solid;
+}
+#articleDetail .commentList .list-view-section-body > div:last-child .line_public::after {
+  display: none;
+}
+#articleDetail .commentList .listCont .am-list-content {
+  color: #666 !important;
+  font-size: 13px;
+  line-height: 17px;
+}
+#articleDetail .commentList .listCont .am-list-brief {
+  font-size: 15px;
+  word-break: break-all;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+  color: #333;
+  line-height: 20px;
+}
+#articleDetail .commentList .listCont .am-list-item {
+  -webkit-align-items: inherit;
+  -moz-align-items: inherit;
+  -ms-align-items: inherit;
+  -o-align-items: inherit;
+  -khtml-align-items: inherit;
+  align-items: inherit;
+  padding: 15px 0;
+}
+#articleDetail .commentList .listCont .am-list-item img {
+  width: 28px;
+  height: 28px;
+  vertical-align: top;
+  border-radius: 50%;
+}
+#articleDetail .commentList .listCont .am-list-item .am-list-line-multiple {
+  padding: 0;
+}
+#articleDetail .commit {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
   width: 100%;
-  height: 100%;
+}
+#articleDetail .commit .am-list-item {
+  padding: 10px 15px;
+  min-height: auto;
+}
+#articleDetail .commit .am-textarea-item {
+  background-color: #fff;
+}
+#articleDetail .commit .am-textarea-control {
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+#articleDetail .commit .am-textarea-control textarea {
+  font-size: 13px;
+  line-height: 17px;
+  max-height: 51px;
+  overflow-y: auto;
+  padding: 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #333;
 }

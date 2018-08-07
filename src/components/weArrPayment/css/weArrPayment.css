@@ -58,6 +58,7 @@
   color: #fff;
   font-size: 10px;
   background: rgba(255, 255, 255, 0.46) url("../img/icon_start.png") no-repeat;
+  background-size: 20px;
   -webkit-border-radius: 10px 3px 3px 10px;
   -moz-border-radius: 10px 3px 3px 10px;
   border-radius: 10px 3px 3px 10px;
@@ -71,6 +72,7 @@
 }
 #weArrPayment .payContent .personCenter .msg.vip {
   background: rgba(255, 255, 255, 0.46) url("../img/icon_startVip.png") no-repeat;
+  background-size: 20px;
 }
 #weArrPayment .payContent .rechargeAmount .payBall {
   width: 50%;
@@ -181,7 +183,7 @@
   background-color: #e5e5e5;
   display: block;
   z-index: 1;
-  top: 0;
+  top: -1px;
   right: 15px;
   bottom: auto;
   left: 0;

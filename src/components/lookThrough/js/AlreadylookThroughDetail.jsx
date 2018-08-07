@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast, Modal, Button } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Modal, Button,Icon } from 'antd-mobile';
 import "../css/AlreadylookThroughDetail.less"
 
 const RadioItem = Radio.RadioItem;
@@ -129,6 +129,13 @@ export default class AlreadylookThroughDetail extends React.Component {
             }
         });
     }
+
+     /**
+     * 返回
+     */
+    goBack=()=>{
+        location.href = "http://192.168.50.72:8091/#/lookThrough?auditId="+calm.state.auditId;
+    }
     render() {
         var _this = this;
         const data2 = [
@@ -140,6 +147,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             <div id="alreadyLookThrough" style={{
                 height: document.body.clientHeight
             }}>
+             {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
                     {
                         // 自媒体文章

@@ -14,6 +14,7 @@ export default class lookThrough extends React.Component {
     constructor(props) {
         super(props);
         calm = this;
+        
         calm.initDataSource = [];
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initDataSource),
@@ -23,6 +24,9 @@ export default class lookThrough extends React.Component {
             waitLookThroughData: [],
             alreadyLookThroudhData: [],
         }
+    }
+    componentWillMount() {
+        document.title = "审核列表";
     }
     componentDidMount() {
         document.title = "审核列表"
@@ -36,9 +40,7 @@ export default class lookThrough extends React.Component {
         calm.getArticleAndLittleVideoIsNo();
         // window.addEventListener('scroll', calm.scrollHandle);
     }
-    componentWillMount() {
-        // window.addEventListener('scroll', calm.scrollHandle);
-    }
+   
     // scrollHandler() {
     //     console.log("出发了滚动事件")
     //     console.log(window.pageYOffset)
@@ -156,26 +158,26 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
+        var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
         var data = {
             method: 'openNewPage',
-            url: url
+            url: urlW
         };
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+            window.location.href = urlW;
         });
     }
     /**
      * 跳转已审核页面
      */
     toAlreadyLookThrough(id, type, auditId) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "AlreadylookThroughDetail?id=" + id + "&type=" + type + "&auditId=" + auditId);
+        var urlA = encodeURI(WebServiceUtil.mobileServiceURL + "AlreadylookThroughDetail?id=" + id + "&type=" + type + "&auditId=" + auditId);
         var data = {
             method: 'openNewPage',
-            url: url
+            url: urlA
         };
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+            window.location.href = urlA;
         });
     }
 

@@ -304,7 +304,7 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail">
-                <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div>
+                {/* <div className="goBack line_public"><Icon type="left" onClick={theLike.goBack}/></div> */}
                 <div className="inner">
                     <div className="p15">
                         <div className="title">{this.state.data.articleTitle}</div>

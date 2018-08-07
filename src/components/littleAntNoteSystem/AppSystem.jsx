@@ -14,7 +14,7 @@ export default class AppSystem extends React.Component {
             user: {
                 name: '李栋',
                 pic: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3407202463,2165689779&fm=200&gp=0.jpg",
-                userId: 3,
+                userId: JSON.parse(sessionStorage.getItem("loginUser")),
             }
         };
     }
@@ -22,6 +22,11 @@ export default class AppSystem extends React.Component {
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
         Bridge.setRefreshAble("false");
+        if(this.state.user.userId){
+
+        }else {
+            location.hash="Login";
+        }
 
     }
 

@@ -51,6 +51,7 @@ export default class weArrPayment extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                
                 console.log(result,"re")
                 if (result.msg == '调用成功' || result.success) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {

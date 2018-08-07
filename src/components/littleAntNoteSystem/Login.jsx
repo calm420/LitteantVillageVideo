@@ -56,7 +56,7 @@ export default class Login extends React.Component {
             "uuid":machineId,
         };
 
-        WebServiceUtil.requestArPaymentApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     var response = result.response;
@@ -90,10 +90,10 @@ export default class Login extends React.Component {
         return (
             <div id="Login">
                 <div className="ThinkChange_cont empty_center">
-                    <div className="ThinkChange"></div>
+                    <div className="ThinkChange">{this.state.loginImg}</div>
                     <div className="ThinkChange_text">扫码登录</div>
                 </div>
-                {this.state.loginImg}
+                
             </div>
         );
     }

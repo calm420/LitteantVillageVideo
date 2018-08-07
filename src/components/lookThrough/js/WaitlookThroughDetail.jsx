@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast, Button } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Button,Icon } from 'antd-mobile';
 import "../css/WaitlookThroughDetail.less"
 const RadioItem = Radio.RadioItem;
 var calm;
@@ -143,6 +143,14 @@ export default class WaitlookThroughDetail extends React.Component {
             }
         });
     }
+
+
+     /**
+     * 返回
+     */
+    goBack=()=>{
+        location.href = "http://192.168.50.72:8091/#/lookThrough?auditId="+calm.state.auditId;
+    }
     render() {
         var _this = this;
         const data2 = [
@@ -154,6 +162,7 @@ export default class WaitlookThroughDetail extends React.Component {
             <div id="waitLookThrough" style={{
                 height: document.body.clientHeight
             }}>
+             {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content">
                     {
                         calm.state.type == 0 ?

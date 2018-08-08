@@ -159,3 +159,19 @@
   box-sizing: border-box;
   color: #333;
 }
+#articleDetail .commit {
+  background: white;
+}
+#articleDetail .commit .am-textarea-item {
+  width: calc(100% - 40px);
+  display: inline-block;
+  box-sizing: border-box;
+}
+#articleDetail .commit .pent {
+  display: inline-block;
+}
+#articleDetail .commit .pent img {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}

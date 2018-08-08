@@ -14,7 +14,7 @@ var localUrl = "192.168.50.72";    //跳转地址http:
 // //小蚂蚁webService地址
 const apiWebServiceURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
 
-const apiWebServiceURLOfRemote = "https://www.maaee.com/Excoord_LittleVideoApiServer/webservice";
+const apiWebServiceURLOfRemote = "http://www.maaee.com:6012/Excoord_LittleVideoApiServer/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
 const mobileURLOfLocal = "http://" + localUrl + ":8094/#/";

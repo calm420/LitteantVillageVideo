@@ -69,7 +69,7 @@ export default class LoginScanner extends React.Component {
     render() {
         return (
             <div className="container">
-                <div className='submitBtn' style={{ width: '100%', position: 'absolute', left: '0', top: '50%', marginTop: '-44px' }}>
+                <div style={{ width: '100%', position: 'absolute', left: '0', top: '50%', marginTop: '-44px' }}>
                     <div style={{ color: '#333', fontSize: '16px', paddingBottom: '25px', textAlign: 'center' }}>有样：AR微分享学习平台登录</div>
                     <Button style={{ width: '250px', margin: '0 auto' }} type='warning' onClick={this.allowLoginLittleVideoSystem}>登录</Button>
                 </div>

@@ -201,3 +201,16 @@
 #ReadPanel .am-image-picker-list .am-image-picker-upload-btn:after {
   background: transparent;
 }
+#ReadPanel .author {
+  background: #F5F6FA;
+  margin-top: 8px;
+}
+#ReadPanel .author .am-list-item.am-input-item {
+  background: #F5F6FA;
+}
+#ReadPanel .author .am-list-item.am-input-item .am-input-control input {
+  padding: 0 10px;
+}
+#ReadPanel .ql-editor.ql-blank::before {
+  font-style: normal;
+}

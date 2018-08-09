@@ -368,15 +368,6 @@ export default class ReadPanel extends React.Component {
                                 ></InputItem>
                                 {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
                             </div>
-                            <div className="author">
-                                <InputItem
-                                    clear
-                                    placeholder="请输入作者姓名"
-                                    onChange={this.inputChangeForAuthor.bind(this)}
-                                    value={this.state.author}
-                                ></InputItem>
-                                {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
-                            </div>
                             <div className="image">
                                 {/*<img*/}
                                 {/*src="https://dxlfb468n8ekd.cloudfront.net/gsc/ICCVKO/13/ad/59/13ad5999c49548458440bfe7353f49c9/images/page3/u92.png?token=0121f9711e3571df8e85906ef4bd8f15"*/}
@@ -395,6 +386,15 @@ export default class ReadPanel extends React.Component {
                                 {/*</div>*/}
                                 <div className="img_text" style={files.length > 0 ? {display: 'none'} : {display: "block"}}>请添加新闻列表页展示图(支持jpg ,png图片，建议尺寸)</div>
                             </div>
+                        </div>
+                        <div className="author">
+                            <InputItem
+                                clear
+                                placeholder="请输入作者姓名"
+                                onChange={this.inputChangeForAuthor.bind(this)}
+                                value={this.state.author}
+                            ></InputItem>
+                            {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
                         </div>
                         <div className="edit_cont">
                             <ReactQuill

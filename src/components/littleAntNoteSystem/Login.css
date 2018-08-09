@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #Login {
   height: 100%;
   background: url("img/login_bg.png") no-repeat;

@@ -395,7 +395,7 @@ export default class articleDetail extends React.Component {
                                 <div className="title">{this.state.data.articleTitle}</div>
                                 <div className="at">
                                     <div
-                                        className="author">{this.state.data.userInfo ? this.state.data.userInfo.userName : ""}</div>
+                                        className="author">{this.state.data.author}</div>
                                     <div
                                         className="createTime">{WebServiceUtil.formatYMD(this.state.data.createTime)}</div>
                                 </div>

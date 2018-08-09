@@ -80,7 +80,7 @@ export default class List extends React.Component {
     getListData(type) {  //0  1
         var param = {
             "method": 'getArticleInfoListByStatus',
-            "userId": 3,
+            "userId": JSON.parse(sessionStorage.getItem("loginUser")).uid,
             "status": type,
             pageNo: '-1'
         };

@@ -355,7 +355,7 @@ export default class ReadPanel extends React.Component {
                 <div className="click_head" style={!this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
                     点击 "<a onClick={this.changeWrite.bind(this)}>写文章</a>"，创建一篇新文章
                 </div>
-                <div className="write_article_cont" style={this.state.writeFlag ? {display: 'none'} : {display: "block"}}>
+                <div className="write_article_cont" style={{display: 'none'}}>
                     <div className="empty_draft empty_center"><span>暂无草稿</span></div>
                 </div>
                 <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>

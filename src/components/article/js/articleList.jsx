@@ -24,7 +24,9 @@ export default class articleList extends React.Component {
             hasMore: true,
             index: 0,
             userRoot: false,
-            recommended_video: [],
+            recommended_video: {
+                response:[]
+            },
         }
     }
 
@@ -64,10 +66,17 @@ export default class articleList extends React.Component {
                 console.log(result, '短视频');
                 if (result.success) {
                     this.setState({
-                        recommended_video: result.response,
-                        random_index: this.getRandom(),
+                        recommended_video: result,
+                        recommended_pageCount: result.pager.pageCount,
+                        recommended_pageNo: result.pager.pageNo,
+                        // random_index: this.getRandom(),
                     }, () => {
-                        console.log(this.state.random_index, 'random')
+                        var obj=[];
+                        // obj[`recommended_video[${this.state.defaultPageNo-1}]`] = result.response;
+                        // console.log(obj)
+                        // this.setState(obj,()=>{
+                        //     console.log(this.state.recommended_video[0], 'recommended_video');
+                        // })
                         //获取文章列表
                         this.getArticleInfoListByType();
                     })
@@ -102,18 +111,20 @@ export default class articleList extends React.Component {
                     // console.log(this.state.recommended_video,'recommended_video');
                     var initLength = this.initDataSource.length;
                     this.initDataSource = this.initDataSource.concat(result.response);
-                    if (this.state.recommended_video.length > 0 && result.response.length > 0) {
+                    if (this.state.recommended_video.response.length > 0 && result.response.length > 0) {
                         this.initDataSource.splice((result.response.length / 2) + initLength, 0, this.state.recommended_video);
                     }else{
                         this.setState({
-                            recommended_video:[]
+                            recommended_video:{
+                                response:[]
+                            }
                         })
                     }
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true
                     })
-                    if ((this.initDataSource.length - (this.state.recommended_video.length == 0?0:1)) >= result.pager.rsCount) {
+                    if ((this.initDataSource.length - (this.state.recommended_video.response.length == 0?0:1)) >= result.pager.rsCount) {
                         this.setState({
                             hasMore: false,
                             isLoading: false
@@ -213,14 +224,20 @@ export default class articleList extends React.Component {
     }
 
     //播放视频
-    toPlayVideo(videoPath){
-        console.log(videoPath);
+    toPlayVideo(videoIndex,recommended_video,recommended_pageCount,recommended_pageNo){
+        console.log(videoIndex);
+        console.log(recommended_video);
+        console.log(recommended_pageCount);
+        console.log(recommended_pageNo);
         var data = {
-            method: 'showPdf',
-            pdfUrl: videoPath
+            method: 'playArticleVideo',
+            videos: recommended_video,
+            position: videoIndex,
+            pageNo: recommended_pageNo,
+            pageCount: recommended_pageCount
         };
         Bridge.callHandler(data, null, function (error) {
-            console.log('开启视频失败')
+            console.log('开启小视频失败')
         });
     }
 
@@ -284,15 +301,17 @@ export default class articleList extends React.Component {
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
-            if (rowData instanceof Array) {  //为自媒体推荐视频
+            // console.log(rowData,'整体循环中的rowData')
+            if (rowData.response instanceof Array) {  //为自媒体推荐视频
                 var videoDom = [];
-                for(var i=0;i<rowData.length;i++){
+                // console.log(rowData,'自媒体视频循环中listVideoInfo')
+                for(var i=0;i<rowData.response.length;i++){
                     videoDom.push(
-                        <div className="video_row" onClick={this.toPlayVideo.bind(this,rowData[i].videoPath)}>
-                            <img className="video_firstImage" src={rowData[i].coverPath==''?rowData[i].firstUrl:rowData[i].coverPath} alt=""/>
-                            <div className="like">{rowData[i].likeCount}赞</div>
-                            <div className="read"><span>△</span>&nbsp;&nbsp;{rowData[i].readCount}</div>
-                            <div className="video_content">{rowData[i].videoContent}</div>
+                        <div className="video_row" onClick={this.toPlayVideo.bind(this,i,rowData.response,rowData.pager.pageCount,rowData.pager.pageNo)}>
+                            <img className="video_firstImage" src={rowData.response[i].coverPath==''?rowData.response[i].firstUrl:rowData.response[i].coverPath} alt=""/>
+                            <div className="like">{rowData.response[i].likeCount}赞</div>
+                            <div className="read"><span>△</span>&nbsp;&nbsp;{rowData.response[i].readCount}</div>
+                            <div className="video_content">{rowData.response[i].videoContent}</div>
                         </div>
                     )
                 }
@@ -363,7 +382,7 @@ export default class articleList extends React.Component {
             }
 
             return (
-                <div onClick={rowData instanceof Array?'':this.toDetail.bind(this, rowData.articleId)}>
+                <div onClick={rowData.response instanceof Array?'':this.toDetail.bind(this, rowData.articleId)}>
                     {dom}
                 </div>
             )
@@ -373,7 +392,7 @@ export default class articleList extends React.Component {
                 height: document.body.clientHeight
             }}>
                 <div className='emptyDiv' style={
-                    this.state.userRoot ? {display: 'none'} : {display: 'block'}
+                    this.state.userRoot || this.state.index == 1 ? {display: 'none'} : {display: 'block'}
                 }>
                     <div className='emptyIcon'></div>
                     <div className='text'>请在“个人中心”的设置页面<br/>完善资料后查看相关内容</div>
@@ -392,7 +411,6 @@ export default class articleList extends React.Component {
                         height: document.documentElement.clientHeight - 46,
                         backgroundColor: '#f4f4f4'
                     }}>
-                        {/*推荐*/}
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

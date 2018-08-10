@@ -27,8 +27,6 @@ export default class addUploadVideo extends React.Component {
                 videoUrl: '',
                 coverPath: '',
                 videoContent: '',
-                cheContent: "",
-                cheTitle: "",
                 userId: uid,
                 videoType: 0,
                 isRecommend: 0,
@@ -122,18 +120,9 @@ export default class addUploadVideo extends React.Component {
         calm.buildAddList()
 
     };
-    /**
-     * 挑战内容
-     */
-    cheContentChange(index, value) {
-        console.log(index);
-        console.log(value)
-        calm.state.addVideoList[index].cheContent = value
-        calm.buildAddList()
 
-    }
     /**
-     * 音乐上传
+     * 视频上传
      */
     uploadMp4(index, event) {
         event.stopPropagation()
@@ -217,7 +206,7 @@ export default class addUploadVideo extends React.Component {
                 {/*删除按钮*/}
                 <div className="icon_delete" onClick={calm.showListAlert.bind(this, i)}
                     style={{ display: listArr.length == 1 ? 'none' : 'block' }}></div>
-                     <div className="my_flex sameBack">
+                <div className="my_flex sameBack">
                     <span className="textTitle">上传封面
                         <p style={{ margin: 0, height: 5 }}></p>
                         <span className="uploadSupport">(jpg格式)</span>
@@ -254,7 +243,7 @@ export default class addUploadVideo extends React.Component {
                     }
                 </div>
                 <div className="line_public flex_container"></div>
-               
+
                 <div>心情描述</div>
                 <TextareaItem
                     className="add_element"
@@ -338,8 +327,6 @@ export default class addUploadVideo extends React.Component {
             coverPath: '',
             videoContent: '',
             tagValue: '',
-            cheTitle: "",
-            cheContent: "",
             videoType: 0,
             isRecommend: 0,
             userId: calm.state.uid,
@@ -386,47 +373,51 @@ export default class addUploadVideo extends React.Component {
     /**
      * 保存视频信息
      */
-    batchVideoMusic() {
-        var submitFlag = true;
-        var listArr = calm.state.addVideoList
-        for (var i = 0; i < listArr.length; i++) {
-            // if (listArr[i].coverPath.length == 0 || listArr[i].videoUrl.length == 0 || listArr[i].videoContent.length == 0 || listArr[i].tagValue.length == 0) {
-            //     submitFlag = false
-            //     break
-            // }
-            // if (listArr[i].show || listArr[i].cheContent == "" || listArr[i].cheTitle == "") {
-            //     continue;
-            // }
-        }
-        // if (!submitFlag) {
-        //     Toast.fail('存在空值请检查', 2)
-        //     return
-        // }
+    batchLittleVideoInfo() {
+        var newArr = []
+        calm.state.addVideoList.forEach(function (v, i) {
+            newArr.push({
+                coverPath:v.coverPath,
+                videoPath:v.videoUrl,
+                videoType:v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
+                userId:v.userId,
+                videoContent:v.videoContent,   // 心情描述 
+                tags: [
+                    {
+                        tagTitle:v.cheData.label,
+                        tagType: 2,   //挑战
+                        tagContent:v.cheData.extra
+                    }
+                ]
+            })
+        })
 
+        console.log(calm.state.addVideoList)
+        console.log(newArr)
 
-        console.log(listArr);
+        newArr.forEach((v,i)=>{
+            console.log(v,"vb")
+            v.tags =  v.tags.concat(calm.state.addVideoList[i].tagText)
+        })
 
+        console.log(newArr,"newArr");   
         var param = {
-            "method": 'batchVideoMusic',
-            "videoMusicsJson": JSON.stringify(listArr),
+            "method": 'batchLittleVideoInfo',
+            "videoJson": JSON.stringify(newArr),
         };
-
-
-        console.log(param)
-        return
-
+        console.log(param,"param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
 
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
-                    var data = {
-                        method: 'finishForRefresh',
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                        console.log(error);
-                    });
+                    // var data = {
+                    //     method: 'finishForRefresh',
+                    // };
+                    // Bridge.callHandler(data, null, function (error) {
+                    //     console.log(error);
+                    // });
                 }
             },
             onError: function (error) {
@@ -436,7 +427,7 @@ export default class addUploadVideo extends React.Component {
     }
 
 
- 
+
     /**
      * 挑战搜索框
      */
@@ -471,7 +462,6 @@ export default class addUploadVideo extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                // console.log(v);
                                 if (v.tagId == 0) {
                                     arr.push({
                                         value: v.tagId,
@@ -554,9 +544,9 @@ export default class addUploadVideo extends React.Component {
         calm.setState({ showTextOrList: true })
     }
 
-       /** 
-     * 标签搜索框
-     */
+    /** 
+  * 标签搜索框
+  */
     searchInputChange = (value) => {
         calm.setState({
             searchValue: value
@@ -571,9 +561,22 @@ export default class addUploadVideo extends React.Component {
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
-        calm.state.addVideoList[calm.state.tagIndex].tagText = calm.state.addVideoList[calm.state.tagIndex].tagText.concat(calm.state.tagChangeData);
+        var tagTextData = []
+        calm.state.tagChangeData.forEach((v,i)=>{
+            tagTextData.push({
+                tagTitle:v.tagTitle,
+                tagType:1,
+                tagId:v.tagId
+            })
+        })
+
+        console.log(tagTextData,"tagTextData")
+
+
+        calm.state.addVideoList[calm.state.tagIndex].tagText = calm.state.addVideoList[calm.state.tagIndex].tagText.concat(tagTextData);
         var arr = calm.state.addVideoList[calm.state.tagIndex].tagText;
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "id")
+        // calm.state.addVideoList[calm.state.tagIndex].tagText.push(clam.state.sea)
         calm.buildAddList();
         calm.setState({ tagData: [], tagChangeData: [], searchValue: "" })
     }
@@ -613,10 +616,10 @@ export default class addUploadVideo extends React.Component {
                                 // console.log(v);
                                 if (v.tagId == 0) {
                                     console.log(v.tagId, "tagId")
-                                    arr.push(<Tag
-                                        selected={false}
-                                        onChange={calm.tagChange.bind(this, v)}
-                                    >{v.tagTitle}</Tag>)
+                                    // arr.push(<Tag
+                                    //     selected={false}
+                                    //     onChange={calm.tagChange.bind(this, v)}
+                                    // >{v.tagTitle}</Tag>)
                                     return
                                 }
                                 arr.push(<Tag
@@ -779,7 +782,7 @@ export default class addUploadVideo extends React.Component {
                     </div>
                 </div>
                 <div className='submitBtn'>
-                    <Button type="warning" onClick={this.batchVideoMusic}>提交</Button>
+                    <Button type="warning" onClick={this.batchLittleVideoInfo}>提交</Button>
                 </div>
             </div>
         );

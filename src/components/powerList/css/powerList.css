@@ -1,0 +1,25 @@
+(node) util.print is deprecated. Use console.log instead.
+#powerList {
+  height: 100%;
+}
+#powerList .listCont {
+  -webkit-flex-wrap: wrap;
+  /* Safari 6.1+ */
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  padding-bottom: 20px;
+}
+#powerList .listCont li {
+  width: 25%;
+  padding: 20px 10px 0;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  box-sizing: border-box;
+}
+#powerList .listCont li img {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 10px;
+}

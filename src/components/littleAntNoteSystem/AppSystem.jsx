@@ -12,18 +12,15 @@ export default class AppSystem extends React.Component {
         this.state = {
             title: 'app',
             open: false,
-            user: {
-                name: '李栋',
-                pic: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3407202463,2165689779&fm=200&gp=0.jpg",
-                userId: JSON.parse(sessionStorage.getItem("loginUser")),
-            }
+            user: JSON.parse(sessionStorage.getItem("loginUser")),
         };
     }
 
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
         Bridge.setRefreshAble("false");
-        if(this.state.user.userId){
+        console.log(JSON.parse(sessionStorage.getItem("loginUser")))
+        if(this.state.user){
 
         }else {
             location.hash="Login";
@@ -75,8 +72,8 @@ export default class AppSystem extends React.Component {
                     mode="dark"
                     leftContent="校园自媒体"
                     rightContent={[
-                        <img className="headPic" src={this.state.user.pic} alt=""/>,
-                        <div className="userName">{this.state.user.name}</div>,
+                        <img className="headPic" src={this.state.user.avatar} alt=""/>,
+                        <div className="userName">{this.state.user.userName}</div>,
                         <div className="user_line"></div>,
                         <div className="cancellation"><i className="user_exit"></i><span onClick={_this.showAlert}>退出</span></div>,
                     ]}

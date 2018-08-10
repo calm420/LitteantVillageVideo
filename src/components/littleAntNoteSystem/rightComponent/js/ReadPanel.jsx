@@ -6,8 +6,8 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 export default class ReadPanel extends React.Component {
     constructor(props) {
         super(props);
-        // var loginUserStr = sessionStorage.getItem("loginUser");
-        // var loginUser = JSON.parse(loginUserStr);
+        var loginUserStr = sessionStorage.getItem("loginUser");
+        var loginUser = JSON.parse(loginUserStr);
         this.state = {
             title: 'app',
             open: false,
@@ -37,14 +37,16 @@ export default class ReadPanel extends React.Component {
             writeFlag: false,
             files: [], //图片数组
             title_editor: '',  //标题
-            user: {
+            articleInfoJson: {
                 articleTitle: '未命名',
-                // userId: loginUser.colUid,
-                userId: 3,
-                schoolId: 1,
-                gradeId: 1,
+                userId: loginUser.uid,
+                // userId: 3,
+                schoolId: loginUser.schoolId,
+                gradeId: loginUser.gradeId,
                 status: 0,// 0草稿 1 发布
-            }
+            },
+            author:'',
+            // user:JSON.parse(sessionStorage.getItem("loginUser"))
         };
         this.handleChange = this.handleChange.bind(this)
     }
@@ -79,6 +81,8 @@ export default class ReadPanel extends React.Component {
             warn = "请输入标题!"
         } else if ((this.state.editorHtml == '' || this.state.editorHtml == '<p><br></p>') && type == 1) {
             warn = "请输入内容!"
+        }else if ((this.state.author == '') && type == 1){
+            warn = "请输入作者!"
         }
         if (warn != "") {
             Toast.info(warn);
@@ -207,6 +211,7 @@ export default class ReadPanel extends React.Component {
             "articleImgs": imgArray,
             "articleContent": html,
             "status": type,
+            "author": this.state.author,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -229,7 +234,7 @@ export default class ReadPanel extends React.Component {
     changeWrite() {
         var param = {
             "method": 'saveArticleInfo',
-            "articleInfoJson": this.state.user,
+            "articleInfoJson": this.state.articleInfoJson,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -263,6 +268,12 @@ export default class ReadPanel extends React.Component {
     inputChange(val) {
         this.setState({
             title_editor: val
+        })
+    }
+
+    inputChangeForAuthor(val){
+        this.setState({
+            author: val
         })
     }
 
@@ -344,9 +355,11 @@ export default class ReadPanel extends React.Component {
                 <div className="click_head" style={!this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
                     点击 "<a onClick={this.changeWrite.bind(this)}>写文章</a>"，创建一篇新文章
                 </div>
+                <div className="write_article_cont" style={{display: 'none'}}>
+                    <div className="empty_draft empty_center"><span>暂无草稿</span></div>
+                </div>
                 <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
                     <div className="write_article_cont">
-                        <div className="empty_draft empty_center"><span>暂无草稿</span></div>
                         <div className="headBox">
                             <div className="title">
                                 <InputItem
@@ -375,6 +388,15 @@ export default class ReadPanel extends React.Component {
                                 {/*</div>*/}
                                 <div className="img_text" style={files.length > 0 ? {display: 'none'} : {display: "block"}}>请添加新闻列表页展示图(支持jpg ,png图片，建议尺寸)</div>
                             </div>
+                        </div>
+                        <div className="author">
+                            <InputItem
+                                clear
+                                placeholder="请输入作者姓名"
+                                onChange={this.inputChangeForAuthor.bind(this)}
+                                value={this.state.author}
+                            ></InputItem>
+                            {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
                         </div>
                         <div className="edit_cont">
                             <ReactQuill

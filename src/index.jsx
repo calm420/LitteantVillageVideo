@@ -107,6 +107,7 @@ const addUploadVideo = (location, cb) => {
         cb(null, require('./components/uploadVideo/js/addUploadVideo').default)
     }, 'addUploadVideo')
 };
+
 const uploadvideoList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/uploadVideo/js/uploadvideoList').default)
@@ -122,6 +123,11 @@ const myCollection = (location, cb) => {
     }, 'uploadvideoList')
 
 }
+const powerList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/powerList/js/powerList').default)
+    }, 'powerList')
+};
 
 
 import './index.less';
@@ -136,7 +142,7 @@ class Index extends React.Component {
                     <li><Link to="/s1">ListView + Carousel</Link></li>
                     <li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
-                    <li><Link to="/articleList?userId=3"
+                    <li><Link to="/articleList?userId=6"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
                     <li><Link to="/myArticleList?userId=3"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
@@ -163,6 +169,10 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/myCollection?userId=1" style={{fontSize: '24px'}}>我的收藏</Link>
+                    </li> 
+                    <li>
+                        <Link
+                            to="/powerList?ident=6" style={{fontSize: '24px'}}>系统权限</Link>
                     </li>
                 </ul>
             </div>
@@ -191,6 +201,7 @@ ReactDOM.render(
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
             <Route path="myArticleList" getComponent={myArticleList} />
             <Route path="myCollection" getComponent={myCollection} />
+            <Route path="powerList" getComponent={powerList} />
         </Route>
     </Router>
     ,

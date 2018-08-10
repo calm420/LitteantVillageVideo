@@ -1,6 +1,6 @@
 import React from 'react';
 import {ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem} from 'antd-mobile';
-import '../css/uploadvideoList.less'
+// import '../css/uploadvideoList.less'
 
 var musicList;
 const alert = Modal.alert;
@@ -412,7 +412,7 @@ export default class uploadvideoList extends React.Component {
                         }}
                     />
                     <div className='addBunton' onClick={this.addRing}>
-                        <img src={require("../img/addBtn.png")}/>
+                        <img src={require("../imgs/addBtn.png")}/>
                     </div>
                 </div>
                 <div className='updateModel' style={{display: 'none'}}>

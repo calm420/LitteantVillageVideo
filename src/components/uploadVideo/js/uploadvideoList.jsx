@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem} from 'antd-mobile';
+import { ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem } from 'antd-mobile';
 // import '../css/uploadvideoList.less'
 
 var musicList;
@@ -27,8 +27,8 @@ export default class uploadvideoList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        this.setState({"uid": uid});
-        // this.getVideoMusicList()
+        this.setState({ "uid": uid });
+        this.getVideoMusicList()
     }
 
     /**
@@ -44,7 +44,24 @@ export default class uploadvideoList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    var arr = result.response;
+                    var arr = [{
+                        coverPath: "coverPath",
+                        videoPath: "videoUrl",
+                        videoType: "videoType",   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
+                        userId: "userId",
+                        videoContent: "videoContent",   // 心情描述 
+                        tags: [
+                            {
+                                tagTitle:"挑战",
+                                tagType: 2,   //挑战
+                                tagContent: "哈哈哈哈"
+                            },
+                            {
+                                tagTitle:"标签",
+                                tagType: 1,   //标签
+                            }
+                        ]
+                    }];
                     // var pager = result.pager;
                     for (let i = 0; i < arr.length; i++) {
                         var topic = arr[i];
@@ -103,8 +120,8 @@ export default class uploadvideoList extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定移除吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.deleteVideoMusic(id)},
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteVideoMusic(id) },
 
         ], phone);
     }
@@ -363,20 +380,20 @@ export default class uploadvideoList extends React.Component {
         var _this = this
 
         const row = (rowData, sectionID, rowID) => {
-
+            console.log(rowData,"rowData")
             return (
                 <Card>
                     <div className="my_flex item line_public">
-                        <img src={rowData.cover} alt=""/>
+                        <img src={rowData.cover} alt="" />
                         <div className="textCont">
                             <div className="textOver">歌曲名称：{rowData.musicName}</div>
                             <div className="singer">
                                 <div className="textOver">歌手名称：{rowData.musicMan}</div>
                                 <div className="icon">
                                     <span className="modifyBtn_common"
-                                          onClick={this.editSong.bind(this, rowData.musicId)}></span>
+                                        onClick={this.editSong.bind(this, rowData.musicId)}></span>
                                     <span className="deleteBtn_common"
-                                          onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
+                                        onClick={this.showDelAlert.bind(this, rowData.musicId)}></span>
                                 </div>
                             </div>
 
@@ -388,14 +405,14 @@ export default class uploadvideoList extends React.Component {
         };
 
         return (
-            <div id="uploadvideoList" style={{height: musicList.state.clientHeight}}>
-                <div className='tableDiv' style={{height: musicList.state.clientHeight}}>
+            <div id="uploadvideoList" style={{ height: musicList.state.clientHeight }}>
+                <div className='tableDiv' style={{ height: musicList.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                            <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -412,10 +429,10 @@ export default class uploadvideoList extends React.Component {
                         }}
                     />
                     <div className='addBunton' onClick={this.addRing}>
-                        <img src={require("../imgs/addBtn.png")}/>
+                        <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
-                <div className='updateModel' style={{display: 'none'}}>
+                <div className='updateModel' style={{ display: 'none' }}>
                     <div>
                         {this.state.editDiv}
                     </div>

@@ -27,7 +27,7 @@ export default class addUploadVideo extends React.Component {
                 videoUrl: '',
                 coverPath: '',
                 videoContent: '',
-                userId: uid,
+                userId: 8,
                 videoType: 0,
                 isRecommend: 0,
                 show: false,
@@ -174,8 +174,10 @@ export default class addUploadVideo extends React.Component {
      * 删除标签
      */
     deleteTag(item, index) {
+        console.log(item,"item")
         calm.state.addVideoList[index].tagText.forEach((v, i) => {
-            if (item.id == v.id) {
+            console.log(v,"v")
+            if (item.tagTitle == v.tagTitle) {
                 calm.state.addVideoList[index].tagText.splice(i, 1)
             }
         })
@@ -569,7 +571,7 @@ export default class addUploadVideo extends React.Component {
         console.log(calm.state.addVideoList[calm.state.tagIndex].tagText, "tagTexte")
 
         var arr = calm.state.addVideoList[calm.state.tagIndex].tagText;
-        calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "tagId")
+        calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "tagTitle")
         calm.buildAddList();
         calm.setState({ tagData: [], tagChangeData: [], searchValue: "" })
     }

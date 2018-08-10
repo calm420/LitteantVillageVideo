@@ -137,4 +137,55 @@
     }
   }
 
+  .video_box{
+    //border: 1px solid red;
+    overflow-x: auto;
+    width: 100%;
+    white-space: nowrap;
+    .video_row{
+      width: 200px;
+      height: 350px;
+      display: inline-block;
+      box-sizing: border-box;
+      padding: 5px;
+      padding-right: 0;
+      position: relative;
+      .video_firstImage{
+        width: 100%;
+        height: 100%;
+      }
+      .like{
+        position: absolute;
+        bottom:20px;
+        right: 20px;
+        color: white;
+        font-weight: 900;
+      }
+      .read{
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: white;
+        font-weight: 900;
+        span{
+          transform: rotate(90deg);
+          display: inline-block;
+        }
+      }
+      .video_content{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        font-weight: 900;
+      }
+    }
+    .video_row:nth-last-child(1){
+      padding-right: 5px;
+    }
+  }
+  .video_box::-webkit-scrollbar {
+    display: none;
+  }
+
 }

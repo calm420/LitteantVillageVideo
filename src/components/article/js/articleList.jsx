@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView, Button, List, Picker, Tag,Tabs
+    Toast, DatePicker, ListView, Button, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/articleList.less';
 
@@ -22,8 +22,9 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
-            index:0,
-            userRoot:false,
+            index: 0,
+            userRoot: false,
+            recommended_video: [],
         }
     }
 
@@ -37,34 +38,41 @@ export default class articleList extends React.Component {
         this.setState({
             userId: userId
         }, () => {
-            this.getArticleInfoListByType();
+            // this.getArticleInfoListByType();
             this.getLittleVideoUserById();
+            this.getArticleRecommenLittleVideoList();
         })
     }
 
 
+    getRandom() {
+        return parseInt(Math.random() * (15 - 5 + 1) + 5);
+    }
+
+
     /**
-     * 按查询条件获取列表
+     * 按页码获取短视频列表
      * **/
-    getLittleVideoUserById() {
+    getArticleRecommenLittleVideoList() {
         var param = {
-            "method": 'getLittleVideoUserById',
-            "uid": this.state.userId,
+            "method": 'getArticleRecommenLittleVideoList',
+            "userId": this.state.userId,
+            "pageNo": JSON.stringify(this.state.defaultPageNo)
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'user');
+                console.log(result, '短视频');
                 if (result.success) {
-                    var data = result.response;
-                    if(data.schoolId){
-                        this.setState({
-                            userRoot:true,
-                        })
-                    }else{
-                        this.setState({
-                            userRoot:false,
-                        })
-                    }
+                    this.setState({
+                        recommended_video: result.response,
+                        random_index: this.getRandom(),
+                    }, () => {
+                        console.log(this.state.random_index, 'random')
+                        //获取文章列表
+                        this.getArticleInfoListByType();
+                    })
+                } else {
+
                 }
             },
             onError: function (error) {
@@ -72,7 +80,6 @@ export default class articleList extends React.Component {
             }
         });
     }
-
 
     /**
      * 按查询条件获取列表
@@ -89,15 +96,60 @@ export default class articleList extends React.Component {
                 console.log(result);
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
+                    // this.setState({
+                    //     random_index: parseInt(result.response.length / 2)
+                    // })
+                    // console.log(this.state.recommended_video,'recommended_video');
+                    var initLength = this.initDataSource.length;
                     this.initDataSource = this.initDataSource.concat(result.response);
+                    if (this.state.recommended_video.length > 0 && result.response.length > 0) {
+                        this.initDataSource.splice((result.response.length / 2) + initLength, 0, this.state.recommended_video);
+                    }else{
+                        this.setState({
+                            recommended_video:[]
+                        })
+                    }
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading:true
+                        isLoading: true
                     })
-                    if (this.initDataSource.length == result.pager.rsCount) {
+                    if ((this.initDataSource.length - (this.state.recommended_video.length == 0?0:1)) >= result.pager.rsCount) {
                         this.setState({
                             hasMore: false,
                             isLoading: false
+                        })
+                    }
+                    //调用短视频
+                    // this.getArticleRecommenLittleVideoList();
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+
+    /**
+     * 查询用户权限
+     * **/
+    getLittleVideoUserById() {
+        var param = {
+            "method": 'getLittleVideoUserById',
+            "uid": this.state.userId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'user');
+                if (result.success) {
+                    var data = result.response;
+                    if (data.schoolId) {
+                        this.setState({
+                            userRoot: true,
+                        })
+                    } else {
+                        this.setState({
+                            userRoot: false,
                         })
                     }
                 }
@@ -107,6 +159,7 @@ export default class articleList extends React.Component {
             }
         });
     }
+
 
     /**
      *  ListView数据全部渲染完毕的回调
@@ -124,14 +177,14 @@ export default class articleList extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            this.getArticleInfoListByType();
+            this.getArticleRecommenLittleVideoList();
         });
     };
 
     toDetail(id) {
-        console.log(id);
+        console.log("触发跳转事件");
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId +"&type=1");
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1");
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -145,17 +198,30 @@ export default class articleList extends React.Component {
     }
 
     //tab栏切换事件
-    onChange(val){
+    onChange(val) {
         this.initDataSource = [];
         this.setState({
             dataSource: dataSource.cloneWithRows(this.initDataSource),
             defaultPageNo: 1,
             isLoading: true,
             hasMore: true,
-            index:val.value
-        },()=>{
-            this.getArticleInfoListByType();
+            index: val.value,
+            recommended_video:[]
+        }, () => {
+            this.getArticleRecommenLittleVideoList();
         })
+    }
+
+    //播放视频
+    toPlayVideo(videoPath){
+        console.log(videoPath);
+        var data = {
+            method: 'showPdf',
+            pdfUrl: videoPath
+        };
+        Bridge.callHandler(data, null, function (error) {
+            console.log('开启视频失败')
+        });
     }
 
     //计算时间差
@@ -218,68 +284,86 @@ export default class articleList extends React.Component {
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
-            if (image.length == 1) {  //图片一张
-                dom = <div className="item line_public">
-                    <div className="leftBox">
-                        <div className="title">{rowData.articleTitle}</div>
-                        <div className="bottom">
-                            <div className="read">{rowData.readCount}阅读</div>
-                            <div className="like">{rowData.readCount}点赞</div>
-                            <div className="time">{time}</div>
+            if (rowData instanceof Array) {  //为自媒体推荐视频
+                var videoDom = [];
+                for(var i=0;i<rowData.length;i++){
+                    videoDom.push(
+                        <div className="video_row" onClick={this.toPlayVideo.bind(this,rowData[i].videoPath)}>
+                            <img className="video_firstImage" src={rowData[i].coverPath==''?rowData[i].firstUrl:rowData[i].coverPath} alt=""/>
+                            <div className="like">{rowData[i].likeCount}赞</div>
+                            <div className="read"><span>△</span>&nbsp;&nbsp;{rowData[i].readCount}</div>
+                            <div className="video_content">{rowData[i].videoContent}</div>
                         </div>
-                    </div>
-                    <div className="rightBox">
-                        <img src={image[0]} alt=""/>
-                    </div>
-                </div>
-            } else if (image.length > 1) {    //图片大于一张
-                var imageDom = [];
-                for (var i = 0; i < image.length; i++) {
-                    imageDom.push(<img className="image3"
-                                       src={image[i]}
-                                       alt=""/>)
+                    )
                 }
-                dom = <div className="item line_public">
-                    <div className="title">{rowData.articleTitle}</div>
-                    <div className="images">{imageDom}</div>
-                    <div className="bottom">
-                        <div className="read">{rowData.readCount}阅读</div>
-                        <div className="like">{rowData.readCount}点赞</div>
-                        <div className="time">{time}</div>
-                    </div>
-                </div>
-            } else {                //图片没有
-                var videoFlag = false;
-                if (videoFlag) { //有视频
+                dom = <div className="video_box">{videoDom}</div>;
+            } else {
+                if (image.length == 1) {  //图片一张
                     dom = <div className="item line_public">
-                        <div className="title">{rowData.articleTitle}</div>
-                        <div className="images">
-                            <div className="videoBox">
-                                <div onClick={this.toDetail.bind(this,rowData.articleId)} className="videoMask"></div>
-                                <img onClick={this.toDetail.bind(this,rowData.articleId)} className="playImg" src={require('../images/videoClick.png')} alt=""/>
-                                <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
+                        <div className="leftBox">
+                            <div className="title">{rowData.articleTitle}</div>
+                            <div className="bottom">
+                                <div className="read">{rowData.readCount}阅读</div>
+                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="time">{time}</div>
                             </div>
                         </div>
-                        <div className="bottom">
-                            <div className="read">{rowData.readCount}阅读</div>
-                            <div className="like">{rowData.readCount}点赞</div>
-                            <div className="time">{time}</div>
+                        <div className="rightBox">
+                            <img src={image[0]} alt=""/>
                         </div>
                     </div>
-                } else {  //图片没有 视频也没有
+                } else if (image.length > 1) {    //图片大于一张
+                    var imageDom = [];
+                    for (var i = 0; i < image.length; i++) {
+                        imageDom.push(<img className="image3"
+                                           src={image[i]}
+                                           alt=""/>)
+                    }
                     dom = <div className="item line_public">
                         <div className="title">{rowData.articleTitle}</div>
+                        <div className="images">{imageDom}</div>
                         <div className="bottom">
                             <div className="read">{rowData.readCount}阅读</div>
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
                     </div>
-                }
+                } else {                //图片没有
+                    var videoFlag = false;
+                    if (videoFlag) { //有视频
+                        dom = <div className="item line_public">
+                            <div className="title">{rowData.articleTitle}</div>
+                            <div className="images">
+                                <div className="videoBox">
+                                    <div onClick={this.toDetail.bind(this, rowData.articleId)}
+                                         className="videoMask"></div>
+                                    <img onClick={this.toDetail.bind(this, rowData.articleId)} className="playImg"
+                                         src={require('../images/videoClick.png')} alt=""/>
+                                    <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
+                                </div>
+                            </div>
+                            <div className="bottom">
+                                <div className="read">{rowData.readCount}阅读</div>
+                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="time">{time}</div>
+                            </div>
+                        </div>
+                    } else {  //图片没有 视频也没有
+                        dom = <div className="item line_public">
+                            <div className="title">{rowData.articleTitle}</div>
+                            <div className="bottom">
+                                <div className="read">{rowData.readCount}阅读</div>
+                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="time">{time}</div>
+                            </div>
+                        </div>
+                    }
 
+                }
             }
+
             return (
-                <div onClick={this.toDetail.bind(this, rowData.articleId)}>
+                <div onClick={rowData instanceof Array?'':this.toDetail.bind(this, rowData.articleId)}>
                     {dom}
                 </div>
             )
@@ -289,7 +373,7 @@ export default class articleList extends React.Component {
                 height: document.body.clientHeight
             }}>
                 <div className='emptyDiv' style={
-                    this.state.userRoot? {display:'none'} : {display:'block'}
+                    this.state.userRoot ? {display: 'none'} : {display: 'block'}
                 }>
                     <div className='emptyIcon'></div>
                     <div className='text'>请在“个人中心”的设置页面<br/>完善资料后查看相关内容</div>
@@ -302,33 +386,33 @@ export default class articleList extends React.Component {
                       useOnPan={false}
                       onChange={this.onChange.bind(this)}
                       tabBarPosition={'top'}
-                      // tabBarUnderlineStyle={{width:'15px'}}
+                    // tabBarUnderlineStyle={{width:'15px'}}
                 >
                     <div style={{
                         height: document.documentElement.clientHeight - 46,
                         backgroundColor: '#f4f4f4'
                     }}>
-                            {/*推荐*/}
-                            <ListView
-                                ref={el => this.lv = el}
-                                dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                                renderFooter={() => (
-                                    <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                        {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                                    </div>)}
-                                renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                                className="am-list"
-                                pageSize={30}    //每次事件循环（每帧）渲染的行数
-                                //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                                scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                                onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                                onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                                initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                                scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                                style={{
-                                    height: document.body.clientHeight - 46,
-                                }}
-                            />
+                        {/*推荐*/}
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            style={{
+                                height: document.body.clientHeight - 46,
+                            }}
+                        />
                     </div>
 
                     <div style={{

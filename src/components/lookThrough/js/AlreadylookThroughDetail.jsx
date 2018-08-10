@@ -287,7 +287,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                         <video
                                                             style={{ width: "100%" }}
                                                             controls="controls"
-                                                            preload="auto"
+                                                            preload="load"
                                                             src={calm.state.data.littleVideoInfo.videoPath}
                                                             autoPlay>
                                                         </video>

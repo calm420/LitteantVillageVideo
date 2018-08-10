@@ -73,7 +73,7 @@ export default class powerList extends React.Component {
             console.log(v);
             arr.push(<li key={v.powerId} onClick={power_List.listOnClick.bind(this, v.powerUrl)}>
                 <img src={v.iconUrl} alt=""/>
-                <span>{v.powerName}</span>
+                <span className='textOver'>{v.powerName}</span>
             </li>)
         })
         this.setState({listArr: arr});
@@ -97,7 +97,9 @@ export default class powerList extends React.Component {
         var _this = this;
         return (
             <div id="powerList">
-                {this.state.listArr}
+                <div className="my_flex listCont">
+                     {this.state.listArr}
+                </div>
             </div>
         );
     }

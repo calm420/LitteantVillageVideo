@@ -309,9 +309,14 @@ export default class articleList extends React.Component {
                     videoDom.push(
                         <div className="video_row" onClick={this.toPlayVideo.bind(this,i,rowData.response,rowData.pager.pageCount,rowData.pager.pageNo)}>
                             <img className="video_firstImage" src={rowData.response[i].coverPath==''?rowData.response[i].firstUrl:rowData.response[i].coverPath} alt=""/>
-                            <div className="like">{rowData.response[i].likeCount}赞</div>
-                            <div className="read"><span>△</span>&nbsp;&nbsp;{rowData.response[i].readCount}</div>
-                            <div className="video_content">{rowData.response[i].videoContent}</div>
+                            <div className="gradient_bgT topText">
+                                <div className="video_content">{rowData.response[i].videoContent}</div>
+                            </div>
+                            <div className='gradient_bgB bottomText'>
+                                <div className="like">{rowData.response[i].likeCount}赞</div>
+                                <div className="read">{rowData.response[i].readCount}</div>
+                            </div>
+
                         </div>
                     )
                 }

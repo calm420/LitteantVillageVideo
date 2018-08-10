@@ -25,6 +25,7 @@ export default class powerList extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         this.getAllPowersByUserId(userId)
+        this.setState({userId})
     }
 
     getAllPowersByUserId(userId) {
@@ -38,10 +39,12 @@ export default class powerList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
 
-                if (result.msg == '调用成功' && result.success == true && result.response.length != 0) {
-                    _this.buildList(result.response)
+                if (result.msg == '调用成功' && result.success == true) {
+                    if (result.response.length != 0) {
+                        _this.buildList(result.response)
+                    }
                 } else {
-                    // Toast.fail(result.msg)
+                    Toast.fail(result.msg)
                 }
 
             },
@@ -77,7 +80,17 @@ export default class powerList extends React.Component {
     }
 
     listOnClick(src) {
+
         console.log(src);
+
+        var url = src + '&ident=' + power_List.state.userId;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
     render() {

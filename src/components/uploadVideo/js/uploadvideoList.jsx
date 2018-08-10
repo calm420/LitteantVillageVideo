@@ -28,7 +28,7 @@ export default class uploadvideoList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({"uid": uid});
-        this.getVideoMusicList()
+        // this.getVideoMusicList()
     }
 
     /**

@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast, Button,Icon } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Button, Icon } from 'antd-mobile';
 import "../css/WaitlookThroughDetail.less"
 const RadioItem = Radio.RadioItem;
 var calm;
@@ -9,7 +9,9 @@ export default class WaitlookThroughDetail extends React.Component {
         super(props);
         calm = this;
         this.state = {
-            isPass: 0,
+            isPass: "",
+            isRec: "",
+            isTop: "",
             data: {
             }
         }
@@ -106,25 +108,90 @@ export default class WaitlookThroughDetail extends React.Component {
      * 单选按钮的改变
      */
     redioChange = (value) => {
+        if (value == 1) {
+            calm.setState({
+                isShow: true
+            })
+        }
+        if (value == 0) {
+            calm.setState({
+                isShow: false,
+                isRec: "",
+                isTop: ""
+            })
+        }
         this.setState({
             isPass: value,
         });
     };
 
     /**
+     * 是否推荐
+     */
+    recChange = (value) => {
+        console.log(value)
+        this.setState({
+            isRec: value
+        })
+    }
+
+    /**
+     * 是否置顶
+     */
+    topChange = (value) => {
+        console.log(value)
+        this.setState({
+            isTop: value
+        })
+    }
+
+    /**
      * 点击提交按钮
      */
     submit() {
-        var param = {
-            "method": 'saveAuditInfo',
-            "auditInfoJson": {
-                targetId: calm.state.id,
-                targetType: calm.state.type,
-                isPass: calm.state.isPass,
-                auditMark: calm.state.textareaValue,
-                auditorId: calm.state.auditorId
-            },
-        };
+        if(calm.state.isPass == ""){
+            Toast.info("请勾选未勾选项")
+            return
+        }
+        var param;
+        if (calm.state.type == 0) {
+            param = {
+                "method": 'saveAuditInfo',
+                "auditInfoJson": {
+                    targetId: calm.state.id,
+                    targetType: calm.state.type,
+                    isPass: calm.state.isPass,
+                    auditMark: calm.state.textareaValue,
+                    auditorId: calm.state.auditorId,
+                    istop: calm.state.isTop,
+                    isRecommend: calm.state.isRec
+                },
+            };
+        } else if (calm.state.type == 1) {
+            param = {
+                "method": 'saveAuditInfo',
+                "auditInfoJson": {
+                    targetId: calm.state.id,
+                    targetType: calm.state.type,
+                    isPass: calm.state.isPass,
+                    auditMark: calm.state.textareaValue,
+                    auditorId: calm.state.auditorId,
+                    isRecommend: calm.state.isRec
+                },
+            };
+        } else if (calm.state.type == 2) {
+            param = {
+                "method": 'saveAuditInfo',
+                "auditInfoJson": {
+                    targetId: calm.state.id,
+                    targetType: calm.state.type,
+                    isPass: calm.state.isPass,
+                    auditMark: calm.state.textareaValue,
+                    auditorId: calm.state.auditorId,
+                },
+            };
+        }
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
@@ -145,19 +212,27 @@ export default class WaitlookThroughDetail extends React.Component {
     }
 
 
-   
+
     render() {
         var _this = this;
         const data2 = [
-            { value: 0, label: '通过' },
-            { value: 1, label: '不通过' },
+            { value: 1, label: '通过' },
+            { value: 0, label: '不通过' },
         ];
-        const { isPass } = this.state;
+        const isRecData = [
+            { value: 1, label: '是' },
+            { value: 0, label: '否' },
+        ];
+        const isTopData = [
+            { value: 1, label: '是' },
+            { value: 0, label: '否' },
+        ];
+        const { isPass, isRec, isTop } = this.state;
         return (
             <div id="waitLookThrough" style={{
                 height: document.body.clientHeight
             }}>
-             {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
+                {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content">
                     {
                         calm.state.type == 0 ?
@@ -204,27 +279,113 @@ export default class WaitlookThroughDetail extends React.Component {
                                     </div>
                                     : ""
                     }
-                    <div className="isDangerArea">
-                        <List renderHeader={() => '审核：'}>
-                            {data2.map(i => (
-                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                    {i.label}
-                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                </RadioItem>
-                            ))}
-                        </List>
-                    </div>
-                    <div className="sameBack description">审核说明:
-                    <List>
-                            <TextareaItem
-                                rows={3}
-                                placeholder="请在此处输入审核的说明／不通过的原因"
-                                onChange={v => _this.setState({
-                                    textareaValue: v
-                                })}
-                            />
-                        </List>
-                    </div>
+                    {
+                        calm.state.type == 0 ?
+                            <div>
+                                <div className="isDangerArea">
+                                    <List renderHeader={() => '审核：'}>
+                                        {data2.map(i => (
+                                            <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                {i.label}
+                                                {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                            </RadioItem>
+                                        ))}
+                                    </List>
+                                    <div style={{ display: calm.state.isShow ? "block" : "none" }}>
+                                        <List renderHeader={() => '推荐：'}>
+                                            {isRecData.map(i => (
+                                                <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
+                                                    {i.label}
+                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                </RadioItem>
+                                            ))}
+                                        </List>
+                                        <List renderHeader={() => '置顶：'}>
+                                            {isTopData.map(i => (
+                                                <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
+                                                    {i.label}
+                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                </RadioItem>
+                                            ))}
+                                        </List>
+                                    </div>
+
+                                </div>
+                                <div className="sameBack description">审核说明:
+                        <List>
+                                        <TextareaItem
+                                            rows={3}
+                                            placeholder="请在此处输入审核的说明／不通过的原因"
+                                            onChange={v => _this.setState({
+                                                textareaValue: v
+                                            })}
+                                        />
+                                    </List>
+                                </div>
+                            </div>
+                            :
+                            calm.state.type == 1 ?
+                                <div>
+                                    <div className="isDangerArea">
+                                        <List renderHeader={() => '审核：'}>
+                                            {data2.map(i => (
+                                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                    {i.label}
+                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                </RadioItem>
+                                            ))}
+                                        </List>
+                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '推荐：'}>
+                                            {isRecData.map(i => (
+                                                <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
+                                                    {i.label}
+                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                </RadioItem>
+                                            ))}
+                                        </List>
+
+                                    </div>
+                                    <div className="sameBack description">审核说明:
+                                        <List>
+                                            <TextareaItem
+                                                rows={3}
+                                                placeholder="请在此处输入审核的说明／不通过的原因"
+                                                onChange={v => _this.setState({
+                                                    textareaValue: v
+                                                })}
+                                            />
+                                        </List>
+                                    </div>
+                                </div>
+                                :
+                                calm.state.type == 2 ?
+                                    <div>
+                                        <div className="isDangerArea">
+                                            <List renderHeader={() => '审核：'}>
+                                                {data2.map(i => (
+                                                    <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                        {i.label}
+                                                        {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                    </RadioItem>
+                                                ))}
+                                            </List>
+                                        </div>
+                                        <div className="sameBack description">审核说明:
+                                        <List>
+                                                <TextareaItem
+                                                    rows={3}
+                                                    placeholder="请在此处输入审核的说明／不通过的原因"
+                                                    onChange={v => _this.setState({
+                                                        textareaValue: v
+                                                    })}
+                                                />
+                                            </List>
+                                        </div>
+                                    </div>
+                                    :
+                                    ""
+                    }
+
                 </div>
                 <div className="submitBtn">
                     <Button type='warning' onClick={_this.submit}>提交</Button>

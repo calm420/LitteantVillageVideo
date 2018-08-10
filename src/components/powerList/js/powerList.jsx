@@ -16,7 +16,7 @@ export default class powerList extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "充值";   //设置title
+        document.title = "用户管理";   //设置title
     }
 
     componentDidMount() {
@@ -98,7 +98,7 @@ export default class powerList extends React.Component {
         return (
             <div id="powerList">
                 <div className="my_flex listCont">
-                     {this.state.listArr}
+                    {this.state.listArr}
                 </div>
             </div>
         );

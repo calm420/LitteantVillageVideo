@@ -213,7 +213,7 @@ export default class addUploadVideo extends React.Component {
                         <span className="uploadSupport">(jpg格式)</span>
                     </span>
                     {calm.state.addVideoList[i].coverPath.length == 0 ?
-                        <button className="" onClick={calm.uploadImage.bind(this, i)}>上传封面</button>
+                        <button className="uploadBtn" onClick={calm.uploadImage.bind(this, i)}>上传封面</button>
                         :
                         <div className="upload_file">
                             <img onClick={calm.imgPreview.bind(this, calm.state.addVideoList[i].coverPath)}
@@ -230,7 +230,7 @@ export default class addUploadVideo extends React.Component {
                         <span className="uploadSupport">(MP4格式)</span>
                     </span>
                     {calm.state.addVideoList[i].videoUrl.length == 0 ?
-                        <button className="" onClick={calm.uploadMp4.bind(this, i)}>上传视频</button>
+                        <button className="uploadBtn" onClick={calm.uploadMp4.bind(this, i)}>上传视频</button>
                         :
                         <div className="upload_file">
                             <video

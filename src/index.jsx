@@ -113,6 +113,12 @@ const uploadvideoList = (location, cb) => {
     }, 'uploadvideoList')
 };
 
+const powerList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/powerList/js/powerList').default)
+    }, 'powerList')
+};
+
 
 import './index.less';
 
@@ -148,6 +154,10 @@ class Index extends React.Component {
                         <Link
                             to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
                     </li> */}
+                    <li>
+                        <Link
+                            to="/powerList?ident=6" style={{fontSize: '24px'}}>系统权限</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -174,6 +184,7 @@ ReactDOM.render(
             <Route path="addUploadVideo" getComponent={addUploadVideo}/>
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
             <Route path="myArticleList" getComponent={myArticleList} />
+            <Route path="powerList" getComponent={powerList} />
         </Route>
     </Router>
     ,

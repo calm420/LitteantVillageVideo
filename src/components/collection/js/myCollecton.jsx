@@ -36,7 +36,7 @@ export default class myCollection extends React.Component {
     getUserFavoriteByUserId() {
         var param = {
             "method": 'getUserFavoriteByUserId',
-            "userId": calm.state.defaultPageNo,
+            "userId": 1,
             "targetType": -1,
             "pageNo": calm.state.defaultPageNo,
         };
@@ -125,7 +125,8 @@ export default class myCollection extends React.Component {
                                     controls="controls"
                                     preload="auto"
                                     src={rowData.littleVideoInfo.videoPath}
-                                    autoPlay>
+                                    poster={require("../../article/images/praise.png")}
+                                    >
                                 </video>
                                 <div className="bottom">
                                     <span className='read'>{rowData.littleVideoInfo.readCount}阅读</span>

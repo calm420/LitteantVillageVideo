@@ -217,7 +217,7 @@ export default class ReadPanel extends React.Component {
             onResponse: result => {
                 console.log(result,'updateArticleInfo')
                 if (result.success) {
-                    Toast.info(type==0?'保存成功':'发布成功')
+                    Toast.info(type==0?'保存成功':'发布成功',0.5)
                     this.initEditor();
                     this.props.submit(Math.abs(type-1))
                 } else {

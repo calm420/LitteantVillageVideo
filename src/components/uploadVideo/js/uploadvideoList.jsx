@@ -32,7 +32,7 @@ export default class uploadvideoList extends React.Component {
     }
 
     /**
-     * 获取音乐列表
+     * 获取视频列表
      */
     getVideoMusicList() {
         var _this = this;
@@ -75,7 +75,7 @@ export default class uploadvideoList extends React.Component {
     }
 
     /**
-     * 批量添加音乐
+     * 批量添加视频
      * 跳转到添加页面
      */
     addRing() {
@@ -110,7 +110,7 @@ export default class uploadvideoList extends React.Component {
     }
 
     /**
-     * 删除音乐信息
+     * 删除视频信息
      */
     deleteVideoMusic(id) {
         var _this = this;
@@ -147,97 +147,97 @@ export default class uploadvideoList extends React.Component {
     /**
      * 编辑音乐信息
      */
-    editSong(id) {
-        var _this = this
-        var param = {
-            "method": 'getVideoMusicById',
-            "videoMusicId": id,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' && result.success == true) {
-                    _this.setState({editData: result.response})
-                    _this.editModelShow(true)
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
+    // editSong(id) {
+    //     var _this = this
+    //     var param = {
+    //         "method": 'getVideoMusicById',
+    //         "videoMusicId": id,
+    //     };
+    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+    //         onResponse: function (result) {
+    //             if (result.msg == '调用成功' && result.success == true) {
+    //                 _this.setState({editData: result.response})
+    //                 _this.editModelShow(true)
+    //             }
+    //         },
+    //         onError: function (error) {
+    //             // message.error(error);
+    //         }
+    //     });
+    // }
 
     /**
      * 音乐上传
      */
-    uploadMp3(event) {
-        event.stopPropagation()
-        var data = {
-            method: 'selectMp3',
-        };
-        Bridge.callHandler(data, function (res) {
-            // 拿到照片地址,显示在页面等待上传
-            let newArr = {};
-            let item = res.split("?");
-            newArr.picPath = item[0],
-                newArr.picName = item[1].split("=")[1]
+    // uploadMp3(event) {
+    //     event.stopPropagation()
+    //     var data = {
+    //         method: 'selectMp3',
+    //     };
+    //     Bridge.callHandler(data, function (res) {
+    //         // 拿到照片地址,显示在页面等待上传
+    //         let newArr = {};
+    //         let item = res.split("?");
+    //         newArr.picPath = item[0],
+    //             newArr.picName = item[1].split("=")[1]
 
-            musicList.state.editData.musicUrl = newArr.picPath
+    //         musicList.state.editData.musicUrl = newArr.picPath
 
-            musicList.editModelShow(false)
+    //         musicList.editModelShow(false)
 
-        }, function (error) {
-            console.log(error);
-        });
-    }
+    //     }, function (error) {
+    //         console.log(error);
+    //     });
+    // }
 
     /**
      * 封面上传
      */
-    uploadImage(event) {
-        event.stopPropagation()
-        var data = {
-            method: 'selectImages',
-        };
-        Bridge.callHandler(data, function (res) {
-            // 拿到照片地址,显示在页面等待上传
-            let newArr = {};
-            let item = res.split("?");
-            newArr.picPath = item[0],
-                newArr.picName = item[1].split("=")[1]
-            musicList.state.editData.cover = newArr.picPath
-            musicList.editModelShow(false)
+    // uploadImage(event) {
+    //     event.stopPropagation()
+    //     var data = {
+    //         method: 'selectImages',
+    //     };
+    //     Bridge.callHandler(data, function (res) {
+    //         // 拿到照片地址,显示在页面等待上传
+    //         let newArr = {};
+    //         let item = res.split("?");
+    //         newArr.picPath = item[0],
+    //             newArr.picName = item[1].split("=")[1]
+    //         musicList.state.editData.cover = newArr.picPath
+    //         musicList.editModelShow(false)
 
-        }, function (error) {
-            console.log(error);
-        });
-    }
+    //     }, function (error) {
+    //         console.log(error);
+    //     });
+    // }
 
     /**
      * 封面预览
      */
-    imgPreview(src) {
-        var dataObj = {};
-        dataObj.method = 'showImage';
-        dataObj.url = src;
-        dataObj.currentUrl = src;
-        Bridge.callHandler(dataObj, null, function (error) {
-            console.log(error);
-        })
-    }
+    // imgPreview(src) {
+    //     var dataObj = {};
+    //     dataObj.method = 'showImage';
+    //     dataObj.url = src;
+    //     dataObj.currentUrl = src;
+    //     Bridge.callHandler(dataObj, null, function (error) {
+    //         console.log(error);
+    //     })
+    // }
 
     /**
      * mp3预览
      */
-    mp3Preview(src) {
+    // mp3Preview(src) {
 
-        var data = {
-            method: 'playAudio',
-            url: src
-        };
-        Bridge.callHandler(data, null, function (error) {
+    //     var data = {
+    //         method: 'playAudio',
+    //         url: src
+    //     };
+    //     Bridge.callHandler(data, null, function (error) {
 
-        });
-    }
+    //     });
+    // }
 
     /**
      * 输入框改变的回调
@@ -255,65 +255,65 @@ export default class uploadvideoList extends React.Component {
         musicList.editModelShow(false)
     }
 
-    editModelShow(falg) {
-        var data = this.state.editData
+    // editModelShow(falg) {
+    //     var data = this.state.editData
 
-        if (falg) {
-            $('.updateModel').slideDown()
-            $('.tagAddPanel_bg').show()
-        }
+    //     if (falg) {
+    //         $('.updateModel').slideDown()
+    //         $('.tagAddPanel_bg').show()
+    //     }
 
-        var editDiv = <div className="listCont">
-            <div>
-                <InputItem
-                    className="add_element"
-                    placeholder="请输入歌曲名称"
-                    value={data.musicName}
-                    onChange={musicList.inputOnChange.bind(this, 'musicName')}
-                >
-                    <div>歌曲名称</div>
-                </InputItem>
-            </div>
-            <div className="line_public flex_container"></div>
-            <div>
-                <InputItem
-                    className="add_element"
-                    placeholder="请输入歌手名称"
-                    value={data.musicMan}
-                    onChange={musicList.inputOnChange.bind(this, 'musicMan')}
-                >
-                    <div>歌手名称</div>
-                </InputItem>
-            </div>
-            <div className="line_public flex_container"></div>
-            <div className="my_flex sameBack">
-                    <span className="textTitle">上传封面
-                        <p style={{margin: 0, height: 5}}></p>
-                        <span className="uploadSupport">(jpg格式)</span>
-                    </span>
-                <div className="upload_file">
-                    <img onClick={musicList.imgPreview.bind(this, data.cover)}
-                         className="imgTag" src={data.cover}/>
-                    <div className="icon_pointer" onClick={musicList.uploadImage.bind(this,)}>修改</div>
-                </div>
+    //     var editDiv = <div className="listCont">
+    //         <div>
+    //             <InputItem
+    //                 className="add_element"
+    //                 placeholder="请输入歌曲名称"
+    //                 value={data.musicName}
+    //                 onChange={musicList.inputOnChange.bind(this, 'musicName')}
+    //             >
+    //                 <div>歌曲名称</div>
+    //             </InputItem>
+    //         </div>
+    //         <div className="line_public flex_container"></div>
+    //         <div>
+    //             <InputItem
+    //                 className="add_element"
+    //                 placeholder="请输入歌手名称"
+    //                 value={data.musicMan}
+    //                 onChange={musicList.inputOnChange.bind(this, 'musicMan')}
+    //             >
+    //                 <div>歌手名称</div>
+    //             </InputItem>
+    //         </div>
+    //         <div className="line_public flex_container"></div>
+    //         <div className="my_flex sameBack">
+    //                 <span className="textTitle">上传封面
+    //                     <p style={{margin: 0, height: 5}}></p>
+    //                     <span className="uploadSupport">(jpg格式)</span>
+    //                 </span>
+    //             <div className="upload_file">
+    //                 <img onClick={musicList.imgPreview.bind(this, data.cover)}
+    //                      className="imgTag" src={data.cover}/>
+    //                 <div className="icon_pointer" onClick={musicList.uploadImage.bind(this,)}>修改</div>
+    //             </div>
 
-            </div>
-            <div className="line_public flex_container"></div>
-            <div className="my_flex sameBack">
-                    <span className="textTitle">上传音乐
-                        <p style={{margin: 0, height: 5}}></p>
-                        <span className="uploadSupport">(MP3格式)</span>
-                    </span>
-                <div className="upload_file">
-                    <div onClick={musicList.mp3Preview.bind(this, data.musicUrl)}
-                         className="musicIcon"/>
-                    <div className="icon_pointer" onClick={musicList.uploadMp3.bind(this,)}>修改</div>
-                </div>
-            </div>
-        </div>
+    //         </div>
+    //         <div className="line_public flex_container"></div>
+    //         <div className="my_flex sameBack">
+    //                 <span className="textTitle">上传音乐
+    //                     <p style={{margin: 0, height: 5}}></p>
+    //                     <span className="uploadSupport">(MP3格式)</span>
+    //                 </span>
+    //             <div className="upload_file">
+    //                 <div onClick={musicList.mp3Preview.bind(this, data.musicUrl)}
+    //                      className="musicIcon"/>
+    //                 <div className="icon_pointer" onClick={musicList.uploadMp3.bind(this,)}>修改</div>
+    //             </div>
+    //         </div>
+    //     </div>
 
-        this.setState({editDiv})
-    }
+    //     this.setState({editDiv})
+    // }
 
     exitAddTags() {
         $('.updateModel').slideUp()

@@ -45,7 +45,8 @@ export default class addUploadVideo extends React.Component {
             challengeIndex: "",
             showTextOrList: true,
             chaContent: "",
-            showDelete: false
+            showDelete: false,
+            isNewTag:0   //0不是   1是
 
         };
     }
@@ -472,21 +473,6 @@ export default class addUploadVideo extends React.Component {
                                 }
                                 arr.push(
                                     {
-                                        value: 3,
-                                        label: "哈哈",
-                                        extra: "tagContent"
-                                    },
-                                    {
-                                        value: 4,
-                                        label: "哈哈哈",
-                                        extra: "extra:v.tagContent"
-                                    },
-                                    {
-                                        value: 5,
-                                        label: "哈哈哈哈",
-                                        extra: "extra:v.tagContent"
-                                    },
-                                    {
                                         value: v.tagId,
                                         label: v.tagTitle,
                                         extra: v.tagContent
@@ -569,10 +555,7 @@ export default class addUploadVideo extends React.Component {
                 tagId:v.tagId
             })
         })
-
         console.log(tagTextData,"tagTextData")
-
-
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.state.addVideoList[calm.state.tagIndex].tagText.concat(tagTextData);
         var arr = calm.state.addVideoList[calm.state.tagIndex].tagText;
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "id")
@@ -595,6 +578,7 @@ export default class addUploadVideo extends React.Component {
   * 搜索关键字结果
   */
     getTagsByContent() {
+        console.log(calm.state.isNewTag,"isNewTag")
         if (calm.state.searchValue == "") {
             Toast.info("请输入搜索的关键词")
             return;
@@ -615,6 +599,9 @@ export default class addUploadVideo extends React.Component {
                             result.response.forEach(function (v, i) {
                                 // console.log(v);
                                 if (v.tagId == 0) {
+                                    calm.setState({
+                                        isNewTag:1
+                                    })
                                     console.log(v.tagId, "tagId")
                                     // arr.push(<Tag
                                     //     selected={false}

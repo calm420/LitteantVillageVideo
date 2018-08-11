@@ -113,7 +113,11 @@ const uploadvideoList = (location, cb) => {
         cb(null, require('./components/uploadVideo/js/uploadvideoList').default)
     }, 'uploadvideoList')
 };
-
+const updateVideo = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/uploadVideo/js/updateVideo').default)
+    }, 'updateVideo')
+};
 /*
 * 我的收藏
 * */
@@ -162,7 +166,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/uploadvideoList?" style={{fontSize: '24px'}}>上传视频</Link>
+                            to="/uploadvideoList?ident=8" style={{fontSize: '24px'}}>上传视频</Link>
                     </li>
                    
 
@@ -198,6 +202,7 @@ ReactDOM.render(
             <Route path="addUploadMusic" getComponent={addUploadMusic}/>
             <Route path="weArrPayment" getComponent={weArrPayment}/>
             <Route path="addUploadVideo" getComponent={addUploadVideo}/>
+            <Route path="updateVideo" getComponent={updateVideo}/>
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
             <Route path="myArticleList" getComponent={myArticleList} />
             <Route path="myCollection" getComponent={myCollection} />

@@ -30,7 +30,7 @@ export default class uploadvideoList extends React.Component {
         var uid = locationSearch.split("&")[0].split("=")[1];
         // var pwd = locationSearch.split("&")[0].split("=")[1];
         // var uid = locationSearch.split("&")[1].split("=")[1];
-        this.setState({ "uid": uid});
+        this.setState({ "uid": uid });
         // this.LittleAntLogin(uid,pwd)
         this.getLittleVideoInfoListByUserId(uid)
     }
@@ -38,7 +38,7 @@ export default class uploadvideoList extends React.Component {
     /**
      * 转换用户
      */
-    LittleAntLogin(uid,pwd){
+    LittleAntLogin(uid, pwd) {
         var param = {
             "method": 'LittleAntLogin',
             "colAccount": uid,
@@ -175,7 +175,7 @@ export default class uploadvideoList extends React.Component {
      * 编辑视频信息
      */
     editVideo(id) {
-        var url = WebServiceUtil.mobileServiceURL + "updateVideo?ident=" + musicList.state.uid+"&id="+id;
+        var url = WebServiceUtil.mobileServiceURL + "updateVideo?ident=" + musicList.state.uid + "&id=" + id;
         var data = {
             method: 'openNewPage',
             url: url

@@ -6,8 +6,8 @@ var calm;
 const RadioItem = Radio.RadioItem;
 const typeDate = [
     { value: 0, label: '普通类型' },
-    { value: 1, label: '广告视频' },
-    { value: 2, label: '挑战视频' },
+    { value: 2, label: '广告视频' },
+    { value: 1, label: '挑战视频' },
 ];
 
 export default class updateVideo extends React.Component {
@@ -15,25 +15,6 @@ export default class updateVideo extends React.Component {
         super(props);
         calm = this;
         this.state = {
-            object: {
-                coverPath: "",
-                videoUrl: "",
-                videoType: 2,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
-                userId: 8,
-                videoContent: "哈哈哈哈哈哈哈哈",   // 心情描述 
-                tags: [
-                    {
-                        tagTitle: "这是挑战",
-                        tagType: 2,   //挑战
-                        tagContent: "这是挑战的内容"
-                    }
-                    ,
-                    {
-                        tagTitle: "这是标签",
-                        tagType: 1,   //标签
-                    }
-                ]
-            },
             coverPath: "",
             videoUrl: "",
             tagText: [], //存标签
@@ -78,7 +59,7 @@ export default class updateVideo extends React.Component {
             onResponse: function (result) {
                 console.log(result, "rerere")
                 if (result.msg == '调用成功' || result.success == true) {
-                    if (result.response.videoType != 2) {
+                    if (result.response.videoType != 1) {
                         calm.setState({
                             show: false
                         })
@@ -89,15 +70,20 @@ export default class updateVideo extends React.Component {
                         videoContent: result.response.videoContent,
                         videoType: result.response.videoType,
                     })
+
+                    console.log(calm.state.videoType)
                     result.response.tags.map((v, i) => {
-                        if (v.tagType == 2 && calm.state.videoContent == 2) {
+                        if (v.tagType == 1 && calm.state.videoContent == 2) {
                             calm.state.cheData.label = v.tagTitle,
                                 calm.state.cheData.extra = v.tagContent
                         }
-                        if (v.tagType != 2) {
+                        if (v.tagType != 1) {
                             calm.state.tagText.push(v);
                         }
                         console.log(v, "mapppppp")
+                    })
+                    calm.setState({
+                        tagText:calm.state.tagText
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -207,7 +193,7 @@ export default class updateVideo extends React.Component {
     */
     onChangeRadio = (value) => {
         console.log(value, 'checkbox');
-        if (value == 2) {
+        if (value == 1) {
             calm.state.show = true;
         } else {
             calm.state.show = false;
@@ -545,8 +531,9 @@ export default class updateVideo extends React.Component {
         }
         console.log(calm.state.tagText, "tagText")
         obj.tags = obj.tags.concat(calm.state.tagText)
+        // 添加合并标签
         obj.tags.map((v, i) => {
-            if (calm.state.videoType != 2) {
+            if (calm.state.videoType != 1) {
                 if (v.tagType == 2) {
                     obj.tags.splice(i, 1)
                 }

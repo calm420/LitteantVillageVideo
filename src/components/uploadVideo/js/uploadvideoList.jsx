@@ -26,9 +26,34 @@ export default class uploadvideoList extends React.Component {
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        console.log(locationSearch)
         var uid = locationSearch.split("&")[0].split("=")[1];
+        // var pwd = locationSearch.split("&")[0].split("=")[1];
+        // var uid = locationSearch.split("&")[1].split("=")[1];
         this.setState({ "uid": uid });
+        // this.LittleAntLogin(uid,pwd)
         this.getLittleVideoInfoListByUserId(uid)
+    }
+
+    /**
+     * 转换用户
+     */
+    LittleAntLogin(uid, pwd) {
+        var param = {
+            "method": 'LittleAntLogin',
+            "colAccount": uid,
+            "colPasswd": pwd
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                console.log(result, "calm");
+                if (result.msg == '调用成功' && result.success == true) {
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
     }
 
     /**
@@ -39,7 +64,7 @@ export default class uploadvideoList extends React.Component {
         const dataBlob = {};
         var param = {
             "method": 'getLittleVideoInfoListByUserId',
-            "userId": uid,
+            "userId": 8,
             "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -147,10 +172,10 @@ export default class uploadvideoList extends React.Component {
     }
 
     /**
-     * 编辑音乐信息
+     * 编辑视频信息
      */
     editVideo(id) {
-        var url = WebServiceUtil.mobileServiceURL + "updateVideo?ident=" + musicList.state.uid+"&id="+id;
+        var url = WebServiceUtil.mobileServiceURL + "updateVideo?ident=" + musicList.state.uid + "&id=" + id;
         var data = {
             method: 'openNewPage',
             url: url

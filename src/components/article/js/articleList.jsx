@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView, Button, List, Picker, Tag, Tabs
+    Toast, DatePicker,PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/articleList.less';
 
@@ -27,6 +27,7 @@ export default class articleList extends React.Component {
             recommended_video: {
                 response:[]
             },
+            refreshing: false,
         }
     }
 
@@ -122,7 +123,8 @@ export default class articleList extends React.Component {
                     }
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading: true
+                        isLoading: true,
+                        refreshing:false,
                     })
                     if ((this.initDataSource.length - (this.state.recommended_video.response.length == 0?0:1)) >= result.pager.rsCount) {
                         this.setState({
@@ -190,6 +192,18 @@ export default class articleList extends React.Component {
         }, () => {
             this.getArticleRecommenLittleVideoList();
         });
+    };
+
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.initDataSource = [];
+        this.setState({defaultPageNo: 1, refreshing: true,dataSource:dataSource.cloneWithRows(this.initDataSource),isLoading: true,
+            hasMore: true,},()=>{
+            this.getLittleVideoUserById();
+            this.getArticleRecommenLittleVideoList();
+        });
+
     };
 
     toDetail(id) {
@@ -435,6 +449,10 @@ export default class articleList extends React.Component {
                             style={{
                                 height: document.body.clientHeight - 46,
                             }}
+                            pullToRefresh={<PullToRefresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                            />}
                         />
                     </div>
 
@@ -462,6 +480,10 @@ export default class articleList extends React.Component {
                             style={{
                                 height: document.body.clientHeight - 46,
                             }}
+                            pullToRefresh={<PullToRefresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                            />}
                         />
                     </div>
                 </Tabs>

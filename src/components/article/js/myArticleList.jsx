@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView, Button, List, Picker, Tag,Tabs
+    Toast, DatePicker, ListView, Button, List, Picker, Tag,PullToRefresh
 } from 'antd-mobile';
 import '../css/myArticleList.less';
 
@@ -18,7 +18,9 @@ export default class myArticleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
-            index:0
+            index:0,
+            refreshing:false,
+
         }
     }
 
@@ -36,6 +38,17 @@ export default class myArticleList extends React.Component {
         })
     }
 
+
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.initDataSource = [];
+        this.setState({defaultPageNo: 1, refreshing: true,dataSource:dataSource.cloneWithRows(this.initDataSource),isLoading: true,
+            hasMore: true,},()=>{
+            this.getArticleInfoListByStatus();
+        });
+
+    };
 
     /**
      * 按查询条件获取列表
@@ -55,7 +68,8 @@ export default class myArticleList extends React.Component {
                     this.initDataSource = this.initDataSource.concat(result.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading:true
+                        isLoading:true,
+                        refreshing:false,
                     })
                     if (this.initDataSource.length == result.pager.rsCount) {
                         this.setState({
@@ -248,6 +262,10 @@ export default class myArticleList extends React.Component {
                             style={{
                                 height: document.body.clientHeight - 43.5,
                             }}
+                            pullToRefresh={<PullToRefresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                            />}
                         />
                     </div>
             </div>

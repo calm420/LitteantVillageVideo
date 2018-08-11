@@ -6,8 +6,8 @@ const RadioItem = Radio.RadioItem;
 var calm;
 const typeDate = [
     { value: 0, label: '普通类型' },
-    { value: 1, label: '广告视频' },
-    { value: 2, label: '挑战视频' },
+    { value: 2, label: '广告视频' },
+    { value: 1, label: '挑战视频' },
 ];
 const recomData = [
     { value: 0, label: '是' },
@@ -348,7 +348,7 @@ export default class addUploadVideo extends React.Component {
     }
 
     /**
-     * 删除音乐model
+     * 删除视频
      * @param src
      * @param id
      * @param event

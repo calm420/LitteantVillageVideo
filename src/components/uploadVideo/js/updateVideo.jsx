@@ -30,7 +30,7 @@ export default class updateVideo extends React.Component {
             challengeValue: "",
             showTextOrList: true,
             chaContent: "",
-            showDelete: false,
+            showDelete:true,
             isNewTag: 0   //0不是   1是
         }
     }
@@ -41,7 +41,6 @@ export default class updateVideo extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        console.log(uid,"uid")
         var vid = locationSearch.split("&")[1].split("=")[1];
         calm.setState({
             vid
@@ -58,7 +57,7 @@ export default class updateVideo extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "rerere")
+                console.log(result,"cdcd")
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.videoType != 1) {
                         calm.setState({
@@ -71,20 +70,19 @@ export default class updateVideo extends React.Component {
                         videoContent: result.response.videoContent,
                         videoType: result.response.videoType,
                     })
-
-                    console.log(calm.state.videoType)
                     result.response.tags.map((v, i) => {
-                        if (v.tagType == 1 && calm.state.videoContent == 2) {
-                            calm.state.cheData.label = v.tagTitle,
+                        if (v.tagType == 2) {
+                                calm.state.cheData.label = v.tagTitle,
                                 calm.state.cheData.extra = v.tagContent
                         }
-                        if (v.tagType != 1) {
+                        if (v.tagType == 1) {
                             calm.state.tagText.push(v);
                         }
-                        console.log(v, "mapppppp")
                     })
+                    console.log(calm.state.tagText, "tagText")
                     calm.setState({
-                        tagText:calm.state.tagText
+                        tagText: calm.state.tagText,
+                        cheData:calm.state.cheData
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -102,11 +100,9 @@ export default class updateVideo extends React.Component {
      * @param value
      */
     inputOnChange = (value) => {
-        console.log(value, "vv")
         calm.setState({
             videoContent: value
         })
-        // calm.state.object.videoContent = value
     }
     /**
      * 封面预览
@@ -143,12 +139,10 @@ export default class updateVideo extends React.Component {
             let newArr = {};
             let item = res.split("?");
             newArr.picPath = item[0],
-                console.log(newArr.picPath, "res")
-            newArr.picName = item[1].split("=")[1]
+                newArr.picName = item[1].split("=")[1]
             calm.setState({
                 coverPath: newArr.picPath
             })
-            // calm.state.coverPath = newArr.picPath
 
         }, function (error) {
             console.log(error);
@@ -193,7 +187,6 @@ export default class updateVideo extends React.Component {
     * 类型的改变
     */
     onChangeRadio = (value) => {
-        console.log(value, 'checkbox');
         if (value == 1) {
             calm.state.show = true;
         } else {
@@ -263,7 +256,6 @@ export default class updateVideo extends React.Component {
     * 搜索关键字结果
     */
     getTagsByContent() {
-        console.log(calm.state.isNewTag, "isNewTag")
         if (calm.state.searchValue == "") {
             Toast.info("请输入搜索的关键词")
             return;
@@ -277,12 +269,10 @@ export default class updateVideo extends React.Component {
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
-                    console.log(result)
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                // console.log(v);
                                 if (v.tagId == 0) {
                                     calm.setState.isNewTag = 0;
                                     arr.push(<Tag
@@ -325,7 +315,6 @@ export default class updateVideo extends React.Component {
                 }
             })
         }
-        console.log(calm.state.tagChangeData, "tagChangeData")
     }
     /**
     * 去重
@@ -350,7 +339,6 @@ export default class updateVideo extends React.Component {
      * 挑战改变
      */
     chaChange = (i) => {
-        console.log('checkbox', i);
         if (i.value == 0) {
             calm.setState({
                 showTextOrList: false
@@ -367,7 +355,6 @@ export default class updateVideo extends React.Component {
      * 挑战内容
      */
     chaOnChange = (value) => {
-        console.log(value, "w")
         calm.setState({
             chaContent: value
         })
@@ -399,9 +386,9 @@ export default class updateVideo extends React.Component {
             calm.state.cheData.label = calm.state.cheData.label;
             calm.state.cheData.extra = calm.state.chaContent;
         }
-        console.log(calm.state.cheData, "ttt")
         calm.setState({
-            showDelete: true
+            showDelete: true,
+            chaChangeValue: ""
         }, () => {
 
         })
@@ -416,7 +403,6 @@ export default class updateVideo extends React.Component {
      * 挑战搜索框
      */
     chaInputChange = (value) => {
-        console.log(value, "cha")
         calm.setState({
             challengeValue: value
         }, () => {
@@ -442,7 +428,6 @@ export default class updateVideo extends React.Component {
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
-                    console.log(result)
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
@@ -451,7 +436,8 @@ export default class updateVideo extends React.Component {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
-                                        extra: <div>{v.tagContent}<div className='blueTxt'>点击发起</div></div>                                    })
+                                        extra: <div>{v.tagContent}<div className='blueTxt'>点击发起</div></div>
+                                    })
                                     return;
                                 }
                                 arr.push(
@@ -501,7 +487,6 @@ export default class updateVideo extends React.Component {
     deleteTag(item) {
         var tagNewArr = calm.state.tagText;
         tagNewArr.forEach((v, i) => {
-            console.log(v, "v")
             if (item.tagTitle == v.tagTitle) {
                 tagNewArr.splice(i, 1)
             }
@@ -529,7 +514,6 @@ export default class updateVideo extends React.Component {
                 },
             ]
         }
-        console.log(calm.state.tagText, "tagText")
         obj.tags = obj.tags.concat(calm.state.tagText)
         // 添加合并标签
         obj.tags.map((v, i) => {
@@ -544,7 +528,6 @@ export default class updateVideo extends React.Component {
             "videoId": calm.state.vid,
             "videoDatas": obj,
         };
-        console.log(param, "param")
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
@@ -572,16 +555,16 @@ export default class updateVideo extends React.Component {
                 <div className="addList">
                     <div className="listCont">
                         <div className="my_flex sameBack">
-                        <span className="textTitle">封面
+                            <span className="textTitle">封面
                             <p style={{ margin: 0, height: 3 }}></p>
-                            <span className="uploadSupport">(jpg格式)</span>
-                        </span>
+                                <span className="uploadSupport">(jpg格式)</span>
+                            </span>
                             {calm.state.coverPath.length == 0 ?
                                 <button className="uploadBtn" onClick={calm.uploadImage.bind(this)}>上传封面</button>
                                 :
                                 <div className="upload_file">
                                     <img onClick={calm.imgPreview.bind(this, calm.state.coverPath)}
-                                         className="imgTag" src={calm.state.coverPath} />
+                                        className="imgTag" src={calm.state.coverPath} />
                                     <div className="icon_pointer" onClick={calm.uploadImage.bind(this)}>更换</div>
                                 </div>
                             }
@@ -589,10 +572,10 @@ export default class updateVideo extends React.Component {
                         </div>
                         <div className="line_public flex_container"></div>
                         <div className="my_flex sameBack">
-                        <span className="textTitle">视频
+                            <span className="textTitle">视频
                             <p style={{ margin: 0, height: 3 }}></p>
-                            <span className="uploadSupport">(MP4格式)</span>
-                        </span>
+                                <span className="uploadSupport">(MP4格式)</span>
+                            </span>
                             {calm.state.videoUrl.length == 0 ?
                                 <button className="uploadBtn" onClick={calm.uploadMp4.bind(this)}>上传视频</button>
                                 :
@@ -657,6 +640,7 @@ export default class updateVideo extends React.Component {
                             <div className="textTitle">标签</div>
                             {
                                 calm.state.tagText.map((v, i) => {
+                                    console.log(v,"cdcdv")
                                     if (v.tagType == 1) {
                                         return (
                                             <div className="spanTag">
@@ -731,26 +715,26 @@ export default class updateVideo extends React.Component {
                         </InputItem>
                     </div>
                     <div className='challenge'>
-                    {
-                        calm.state.showTextOrList ?
-                            <List>
-                                {calm.state.challengeData.map(i => (
-                                    <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                        <span className='preIcon'>#</span>{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
-                                    </RadioItem>
-                                ))}
-                            </List>
-                            :
-                            <TextareaItem
-                                className="add_element"
-                                placeholder="请输入挑战的表述"
-                                value={calm.state.chaContent}
-                                onChange={calm.chaOnChange.bind(this)}
-                                rows={5}
-                                count={50}
-                            />
+                        {
+                            calm.state.showTextOrList ?
+                                <List>
+                                    {calm.state.challengeData.map(i => (
+                                        <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
+                                            <span className='preIcon'>#</span>{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                                :
+                                <TextareaItem
+                                    className="add_element"
+                                    placeholder="请输入挑战的表述"
+                                    value={calm.state.chaContent}
+                                    onChange={calm.chaOnChange.bind(this)}
+                                    rows={5}
+                                    count={50}
+                                />
 
-                    }
+                        }
                     </div>
                     <div className="bottomBox">
                         <span className="close" onClick={calm.cancelChaSubmit}>取消</span>

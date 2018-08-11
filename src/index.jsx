@@ -166,7 +166,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/uploadvideoList?ident=8" style={{fontSize: '24px'}}>上传视频</Link>
+                            to="/uploadvideoList?ident=8&accsess_user=23836" style={{fontSize: '24px'}}>上传视频</Link>
                     </li>
                    
 

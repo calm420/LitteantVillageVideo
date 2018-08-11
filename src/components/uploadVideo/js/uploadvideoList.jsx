@@ -28,18 +28,10 @@ export default class uploadvideoList extends React.Component {
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        console.log(locationSearch)
-        var uid = locationSearch.split("&")[0].split("=")[1];
-
-        // var pwd = locationSearch.split("&")[0].split("=")[1];
-        // var userId = locationSearch.split("&")[1].split("=")[1];
-
-
-        // this.setState({pwd});
-        this.setState({uid});
-        calm.getLittleVideoInfoListByUserId(uid)
-
-        // this.LittleAntLogin(userId,pwd)
+        var pwd = locationSearch.split("&")[0].split("=")[1];
+        var userId = locationSearch.split("&")[1].split("=")[1];
+        this.setState({pwd});
+        calm.LittleAntLogin(userId,pwd)
     }
 
     /**
@@ -53,8 +45,10 @@ export default class uploadvideoList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "calqqqqq");
+                console.log(result,"rere")
                 if (result.msg == '调用成功' && result.success == true) {
+                    console.log(result.response.uid,"uid")
+
                     calm.setState({
                         uid:result.response.uid
                     },()=>{
@@ -82,7 +76,6 @@ export default class uploadvideoList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "calm");
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     // var pager = result.pager;
@@ -119,7 +112,8 @@ export default class uploadvideoList extends React.Component {
      * 跳转到添加页面
      */
     addRing() {
-        var url = WebServiceUtil.mobileServiceURL + "addUploadVideo?ident=" + musicList.state.uid;
+        console.log(calm.state.uid)
+        var url = WebServiceUtil.mobileServiceURL + "addUploadVideo?ident=" + calm.state.uid;
         var data = {
             method: 'openNewPage',
             url: url
@@ -134,6 +128,7 @@ export default class uploadvideoList extends React.Component {
      * @param id
      */
     showDelAlert(id) {
+        console.log(id,"vid")
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -152,37 +147,38 @@ export default class uploadvideoList extends React.Component {
     /**
      * 删除视频信息
      */
-    deleteVideoMusic(id) {
-        var _this = this;
+    // deleteVideoMusic(id) {
+    //     console.log(id,"eee")
+    //     var _this = this;
 
-        var param = {
-            "method": 'deleteVideoMusic',
-            "videoMusicId": id,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' && result.success == true) {
-                    Toast.success('删除成功', 1)
-                    //删除本地数据
-                    musicList.state.dataSource = [];
-                    musicList.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    musicList.initData.forEach(function (v, i) {
-                        if (id == v.musicId) {
-                            musicList.initData.splice(i, 1);
-                        }
-                    });
-                    musicList.setState({
-                        dataSource: musicList.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
+    //     var param = {
+    //         "method": 'deleteVideoMusic',
+    //         "videoMusicId": id,
+    //     };
+    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+    //         onResponse: function (result) {
+    //             if (result.msg == '调用成功' && result.success == true) {
+    //                 Toast.success('删除成功', 1)
+    //                 //删除本地数据
+    //                 musicList.state.dataSource = [];
+    //                 musicList.state.dataSource = new ListView.DataSource({
+    //                     rowHasChanged: (row1, row2) => row1 !== row2,
+    //                 });
+    //                 musicList.initData.forEach(function (v, i) {
+    //                     if (id == v.musicId) {
+    //                         musicList.initData.splice(i, 1);
+    //                     }
+    //                 });
+    //                 musicList.setState({
+    //                     dataSource: musicList.state.dataSource.cloneWithRows(_this.initData)
+    //                 });
+    //             }
+    //         },
+    //         onError: function (error) {
+    //             // message.error(error);
+    //         }
+    //     });
+    // }
 
     /**
      * 编辑视频信息
@@ -197,80 +193,6 @@ export default class uploadvideoList extends React.Component {
             window.location.href = url;
         });
     }
-
-    /**
-     * 音乐上传
-     */
-    // uploadMp3(event) {
-    //     event.stopPropagation()
-    //     var data = {
-    //         method: 'selectMp3',
-    //     };
-    //     Bridge.callHandler(data, function (res) {
-    //         // 拿到照片地址,显示在页面等待上传
-    //         let newArr = {};
-    //         let item = res.split("?");
-    //         newArr.picPath = item[0],
-    //             newArr.picName = item[1].split("=")[1]
-
-    //         musicList.state.editData.musicUrl = newArr.picPath
-
-    //         musicList.editModelShow(false)
-
-    //     }, function (error) {
-    //         console.log(error);
-    //     });
-    // }
-
-    /**
-     * 封面上传
-     */
-    // uploadImage(event) {
-    //     event.stopPropagation()
-    //     var data = {
-    //         method: 'selectImages',
-    //     };
-    //     Bridge.callHandler(data, function (res) {
-    //         // 拿到照片地址,显示在页面等待上传
-    //         let newArr = {};
-    //         let item = res.split("?");
-    //         newArr.picPath = item[0],
-    //             newArr.picName = item[1].split("=")[1]
-    //         musicList.state.editData.cover = newArr.picPath
-    //         musicList.editModelShow(false)
-
-    //     }, function (error) {
-    //         console.log(error);
-    //     });
-    // }
-
-    /**
-     * 封面预览
-     */
-    // imgPreview(src) {
-    //     var dataObj = {};
-    //     dataObj.method = 'showImage';
-    //     dataObj.url = src;
-    //     dataObj.currentUrl = src;
-    //     Bridge.callHandler(dataObj, null, function (error) {
-    //         console.log(error);
-    //     })
-    // }
-
-    /**
-     * mp3预览
-     */
-    // mp3Preview(src) {
-
-    //     var data = {
-    //         method: 'playAudio',
-    //         url: src
-    //     };
-    //     Bridge.callHandler(data, null, function (error) {
-
-    //     });
-    // }
-
     /**
      * 输入框改变的回调
      * @param type  musicName=歌名  musicMan=歌手
@@ -287,114 +209,9 @@ export default class uploadvideoList extends React.Component {
         musicList.editModelShow(false)
     }
 
-    // editModelShow(falg) {
-    //     var data = this.state.editData
-
-    //     if (falg) {
-    //         $('.updateModel').slideDown()
-    //         $('.tagAddPanel_bg').show()
-    //     }
-
-    //     var editDiv = <div className="listCont">
-    //         <div>
-    //             <InputItem
-    //                 className="add_element"
-    //                 placeholder="请输入歌曲名称"
-    //                 value={data.musicName}
-    //                 onChange={musicList.inputOnChange.bind(this, 'musicName')}
-    //             >
-    //                 <div>歌曲名称</div>
-    //             </InputItem>
-    //         </div>
-    //         <div className="line_public flex_container"></div>
-    //         <div>
-    //             <InputItem
-    //                 className="add_element"
-    //                 placeholder="请输入歌手名称"
-    //                 value={data.musicMan}
-    //                 onChange={musicList.inputOnChange.bind(this, 'musicMan')}
-    //             >
-    //                 <div>歌手名称</div>
-    //             </InputItem>
-    //         </div>
-    //         <div className="line_public flex_container"></div>
-    //         <div className="my_flex sameBack">
-    //                 <span className="textTitle">上传封面
-    //                     <p style={{margin: 0, height: 5}}></p>
-    //                     <span className="uploadSupport">(jpg格式)</span>
-    //                 </span>
-    //             <div className="upload_file">
-    //                 <img onClick={musicList.imgPreview.bind(this, data.cover)}
-    //                      className="imgTag" src={data.cover}/>
-    //                 <div className="icon_pointer" onClick={musicList.uploadImage.bind(this,)}>修改</div>
-    //             </div>
-
-    //         </div>
-    //         <div className="line_public flex_container"></div>
-    //         <div className="my_flex sameBack">
-    //                 <span className="textTitle">上传音乐
-    //                     <p style={{margin: 0, height: 5}}></p>
-    //                     <span className="uploadSupport">(MP3格式)</span>
-    //                 </span>
-    //             <div className="upload_file">
-    //                 <div onClick={musicList.mp3Preview.bind(this, data.musicUrl)}
-    //                      className="musicIcon"/>
-    //                 <div className="icon_pointer" onClick={musicList.uploadMp3.bind(this,)}>修改</div>
-    //             </div>
-    //         </div>
-    //     </div>
-
-    //     this.setState({editDiv})
-    // }
-
-    // exitAddTags() {
-    //     $('.updateModel').slideUp()
-    //     $('.tagAddPanel_bg').hide()
-    // }
-
-    // addTagsForSure() {
-    //     var data = musicList.state.editData
-
-    //     var param = {
-    //         "method": 'updateVideoMusic',
-    //         "videoMusicId": data.musicId,
-    //         "videoMusicDatas": JSON.stringify(data)
-    //     };
-
-    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-    //         onResponse: function (result) {
-    //             if (result.msg == '调用成功' && result.success == true) {
-    //                 Toast.success('修改成功', 1)
-    //                 $('.updateModel').slideUp()
-    //                 $('.tagAddPanel_bg').hide()
-    //                 //更改本地数据
-
-    //                 musicList.state.dataSource = [];
-    //                 musicList.state.dataSource = new ListView.DataSource({
-    //                     rowHasChanged: (row1, row2) => row1 !== row2,
-    //                 });
-    //                 musicList.initData.forEach(function (item, index) {
-    //                     if (data.musicId == item.musicId) {
-    //                         // item = data   对象的拷贝
-    //                         musicList.initData.splice(index, 1, data);
-    //                     }
-    //                 });
-    //                 musicList.setState({
-    //                     dataSource: musicList.state.dataSource.cloneWithRows(musicList.initData)
-    //                 });
-    //             }
-    //         },
-    //         onError: function (error) {
-    //             // message.error(error);
-    //         }
-    //     });
-    // }
-
     render() {
-        console.log("render")
         var _this = this
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "rowData")
             return (
                 <div className="item line_public">
                     <div className="my_flex topDiv alignCenter">
@@ -414,10 +231,12 @@ export default class uploadvideoList extends React.Component {
                     <div className="my_flex">
                     {
                         rowData.tags ? rowData.tags.map((v, i) => {
-                            console.log(v, "v")
                             return (
                                 <div className='textCont'>
                                     {
+                                        v == null ?
+                                        ""
+                                        :
                                         rowData.videoType == 1 && v.tagType == 2 ?
                                             <div className='cont'>
                                                 <span className='preIcon'>#</span>{v.tagTitle}
@@ -427,8 +246,7 @@ export default class uploadvideoList extends React.Component {
                                                 v == null ?
                                                 ""
                                                 :
-
-                                            rowData.videoType == 0 && v.tagType == 1 ?
+                                                rowData.videoType == 0 && v.tagType == 1 ?
                                                 <span className='tagCont'>
                                                     {v.tagTitle}
                                                 </span>
@@ -447,8 +265,8 @@ export default class uploadvideoList extends React.Component {
                         <div className="icon">
                         <span className="modifyBtn_common"
                               onClick={this.editVideo.bind(this, rowData.vid)}></span>
-                            <span className="deleteBtn_common"
-                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span>
+                            {/* <span className="deleteBtn_common"
+                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span> */}
                         </div>
                     </div>
 
@@ -486,16 +304,6 @@ export default class uploadvideoList extends React.Component {
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
-                {/* <div className='updateModel' style={{ display: 'none' }}>
-                    <div>
-                        {this.state.editDiv}
-                    </div>
-                    <div className="bottomBox">
-                        <span className="close" onClick={this.exitAddTags}>取消</span>
-                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
-                    </div>
-                </div> */}
-
                 <div className="tagAddPanel_bg"></div>
             </div>
         );

@@ -210,8 +210,8 @@ export default class addUploadVideo extends React.Component {
                 <div className="icon_delete" onClick={calm.showListAlert.bind(this, i)}
                     style={{ display: listArr.length == 1 ? 'none' : 'block' }}></div>
                 <div className="my_flex sameBack">
-                    <span className="textTitle">上传封面
-                        <p style={{ margin: 0, height: 5 }}></p>
+                    <span className="textTitle">封面
+                        <p style={{ margin: 0, height: 3 }}></p>
                         <span className="uploadSupport">(jpg格式)</span>
                     </span>
                     {calm.state.addVideoList[i].coverPath.length == 0 ?
@@ -220,15 +220,15 @@ export default class addUploadVideo extends React.Component {
                         <div className="upload_file">
                             <img onClick={calm.imgPreview.bind(this, calm.state.addVideoList[i].coverPath)}
                                 className="imgTag" src={calm.state.addVideoList[i].coverPath} />
-                            <div className="icon_pointer" onClick={calm.uploadImage.bind(this, i)}>修改</div>
+                            <div className="icon_pointer" onClick={calm.uploadImage.bind(this, i)}>更换</div>
                         </div>
                     }
 
                 </div>
                 <div className="line_public flex_container"></div>
                 <div className="my_flex sameBack">
-                    <span className="textTitle">上传视频
-                        <p style={{ margin: 0, height: 5 }}></p>
+                    <span className="textTitle">视频
+                        <p style={{ margin: 0, height: 3 }}></p>
                         <span className="uploadSupport">(MP4格式)</span>
                     </span>
                     {calm.state.addVideoList[i].videoUrl.length == 0 ?
@@ -240,36 +240,43 @@ export default class addUploadVideo extends React.Component {
                                 src={calm.state.addVideoList[i].videoUrl}></video>
                             {/* <div 
                                 className="musicIcon" /> */}
-                            <div className="icon_pointer" onClick={calm.uploadMp4.bind(this, i)}>修改</div>
+                            <div className="icon_pointer" onClick={calm.uploadMp4.bind(this, i)}>更换</div>
                         </div>
 
                     }
                 </div>
                 <div className="line_public flex_container"></div>
-
-                <div>心情描述</div>
-                <TextareaItem
-                    className="add_element"
-                    placeholder="请输入心情描述"
-                    value={calm.state.addVideoList[i].videoContent}
-                    onChange={calm.inputOnChange.bind(this, i)}
-                    rows={5}
-                    count={50}
-                />
+                <div className="sameBack videoType my_flex">
+                    <span className="textTitle">类型</span>
+                    <List>
+                        {typeDate.map(item => (
+                            <RadioItem
+                                key={item.value}
+                                checked={calm.state.addVideoList[i].videoType === item.value}
+                                onChange={() => calm.onChangeRadio(i, item.value)}>
+                                {item.label}
+                            </RadioItem>
+                        ))}
+                    </List>
+                </div>
                 <div className="line_public flex_container"></div>
-                <List renderHeader={() => '视频类型'}>
-                    {typeDate.map(item => (
-                        <RadioItem
-                            key={item.value}
-                            checked={calm.state.addVideoList[i].videoType === item.value}
-                            onChange={() => calm.onChangeRadio(i, item.value)}>
-                            {item.label}
-                        </RadioItem>
-                    ))}
-                </List>
+                    <div className="my_flex sameBack">
+                    <span className="textTitle">描述</span>
+                    <TextareaItem
+                        className="add_element"
+                        placeholder="请输入心情描述"
+                        value={calm.state.addVideoList[i].videoContent}
+                        onChange={calm.inputOnChange.bind(this, i)}
+                        rows={5}
+                        count={50}
+                    />
+                </div>
+                <div className="line_public flex_container"></div>
                 <div style={{ display: calm.state.addVideoList[i].show ? "block" : "none" }}>
-                    挑战
-                    <span style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</span>
+                    <div className="my_flex sameBack">
+                        <span className="textTitle">挑战</span>
+                        <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</span>
+                    </div>
                     <div>
                         <span className="deleteCha" style={{ display: calm.state.showDelete ? "block" : "none" }} onClick={calm.deleteCha.bind(this, i)}>删除</span>
                         <div>
@@ -278,8 +285,10 @@ export default class addUploadVideo extends React.Component {
                             {calm.state.addVideoList[i].cheData.extra}
                         </div>
                     </div>
+                    <div className="line_public flex_container"></div>
                 </div>
-                <div>标签
+                <div className='my_flex sameBack'>
+                    <div className="textTitle">标签</div>
                     {
                         calm.state.addVideoList[i].tagText.map((v, i) => {
                             return (
@@ -294,12 +303,11 @@ export default class addUploadVideo extends React.Component {
                         calm.state.addVideoList[i].tagText.length == 3 ?
                             ""
                             :
-                            <span onClick={calm.addTag.bind(this, i)}>添加标签</span>
+                            <span className='tagBtn' onClick={calm.addTag.bind(this, i)}>添加标签</span>
 
                     }
                 </div>
 
-                <div className="line_public flex_container"></div>
             </div>)
         })
         this.setState({ addListArr: arr })
@@ -705,7 +713,7 @@ export default class addUploadVideo extends React.Component {
     }
     render() {
         return (
-            <div id="addUploadVideo" style={{ height: this.state.clientHeight }}>
+            <div id="addUploadVideo">
                 <div className="addList">
                     {this.state.addListArr}
                     <div className="addBtn sameBack" onClick={this.addList}>
@@ -724,11 +732,10 @@ export default class addUploadVideo extends React.Component {
                     {/* {useIndex} */}
                     <div className="tagInput">
                         <InputItem
-                            placeholder="请输入关键字"
+                            placeholder="请输入标签"
                             onChange={calm.searchInputChange}
                             value={calm.state.searchValue}
                         >
-                            <div>标签名称</div>
                         </InputItem>
 
                         {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
@@ -755,15 +762,21 @@ export default class addUploadVideo extends React.Component {
                             onChange={calm.chaInputChange}
                             value={calm.state.challengeValue}
                         >
-                            <div>挑战</div>
                         </InputItem>
                     </div>
+                    <div className='challenge'>
                     {
                         calm.state.showTextOrList ?
-                            <List renderHeader={() => ''}>
+                            <List renderHeader={() => {
+                                <span>
+                                    #
+                                </span>
+                            }
+
+                            }>
                                 {calm.state.challengeData.map(i => (
                                     <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                        {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                        {i.label}<div className='text'>{i.extra}</div>
                                     </RadioItem>
                                 ))}
                             </List>
@@ -778,7 +791,7 @@ export default class addUploadVideo extends React.Component {
                             />
 
                     }
-
+                    </div>
                     <div className="bottomBox">
                         <span className="close" onClick={calm.cancelChaSubmit}>取消</span>
                         <span className="bind" onClick={calm.submitChaArr}>确 定</span>

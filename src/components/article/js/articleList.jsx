@@ -325,15 +325,15 @@ export default class articleList extends React.Component {
                 if (image.length == 1) {  //图片一张
                     dom = <div className="item line_public">
                         <div className="leftBox">
-                            <div className="title">{rowData.articleTitle}</div>
+                            <div className="title minHeight">{rowData.articleTitle}</div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
                                 <div className="like">{rowData.readCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>
-                        <div className="rightBox">
-                            <img src={image[0]} alt=""/>
+                        <div className="rightBox" style={{backgroundImage: 'url(' + image[0] + ')'}}>
+                            {/*<img src={image[0]} alt=""/>*/}
                         </div>
                     </div>
                 } else if (image.length > 1) {    //图片大于一张

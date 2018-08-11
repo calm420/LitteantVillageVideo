@@ -28,17 +28,9 @@ export default class uploadvideoList extends React.Component {
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        console.log(locationSearch)
-        // var uid = locationSearch.split("&")[0].split("=")[1];
-
         var pwd = locationSearch.split("&")[0].split("=")[1];
         var userId = locationSearch.split("&")[1].split("=")[1];
-
-
         this.setState({pwd});
-        // this.setState({uid});
-        // calm.getLittleVideoInfoListByUserId(uid)
-
         this.LittleAntLogin(userId,pwd)
     }
 
@@ -53,7 +45,6 @@ export default class uploadvideoList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "calqqqqq");
                 if (result.msg == '调用成功' && result.success == true) {
                     calm.setState({
                         uid:result.response.uid
@@ -82,7 +73,6 @@ export default class uploadvideoList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "calm");
                 if (result.msg == '调用成功' && result.success == true) {
                     var arr = result.response;
                     // var pager = result.pager;
@@ -214,10 +204,8 @@ export default class uploadvideoList extends React.Component {
     }
 
     render() {
-        console.log("render")
         var _this = this
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, "rowData")
             return (
                 <div className="item line_public">
                     <div className="my_flex topDiv alignCenter">
@@ -237,7 +225,6 @@ export default class uploadvideoList extends React.Component {
                     <div className="my_flex">
                     {
                         rowData.tags ? rowData.tags.map((v, i) => {
-                            console.log(v, "v")
                             return (
                                 <div className='textCont'>
                                     {
@@ -311,16 +298,6 @@ export default class uploadvideoList extends React.Component {
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>
-                {/* <div className='updateModel' style={{ display: 'none' }}>
-                    <div>
-                        {this.state.editDiv}
-                    </div>
-                    <div className="bottomBox">
-                        <span className="close" onClick={this.exitAddTags}>取消</span>
-                        <span className="bind" onClick={this.addTagsForSure}>确定</span>
-                    </div>
-                </div> */}
-
                 <div className="tagAddPanel_bg"></div>
             </div>
         );

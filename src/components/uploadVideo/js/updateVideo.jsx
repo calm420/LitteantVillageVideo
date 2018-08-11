@@ -41,7 +41,6 @@ export default class updateVideo extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        console.log(uid,"uid")
         var vid = locationSearch.split("&")[1].split("=")[1];
         calm.setState({
             vid
@@ -58,7 +57,6 @@ export default class updateVideo extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "rerere")
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.videoType != 1) {
                         calm.setState({
@@ -71,8 +69,6 @@ export default class updateVideo extends React.Component {
                         videoContent: result.response.videoContent,
                         videoType: result.response.videoType,
                     })
-
-                    console.log(calm.state.videoType)
                     result.response.tags.map((v, i) => {
                         if (v.tagType == 1 && calm.state.videoContent == 2) {
                             calm.state.cheData.label = v.tagTitle,
@@ -81,7 +77,6 @@ export default class updateVideo extends React.Component {
                         if (v.tagType != 1) {
                             calm.state.tagText.push(v);
                         }
-                        console.log(v, "mapppppp")
                     })
                     calm.setState({
                         tagText:calm.state.tagText
@@ -102,11 +97,9 @@ export default class updateVideo extends React.Component {
      * @param value
      */
     inputOnChange = (value) => {
-        console.log(value, "vv")
         calm.setState({
             videoContent: value
         })
-        // calm.state.object.videoContent = value
     }
     /**
      * 封面预览
@@ -143,12 +136,10 @@ export default class updateVideo extends React.Component {
             let newArr = {};
             let item = res.split("?");
             newArr.picPath = item[0],
-                console.log(newArr.picPath, "res")
             newArr.picName = item[1].split("=")[1]
             calm.setState({
                 coverPath: newArr.picPath
             })
-            // calm.state.coverPath = newArr.picPath
 
         }, function (error) {
             console.log(error);
@@ -193,7 +184,6 @@ export default class updateVideo extends React.Component {
     * 类型的改变
     */
     onChangeRadio = (value) => {
-        console.log(value, 'checkbox');
         if (value == 1) {
             calm.state.show = true;
         } else {
@@ -263,7 +253,6 @@ export default class updateVideo extends React.Component {
     * 搜索关键字结果
     */
     getTagsByContent() {
-        console.log(calm.state.isNewTag, "isNewTag")
         if (calm.state.searchValue == "") {
             Toast.info("请输入搜索的关键词")
             return;
@@ -277,12 +266,10 @@ export default class updateVideo extends React.Component {
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
-                    console.log(result)
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                // console.log(v);
                                 if (v.tagId == 0) {
                                     calm.setState.isNewTag = 0;
                                     arr.push(<Tag
@@ -325,7 +312,6 @@ export default class updateVideo extends React.Component {
                 }
             })
         }
-        console.log(calm.state.tagChangeData, "tagChangeData")
     }
     /**
     * 去重
@@ -350,7 +336,6 @@ export default class updateVideo extends React.Component {
      * 挑战改变
      */
     chaChange = (i) => {
-        console.log('checkbox', i);
         if (i.value == 0) {
             calm.setState({
                 showTextOrList: false
@@ -367,7 +352,6 @@ export default class updateVideo extends React.Component {
      * 挑战内容
      */
     chaOnChange = (value) => {
-        console.log(value, "w")
         calm.setState({
             chaContent: value
         })
@@ -399,7 +383,6 @@ export default class updateVideo extends React.Component {
             calm.state.cheData.label = calm.state.cheData.label;
             calm.state.cheData.extra = calm.state.chaContent;
         }
-        console.log(calm.state.cheData, "ttt")
         calm.setState({
             showDelete: true,
             chaChangeValue:""
@@ -417,7 +400,6 @@ export default class updateVideo extends React.Component {
      * 挑战搜索框
      */
     chaInputChange = (value) => {
-        console.log(value, "cha")
         calm.setState({
             challengeValue: value
         }, () => {
@@ -443,7 +425,6 @@ export default class updateVideo extends React.Component {
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
-                    console.log(result)
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
@@ -502,7 +483,6 @@ export default class updateVideo extends React.Component {
     deleteTag(item) {
         var tagNewArr = calm.state.tagText;
         tagNewArr.forEach((v, i) => {
-            console.log(v, "v")
             if (item.tagTitle == v.tagTitle) {
                 tagNewArr.splice(i, 1)
             }
@@ -530,7 +510,6 @@ export default class updateVideo extends React.Component {
                 },
             ]
         }
-        console.log(calm.state.tagText, "tagText")
         obj.tags = obj.tags.concat(calm.state.tagText)
         // 添加合并标签
         obj.tags.map((v, i) => {
@@ -545,7 +524,6 @@ export default class updateVideo extends React.Component {
             "videoId": calm.state.vid,
             "videoDatas": obj,
         };
-        console.log(param, "param")
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {

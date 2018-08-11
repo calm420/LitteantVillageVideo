@@ -16,7 +16,6 @@ export default class addUploadVideo extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        console.log(uid, "uid")
         super(props);
         calm = this;
         this.state = {
@@ -109,8 +108,6 @@ export default class addUploadVideo extends React.Component {
      * 类型的改变
      */
     onChangeRadio = (index, value) => {
-        console.log($(this), "this")
-        console.log(value, 'checkbox');
         if (value == 2) {
             calm.state.addVideoList[index].show = true;
         } else {
@@ -147,7 +144,6 @@ export default class addUploadVideo extends React.Component {
      */
     addTag(index) {
 
-        console.log(index, "tagindex")
         $(`.calmTagDiv`).slideDown();
         $(`.tagBack`).show();
         calm.setState({
@@ -163,7 +159,6 @@ export default class addUploadVideo extends React.Component {
 
         $('.calmChaDiv').slideDown();
         $('.tagBack').show();
-        console.log(index, "iiii")
         calm.setState({
             challengeIndex: index
         })
@@ -173,9 +168,7 @@ export default class addUploadVideo extends React.Component {
      * 删除标签
      */
     deleteTag(item, index) {
-        console.log(item, "item")
         calm.state.addVideoList[index].tagText.forEach((v, i) => {
-            console.log(v, "v")
             if (item.tagTitle == v.tagTitle) {
                 calm.state.addVideoList[index].tagText.splice(i, 1)
             }
@@ -403,32 +396,25 @@ export default class addUploadVideo extends React.Component {
             })
         })
 
-        console.log(calm.state.addVideoList)
-        console.log(newArr)
-
         newArr.forEach((v, i) => {
-            console.log(v, "vb")
             v.tags = v.tags.concat(calm.state.addVideoList[i].tagText)
         })
-
-        console.log(newArr, "newArr");
         var param = {
             "method": 'batchLittleVideoInfo',
             "videoJson": JSON.stringify(newArr),
         };
-        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
 
                     Toast.success('成功');
-                    //关闭当前窗口，并刷新上一个页面
-                    // var data = {
-                    //     method: 'finishForRefresh',
-                    // };
-                    // Bridge.callHandler(data, null, function (error) {
-                    //     console.log(error);
-                    // });
+                    // 关闭当前窗口，并刷新上一个页面
+                    var data = {
+                        method: 'finishForRefresh',
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 }
             },
             onError: function (error) {
@@ -519,7 +505,6 @@ export default class addUploadVideo extends React.Component {
             calm.state.addVideoList[calm.state.challengeIndex].cheData.label = calm.state.cheData.label;
             calm.state.addVideoList[calm.state.challengeIndex].cheData.extra = calm.state.chaContent;
         }
-        console.log(calm.state.addVideoList[calm.state.challengeIndex].cheData, "ttt")
         calm.setState({
             showDelete: true
         }, () => {
@@ -577,11 +562,7 @@ export default class addUploadVideo extends React.Component {
             }
 
         })
-        console.log(calm.state.addVideoList[calm.state.tagIndex].tagText, "tagTexts")
-        console.log(tagTextData, "tagTextData")
-
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.state.addVideoList[calm.state.tagIndex].tagText.concat(tagTextData);
-        console.log(calm.state.addVideoList[calm.state.tagIndex].tagText, "tagTexte")
 
         var arr = calm.state.addVideoList[calm.state.tagIndex].tagText;
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "tagTitle")
@@ -603,7 +584,6 @@ export default class addUploadVideo extends React.Component {
   * 搜索关键字结果
   */
     getTagsByContent() {
-        console.log(calm.state.isNewTag, "isNewTag")
         if (calm.state.searchValue == "") {
             Toast.info("请输入搜索的关键词")
             return;
@@ -617,18 +597,15 @@ export default class addUploadVideo extends React.Component {
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
-                    console.log(result)
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                // console.log(v);
                                 if (v.tagId == 0) {
                                     // calm.setState({
                                     //     isNewTag:0
                                     // })
                                     calm.setState.isNewTag = 0;
-                                    console.log(v.tagId, "tagId")
                                     arr.push(<Tag
                                         selected={false}
                                         onChange={calm.tagChange.bind(this, v)}
@@ -669,7 +646,6 @@ export default class addUploadVideo extends React.Component {
                 }
             })
         }
-        console.log(calm.state.tagChangeData, "tagChangeData")
     }
     /**
     * 去重
@@ -694,14 +670,11 @@ export default class addUploadVideo extends React.Component {
      * 挑战改变
      */
     chaChange (i) {
-        console.log($(this),"this")
-        console.log(i.label)
-        console.log(calm.state.challengeValue, "challengeValue")
+      
 
         calm.setState({
             challengeValue: i.label
         }, () => {
-            console.log(calm.state.challengeValue, "challengeVaeeeeeelue")
 
         })
 
@@ -721,7 +694,6 @@ export default class addUploadVideo extends React.Component {
      * 挑战内容
      */
     chaOnChange = (value) => {
-        console.log(value, "w")
         calm.setState({
             chaContent: value
         })

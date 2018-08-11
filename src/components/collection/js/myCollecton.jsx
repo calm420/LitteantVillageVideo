@@ -138,18 +138,17 @@ export default class myCollection extends React.Component {
     //播放视频
     playVideo(videoPath){
         console.log(Math.ceil(this.state.videoList.length / this.state.dividendNumber),'recommended_pageCount');
-        console.log(this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath) / this.state.dividendNumber,'recommended_pageNo')
+        console.log(Math.ceil((this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath)) / this.state.dividendNumber),'recommended_pageNo')
         console.log(this.state.videoList);
         console.log(this.state.videoList.indexOf(videoPath),'index');
         console.log(this.state.videoObj,'videoObj')
         console.log(videoPath)
-        console.log('11111111111111111111');
         // return;
         var data = {
             method: 'playArticleVideo',
             videos: this.state.videoObj,
             position: this.state.videoList.indexOf(videoPath),
-            pageNo: this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath) / this.state.dividendNumber,
+            pageNo: Math.ceil((this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath)) / this.state.dividendNumber),
             pageCount: Math.ceil(this.state.videoList.length / this.state.dividendNumber)
         };
         Bridge.callHandler(data, null, function (error) {

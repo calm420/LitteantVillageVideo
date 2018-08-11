@@ -41,6 +41,7 @@ export default class updateVideo extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
+        console.log(uid,"uid")
         var vid = locationSearch.split("&")[1].split("=")[1];
         calm.setState({
             vid

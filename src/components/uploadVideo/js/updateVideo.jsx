@@ -401,7 +401,8 @@ export default class updateVideo extends React.Component {
         }
         console.log(calm.state.cheData, "ttt")
         calm.setState({
-            showDelete: true
+            showDelete: true,
+            chaChangeValue:""
         }, () => {
 
         })

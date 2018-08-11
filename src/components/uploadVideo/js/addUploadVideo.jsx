@@ -16,7 +16,7 @@ export default class addUploadVideo extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
-        console.log(uid,"uid")
+        console.log(uid, "uid")
         super(props);
         calm = this;
         this.state = {
@@ -109,6 +109,7 @@ export default class addUploadVideo extends React.Component {
      * 类型的改变
      */
     onChangeRadio = (index, value) => {
+        console.log($(this), "this")
         console.log(value, 'checkbox');
         if (value == 2) {
             calm.state.addVideoList[index].show = true;
@@ -172,9 +173,9 @@ export default class addUploadVideo extends React.Component {
      * 删除标签
      */
     deleteTag(item, index) {
-        console.log(item,"item")
+        console.log(item, "item")
         calm.state.addVideoList[index].tagText.forEach((v, i) => {
-            console.log(v,"v")
+            console.log(v, "v")
             if (item.tagTitle == v.tagTitle) {
                 calm.state.addVideoList[index].tagText.splice(i, 1)
             }
@@ -444,7 +445,9 @@ export default class addUploadVideo extends React.Component {
     chaInputChange = (value) => {
         console.log(value, "cha")
         calm.setState({
-            challengeValue: value
+            challengeValue: value,
+            showTextOrList:true,
+            chaChangeValue:""
         }, () => {
             calm.getChasByContent()
         })
@@ -472,12 +475,13 @@ export default class addUploadVideo extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                var str =v.tagContent
+                                var str = v.tagContent
                                 if (v.tagId == 0) {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
                                         extra:<div>{str}<div className='blueTxt'>点击发起</div></div>
+
                                     })
                                     return;
                                 }
@@ -523,7 +527,7 @@ export default class addUploadVideo extends React.Component {
 
         })
         // $('.deleteCha').show();
-        calm.setState({ challengeData: [], challengeValue: "", showTextOrList: true, chaContent: "" })
+        calm.setState({ challengeData: [], challengeValue: "", showTextOrList: true, chaContent: "" ,chaChangeValue:""})
 
 
     }
@@ -689,8 +693,18 @@ export default class addUploadVideo extends React.Component {
     /**
      * 挑战改变
      */
-    chaChange = (i) => {
-        console.log('checkbox', i);
+    chaChange (i) {
+        console.log($(this),"this")
+        console.log(i.label)
+        console.log(calm.state.challengeValue, "challengeValue")
+
+        calm.setState({
+            challengeValue: i.label
+        }, () => {
+            console.log(calm.state.challengeValue, "challengeVaeeeeeelue")
+
+        })
+
         if (i.value == 0) {
             calm.setState({
                 showTextOrList: false

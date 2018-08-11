@@ -451,8 +451,7 @@ export default class updateVideo extends React.Component {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
-                                        extra: v.tagContent + "点击发起挑战"
-                                    })
+                                        extra: <div>{v.tagContent}<div className='blueTxt'>点击发起</div></div>                                    })
                                     return;
                                 }
                                 arr.push(
@@ -641,15 +640,17 @@ export default class updateVideo extends React.Component {
                             <div className="my_flex sameBack">
                                 <span className="textTitle">挑战</span>
                                 <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this)}>添加挑战</span>
-                            </div>
-                            <div>
-                                <span className="deleteCha" style={{ display: calm.state.showDelete ? "block" : "none" }} onClick={calm.deleteCha.bind(this)}>删除</span>
-                                <div>
-                                    {calm.state.cheData.label}</div>
-                                <div>
-                                    {calm.state.cheData.extra}
+                                <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
+                                    <div className='tagTitle textOver'>
+                                        <span className="del_tag" onClick={calm.deleteCha.bind(this)}>删除</span>
+                                        <span className='preIcon'>#</span>
+                                        {calm.state.cheData.label}</div>
+                                    <div className='tagText'>
+                                        {calm.state.cheData.extra}
+                                    </div>
                                 </div>
                             </div>
+
                             <div className="line_public flex_container"></div>
                         </div>
                         <div className='my_flex sameBack'>
@@ -715,6 +716,12 @@ export default class updateVideo extends React.Component {
                         display: "none",
                     }}
                 >
+                    {
+                        calm.state.showTextOrList ?
+                            ""
+                            :
+                            <div className='startTitle'>发起挑战<span className='preIcon'>#</span></div>
+                    }
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入挑战"
@@ -726,10 +733,10 @@ export default class updateVideo extends React.Component {
                     <div className='challenge'>
                     {
                         calm.state.showTextOrList ?
-                            <List renderHeader={() => ''}>
+                            <List>
                                 {calm.state.challengeData.map(i => (
                                     <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                        {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                        <span className='preIcon'>#</span>{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
                                     </RadioItem>
                                 ))}
                             </List>

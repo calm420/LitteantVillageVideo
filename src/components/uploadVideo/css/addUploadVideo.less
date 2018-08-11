@@ -1,5 +1,9 @@
 #addUploadVideo {
   height: 100% !important;
+  .preIcon{
+    color: #EDB74A;
+    padding-right: 5px;
+  }
   .addList{
     height: calc(~"100% - 75px");
     overflow-y: auto;
@@ -24,6 +28,7 @@
   top: 50%;
   z-index: 9 !important;
   cursor: pointer;
+  font-size: 0;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -228,16 +233,16 @@
       margin: 0 auto;
       position: relative;
       width: 80px;
-      padding-left: 20px;
+      padding-left: 18px;
       display: block;
     }
     .am-icon-md {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       margin-right: 3px;
       position: absolute;
       left: 0;
-      top: 5px;
+      top: 6px;
     }
   }
   .bottomBox {
@@ -330,19 +335,40 @@
   .am-textarea-control textarea{
     font-size: 13px;
     color: #333;
-    height: 90px;
+    height: 100px;
   }
   .am-textarea-control{
-    padding: 5px;
+    padding:0 5px;
     border: 1px #e5e5e5 solid;
   }
   .challenge{
+    height: calc(~"100% - 111px");
+    overflow-y: auto;
+    .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio{
+      height: auto !important;
+    }
     .text{
       color: #666;
       font-size: 13px;
+      margin-top: 5px;
     }
     .am-list-content{
       border-bottom: 1px #eee solid !important;
+    }
+    .blueTxt{
+      color: #4285F4 ;
+      font-size: 15px;
+      margin: 8px 0;
+    }
+    .add_element{
+      width:100%;
+      margin-top: 10px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+      .am-textarea-control{
+        border: 0;
+      }
     }
   }
   video{
@@ -351,5 +377,46 @@
   }
   .am-list-item:visited{
     background-color: #000;
+  }
+  .challengeTag{
+    color: #333;
+    background-color: #f6f6f6;
+    border: 1px #e5e5e5 solid;
+    padding: 0 10px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+    width: calc(~"100% - 50px");
+    font-size: 15px;
+    .tagTitle{
+      font-size: 15px;
+      margin-bottom: 10px;
+      position: relative;
+      padding-right: 30px;
+      line-height: 30px;
+      height: 30px;
+      .del_tag{
+        right: 0;
+      }
+    }
+    .tagText{
+      padding-bottom: 10px;
+      text-indent: 15px;
+      line-height: 20px;
+    }
+  }
+  .startTitle{
+    margin-right: 5px;
+    font-size: 17px;
+    color: #333;
+    padding: 10px 0;
+    text-align: center;
+    .preIcon{
+      margin-left: 5px;
+    }
   }
 }

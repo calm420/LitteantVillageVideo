@@ -1,6 +1,10 @@
 #addUploadVideo {
   height: 100% !important;
 }
+#addUploadVideo .preIcon {
+  color: #EDB74A;
+  padding-right: 5px;
+}
 #addUploadVideo .addList {
   height: calc(100% - 75px);
   overflow-y: auto;
@@ -25,6 +29,7 @@
   top: 50%;
   z-index: 9 !important;
   cursor: pointer;
+  font-size: 0;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -221,16 +226,16 @@
   margin: 0 auto;
   position: relative;
   width: 80px;
-  padding-left: 20px;
+  padding-left: 18px;
   display: block;
 }
 #addUploadVideo .addBtn .am-icon-md {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   margin-right: 3px;
   position: absolute;
   left: 0;
-  top: 5px;
+  top: 6px;
 }
 #addUploadVideo .bottomBox {
   display: flex;
@@ -322,18 +327,41 @@
 #addUploadVideo .am-textarea-control textarea {
   font-size: 13px;
   color: #333;
-  height: 90px;
+  height: 100px;
 }
 #addUploadVideo .am-textarea-control {
-  padding: 5px;
+  padding: 0 5px;
   border: 1px #e5e5e5 solid;
+}
+#addUploadVideo .challenge {
+  height: calc(100% - 111px);
+  overflow-y: auto;
+}
+#addUploadVideo .challenge .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio {
+  height: auto !important;
 }
 #addUploadVideo .challenge .text {
   color: #666;
   font-size: 13px;
+  margin-top: 5px;
 }
 #addUploadVideo .challenge .am-list-content {
   border-bottom: 1px #eee solid !important;
+}
+#addUploadVideo .challenge .blueTxt {
+  color: #4285F4 ;
+  font-size: 15px;
+  margin: 8px 0;
+}
+#addUploadVideo .challenge .add_element {
+  width: 100%;
+  margin-top: 10px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+#addUploadVideo .challenge .add_element .am-textarea-control {
+  border: 0;
 }
 #addUploadVideo video {
   width: 100%;
@@ -341,4 +369,45 @@
 }
 #addUploadVideo .am-list-item:visited {
   background-color: #000;
+}
+#addUploadVideo .challengeTag {
+  color: #333;
+  background-color: #f6f6f6;
+  border: 1px #e5e5e5 solid;
+  padding: 0 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  width: calc(100% - 50px);
+  font-size: 15px;
+}
+#addUploadVideo .challengeTag .tagTitle {
+  font-size: 15px;
+  margin-bottom: 10px;
+  position: relative;
+  padding-right: 30px;
+  line-height: 30px;
+  height: 30px;
+}
+#addUploadVideo .challengeTag .tagTitle .del_tag {
+  right: 0;
+}
+#addUploadVideo .challengeTag .tagText {
+  padding-bottom: 10px;
+  text-indent: 15px;
+  line-height: 20px;
+}
+#addUploadVideo .startTitle {
+  margin-right: 5px;
+  font-size: 17px;
+  color: #333;
+  padding: 10px 0;
+  text-align: center;
+}
+#addUploadVideo .startTitle .preIcon {
+  margin-left: 5px;
 }

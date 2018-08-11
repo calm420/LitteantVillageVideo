@@ -1,10 +1,14 @@
-(node) util.print is deprecated. Use console.log instead.
-#uploadvideoList .am-list-view-scrollview-content {
-  width: 100%;
+#uploadvideoList .alignCenter {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  -khtml-align-items: center;
+  align-items: center;
 }
-#uploadvideoList .am-card {
-  min-height: auto;
-  padding-bottom: 0;
+#uploadvideoList .preIcon {
+  color: #EDB74A;
+  padding-right: 5px;
 }
 #uploadvideoList .item {
   padding: 15px;
@@ -23,25 +27,6 @@
   -moz-border-radius: 50%;
   border-radius: 50%;
 }
-#uploadvideoList .item .textCont {
-  width: calc(100% - 59px);
-  color: #333;
-  font-size: 16px;
-}
-#uploadvideoList .item .textCont .singer {
-  margin-top: 10px;
-  position: relative;
-}
-#uploadvideoList .item .textCont .singer .textOver {
-  width: calc(100% - 65px);
-}
-#uploadvideoList .item .textCont .singer .icon {
-  position: absolute;
-  right: -8px;
-  top: 2px;
-  height: 18px;
-  line-height: 18px;
-}
 #uploadvideoList .addBunton {
   width: 3rem;
   height: 3rem;
@@ -52,129 +37,67 @@
 #uploadvideoList .addBunton img {
   width: 100%;
 }
-#uploadvideoList .updateModel {
-  width: 100%;
-  background-color: #f4f4f4;
-  position: absolute;
-  bottom: 0;
-  z-index: 999;
-  height: 329px;
+#uploadvideoList .uploadVideo .topDiv {
+  line-height: 18px;
+  vertical-align: middle;
+  margin-bottom: 10px;
 }
-#uploadvideoList .tagAddPanel_bg {
-  background: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  position: absolute;
-  z-index: 980;
-  top: 0;
-  left: 0;
-  display: none;
+#uploadvideoList .uploadVideo .title {
+  color: #333;
+  font-size: 15px;
+  font-weight: bold;
+  max-width: calc(100% - 75px);
 }
-#uploadvideoList .bottomBox {
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-#uploadvideoList .bottomBox span {
-  flex: 1;
-  text-align: center;
-  font-size: 14px;
-  padding: 1rem;
-  display: inline-block;
-}
-#uploadvideoList .bottomBox .bind {
-  background: #F56A55;
+#uploadvideoList .uploadVideo .tag {
+  font-size: 10px;
   color: #fff;
+  margin-left: 15px;
+  padding: 2px 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
-#uploadvideoList .close {
-  font-size: 1.5em;
-  background: #fff;
-  color: #F56A55;
+#uploadvideoList .uploadVideo .tag.tag_common {
+  background-color: #68D4A0;
 }
-#uploadvideoList .listCont {
-  background-color: #fff;
-  margin-top: 10px;
-  position: relative;
+#uploadvideoList .uploadVideo .tag.tag_challenge {
+  background-color: #71B0FA;
 }
-#uploadvideoList .listCont .sameBack {
-  background-color: #fff;
-  padding: 15px;
-  font-size: 16px;
-  color: #666;
+#uploadvideoList .uploadVideo .tag.tag_ad {
+  background-color: #F5A623;
 }
-#uploadvideoList .listCont:first-child {
-  margin-top: 0;
-}
-#uploadvideoList .listCont .icon_delete {
-  background: url("../img/del_group.png") no-repeat;
-  font-size: 0;
-  width: 34px;
-  height: 32px;
-  background-size: 100%;
-  border: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-}
-#uploadvideoList .listCont .am-list-item .am-input-label {
-  color: #666 !important;
-  font-size: 16px;
-}
-#uploadvideoList .listCont .am-list-item .am-input-label.am-input-label-5 {
-  width: 70px;
-  margin-right: 4px;
-  text-align: right;
-  padding-right: 15px;
-}
-#uploadvideoList .listCont .textTitle {
-  width: 70px;
-  margin-right: 4px;
-  text-align: right;
-  padding-right: 15px;
-}
-#uploadvideoList .listCont .textTitle .uploadSupport {
-  font-size: 14px;
-  color: #888;
-}
-#uploadvideoList .listCont .uploadBtn {
-  background: url("../img/addPic.png") no-repeat;
-  font-size: 0;
-  width: 68px;
-  height: 68px;
-  background-size: 100%;
-  border: 0;
-  cursor: pointer;
-}
-#uploadvideoList .listCont .upload_file {
-  width: 68px;
-  height: 68px;
-  text-align: center;
-  background-color: #eee;
-  position: relative;
-}
-#uploadvideoList .listCont .upload_file .icon_pointer {
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 4px 0;
-  border-radius: 0 0 2px 2px;
-  text-align: center;
+#uploadvideoList .uploadVideo .time {
+  color: #999;
   font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+  position: relative;
 }
-#uploadvideoList .listCont .upload_file .imgTag {
-  width: 100%;
-  height: 100%;
+#uploadvideoList .uploadVideo .time .icon {
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
-#uploadvideoList .listCont .upload_file .musicIcon {
-  background: url("../img/musicIcon.png") no-repeat;
-  background-size: 100%;
-  width: 100%;
-  height: 100%;
+#uploadvideoList .textCont {
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+#uploadvideoList .textCont .cont {
+  color: #666;
+  font-size: 14px;
+}
+#uploadvideoList .textCont .tagCont {
+  color: #666;
+  border: 1px #666 solid;
+  font-size: 12px;
+  padding: 2px 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-right: 10px;
 }

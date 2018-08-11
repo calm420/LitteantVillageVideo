@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem } from 'antd-mobile';
-// import '../css/uploadvideoList.less'
+import '../css/uploadvideoList.less'
 
 var musicList;
 var calm;
@@ -29,12 +29,17 @@ export default class uploadvideoList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         console.log(locationSearch)
-        var pwd = locationSearch.split("&")[0].split("=")[1];
-        var userId = locationSearch.split("&")[1].split("=")[1];
-        
+        var uid = locationSearch.split("&")[0].split("=")[1];
 
-        this.setState({pwd});
-        this.LittleAntLogin(userId,pwd)
+        // var pwd = locationSearch.split("&")[0].split("=")[1];
+        // var userId = locationSearch.split("&")[1].split("=")[1];
+
+
+        // this.setState({pwd});
+        this.setState({uid});
+        calm.getLittleVideoInfoListByUserId(uid)
+
+        // this.LittleAntLogin(userId,pwd)
     }
 
     /**
@@ -391,34 +396,42 @@ export default class uploadvideoList extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             console.log(rowData, "rowData")
             return (
-                <div className="my_flex item line_public">
-                    <span>{rowData.videoContent}</span>
-                    {
-                        rowData.videoType == 0 ?
-                            <span>普通视频</span>
-                            :
-                            rowData.videoType == 1 ?
-                                <span>挑战视频</span> :
-                                rowData.videoType == 2 ?
-                                    <span>广告视频</span>
-                                    :
-                                    ""
-                    }
+                <div className="item line_public">
+                    <div className="my_flex topDiv alignCenter">
+                        <span className='title textOver'>{rowData.videoContent}</span>
+                        {
+                            rowData.videoType == 0 ?
+                                <span className='tag tag_common'>普通视频</span>
+                                :
+                                rowData.videoType == 1 ?
+                                    <span className='tag tag_challenge'>挑战视频</span> :
+                                    rowData.videoType == 2 ?
+                                        <span className='tag tag_ad'>广告视频</span>
+                                        :
+                                        ""
+                        }
+                    </div>
+                    <div className="my_flex">
                     {
                         rowData.tags ? rowData.tags.map((v, i) => {
                             console.log(v, "v")
                             return (
-                                <div>
+                                <div className='textCont'>
                                     {
                                         rowData.videoType == 1 && v.tagType == 2 ?
-                                            <div>
-                                                {v.tagTitle}
+                                            <div className='cont'>
+                                                <span className='preIcon'>#</span>{v.tagTitle}
                                             </div>
                                             :
+
+                                                v == null ?
+                                                ""
+                                                :
+
                                             rowData.videoType == 0 && v.tagType == 1 ?
-                                                <div>
+                                                <span className='tagCont'>
                                                     {v.tagTitle}
-                                                </div>
+                                                </span>
                                                 :
                                                 ""
                                     }
@@ -428,13 +441,17 @@ export default class uploadvideoList extends React.Component {
                             :
                             ""
                     }
-                    <span>上传时间:{WebServiceUtil.formatYMD(rowData.createTime)}</span>
-                    <div className="icon">
-                        <span className="modifyBtn_common"
-                            onClick={this.editVideo.bind(this, rowData.vid)}></span>
-                        <span className="deleteBtn_common"
-                            onClick={this.showDelAlert.bind(this, rowData.vid)}></span>
                     </div>
+                    <div className='time my_flex'>
+                        <span>上传时间:{WebServiceUtil.formatYMD(rowData.createTime)}</span>
+                        <div className="icon">
+                        <span className="modifyBtn_common"
+                              onClick={this.editVideo.bind(this, rowData.vid)}></span>
+                            <span className="deleteBtn_common"
+                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span>
+                        </div>
+                    </div>
+
 
                 </div>
 
@@ -453,7 +470,7 @@ export default class uploadvideoList extends React.Component {
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                             </div>)}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list"
+                        className="am-list uploadVideo"
                         pageSize={30}    //每次事件循环（每帧）渲染的行数
                         //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                         scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行

@@ -110,7 +110,7 @@ export default class addUploadVideo extends React.Component {
      */
     onChangeRadio = (index, value) => {
         console.log(value, 'checkbox');
-        if (value == 1) {
+        if (value == 2) {
             calm.state.addVideoList[index].show = true;
         } else {
             calm.state.addVideoList[index].show = false;
@@ -274,14 +274,16 @@ export default class addUploadVideo extends React.Component {
                     <div className="my_flex sameBack">
                         <span className="textTitle">挑战</span>
                         <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</span>
-                    </div>
-                    <div>
-                        <span className="deleteCha" style={{ display: calm.state.showDelete ? "block" : "none" }} onClick={calm.deleteCha.bind(this, i)}>删除</span>
-                        <div>
-                            {calm.state.addVideoList[i].cheData.label}</div>
-                        <div>
-                            {calm.state.addVideoList[i].cheData.extra}
-                        </div>
+                       <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
+                           <div className='tagTitle textOver'>
+                               <span className="del_tag" onClick={calm.deleteCha.bind(this, i)}>删除</span>
+                               <span className='preIcon'>#</span>
+                               {calm.state.addVideoList[i].cheData.label}</div>
+                           <div className='tagText'>
+                               {calm.state.addVideoList[i].cheData.extra}
+                           </div>
+                       </div>
+
                     </div>
                     <div className="line_public flex_container"></div>
                 </div>
@@ -475,7 +477,7 @@ export default class addUploadVideo extends React.Component {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
-                                        extra:<span>{str}<span>点击发起</span></span>
+                                        extra:<div>{str}<div className='blueTxt'>点击发起</div></div>
                                     })
                                     return;
                                 }
@@ -755,6 +757,12 @@ export default class addUploadVideo extends React.Component {
                         display: "none",
                     }}
                 >
+                    {
+                        calm.state.showTextOrList ?
+                            ""
+                            :
+                            <div className='startTitle'>发起挑战<span className='preIcon'>#</span></div>
+                    }
                     <div className="tagInput">
                         <InputItem
                             placeholder="请输入挑战"
@@ -766,16 +774,10 @@ export default class addUploadVideo extends React.Component {
                     <div className='challenge'>
                     {
                         calm.state.showTextOrList ?
-                            <List renderHeader={() => {
-                                <span>
-                                    #
-                                </span>
-                            }
-
-                            }>
+                            <List>
                                 {calm.state.challengeData.map(i => (
                                     <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                        {i.label}<div className='text'>{i.extra}</div>
+                                        <span className='preIcon'>#</span>{i.label}<div className='text'>{i.extra}</div>
                                     </RadioItem>
                                 ))}
                             </List>

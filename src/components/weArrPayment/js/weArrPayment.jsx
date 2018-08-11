@@ -194,7 +194,7 @@ export default class weArrPayment extends React.Component {
                         <div className="my_flex">
                             <div id="theFirst" className='payBall active' onClick={this.changeRechargeType.bind(this, 0)}>
                                 <div>六个月</div>
-                                <span>200</span>元
+                                <span>0.01</span>元
                             </div>
                             <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
                                 <div>一年</div>

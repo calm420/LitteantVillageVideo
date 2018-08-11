@@ -6,8 +6,8 @@ const RadioItem = Radio.RadioItem;
 var calm;
 const typeDate = [
     { value: 0, label: '普通类型' },
-    { value: 1, label: '广告视频' },
-    { value: 2, label: '挑战视频' },
+    { value: 2, label: '广告视频' },
+    { value: 1, label: '挑战视频' },
 ];
 
 const alert = Modal.alert;
@@ -108,7 +108,8 @@ export default class addUploadVideo extends React.Component {
      * 类型的改变
      */
     onChangeRadio = (index, value) => {
-        if (value == 2) {
+        console.log(value,"ss")
+        if (value == 1) {
             calm.state.addVideoList[index].show = true;
         } else {
             calm.state.addVideoList[index].show = false;
@@ -429,7 +430,6 @@ export default class addUploadVideo extends React.Component {
      * 挑战搜索框
      */
     chaInputChange = (value) => {
-        console.log(value, "cha")
         calm.setState({
             challengeValue: value,
             showTextOrList:true,
@@ -456,7 +456,6 @@ export default class addUploadVideo extends React.Component {
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
-                    console.log(result)
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []

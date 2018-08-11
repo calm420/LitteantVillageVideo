@@ -31,7 +31,7 @@ export default class uploadvideoList extends React.Component {
         var pwd = locationSearch.split("&")[0].split("=")[1];
         var userId = locationSearch.split("&")[1].split("=")[1];
         this.setState({pwd});
-        this.LittleAntLogin(userId,pwd)
+        calm.LittleAntLogin(userId,pwd)
     }
 
     /**
@@ -45,7 +45,10 @@ export default class uploadvideoList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
+                console.log(result,"rere")
                 if (result.msg == '调用成功' && result.success == true) {
+                    console.log(result.response.uid,"uid")
+
                     calm.setState({
                         uid:result.response.uid
                     },()=>{
@@ -109,7 +112,8 @@ export default class uploadvideoList extends React.Component {
      * 跳转到添加页面
      */
     addRing() {
-        var url = WebServiceUtil.mobileServiceURL + "addUploadVideo?ident=" + musicList.state.uid;
+        console.log(calm.state.uid)
+        var url = WebServiceUtil.mobileServiceURL + "addUploadVideo?ident=" + calm.state.uid;
         var data = {
             method: 'openNewPage',
             url: url
@@ -124,6 +128,7 @@ export default class uploadvideoList extends React.Component {
      * @param id
      */
     showDelAlert(id) {
+        console.log(id,"vid")
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -142,37 +147,38 @@ export default class uploadvideoList extends React.Component {
     /**
      * 删除视频信息
      */
-    deleteVideoMusic(id) {
-        var _this = this;
+    // deleteVideoMusic(id) {
+    //     console.log(id,"eee")
+    //     var _this = this;
 
-        var param = {
-            "method": 'deleteVideoMusic',
-            "videoMusicId": id,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: function (result) {
-                if (result.msg == '调用成功' && result.success == true) {
-                    Toast.success('删除成功', 1)
-                    //删除本地数据
-                    musicList.state.dataSource = [];
-                    musicList.state.dataSource = new ListView.DataSource({
-                        rowHasChanged: (row1, row2) => row1 !== row2,
-                    });
-                    musicList.initData.forEach(function (v, i) {
-                        if (id == v.musicId) {
-                            musicList.initData.splice(i, 1);
-                        }
-                    });
-                    musicList.setState({
-                        dataSource: musicList.state.dataSource.cloneWithRows(_this.initData)
-                    });
-                }
-            },
-            onError: function (error) {
-                // message.error(error);
-            }
-        });
-    }
+    //     var param = {
+    //         "method": 'deleteVideoMusic',
+    //         "videoMusicId": id,
+    //     };
+    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+    //         onResponse: function (result) {
+    //             if (result.msg == '调用成功' && result.success == true) {
+    //                 Toast.success('删除成功', 1)
+    //                 //删除本地数据
+    //                 musicList.state.dataSource = [];
+    //                 musicList.state.dataSource = new ListView.DataSource({
+    //                     rowHasChanged: (row1, row2) => row1 !== row2,
+    //                 });
+    //                 musicList.initData.forEach(function (v, i) {
+    //                     if (id == v.musicId) {
+    //                         musicList.initData.splice(i, 1);
+    //                     }
+    //                 });
+    //                 musicList.setState({
+    //                     dataSource: musicList.state.dataSource.cloneWithRows(_this.initData)
+    //                 });
+    //             }
+    //         },
+    //         onError: function (error) {
+    //             // message.error(error);
+    //         }
+    //     });
+    // }
 
     /**
      * 编辑视频信息
@@ -259,8 +265,8 @@ export default class uploadvideoList extends React.Component {
                         <div className="icon">
                         <span className="modifyBtn_common"
                               onClick={this.editVideo.bind(this, rowData.vid)}></span>
-                            <span className="deleteBtn_common"
-                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span>
+                            {/* <span className="deleteBtn_common"
+                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span> */}
                         </div>
                     </div>
 

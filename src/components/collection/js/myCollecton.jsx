@@ -1,5 +1,5 @@
 import React from "react";
-import { ListView } from 'antd-mobile';
+import { ListView,PullToRefresh } from 'antd-mobile';
 import '../css/myCollection.less'
 var calm;
 const dataSource = new ListView.DataSource({
@@ -15,6 +15,7 @@ export default class myCollection extends React.Component {
             defaultPageNo: 1,
             isLoading: true,
             hasMore: true,
+            refreshing:false,
         }
     }
     componentDidMount() {
@@ -39,11 +40,7 @@ export default class myCollection extends React.Component {
     getUserFavoriteByUserId() {
         var param = {
             "method": 'getUserFavoriteByUserId',
-<<<<<<< HEAD
             "userId": calm.state.auditorId,
-=======
-            "userId": 1,
->>>>>>> f53f447b7ac90fba2474a2d3e2d0fd8ac846f09e
             "targetType": -1,
             "pageNo": calm.state.defaultPageNo,
         };
@@ -64,7 +61,8 @@ export default class myCollection extends React.Component {
                         })
                     }
                     calm.setState({
-                        waitLookThroughData: result.response
+                        waitLookThroughData: result.response,
+                        refreshing:false,
                     })
                 }
             },
@@ -107,6 +105,20 @@ export default class myCollection extends React.Component {
             window.location.href = url;
         });
     }
+
+
+
+    onRefresh = () => {
+        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        this.initDataSource = [];
+        this.setState({defaultPageNo: 1, refreshing: true,dataSource:dataSource.cloneWithRows(this.initDataSource),isLoading: true,
+            hasMore: true,},()=>{
+            this.getUserFavoriteByUserId();
+        });
+
+    };
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -182,6 +194,10 @@ export default class myCollection extends React.Component {
                     style={{
                         height: document.body.clientHeight,
                     }}
+                    pullToRefresh={<PullToRefresh
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.onRefresh}
+                    />}
                 />
             </div>
         )

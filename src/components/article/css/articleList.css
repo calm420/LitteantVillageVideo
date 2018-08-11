@@ -34,6 +34,9 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+#articleList .title.minHeight {
+  min-height: 47px;
+}
 #articleList .bottom {
   font-size: 12px;
   color: #999;
@@ -56,6 +59,8 @@
   display: inline-block;
   vertical-align: top;
   text-align: right;
+  background-size: 100%;
+  background-position-y: center;
 }
 #articleList .rightBox img {
   height: 100%;

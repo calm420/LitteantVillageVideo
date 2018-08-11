@@ -1,6 +1,11 @@
 #addUploadVideo {
+  height: 100% !important;
+  .preIcon{
+    color: #EDB74A;
+    padding-right: 5px;
+  }
   .addList{
-    height: calc(~"100% - 77px");
+    height: calc(~"100% - 75px");
     overflow-y: auto;
   }
   .tagBack{
@@ -13,19 +18,25 @@
     background-color: rgba(0,0,0,0.4);
 }
 .del_tag {
-  width: 16px;
-  height: 16px;
-  background: url("../imgs/delPic.png") no-repeat;
+  width: 13px;
+  height: 13px;
+  background: url("../imgs/icon_close.png") no-repeat;
   background-size: 100% 100%;
   display: inline-block;
   position: absolute;
-  right: -8px;
-  top: -8px;
+  right: 7px;
+  top: 50%;
   z-index: 9 !important;
   cursor: pointer;
+  font-size: 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .tagCont{
-  background-color: #f4f4f4;
+  background-color: #fff;
   height: 70%;
   position: absolute;
   bottom: 0;
@@ -35,35 +46,22 @@
 }
 .tagInput{
   position: relative;
-  .searchIcon{
-      width: 15px;
-      height: 19px;
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-      background: url("../imgs/icon_search.png") no-repeat;
-      background-size: 100%;
-      font-size: 0;
+  .am-list-item{
+    background-color: #f4f4f4;
   }
-  .am-list-item .am-input-control input{
-      width: 88%;
+  .am-list-item .am-input-control{
+    background: #fff;
+    height: 32px;
+    line-height: 32px;
+    padding:0 10px;
+    border-radius: 2px;
+    input{
+      font-size: 15px;
+      color: #333;
+    }
   }
 }
-    .icon_delete{
-        // background: url("../imgs/del_group.png") no-repeat;
-        font-size: 0;
-        width: 34px;
-        height: 32px;
-        background-size: 100%;
-        border: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 1;
-    }
+
     .classTags{
         padding-right: 15px;
         padding-top: 10px;
@@ -84,6 +82,8 @@
         .am-tag-normal {
             border-radius: 2px;
             margin-left: 15px;
+              border: 1px #666 solid;
+              color: #666;
         }
         .am-tag-text {
             font-size: 13px;
@@ -95,14 +95,16 @@
             max-width: 70px;
         }
         .am-tag-active{
-            border: 1px #2B84EF solid;
-            color: #2B84EF;
+          background-color: #f6f6f6;
+          border: 1px #e5e5e5 solid;
+          color: #333;
         }
     }
     .spanTag{
-        border: 1px #2B84EF solid;
-        color: #2B84EF;
-        padding: 0 10px;
+        color: #333;
+        background-color: #f6f6f6;
+        border: 1px #e5e5e5 solid;
+        padding: 0 40px 0 10px;
         font-size: 13px;
         margin-right: 15px;
         margin-bottom: 15px;
@@ -119,17 +121,18 @@
         display: inline-block;
     }
     .tagBtn{
-        // background: url("../imgs/tagBack.png") no-repeat;
+      background: url("../imgs/icon_uploadS.png") no-repeat;
         width: 36px;
         height: 36px;
         background-size: 100%;
         border: 0;
         display: inline-block;
+        font-size: 0;
     }
   .sameBack{
     background-color: #fff;
     padding: 15px;
-    font-size: 16px;
+    font-size: 15px;
     color: #666;
   }
 
@@ -144,7 +147,7 @@
       width: 88%;
     }
     .icon_delete{
-      // background: url("../img/del_group.png") no-repeat;
+      background: url("../imgs/del_group.png") no-repeat;
       font-size: 0;
       width: 34px;
       height: 32px;
@@ -169,18 +172,17 @@
     }
 
     .textTitle {
-      width: 70px;
-      margin-right: 4px;
-      text-align: right;
-      padding-right: 15px;
+      width: 35px;
+      margin-right: 15px;
+      text-align: left;
       .uploadSupport {
-        font-size: 14px;
+        font-size: 12px;
         color: #888;
       }
     }
 
     .uploadBtn {
-      // background: url("../img/addPic.png") no-repeat;
+      background: url("../imgs/icon_uploadB.png") no-repeat;
       font-size: 0;
       width: 68px;
       height: 68px;
@@ -231,16 +233,16 @@
       margin: 0 auto;
       position: relative;
       width: 80px;
-      padding-left: 20px;
+      padding-left: 18px;
       display: block;
     }
     .am-icon-md {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       margin-right: 3px;
       position: absolute;
       left: 0;
-      top: 5px;
+      top: 6px;
     }
   }
   .bottomBox {
@@ -249,21 +251,172 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    border-top: 1px #e5e5e5 solid;
+    padding: 10px 0;
     span {
         flex: 1;
         text-align: center;
         font-size: 1rem;
         padding: 1rem;
         display: inline-block;
+        margin: 0 15px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
     }
     .bind {
-        background: #e46a51;
+        background: #4285F4;
         color: #fff;
     }
     .close {
         background: #fff;
-        color: #e46a51;
+        color: #4285F4 ;
+      border: 1px #4285F4 solid;
     }
 
 }
+  .videoType{
+    padding-bottom: 0;
+    .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio,.am-list-item{
+      height:18px;
+      min-height: 18px;
+    }
+    .am-list{
+      width: calc(~"100% - 50px") !important;
+    }
+    .am-radio-item{
+      display: inline-block;
+      background: none;
+      padding-left: 0;
+      padding-bottom: 15px;
+    }
+    .am-list-content{
+      font-size: 15px;
+      color: #666 !important;
+      padding-left: 24px;
+      line-height: 18px;
+      vertical-align: bottom;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .am-radio-inner {
+      border: 1px #999999 solid;
+      width: 18px;
+      height: 18px;
+      background-color: #fff;
+      left: 0 !important;
+      top: 0 !important;
+    }
+    .am-radio-checked .am-radio-inner {
+      border: 1px #4285F4 solid;
+      background-color: #4285f4;
+      &::after {
+        width: 5px;
+        height: 11px;
+        border-width: 0 1px 1px 0;
+        top: 0;
+        border-color: #fff;
+      }
+    }
+    .am-list-item:last-child .am-list-line{
+      padding-right: 0;
+    }
+  }
+  .am-textarea-has-count{
+    padding: 0;
+  }
+  .add_element{
+    width: calc(~"100% - 50px");
+    background-color: #f6f6f6;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+  }
+  .am-textarea-control textarea{
+    font-size: 13px;
+    color: #333;
+    height: 100px;
+  }
+  .am-textarea-control{
+    padding:0 5px;
+    border: 1px #e5e5e5 solid;
+  }
+  .challenge{
+    height: calc(~"100% - 111px");
+    overflow-y: auto;
+    .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio{
+      height: auto !important;
+    }
+    .text{
+      color: #666;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .am-list-content{
+      border-bottom: 1px #eee solid !important;
+    }
+    .blueTxt{
+      color: #4285F4 ;
+      font-size: 15px;
+      margin: 8px 0;
+    }
+    .add_element{
+      width:100%;
+      margin-top: 10px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+      .am-textarea-control{
+        border: 0;
+      }
+    }
+  }
+  video{
+    width: 100%;
+    height: 100%;
+  }
+  .am-list-item:visited{
+    background-color: #000;
+  }
+  .challengeTag{
+    color: #333;
+    background-color: #f6f6f6;
+    border: 1px #e5e5e5 solid;
+    padding: 0 10px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+    width: calc(~"100% - 50px");
+    font-size: 15px;
+    .tagTitle{
+      font-size: 15px;
+      margin-bottom: 10px;
+      position: relative;
+      padding-right: 30px;
+      line-height: 30px;
+      height: 30px;
+      .del_tag{
+        right: 0;
+      }
+    }
+    .tagText{
+      padding-bottom: 10px;
+      text-indent: 15px;
+      line-height: 20px;
+    }
+  }
+  .startTitle{
+    margin-right: 5px;
+    font-size: 17px;
+    color: #333;
+    padding: 10px 0;
+    text-align: center;
+    .preIcon{
+      margin-left: 5px;
+    }
+  }
 }

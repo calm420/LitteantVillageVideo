@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker,PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
+    Toast, DatePicker, PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/articleList.less';
 
@@ -25,7 +25,7 @@ export default class articleList extends React.Component {
             index: 0,
             userRoot: false,
             recommended_video: {
-                response:[]
+                response: []
             },
             refreshing: false,
         }
@@ -56,7 +56,7 @@ export default class articleList extends React.Component {
     /**
      * 按页码获取短视频列表
      * **/
-    getArticleRecommenLittleVideoList() {
+    getArticleRecommenLittleVideoList(clearFlag) {
         var param = {
             "method": 'getArticleRecommenLittleVideoList',
             "userId": this.state.userId,
@@ -72,14 +72,14 @@ export default class articleList extends React.Component {
                         recommended_pageNo: result.pager.pageNo,
                         // random_index: this.getRandom(),
                     }, () => {
-                        var obj=[];
+                        var obj = [];
                         // obj[`recommended_video[${this.state.defaultPageNo-1}]`] = result.response;
                         // console.log(obj)
                         // this.setState(obj,()=>{
                         //     console.log(this.state.recommended_video[0], 'recommended_video');
                         // })
                         //获取文章列表
-                        this.getArticleInfoListByType();
+                        this.getArticleInfoListByType(clearFlag);
                     })
                 } else {
 
@@ -94,7 +94,8 @@ export default class articleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByType() {
+    getArticleInfoListByType(clearFlag) {
+        var _this = this;
         var param = {
             "method": 'getArticleInfoListByType',
             "userId": this.state.userId,
@@ -110,23 +111,34 @@ export default class articleList extends React.Component {
                     //     random_index: parseInt(result.response.length / 2)
                     // })
                     // console.log(this.state.recommended_video,'recommended_video');
+
+
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initDataSource.splice(0);
+                        _this.state.dataSource = [];
+                        _this.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+
+
                     var initLength = this.initDataSource.length;
                     this.initDataSource = this.initDataSource.concat(result.response);
                     if (this.state.recommended_video.response.length > 0 && result.response.length > 0) {
                         this.initDataSource.splice((result.response.length / 2) + initLength, 0, this.state.recommended_video);
-                    }else{
+                    } else {
                         this.setState({
-                            recommended_video:{
-                                response:[]
+                            recommended_video: {
+                                response: []
                             }
                         })
                     }
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true,
-                        refreshing:false,
+                        refreshing: false,
                     })
-                    if ((this.initDataSource.length - (this.state.recommended_video.response.length == 0?0:1)) >= result.pager.rsCount) {
+                    if ((this.initDataSource.length - (this.state.recommended_video.response.length == 0 ? 0 : 1)) >= result.pager.rsCount) {
                         this.setState({
                             hasMore: false,
                             isLoading: false
@@ -196,12 +208,13 @@ export default class articleList extends React.Component {
 
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        console.log(divPull,'divPull')
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.initDataSource = [];
-        this.setState({defaultPageNo: 1, refreshing: true,dataSource:dataSource.cloneWithRows(this.initDataSource),isLoading: true,
-            hasMore: true,},()=>{
+        this.setState({
+            defaultPageNo: 1, refreshing: true
+        }, () => {
             this.getLittleVideoUserById();
-            this.getArticleRecommenLittleVideoList();
+            this.getArticleRecommenLittleVideoList(true);
         });
 
     };
@@ -231,14 +244,14 @@ export default class articleList extends React.Component {
             isLoading: true,
             hasMore: true,
             index: val.value,
-            recommended_video:[]
+            recommended_video: []
         }, () => {
             this.getArticleRecommenLittleVideoList();
         })
     }
 
     //播放视频
-    toPlayVideo(videoIndex,recommended_video,recommended_pageCount,recommended_pageNo){
+    toPlayVideo(videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
         console.log(videoIndex);
         console.log(recommended_video);
         console.log(recommended_pageCount);
@@ -319,10 +332,13 @@ export default class articleList extends React.Component {
             if (rowData.response instanceof Array) {  //为自媒体推荐视频
                 var videoDom = [];
                 // console.log(rowData,'自媒体视频循环中listVideoInfo')
-                for(var i=0;i<rowData.response.length;i++){
+                for (var i = 0; i < rowData.response.length; i++) {
                     videoDom.push(
-                        <div className="video_row" onClick={this.toPlayVideo.bind(this,i,rowData.response,rowData.pager.pageCount,rowData.pager.pageNo)}>
-                            <img className="video_firstImage" src={rowData.response[i].coverPath==''?rowData.response[i].firstUrl:rowData.response[i].coverPath} alt=""/>
+                        <div className="video_row"
+                             onClick={this.toPlayVideo.bind(this, i, rowData.response, rowData.pager.pageCount, rowData.pager.pageNo)}>
+                            <img className="video_firstImage"
+                                 src={rowData.response[i].coverPath == '' ? rowData.response[i].firstUrl : rowData.response[i].coverPath}
+                                 alt=""/>
                             <div className="gradient_bgT topText">
                                 <div className="video_content">{rowData.response[i].videoContent}</div>
                             </div>
@@ -401,7 +417,7 @@ export default class articleList extends React.Component {
             }
 
             return (
-                <div onClick={rowData.response instanceof Array?'':this.toDetail.bind(this, rowData.articleId)}>
+                <div onClick={rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId)}>
                     {dom}
                 </div>
             )
@@ -452,6 +468,7 @@ export default class articleList extends React.Component {
                             pullToRefresh={<PullToRefresh
                                 refreshing={this.state.refreshing}
                                 onRefresh={this.onRefresh}
+                                // distanceToRefresh={80}
                             />}
                         />
                     </div>
@@ -483,6 +500,7 @@ export default class articleList extends React.Component {
                             pullToRefresh={<PullToRefresh
                                 refreshing={this.state.refreshing}
                                 onRefresh={this.onRefresh}
+                                // distanceToRefresh={80}
                             />}
                         />
                     </div>

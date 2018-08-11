@@ -340,7 +340,7 @@ export default class addUploadVideo extends React.Component {
     }
 
     /**
-     * 删除音乐model
+     * 删除视频
      * @param src
      * @param id
      * @param event

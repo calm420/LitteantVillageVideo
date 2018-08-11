@@ -1,5 +1,5 @@
 import React from "react";
-import { ListView,PullToRefresh } from 'antd-mobile';
+import { ListView,PullToRefresh,Toast } from 'antd-mobile';
 import '../css/myCollection.less'
 var calm;
 const dataSource = new ListView.DataSource({
@@ -16,6 +16,8 @@ export default class myCollection extends React.Component {
             isLoading: true,
             hasMore: true,
             refreshing:false,
+            dividendNumber: 4,
+            videoObj:[],
         }
     }
     componentDidMount() {
@@ -34,6 +36,9 @@ export default class myCollection extends React.Component {
     }
 
 
+
+
+
     /**
      * 收藏列表
      */
@@ -47,12 +52,22 @@ export default class myCollection extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "带审核");
+                var videoList = [],videoObj = [];
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.initDataSource = calm.initDataSource.concat(result.response);
+                    var res = this.initDataSource;
+                    res.forEach((value,index)=>{
+                        if(value.littleVideoInfo){
+                            videoList.push(value.littleVideoInfo.videoPath);
+                            videoObj.push(value.littleVideoInfo);
+                        }
+                    })
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
-                        isLoading: true
+                        isLoading: true,
+                        videoList:videoList,
+                        videoObj:videoObj
                     })
                     if (calm.initDataSource.length == result.pager.rsCount) {
                         calm.setState({
@@ -96,7 +111,7 @@ export default class myCollection extends React.Component {
      * 跳转文章详情页面
      */
     toArticleDetail(id){
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "collectionDetail?id=" + id );
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.auditorId + "&type=1");
         var data = {
             method: 'openNewPage',
             url: url
@@ -118,6 +133,29 @@ export default class myCollection extends React.Component {
         });
 
     };
+
+
+    //播放视频
+    playVideo(videoPath){
+        console.log(Math.ceil(this.state.videoList.length / this.state.dividendNumber),'recommended_pageCount');
+        console.log(this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath) / this.state.dividendNumber,'recommended_pageNo')
+        console.log(this.state.videoList);
+        console.log(this.state.videoList.indexOf(videoPath),'index');
+        console.log(this.state.videoObj,'videoObj')
+        console.log(videoPath)
+        console.log('11111111111111111111');
+        // return;
+        var data = {
+            method: 'playArticleVideo',
+            videos: this.state.videoObj,
+            position: this.state.videoList.indexOf(videoPath),
+            pageNo: this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath) / this.state.dividendNumber,
+            pageCount: Math.ceil(this.state.videoList.length / this.state.dividendNumber)
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.info('开启小视频失败')
+        });
+    }
 
     render() {
         var _this = this;
@@ -141,10 +179,11 @@ export default class myCollection extends React.Component {
                                 }
                                 <video
                                     style={{ width: "100%" }}
-                                    controls="controls"
+                                    // controls="controls"
+                                    onClick={this.playVideo.bind(this,rowData.littleVideoInfo.videoPath)}
                                     preload="auto"
                                     src={rowData.littleVideoInfo.videoPath}
-                                    poster={require("../../article/images/praise.png")}
+                                    poster={rowData.littleVideoInfo.coverPath?rowData.littleVideoInfo.coverPath:rowData.littleVideoInfo.firstUrl}
                                     >
                                 </video>
                                 <div className="bottom">
@@ -155,7 +194,7 @@ export default class myCollection extends React.Component {
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div className='item' onClick={calm.toArticleDetail.bind(this,rowData.favoriteId)}>
+                                <div className='item' onClick={calm.toArticleDetail.bind(this,rowData.articleInfo.articleId)}>
                                     <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                     <div className="bottom">
                                         <span className='read'>{rowData.articleInfo.readCount}阅读</span>

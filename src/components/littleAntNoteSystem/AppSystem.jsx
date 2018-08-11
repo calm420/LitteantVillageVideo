@@ -18,7 +18,7 @@ export default class AppSystem extends React.Component {
 
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
-        Bridge.setRefreshAble("true");
+        Bridge.setRefreshAble("false");
         console.log(JSON.parse(sessionStorage.getItem("loginUser")))
         if(this.state.user){
 

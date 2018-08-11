@@ -16,7 +16,7 @@ export default class powerList extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "用户管理";   //设置title
+        document.title = "权限管理";   //设置title
     }
 
     componentDidMount() {

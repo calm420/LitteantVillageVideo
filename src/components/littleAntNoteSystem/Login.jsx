@@ -16,7 +16,7 @@ export default class Login extends React.Component {
 
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
-        Bridge.setRefreshAble("true");
+        Bridge.setRefreshAble("false");
         simpleMS = new SimpleWebsocketConnection();
         simpleMS.connect();
         machineId = this.createMachineId();

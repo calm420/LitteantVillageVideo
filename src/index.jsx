@@ -172,7 +172,7 @@ class Index extends React.Component {
 
                     <li>
                         <Link
-                            to="/myCollection?userId=1" style={{fontSize: '24px'}}>我的收藏</Link>
+                            to="/myCollection?userId=6" style={{fontSize: '24px'}}>我的收藏</Link>
                     </li> 
                     <li>
                         <Link

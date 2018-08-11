@@ -9,16 +9,14 @@ const typeDate = [
     { value: 2, label: '广告视频' },
     { value: 1, label: '挑战视频' },
 ];
-const recomData = [
-    { value: 0, label: '是' },
-    { value: 1, label: '否' },
-];
+
 const alert = Modal.alert;
 export default class addUploadVideo extends React.Component {
     constructor(props) {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
+        console.log(uid,"uid")
         super(props);
         calm = this;
         this.state = {
@@ -112,7 +110,7 @@ export default class addUploadVideo extends React.Component {
      */
     onChangeRadio = (index, value) => {
         console.log(value, 'checkbox');
-        if (value == 2) {
+        if (value == 1) {
             calm.state.addVideoList[index].show = true;
         } else {
             calm.state.addVideoList[index].show = false;
@@ -464,11 +462,12 @@ export default class addUploadVideo extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
+                                var str =v.tagContent
                                 if (v.tagId == 0) {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
-                                        extra: v.tagContent
+                                        extra:<span>{str}<span>点击发起</span></span>
                                     })
                                     return;
                                 }

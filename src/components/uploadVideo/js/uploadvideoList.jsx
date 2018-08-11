@@ -3,11 +3,13 @@ import { ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem } from '
 // import '../css/uploadvideoList.less'
 
 var musicList;
+var calm;
 const alert = Modal.alert;
 
 export default class uploadvideoList extends React.Component {
     constructor(props) {
         super(props);
+        calm = this;
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
@@ -27,28 +29,34 @@ export default class uploadvideoList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         console.log(locationSearch)
-        var uid = locationSearch.split("&")[0].split("=")[1];
-        // var pwd = locationSearch.split("&")[0].split("=")[1];
-        // var uid = locationSearch.split("&")[1].split("=")[1];
-        this.setState({ "uid": uid });
-        // this.LittleAntLogin(uid,pwd)
-        this.getLittleVideoInfoListByUserId(uid)
+        var pwd = locationSearch.split("&")[0].split("=")[1];
+        var userId = locationSearch.split("&")[1].split("=")[1];
+        
+
+        this.setState({pwd});
+        this.LittleAntLogin(userId,pwd)
     }
 
     /**
      * 转换用户
      */
-    LittleAntLogin(uid, pwd) {
+    LittleAntLogin(userId, pwd) {
         var param = {
             "method": 'LittleAntLogin',
-            "colAccount": uid,
+            "colAccount": "te"+userId,
             "colPasswd": pwd
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result, "calm");
+                console.log(result, "calqqqqq");
                 if (result.msg == '调用成功' && result.success == true) {
-                }
+                    calm.setState({
+                        uid:result.response.uid
+                    },()=>{
+                        calm.getLittleVideoInfoListByUserId(calm.state.uid)
+
+                    })
+                }   
             },
             onError: function (error) {
                 // message.error(error);
@@ -64,7 +72,7 @@ export default class uploadvideoList extends React.Component {
         const dataBlob = {};
         var param = {
             "method": 'getLittleVideoInfoListByUserId',
-            "userId": 8,
+            "userId": uid,
             "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

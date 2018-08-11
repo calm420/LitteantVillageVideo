@@ -27,7 +27,7 @@ export default class addUploadVideo extends React.Component {
                 videoUrl: '',
                 coverPath: '',
                 videoContent: '',
-                userId: 8,
+                userId: uid,
                 videoType: 0,
                 isRecommend: 0,
                 show: false,

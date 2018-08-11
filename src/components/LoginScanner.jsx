@@ -18,7 +18,7 @@ export default class LoginScanner extends React.Component {
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
         document.title = "欢迎登录小蚂蚁平台";
-        Bridge.setRefreshAble("false");
+        Bridge.setRefreshAble("true");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

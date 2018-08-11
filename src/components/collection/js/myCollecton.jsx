@@ -23,10 +23,13 @@ export default class myCollection extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var auditorId = searchArray[0].split('=')[1];
+        console.log(auditorId)
         calm.setState({
-            auditorId
+            auditorId:auditorId
+        },()=>{
+            calm.getUserFavoriteByUserId();
         })
-        calm.getUserFavoriteByUserId();
+
     }
 
 
@@ -36,7 +39,7 @@ export default class myCollection extends React.Component {
     getUserFavoriteByUserId() {
         var param = {
             "method": 'getUserFavoriteByUserId',
-            "userId": calm.state.defaultPageNo,
+            "userId": calm.state.auditorId,
             "targetType": -1,
             "pageNo": calm.state.defaultPageNo,
         };

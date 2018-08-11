@@ -1,6 +1,6 @@
 import React from "react";
 import { ListView } from 'antd-mobile';
-
+import '../css/myCollection.less'
 var calm;
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -39,7 +39,11 @@ export default class myCollection extends React.Component {
     getUserFavoriteByUserId() {
         var param = {
             "method": 'getUserFavoriteByUserId',
+<<<<<<< HEAD
             "userId": calm.state.auditorId,
+=======
+            "userId": 1,
+>>>>>>> f53f447b7ac90fba2474a2d3e2d0fd8ac846f09e
             "targetType": -1,
             "pageNo": calm.state.defaultPageNo,
         };
@@ -110,35 +114,42 @@ export default class myCollection extends React.Component {
                 <div>
                     {
                         rowData.littleVideoInfo ?
-                            <div>
+                            <div className='item'>
                                 {
                                     rowData.littleVideoInfo.userInfo ?
-                                        <div>
-                                            <img src={rowData.littleVideoInfo.userInfo.avatar} alt="" />
-                                            <span>{rowData.littleVideoInfo.userInfo.userName}</span>
+                                        <div className='my_flex'>
+                                            <img className='photo' src={rowData.littleVideoInfo.userInfo.avatar} alt="" />
+                                            <div className="right">
+                                                <span className='author'>{rowData.littleVideoInfo.userInfo.userName}</span>
+                                                <div className='time small'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
+                                            </div>
                                         </div>
                                         :
                                         ""
                                 }
-                                <span>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</span>
                                 <video
                                     style={{ width: "100%" }}
                                     controls="controls"
                                     preload="auto"
                                     src={rowData.littleVideoInfo.videoPath}
-                                    autoPlay>
+                                    poster={require("../../article/images/praise.png")}
+                                    >
                                 </video>
-                                <span>{rowData.littleVideoInfo.readCount}阅读</span>
-                                <span>{rowData.littleVideoInfo.likeCount}点赞</span>
-                                <span>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime))? "今天":WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
+                                <div className="bottom">
+                                    <span className='read'>{rowData.littleVideoInfo.readCount}阅读</span>
+                                    <span className='like'>{rowData.littleVideoInfo.likeCount}点赞</span>
+                                    <span className='time'>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime))? "今天":WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
+                                </div>
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div onClick={calm.toArticleDetail.bind(this,rowData.favoriteId)}>
-                                    <span>{rowData.articleInfo.articleTitle}</span>
-                                    <span>{rowData.articleInfo.readCount}阅读</span>
-                                    <span>{rowData.articleInfo.likeCount}点赞</span>
-                                    <span>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime))? "今天":WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
+                                <div className='item' onClick={calm.toArticleDetail.bind(this,rowData.favoriteId)}>
+                                    <div className='title'>{rowData.articleInfo.articleTitle}</div>
+                                    <div className="bottom">
+                                        <span className='read'>{rowData.articleInfo.readCount}阅读</span>
+                                        <span className='like'>{rowData.articleInfo.likeCount}点赞</span>
+                                        <span className='time'>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime))? "今天":WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
+                                    </div>
                                 </div>
                                 :
                                 ""
@@ -169,7 +180,7 @@ export default class myCollection extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight - 43.5,
+                        height: document.body.clientHeight,
                     }}
                 />
             </div>

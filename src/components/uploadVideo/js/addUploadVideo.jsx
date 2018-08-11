@@ -27,7 +27,7 @@ export default class addUploadVideo extends React.Component {
                 videoUrl: '',
                 coverPath: '',
                 videoContent: '',
-                userId: uid,
+                userId: 8,
                 videoType: 0,
                 isRecommend: 0,
                 show: false,
@@ -46,7 +46,7 @@ export default class addUploadVideo extends React.Component {
             showTextOrList: true,
             chaContent: "",
             showDelete: false,
-            isNewTag:0   //0不是   1是
+            isNewTag: 0   //0不是   1是
 
         };
     }
@@ -174,8 +174,10 @@ export default class addUploadVideo extends React.Component {
      * 删除标签
      */
     deleteTag(item, index) {
+        console.log(item,"item")
         calm.state.addVideoList[index].tagText.forEach((v, i) => {
-            if (item.id == v.id) {
+            console.log(v,"v")
+            if (item.tagTitle == v.tagTitle) {
                 calm.state.addVideoList[index].tagText.splice(i, 1)
             }
         })
@@ -280,7 +282,6 @@ export default class addUploadVideo extends React.Component {
                 <div>标签
                     {
                         calm.state.addVideoList[i].tagText.map((v, i) => {
-                            console.log(v, "cal")
                             return (
                                 <div className="spanTag">
                                     <span className="textOver">{v.tagTitle}</span>
@@ -320,7 +321,7 @@ export default class addUploadVideo extends React.Component {
      */
     addList = () => {
         if (this.state.addVideoList.length == 10) {
-            Toast.fail('最大只允许一次上传十个音乐', 2)
+            Toast.fail('最大只允许一次上传十个视频', 2)
             return
         }
         this.state.addVideoList.push({
@@ -378,16 +379,16 @@ export default class addUploadVideo extends React.Component {
         var newArr = []
         calm.state.addVideoList.forEach(function (v, i) {
             newArr.push({
-                coverPath:v.coverPath,
-                videoPath:v.videoUrl,
-                videoType:v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
-                userId:v.userId,
-                videoContent:v.videoContent,   // 心情描述 
+                coverPath: v.coverPath,
+                videoPath: v.videoUrl,
+                videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
+                userId: v.userId,
+                videoContent: v.videoContent,   // 心情描述 
                 tags: [
                     {
-                        tagTitle:v.cheData.label,
+                        tagTitle: v.cheData.label,
                         tagType: 2,   //挑战
-                        tagContent:v.cheData.extra
+                        tagContent: v.cheData.extra
                     }
                 ]
             })
@@ -396,17 +397,17 @@ export default class addUploadVideo extends React.Component {
         console.log(calm.state.addVideoList)
         console.log(newArr)
 
-        newArr.forEach((v,i)=>{
-            console.log(v,"vb")
-            v.tags =  v.tags.concat(calm.state.addVideoList[i].tagText)
+        newArr.forEach((v, i) => {
+            console.log(v, "vb")
+            v.tags = v.tags.concat(calm.state.addVideoList[i].tagText)
         })
 
-        console.log(newArr,"newArr");   
+        console.log(newArr, "newArr");
         var param = {
             "method": 'batchLittleVideoInfo',
             "videoJson": JSON.stringify(newArr),
         };
-        console.log(param,"param")
+        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -548,18 +549,29 @@ export default class addUploadVideo extends React.Component {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
         var tagTextData = []
-        calm.state.tagChangeData.forEach((v,i)=>{
-            tagTextData.push({
-                tagTitle:v.tagTitle,
-                tagType:1,
-                tagId:v.tagId
-            })
+        calm.state.tagChangeData.forEach((v, i) => {
+            if (v.tagId == 0) {
+                tagTextData.push({
+                    tagTitle: v.tagTitle,
+                    tagType: 1,
+                })
+            } else {
+                tagTextData.push({
+                    tagTitle: v.tagTitle,
+                    tagType: 1,
+                    tagId: v.tagId
+                })
+            }
+
         })
-        console.log(tagTextData,"tagTextData")
+        console.log(calm.state.addVideoList[calm.state.tagIndex].tagText, "tagTexts")
+        console.log(tagTextData, "tagTextData")
+
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.state.addVideoList[calm.state.tagIndex].tagText.concat(tagTextData);
+        console.log(calm.state.addVideoList[calm.state.tagIndex].tagText, "tagTexte")
+
         var arr = calm.state.addVideoList[calm.state.tagIndex].tagText;
-        calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "id")
-        // calm.state.addVideoList[calm.state.tagIndex].tagText.push(clam.state.sea)
+        calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "tagTitle")
         calm.buildAddList();
         calm.setState({ tagData: [], tagChangeData: [], searchValue: "" })
     }
@@ -578,7 +590,7 @@ export default class addUploadVideo extends React.Component {
   * 搜索关键字结果
   */
     getTagsByContent() {
-        console.log(calm.state.isNewTag,"isNewTag")
+        console.log(calm.state.isNewTag, "isNewTag")
         if (calm.state.searchValue == "") {
             Toast.info("请输入搜索的关键词")
             return;
@@ -599,16 +611,20 @@ export default class addUploadVideo extends React.Component {
                             result.response.forEach(function (v, i) {
                                 // console.log(v);
                                 if (v.tagId == 0) {
-                                    calm.setState({
-                                        isNewTag:1
-                                    })
+                                    // calm.setState({
+                                    //     isNewTag:0
+                                    // })
+                                    calm.setState.isNewTag = 0;
                                     console.log(v.tagId, "tagId")
-                                    // arr.push(<Tag
-                                    //     selected={false}
-                                    //     onChange={calm.tagChange.bind(this, v)}
-                                    // >{v.tagTitle}</Tag>)
+                                    arr.push(<Tag
+                                        selected={false}
+                                        onChange={calm.tagChange.bind(this, v)}
+                                    >{v.tagTitle}</Tag>)
                                     return
                                 }
+                                calm.setState({
+                                    isNewTag: 0
+                                })
                                 arr.push(<Tag
                                     selected={false}
                                     onChange={calm.tagChange.bind(this, v)}

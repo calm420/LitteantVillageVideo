@@ -273,7 +273,7 @@ export default class lookThrough extends React.Component {
                                         <span className='author'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                         <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
-                                        <div className='time'>上传时间：{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
+                                        <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                     </div>
                                 </div>
                                 :
@@ -283,8 +283,8 @@ export default class lookThrough extends React.Component {
                                         <div className="right">
                                             <span className='author'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                             <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
-                                            <div className='title'>题：{rowData.articleInfo.articleTitle}</div>
-                                            <div className='time'>上传时间：{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
+                                            <div className='title'>{rowData.articleInfo.articleTitle}</div>
+                                            <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
 
                                         </div>
                                     </div>

@@ -6,8 +6,8 @@ const RadioItem = Radio.RadioItem;
 var calm;
 const typeDate = [
     { value: 0, label: '普通类型' },
-    { value: 2, label: '广告视频' },
-    { value: 1, label: '挑战视频' },
+    { value: 1, label: '广告视频' },
+    { value: 2, label: '挑战视频' },
 ];
 const recomData = [
     { value: 0, label: '是' },
@@ -112,7 +112,7 @@ export default class addUploadVideo extends React.Component {
      */
     onChangeRadio = (index, value) => {
         console.log(value, 'checkbox');
-        if (value == 2) {
+        if (value == 1) {
             calm.state.addVideoList[index].show = true;
         } else {
             calm.state.addVideoList[index].show = false;
@@ -238,7 +238,7 @@ export default class addUploadVideo extends React.Component {
                             <video
                                 onClick={calm.mp4Preview.bind(this, calm.state.addVideoList[i])}
                                 src={calm.state.addVideoList[i].videoUrl}></video>
-                            {/* <div 
+                            {/* <div
                                 className="musicIcon" /> */}
                             <div className="icon_pointer" onClick={calm.uploadMp4.bind(this, i)}>更换</div>
                         </div>
@@ -348,7 +348,7 @@ export default class addUploadVideo extends React.Component {
     }
 
     /**
-     * 删除视频
+     * 删除音乐model
      * @param src
      * @param id
      * @param event

@@ -568,101 +568,116 @@ export default class updateVideo extends React.Component {
     render() {
         return (
             // <div>wewssd</div>
-            <div id="addUploadVideo" style={{ height: "120%" }}>
-                <div className="my_flex sameBack">
-                    <span className="textTitle">上传封面
-                        <p style={{ margin: 0, height: 5 }}></p>
-                        <span className="uploadSupport">(jpg格式)</span>
-                    </span>
-                    {calm.state.coverPath.length == 0 ?
-                        <button className="" onClick={calm.uploadImage.bind(this)}>上传封面</button>
-                        :
-                        <div className="upload_file">
-                            <img style={{ width: "50px" }} onClick={calm.imgPreview.bind(this, calm.state.coverPath)}
-                                className="imgTag" src={calm.state.coverPath} />
-                            <div className="icon_pointer" onClick={calm.uploadImage.bind(this)}>修改</div>
-                        </div>
-                    }
-
-                </div>
-                <div className="line_public flex_container"></div>
-                <div className="my_flex sameBack">
-                    <span className="textTitle">上传视频
-                        <p style={{ margin: 0, height: 5 }}></p>
-                        <span className="uploadSupport">(MP4格式)</span>
-                    </span>
-                    {calm.state.videoUrl.length == 0 ?
-                        <button className="" onClick={calm.uploadMp4.bind(this)}>上传视频</button>
-                        :
-                        <div className="upload_file">
-                            <video
-                                style={{ width: "50px" }}
-                                onClick={calm.mp4Preview.bind(this, calm.state.videoUrl)}
-                                src={calm.state.videoUrl}></video>
-                            {/* <div 
-                                className="musicIcon" /> */}
-                            <div className="icon_pointer" onClick={calm.uploadMp4.bind(this)}>修改</div>
-                        </div>
-
-                    }
-                </div>
-                <div className="line_public flex_container"></div>
-                <div>心情描述</div>
-                <TextareaItem
-                    className="add_element"
-                    placeholder="请输入心情描述"
-                    value={calm.state.videoContent}
-                    onChange={calm.inputOnChange.bind(this)}
-                    rows={5}
-                    count={50}
-                />
-                <div className="line_public flex_container"></div>
-                <List renderHeader={() => '视频类型'}>
-                    {typeDate.map(item => (
-                        <RadioItem
-                            key={item.value}
-                            checked={calm.state.videoType === item.value}
-                            onChange={() => calm.onChangeRadio(item.value)}>
-                            {item.label}
-                        </RadioItem>
-                    ))}
-                </List>
-                <div style={{ display: calm.state.show ? "block" : "none" }}>
-                    挑战
-                    <span style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this)}>添加挑战</span>
-                    <div>
-                        <span className="deleteCha" style={{ display: calm.state.showDelete ? "block" : "none" }} onClick={calm.deleteCha.bind(this)}>删除</span>
-                        <div>
-                            {calm.state.cheData.label}</div>
-                        <div>
-                            {calm.state.cheData.extra}
-                        </div>
-                    </div>
-                </div>
-                <div>标签
-                    {
-                        calm.state.tagText.map((v, i) => {
-                            if (v.tagType == 1) {
-                                return (
-                                    <div className="spanTag">
-                                        <span className="textOver">{v.tagTitle}</span>
-                                        <span className="del_tag" onClick={calm.deleteTag.bind(this, v)}></span>
-                                    </div>
-                                )
+            <div id="addUploadVideo">
+                <div className="addList">
+                    <div className="listCont">
+                        <div className="my_flex sameBack">
+                        <span className="textTitle">封面
+                            <p style={{ margin: 0, height: 3 }}></p>
+                            <span className="uploadSupport">(jpg格式)</span>
+                        </span>
+                            {calm.state.coverPath.length == 0 ?
+                                <button className="uploadBtn" onClick={calm.uploadImage.bind(this)}>上传封面</button>
+                                :
+                                <div className="upload_file">
+                                    <img onClick={calm.imgPreview.bind(this, calm.state.coverPath)}
+                                         className="imgTag" src={calm.state.coverPath} />
+                                    <div className="icon_pointer" onClick={calm.uploadImage.bind(this)}>更换</div>
+                                </div>
                             }
 
-                        })
-                    }
-                    {
-                        calm.state.tagText.length == 3 ?
-                            ""
-                            :
-                            <span onClick={calm.addTag}>添加标签</span>
+                        </div>
+                        <div className="line_public flex_container"></div>
+                        <div className="my_flex sameBack">
+                        <span className="textTitle">视频
+                            <p style={{ margin: 0, height: 3 }}></p>
+                            <span className="uploadSupport">(MP4格式)</span>
+                        </span>
+                            {calm.state.videoUrl.length == 0 ?
+                                <button className="uploadBtn" onClick={calm.uploadMp4.bind(this)}>上传视频</button>
+                                :
+                                <div className="upload_file">
+                                    <video
+                                        onClick={calm.mp4Preview.bind(this, calm.state.videoUrl)}
+                                        src={calm.state.videoUrl}></video>
+                                    {/* <div
+                                    className="musicIcon" /> */}
+                                    <div className="icon_pointer" onClick={calm.uploadMp4.bind(this)}>修改</div>
+                                </div>
 
-                    }
+                            }
+                        </div>
+                        <div className="line_public flex_container"></div>
+                        <div className="sameBack videoType my_flex">
+                            <span className="textTitle">类型</span>
+                            <List>
+                                {typeDate.map(item => (
+                                    <RadioItem
+                                        key={item.value}
+                                        checked={calm.state.videoType === item.value}
+                                        onChange={() => calm.onChangeRadio(item.value)}>
+                                        {item.label}
+                                    </RadioItem>
+                                ))}
+                            </List>
+                        </div>
+                        <div className="line_public flex_container"></div>
+                        <div className="my_flex sameBack">
+                            <span className="textTitle">描述</span>
+                            <TextareaItem
+                                className="add_element"
+                                placeholder="请输入心情描述"
+                                value={calm.state.videoContent}
+                                onChange={calm.inputOnChange.bind(this)}
+                                rows={5}
+                                count={50}
+                            />
+                        </div>
+
+                        <div className="line_public flex_container"></div>
+
+                        <div style={{ display: calm.state.show ? "block" : "none" }}>
+                            <div className="my_flex sameBack">
+                                <span className="textTitle">挑战</span>
+                                <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this)}>添加挑战</span>
+                            </div>
+                            <div>
+                                <span className="deleteCha" style={{ display: calm.state.showDelete ? "block" : "none" }} onClick={calm.deleteCha.bind(this)}>删除</span>
+                                <div>
+                                    {calm.state.cheData.label}</div>
+                                <div>
+                                    {calm.state.cheData.extra}
+                                </div>
+                            </div>
+                            <div className="line_public flex_container"></div>
+                        </div>
+                        <div className='my_flex sameBack'>
+                            <div className="textTitle">标签</div>
+                            {
+                                calm.state.tagText.map((v, i) => {
+                                    if (v.tagType == 1) {
+                                        return (
+                                            <div className="spanTag">
+                                                <span className="textOver">{v.tagTitle}</span>
+                                                <span className="del_tag" onClick={calm.deleteTag.bind(this, v)}></span>
+                                            </div>
+                                        )
+                                    }
+
+                                })
+                            }
+                            {
+                                calm.state.tagText.length == 3 ?
+                                    ""
+                                    :
+                                    <span className='tagBtn' onClick={calm.addTag}>添加标签</span>
+
+                            }
+                        </div>
+                    </div>
+
+
                 </div>
-
-
                 {/* 添加标签 */}
                 <div className="tagBack" style={{
                     display: "none",
@@ -675,11 +690,10 @@ export default class updateVideo extends React.Component {
                     {/* {useIndex} */}
                     <div className="tagInput">
                         <InputItem
-                            placeholder="请输入关键字"
+                            placeholder="请输入标签"
                             onChange={calm.searchInputChange}
                             value={calm.state.searchValue}
                         >
-                            <div>标签名称</div>
                         </InputItem>
 
                         {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
@@ -706,9 +720,9 @@ export default class updateVideo extends React.Component {
                             onChange={calm.chaInputChange}
                             value={calm.state.challengeValue}
                         >
-                            <div>挑战</div>
                         </InputItem>
                     </div>
+                    <div className='challenge'>
                     {
                         calm.state.showTextOrList ?
                             <List renderHeader={() => ''}>
@@ -729,7 +743,7 @@ export default class updateVideo extends React.Component {
                             />
 
                     }
-
+                    </div>
                     <div className="bottomBox">
                         <span className="close" onClick={calm.cancelChaSubmit}>取消</span>
                         <span className="bind" onClick={calm.submitChaArr}>确 定</span>

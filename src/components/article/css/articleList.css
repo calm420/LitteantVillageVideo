@@ -95,7 +95,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-#articleList .emptyDiv {
+#articleList .artEmptyDiv {
   position: absolute;
   top: 50%;
   left: 0;
@@ -108,7 +108,7 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-#articleList .emptyDiv .emptyIcon {
+#articleList .artEmptyDiv .emptyIcon {
   background: url("../images/icon_empty.png") no-repeat;
   width: 194px;
   height: 105px;
@@ -116,13 +116,13 @@
   text-align: center;
   margin: 0 auto;
 }
-#articleList .emptyDiv .text {
+#articleList .artEmptyDiv .text {
   color: #999;
   font-size: 14px;
   padding: 33px 0 50px;
   line-height: 22px;
 }
-#articleList .emptyDiv span {
+#articleList .artEmptyDiv span {
   color: #4285f4;
   border: 1px #4285f4 solid;
   -webkit-border-radius: 2px;

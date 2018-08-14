@@ -310,6 +310,9 @@ export default class lookThrough extends React.Component {
             <div id="lookThrough" style={{
                 height: document.body.clientHeight
             }}>
+                <div className='emptyDiv' style={{display:'none'}}>
+                    <div className='emptyIcon'></div>
+                </div>
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} onChange={calm.onChange} >
                     <div style={{
                         height: document.documentElement.clientHeight - 46,

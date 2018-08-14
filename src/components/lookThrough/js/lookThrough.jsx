@@ -260,7 +260,7 @@ export default class lookThrough extends React.Component {
                             <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowData.auditId)}>
                                 <img className='photo' src={rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.avatar : ""} alt="" />
                                 <div className="right">
-                                    <span className='author'>{rowData.littleVideoInfo.userInfo.userName}</span>
+                                    <span className='author'>{rowData.littleVideoInfo.userInfo ?rowData.littleVideoInfo.userInfo.userName:""}</span>
                                     <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
@@ -310,7 +310,7 @@ export default class lookThrough extends React.Component {
             <div id="lookThrough" style={{
                 height: document.body.clientHeight
             }}>
-                <div className='emptyDiv' style={{display:'none'}}>
+                <div className='emptyDiv' style={{display:calm.initDataSource.length == 0 ? "block" :'none'}}>
                     <div className='emptyIcon'></div>
                 </div>
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} onChange={calm.onChange} >

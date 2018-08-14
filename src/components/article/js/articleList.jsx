@@ -426,7 +426,7 @@ export default class articleList extends React.Component {
             <div id="articleList" style={{
                 height: document.body.clientHeight
             }}>
-                <div className='emptyDiv' style={
+                <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 ? {display: 'none'} : {display: 'block'}
                 }>
                     <div className='emptyIcon'></div>

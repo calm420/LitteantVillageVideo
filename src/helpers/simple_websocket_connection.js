@@ -1,6 +1,6 @@
 import React from 'react';
 
-var isDebug = true;
+var isDebug = false;
 
 export function SimpleWebsocketConnection() {
     this.msgWsListener = null;

@@ -212,6 +212,11 @@ export default class myCollection extends React.Component {
             <div id="myCollection" style={{
                 height: document.body.clientHeight
             }}>
+                <div className='emptyDiv' style={
+                    row.length > 0 ? {display: 'none'} : {display: 'block'}
+                }>
+                    <div className='emptyIcon'></div>
+                </div>
                 {/* 未审核 */}
                 <ListView
                     ref={el => this.lv = el}

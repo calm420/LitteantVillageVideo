@@ -51,7 +51,6 @@ export default class myCollection extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "带审核");
                 var videoList = [],videoObj = [];
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
@@ -88,7 +87,7 @@ export default class myCollection extends React.Component {
     }
 
     /**
-     *  带审核的ListView数据全部渲染完毕的回调
+     *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
         console.log('触底事件')
@@ -157,6 +156,9 @@ export default class myCollection extends React.Component {
     }
 
     render() {
+
+        console.log("ssss");
+
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (

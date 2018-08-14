@@ -21,6 +21,7 @@ export default class myCollection extends React.Component {
         }
     }
     componentDidMount() {
+        console.log("scscsc")
         document.title = "收藏列表"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -156,9 +157,6 @@ export default class myCollection extends React.Component {
     }
 
     render() {
-
-        console.log("ssss");
-
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (

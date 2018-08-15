@@ -459,11 +459,11 @@ export default class articleDetail extends React.Component {
                                     {/*src={this.state.collection ? require("../images/share.png") : require("../images/pent.png")}*/}
                                     {/*alt=""/>*/}
                             {/*</div>*/}
-                            <div style={
-                                this.state.reportFlag?{display:'inline-block'}:{display:'none'}
-                            } className="report" onClick={this.toReport.bind(this)}>
-                                <img onClick={this.toReport.bind(this)} src={require("../images/report.png")} alt=""/>
-                            </div>
+                            {/*<div style={*/}
+                                {/*this.state.reportFlag?{display:'inline-block'}:{display:'none'}*/}
+                            {/*} className="report" onClick={this.toReport.bind(this)}>*/}
+                                {/*<img onClick={this.toReport.bind(this)} src={require("../images/report.png")} alt=""/>*/}
+                            {/*</div>*/}
                             {/*<Button type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>*/}
                         </div>
                     </div>
@@ -482,6 +482,11 @@ export default class articleDetail extends React.Component {
                                 <div className="content"
                                      dangerouslySetInnerHTML={{__html: this.state.data.articleContent}}></div>
                                 <div className="content_bottom">
+                                    <div style={
+                                        this.state.reportFlag?{display:'inline-block'}:{display:'none'}
+                                    } className="report" onClick={this.toReport.bind(this)} >
+                                        <div className="i_report" onClick={this.toReport.bind(this)}>举报</div>
+                                    </div>
                                     <div className="like" onClick={this.likeFlag.bind(this)} style={
                                         this.state.likeFlag ? {
                                             borderColor: '#FE5C50',
@@ -494,6 +499,7 @@ export default class articleDetail extends React.Component {
                                         </div>
 
                                     </div>
+
                                 </div>
                             </div>
                         )}
@@ -520,11 +526,10 @@ export default class articleDetail extends React.Component {
                     <div className="positionBox" style={
                         this.state.reportButtonFlag?{display:'block'}:{display:'none'}
                     }>
-                        <div className="cancelReport" onClick={this.cancelBox}>X</div>
-                        {/*<div className="box_head">请选择举报原因</div>*/}
+                        <div className="cancelReport" onClick={this.cancelBox}><i onClick={this.cancelBox}></i></div>
                         <List renderHeader={() => '请选择举报原因'}>
                             {data_report.map(i => (
-                                <RadioItem key={i.value} checked={this.state.value === i.value}
+                                <RadioItem className={this.state.value === i.value?'checked':''} key={i.value} checked={this.state.value === i.value}
                                            onChange={() => this.onChange_report(i.value)}>
                                     {i.label}
                                 </RadioItem>

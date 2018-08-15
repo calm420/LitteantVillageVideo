@@ -361,7 +361,7 @@ export default class articleList extends React.Component {
                         </div>
                     )
                 }
-                dom = <div className="video_box">{videoDom}</div>;
+                dom = <div className="video_box line_public">{videoDom}</div>;
             } else {
                 if (image.length == 1) {  //图片一张
                     dom = <div className="item line_public">
@@ -369,7 +369,7 @@ export default class articleList extends React.Component {
                             <div className="title minHeight">{rowData.articleTitle}</div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>
@@ -389,7 +389,7 @@ export default class articleList extends React.Component {
                         <div className="images">{imageDom}</div>
                         <div className="bottom">
                             <div className="read">{rowData.readCount}阅读</div>
-                            <div className="like">{rowData.readCount}点赞</div>
+                            <div className="like">{rowData.likeCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
                     </div>
@@ -409,7 +409,7 @@ export default class articleList extends React.Component {
                             </div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>
@@ -418,7 +418,7 @@ export default class articleList extends React.Component {
                             <div className="title">{rowData.articleTitle}</div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>

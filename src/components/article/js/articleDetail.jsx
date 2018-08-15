@@ -393,7 +393,7 @@ export default class articleDetail extends React.Component {
             reportFlag: false,
             reportButtonFlag:false,
         },()=>{
-            Toast.success('您的举报已收到，感谢您的反馈!',1);
+            Toast.success('感谢您的举报,我们会在24小时之内反馈您结果!',1);
         })
     }
 
@@ -402,6 +402,10 @@ export default class articleDetail extends React.Component {
             reportFlag: true,
             reportButtonFlag: false,
         })
+    }
+
+    toShare = ()=>{
+        console.log('分享')
     }
 
     render() {
@@ -450,6 +454,11 @@ export default class articleDetail extends React.Component {
                                     src={this.state.collection ? require("../images/fillPent.png") : require("../images/pent.png")}
                                     alt=""/>
                             </div>
+                            {/*<div className="share" onClick={this.toShare}>*/}
+                                {/*<img*/}
+                                    {/*src={this.state.collection ? require("../images/share.png") : require("../images/pent.png")}*/}
+                                    {/*alt=""/>*/}
+                            {/*</div>*/}
                             <div style={
                                 this.state.reportFlag?{display:'inline-block'}:{display:'none'}
                             } className="report" onClick={this.toReport.bind(this)}>

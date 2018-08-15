@@ -258,8 +258,8 @@ export default class uploadvideoList extends React.Component {
                         <div className="icon">
                         <span className="modifyBtn_common"
                               onClick={this.editVideo.bind(this, rowData.vid)}></span>
-                            <span className="deleteBtn_common"
-                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span>
+                            {/* <span className="deleteBtn_common"
+                                  onClick={this.showDelAlert.bind(this, rowData.vid)}></span> */}
                         </div>
                     </div>
 

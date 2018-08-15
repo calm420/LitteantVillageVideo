@@ -33,6 +33,7 @@ export default class articleDetail extends React.Component {
             value: 0,
             reportFlag: false,
             reportButtonFlag: false,
+            checkVersion:false, //是否显示举报按钮
         }
     }
 
@@ -49,12 +50,7 @@ export default class articleDetail extends React.Component {
         var version = searchArray[4].split('=')[1];
         console.log(machineType);
         console.log(version);
-        if(machineType != '' && version != ''){
-            this.setState({
-                reportFlag: true,
-                reportButtonFlag: false,
-            })
-        }
+
         this.setState({
             artId: artId,
             userId: userId,
@@ -196,6 +192,12 @@ export default class articleDetail extends React.Component {
                         data: result.response,
                         checkVersion: result.isIosCheckVersion //是否显示举报按钮
                     }, () => {
+                        if(this.state.checkVersion){
+                            this.setState({
+                                reportFlag: true,
+                                reportButtonFlag: false,
+                            })
+                        }
                         $(".ql-image").click(function (e) {
                             console.log(123);
                             console.log(e);

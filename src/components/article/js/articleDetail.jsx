@@ -398,6 +398,7 @@ export default class articleDetail extends React.Component {
     }
 
     cancelBox = ()=>{
+        console.log('cancel')
         this.setState({
             reportFlag: true,
             reportButtonFlag: false,

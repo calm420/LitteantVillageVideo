@@ -356,7 +356,7 @@ export default class articleList extends React.Component {
                         </div>
                     )
                 }
-                dom = <div className="video_box">{videoDom}</div>;
+                dom = <div className="video_box line_public">{videoDom}</div>;
             } else {
                 if (image.length == 1) {  //图片一张
                     dom = <div className="item line_public">

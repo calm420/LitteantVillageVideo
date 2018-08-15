@@ -511,6 +511,7 @@ export default class articleDetail extends React.Component {
                     <div className="positionBox" style={
                         this.state.reportButtonFlag?{display:'block'}:{display:'none'}
                     }>
+                        <div className="cancelReport" onClick={this.cancelBox}>X</div>
                         {/*<div className="box_head">请选择举报原因</div>*/}
                         <List renderHeader={() => '请选择举报原因'}>
                             {data_report.map(i => (

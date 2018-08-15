@@ -50,8 +50,6 @@ const EditorDemo = (location, cb) => {
 };
 
 
-
-
 /**
  * 审核列表
  */
@@ -62,24 +60,24 @@ const lookThrough = (location, cb) => {
 };
 
 
- /**
-  * 未审核详情
-  */
- const WaitlookThroughDetail = (location, cb) => {
+/**
+ * 未审核详情
+ */
+const WaitlookThroughDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/lookThrough/js/WaitlookThroughDetail').default)
     }, 'WaitlookThroughDetail')
 };
 
- /**
-  * 已审核详情
-  */
- const AlreadylookThroughDetail = (location, cb) => {
+/**
+ * 已审核详情
+ */
+const AlreadylookThroughDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/lookThrough/js/AlreadylookThroughDetail').default)
     }, 'AlreadylookThroughDetail')
- };
- 
+};
+
 const uploadMusicList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/uploadMusic/js/uploadMusicList').default)
@@ -133,6 +131,12 @@ const powerList = (location, cb) => {
     }, 'powerList')
 };
 
+const powerAdministrate = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/powerAdministrate/js/powerAdministrate').default)
+    }, 'powerAdministrate')
+};
+
 
 import './index.less';
 
@@ -168,15 +172,19 @@ class Index extends React.Component {
                         <Link
                             to="/uploadvideoList?ident=8&accsess_user=23836" style={{fontSize: '24px'}}>上传视频</Link>
                     </li>
-                   
+
 
                     <li>
                         <Link
                             to="/myCollection?userId=6" style={{fontSize: '24px'}}>我的收藏</Link>
-                    </li> 
+                    </li>
                     <li>
                         <Link
                             to="/powerList?ident=6" style={{fontSize: '24px'}}>系统权限</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/powerAdministrate" style={{fontSize: '24px'}}>用户系统权限</Link>
                     </li>
                 </ul>
             </div>
@@ -204,9 +212,10 @@ ReactDOM.render(
             <Route path="addUploadVideo" getComponent={addUploadVideo}/>
             <Route path="updateVideo" getComponent={updateVideo}/>
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
-            <Route path="myArticleList" getComponent={myArticleList} />
-            <Route path="myCollection" getComponent={myCollection} />
-            <Route path="powerList" getComponent={powerList} />
+            <Route path="myArticleList" getComponent={myArticleList}/>
+            <Route path="myCollection" getComponent={myCollection}/>
+            <Route path="powerList" getComponent={powerList}/>
+            <Route path="powerAdministrate" getComponent={powerAdministrate}/>
         </Route>
     </Router>
     ,

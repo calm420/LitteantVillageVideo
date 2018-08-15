@@ -2,7 +2,6 @@ import React from 'react';
 import { ListView, WingBlank, WhiteSpace, Card, Modal, Toast, InputItem } from 'antd-mobile';
 import '../css/uploadvideoList.less'
 
-var musicList;
 var calm;
 const alert = Modal.alert;
 
@@ -14,7 +13,6 @@ export default class uploadvideoList extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
         this.initData = [];
-        musicList = this;
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             defaultPageNo: 1,
@@ -45,10 +43,7 @@ export default class uploadvideoList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result,"rere")
                 if (result.msg == '调用成功' && result.success == true) {
-                    console.log(result.response.uid,"uid")
-
                     calm.setState({
                         uid:result.response.uid
                     },()=>{
@@ -111,8 +106,7 @@ export default class uploadvideoList extends React.Component {
      * 批量添加视频
      * 跳转到添加页面
      */
-    addRing() {
-        console.log(calm.state.uid)
+    addVideo() {
         var url = WebServiceUtil.mobileServiceURL + "addUploadVideo?ident=" + calm.state.uid;
         var data = {
             method: 'openNewPage',
@@ -128,7 +122,6 @@ export default class uploadvideoList extends React.Component {
      * @param id
      */
     showDelAlert(id) {
-        console.log(id,"vid")
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -137,9 +130,9 @@ export default class uploadvideoList extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('您确定移除吗?', '', [
+        const alertInstance = alert('您确定删除该视频吗?', '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.deleteVideoMusic(id) },
+            { text: '确定', onPress: () => _this.deleteLittleVideoInfoByType(id) },
 
         ], phone);
     }
@@ -147,44 +140,44 @@ export default class uploadvideoList extends React.Component {
     /**
      * 删除视频信息
      */
-    // deleteVideoMusic(id) {
-    //     console.log(id,"eee")
-    //     var _this = this;
+    deleteLittleVideoInfoByType(id) {
+        console.log(id,"eee")
+        var _this = this;
 
-    //     var param = {
-    //         "method": 'deleteVideoMusic',
-    //         "videoMusicId": id,
-    //     };
-    //     WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-    //         onResponse: function (result) {
-    //             if (result.msg == '调用成功' && result.success == true) {
-    //                 Toast.success('删除成功', 1)
-    //                 //删除本地数据
-    //                 musicList.state.dataSource = [];
-    //                 musicList.state.dataSource = new ListView.DataSource({
-    //                     rowHasChanged: (row1, row2) => row1 !== row2,
-    //                 });
-    //                 musicList.initData.forEach(function (v, i) {
-    //                     if (id == v.musicId) {
-    //                         musicList.initData.splice(i, 1);
-    //                     }
-    //                 });
-    //                 musicList.setState({
-    //                     dataSource: musicList.state.dataSource.cloneWithRows(_this.initData)
-    //                 });
-    //             }
-    //         },
-    //         onError: function (error) {
-    //             // message.error(error);
-    //         }
-    //     });
-    // }
+        var param = {
+            "method": 'deleteLittleVideoInfoByType',
+            "videoIds": id,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: function (result) {
+                if (result.msg == '调用成功' && result.success == true) {
+                    Toast.success('删除成功', 1)
+                    //删除本地数据
+                    calm.state.dataSource = [];
+                    calm.state.dataSource = new ListView.DataSource({
+                        rowHasChanged: (row1, row2) => row1 !== row2,
+                    });
+                    calm.initData.forEach(function (v, i) {
+                        if (id == v.vid) {
+                            calm.initData.splice(i, 1);
+                        }
+                    });
+                    calm.setState({
+                        dataSource: calm.state.dataSource.cloneWithRows(_this.initData)
+                    });
+                }
+            },
+            onError: function (error) {
+                // message.error(error);
+            }
+        });
+    }
 
     /**
      * 编辑视频信息
      */
     editVideo(id) {
-        var url = WebServiceUtil.mobileServiceURL + "updateVideo?ident=" + musicList.state.uid + "&id=" + id;
+        var url = WebServiceUtil.mobileServiceURL + "updateVideo?ident=" + calm.state.uid + "&id=" + id;
         var data = {
             method: 'openNewPage',
             url: url
@@ -206,7 +199,7 @@ export default class uploadvideoList extends React.Component {
         } else if (type == 'musicMan') {
             data.musicMan = value
         }
-        musicList.editModelShow(false)
+        calm.editModelShow(false)
     }
 
     render() {
@@ -277,8 +270,8 @@ export default class uploadvideoList extends React.Component {
         };
 
         return (
-            <div id="uploadvideoList" style={{ height: musicList.state.clientHeight }}>
-                <div className='tableDiv' style={{ height: musicList.state.clientHeight }}>
+            <div id="uploadvideoList" style={{ height: calm.state.clientHeight }}>
+                <div className='tableDiv' style={{ height: calm.state.clientHeight }}>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
@@ -297,10 +290,10 @@ export default class uploadvideoList extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: musicList.state.clientHeight,
+                            height: calm.state.clientHeight,
                         }}
                     />
-                    <div className='addBunton' onClick={this.addRing}>
+                    <div className='addBunton' onClick={this.addVideo}>
                         <img src={require("../imgs/addBtn.png")} />
                     </div>
                 </div>

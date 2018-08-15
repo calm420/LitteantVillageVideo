@@ -30,7 +30,7 @@ export default class updateVideo extends React.Component {
             challengeValue: "",
             showTextOrList: true,
             chaContent: "",
-            showDelete:true,
+            showDelete: true,
             isNewTag: 0   //0不是   1是
         }
     }
@@ -57,7 +57,6 @@ export default class updateVideo extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
-                console.log(result,"cdcd")
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.videoType != 1) {
                         calm.setState({
@@ -69,20 +68,20 @@ export default class updateVideo extends React.Component {
                         videoUrl: result.response.videoPath,
                         videoContent: result.response.videoContent,
                         videoType: result.response.videoType,
+                        initType:result.response.videoType
                     })
                     result.response.tags.map((v, i) => {
-                        if (v.tagType == 2) {
-                                calm.state.cheData.label = v.tagTitle,
+                        if (v.tagType == 2 && calm.state.videoType == 1) {
+                            calm.state.cheData.label = v.tagTitle,
                                 calm.state.cheData.extra = v.tagContent
                         }
                         if (v.tagType == 1) {
                             calm.state.tagText.push(v);
                         }
                     })
-                    console.log(calm.state.tagText, "tagText")
                     calm.setState({
                         tagText: calm.state.tagText,
-                        cheData:calm.state.cheData
+                        cheData: calm.state.cheData
                     })
                 } else {
                     Toast.fail(result.msg, 5);
@@ -187,6 +186,11 @@ export default class updateVideo extends React.Component {
     * 类型的改变
     */
     onChangeRadio = (value) => {
+        if(calm.state.initType!==1 && value == 1){
+            calm.setState({
+                showDelete:false
+            })
+        }
         if (value == 1) {
             calm.state.show = true;
         } else {
@@ -194,9 +198,7 @@ export default class updateVideo extends React.Component {
         }
         calm.setState({
             videoType: value
-
-        }
-        )
+        })
         // calm.state.videoType = value
 
     };
@@ -550,7 +552,6 @@ export default class updateVideo extends React.Component {
 
     render() {
         return (
-            // <div>wewssd</div>
             <div id="addUploadVideo">
                 <div className="addList">
                     <div className="listCont">
@@ -623,6 +624,7 @@ export default class updateVideo extends React.Component {
                             <div className="my_flex sameBack">
                                 <span className="textTitle">挑战</span>
                                 <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this)}>添加挑战</span>
+
                                 <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
                                     <div className='tagTitle textOver'>
                                         <span className="del_tag" onClick={calm.deleteCha.bind(this)}>删除</span>
@@ -640,7 +642,6 @@ export default class updateVideo extends React.Component {
                             <div className="textTitle">标签</div>
                             {
                                 calm.state.tagText.map((v, i) => {
-                                    console.log(v,"cdcdv")
                                     if (v.tagType == 1) {
                                         return (
                                             <div className="spanTag">

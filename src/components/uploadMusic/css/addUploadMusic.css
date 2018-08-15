@@ -5,7 +5,7 @@
 #addUploadMusic .sameBack {
   background-color: #fff;
   padding: 15px;
-  font-size: 16px;
+  font-size: 15px;
   color: #666;
 }
 #addUploadMusic .listCont {
@@ -18,6 +18,8 @@
 }
 #addUploadMusic .listCont .am-list-item .am-input-control input {
   width: 88%;
+  font-size: 15px;
+  color: #333;
 }
 #addUploadMusic .listCont .icon_delete {
   background: url("../img/del_group.png") no-repeat;
@@ -33,7 +35,7 @@
 }
 #addUploadMusic .listCont .am-list-item .am-input-label {
   color: #666 !important;
-  font-size: 16px;
+  font-size: 15px;
 }
 #addUploadMusic .listCont .am-list-item .am-input-label.am-input-label-5 {
   width: 70px;
@@ -48,11 +50,11 @@
   padding-right: 15px;
 }
 #addUploadMusic .listCont .textTitle .uploadSupport {
-  font-size: 14px;
+  font-size: 13px;
   color: #888;
 }
 #addUploadMusic .listCont .uploadBtn {
-  background: url("../img/addPic.png") no-repeat;
+  background: url("../img/icon_uploadB.png") no-repeat;
   font-size: 0;
   width: 68px;
   height: 68px;

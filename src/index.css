@@ -321,6 +321,14 @@ hr {
   text-overflow: ellipsis;
   display: block;
 }
+.textOver_line3 {
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 .line_public {
   position: relative;
 }

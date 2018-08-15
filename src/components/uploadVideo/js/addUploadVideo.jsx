@@ -267,8 +267,8 @@ export default class addUploadVideo extends React.Component {
                 <div className="line_public flex_container"></div>
                 <div style={{ display: calm.state.addVideoList[i].show ? "block" : "none" }}>
                     <div className="my_flex sameBack">
-                        <span className="textTitle">挑战</span>
-                        <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</span>
+                        <div className="textTitle">挑战</div>
+                        <div className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</div>
                        <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
                            <div className='tagTitle textOver'>
                                <span className="del_tag" onClick={calm.deleteCha.bind(this, i)}>删除</span>
@@ -284,6 +284,7 @@ export default class addUploadVideo extends React.Component {
                 </div>
                 <div className='my_flex sameBack'>
                     <div className="textTitle">标签</div>
+                    <div className='my_flex tagDiv'>
                     {
                         calm.state.addVideoList[i].tagText.map((v, i) => {
                             return (
@@ -294,13 +295,15 @@ export default class addUploadVideo extends React.Component {
                             )
                         })
                     }
+
                     {
                         calm.state.addVideoList[i].tagText.length == 3 ?
                             ""
                             :
-                            <span className='tagBtn' onClick={calm.addTag.bind(this, i)}>添加标签</span>
+                            <div className='tagBtn' onClick={calm.addTag.bind(this, i)}>添加标签</div>
 
                     }
+                    </div>
                 </div>
 
             </div>)
@@ -762,7 +765,7 @@ export default class addUploadVideo extends React.Component {
                             <List>
                                 {calm.state.challengeData.map(i => (
                                     <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                        <span className='preIcon'>#</span>{i.label}<div className='text'>{i.extra}</div>
+                                        <div className='topTitle textOver'><span className='preIcon'>#</span>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
                                     </RadioItem>
                                 ))}
                             </List>

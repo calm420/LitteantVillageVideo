@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView, TextareaItem, Button, List, Picker, Tag, Icon
+    Toast, DatePicker, ListView, TextareaItem, Button, List, Picker, Tag, Radio
 } from 'antd-mobile';
 import '../css/articleDetail.less';
 
+const RadioItem = Radio.RadioItem;
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -29,6 +30,9 @@ export default class articleDetail extends React.Component {
             },
             commitText: '',
             collection: false,  //是否收藏
+            value: 0,
+            reportFlag: false,
+            reportButtonFlag: false,
         }
     }
 
@@ -41,10 +45,22 @@ export default class articleDetail extends React.Component {
         var artId = searchArray[0].split('=')[1];
         var userId = searchArray[1].split('=')[1];
         var type = searchArray[2].split('=')[1];
+        var machineType = searchArray[3].split('=')[1];
+        var version = searchArray[4].split('=')[1];
+        console.log(machineType);
+        console.log(version);
+        if(machineType != '' && version != ''){
+            this.setState({
+                reportFlag: true,
+                reportButtonFlag: false,
+            })
+        }
         this.setState({
             artId: artId,
             userId: userId,
             type: type,
+            machineType: machineType,
+            version: version
         }, () => {
             this.getArticleInfoById();
             this.getUserLikeLog();
@@ -161,16 +177,24 @@ export default class articleDetail extends React.Component {
      * 按文章id获取详情信息
      * **/
     getArticleInfoById() {
+        var headers = {};
+        if (this.state.machineType != '' && this.state.version != '') {
+            headers = {
+                "machineType": 'ios',
+                "version": 100
+            }
+        }
         var param = {
             "method": 'getArticleInfoById',
             "articleId": this.state.artId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApiWithHead(JSON.stringify(param), JSON.stringify(headers), {
             onResponse: result => {
                 console.log(result, "detail");
                 if (result.success) {
                     this.setState({
-                        data: result.response
+                        data: result.response,
+                        checkVersion: result.isIosCheckVersion //是否显示举报按钮
                     }, () => {
                         $(".ql-image").click(function (e) {
                             console.log(123);
@@ -258,10 +282,10 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'是否收藏');
+                console.log(result, '是否收藏');
                 if (result.success) {
                     this.setState({
-                        collection: result.response?true:false,
+                        collection: result.response ? true : false,
                     })
                 } else {
                     Toast.info('+1?');
@@ -273,20 +297,20 @@ export default class articleDetail extends React.Component {
         });
     }
 
-    changePent(){
+    changePent() {
         var userFavoriteInfoJson = {
-            userId:this.state.userId,
-            targetId:this.state.artId,
-            targetType:0
+            userId: this.state.userId,
+            targetId: this.state.artId,
+            targetType: 0
         }
         var param = {
             "method": 'changeUserFavoriteInfo',
             "userFavoriteInfoJson": userFavoriteInfoJson,
-            "changeType": this.state.collection?1:0,
+            "changeType": this.state.collection ? 1 : 0,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'点击收藏/取消');
+                console.log(result, '点击收藏/取消');
                 if (result.success) {
                     this.setState({
                         collection: !this.state.collection
@@ -348,7 +372,45 @@ export default class articleDetail extends React.Component {
         })
     }
 
+    //举报
+    toReport() {
+        this.setState({
+            reportButtonFlag:true,
+        })
+    }
+
+
+    onChange_report = (value) => {
+        this.setState({
+            value,
+        });
+    };
+
+    reportSubmit() {
+        this.setState({
+            reportFlag: false,
+            reportButtonFlag:false,
+        },()=>{
+            Toast.success('您的举报已收到，感谢您的反馈!',1);
+        })
+    }
+
+    cancelBox = ()=>{
+        this.setState({
+            reportFlag: true,
+            reportButtonFlag: false,
+        })
+    }
+
     render() {
+        const data_report = [
+            {value: 0, label: '广告及垃圾信息'},
+            {value: 1, label: '抄袭或未授权转载'},
+            {value: 3, label: '欺诈、色情或发布敏感信息'},
+            {value: 4, label: '违法犯罪'},
+            {value: 5, label: '不实信息'},
+            {value: 6, label: '其他'},
+        ];
         const row = (rowData, sectionID, rowID) => {
             return (
                 <div style={
@@ -371,7 +433,7 @@ export default class articleDetail extends React.Component {
             <div id="articleDetail" style={{height: document.body.clientHeight}}>
                 <div className="inner">
                     <div className="commit">
-                        <div>
+                        <div id={this.state.reportFlag?'textAndReport':'textNo'}>
                             <TextareaItem
                                 id="text"
                                 placeholder="请输入评论内容"
@@ -382,7 +444,14 @@ export default class articleDetail extends React.Component {
                                 onChange={this.commitChange.bind(this)}
                             />
                             <div className="pent" onClick={this.changePent.bind(this)}>
-                                <img src={this.state.collection?require("../images/fillPent.png"):require("../images/pent.png")} alt=""/>
+                                <img
+                                    src={this.state.collection ? require("../images/fillPent.png") : require("../images/pent.png")}
+                                    alt=""/>
+                            </div>
+                            <div style={
+                                this.state.reportFlag?{display:'inline-block'}:{display:'none'}
+                            } className="report" onClick={this.toReport.bind(this)}>
+                                <img onClick={this.toReport.bind(this)} src={require("../images/report.png")} alt=""/>
                             </div>
                             {/*<Button type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>*/}
                         </div>
@@ -436,6 +505,27 @@ export default class articleDetail extends React.Component {
                         }}
                     />
 
+                    {/*举报 start*/}
+                    <div className="positionBox" style={
+                        this.state.reportButtonFlag?{display:'block'}:{display:'none'}
+                    }>
+                        {/*<div className="box_head">请选择举报原因</div>*/}
+                        <List renderHeader={() => '请选择举报原因'}>
+                            {data_report.map(i => (
+                                <RadioItem key={i.value} checked={this.state.value === i.value}
+                                           onChange={() => this.onChange_report(i.value)}>
+                                    {i.label}
+                                </RadioItem>
+                            ))}
+                        </List>
+                        <Button type="primary" onClick={this.reportSubmit.bind(this)}>提交</Button>
+                    </div>
+                    <div className="postionBox_mask"
+                         style={
+                             this.state.reportButtonFlag?{display:'block',height:this.state.clientHeight}:{display:'none',height:this.state.clientHeight}
+                         }
+                         onClick={this.cancelBox}></div>
+                    {/*举报 end*/}
                 </div>
 
             </div>

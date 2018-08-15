@@ -146,7 +146,9 @@ class Index extends React.Component {
                     <li><Link to="/s1">ListView + Carousel</Link></li>
                     <li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
-                    <li><Link to="/articleList?userId=6"
+                    <li><Link to="/articleList?userId=31&machineType=ios&version=100"
+                              style={{fontSize: '24px'}}>ios文章列表</Link></li>
+                    <li><Link to="/articleList?userId=31"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
                     <li><Link to="/myArticleList?userId=3"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>

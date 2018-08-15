@@ -168,7 +168,12 @@
   .commit{
     background: white;
 
-    .am-textarea-item{
+    #textAndReport .am-textarea-item{
+      width:calc(~"100% - 80px");
+      display: inline-block;
+      box-sizing: border-box;
+    }
+    #textNo .am-textarea-item{
       width:calc(~"100% - 40px");
       display: inline-block;
       box-sizing: border-box;
@@ -181,5 +186,46 @@
         vertical-align: middle;
       }
     }
+    .report{
+      display: inline-block;
+      img{
+        margin-left:5px;
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+        transform: translateY(2px);
+      }
+    }
+  }
+  .positionBox{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 10000;
+    width: 300px;
+    //height: 400px;
+    background: white;
+    box-shadow: 0px 0px 10px #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    //.am-radio-input{
+    //  padding-left: 5px;
+    //}
+  }
+  .postionBox_mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    background: black;
+    z-index: 9999;
+    opacity: 0.5;
   }
 }

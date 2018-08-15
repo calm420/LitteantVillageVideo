@@ -38,8 +38,14 @@ export default class articleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
+        var machineType = searchArray[1]?searchArray[1].split('=')[1]:'';
+        var version = searchArray[2]?searchArray[2].split('=')[1]:'';
+        console.log(machineType);
+        console.log(version);
         this.setState({
-            userId: userId
+            userId: userId,
+            machineType:machineType,
+            version:version
         }, () => {
             // this.getArticleInfoListByType();
             this.getLittleVideoUserById();
@@ -222,7 +228,7 @@ export default class articleList extends React.Component {
     toDetail(id) {
         console.log("触发跳转事件");
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1");
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType="+this.state.machineType+"&version="+this.state.version);
             var data = {
                 method: 'openNewPage',
                 url: url

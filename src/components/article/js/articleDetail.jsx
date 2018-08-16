@@ -42,14 +42,22 @@ export default class articleDetail extends React.Component {
         document.title = '校园自媒体';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var artId = searchArray[0].split('=')[1];
-        var userId = searchArray[1].split('=')[1];
-        var type = searchArray[2].split('=')[1];
-        var machineType = searchArray[3].split('=')[1];
-        var version = searchArray[4].split('=')[1];
-        console.log(machineType);
-        console.log(version);
+        if(locationSearch.indexOf("?") == -1){
+            var searchArray = locationSearch.split("&");
+            var artId = searchArray[0].split('=')[1];
+            var userId = searchArray[1].split('=')[1];
+            var type = searchArray[2].split('=')[1];
+            var machineType = searchArray[3].split('=')[1];
+            var version = searchArray[4].split('=')[1];
+        }else{
+            locationSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
+            var searchArray = locationSearch.split("&");
+            var artId = searchArray[0].split('=')[1];
+            var userId = searchArray[1].split('=')[1];
+            var type = searchArray[2].split('=')[1];
+            var machineType = searchArray[3].split('=')[1];
+            var version = searchArray[4].split('=')[1];
+        }
 
         this.setState({
             artId: artId,
@@ -455,11 +463,11 @@ export default class articleDetail extends React.Component {
                                     src={this.state.collection ? require("../images/fillPent.png") : require("../images/pent.png")}
                                     alt=""/>
                             </div>
-                            {/*<div className="share" onClick={this.toShare}>*/}
-                                {/*<img*/}
-                                    {/*src={this.state.collection ? require("../images/share.png") : require("../images/pent.png")}*/}
-                                    {/*alt=""/>*/}
-                            {/*</div>*/}
+                            <div className="share" onClick={this.toShare}>
+                                <img
+                                    src={this.state.collection ? require("../images/share.png") : require("../images/pent.png")}
+                                    alt=""/>
+                            </div>
                             {/*<div style={*/}
                                 {/*this.state.reportFlag?{display:'inline-block'}:{display:'none'}*/}
                             {/*} className="report" onClick={this.toReport.bind(this)}>*/}

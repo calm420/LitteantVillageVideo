@@ -1,7 +1,8 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.71";   //请求地址
 var isDebugLocal = false;
 var localUrl = "192.168.50.163";    //跳转地址http:
+
 
 // //云校本地测试webService地址
 // var elearningWebserviceURLOfLocal = "http://" + localDomain + ":8888/elearning/elearningControl/";
@@ -132,7 +133,6 @@ WebServiceUtil.formatD = function (nS) {
 };
 
 
-
 /**
  * 时间戳转月日
  * @param nS
@@ -157,9 +157,9 @@ WebServiceUtil.formatAllTime = function (nS) {
     var year = da.getFullYear();
     var month = da.getMonth() + 1;
     var date = da.getDate();
-    var hour = (da.getHours() < 10 ? '0'+(da.getHours()) : da.getHours()) + ":";
-    var minutes = (da.getMinutes() < 10 ? '0'+(da.getMinutes()) : da.getMinutes())+ ":";
-    var sencond = (da.getSeconds() < 10 ? '0'+(da.getSeconds()) : da.getSeconds());
+    var hour = (da.getHours() < 10 ? '0' + (da.getHours()) : da.getHours()) + ":";
+    var minutes = (da.getMinutes() < 10 ? '0' + (da.getMinutes()) : da.getMinutes()) + ":";
+    var sencond = (da.getSeconds() < 10 ? '0' + (da.getSeconds()) : da.getSeconds());
     var dayStr = [year, month, date].join('-');
     var dateStr = dayStr + " " + hour + minutes + sencond;
     return dateStr;

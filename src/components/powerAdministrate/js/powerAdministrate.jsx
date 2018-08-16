@@ -238,6 +238,7 @@ export default class powerAdministrate extends React.Component {
             return (
                 <div>
                     <span>{rowData.roleName}</span>
+                    <span>管理</span>
                     <span onClick={this.showDelRolePanel.bind(this, rowData)}>删除</span>
                     <span onClick={this.showUpdateRolePanel.bind(this, rowData)}>修改</span>
                 </div>

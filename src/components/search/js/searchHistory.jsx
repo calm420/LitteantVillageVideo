@@ -1,6 +1,6 @@
 import React from 'react';
 import { WhiteSpace, SearchBar, Button, WingBlank, Result } from 'antd-mobile';
-
+import '../css/searchHistory.less';
 var calm;
 export default class searchHistory extends React.Component {
     constructor(props) {
@@ -104,25 +104,30 @@ export default class searchHistory extends React.Component {
     }
     render() {
         return (
-            <div>
-                <SearchBar id="search"
-                    onSubmit={value => console.log(value, 'onSubmit')}
-                    onClear={value => console.log(value, 'onClear')}
-                    onFocus={() => console.log('onFocus')}
-                    onBlur={() => console.log('onBlur')}
-                    onCancel={() => console.log("onCancle")}
-                    onChange={this.onChange}
-                    showCancelButton={calm.state.showCancelButton}
-                    placeholder="Search"
-                    maxLength={8} />
-                <p>搜索历史<span onClick={calm.clearSession}>清空</span></p>
-                {
-                    calm.state.searchHistory.map((v, i) => {
-                        return (
-                            <div onClick={calm.toSearchResultNo.bind(this,v)}>{v}</div>
-                        )
-                    })
-                }
+            <div id='searchHistory'>
+                <div className='line_public'>
+                    <SearchBar id="search"
+                               onSubmit={value => console.log(value, 'onSubmit')}
+                               onClear={value => console.log(value, 'onClear')}
+                               onFocus={() => console.log('onFocus')}
+                               onBlur={() => console.log('onBlur')}
+                               onCancel={() => console.log("onCancle")}
+                               onChange={this.onChange}
+                               showCancelButton={calm.state.showCancelButton}
+                               placeholder="Search"
+                               maxLength={8} />
+                </div>
+
+                <div className='historyCont'>
+                    <p className='searchTxt'>历史搜索<span onClick={calm.clearSession}>清空</span></p>
+                    {
+                        calm.state.searchHistory.map((v, i) => {
+                            return (
+                                <div className='item' onClick={calm.toSearchResultNo.bind(this,v)}>{v}</div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         )
     }

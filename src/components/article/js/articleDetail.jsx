@@ -414,7 +414,19 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = ()=>{
-        console.log('分享')
+        console.log('分享');
+        console.log(window.location.href,'url');
+        console.log(this.state.data.articleTitle,'标题');
+        console.log(this.state.data.author,'作者');
+        var data = {
+            method: 'shareWechat',
+            shareUrl: window.location.href,
+            shareTitle: this.state.data.articleTitle,
+            shareUserName: this.state.data.author,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.info('分享文章失败')
+        });
     }
 
     render() {

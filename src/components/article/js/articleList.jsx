@@ -333,6 +333,16 @@ export default class articleList extends React.Component {
     //     });
     // }
 
+    toPerfectInfo = ()=>{
+        console.log('去完善资料');
+        var data = {
+            method: 'perfectUserInfo',
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.info('跳转完善资料失败',1)
+        });
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -442,7 +452,7 @@ export default class articleList extends React.Component {
                 }>
                     <div className='emptyIcon'></div>
                     <div className='text'>请在“个人中心”的设置页面<br/>完善资料后查看相关内容</div>
-
+                    <button onClick={this.toPerfectInfo}>完善资料</button>
                     {/*<span>完善资料</span>*/}
                 </div>
                 <Tabs tabs={tabs}

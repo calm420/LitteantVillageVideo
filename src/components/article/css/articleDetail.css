@@ -187,12 +187,12 @@
   background: white;
 }
 #articleDetail .commit #textAndReport .am-textarea-item {
-  width: calc(100% - 40px);
+  width: calc(100% - 100px);
   display: inline-block;
   box-sizing: border-box;
 }
 #articleDetail .commit #textNo .am-textarea-item {
-  width: calc(100% - 40px);
+  width: calc(100% - 80px);
   display: inline-block;
   box-sizing: border-box;
 }

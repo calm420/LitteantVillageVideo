@@ -55,9 +55,18 @@
         }
     }
     .listCont {
+      width: 100%;
+      .list-view-section-body{
         padding: 0 10px 0 15px;
         -webkit-flex-wrap: wrap; /* Safari 6.1+ */
         flex-wrap: wrap;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        text-align: left;
+        overflow: hidden;
+      }
         .videoItem{
             width: 50%;
             height: 215px;

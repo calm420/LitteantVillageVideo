@@ -134,7 +134,7 @@ const powerList = (location, cb) => {
 /**
  * 搜索
  */
-const searchHistory =  (location, cb) => {
+const searchHistory = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/search/js/searchHistory').default)
     }, 'searchHistory')
@@ -154,6 +154,18 @@ const authorityManagement = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/authorityManagement/js/authorityManagement').default)
     }, 'authorityManagement')
+};
+
+const userAdministration = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/powerAdministrate/js/userAdministration').default)
+    }, 'userAdministration')
+};
+
+const accessManagement = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/powerAdministrate/js/authorityManagement').default)
+    }, 'accessManagement')
 };
 
 
@@ -206,7 +218,7 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/searchHistory" style={{fontSize: '24px'}}>搜索</Link>
-                            </li>
+                    </li>
                     <li>
                         <Link
                             to="/powerAdministrate" style={{fontSize: '24px'}}>角色管理</Link>
@@ -241,16 +253,18 @@ ReactDOM.render(
             <Route path="addUploadVideo" getComponent={addUploadVideo}/>
             <Route path="updateVideo" getComponent={updateVideo}/>
             <Route path="uploadvideoList" getComponent={uploadvideoList}/>
-            <Route path="myArticleList" getComponent={myArticleList} />
-            <Route path="myCollection" getComponent={myCollection} />
-            <Route path="powerList" getComponent={powerList} />
-            <Route path="searchHistory" getComponent={searchHistory} />
-            <Route path="serachResult" getComponent={serachResult} />
+            <Route path="myArticleList" getComponent={myArticleList}/>
+            <Route path="myCollection" getComponent={myCollection}/>
+            <Route path="powerList" getComponent={powerList}/>
+            <Route path="searchHistory" getComponent={searchHistory}/>
+            <Route path="serachResult" getComponent={serachResult}/>
             <Route path="myArticleList" getComponent={myArticleList}/>
             <Route path="myCollection" getComponent={myCollection}/>
             <Route path="powerList" getComponent={powerList}/>
             <Route path="powerAdministrate" getComponent={powerAdministrate}/>
             <Route path="authorityManagement" getComponent={authorityManagement}/>
+            <Route path="userAdministration" getComponent={userAdministration}/>
+            <Route path="accessManagement" getComponent={accessManagement}/>
         </Route>
     </Router>
     ,

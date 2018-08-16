@@ -13,6 +13,7 @@ export default class AppSystem extends React.Component {
             title: 'app',
             open: false,
             user: JSON.parse(sessionStorage.getItem("loginUser")),
+            clientHeight: document.body.clientHeight,
         };
     }
 
@@ -95,7 +96,7 @@ export default class AppSystem extends React.Component {
                             submit={this.submitForList}
                         />
                     </div>
-                    <div className="right">
+                    <div className="right" style={{height: this.state.clientHeight - 54}}>
                         <ReadPanel
                             submit={this.submit}
                             ref='listToReadPanel'

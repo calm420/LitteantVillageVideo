@@ -137,6 +137,12 @@ const powerAdministrate = (location, cb) => {
     }, 'powerAdministrate')
 };
 
+const authorityManagement = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/authorityManagement/js/authorityManagement').default)
+    }, 'authorityManagement')
+};
+
 
 import './index.less';
 
@@ -150,7 +156,9 @@ class Index extends React.Component {
                     <li><Link to="/s1">ListView + Carousel</Link></li>
                     <li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
-                    <li><Link to="/articleList?userId=6"
+                    <li><Link to="/articleList?userId=31&machineType=ios&version=100"
+                              style={{fontSize: '24px'}}>ios文章列表</Link></li>
+                    <li><Link to="/articleList?userId=31"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
                     <li><Link to="/myArticleList?userId=3"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
@@ -184,7 +192,11 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/powerAdministrate" style={{fontSize: '24px'}}>用户系统权限</Link>
+                            to="/powerAdministrate" style={{fontSize: '24px'}}>角色管理</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/authorityManagement" style={{fontSize: '24px'}}>权限管理</Link>
                     </li>
                 </ul>
             </div>
@@ -216,6 +228,7 @@ ReactDOM.render(
             <Route path="myCollection" getComponent={myCollection}/>
             <Route path="powerList" getComponent={powerList}/>
             <Route path="powerAdministrate" getComponent={powerAdministrate}/>
+            <Route path="authorityManagement" getComponent={authorityManagement}/>
         </Route>
     </Router>
     ,

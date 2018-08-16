@@ -28,6 +28,7 @@ export default class articleList extends React.Component {
                 response: []
             },
             refreshing: false,
+            show_bottom_text:true,
         }
     }
 
@@ -38,8 +39,14 @@ export default class articleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
+        var machineType = searchArray[1]?searchArray[1].split('=')[1]:'';
+        var version = searchArray[2]?searchArray[2].split('=')[1]:'';
+        console.log(machineType);
+        console.log(version);
         this.setState({
-            userId: userId
+            userId: userId,
+            machineType:machineType,
+            version:version
         }, () => {
             // this.getArticleInfoListByType();
             this.getLittleVideoUserById();
@@ -177,6 +184,10 @@ export default class articleList extends React.Component {
                             userRoot: false,
                         })
                     }
+                }else{
+                    this.setState({
+                        show_bottom_text: false,
+                    })
                 }
             },
             onError: function (error) {
@@ -222,7 +233,7 @@ export default class articleList extends React.Component {
     toDetail(id) {
         console.log("触发跳转事件");
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1");
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType="+this.state.machineType+"&version="+this.state.version);
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -350,7 +361,7 @@ export default class articleList extends React.Component {
                         </div>
                     )
                 }
-                dom = <div className="video_box">{videoDom}</div>;
+                dom = <div className="video_box line_public">{videoDom}</div>;
             } else {
                 if (image.length == 1) {  //图片一张
                     dom = <div className="item line_public">
@@ -358,7 +369,7 @@ export default class articleList extends React.Component {
                             <div className="title minHeight">{rowData.articleTitle}</div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>
@@ -378,7 +389,7 @@ export default class articleList extends React.Component {
                         <div className="images">{imageDom}</div>
                         <div className="bottom">
                             <div className="read">{rowData.readCount}阅读</div>
-                            <div className="like">{rowData.readCount}点赞</div>
+                            <div className="like">{rowData.likeCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
                     </div>
@@ -398,7 +409,7 @@ export default class articleList extends React.Component {
                             </div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>
@@ -407,7 +418,7 @@ export default class articleList extends React.Component {
                             <div className="title">{rowData.articleTitle}</div>
                             <div className="bottom">
                                 <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.readCount}点赞</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
                                 <div className="time">{time}</div>
                             </div>
                         </div>
@@ -431,6 +442,7 @@ export default class articleList extends React.Component {
                 }>
                     <div className='emptyIcon'></div>
                     <div className='text'>请在“个人中心”的设置页面<br/>完善资料后查看相关内容</div>
+
                     {/*<span>完善资料</span>*/}
                 </div>
                 <Tabs tabs={tabs}
@@ -451,7 +463,7 @@ export default class articleList extends React.Component {
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
                                 <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                                    {this.state.show_bottom_text?this.state.isLoading ? '正在加载...' : '已经全部加载完毕':''}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                             className="am-list"

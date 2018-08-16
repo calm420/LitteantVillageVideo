@@ -52,16 +52,26 @@
     max-height: 100%;
   }
   .content_bottom{
+    text-align: center;
+    .report{
+      font-size: 12px;
+    }
     .like{
-      width: 120px;
-      height: 40px;
-      line-height: 40px;
-      margin: 20px auto 10px;
+      font-size: 14px;
+    }
+    .like, .report{
+      max-width: 120px;
+      min-width: 96px;
+      height: 36px;
+      line-height: 36px;
+      margin: 20px;
       border: 1px solid #999;
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       border-radius: 20px;
       text-align: center;
+      display: inline-block;
+
       .noLike{
         background: url("../images/praise.png") no-repeat left 10px;
         background-size: 16px;
@@ -74,6 +84,13 @@
         background-size: 16px;
         display: inline-block;
         padding-left: 25px;
+      }
+      .i_report{
+        background: url("../images/iconreport.png") no-repeat left 10px;
+        background-size: 18px 16px;
+        display: inline-block;
+        padding-left: 25px;
+        color: #999;
       }
       img{
         width: 16px;
@@ -168,7 +185,12 @@
   .commit{
     background: white;
 
-    .am-textarea-item{
+    #textAndReport .am-textarea-item{
+      width:calc(~"100% - 40px");
+      display: inline-block;
+      box-sizing: border-box;
+    }
+    #textNo .am-textarea-item{
       width:calc(~"100% - 40px");
       display: inline-block;
       box-sizing: border-box;
@@ -176,10 +198,126 @@
     .pent{
       display: inline-block;
       img{
+        width: 20px;
+        vertical-align: middle;
+      }
+    }
+    .report{
+      display: inline-block;
+      img{
+        margin-left:5px;
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+        transform: translateY(2px);
+      }
+    }
+    .share{
+      display: inline-block;
+      img{
+        margin-left:5px;
         width: 25px;
         height: 25px;
         vertical-align: middle;
       }
     }
+  }
+  .positionBox{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100%;
+    background: #f9f9f9;
+    //height: 400px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 15px;
+    .am-list-header{
+      padding:20px 15px;
+      color: #333;
+      font-size: 15px;
+      text-align: center;
+    }
+    .am-list-content{
+      color: #666 !important;
+    }
+    .am-list-item{
+      padding: 0 15px;
+      background: #f9f9f9;
+      min-height: 50px;
+    }
+    .am-list{
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: 15px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }
+
+    }
+    .cancelReport{
+      position: absolute;
+      top: 20px;
+      right: 15px;
+      z-index: 999999;
+      i{
+        background: url("../images/close_r.png") no-repeat;
+        background-size: 14px;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+
+      }
+    }
+    .am-list-item:last-child  .am-list-line {
+      border-bottom: 0 !important;
+    }
+    .am-list-line{
+      position: relative;
+      border-bottom:1px solid #e5e5e5 !important;
+    }
+    .checked{
+      background: #fff;
+    }
+    .am-button{
+      height: 50px !important;
+      line-height: 50px !important;
+    }
+    .am-button::before{
+      border-color: #fff !important;
+    }
+    .am-button-primary{
+      background-color: #fff;
+      color: #4285f4;
+    }
+    //.am-radio-input{
+    //  padding-left: 5px;
+    //}
+  }
+  .postionBox_mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+    background: black;
+    z-index: 9999;
+    opacity: 0.5;
   }
 }

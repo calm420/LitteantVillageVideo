@@ -24,7 +24,7 @@ export default class powerAdministrate extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "用户权限管理";   //设置title
+        document.title = "角色管理";   //设置title
     }
 
     componentDidMount() {

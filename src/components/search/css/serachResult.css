@@ -1,4 +1,158 @@
-(node) util.print is deprecated. Use console.log instead.
 #serachResult video::-webkit-media-controls-fullscreen-button {
   display: none;
+}
+#serachResult .am-search-cancel {
+  font-size: 15px;
+  color: #4285F4;
+}
+#serachResult .am-search {
+  background-color: #fff;
+}
+#serachResult .am-search .am-search-input {
+  background-color: #f4f4f4;
+  height: 35px;
+}
+#serachResult .am-search .am-search-input .am-search-synthetic-ph {
+  height: 35px;
+  line-height: 35px;
+}
+#serachResult .am-search .am-search-input input {
+  color: #333;
+  height: 35px;
+}
+#serachResult .am-search .am-search-input .am-search-clear {
+  padding: 10.5px;
+}
+#serachResult .am-tabs-default-bar-tab {
+  height: 36px !important;
+  line-height: 36px !important;
+  padding: 0;
+}
+#serachResult .am-tabs-default-bar-tab-active {
+  color: #333 !important;
+  font-size: 15px;
+}
+#serachResult .am-tabs-default-bar-tab-active::before {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0 !important;
+  width: 100%;
+  height: 1px;
+  margin-left: 0 !important;
+}
+#serachResult .am-tabs-content-wrap {
+  margin-top: 5px;
+}
+#serachResult .uploadVideo .am-list-body {
+  background-color: #f4f4f4;
+}
+#serachResult .listCont {
+  padding: 0 10px 0 15px;
+  -webkit-flex-wrap: wrap;
+  /* Safari 6.1+ */
+  flex-wrap: wrap;
+}
+#serachResult .listCont .videoItem {
+  width: 50%;
+  height: 215px;
+  margin-bottom: 5px;
+}
+#serachResult .listCont .videoInfo {
+  position: relative;
+  margin-right: 5px;
+  height: 100%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+#serachResult .listCont .videoInfo img {
+  width: 100%;
+  height: 100%;
+}
+#serachResult .listCont .videoInfo .gradient_bgT {
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  /* 标准的语法 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 50px;
+}
+#serachResult .listCont .videoInfo .gradient_bgB {
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  /* 标准的语法 */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+}
+#serachResult .listCont .videoInfo .video_content {
+  color: white;
+  font-size: 15px;
+  line-height: 20px;
+  word-break: break-all;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+#serachResult .listCont .videoInfo .like {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: white;
+}
+#serachResult .listCont .videoInfo .read {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  background: url("../images/icon_play.png") no-repeat left center;
+  background-size: 8px;
+  padding-left: 13px;
+}
+#serachResult .listCont .videoInfo .read span {
+  transform: rotate(90deg);
+  display: inline-block;
+}
+#serachResult .listCont .videoInfo .video_row {
+  width: 172px;
+  height: 215px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 15px 0 15px 5px;
+  position: relative;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+#serachResult .listCont .videoInfo .video_row .video_firstImage {
+  width: 100%;
+  height: 100%;
 }

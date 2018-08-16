@@ -1,8 +1,11 @@
 import React from 'react';
-import {Toast, Result, Icon} from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import '../css/userAdministration.less'
 
 var user_Administration;
+
+const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs"
+                          alt=""/>;
 
 export default class userAdministration extends React.Component {
 

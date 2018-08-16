@@ -61,7 +61,7 @@
   font-size: 12px;
 }
 #articleDetail .content_bottom .like {
-  font-size: 14px;
+  font-size: 16px;
 }
 #articleDetail .content_bottom .like,
 #articleDetail .content_bottom .report {
@@ -70,13 +70,12 @@
   height: 36px;
   line-height: 36px;
   margin: 20px;
-  border: 1px solid #999;
+  border: 1px solid #e5e5e5;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
   text-align: center;
   display: inline-block;
-  font-size: 16px;
 }
 #articleDetail .content_bottom .like .noLike,
 #articleDetail .content_bottom .report .noLike {
@@ -98,7 +97,7 @@
 #articleDetail .content_bottom .like .i_report,
 #articleDetail .content_bottom .report .i_report {
   background: url("../images/iconreport.png") no-repeat left 10px;
-  background-size: 18px 16px;
+  background-size: 20px;
   display: inline-block;
   padding-left: 25px;
   color: #999;
@@ -220,7 +219,7 @@
 }
 #articleDetail .commit .share {
   display: inline-block;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 #articleDetail .commit .share img {
   margin-left: 5px;

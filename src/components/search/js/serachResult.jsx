@@ -56,11 +56,8 @@ export default class serachResult extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "re")
                 if (result.success) {
-                    calm.initDataSource = [];
                     calm.state.rsCount = result.pager.rsCount;
-                    console.log(result.response.littleVideoInfo, "result.response.littleVideoInfo")
                     calm.initDataSource = calm.initDataSource.concat(result);
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
@@ -88,7 +85,6 @@ export default class serachResult extends React.Component {
     *  带审核的ListView数据全部渲染完毕的回调
     */
     onEndReached = (event) => {
-        console.log('触底事件')
         var _this = this;
         var currentPageNo = _this.state.defaultPageNo;
         if (!_this.state.isLoading && !_this.state.hasMore) {
@@ -103,14 +99,15 @@ export default class serachResult extends React.Component {
             _this.searchVideo();
         });
     };
+
     /**
-     * 输入框改变的时候
+     * 搜索输入框改变的时候
      */
     onChange = (value) => {
         this.setState({ value });
     };
     /**
-     * 点击搜索
+     * 点击搜索事件
      */
     serach = () => {
         /**
@@ -137,22 +134,28 @@ export default class serachResult extends React.Component {
      * 返回搜索结果页面
      */
     toSearchHistory = () => {
-        console.log("dianji")
+        var url = WebServiceUtil.mobileServiceURL + "searchHistory";
         var data = {
-            method: 'finishForRefresh',
+            method: 'openNewPage',
+            url: url
         };
         Bridge.callHandler(data, null, function (error) {
-            console.log(error);
+            window.location.href = url;
         });
+        // var data = {
+        //     method: 'finishForRefresh',
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     console.log(error);
+        // });
     }
-
 
     //播放视频
     toPlayVideo(videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
-        console.log(videoIndex,"videoIndex");
-        console.log(recommended_video,"视频信息");
-        console.log(recommended_pageCount,"yeshu");
-        console.log(recommended_pageNo);
+        // console.log(videoIndex,"videoIndex");
+        // console.log(recommended_video,"视频信息");
+        // console.log(recommended_pageCount,"yeshu");
+        // console.log(recommended_pageNo);
         var data = {
             method: 'playArticleVideo',
             videos: recommended_video,
@@ -170,7 +173,6 @@ export default class serachResult extends React.Component {
        * Tab栏切换
        */
     tagOnChange(val) {
-        // console.log(val,"VAL")
         console.log(val.value,"VALUE")
         // if(val.value == 3){
         //     calm.initDataSource = [];
@@ -195,10 +197,8 @@ export default class serachResult extends React.Component {
     }
     render() {
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData,"rowDta")
-            console.log(rowID, "1")
             return (
-                <div >
+                <div>
                     {
                         rowData.response.littleVideoInfo.map((v, i) => {
                             return (

@@ -133,6 +133,19 @@ const powerList = (location, cb) => {
     }, 'powerList')
 };
 
+/**
+ * 搜索
+ */
+const searchHistory =  (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/search/js/searchHistory').default)
+    }, 'searchHistory')
+};
+const serachResult = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/search/js/serachResult').default)
+    }, 'serachResult')
+};
 
 import './index.less';
 
@@ -178,6 +191,10 @@ class Index extends React.Component {
                         <Link
                             to="/powerList?ident=6" style={{fontSize: '24px'}}>系统权限</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/searchHistory" style={{fontSize: '24px'}}>搜索</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -207,6 +224,8 @@ ReactDOM.render(
             <Route path="myArticleList" getComponent={myArticleList} />
             <Route path="myCollection" getComponent={myCollection} />
             <Route path="powerList" getComponent={powerList} />
+            <Route path="searchHistory" getComponent={searchHistory} />
+            <Route path="serachResult" getComponent={serachResult} />
         </Route>
     </Router>
     ,

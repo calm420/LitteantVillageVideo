@@ -108,7 +108,12 @@ export default class addUploadVideo extends React.Component {
      * 类型的改变
      */
     onChangeRadio = (index, value) => {
-        console.log(value,"ss")
+        if(value !=1){
+            calm.setState({
+                showDelete:false
+            })
+            calm.state.addVideoList[index].cheData = {};
+        }
         if (value == 1) {
             calm.state.addVideoList[index].show = true;
         } else {
@@ -381,22 +386,32 @@ export default class addUploadVideo extends React.Component {
     batchLittleVideoInfo() {
         var newArr = []
         calm.state.addVideoList.forEach(function (v, i) {
-            newArr.push({
-                coverPath: v.coverPath,
-                videoPath: v.videoUrl,
-                videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
-                userId: v.userId,
-                videoContent: v.videoContent,   // 心情描述 
-                tags: [
-                    {
-                        tagTitle: v.cheData.label,
-                        tagType: 2,   //挑战
-                        tagContent: v.cheData.extra
-                    }
-                ]
-            })
+            if($.isEmptyObject(v.cheData)){
+                newArr.push({
+                    coverPath: v.coverPath,
+                    videoPath: v.videoUrl,
+                    videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
+                    userId: v.userId,
+                    videoContent: v.videoContent,   // 心情描述 
+                    tags: []
+                })
+            }else {
+                newArr.push({
+                    coverPath: v.coverPath,
+                    videoPath: v.videoUrl,
+                    videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
+                    userId: v.userId,
+                    videoContent: v.videoContent,   // 心情描述 
+                    tags: [
+                        {
+                            tagTitle: v.cheData.label,
+                            tagType: 2,   //挑战
+                            tagContent: v.cheData.extra
+                        }
+                    ]
+                })
+            }
         })
-
         newArr.forEach((v, i) => {
             v.tags = v.tags.concat(calm.state.addVideoList[i].tagText)
         })

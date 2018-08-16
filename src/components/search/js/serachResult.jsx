@@ -240,7 +240,7 @@ export default class serachResult extends React.Component {
                     onChange={calm.tagOnChange}
                     initialPage={0} tabs={tabs} >
                     <div style={{
-                        height: document.documentElement.clientHeight - 41 - 44,
+                        height: document.documentElement.clientHeight - 36 - 44,
                         backgroundColor: '#f4f4f4'
                     }} className="listCont">
                         <ListView
@@ -260,7 +260,7 @@ export default class serachResult extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={{
-                                height: calm.state.clientHeight  - 41 - 44,
+                                height: document.documentElement.clientHeight  - 36 - 44,
                             }}
                         />
                     </div>

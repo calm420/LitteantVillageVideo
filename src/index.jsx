@@ -50,8 +50,6 @@ const EditorDemo = (location, cb) => {
 };
 
 
-
-
 /**
  * 审核列表
  */
@@ -62,24 +60,24 @@ const lookThrough = (location, cb) => {
 };
 
 
- /**
-  * 未审核详情
-  */
- const WaitlookThroughDetail = (location, cb) => {
+/**
+ * 未审核详情
+ */
+const WaitlookThroughDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/lookThrough/js/WaitlookThroughDetail').default)
     }, 'WaitlookThroughDetail')
 };
 
- /**
-  * 已审核详情
-  */
- const AlreadylookThroughDetail = (location, cb) => {
+/**
+ * 已审核详情
+ */
+const AlreadylookThroughDetail = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/lookThrough/js/AlreadylookThroughDetail').default)
     }, 'AlreadylookThroughDetail')
- };
- 
+};
+
 const uploadMusicList = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/uploadMusic/js/uploadMusicList').default)
@@ -146,6 +144,18 @@ const serachResult = (location, cb) => {
         cb(null, require('./components/search/js/serachResult').default)
     }, 'serachResult')
 };
+const powerAdministrate = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/powerAdministrate/js/powerAdministrate').default)
+    }, 'powerAdministrate')
+};
+
+const authorityManagement = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/authorityManagement/js/authorityManagement').default)
+    }, 'authorityManagement')
+};
+
 
 import './index.less';
 
@@ -159,7 +169,9 @@ class Index extends React.Component {
                     <li><Link to="/s1">ListView + Carousel</Link></li>
                     <li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
-                    <li><Link to="/articleList?userId=6"
+                    <li><Link to="/articleList?userId=31&machineType=ios&version=100"
+                              style={{fontSize: '24px'}}>ios文章列表</Link></li>
+                    <li><Link to="/articleList?userId=31"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
                     <li><Link to="/myArticleList?userId=3"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
@@ -181,12 +193,12 @@ class Index extends React.Component {
                         <Link
                             to="/uploadvideoList?ident=8&accsess_user=23836" style={{fontSize: '24px'}}>上传视频</Link>
                     </li>
-                   
+
 
                     <li>
                         <Link
                             to="/myCollection?userId=6" style={{fontSize: '24px'}}>我的收藏</Link>
-                    </li> 
+                    </li>
                     <li>
                         <Link
                             to="/powerList?ident=6" style={{fontSize: '24px'}}>系统权限</Link>
@@ -194,6 +206,14 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/searchHistory" style={{fontSize: '24px'}}>搜索</Link>
+                            </li>
+                    <li>
+                        <Link
+                            to="/powerAdministrate" style={{fontSize: '24px'}}>角色管理</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/authorityManagement" style={{fontSize: '24px'}}>权限管理</Link>
                     </li>
                 </ul>
             </div>
@@ -226,6 +246,11 @@ ReactDOM.render(
             <Route path="powerList" getComponent={powerList} />
             <Route path="searchHistory" getComponent={searchHistory} />
             <Route path="serachResult" getComponent={serachResult} />
+            <Route path="myArticleList" getComponent={myArticleList}/>
+            <Route path="myCollection" getComponent={myCollection}/>
+            <Route path="powerList" getComponent={powerList}/>
+            <Route path="powerAdministrate" getComponent={powerAdministrate}/>
+            <Route path="authorityManagement" getComponent={authorityManagement}/>
         </Route>
     </Router>
     ,

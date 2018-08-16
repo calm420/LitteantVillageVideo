@@ -39,6 +39,7 @@ export default class authorityManagement extends React.Component {
     getAllPowers() {
         var _this = this;
         const dataBlob = {};
+        _this.initData = [];
 
         var param = {
             "method": 'getAllPowers',

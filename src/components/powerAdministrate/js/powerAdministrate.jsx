@@ -1,10 +1,11 @@
 import React from 'react';
-import {Toast, Modal, ListView} from 'antd-mobile';
+import {Toast, Modal, ListView, Popover} from 'antd-mobile';
 import '../css/powerAdministrate.less'
 
 var power_Administrate;
 const prompt = Modal.prompt;
 const alert = Modal.alert;
+const Item = Popover.Item;
 
 export default class powerAdministrate extends React.Component {
 
@@ -230,6 +231,28 @@ export default class powerAdministrate extends React.Component {
         });
     }
 
+    onSelect = (opt) => {
+        this.setState({
+            visible: false,
+        });
+
+        if (opt.props.value == 'userAdministration') {
+            // 跳转用户管理
+            var url = WebServiceUtil.mobileServiceURL + "userAdministration?roleId=" + opt.props.roleId;
+        } else if (opt.props.value == 'authorityManagement') {
+            // 跳转权限管理
+            var url = WebServiceUtil.mobileServiceURL + "accessManagement";
+        }
+
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    };
+
     render() {
         var _this = this;
 
@@ -238,6 +261,27 @@ export default class powerAdministrate extends React.Component {
             return (
                 <div>
                     <span>{rowData.roleName}</span>
+                    <Popover mask
+                             overlayClassName="fortest"
+                             overlayStyle={{color: 'currentColor'}}
+                             visible={this.state.visible}
+                             overlay={[
+                                 (<Item key="4" value="userAdministration"
+                                        roleId={rowData.roleId}
+                                        data-seed="logId">用户管理</Item>),
+                                 (<Item key="5" value="authorityManagement"
+                                        style={{whiteSpace: 'nowrap'}}>权限管理</Item>),
+                             ]}
+                             align={{
+                                 overflow: {adjustY: 0, adjustX: 0},
+                                 offset: [-10, 0],
+                             }}
+                             onSelect={this.onSelect}
+                    >
+                        <div>
+                            管理
+                        </div>
+                    </Popover>
                     <span onClick={this.showDelRolePanel.bind(this, rowData)}>删除</span>
                     <span onClick={this.showUpdateRolePanel.bind(this, rowData)}>修改</span>
                 </div>

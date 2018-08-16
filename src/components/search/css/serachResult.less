@@ -2,4 +2,164 @@
     video::-webkit-media-controls-fullscreen-button {
         display: none;
     }
+    .am-search-cancel{
+        font-size: 15px;
+        color: #4285F4;
+    }
+    .am-search{
+        background-color: #fff;
+        .am-search-input{
+            background-color: #f4f4f4;
+            height: 35px;
+            .am-search-synthetic-ph{
+                height: 35px;
+                line-height: 35px;
+            }
+            input{
+                color: #333;
+                height: 35px;
+            }
+            .am-search-clear{
+                padding: 10.5px;
+            }
+        }
+    }
+    .am-tabs-default-bar-tab{
+        height: 36px !important;
+        line-height: 36px !important;
+        padding: 0;
+    }
+    .am-tabs-default-bar-tab-active{
+        color: #333 !important;
+        font-size: 15px;
+    }
+    .am-tabs-default-bar-tab-active::before{
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        right: 0 !important;
+        width: 100%;
+        height: 1px;
+        margin-left: 0 !important;
+    }
+    .uploadVideo{
+        .am-list-body{
+            background-color: #f4f4f4;
+        }
+    }
+    .listCont {
+      width: 100%;
+      .list-view-section-body{
+        padding: 0 10px 0 15px;
+        -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+        flex-wrap: wrap;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        text-align: left;
+        overflow: hidden;
+      }
+        .videoItem{
+            width: 50%;
+            height: 215px;
+            margin-top: 5px;
+        }
+        .videoInfo {
+            position: relative;
+            margin-right: 5px;
+
+            height: 100%;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .gradient_bgT {
+                background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Safari 5.1 - 6.0 */
+                background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Opera 11.1 - 12.0 */
+                background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Firefox 3.6 - 15 */
+                background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* 标准的语法 */
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+                min-height: 50px;
+            }
+            .gradient_bgB {
+                background: -webkit-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Safari 5.1 - 6.0 */
+                background: -o-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Opera 11.1 - 12.0 */
+                background: -moz-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Firefox 3.6 - 15 */
+                background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* 标准的语法 */
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                padding: 10px;
+                width: 100%;
+                height: 50px;
+                box-sizing: border-box;
+            }
+            .video_content {
+
+                color: white;
+                font-size: 15px;
+                line-height: 20px;
+                word-break: break-all;
+                white-space: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+
+            }
+            .like {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                color: white;
+            }
+            .read {
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                color: white;
+                background: url("../images/icon_play.png") no-repeat left center;
+                background-size: 8px;
+                padding-left: 13px;
+                span {
+                    transform: rotate(90deg);
+                    display: inline-block;
+                }
+            }
+            .video_row {
+                width: 172px;
+                height: 215px;
+                display: inline-block;
+                box-sizing: border-box;
+                margin: 15px 0 15px 5px;
+                position: relative;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+                overflow: hidden;
+                .video_firstImage {
+                    width: 100%;
+                    height: 100%;
+
+                }
+
+
+            }
+        }
+    }
 }

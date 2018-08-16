@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #serachResult video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
@@ -94,7 +93,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  padding: 10px;
+  padding: 9px;
   width: 100%;
   box-sizing: border-box;
   min-height: 50px;
@@ -111,10 +110,11 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 10px;
+  padding: 9px;
   width: 100%;
   height: 50px;
   box-sizing: border-box;
+  font-size: 12px;
 }
 #serachResult .listCont .videoInfo .video_content {
   color: white;
@@ -130,18 +130,19 @@
 }
 #serachResult .listCont .videoInfo .like {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 9px;
+  right: 8px;
   color: white;
+  letter-spacing: 1px;
 }
 #serachResult .listCont .videoInfo .read {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 9px;
+  left: 9px;
   color: white;
   background: url("../images/icon_play.png") no-repeat left center;
   background-size: 8px;
-  padding-left: 13px;
+  padding-left: 10px;
 }
 #serachResult .listCont .videoInfo .read span {
   transform: rotate(90deg);

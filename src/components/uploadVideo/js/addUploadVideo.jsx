@@ -779,7 +779,7 @@ export default class addUploadVideo extends React.Component {
                         calm.state.showTextOrList ?
                             <List>
                                 {calm.state.challengeData.map(i => (
-                                    <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
+                                    <RadioItem className={calm.state.chaChangeValue === i.value?'checked':''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
                                         <div className='topTitle textOver'><span className='preIcon'>#</span>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
                                     </RadioItem>
                                 ))}

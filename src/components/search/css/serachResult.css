@@ -46,22 +46,28 @@
   height: 1px;
   margin-left: 0 !important;
 }
-#serachResult .am-tabs-content-wrap {
-  margin-top: 5px;
-}
 #serachResult .uploadVideo .am-list-body {
   background-color: #f4f4f4;
 }
 #serachResult .listCont {
+  width: 100%;
+}
+#serachResult .listCont .list-view-section-body {
   padding: 0 10px 0 15px;
   -webkit-flex-wrap: wrap;
   /* Safari 6.1+ */
   flex-wrap: wrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+  overflow: hidden;
 }
 #serachResult .listCont .videoItem {
   width: 50%;
   height: 215px;
-  margin-bottom: 5px;
+  margin-top: 5px;
 }
 #serachResult .listCont .videoInfo {
   position: relative;

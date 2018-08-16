@@ -198,21 +198,19 @@ export default class serachResult extends React.Component {
             console.log(rowData,"rowDta")
             console.log(rowID, "1")
             return (
-                <div className='my_flex listCont' >
+                <div className='videoItem' >
                     {
                         rowData.response.littleVideoInfo.map((v, i) => {
                             return (
-                                <div className='videoItem'>
-                                    <div className="videoInfo" onClick={this.toPlayVideo.bind(this, i, v, rowData.pager.pageCount, rowData.pager.pageNo)}>
-                                        {/*<video controls="controls" autoPlay style={{ width: "300px" }} src={v.videoPath}></video>*/}
-                                        <img src={v.coverPath} alt="" />
-                                        <div className="gradient_bgT topText">
-                                            <div className="video_content">{v.videoContent}</div>
-                                        </div>
-                                        <div className='gradient_bgB bottomText'>
-                                            <div className="like">{v.likeCount}赞</div>
-                                            <div className="read">{v.readCount}</div>
-                                        </div>
+                                <div className="videoInfo" onClick={this.toPlayVideo.bind(this, i, v, rowData.pager.pageCount, rowData.pager.pageNo)}>
+                                    {/*<video controls="controls" autoPlay style={{ width: "300px" }} src={v.videoPath}></video>*/}
+                                    <img src={v.coverPath} alt="" />
+                                    <div className="gradient_bgT topText">
+                                        <div className="video_content">{v.videoContent}</div>
+                                    </div>
+                                    <div className='gradient_bgB bottomText'>
+                                        <div className="like">{v.likeCount}赞</div>
+                                        <div className="read">{v.readCount}</div>
                                     </div>
                                 </div>
                             )
@@ -242,9 +240,9 @@ export default class serachResult extends React.Component {
                     onChange={calm.tagOnChange}
                     initialPage={0} tabs={tabs} >
                     <div style={{
-                        height: document.documentElement.clientHeight - 41 - 44,
+                        height: document.documentElement.clientHeight - 36 - 44,
                         backgroundColor: '#f4f4f4'
-                    }} className="hahah">
+                    }} className="listCont">
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -262,7 +260,7 @@ export default class serachResult extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={{
-                                height: calm.state.clientHeight  - 41 - 44,
+                                height: document.documentElement.clientHeight  - 36 - 44,
                             }}
                         />
                     </div>

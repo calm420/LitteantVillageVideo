@@ -173,7 +173,7 @@ export default class serachResult extends React.Component {
        * Tab栏切换
        */
     tagOnChange(val) {
-        console.log(val.value,"VALUE")
+        console.log(val.value, "VALUE")
         // if(val.value == 3){
         //     calm.initDataSource = [];
         //     calm.setState({
@@ -183,14 +183,14 @@ export default class serachResult extends React.Component {
         //         hasMore: true,
         //     })
         // }
-        if(val.value == 2){
+        if (val.value == 2) {
             calm.initDataSource = [];
             calm.setState({
                 dataSource: dataSource.cloneWithRows(calm.initDataSource),
                 defaultPageNo: 1,
                 isLoading: true,
                 hasMore: true,
-            },()=>{
+            }, () => {
                 calm.searchVideo(calm.state.value)
             })
         }

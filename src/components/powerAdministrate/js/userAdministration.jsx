@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, ListView, Card, Modal} from 'antd-mobile';
+import {Toast, ListView, Card, Modal, Icon} from 'antd-mobile';
 import '../css/userAdministration.less'
 
 var user_Administration;
@@ -27,12 +27,13 @@ export default class userAdministration extends React.Component {
     }
 
     componentDidMount() {
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var roleId = searchArray[0].split('=')[1];
+        var roleName = searchArray[1].split('=')[1];
         this.getAllUsersByRoleId(roleId)
-        this.setState({roleId})
+        this.setState({roleId, roleName})
     }
 
     getAllUsersByRoleId(roleId) {
@@ -180,8 +181,14 @@ export default class userAdministration extends React.Component {
         var _this = this;
         var arr = []
         data.forEach(function (v, i) {
-            arr.push(<li onClick={() => {
+            arr.push(<li className='line_public noomPowerList' onClick={(e) => {
                 _this.setState({addPerUserId: v.uid})
+                for (var i = 0; i < $('.noomPowerList').length; i++) {
+                    $('.noomPowerList').eq(i).removeClass("active");
+                }
+
+                e.target.className = 'active line_public noomPowerList'
+
             }}>{v.userName}</li>)
         })
         this.setState({responseList: arr})
@@ -228,22 +235,26 @@ export default class userAdministration extends React.Component {
 
             return (
                 <Card>
-                    <div>
-                        <img src={rowData.userInfo.avatar} className='avatar'/>
-                        <span>{rowData.userInfo.userName}</span>
-                        <span onClick={_this.showDeletePower.bind(this, rowData.userRoleId)}>删除</span>
+                    <div className='item line_public'>
+                        {/*<img src={rowData.userInfo.avatar} className='avatar'/>*/}
+                        <span className='textOver'>{rowData.userInfo.userName}</span>
+                        <span className='icon_delete' onClick={_this.showDeletePower.bind(this, rowData.userRoleId)}>删除</span>
                     </div>
                 </Card>
             )
         };
 
         return (
-            <div id="userAdministration">
-                <div className='tableDiv' style={{height: user_Administration.state.clientHeight}}>
+            <div id="accessManagement" className='userAdministration'>
+                <div className='tableDiv'>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderHeader={() => <div className='topDiv'>
+                            <div className='role'>角色：<span>{this.state.roleName}</span></div>
+                            <div className='user'>用户</div>
+                        </div>}
                         renderFooter={() => (
                             <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
@@ -258,22 +269,23 @@ export default class userAdministration extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: user_Administration.state.clientHeight,
+                            height: user_Administration.state.clientHeight - 65,
                         }}
                     />
-                    <div className='addBunton' onClick={this.showAddPower}>
-                        <img src={require("../img/addBtn.png")}/>
+
+                    <div className='addBtn sameBack' onClick={this.showAddPower}>
+                        <span>添加角色<Icon type="plus"/></span>
                     </div>
                 </div>
 
                 <div className='updateModel' style={{display: 'none'}}>
                     <div>
-                        <div>
-                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang}/>
+                        <div className='searchDiv'>
+                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
                             <span onClick={this.searchUserByKeyWord}>搜索</span>
                         </div>
                     </div>
-                    <div>
+                    <div className='cont'>
                         {this.state.responseList}
                     </div>
                     <div className="bottomBox">

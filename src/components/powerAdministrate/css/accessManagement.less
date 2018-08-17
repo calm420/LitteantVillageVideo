@@ -1,9 +1,31 @@
 #accessManagement {
+  height: 100%;
   .tableDiv{
     color: #333;
     font-size: 15px;
     height: calc(~"100% - 65px");
   }
+  .am-list-header{
+    padding: 0;
+    .topDiv{
+      color: #666;
+      .role{
+        height: 52px;
+        line-height: 52px;
+        background-color: #fff;
+        padding: 0 15px;
+        span{
+          color: #333;
+        }
+      }
+      .user{
+        line-height: 40px;
+        padding: 0 15px;
+      }
+
+    }
+  }
+
     .item{
       margin: 0 15px;
       line-height: 52px;
@@ -35,7 +57,7 @@
     position: absolute;
     bottom: 0;
     z-index: 999;
-    height: 50%;
+    height: 70%;
     .cont{
       height: calc(~"100% - 75px");
       overflow-y: auto;
@@ -49,6 +71,53 @@
         &.active{
           color: #4285F4;
         }
+        &:last-child::after{
+          display: none;
+        }
       }
   }
+/*用户管理界面*/
+  &.userAdministration{
+    .am-card{
+      min-height: auto;
+      padding: 0;
+      .item:last-child::after{
+        display: block;
+      }
+      &:last-child{
+        .item::after{
+          display: none;
+        }
+      }
+    }
+  }
+  .updateModel{
+    .cont{
+      height: calc(~"100% - 75px - 51px");
+    }
+    .searchDiv{
+        height: 51px;
+        background-color: #F3F3F3;
+        padding: 8.5px 15px;
+        box-sizing: border-box;
+      input{
+        background-color: #fff;
+        border: 0;
+        line-height: 20px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        padding: 7px 10px;
+        box-sizing: border-box;
+        width: calc(~"100% - 55px");
+        color: #333;
+      }
+      span{
+        font-size: 15px;
+        color: #4285F4;
+        padding-left: 20px;
+      }
+    }
+  }
+
 }

@@ -1,7 +1,30 @@
+#accessManagement {
+  height: 100%;
+  /*用户管理界面*/
+}
 #accessManagement .tableDiv {
   color: #333;
   font-size: 15px;
   height: calc(100% - 65px);
+}
+#accessManagement .am-list-header {
+  padding: 0;
+}
+#accessManagement .am-list-header .topDiv {
+  color: #666;
+}
+#accessManagement .am-list-header .topDiv .role {
+  height: 52px;
+  line-height: 52px;
+  background-color: #fff;
+  padding: 0 15px;
+}
+#accessManagement .am-list-header .topDiv .role span {
+  color: #333;
+}
+#accessManagement .am-list-header .topDiv .user {
+  line-height: 40px;
+  padding: 0 15px;
 }
 #accessManagement .item {
   margin: 0 15px;
@@ -75,12 +98,11 @@
 #accessManagement .updateModel .searchDiv input {
   background-color: #fff;
   border: 0;
-  line-height: 34px;
-  height: 34px;
+  line-height: 20px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
-  padding-left: 10px;
+  padding: 7px 10px;
   box-sizing: border-box;
   width: calc(100% - 55px);
   color: #333;

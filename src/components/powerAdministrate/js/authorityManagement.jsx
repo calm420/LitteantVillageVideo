@@ -242,9 +242,9 @@ export default class authorityManagement extends React.Component {
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                        renderHeader={() => <div>
-                            <div>角色:{this.state.roleName}</div>
-                            <div>权限</div>
+                        renderHeader={() =>  <div className='topDiv'>
+                            <div className='role'>角色：<span>{this.state.roleName}</span></div>
+                            <div className='user'>用户</div>
                         </div>}
                         renderFooter={() => (
                             <div>

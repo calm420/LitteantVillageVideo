@@ -421,7 +421,6 @@ export default class uploadMusicList extends React.Component {
                     <div>
                         {this.state.editDiv}
                     </div>
-                    <div className='line_public'></div>
                     <div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>
                         <span className="bind" onClick={this.addTagsForSure}>确定</span>

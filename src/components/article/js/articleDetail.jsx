@@ -42,14 +42,22 @@ export default class articleDetail extends React.Component {
         document.title = '校园自媒体';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var artId = searchArray[0].split('=')[1];
-        var userId = searchArray[1].split('=')[1];
-        var type = searchArray[2].split('=')[1];
-        var machineType = searchArray[3].split('=')[1];
-        var version = searchArray[4].split('=')[1];
-        console.log(machineType);
-        console.log(version);
+        if(locationSearch.indexOf("?") == -1){  //正常逻辑
+            var searchArray = locationSearch.split("&");
+            var artId = searchArray[0].split('=')[1];
+            var userId = searchArray[1].split('=')[1];
+            var type = searchArray[2].split('=')[1];
+            var machineType = searchArray[3].split('=')[1];
+            var version = searchArray[4].split('=')[1];
+        }else{   //分享逻辑
+            locationSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
+            var searchArray = locationSearch.split("&");
+            var artId = searchArray[0].split('=')[1];
+            var userId = searchArray[1].split('=')[1];
+            var type = searchArray[2].split('=')[1];
+            var machineType = searchArray[3].split('=')[1];
+            var version = searchArray[4].split('=')[1];
+        }
 
         this.setState({
             artId: artId,
@@ -355,7 +363,8 @@ export default class articleDetail extends React.Component {
                         hasMore: true,
                         commitText: ''
                     }, () => {
-                        theLike.getDiscussInfoList();
+                        window.location.reload()
+                        // theLike.getDiscussInfoList();
                     })
                 } else {
                     Toast.info('评论失败!', 1);
@@ -406,7 +415,19 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = ()=>{
-        console.log('分享')
+        console.log('分享');
+        console.log(window.location.href,'url');
+        console.log(this.state.data.articleTitle,'标题');
+        console.log(this.state.data.author,'作者');
+        var data = {
+            method: 'shareWechat',
+            shareUrl: window.location.href,
+            shareTitle: this.state.data.articleTitle,
+            shareUserName: this.state.data.author,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.info('分享文章失败')
+        });
     }
 
     render() {
@@ -455,11 +476,11 @@ export default class articleDetail extends React.Component {
                                     src={this.state.collection ? require("../images/fillPent.png") : require("../images/pent.png")}
                                     alt=""/>
                             </div>
-                            {/*<div className="share" onClick={this.toShare}>*/}
-                                {/*<img*/}
-                                    {/*src={this.state.collection ? require("../images/share.png") : require("../images/pent.png")}*/}
-                                    {/*alt=""/>*/}
-                            {/*</div>*/}
+                            <div className="share" onClick={this.toShare}>
+                                <img
+                                    src={require("../images/share.png")}
+                                    alt=""/>
+                            </div>
                             {/*<div style={*/}
                                 {/*this.state.reportFlag?{display:'inline-block'}:{display:'none'}*/}
                             {/*} className="report" onClick={this.toReport.bind(this)}>*/}
@@ -486,17 +507,16 @@ export default class articleDetail extends React.Component {
                                     <div style={
                                         this.state.reportFlag?{display:'inline-block'}:{display:'none'}
                                     } className="report" onClick={this.toReport.bind(this)} >
-                                        <div className="i_report" onClick={this.toReport.bind(this)}>举报</div>
+                                        <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span></div>
                                     </div>
                                     <div className="like" onClick={this.likeFlag.bind(this)} style={
                                         this.state.likeFlag ? {
-                                            borderColor: '#FE5C50',
-                                            color: '#FE5C50'
-                                        } : {borderColor: '#999', color: '#999'}
+                                            borderColor: 'rgb(253, 153, 147)',
+                                        } : {borderColor: '#e5e5e5',}
                                     }>
                                         <div className={this.state.likeFlag ? 'likeActive' : 'noLike'}>
                                             {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
-                                            {this.state.data.likeCount}
+                                            <span>{this.state.data.likeCount}</span>
                                         </div>
 
                                     </div>

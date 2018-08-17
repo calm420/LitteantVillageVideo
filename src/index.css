@@ -488,6 +488,9 @@ hr {
 .am-list-view-scrollview-content {
   width: 100%;
 }
+.am-list-item.am-input-item {
+  height: 52px !important;
+}
 .bottomBox {
   display: flex;
   width: 100%;
@@ -558,6 +561,30 @@ hr {
 .textTitle .uploadSupport {
   font-size: 13px;
   color: #888;
+}
+/*新增组按钮*/
+.addBtn {
+  text-align: center;
+  font-size: 16px;
+  color: #4285F4 !important;
+  line-height: 30px;
+  padding: 10px 15px !important;
+  margin-top: 15px;
+}
+.addBtn span {
+  margin: 0 auto;
+  position: relative;
+  width: 80px;
+  padding-left: 18px;
+  display: block;
+}
+.addBtn .am-icon-md {
+  width: 16px;
+  height: 16px;
+  margin-right: 3px;
+  position: absolute;
+  left: 0;
+  top: 6px;
 }
 ::-webkit-scrollbar {
   width: 6px;

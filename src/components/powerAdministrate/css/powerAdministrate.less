@@ -1,3 +1,63 @@
 #powerAdministrate {
-  
+    color: #333;
+  .am-accordion{
+    &::before{
+      display: none;
+    }
+    .am-accordion-item .am-accordion-header{
+      color: #333;
+      font-size: 15px;
+      border: 0;
+      height: 52px;
+      line-height: 52px;
+      i{
+        width: 0;
+        height: 0;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        border-left: 4px solid #666;
+        top: 23px;
+      }
+      &::after{
+        background-color: #e5e5e5 !important;
+        -webkit-transform-origin: 0 0;
+        -ms-transform-origin:  0 0;
+        transform-origin: 0 0;
+      }
+    }
+  }
+  .ul_list_del{
+    height: 57px;
+    background: #f6f6f6;
+    li{
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      padding: 10px 0;
+      i{
+        display: block;
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
+      }
+      &.user i{
+        background: url("../img/icon_power_user.png") no-repeat center top;
+        background-size: 18px;
+      }
+      &.permission i{
+        background: url("../img/icon_permission.png") no-repeat center top;
+        background-size: 16px;
+      }
+      &.delete i{
+        background: url("../img/icon_power_delete.png") no-repeat center top;
+        background-size: 18px;
+      }
+      &.modify i{
+        background: url("../img/icon_power_modify.png") no-repeat center top;
+        background-size: 16px;
+      }
+    }
+  }
+
+
 }

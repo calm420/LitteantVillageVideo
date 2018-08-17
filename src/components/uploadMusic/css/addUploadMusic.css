@@ -91,26 +91,3 @@
   width: 100%;
   height: 100%;
 }
-#addUploadMusic .addBtn {
-  text-align: center;
-  font-size: 16px;
-  color: #638bb7;
-  line-height: 30px;
-  padding: 7px 15px;
-  margin-top: 15px;
-}
-#addUploadMusic .addBtn span {
-  margin: 0 auto;
-  position: relative;
-  width: 80px;
-  padding-left: 20px;
-  display: block;
-}
-#addUploadMusic .addBtn .am-icon-md {
-  width: 18px;
-  height: 18px;
-  margin-right: 3px;
-  position: absolute;
-  left: 0;
-  top: 5px;
-}

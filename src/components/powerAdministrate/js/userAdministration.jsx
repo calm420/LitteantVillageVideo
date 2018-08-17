@@ -180,7 +180,6 @@ export default class userAdministration extends React.Component {
         var _this = this;
         var arr = []
         data.forEach(function (v, i) {
-            console.log(v);
             arr.push(<li onClick={() => {
                 _this.setState({addPerUserId: v.uid})
             }}>{v.userName}</li>)

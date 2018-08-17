@@ -113,19 +113,12 @@ export default class authorityManagement extends React.Component {
         arr.forEach(function (v, i) {
             array.push(<li className='line_public noomPowerList' onClick={(e) => {
                 _this.setState({powerItem: v})
-                // for (var i = 0; i < document.getElementsByClassName('noomPowerList').length; i++) {
-                //     document.getElementsByClassName('noomPowerList')[i].class = 'line_public noomPowerList'
-                //     console.log(document.getElementsByClassName('noomPowerList')[i]);
-                //     // console.log(document.getElementsByClassName('noomPowerList')[i].className);
-                // }
 
                 for (var i = 0; i < $('.noomPowerList').length; i++) {
-                    console.log($('.noomPowerList')[i]);
-                    // $('.noomPowerList')[i].className = 'line_public noomPowerList'
                     $('.noomPowerList').eq(i).removeClass("active");
                 }
 
-                e.target.className = 'active line_public'
+                e.target.className = 'active line_public noomPowerList'
             }}>
                 {v.powerName}
             </li>)

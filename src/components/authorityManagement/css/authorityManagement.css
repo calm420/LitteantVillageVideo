@@ -2,6 +2,9 @@
 #authorityManagement {
   overflow-x: hidden;
 }
+#authorityManagement .am-list-body {
+  background: transparent;
+}
 #authorityManagement .addBunton {
   width: 3rem;
   height: 3rem;
@@ -20,14 +23,9 @@
   z-index: 999;
   height: 350px;
 }
-#authorityManagement .tagAddPanel_bg {
-  background: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  position: absolute;
-  z-index: 980;
-  top: 0;
-  left: 0;
-  display: none;
+#authorityManagement .am-list-item10 {
+  padding: 10px 15px;
+}
+#authorityManagement .am-card {
+  margin-bottom: 10px;
 }

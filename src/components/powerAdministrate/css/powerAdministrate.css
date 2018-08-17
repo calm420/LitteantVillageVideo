@@ -1,5 +1,11 @@
+(node) util.print is deprecated. Use console.log instead.
 #powerAdministrate {
   color: #333;
+  height: 100%;
+}
+#powerAdministrate .am-accordion {
+  height: calc(100% - 65px);
+  overflow-y: auto;
 }
 #powerAdministrate .am-accordion::before {
   display: none;

@@ -227,23 +227,25 @@ export default class authorityManagement extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData);
 
             return (
                 <Card>
-                    <div>
-                        <div className="am-list-item"><span className="textTitle textTitle_t">权限名称</span><span className="am-input-control">{rowData.powerName}</span></div>
+                    <div style={{position: 'relative'}}>
+                        <div className="am-list-item"><span className="textTitle textTitle_t">权限名称</span><span
+                            className="am-input-control">{rowData.powerName}</span></div>
                         <div className="line_public flex_container"></div>
                         <div className="am-list-item am-list-item10">
                             <span className="textTitle textTitle_t">权限图标</span>
                             <span className="upload_file">
                                 <img src={rowData.iconUrl} alt=""/>
-                                <div className="icon_pointer" onClick={authority_Management.uploadImage}>修改</div>
+                                {/*<div className="icon_pointer" onClick={authority_Management.uploadImage}>修改</div>*/}
                             </span>
                         </div>
                         <div className="line_public flex_container"></div>
-                        <div className="am-list-item"><span className="textTitle textTitle_t">权限路径</span><span className="am-input-control">{rowData.powerUrl}</span></div>
-                        <span className="icon_delete icon_pointer" onClick={this.showDeletePower.bind(this, rowData.powerId)}>删除</span>
+                        <div className="am-list-item"><span className="textTitle textTitle_t">权限路径</span><span
+                            className="am-input-control">{rowData.powerUrl}</span></div>
+                        <span className="icon_delete icon_pointer"
+                              onClick={this.showDeletePower.bind(this, rowData.powerId)}>删除</span>
                     </div>
                 </Card>
             )

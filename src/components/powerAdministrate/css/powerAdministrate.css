@@ -1,9 +1,6 @@
 #powerAdministrate {
   color: #333;
 }
-#powerAdministrate .addBtn {
-  margin-top: 20px;
-}
 #powerAdministrate .am-accordion::before {
   display: none;
 }

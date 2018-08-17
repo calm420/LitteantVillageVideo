@@ -1,6 +1,9 @@
 #powerAdministrate {
   color: #333;
 }
+#powerAdministrate .addBtn {
+  margin-top: 20px;
+}
 #powerAdministrate .am-accordion::before {
   display: none;
 }
@@ -8,6 +11,8 @@
   color: #333;
   font-size: 15px;
   border: 0;
+  height: 52px;
+  line-height: 52px;
 }
 #powerAdministrate .am-accordion .am-accordion-item .am-accordion-header i {
   width: 0;
@@ -15,6 +20,7 @@
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
   border-left: 4px solid #666;
+  top: 23px;
 }
 #powerAdministrate .am-accordion .am-accordion-item .am-accordion-header::after {
   background-color: #e5e5e5 !important;

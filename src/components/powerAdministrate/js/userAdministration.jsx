@@ -180,9 +180,14 @@ export default class userAdministration extends React.Component {
         var _this = this;
         var arr = []
         data.forEach(function (v, i) {
-            console.log(v);
-            arr.push(<li className='line_public' onClick={() => {
+            arr.push(<li className='line_public noomPowerList' onClick={(e) => {
                 _this.setState({addPerUserId: v.uid})
+                for (var i = 0; i < $('.noomPowerList').length; i++) {
+                    $('.noomPowerList').eq(i).removeClass("active");
+                }
+
+                e.target.className = 'active line_public noomPowerList'
+
             }}>{v.userName}</li>)
         })
         this.setState({responseList: arr})

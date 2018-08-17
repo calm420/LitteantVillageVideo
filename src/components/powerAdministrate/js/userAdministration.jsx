@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, ListView, Card, Modal} from 'antd-mobile';
+import {Toast, ListView, Card, Modal, Icon} from 'antd-mobile';
 import '../css/userAdministration.less'
 
 var user_Administration;
@@ -181,7 +181,7 @@ export default class userAdministration extends React.Component {
         var arr = []
         data.forEach(function (v, i) {
             console.log(v);
-            arr.push(<li onClick={() => {
+            arr.push(<li className='line_public' onClick={() => {
                 _this.setState({addPerUserId: v.uid})
             }}>{v.userName}</li>)
         })
@@ -229,18 +229,18 @@ export default class userAdministration extends React.Component {
 
             return (
                 <Card>
-                    <div>
-                        <img src={rowData.userInfo.avatar} className='avatar'/>
-                        <span>{rowData.userInfo.userName}</span>
-                        <span onClick={_this.showDeletePower.bind(this, rowData.userRoleId)}>删除</span>
+                    <div className='item line_public'>
+                        {/*<img src={rowData.userInfo.avatar} className='avatar'/>*/}
+                        <span className='textOver'>{rowData.userInfo.userName}</span>
+                        <span className='icon_delete' onClick={_this.showDeletePower.bind(this, rowData.userRoleId)}>删除</span>
                     </div>
                 </Card>
             )
         };
 
         return (
-            <div id="userAdministration">
-                <div className='tableDiv' style={{height: user_Administration.state.clientHeight}}>
+            <div id="accessManagement" className='userAdministration'>
+                <div className='tableDiv'>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
@@ -259,22 +259,23 @@ export default class userAdministration extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: user_Administration.state.clientHeight,
+                            height: user_Administration.state.clientHeight - 65,
                         }}
                     />
-                    <div className='addBunton' onClick={this.showAddPower}>
-                        <img src={require("../img/addBtn.png")}/>
+
+                    <div className='addBtn sameBack' onClick={this.showAddPower}>
+                        <span>添加角色<Icon type="plus"/></span>
                     </div>
                 </div>
 
                 <div className='updateModel' style={{display: 'none'}}>
                     <div>
-                        <div>
-                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang}/>
+                        <div className='searchDiv'>
+                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang} placeholder='请输入搜索内容'/>
                             <span onClick={this.searchUserByKeyWord}>搜索</span>
                         </div>
                     </div>
-                    <div>
+                    <div className='cont'>
                         {this.state.responseList}
                     </div>
                     <div className="bottomBox">

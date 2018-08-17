@@ -1,0 +1,56 @@
+#powerAdministrate {
+  color: #333;
+}
+#powerAdministrate .am-accordion::before {
+  display: none;
+}
+#powerAdministrate .am-accordion .am-accordion-item .am-accordion-header {
+  color: #333;
+  font-size: 15px;
+  border: 0;
+}
+#powerAdministrate .am-accordion .am-accordion-item .am-accordion-header i {
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid #666;
+}
+#powerAdministrate .am-accordion .am-accordion-item .am-accordion-header::after {
+  background-color: #e5e5e5 !important;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+#powerAdministrate .ul_list_del {
+  height: 57px;
+  background: #f6f6f6;
+}
+#powerAdministrate .ul_list_del li {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  padding: 10px 0;
+}
+#powerAdministrate .ul_list_del li i {
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+}
+#powerAdministrate .ul_list_del li.user i {
+  background: url("../img/icon_power_user.png") no-repeat center top;
+  background-size: 18px;
+}
+#powerAdministrate .ul_list_del li.permission i {
+  background: url("../img/icon_permission.png") no-repeat center top;
+  background-size: 16px;
+}
+#powerAdministrate .ul_list_del li.delete i {
+  background: url("../img/icon_power_delete.png") no-repeat center top;
+  background-size: 18px;
+}
+#powerAdministrate .ul_list_del li.modify i {
+  background: url("../img/icon_power_modify.png") no-repeat center top;
+  background-size: 16px;
+}

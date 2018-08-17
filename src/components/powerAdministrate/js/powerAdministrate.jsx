@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, Modal, ListView, Accordion} from 'antd-mobile';
+import {Toast, Modal, ListView, Accordion,Icon} from 'antd-mobile';
 import '../css/powerAdministrate.less'
 
 var power_Administrate;
@@ -71,19 +71,23 @@ export default class powerAdministrate extends React.Component {
             arr.push(
                 <Accordion.Panel header={v.roleName} key={v.roleId + ''}>
                     <ul className="my_flex ul_list_del flex_align_center">
-                        <li className="flex_1"
+                        <li className="flex_1 user"
                             onClick={power_Administrate.onSelect.bind(this, 'userAdministration', v.roleId)}>
+                            <i></i>
                             <div>用户管理</div>
                         </li>
-                        <li className="flex_1"
+                        <li className="flex_1 permission"
                             onClick={power_Administrate.onSelect.bind(this, 'authorityManagement', v.roleId)}>
+                            <i></i>
                             <div>权限管理</div>
                         </li>
-                        <li className="flex_1" onClick={power_Administrate.showDelRolePanel.bind(this, v)}>
-                            <div>删除</div>
+                        <li className="flex_1 delete" onClick={power_Administrate.showDelRolePanel.bind(this, v)}>
+                            <i></i>
+                            <div>删除名称</div>
                         </li>
-                        <li className="flex_1" onClick={power_Administrate.showUpdateRolePanel.bind(this, v)}>
-                            <div>修改</div>
+                        <li className="flex_1 modify" onClick={power_Administrate.showUpdateRolePanel.bind(this, v)}>
+                            <i></i>
+                            <div>修改名称</div>
                         </li>
                     </ul>
                 </Accordion.Panel>
@@ -270,8 +274,9 @@ export default class powerAdministrate extends React.Component {
                                activeKey={this.state.firstKey}>
                         {this.state.accordionArr}
                     </Accordion>
-
-                    <div onClick={this.showAddNewRolesPanel}>新增角色</div>
+                    <div className="addBtn sameBack" onClick={this.showAddNewRolesPanel}>
+                        <span>新增角色<Icon type="plus" /></span>
+                    </div>
                 </div>
             </div>
         );

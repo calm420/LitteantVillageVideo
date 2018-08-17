@@ -1,9 +1,16 @@
 (node) util.print is deprecated. Use console.log instead.
 #authorityManagement {
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100% !important;
 }
 #authorityManagement .am-list-body {
   background: transparent;
+}
+#authorityManagement .tableDiv {
+  height: 100% !important;
+}
+#authorityManagement .am-list-view-scrollview {
+  height: calc(100% - 65px) !important;
 }
 #authorityManagement .addBunton {
   width: 3rem;
@@ -23,9 +30,29 @@
   z-index: 999;
   height: 350px;
 }
+#authorityManagement .updateModel .am-input-control {
+  background: #f6f6f6;
+  padding: 8px 8px 8px 10px;
+  border-radius: 2px;
+}
+#authorityManagement .updateModel .addUpdateModel-list {
+  margin-top: 10px;
+}
+#authorityManagement .updateModel .addUpdateModel-list1 {
+  margin-top: 15px;
+}
+#authorityManagement .updateModel header {
+  font-size: 17px;
+  text-align: center;
+  color: #333;
+  padding: 15px 0;
+}
 #authorityManagement .am-list-item10 {
   padding: 10px 15px;
 }
 #authorityManagement .am-card {
   margin-bottom: 10px;
+}
+#authorityManagement .am-list-footer {
+  padding-bottom: 0;
 }

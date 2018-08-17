@@ -27,12 +27,13 @@ export default class userAdministration extends React.Component {
     }
 
     componentDidMount() {
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var roleId = searchArray[0].split('=')[1];
+        var roleName = searchArray[1].split('=')[1];
         this.getAllUsersByRoleId(roleId)
-        this.setState({roleId})
+        this.setState({roleId, roleName})
     }
 
     getAllUsersByRoleId(roleId) {
@@ -250,6 +251,10 @@ export default class userAdministration extends React.Component {
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderHeader={() => <div>
+                            <div>角色:{this.state.roleName}</div>
+                            <div>用户</div>
+                        </div>}
                         renderFooter={() => (
                             <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                                 {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}

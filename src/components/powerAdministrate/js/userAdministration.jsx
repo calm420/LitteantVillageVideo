@@ -17,6 +17,7 @@ export default class userAdministration extends React.Component {
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initData),
             clientHeight: document.body.clientHeight,
+            inputValue: '',
         };
 
     }
@@ -36,6 +37,7 @@ export default class userAdministration extends React.Component {
 
     getAllUsersByRoleId(roleId) {
         var _this = this;
+        _this.initData = []
         const dataBlob = {};
         var param = {
             "method": 'getAllUsersByRoleId',
@@ -84,9 +86,10 @@ export default class userAdministration extends React.Component {
         $('.tagAddPanel_bg').show()
     }
 
-    exitAddTags() {
+    exitAddTags = () => {
         $('.updateModel').slideUp()
         $('.tagAddPanel_bg').hide()
+        this.setState(({responseList: [], addPerUserId: '', inputValue: ''}))
     }
 
     showDeletePower(userRoleId) {
@@ -139,6 +142,86 @@ export default class userAdministration extends React.Component {
         });
     }
 
+    inputOnChang = (e) => {
+        this.setState({inputValue: e.target.value})
+    }
+
+    searchUserByKeyWord = () => {
+
+        this.setState(({responseList: []}))
+
+        var _this = this;
+        var param = {
+            "method": 'searchUserByKeyWord',
+            "keyWord": this.state.inputValue,
+            "pageNo": -1,
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' && result.success == true) {
+                    if (!WebServiceUtil.isEmpty(result.response)) {
+                        _this.buildResponseList(result.response)
+                    } else {
+                        Toast.fail('未找到该用户', 1)
+                    }
+                } else {
+                    Toast.fail(result.msg)
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    buildResponseList = (data) => {
+        var _this = this;
+        var arr = []
+        data.forEach(function (v, i) {
+            console.log(v);
+            arr.push(<li onClick={() => {
+                _this.setState({addPerUserId: v.uid})
+            }}>{v.userName}</li>)
+        })
+        this.setState({responseList: arr})
+    }
+
+    addTagsForSure = () => {
+        if (WebServiceUtil.isEmpty(this.state.addPerUserId)) {
+            Toast.fail('请选择要添加的用户', 2)
+            return
+        }
+
+        var _this = this;
+        var param = {
+            "method": 'saveUserRole',
+            "userRoleJson": JSON.stringify({
+                userId: this.state.addPerUserId,
+                roleId: this.state.roleId,
+            }),
+        };
+
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' && result.success == true) {
+                    //下降,刷星
+                    _this.exitAddTags()
+                    _this.getAllUsersByRoleId(_this.state.roleId)
+
+                } else {
+                    Toast.fail(result.msg)
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+
+    }
+
     render() {
         var _this = this;
 
@@ -187,11 +270,13 @@ export default class userAdministration extends React.Component {
                 <div className='updateModel' style={{display: 'none'}}>
                     <div>
                         <div>
-                            <input type="text"/>
-                            <span>搜索</span>
+                            <input type="text" value={this.state.inputValue} onChange={this.inputOnChang}/>
+                            <span onClick={this.searchUserByKeyWord}>搜索</span>
                         </div>
                     </div>
-                    <div className='line_public'></div>
+                    <div>
+                        {this.state.responseList}
+                    </div>
                     <div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>
                         <span className="bind" onClick={this.addTagsForSure}>确定</span>

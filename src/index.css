@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -81,7 +82,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #F46A55;
+  color: #f46a55;
 }
 .line_item {
   height: 8px;
@@ -529,7 +530,7 @@ hr {
   border-radius: 4px;
   height: 43px;
   line-height: 43px;
-  font-size: 18px;
+  font-size: 16px;
 }
 .bottomBox .bind {
   background: #4285F4;
@@ -542,7 +543,8 @@ hr {
   border: 1px #4285F4 solid;
 }
 .am-list-item .am-input-label,
-.am-list-item .am-input-control input {
+.am-list-item .am-input-control input,
+.textTitle_t {
   font-size: 15px !important;
   color: #666 !important;
 }
@@ -561,6 +563,66 @@ hr {
 .textTitle .uploadSupport {
   font-size: 13px;
   color: #888;
+}
+.uploadBtn {
+  background: url("components/uploadMusic/img/icon_uploadB.png") no-repeat;
+  font-size: 0;
+  width: 40px;
+  height: 40px;
+  background-size: 100%;
+  border: 0;
+  cursor: pointer;
+}
+.upload_file {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: #eee;
+  position: relative;
+}
+.upload_file .icon_pointer {
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2px 0;
+  border-radius: 0 0 2px 2px;
+  text-align: center;
+  font-size: 12px;
+}
+.upload_file .imgTag,
+.upload_file img {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 2px;
+}
+.upload_file .musicIcon {
+  background: url("components/uploadMusic/img/musicIcon.png") no-repeat;
+  background-size: 100%;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+.am-list-item {
+  min-height: 52px !important;
+}
+.am-input-control {
+  font-size: 15px !important;
+  color: #333;
+}
+.icon_delete {
+  background: url("components/uploadMusic/img/del_group.png") no-repeat;
+  font-size: 0;
+  width: 34px;
+  height: 32px;
+  background-size: 100%;
+  border: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 /*新增组按钮*/
 .addBtn {

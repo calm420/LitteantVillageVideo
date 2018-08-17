@@ -268,15 +268,12 @@ export default class powerAdministrate extends React.Component {
 
         return (
             <div id="powerAdministrate">
-                <div style={{height: this.state.clientHeight}}>
-
-                    <Accordion accordion className="my-accordion" onChange={this.onChange}
-                               activeKey={this.state.firstKey}>
-                        {this.state.accordionArr}
-                    </Accordion>
-                    <div className="addBtn sameBack" onClick={this.showAddNewRolesPanel}>
-                        <span>新增角色<Icon type="plus" /></span>
-                    </div>
+                <Accordion accordion className="my-accordion" onChange={this.onChange}
+                           activeKey={this.state.firstKey}>
+                    {this.state.accordionArr}
+                </Accordion>
+                <div className="addBtn sameBack" onClick={this.showAddNewRolesPanel}>
+                    <span>新增角色<Icon type="plus" /></span>
                 </div>
             </div>
         );

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Toast, ListView, Card, Modal} from 'antd-mobile';
-import '../css/authorityManagement.less'
+import {Toast, ListView, Card, Modal, Icon} from 'antd-mobile';
+import '../css/accessManagement.less'
 
 var authority_Management;
 const alert = Modal.alert;
@@ -111,8 +111,21 @@ export default class authorityManagement extends React.Component {
         var _this = this;
         var array = []
         arr.forEach(function (v, i) {
-            array.push(<li onClick={() => {
+            array.push(<li className='line_public noomPowerList' onClick={(e) => {
                 _this.setState({powerItem: v})
+                // for (var i = 0; i < document.getElementsByClassName('noomPowerList').length; i++) {
+                //     document.getElementsByClassName('noomPowerList')[i].class = 'line_public noomPowerList'
+                //     console.log(document.getElementsByClassName('noomPowerList')[i]);
+                //     // console.log(document.getElementsByClassName('noomPowerList')[i].className);
+                // }
+
+                for (var i = 0; i < $('.noomPowerList').length; i++) {
+                    console.log($('.noomPowerList')[i]);
+                    // $('.noomPowerList')[i].className = 'line_public noomPowerList'
+                    $('.noomPowerList').eq(i).removeClass("active");
+                }
+
+                e.target.className = 'active line_public'
             }}>
                 {v.powerName}
             </li>)
@@ -220,24 +233,28 @@ export default class authorityManagement extends React.Component {
         const row = (rowData, sectionID, rowID) => {
 
             return (
-                <div>
-                    <span>{rowData.powerInfo.powerName}</span>
-                    <span onClick={_this.showDeletePower.bind(this, rowData.rolePowerId)}>删除</span>
+                <div className='item line_public'>
+                    <span className='textOver'>{rowData.powerInfo.powerName}</span>
+                    <span className='icon_delete'
+                          onClick={_this.showDeletePower.bind(this, rowData.rolePowerId)}>删除</span>
                 </div>
             )
         };
 
         return (
-            <div id="authorityManagement">
-                <div className='tableDiv' style={{height: this.state.clientHeight}}>
+            <div id="accessManagement">
+                <div className='tableDiv'>
                     {/*这是列表数据,包括添加按钮*/}
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                            </div>)}
+                            <div>
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                </div>
+                            </div>
+                        )}
                         renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                         className="am-list"
                         pageSize={30}    //每次事件循环（每帧）渲染的行数
@@ -248,16 +265,16 @@ export default class authorityManagement extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: this.state.clientHeight,
+                            height: this.state.clientHeight - 65,
                         }}
                     />
-                    <div className='addBunton' onClick={this.showAddPower}>
-                        <img src={require("../img/addBtn.png")}/>
-                    </div>
-                </div>
 
+                </div>
+                <div className='addBtn sameBack' onClick={this.showAddPower}>
+                    <span>添加权限<Icon type="plus"/></span>
+                </div>
                 <div className='updateModel' style={{display: 'none'}}>
-                    <div>
+                    <div className='cont'>
                         {this.state.powerList}
                     </div>
                     <div className="bottomBox">

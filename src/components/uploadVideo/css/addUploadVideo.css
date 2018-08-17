@@ -317,14 +317,16 @@
 #addUploadVideo .challenge .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio {
   height: auto !important;
 }
+#addUploadVideo .challenge .am-list-item.checked {
+  background-color: #F7FAFF;
+}
+#addUploadVideo .challenge .am-list-item.checked .am-radio-inner {
+  display: none;
+}
 #addUploadVideo .challenge .text {
   color: #666;
   font-size: 13px;
   margin-top: 5px;
-  padding-right: 22px;
-}
-#addUploadVideo .challenge .topTitle {
-  padding-right: 22px;
 }
 #addUploadVideo .challenge .am-list-content {
   border-bottom: 1px #eee solid !important;

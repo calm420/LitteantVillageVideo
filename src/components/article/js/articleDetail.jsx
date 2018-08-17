@@ -507,17 +507,16 @@ export default class articleDetail extends React.Component {
                                     <div style={
                                         this.state.reportFlag?{display:'inline-block'}:{display:'none'}
                                     } className="report" onClick={this.toReport.bind(this)} >
-                                        <div className="i_report" onClick={this.toReport.bind(this)}>举报</div>
+                                        <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span></div>
                                     </div>
                                     <div className="like" onClick={this.likeFlag.bind(this)} style={
                                         this.state.likeFlag ? {
-                                            borderColor: '#FE5C50',
-                                            color: '#FE5C50'
-                                        } : {borderColor: '#999', color: '#999'}
+                                            borderColor: 'rgb(253, 153, 147)',
+                                        } : {borderColor: '#e5e5e5',}
                                     }>
                                         <div className={this.state.likeFlag ? 'likeActive' : 'noLike'}>
                                             {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
-                                            {this.state.data.likeCount}
+                                            <span>{this.state.data.likeCount}</span>
                                         </div>
 
                                     </div>

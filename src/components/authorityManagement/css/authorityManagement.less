@@ -1,7 +1,14 @@
 #authorityManagement {
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100% !important;
   .am-list-body{
     background: transparent;
+  }
+  .tableDiv{
+    height: 100% !important;
+  }
+  .am-list-view-scrollview{
+    height: calc(~"100% - 65px") !important;
   }
   .addBunton {
     width: 3rem;
@@ -21,6 +28,23 @@
     bottom: 0;
     z-index: 999;
     height: 350px;
+    .am-input-control{
+      background: #f6f6f6;
+      padding: 8px 8px 8px 10px;
+      border-radius: 2px;
+    }
+    .addUpdateModel-list{
+      margin-top: 10px;
+    }
+    .addUpdateModel-list1{
+      margin-top: 15px;
+    }
+    header{
+      font-size: 17px;
+      text-align: center;
+      color: #333;
+      padding: 15px 0;
+    }
   }
   .am-list-item10{
     padding: 10px 15px;
@@ -28,4 +52,8 @@
   .am-card{
     margin-bottom: 10px;
   }
+  .am-list-footer{
+    padding-bottom: 0;
+  }
+
 }

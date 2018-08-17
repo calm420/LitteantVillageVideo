@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, ListView, Card, Modal, InputItem} from 'antd-mobile';
+import {Toast, ListView, Card, Modal, InputItem, WhiteSpace} from 'antd-mobile';
 import '../css/authorityManagement.less'
 
 var authority_Management;
@@ -232,12 +232,15 @@ export default class authorityManagement extends React.Component {
             return (
                 <Card>
                     <div>
-                        <div>权限名称：{rowData.powerName}</div>
-                        <div>权限路径：{rowData.powerUrl}</div>
-                        <div>
+                        <div className="am-list-item"><span>权限名称：</span><span>{rowData.powerName}</span></div>
+                        <div className="line_public flex_container"></div>
+                        <div className="am-list-item">权限路径：{rowData.powerUrl}</div>
+                        <div className="line_public flex_container"></div>
+                        <div className="am-list-item">
                             <span>权限图标:</span>
                             <img src={rowData.iconUrl} alt=""/>
                         </div>
+                        <div className="line_public flex_container"></div>
                         <span>编辑</span>
                         <span onClick={this.showDeletePower.bind(this, rowData.powerId)}>删除</span>
                     </div>
@@ -313,7 +316,7 @@ export default class authorityManagement extends React.Component {
                             </div>
 
                         </div>
-                        <div className="line_public flex_container"></div>
+                        <div className="flex_container"></div>
                     </div>
                     <div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>

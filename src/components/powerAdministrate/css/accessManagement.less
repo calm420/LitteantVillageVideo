@@ -1,0 +1,51 @@
+#accessManagement {
+  .tableDiv{
+    color: #333;
+    font-size: 15px;
+    height: calc(~"100% - 65px");
+  }
+    .item{
+      margin: 0 15px;
+      line-height: 52px;
+      height: 52px;
+      position: relative;
+      .icon_delete{
+        background: url("../img/icon_close.png") no-repeat right center;
+        font-size: 0;
+        width: 30px;
+        height: 30px;
+        display: block;
+        background-size: 10px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+    }
+  .updateModel{
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    z-index: 999;
+    height: 50%;
+    .cont{
+      height: calc(~"100% - 75px");
+      overflow-y: auto;
+    }
+      li{
+        height: 50px;
+        line-height: 50px;
+        margin: 0 15px;
+        font-size: 15px;
+        color: #333;
+        &.active{
+          color: #4285F4;
+        }
+      }
+  }
+}

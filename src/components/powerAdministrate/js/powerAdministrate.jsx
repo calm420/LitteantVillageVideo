@@ -247,7 +247,7 @@ export default class powerAdministrate extends React.Component {
             var url = WebServiceUtil.mobileServiceURL + "userAdministration?roleId=" + roleId;
         } else if (opt == 'authorityManagement') {
             // 跳转权限管理
-            var url = WebServiceUtil.mobileServiceURL + "accessManagement";
+            var url = WebServiceUtil.mobileServiceURL + "accessManagement?roleId=" + roleId;
         }
 
         var data = {

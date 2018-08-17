@@ -22,7 +22,7 @@ export default class userAdministration extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "权限管理";   //设置title
+        document.title = "用户管理";   //设置title
     }
 
     componentDidMount() {
@@ -143,7 +143,6 @@ export default class userAdministration extends React.Component {
         var _this = this;
 
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData);
 
             return (
                 <Card>

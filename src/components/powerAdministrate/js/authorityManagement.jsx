@@ -125,7 +125,7 @@ export default class authorityManagement extends React.Component {
                     $('.noomPowerList').eq(i).removeClass("active");
                 }
 
-                e.target.className = 'active line_public'
+                e.target.className = 'active line_public noomPowerList'
             }}>
                 {v.powerName}
             </li>)

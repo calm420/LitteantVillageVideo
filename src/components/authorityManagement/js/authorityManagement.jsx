@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, ListView, Card, Modal, InputItem} from 'antd-mobile';
+import {Toast, ListView, Card, Modal, InputItem, WhiteSpace} from 'antd-mobile';
 import '../css/authorityManagement.less'
 
 var authority_Management;
@@ -232,14 +232,18 @@ export default class authorityManagement extends React.Component {
             return (
                 <Card>
                     <div>
-                        <div>权限名称：{rowData.powerName}</div>
-                        <div>权限路径：{rowData.powerUrl}</div>
-                        <div>
-                            <span>权限图标:</span>
-                            <img src={rowData.iconUrl} alt=""/>
+                        <div className="am-list-item"><span className="textTitle textTitle_t">权限名称</span><span className="am-input-control">{rowData.powerName}</span></div>
+                        <div className="line_public flex_container"></div>
+                        <div className="am-list-item am-list-item10">
+                            <span className="textTitle textTitle_t">权限图标</span>
+                            <span className="upload_file">
+                                <img src={rowData.iconUrl} alt=""/>
+                                <div className="icon_pointer" onClick={authority_Management.uploadImage}>修改</div>
+                            </span>
                         </div>
-                        <span>编辑</span>
-                        <span onClick={this.showDeletePower.bind(this, rowData.powerId)}>删除</span>
+                        <div className="line_public flex_container"></div>
+                        <div className="am-list-item"><span className="textTitle textTitle_t">权限路径</span><span className="am-input-control">{rowData.powerUrl}</span></div>
+                        <span className="icon_delete icon_pointer" onClick={this.showDeletePower.bind(this, rowData.powerId)}>删除</span>
                     </div>
                 </Card>
             )
@@ -283,7 +287,7 @@ export default class authorityManagement extends React.Component {
                                 value={authority_Management.state.powerName}
                                 onChange={authority_Management.inputOnChange.bind(this, 'powerName')}
                             >
-                                <div>权限名称</div>
+                                <div className="textTitle">权限名称</div>
                             </InputItem>
                         </div>
                         <div className="line_public flex_container"></div>
@@ -294,7 +298,7 @@ export default class authorityManagement extends React.Component {
                                 value={authority_Management.state.powerSrc}
                                 onChange={authority_Management.inputOnChange.bind(this, 'powerSrc')}
                             >
-                                <div>权限路径</div>
+                                <div className="textTitle">权限路径</div>
                             </InputItem>
                         </div>
                         <div className="line_public flex_container"></div>
@@ -313,7 +317,7 @@ export default class authorityManagement extends React.Component {
                             </div>
 
                         </div>
-                        <div className="line_public flex_container"></div>
+                        <div className="flex_container"></div>
                     </div>
                     <div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>

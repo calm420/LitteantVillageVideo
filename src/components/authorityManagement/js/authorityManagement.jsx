@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, ListView, Card, Modal, InputItem, WhiteSpace} from 'antd-mobile';
+import {Toast, ListView, Card, Modal, InputItem, WhiteSpace, Icon} from 'antd-mobile';
 import '../css/authorityManagement.less'
 
 var authority_Management;
@@ -273,8 +273,8 @@ export default class authorityManagement extends React.Component {
                             height: authority_Management.state.clientHeight,
                         }}
                     />
-                    <div className='addBunton' onClick={this.showAddPower}>
-                        <img src={require("../img/addBtn.png")}/>
+                    <div className='addBtn sameBack' onClick={this.showAddPower}>
+                        <span>添加权限<Icon type="plus" /></span>
                     </div>
                 </div>
 

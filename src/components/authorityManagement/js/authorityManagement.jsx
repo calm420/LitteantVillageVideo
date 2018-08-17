@@ -280,7 +280,9 @@ export default class authorityManagement extends React.Component {
 
                 <div className='updateModel' style={{display: 'none'}}>
                     <div>
-                        <div>
+                        <header>添加权限</header>
+                        <div className="line_public flex_container"></div>
+                        <div className="addUpdateModel-list1">
                             <InputItem
                                 className="add_element"
                                 placeholder="请输入权限名称"
@@ -290,8 +292,7 @@ export default class authorityManagement extends React.Component {
                                 <div className="textTitle">权限名称</div>
                             </InputItem>
                         </div>
-                        <div className="line_public flex_container"></div>
-                        <div>
+                        <div className="addUpdateModel-list">
                             <InputItem
                                 className="add_element"
                                 placeholder="请输入权限路径"
@@ -301,7 +302,7 @@ export default class authorityManagement extends React.Component {
                                 <div className="textTitle">权限路径</div>
                             </InputItem>
                         </div>
-                        <div className="line_public flex_container"></div>
+                        <div className="flex_container"></div>
                         <div className="my_flex sameBack">
                     <span className="textTitle">上传图标
                         <p style={{margin: 0, height: 5}}></p>
@@ -317,7 +318,6 @@ export default class authorityManagement extends React.Component {
                             </div>
 
                         </div>
-                        <div className="flex_container"></div>
                     </div>
                     <div className="bottomBox">
                         <span className="close" onClick={this.exitAddTags}>取消</span>

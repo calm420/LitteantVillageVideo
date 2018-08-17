@@ -175,7 +175,10 @@ export default class articleList extends React.Component {
                 console.log(result, 'user');
                 if (result.success) {
                     var data = result.response;
+                    console.log(data,'data');
+                    console.log(Boolean(0))
                     if (data.schoolId) {
+                        console.log(data.schoolId);
                         this.setState({
                             userRoot: true,
                         })

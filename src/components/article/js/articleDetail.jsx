@@ -34,6 +34,7 @@ export default class articleDetail extends React.Component {
             reportFlag: false,
             reportButtonFlag: false,
             checkVersion:false, //是否显示举报按钮
+            shareHidden: false, //分享后ｈｉｄｄｅｎ
         }
     }
 
@@ -49,6 +50,9 @@ export default class articleDetail extends React.Component {
             var type = searchArray[2].split('=')[1];
             var machineType = searchArray[3].split('=')[1];
             var version = searchArray[4].split('=')[1];
+            this.setState({
+                shareHidden: false,
+            })
         }else{   //分享逻辑
             locationSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
             var searchArray = locationSearch.split("&");
@@ -57,6 +61,9 @@ export default class articleDetail extends React.Component {
             var type = searchArray[2].split('=')[1];
             var machineType = searchArray[3].split('=')[1];
             var version = searchArray[4].split('=')[1];
+            this.setState({
+                shareHidden: true,
+            })
         }
 
         this.setState({
@@ -460,7 +467,9 @@ export default class articleDetail extends React.Component {
         return (
             <div id="articleDetail" style={{height: document.body.clientHeight}}>
                 <div className="inner">
-                    <div className="commit">
+                    <div className="commit" style={
+                        this.state.shareHidden?{display:'none'}:{display:'inline-block'}
+                    }>
                         <div id={this.state.reportFlag?'textAndReport':'textNo'}>
                             <TextareaItem
                                 id="text"
@@ -509,17 +518,24 @@ export default class articleDetail extends React.Component {
                                     } className="report" onClick={this.toReport.bind(this)} >
                                         <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span></div>
                                     </div>
-                                    <div className="like" onClick={this.likeFlag.bind(this)} style={
-                                        this.state.likeFlag ? {
-                                            borderColor: 'rgb(253, 153, 147)',
-                                        } : {borderColor: '#e5e5e5',}
+                                    <div style={
+                                        this.state.shareHidden ? {display:'none'}:{display:'block'}
                                     }>
-                                        <div className={this.state.likeFlag ? 'likeActive' : 'noLike'}>
-                                            {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
-                                            <span>{this.state.data.likeCount}</span>
-                                        </div>
 
+                                        <div className="like" onClick={this.likeFlag.bind(this)} style={
+                                            this.state.likeFlag ? {
+                                                borderColor: 'rgb(253, 153, 147)',
+                                            } : {borderColor: '#e5e5e5',}
+
+                                        }>
+                                            <div className={this.state.likeFlag ? 'likeActive' : 'noLike'}>
+                                                {/*<img src={this.state.likeFlag?require("../images/praise.png"):require("../images/praise_active.png")} alt=""/>*/}
+                                                <span>{this.state.data.likeCount}</span>
+                                            </div>
+
+                                        </div>
                                     </div>
+
 
                                 </div>
                             </div>

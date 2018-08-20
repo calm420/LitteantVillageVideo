@@ -88,7 +88,9 @@ export default class AppSystem extends React.Component {
                         {/*<div className="cancellation">退出</div>*/}
                     {/*</div>*/}
                 </NavBar>
-
+                <div class="black_bg" style={
+                    {display:'none'}
+                }></div>
                 <div id='main'>
                     <div className="left">
                         <List

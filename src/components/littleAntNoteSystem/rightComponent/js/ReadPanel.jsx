@@ -73,7 +73,8 @@ export default class ReadPanel extends React.Component {
                 console.log(labelData.label, '标签');
                 console.log(labelData.title, '标题');
                 console.log(labelData.author, '作者');
-                this.updateArticleInfo(labelData.title, labelData.label, labelData.author, labelData.type, []);
+                console.log(labelData.imgArray,'图片');
+                this.updateArticleInfo(labelData.title, labelData.label, labelData.author, labelData.type, labelData.imgArray);
             }
         }
 
@@ -439,7 +440,7 @@ export default class ReadPanel extends React.Component {
                             {/*formats={this.state.formats}*/}
                             {/*bounds={'.app'}*/}
                             {/*/>*/}
-                            <iframe id="iframe_box" src="https://192.168.50.163:6443/richText/"
+                            <iframe id="iframe_box" src="https://192.168.50.186:6443/richText/"
                                     frameborder="0"></iframe>
 
                         </div>

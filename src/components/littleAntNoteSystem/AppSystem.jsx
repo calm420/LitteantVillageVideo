@@ -68,7 +68,6 @@ export default class AppSystem extends React.Component {
         return (
             <div id="AppSystem">
                 {/*顶部banner*/}
-
                 <NavBar
                     mode="dark"
                     leftContent="校园自媒体"

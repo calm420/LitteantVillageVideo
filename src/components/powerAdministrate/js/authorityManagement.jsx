@@ -244,7 +244,7 @@ export default class authorityManagement extends React.Component {
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderHeader={() =>  <div className='topDiv'>
                             <div className='role'>角色：<span>{this.state.roleName}</span></div>
-                            <div className='user'>用户</div>
+                            <div className='user'>权限</div>
                         </div>}
                         renderFooter={() => (
                             <div>

@@ -274,7 +274,7 @@ export default class powerAdministrate extends React.Component {
                     {this.state.accordionArr}
                 </Accordion>
                 <div className="addBtn sameBack" onClick={this.showAddNewRolesPanel}>
-                    <span>新增角色<Icon type="plus"/></span>
+                    <span>添加角色<Icon type="plus"/></span>
                 </div>
             </div>
         );

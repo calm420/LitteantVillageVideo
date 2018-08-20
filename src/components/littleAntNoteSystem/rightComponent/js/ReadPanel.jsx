@@ -45,15 +45,40 @@ export default class ReadPanel extends React.Component {
                 gradeId: loginUser.gradeId,
                 status: 0,// 0草稿 1 发布
             },
-            author:'',
+            author: '',
             // user:JSON.parse(sessionStorage.getItem("loginUser"))
         };
         this.handleChange = this.handleChange.bind(this)
     }
 
+    componentDidMount() {
+        var _this = this;
+        //监听ｐｏｓｔｍｅｓｓａｇｅ消息接受
+        window.addEventListener('message', (e) => {
+            this.onMessage(e);
+        })
+    }
+
+
     componentWillMount() {
 
     }
+
+    //接受消息
+    onMessage(e) {
+        if (e.data) {
+            // console.log(JSON.parse(e.data),'e.data  ');
+            var labelData = JSON.parse(e.data);
+            if (labelData.method == 'submit') {
+                console.log(labelData.label, '标签');
+                console.log(labelData.title, '标题');
+                console.log(labelData.author, '作者');
+                this.updateArticleInfo(labelData.title, labelData.label, labelData.author, labelData.type, []);
+            }
+        }
+
+    }
+
 
     handleChange(content, delta, source, editor) {
         // console.log(editor.getContents(),'editor');
@@ -62,164 +87,164 @@ export default class ReadPanel extends React.Component {
 
 
     //首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
-    getBlobBydataURI = function (dataURI, type) {
-        var binary = atob(dataURI.split(',')[1]);
-        var array = [];
-        for (var i = 0; i < binary.length; i++) {
-            array.push(binary.charCodeAt(i));
-        }
-        return new Blob([new Uint8Array(array)], {type: type});
-    }
+    // getBlobBydataURI = function (dataURI, type) {
+    //     var binary = atob(dataURI.split(',')[1]);
+    //     var array = [];
+    //     for (var i = 0; i < binary.length; i++) {
+    //         array.push(binary.charCodeAt(i));
+    //     }
+    //     return new Blob([new Uint8Array(array)], {type: type});
+    // }
 
-    getHTML(type) {
+    // getHTML(type) {
+    //
+    //
+    //     // console.log(this.state.editorHtml);
+    //     // return;
+    //     var warn = "";
+    //     if (this.state.title_editor == '') {
+    //         warn = "请输入标题!"
+    //     } else if ((this.state.editorHtml == '' || this.state.editorHtml == '<p><br></p>') && type == 1) {
+    //         warn = "请输入内容!"
+    //     } else if ((this.state.author == '') && type == 1) {
+    //         warn = "请输入作者!"
+    //     }
+    //     if (warn != "") {
+    //         Toast.info(warn);
+    //         return;
+    //     }
+    //     var array = [];
+    //     var requestArray = [];
+    //     var files = this.state.files;
+    //     if (this.state.editor) {
+    //         array = this.state.editor.getContents().ops;
+    //     }
+    //
+    //     console.log(files, '保存发布的方法中files')
+    //     var editorArray = [], localArray = [];
+    //
+    //     for (var i = 0; i < files.length; i++) {
+    //         console.log(files[i].url, '上传图片的路径')
+    //         if (files[i].url.substring(0, 4) == 'http') {   //判断是否是线上图片
+    //             localArray.push(files[i].url);
+    //         } else {
+    //             var $Blob = this.getBlobBydataURI(files[i].url, 'image/jpeg');
+    //             var formData = new FormData();
+    //             formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+    //             requestArray.push(
+    //                 new Promise(function (resolve, reject) {
+    //                     $.ajax({
+    //                         type: "POST",
+    //                         url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
+    //                         enctype: 'multipart/form-data',
+    //                         data: formData,
+    //                         // 告诉jQuery不要去处理发送的数据
+    //                         processData: false,
+    //                         // 告诉jQuery不要去设置Content-Type请求头
+    //                         contentType: false,
+    //                         success: (responseStr) => {
+    //                             // arrayImage.push(responseStr);
+    //                             // console.log(arrayImage);
+    //                             resolve({
+    //                                 type: 'local',
+    //                                 url: responseStr
+    //                             });
+    //                         },
+    //                         error: function (responseStr) {
+    //                             // console.log(responseStr);
+    //                             reject("一个失败的URL");
+    //                         }
+    //                     });
+    //                 }));
+    //         }
+    //
+    //     }
+    //
+    //     for (var k = 0; k < array.length; k++) {
+    //         if (array[k].insert && array[k].insert.image) {
+    //             console.log(array[k].insert.image, 'html内部的图片')
+    //             if (array[k].insert.image.substring(0, 4) == "http") {  //判断是否是线上图片
+    //                 editorArray.push(array[k].insert.image);
+    //             } else {
+    //                 var $Blob = this.getBlobBydataURI(array[k].insert.image, 'image/jpeg');
+    //                 var formData = new FormData();
+    //                 formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+    //                 requestArray.push(
+    //                     new Promise(function (resolve, reject) {
+    //                         $.ajax({
+    //                             type: "POST",
+    //                             url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
+    //                             enctype: 'multipart/form-data',
+    //                             data: formData,
+    //                             // 告诉jQuery不要去处理发送的数据
+    //                             processData: false,
+    //                             // 告诉jQuery不要去设置Content-Type请求头
+    //                             contentType: false,
+    //                             success: (responseStr) => {
+    //                                 // arrayImage.push(responseStr);
+    //                                 // console.log(arrayImage);
+    //                                 resolve({
+    //                                     type: 'editor',
+    //                                     url: responseStr
+    //                                 });
+    //                             },
+    //                             error: function (responseStr) {
+    //                                 // console.log(responseStr);
+    //                                 reject("一个失败的URL");
+    //                             }
+    //                         });
+    //                     }));
+    //             }
+    //         }
+    //     }
+    //     // console.log(requestArray,'requestArray');
+    //     Promise.all(requestArray).then((values) => {
+    //         console.log(values, 'values');
+    //
+    //         for (var k in values) {
+    //             if (values[k].type == 'local') {
+    //                 localArray.push(values[k].url);
+    //             } else {
+    //                 editorArray.push(values[k].url);
+    //             }
+    //         }
+    //         var i = 0;
+    //         for (var k in array) {
+    //             if (array[k].insert && array[k].insert.image) {
+    //                 array[k].insert.image = editorArray[i];
+    //                 i++;
+    //             }
+    //         }
+    //         var QuillDeltaToHtmlConverter = require('quill-delta-to-html');
+    //         var cfg = {};
+    //         var converter = new QuillDeltaToHtmlConverter(array, cfg);
+    //         var html = converter.convert();
+    //
+    //         console.log(this.state.title_editor, 'biaoti');
+    //         console.log(this.state.artId, 'artId');
+    //         console.log(localArray.join(','), 'localArray');
+    //         console.log(html);
+    //         this.updateArticleInfo(localArray.join(','), html, type);
+    //     });
+    // }
 
-
-        // console.log(this.state.editorHtml);
-        // return;
-        var warn = "";
-        if (this.state.title_editor == '') {
-            warn = "请输入标题!"
-        } else if ((this.state.editorHtml == '' || this.state.editorHtml == '<p><br></p>') && type == 1) {
-            warn = "请输入内容!"
-        }else if ((this.state.author == '') && type == 1){
-            warn = "请输入作者!"
-        }
-        if (warn != "") {
-            Toast.info(warn);
-            return;
-        }
-        var array = [];
-        var requestArray = [];
-        var files = this.state.files;
-        if(this.state.editor){
-            array = this.state.editor.getContents().ops;
-        }
-
-        console.log(files,'保存发布的方法中files')
-        var editorArray = [],localArray = [];
-
-        for(var i=0;i< files.length;i++){
-            console.log(files[i].url,'上传图片的路径')
-            if(files[i].url.substring(0,4) == 'http'){   //判断是否是线上图片
-                localArray.push(files[i].url);
-            }else{
-                var $Blob = this.getBlobBydataURI(files[i].url, 'image/jpeg');
-                var formData = new FormData();
-                formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
-                requestArray.push(
-                    new Promise(function (resolve, reject) {
-                        $.ajax({
-                            type: "POST",
-                            url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
-                            enctype: 'multipart/form-data',
-                            data: formData,
-                            // 告诉jQuery不要去处理发送的数据
-                            processData: false,
-                            // 告诉jQuery不要去设置Content-Type请求头
-                            contentType: false,
-                            success: (responseStr) => {
-                                // arrayImage.push(responseStr);
-                                // console.log(arrayImage);
-                                resolve({
-                                    type:'local',
-                                    url:responseStr
-                                });
-                            },
-                            error: function (responseStr) {
-                                // console.log(responseStr);
-                                reject("一个失败的URL");
-                            }
-                        });
-                    }));
-            }
-
-        }
-
-        for(var k=0;k < array.length;k++){
-            if (array[k].insert && array[k].insert.image) {
-                console.log(array[k].insert.image,'html内部的图片')
-                if(array[k].insert.image.substring(0,4) == "http"){  //判断是否是线上图片
-                    editorArray.push(array[k].insert.image);
-                }else{
-                    var $Blob = this.getBlobBydataURI(array[k].insert.image, 'image/jpeg');
-                    var formData = new FormData();
-                    formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
-                    requestArray.push(
-                        new Promise(function (resolve, reject) {
-                            $.ajax({
-                                type: "POST",
-                                url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
-                                enctype: 'multipart/form-data',
-                                data: formData,
-                                // 告诉jQuery不要去处理发送的数据
-                                processData: false,
-                                // 告诉jQuery不要去设置Content-Type请求头
-                                contentType: false,
-                                success: (responseStr) => {
-                                    // arrayImage.push(responseStr);
-                                    // console.log(arrayImage);
-                                    resolve({
-                                        type:'editor',
-                                        url:responseStr
-                                    });
-                                },
-                                error: function (responseStr) {
-                                    // console.log(responseStr);
-                                    reject("一个失败的URL");
-                                }
-                            });
-                        }));
-                }
-            }
-        }
-        // console.log(requestArray,'requestArray');
-        Promise.all(requestArray).then((values) => {
-            console.log(values,'values');
-
-            for(var k in values){
-                if(values[k].type == 'local'){
-                    localArray.push(values[k].url);
-                }else{
-                    editorArray.push(values[k].url);
-                }
-            }
-            var i = 0;
-            for (var k in array) {
-                if (array[k].insert && array[k].insert.image) {
-                    array[k].insert.image = editorArray[i];
-                    i++;
-                }
-            }
-            var QuillDeltaToHtmlConverter = require('quill-delta-to-html');
-            var cfg = {};
-            var converter = new QuillDeltaToHtmlConverter(array, cfg);
-            var html = converter.convert();
-
-            console.log(this.state.title_editor, 'biaoti');
-            console.log(this.state.artId, 'artId');
-            console.log(localArray.join(','),'localArray');
-            console.log(html);
-            this.updateArticleInfo(localArray.join(','),html,type);
-        });
-    }
-
-    updateArticleInfo(imgArray,html,type){
+    updateArticleInfo(title, html, author, type, imgArray) {
         var param = {
             "method": 'updateArticleInfo',
             "articleId": this.state.artId,
-            "articleTitle": this.state.title_editor,
+            "articleTitle": title,
             "articleImgs": imgArray,
             "articleContent": html,
             "status": type,
-            "author": this.state.author,
+            "author": author,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'updateArticleInfo')
+                console.log(result, 'updateArticleInfo')
                 if (result.success) {
-                    Toast.info(type==0?'保存成功':'发布成功',0.5)
+                    Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
                     this.initEditor();
-                    this.props.submit(Math.abs(type-1))
+                    this.props.submit(Math.abs(type - 1))
                 } else {
                     Toast.fail("保存/发布失败");
                 }
@@ -243,9 +268,9 @@ export default class ReadPanel extends React.Component {
                     this.setState({
                         writeFlag: !this.state.writeFlag,
                         artId: result.response,
-                        title_editor:'未命名'
+                        title_editor: '未命名'
                     }, () => {
-                        this.props.submit('init',this.state.artId)
+                        this.props.submit('init', this.state.artId)
                     })
                 } else {
                     Toast.fail("创建失败");
@@ -265,43 +290,49 @@ export default class ReadPanel extends React.Component {
         });
     }
 
-    inputChange(val) {
-        this.setState({
-            title_editor: val
-        })
-    }
-
-    inputChangeForAuthor(val){
-        this.setState({
-            author: val
-        })
-    }
+    // inputChange(val) {
+    //     this.setState({
+    //         title_editor: val
+    //     })
+    // }
+    //
+    // inputChangeForAuthor(val) {
+    //     this.setState({
+    //         author: val
+    //     })
+    // }
 
     //初始化编辑框
-    initEditor(){
+    initEditor() {
         this.setState({
-            title_editor:'未命名',
+            title_editor: '未命名',
             files: [],
-            editorHtml:'',
-            writeFlag:false,
+            editorHtml: '',
+            writeFlag: false,
             artId: null,
-        },()=>{
+        }, () => {
             console.warn('file状态已归为:')
             console.log(this.state.files);
         })
     }
 
     //接受来自list => appSystem 的消息
-    accept(type,data){
-        // console.log(type);
-        switch(type){
+    accept(type, data) {
+        switch (type) {
             case "编辑":
-                console.log('进入编辑');
                 this.getArticleInfoById(data);
                 break;
+            case "删除":
+                if(data == this.state.artId){
+                    this.setState({
+                        writeFlag:false,
+                        artId:null,
+                    })
+                }else{
+                    console.log('删除的不是编辑状态的');
+                }
+                break;
         }
-        // console.log(data,'in ReadPanel');
-
     }
 
     //根据文章id获取文章
@@ -312,28 +343,32 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'根据id获取文章')
+                console.log(result, '根据id获取文章')
                 if (result.success) {
-                    var data = result.response;
-                    var images = result.response.articleImgArray;
-                    var file = [];
-                    console.log(images,'images')
-                    if(images){
-                        console.log('进入images循环')
-                        for(var i=0;i< images.length;i++){
-                            file.push({url:images[i]});
-                            console.log('运行了'+(i+1)+"次")
-                        }
-                    }
-
-                    console.log(file,'file');
-                    // console.log(data,'根据id获取文章')
+                    console.log(result.response, '编辑的内容');
+                    //发送消息
+                    var data = {};
+                    data.method = 'editor';
+                    data.response = result.response;
+                    var ifm = document.getElementById('iframe_box');
+                    ifm.contentWindow.postMessage(JSON.stringify(data), '*');
+                    var res = result.response;
+                    // var images = result.response.articleImgArray;
+                    // var file = [];
+                    // console.log(images, 'images')
+                    // if (images) {
+                    //     console.log('进入images循环')
+                    //     for (var i = 0; i < images.length; i++) {
+                    //         file.push({url: images[i]});
+                    //         console.log('运行了' + (i + 1) + "次")
+                    //     }
+                    // }
+                    //
+                    // console.log(file, 'file');
+                    // // console.log(data,'根据id获取文章')
                     this.setState({
-                        writeFlag:true,
-                        title_editor: data.articleTitle,
-                        editorHtml:data.articleContent || '',
-                        files:file,
-                        artId: data.articleId
+                        writeFlag: true,
+                        artId: res.articleId
                     })
                 } else {
                     Toast.fail("获取文章失败");
@@ -345,7 +380,6 @@ export default class ReadPanel extends React.Component {
         });
 
     }
-
 
 
     render() {
@@ -360,64 +394,61 @@ export default class ReadPanel extends React.Component {
                 </div>
                 <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
                     <div className="write_article_cont">
-                        <div className="headBox">
-                            <div className="title">
-                                <InputItem
-                                    clear
-                                    placeholder="请输入标题"
-                                    onChange={this.inputChange.bind(this)}
-                                    value={this.state.title_editor}
-                                ></InputItem>
-                                {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
-                            </div>
-                            <div className="image">
-                                {/*<img*/}
-                                {/*src="https://dxlfb468n8ekd.cloudfront.net/gsc/ICCVKO/13/ad/59/13ad5999c49548458440bfe7353f49c9/images/page3/u92.png?token=0121f9711e3571df8e85906ef4bd8f15"*/}
-                                {/*alt=""/>*/}
-                                {/*<div>*/}
-                                <div style={files.length > 0 ? {height: '100%' } : {height: 110 }}>
-                                    <ImagePicker
-                                        files={files}
-                                        onChange={this.onChange}
-                                        onImageClick={(index, fs) => console.log(index, fs)}
-                                        multiple={false}
-                                        selectable={files.length < 1}
-                                        accept="image/gif,image/jpeg,image/jpg,image/png"
-                                    />
-                                </div>
-                                {/*</div>*/}
-                                <div className="img_text" style={files.length > 0 ? {display: 'none'} : {display: "block"}}>请添加新闻列表页展示图(支持jpg ,png图片)</div>
-                                {/*//，建议尺寸*/}
-                            </div>
-                        </div>
-                        <div className="author">
-                            <InputItem
-                                clear
-                                placeholder="请输入作者姓名"
-                                onChange={this.inputChangeForAuthor.bind(this)}
-                                value={this.state.author}
-                            ></InputItem>
-                            {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
-                        </div>
+                        {/*<div className="headBox">*/}
+                        {/*<div className="title">*/}
+                        {/*<InputItem*/}
+                        {/*clear*/}
+                        {/*placeholder="请输入标题"*/}
+                        {/*onChange={this.inputChange.bind(this)}*/}
+                        {/*value={this.state.title_editor}*/}
+                        {/*></InputItem>*/}
+                        {/*</div>*/}
+                        {/*<div className="image">*/}
+                        {/**/}
+                        {/*<div style={files.length > 0 ? {height: '100%'} : {height: 110}}>*/}
+                        {/*<ImagePicker*/}
+                        {/*files={files}*/}
+                        {/*onChange={this.onChange}*/}
+                        {/*onImageClick={(index, fs) => console.log(index, fs)}*/}
+                        {/*multiple={false}*/}
+                        {/*selectable={files.length < 1}*/}
+                        {/*accept="image/gif,image/jpeg,image/jpg,image/png"*/}
+                        {/*/>*/}
+                        {/*</div>*/}
+                        {/*<div className="img_text"*/}
+                        {/*style={files.length > 0 ? {display: 'none'} : {display: "block"}}>请添加新闻列表页展示图(支持jpg*/}
+                        {/*,png图片)*/}
+                        {/*</div>*/}
+                        {/*</div>*/}
+                        {/*</div>*/}
+                        {/*<div className="author">*/}
+                        {/*<InputItem*/}
+                        {/*clear*/}
+                        {/*placeholder="请输入作者姓名"*/}
+                        {/*onChange={this.inputChangeForAuthor.bind(this)}*/}
+                        {/*value={this.state.author}*/}
+                        {/*></InputItem>*/}
+                        {/*</div>*/}
                         <div className="edit_cont">
                             {/*<ReactQuill*/}
-                                {/*placeholder="请输入正文"*/}
-                                {/*theme={this.state.theme}*/}
-                                {/*onChange={this.handleChange}*/}
-                                {/*value={this.state.editorHtml}*/}
-                                {/*modules={this.state.modules}*/}
-                                {/*formats={this.state.formats}*/}
-                                {/*bounds={'.app'}*/}
+                            {/*placeholder="请输入正文"*/}
+                            {/*theme={this.state.theme}*/}
+                            {/*onChange={this.handleChange}*/}
+                            {/*value={this.state.editorHtml}*/}
+                            {/*modules={this.state.modules}*/}
+                            {/*formats={this.state.formats}*/}
+                            {/*bounds={'.app'}*/}
                             {/*/>*/}
-                            {/*<iframe src="" frameborder="0"></iframe>*/}
+                            <iframe id="iframe_box" src="https://192.168.50.186:6443/richText/"
+                                    frameborder="0"></iframe>
 
                         </div>
                     </div>
                     {/*<div className="edit_btn">*/}
-                        {/*<div className="edit_btn_cont">*/}
-                            {/*<button onClick={this.getHTML.bind(this, 0)} className="Preview">保存</button>*/}
-                            {/*<button onClick={this.getHTML.bind(this, 1)} className="publish">发布</button>*/}
-                        {/*</div>*/}
+                    {/*<div className="edit_btn_cont">*/}
+                    {/*<button onClick={this.getHTML.bind(this, 0)} className="Preview">保存</button>*/}
+                    {/*<button onClick={this.getHTML.bind(this, 1)} className="publish">发布</button>*/}
+                    {/*</div>*/}
 
                     {/*</div>*/}
                 </div>

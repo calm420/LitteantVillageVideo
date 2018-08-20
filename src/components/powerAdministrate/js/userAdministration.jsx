@@ -274,7 +274,7 @@ export default class userAdministration extends React.Component {
                     />
 
                     <div className='addBtn sameBack' onClick={this.showAddPower}>
-                        <span>添加角色<Icon type="plus"/></span>
+                        <span>添加用户<Icon type="plus"/></span>
                     </div>
                 </div>
 

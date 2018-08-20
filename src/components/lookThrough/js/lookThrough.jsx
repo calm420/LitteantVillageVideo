@@ -14,7 +14,6 @@ export default class lookThrough extends React.Component {
     constructor(props) {
         super(props);
         calm = this;
-        
         calm.initDataSource = [];
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initDataSource),

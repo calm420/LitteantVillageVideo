@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #userAdministration .addBunton {
   width: 3rem;
   height: 3rem;
@@ -11,25 +10,9 @@
 }
 #userAdministration .updateModel {
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #fff;
   position: absolute;
   bottom: 0;
   z-index: 999;
-  height: 350px;
-}
-#userAdministration .tagAddPanel_bg {
-  background: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  position: absolute;
-  z-index: 980;
-  top: 0;
-  left: 0;
-  display: none;
-}
-#userAdministration .avatar {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
+  height: 50%;
 }

@@ -23,17 +23,18 @@ export default class authorityManagement extends React.Component {
     }
 
     componentWillMount() {
-        document.title = "权限管理";   //设置title
+        document.title = "用户权限管理";   //设置title
     }
 
     componentDidMount() {
-        var locationHref = window.location.href;
+        var locationHref = decodeURI(window.location.href);
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var roleId = searchArray[0].split('=')[1];
+        var roleName = searchArray[1].split('=')[1];
         this.getAllPowerByRoleId(roleId)
         this.getAllPowers()
-        this.setState({roleId})
+        this.setState({roleId, roleName})
     }
 
     getAllPowerByRoleId(roleId) {
@@ -241,6 +242,10 @@ export default class authorityManagement extends React.Component {
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                        renderHeader={() =>  <div className='topDiv'>
+                            <div className='role'>角色：<span>{this.state.roleName}</span></div>
+                            <div className='user'>用户</div>
+                        </div>}
                         renderFooter={() => (
                             <div>
                                 <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>

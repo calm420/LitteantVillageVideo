@@ -400,25 +400,26 @@ export default class ReadPanel extends React.Component {
                             {/*<input type="text" onChange={this.inputChange.bind(this)} value={this.state.title} placeholder="请输入标题"/>*/}
                         </div>
                         <div className="edit_cont">
-                            <ReactQuill
-                                placeholder="请输入正文"
-                                theme={this.state.theme}
-                                onChange={this.handleChange}
-                                value={this.state.editorHtml}
-                                modules={this.state.modules}
-                                formats={this.state.formats}
-                                bounds={'.app'}
-                            />
+                            {/*<ReactQuill*/}
+                                {/*placeholder="请输入正文"*/}
+                                {/*theme={this.state.theme}*/}
+                                {/*onChange={this.handleChange}*/}
+                                {/*value={this.state.editorHtml}*/}
+                                {/*modules={this.state.modules}*/}
+                                {/*formats={this.state.formats}*/}
+                                {/*bounds={'.app'}*/}
+                            {/*/>*/}
+                            {/*<iframe src="" frameborder="0"></iframe>*/}
 
                         </div>
                     </div>
-                    <div className="edit_btn">
-                        <div className="edit_btn_cont">
-                            <button onClick={this.getHTML.bind(this, 0)} className="Preview">保存</button>
-                            <button onClick={this.getHTML.bind(this, 1)} className="publish">发布</button>
-                        </div>
+                    {/*<div className="edit_btn">*/}
+                        {/*<div className="edit_btn_cont">*/}
+                            {/*<button onClick={this.getHTML.bind(this, 0)} className="Preview">保存</button>*/}
+                            {/*<button onClick={this.getHTML.bind(this, 1)} className="publish">发布</button>*/}
+                        {/*</div>*/}
 
-                    </div>
+                    {/*</div>*/}
                 </div>
 
 

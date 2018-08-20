@@ -169,6 +169,13 @@ const accessManagement = (location, cb) => {
 };
 
 
+//播放视频
+const playVideo = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/playVideo/playVideo').default)
+    }, 'playVideo')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -227,6 +234,10 @@ class Index extends React.Component {
                         <Link
                             to="/authorityManagement" style={{fontSize: '24px'}}>权限管理</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/playVideo?url=http://60.205.86.217/upload8/2018-08-16/10/1ec3d84c-8db5-490d-8d86-5826a91db0dd.mp4" style={{fontSize: '24px'}}>播放视频</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -265,6 +276,7 @@ ReactDOM.render(
             <Route path="authorityManagement" getComponent={authorityManagement}/>
             <Route path="userAdministration" getComponent={userAdministration}/>
             <Route path="accessManagement" getComponent={accessManagement}/>
+            <Route path="playVideo" getComponent={playVideo}/>
         </Route>
     </Router>
     ,

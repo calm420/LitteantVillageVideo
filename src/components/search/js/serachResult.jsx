@@ -1,5 +1,5 @@
 import React from 'react';
-import { WhiteSpace, SearchBar, Button, WingBlank, Tabs, ListView } from 'antd-mobile';
+import { WhiteSpace, SearchBar, Button, WingBlank, Tabs, ListView,Toast } from 'antd-mobile';
 import "../css/serachResult.less";
 var calm;
 const dataSource = new ListView.DataSource({
@@ -21,11 +21,27 @@ export default class serachResult extends React.Component {
             defaultPageNo: 1,
             isLoading: true,
             hasMore: true,
-            searchHistory: []
+            searchHistory: [],
+            searghValue:"",
+            videoData:[]
         }
     }
-
+    componentWillMount() {
+        var searchJsonStr = localStorage.getItem('serachArr');
+        var searchArray = JSON.parse(searchJsonStr) || [];
+        var newSearchArray = []
+        for (var i = 0; i < searchArray.length; i++) {
+            if (newSearchArray.indexOf(searchArray[i]) == -1) {  //判断在s数组中是否存在，不存在则push到s数组中
+                newSearchArray.push(searchArray[i]);
+            }
+        }
+        calm.setState({
+            searchHistory: newSearchArray
+        })
+        window.addEventListener('resize', this.onWindwoResize);
+    }
     componentDidMount() {
+        document.title = "搜索结果"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -36,9 +52,16 @@ export default class serachResult extends React.Component {
         }, () => {
             $('.am-search-value').keydown(function (event) {
                 if (event.keyCode == 13) {
-                    calm.serach();
-                    calm.searchVideo(calm.state.value)
-
+                    calm.initDataSource = [];
+                    calm.setState({
+                        dataSource: dataSource.cloneWithRows(calm.initDataSource),
+                        defaultPageNo: 1,
+                        isLoading: true,
+                        hasMore: true,
+                    }, () => {
+                        calm.serach();
+                        calm.searchVideo(calm.state.value)
+                    })
                 }
             })
         })
@@ -48,6 +71,7 @@ export default class serachResult extends React.Component {
      * 视频搜索结果
      */
     searchVideo = (value) => {
+        
         var param = {
             "method": 'searchVideoLiketest',
             "test": value,
@@ -55,13 +79,20 @@ export default class serachResult extends React.Component {
             "pageNo": calm.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            
             onResponse: result => {
-                console.log(result, "re")
+                // alert(JSON.stringify(result.response.littleVideoInfo.length))
+                console.log(result.response.littleVideoInfo,"result")
                 if (result.success) {
-                    calm.initDataSource = [];
                     calm.state.rsCount = result.pager.rsCount;
-                    console.log(result.response.littleVideoInfo, "result.response.littleVideoInfo")
-                    calm.initDataSource = calm.initDataSource.concat(result);
+                    calm.state.pageCount = result.pager.pageCount;
+                    calm.state.pageNo = result.pager.pageNo;
+                    // calm.state.videoData = result.response.littleVideoInfo
+                    console.log(calm.state.videoData,"calm.state.videoData")
+                    calm.setState({
+                        videoData:calm.state.videoData.concat(result.response.littleVideoInfo)
+                    })
+                    calm.initDataSource = calm.initDataSource.concat(result.response.littleVideoInfo);
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
                         isLoading: false
@@ -72,9 +103,6 @@ export default class serachResult extends React.Component {
                             isLoading: false
                         })
                     }
-                    calm.setState({
-                        videoData: result.response
-                    })
                 }
             },
             onError: function (error) {
@@ -88,7 +116,6 @@ export default class serachResult extends React.Component {
     *  带审核的ListView数据全部渲染完毕的回调
     */
     onEndReached = (event) => {
-        console.log('触底事件')
         var _this = this;
         var currentPageNo = _this.state.defaultPageNo;
         if (!_this.state.isLoading && !_this.state.hasMore) {
@@ -96,23 +123,27 @@ export default class serachResult extends React.Component {
             return;
         }
         currentPageNo += 1;
+        console.log(currentPageNo,"currentpgno")
         _this.setState({
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            _this.searchVideo();
+            _this.searchVideo(calm.state.searghValue);
         });
     };
+
     /**
-     * 输入框改变的时候
+     * 搜索输入框改变的时候
      */
     onChange = (value) => {
         this.setState({ value });
     };
     /**
-     * 点击搜索
+     * 点击搜索事件
      */
     serach = () => {
+
+        // alert(JSON.stringify(calm.state.clientHeight))
         /**
          * 取session数据
          */
@@ -127,6 +158,9 @@ export default class serachResult extends React.Component {
         calm.setState({
             searchHistory: newSearchArray
         })
+        if(calm.state.searghValue == ""){
+            return
+        }
         calm.state.searchHistory.push(calm.state.value)
         calm.setState({
             searchHistory: calm.state.searchHistory
@@ -137,32 +171,44 @@ export default class serachResult extends React.Component {
      * 返回搜索结果页面
      */
     toSearchHistory = () => {
-        console.log("dianji")
+        var url = WebServiceUtil.mobileServiceURL + "searchHistory";
         var data = {
-            method: 'finishForRefresh',
+            method: 'openNewPage',
+            url: url
         };
         Bridge.callHandler(data, null, function (error) {
-            console.log(error);
+            window.location.href = url;
         });
+        // var data = {
+        //     method: 'finishForRefresh',
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     console.log(error);
+        // });
     }
 
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        setTimeout(() => {
+            calm.setState({
+                clientHeight: calm.state.clientHeight,
+            })
+        }, 100)
+    }
 
     //播放视频
     toPlayVideo(videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
-        console.log(videoIndex,"videoIndex");
-        console.log(recommended_video,"视频信息");
-        console.log(recommended_pageCount,"yeshu");
-        console.log(recommended_pageNo);
         var data = {
-            method: 'playArticleVideo',
+            method: 'playVideo',
+            keyWord:calm.state.value,
             videos: recommended_video,
             position: videoIndex,
             pageNo: recommended_pageNo,
             pageCount: recommended_pageCount
         };
         Bridge.callHandler(data, null, function (error) {
-            // alert(JSON.stringify(error))
-            // console.log('开启小视频失败',error)
+            console.log('开启小视频失败',error)
         });
     }
 
@@ -170,8 +216,7 @@ export default class serachResult extends React.Component {
        * Tab栏切换
        */
     tagOnChange(val) {
-        // console.log(val,"VAL")
-        console.log(val.value,"VALUE")
+        // console.log(val.value, "VALUE")
         // if(val.value == 3){
         //     calm.initDataSource = [];
         //     calm.setState({
@@ -181,43 +226,36 @@ export default class serachResult extends React.Component {
         //         hasMore: true,
         //     })
         // }
-        if(val.value == 2){
+        if (val.value == 2) {
             calm.initDataSource = [];
             calm.setState({
                 dataSource: dataSource.cloneWithRows(calm.initDataSource),
                 defaultPageNo: 1,
                 isLoading: true,
                 hasMore: true,
-            },()=>{
+            }, () => {
                 calm.searchVideo(calm.state.value)
             })
         }
     }
     render() {
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData,"rowDta")
-            console.log(rowID, "1")
             return (
                 <div className='videoItem' >
                     {
-                        rowData.response.littleVideoInfo.map((v, i) => {
-                            return (
-                                <div className="videoInfo" onClick={this.toPlayVideo.bind(this, i, v, rowData.pager.pageCount, rowData.pager.pageNo)}>
-                                    {/*<video controls="controls" autoPlay style={{ width: "300px" }} src={v.videoPath}></video>*/}
-                                    <img src={v.coverPath} alt="" />
-                                    <div className="gradient_bgT topText">
-                                        <div className="video_content">{v.videoContent}</div>
-                                    </div>
-                                    <div className='gradient_bgB bottomText'>
-                                        <div className="like">{v.likeCount}赞</div>
-                                        <div className="read">{v.readCount}</div>
-                                    </div>
-                                </div>
-                            )
+                        <div className="videoInfo" onClick={this.toPlayVideo.bind(this, rowID, calm.state.videoData, calm.state.pageCount, calm.state.pageNo)}>
+                            {/*<video controls="controls" autoPlay style={{ width: "300px" }} src={v.videoPath}></video>*/}
+                            <img src={rowData.coverPath} alt="" />
+                            <div className="gradient_bgT topText">
+                                <div className="video_content">{rowData.videoContent}</div>
+                            </div>
+                            <div className='gradient_bgB bottomText'>
+                                <div className="like">{rowData.likeCount}赞</div>
+                                <div className="read">{rowData.readCount}</div>
+                            </div>
+                        </div>
 
-                        })
-                    }
-
+                }
                 </div>
             )
         }
@@ -226,13 +264,13 @@ export default class serachResult extends React.Component {
             <div id="serachResult">
                 <SearchBar id="searchResult"
                     value={calm.state.value}
-                    onSubmit={value => console.log(value, 'onSubmit')}
-                    onClear={value => console.log(value, 'onClear')}
-                    onFocus={() => console.log('onFocus')}
-                    onBlur={() => console.log('onBlur')}
+                    // onSubmit={value => console.log(value, 'onSubmit')}
+                    // onClear={value => console.log(value, 'onClear')}
+                    // onFocus={() => console.log('onFocus')}
+                    // onBlur={() => console.log('onBlur')}
                     onCancel={calm.toSearchHistory}
                     onChange={this.onChange}
-                    placeholder="Search"
+                    placeholder="请输入搜索内容"
                     maxLength={8} />
                 <Tabs
                     tabs={tabs}
@@ -240,7 +278,7 @@ export default class serachResult extends React.Component {
                     onChange={calm.tagOnChange}
                     initialPage={0} tabs={tabs} >
                     <div style={{
-                        height: document.documentElement.clientHeight - 36 - 44,
+                        height: calm.state.clientHeight - 36 - 44,
                         backgroundColor: '#f4f4f4'
                     }} className="listCont">
                         <ListView
@@ -260,7 +298,7 @@ export default class serachResult extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={{
-                                height: document.documentElement.clientHeight  - 36 - 44,
+                                height: calm.state.clientHeight - 36 - 44,
                             }}
                         />
                     </div>

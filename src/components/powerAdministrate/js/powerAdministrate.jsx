@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast, Modal, ListView, Accordion,Icon} from 'antd-mobile';
+import {Toast, Modal, ListView, Accordion, Icon} from 'antd-mobile';
 import '../css/powerAdministrate.less'
 
 var power_Administrate;
@@ -72,12 +72,12 @@ export default class powerAdministrate extends React.Component {
                 <Accordion.Panel header={v.roleName} key={v.roleId + ''}>
                     <ul className="my_flex ul_list_del flex_align_center">
                         <li className="flex_1 user"
-                            onClick={power_Administrate.onSelect.bind(this, 'userAdministration', v.roleId)}>
+                            onClick={power_Administrate.onSelect.bind(this, 'userAdministration', v)}>
                             <i></i>
                             <div>用户管理</div>
                         </li>
                         <li className="flex_1 permission"
-                            onClick={power_Administrate.onSelect.bind(this, 'authorityManagement', v.roleId)}>
+                            onClick={power_Administrate.onSelect.bind(this, 'authorityManagement', v)}>
                             <i></i>
                             <div>权限管理</div>
                         </li>
@@ -240,14 +240,15 @@ export default class powerAdministrate extends React.Component {
         });
     }
 
-    onSelect = (opt, roleId) => {
+    onSelect = (opt, v) => {
+        console.log(v);
 
         if (opt == 'userAdministration') {
             // 跳转用户管理
-            var url = WebServiceUtil.mobileServiceURL + "userAdministration?roleId=" + roleId;
+            var url = encodeURI(WebServiceUtil.mobileServiceURL + "userAdministration?roleId=" + v.roleId + "&roleName=" + v.roleName);
         } else if (opt == 'authorityManagement') {
             // 跳转权限管理
-            var url = WebServiceUtil.mobileServiceURL + "accessManagement?roleId=" + roleId;
+            var url = encodeURI(WebServiceUtil.mobileServiceURL + "accessManagement?roleId=" + v.roleId + "&roleName=" + v.roleName);
         }
 
         var data = {
@@ -273,7 +274,7 @@ export default class powerAdministrate extends React.Component {
                     {this.state.accordionArr}
                 </Accordion>
                 <div className="addBtn sameBack" onClick={this.showAddNewRolesPanel}>
-                    <span>新增角色<Icon type="plus" /></span>
+                    <span>添加角色<Icon type="plus"/></span>
                 </div>
             </div>
         );

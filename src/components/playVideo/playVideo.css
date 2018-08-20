@@ -1,0 +1,7 @@
+#playVideo video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+#playVideo .videoDiv {
+  display: block;
+  width: 100%;
+}

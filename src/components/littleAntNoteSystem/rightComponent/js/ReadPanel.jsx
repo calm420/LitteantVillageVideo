@@ -75,7 +75,14 @@ export default class ReadPanel extends React.Component {
                 console.log(labelData.author, '作者');
                 console.log(labelData.imgArray,'图片');
                 this.updateArticleInfo(labelData.title, labelData.label, labelData.author, labelData.type, labelData.imgArray);
+            }else if(labelData.method == 'openPrieview'){
+                console.log('开启遮罩层')
+                this.props.setPanel('openPrieview',labelData.label)
             }
+            // else if(labelData.method == 'closePrieview'){
+            //     console.log('关闭遮罩层');
+            //     this.props.setPanel('closePrieview')
+            // }
         }
 
     }

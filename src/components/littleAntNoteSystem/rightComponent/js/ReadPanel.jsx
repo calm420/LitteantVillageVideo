@@ -318,15 +318,21 @@ export default class ReadPanel extends React.Component {
 
     //接受来自list => appSystem 的消息
     accept(type, data) {
-        // console.log(type);
         switch (type) {
             case "编辑":
-                console.log('进入编辑');
                 this.getArticleInfoById(data);
                 break;
+            case "删除":
+                if(data == this.state.artId){
+                    this.setState({
+                        writeFlag:false,
+                        artId:null,
+                    })
+                }else{
+                    console.log('删除的不是编辑状态的');
+                }
+                break;
         }
-        // console.log(data,'in ReadPanel');
-
     }
 
     //根据文章id获取文章

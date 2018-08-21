@@ -149,10 +149,10 @@ export default class WaitlookThroughDetail extends React.Component {
      * 点击提交按钮
      */
     submit() {
-        if(calm.state.isPass == ""){
-            Toast.info("请勾选未勾选项")
-            return
-        }
+        // if(calm.state.isPass == ""){
+        //     Toast.info("请勾选未勾选项")
+        //     return
+        // }
         var param;
         if (calm.state.type == 0) {
             param = {

@@ -391,6 +391,7 @@ export default class addUploadVideo extends React.Component {
         calm.state.addVideoList.forEach(function (v, i) {
             if($.isEmptyObject(v.cheData)){
                 newArr.push({
+                    status:1,
                     coverPath: v.coverPath,
                     videoPath: v.videoUrl,
                     videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
@@ -400,6 +401,7 @@ export default class addUploadVideo extends React.Component {
                 })
             }else {
                 newArr.push({
+                    status:1,
                     coverPath: v.coverPath,
                     videoPath: v.videoUrl,
                     videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空

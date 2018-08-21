@@ -503,6 +503,7 @@ export default class updateVideo extends React.Component {
     */
     updateLittleVideoInfo() {
         var obj = {
+            status:1,
             coverPath: calm.state.coverPath,
             videoPath: calm.state.videoUrl,
             videoType: calm.state.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空

@@ -424,12 +424,12 @@ export default class articleDetail extends React.Component {
     toShare = ()=>{
         console.log('分享');
         console.log(window.location.href,'url');
-        console.log(this.state.data.articleTitle,'标题');
+        console.log($('.content').text(),'标题');
         console.log(this.state.data.author,'作者');
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,
-            shareTitle: this.state.data.articleContent,
+            shareTitle: $('.content').text(),
             shareUserName: this.state.data.articleTitle,
         };
         Bridge.callHandler(data, null, function (error) {

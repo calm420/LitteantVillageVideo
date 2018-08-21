@@ -439,6 +439,7 @@ export default class ReadPanel extends React.Component {
                         type: result.response.status,
                         attacheMents:newAttachMents
                     };
+                    console.log(newAttachMents);
                     // return;
                     //发送消息
                     var ifm = document.getElementById('iframe_box');

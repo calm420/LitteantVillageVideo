@@ -71,8 +71,8 @@ export default class articleDetail extends React.Component {
                 shareHidden: true,
             })
         }
-
-        return;
+        //
+        // return;
 
         this.setState({
             artId: artId,

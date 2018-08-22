@@ -1,10 +1,12 @@
-(node) util.print is deprecated. Use console.log instead.
+#alreadyLookThrough {
+  position: relative;
+}
 #alreadyLookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
 #alreadyLookThrough .content {
   color: #333;
-  height: calc(100% - 75px);
+  height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
   font-size: 15px;
@@ -56,6 +58,9 @@
 }
 #alreadyLookThrough .textCont video {
   max-width: 100%;
+}
+#alreadyLookThrough .textCont .video_title {
+  margin-bottom: 10px;
 }
 #alreadyLookThrough .isDangerArea {
   margin: 15px 0 10px;
@@ -167,4 +172,16 @@
 }
 #alreadyLookThrough .review .pass {
   color: #4CAF00;
+}
+#alreadyLookThrough .reCheckCont {
+  padding-bottom: 75px;
+}
+#alreadyLookThrough .reCheckCont .submitBtn {
+  position: fixed;
+  background-color: #f4f4f4;
+  bottom: 0;
+  padding: 15px;
+}
+#alreadyLookThrough .result span {
+  font-size: 13px;
 }

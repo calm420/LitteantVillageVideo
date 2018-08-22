@@ -9,7 +9,7 @@ export default class WaitlookThroughDetail extends React.Component {
         super(props);
         calm = this;
         this.state = {
-            isPass: "",
+            isPass: 0,
             isRec: "",
             isTop: "",
             data: {

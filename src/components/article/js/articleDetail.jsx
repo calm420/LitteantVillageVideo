@@ -42,6 +42,8 @@ export default class articleDetail extends React.Component {
         Bridge.setShareAble("false");
         document.title = '校园自媒体';
         var locationHref = window.location.href;
+        // var locationHref = 'http://jiaoxue.maaee.com:8094/?from=singlemessage#/articleDetail?vId=507&userId=38&type=1&machineType=38&version=&access_user=38';
+        // var locationHref = 'jiaoxue.maaee.com:8094/?from=singlemessage&isappinstalled=0#/articleDetail?vId=507&userId=38&type=1&machineType=38&version=&access_user=38'
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         if(locationSearch.indexOf("?") == -1){  //正常逻辑
             var searchArray = locationSearch.split("&");
@@ -54,8 +56,12 @@ export default class articleDetail extends React.Component {
                 shareHidden: false,
             })
         }else{   //分享逻辑
-            locationSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
+            // locationSearch = locationSearch.substr(locationHref.indexOf("?") + 4);
+            // console.log(locationSearch.split('?')[1],'split');
+            // console.log(locationSearch);
+            locationSearch = locationSearch.split('?')[1];
             var searchArray = locationSearch.split("&");
+            console.log(searchArray);
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
             var type = searchArray[2].split('=')[1];
@@ -65,6 +71,8 @@ export default class articleDetail extends React.Component {
                 shareHidden: true,
             })
         }
+        //
+        // return;
 
         this.setState({
             artId: artId,
@@ -424,12 +432,12 @@ export default class articleDetail extends React.Component {
     toShare = ()=>{
         console.log('分享');
         console.log(window.location.href,'url');
-        console.log(this.state.data.articleTitle,'标题');
+        console.log($('.content').text(),'标题');
         console.log(this.state.data.author,'作者');
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,
-            shareTitle: this.state.data.articleContent,
+            shareTitle: $('.content').text(),
             shareUserName: this.state.data.articleTitle,
         };
         Bridge.callHandler(data, null, function (error) {

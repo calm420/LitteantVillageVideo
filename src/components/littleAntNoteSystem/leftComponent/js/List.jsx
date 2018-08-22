@@ -201,7 +201,7 @@ export default class List extends React.Component {
                 console.log(result, "delete");
                 if (result.success) {
                     this.refresh(this.state.tabsIndex);
-
+                    this.props.submit('删除',id)
                 } else {
                     Toast.fail("删除失败");
                 }

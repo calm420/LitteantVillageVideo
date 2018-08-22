@@ -10,10 +10,10 @@ export default class WaitlookThroughDetail extends React.Component {
         calm = this;
         this.state = {
             isPass: 0,
-            isRec: "",
-            isTop: "",
-            data: {
-            }
+            isRec: 0,
+            isTop: 0,
+            data: {},
+            textareaValue:""
         }
     }
 
@@ -51,7 +51,6 @@ export default class WaitlookThroughDetail extends React.Component {
                     calm.setState({
                         data: result.response
                     })
-
                 }
             },
             onError: function (error) {
@@ -91,8 +90,6 @@ export default class WaitlookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-
-                console.log(result, "pppl")
                 if (result.success) {
                     calm.setState({
                         data: result.response
@@ -108,6 +105,7 @@ export default class WaitlookThroughDetail extends React.Component {
      * 单选按钮的改变
      */
     redioChange = (value) => {
+        this.state.isPass = value;
         if (value == 1) {
             calm.setState({
                 isShow: true
@@ -116,8 +114,8 @@ export default class WaitlookThroughDetail extends React.Component {
         if (value == 0) {
             calm.setState({
                 isShow: false,
-                isRec: "",
-                isTop: ""
+                isRec: 0,
+                isTop: 0
             })
         }
         this.setState({
@@ -129,7 +127,6 @@ export default class WaitlookThroughDetail extends React.Component {
      * 是否推荐
      */
     recChange = (value) => {
-        console.log(value)
         this.setState({
             isRec: value
         })
@@ -139,7 +136,6 @@ export default class WaitlookThroughDetail extends React.Component {
      * 是否置顶
      */
     topChange = (value) => {
-        console.log(value)
         this.setState({
             isTop: value
         })
@@ -149,10 +145,6 @@ export default class WaitlookThroughDetail extends React.Component {
      * 点击提交按钮
      */
     submit() {
-        // if(calm.state.isPass == ""){
-        //     Toast.info("请勾选未勾选项")
-        //     return
-        // }
         var param;
         if (calm.state.type == 0) {
             param = {
@@ -191,7 +183,6 @@ export default class WaitlookThroughDetail extends React.Component {
                 },
             };
         }
-        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {

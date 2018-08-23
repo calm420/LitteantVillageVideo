@@ -232,9 +232,7 @@ export default class WaitlookThroughDetail extends React.Component {
         ];
         const { isPass, isRec, isTop } = this.state;
         return (
-            <div id="waitLookThrough" style={{
-                height: calm.state.clientHeight
-            }}>
+            <div id="waitLookThrough">
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="fatherDiv">
                     <div className="content">
@@ -393,7 +391,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                         :
                                         ""
                         }
-                        <div className="submit_button">
+                        <div className="submitBtn">
                             <Button type='warning' onClick={_this.submit}>提交</Button>
                         </div>
                     </div>

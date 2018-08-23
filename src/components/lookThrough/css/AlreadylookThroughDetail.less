@@ -22,11 +22,15 @@
     .topMsg{
         font-size: 12px;
         height: 28px;
-        line-height: 28px;
-        span{
-            vertical-align: top;
-            display: inline-block;
-        }
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        text-align: left;
+        overflow: hidden;
         .photo{
             width: 28px;
             height: 28px;

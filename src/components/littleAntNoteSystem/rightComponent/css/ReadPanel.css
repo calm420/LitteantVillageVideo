@@ -71,53 +71,6 @@
   color: #666;
   line-height: 20px;
 }
-#ReadPanel .write_article {
-  margin: 0;
-  height: 100%;
-  position: relative;
-  overflow-y: auto;
-}
-#ReadPanel .write_article_cont {
-  margin: 0 75px;
-  height: calc(100% - 30px );
-  position: relative;
-  overflow: hidden;
-}
-#ReadPanel .edit_cont {
-  margin-top: 30px;
-  height: calc(100% - 30px );
-  position: relative;
-}
-#ReadPanel .edit_btn {
-  height: 54px;
-  background: #F7F8FC;
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 250px);
-  border-top: 20px solid #fff;
-  text-align: right;
-  margin-top: 20px;
-}
-#ReadPanel .edit_btn .edit_btn_cont {
-  padding: 0 75px;
-  margin-top: 8px;
-}
-#ReadPanel .edit_btn .edit_btn_cont button {
-  border-radius: 2px;
-  border: none;
-  font-size: 16px;
-  margin-left: 50px;
-  cursor: pointer;
-}
-#ReadPanel .edit_btn .edit_btn_cont .publish {
-  background: #4380EB;
-  color: #fff;
-  padding: 10px 25px;
-}
-#ReadPanel .edit_btn .edit_btn_cont .Preview {
-  color: #333;
-  background: transparent;
-}
 #ReadPanel .am-image-picker-list,
 #ReadPanel .am-image-picker-list .am-flexbox {
   padding: 0;

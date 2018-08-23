@@ -95,6 +95,14 @@ export default class ReadPanel extends React.Component {
                 this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
             } else if (iframeData.method == 'openPrieview') {
                 this.props.setPanel('openPrieview', iframeData.label);
+            }else if(iframeData.method == 'exit_editor'){
+                console.log('取消编辑');
+                this.setState({
+                    writeFlag: false
+                },()=>{
+                    this.props.submit('exit_editor', '000')
+                })
+
             }
             // else if(labelData.method == 'closePrieview'){
             //     console.log('关闭遮罩层');
@@ -526,7 +534,7 @@ export default class ReadPanel extends React.Component {
                             {/*formats={this.state.formats}*/}
                             {/*bounds={'.app'}*/}
                             {/*/>*/}
-                            <iframe id="iframe_box" src="https://192.168.50.163:6443/richText/" frameborder="0">
+                            <iframe id="iframe_box" src="https://192.168.50.186:6443/richText/" frameborder="0">
                             </iframe>
 
                             {/*<iframe id="iframe_box" src="https://www.maaee.com:6443/richText/"

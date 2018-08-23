@@ -73,6 +73,12 @@ export default class List extends React.Component {
                     // this.getListData(1); //获取发布列表
                     this.refresh(this.state.tabsIndex);
                 })
+                break;
+            case 'exit_editor':
+                this.setState({
+                    editorId:null,
+                });
+                break;
         }
     }
 

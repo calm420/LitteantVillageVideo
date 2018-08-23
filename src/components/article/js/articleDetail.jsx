@@ -33,9 +33,9 @@ export default class articleDetail extends React.Component {
             value: 0,
             reportFlag: false,
             reportButtonFlag: false,
-            checkVersion:false, //是否显示举报按钮
+            checkVersion: false, //是否显示举报按钮
             shareHidden: false, //分享后ｈｉｄｄｅｎ
-            isLoadingHidden:false,
+            isLoadingHidden: false,
             scrollTo: '',  //评论完成后scroll滚动至,
             textareaFocus: false,
         }
@@ -48,7 +48,7 @@ export default class articleDetail extends React.Component {
         // var locationHref = 'http://jiaoxue.maaee.com:8094/?from=singlemessage#/articleDetail?vId=507&userId=38&type=1&machineType=38&version=&access_user=38';
         // var locationHref = 'jiaoxue.maaee.com:8094/?from=singlemessage&isappinstalled=0#/articleDetail?vId=507&userId=38&type=1&machineType=38&version=&access_user=38'
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        if(locationSearch.indexOf("?") == -1){  //正常逻辑
+        if (locationSearch.indexOf("?") == -1) {  //正常逻辑
             var searchArray = locationSearch.split("&");
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
@@ -58,7 +58,7 @@ export default class articleDetail extends React.Component {
             this.setState({
                 shareHidden: false,
             })
-        }else{   //分享逻辑
+        } else {   //分享逻辑
             // locationSearch = locationSearch.substr(locationHref.indexOf("?") + 4);
             // console.log(locationSearch.split('?')[1],'split');
             // console.log(locationSearch);
@@ -84,31 +84,32 @@ export default class articleDetail extends React.Component {
             machineType: machineType,
             version: version
         }, () => {
-            let p1 = new Promise((resolve,reject) =>{
-                this.getArticleInfoById(function(){
+            let p1 = new Promise((resolve, reject) => {
+                this.getArticleInfoById(function () {
                     resolve('getArticleInfoById');
                 });
             });
-            let p2 = new Promise((resolve,reject) =>{
-                this.getUserLikeLog(function(){
+            let p2 = new Promise((resolve, reject) => {
+                this.getUserLikeLog(function () {
                     resolve('getUserLikeLog');
                 });
             });
-            let p3 = new Promise((resolve,reject) =>{
-                this.getDiscussInfoList(function(){
+            let p3 = new Promise((resolve, reject) => {
+                this.getDiscussInfoList(function () {
                     resolve('getDiscussInfoList');
                 });
             });
-            let p4 = new Promise((resolve,reject) =>{
-                this.getUserFavorite(function(){
+            let p4 = new Promise((resolve, reject) => {
+                this.getUserFavorite(function () {
                     resolve('getUserFavorite');
                 });
             })
-            Promise.all([p1,p2,p3,p4]).then((result) => {
+            Promise.all([p1, p2, p3, p4]).then((result) => {
                 console.log(result);
                 console.log('请求完毕');
+                //评论成功后要跳转的位置   向上偏移200
                 this.setState({
-                    scrollTo:$('.list-view-section-body')[0].offsetTop
+                    scrollTo: $('.list-view-section-body')[0].offsetTop
                 })
                 // console.log($('.list-view-section-body')[0].offsetTop);
 
@@ -135,35 +136,38 @@ export default class articleDetail extends React.Component {
     onWindwoResize() {
         // this
         // setTimeout(() => {
+        // Toast.info(theLike.state.clientHeight+'由大变小',1);
+        if(theLike.state.clientHeight > document.body.clientHeight){
+            // Toast.info('键盘弹起');
             theLike.setState({
-                clientHeight: theLike.state.clientHeight,
+                textareaFocus: true,
+                clientHeight: document.body.clientHeight,
             })
+        }else{
+            // Toast.info('键盘收起');
+            theLike.setState({
+                textareaFocus: false,
+                clientHeight: document.body.clientHeight,
+            })
+        }
         // }, 100)
 
     }
 
 
     //评论框获取焦点事件
-    textareaFocus(){
-
-        this.setState({
-            textareaFocus: true,
-        })
+    textareaFocus() {
+        var height = document.body.scrollHeight;
         // console.log('获取焦点');
         // console.log($('#text'));
         // return;
         // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
+        // document.body.scrollTop = document.body.scrollHeight;
         setTimeout(function () {
-            document.body.scrollTop = document.body.scrollHeight;
-        }, 400);
+            document.body.scrollTop = height;
+        }, 150);
     }
 
-
-    textareaBlurs(){
-        this.setState({
-            textareaFocus: false,
-        })
-    }
 
 
     /**
@@ -178,7 +182,7 @@ export default class articleDetail extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, '评论列表');
-                if(result.pager.rsCount <= 0){
+                if (result.pager.rsCount <= 0) {
                     this.setState({
                         isLoadingHidden: true,
                     })
@@ -206,7 +210,7 @@ export default class articleDetail extends React.Component {
                         })
                     }
                 }
-                if(reslove){
+                if (reslove) {
                     reslove();
                 }
             },
@@ -259,7 +263,7 @@ export default class articleDetail extends React.Component {
                         likeFlag: data.currentUserIsLike
                     })
                 }
-                if(reslove){
+                if (reslove) {
                     reslove();
                 }
             },
@@ -293,7 +297,7 @@ export default class articleDetail extends React.Component {
                         data: result.response,
                         checkVersion: result.isIosCheckVersion //是否显示举报按钮
                     }, () => {
-                        if(this.state.checkVersion){
+                        if (this.state.checkVersion) {
                             this.setState({
                                 reportFlag: true,
                                 reportButtonFlag: false,
@@ -306,7 +310,7 @@ export default class articleDetail extends React.Component {
                     //文章阅读量+1
                     this.addArticleReadCount()
                 }
-                if(reslove){
+                if (reslove) {
                     reslove();
                 }
             },
@@ -395,7 +399,7 @@ export default class articleDetail extends React.Component {
                 } else {
                     Toast.info('+1?');
                 }
-                if(reslove){
+                if (reslove) {
                     reslove();
                 }
             },
@@ -437,7 +441,8 @@ export default class articleDetail extends React.Component {
 
     //评论
     saveDiscussInfo() {
-        console.log(theLike.state.commitText, 'commitText')
+        console.log(theLike.state.commitText, 'commitText');
+        Toast.info('触发')
         if (theLike.state.commitText == '') {
             Toast.info('请输入评论内容!', 1)
             return;
@@ -463,10 +468,10 @@ export default class articleDetail extends React.Component {
                         hasMore: true,
                         commitText: '',
                     }, () => {
-                        // ssdasd23123-=-09;
 
-                        this.getDiscussInfoList(function(){
-                            $(".am-list-view-scrollview").animate({scrollTop: 4107}, 1000);
+                        this.getDiscussInfoList(function () {
+                            // console.log($(".am-list-view-scrollview")[0]);
+                            $(".am-list-view-scrollview")[0].scrollTop =  theLike.state.scrollTo;
                         });
                         // window.location.reload()
                         // theLike.getDiscussInfoList();
@@ -491,7 +496,7 @@ export default class articleDetail extends React.Component {
     //举报
     toReport() {
         this.setState({
-            reportButtonFlag:true,
+            reportButtonFlag: true,
         })
     }
 
@@ -505,13 +510,13 @@ export default class articleDetail extends React.Component {
     reportSubmit() {
         this.setState({
             reportFlag: false,
-            reportButtonFlag:false,
-        },()=>{
-            Toast.success('感谢您的举报,我们会在24小时之内反馈您结果!',1);
+            reportButtonFlag: false,
+        }, () => {
+            Toast.success('感谢您的举报,我们会在24小时之内反馈您结果!', 1);
         })
     }
 
-    cancelBox = ()=>{
+    cancelBox = () => {
         console.log('cancel')
         this.setState({
             reportFlag: true,
@@ -519,7 +524,7 @@ export default class articleDetail extends React.Component {
         })
     }
 
-    toShare = ()=>{
+    toShare = () => {
         // console.log('分享');
         // console.log(window.location.href,'url');
         // console.log($('.content').text(),'标题');
@@ -566,9 +571,9 @@ export default class articleDetail extends React.Component {
             <div id="articleDetail" style={{height: document.body.clientHeight}}>
                 <div className="inner">
                     <div className="commit" style={
-                        this.state.shareHidden?{display:'none'}:{display:'inline-block'}
+                        this.state.shareHidden ? {display: 'none'} : {display: 'inline-block'}
                     }>
-                        <div id={this.state.reportFlag?'textAndReport':'textNo'}>
+                        <div id={this.state.reportFlag ? 'textAndReport' : 'textNo'}>
                             <TextareaItem
                                 id="text"
                                 placeholder="请输入评论内容"
@@ -578,10 +583,9 @@ export default class articleDetail extends React.Component {
                                 value={this.state.commitText}
                                 onChange={this.commitChange.bind(this)}
                                 onFocus={this.textareaFocus.bind(this)}
-                                onBlur={this.textareaBlurs.bind(this)}
                             />
                             <div style={
-                                this.state.textareaFocus?{display:'none'}:{display:'inline-block'}
+                                this.state.textareaFocus ? {display: 'none'} : {display: 'inline-block'}
                             }>
                                 <div className="pent" onClick={this.changePent.bind(this)}>
                                     <img
@@ -595,15 +599,15 @@ export default class articleDetail extends React.Component {
                                 </div>
                             </div>
                             <div style={
-                                this.state.textareaFocus?{display:'inline-block'}:{display:'none'}
+                                this.state.textareaFocus ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <Button className='commit_button' type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>
+                                <Button className='commit_button' type="primary" onClick={this.saveDiscussInfo.bind(this)}>发送</Button>
                             </div>
 
                             {/*<div style={*/}
-                                {/*this.state.reportFlag?{display:'inline-block'}:{display:'none'}*/}
+                            {/*this.state.reportFlag?{display:'inline-block'}:{display:'none'}*/}
                             {/*} className="report" onClick={this.toReport.bind(this)}>*/}
-                                {/*<img onClick={this.toReport.bind(this)} src={require("../images/report.png")} alt=""/>*/}
+                            {/*<img onClick={this.toReport.bind(this)} src={require("../images/report.png")} alt=""/>*/}
                             {/*</div>*/}
                             {/*<Button type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>*/}
                         </div>
@@ -624,12 +628,13 @@ export default class articleDetail extends React.Component {
                                      dangerouslySetInnerHTML={{__html: this.state.data.articleContent}}></div>
                                 <div className="content_bottom">
                                     <div style={
-                                        this.state.reportFlag?{display:'inline-block'}:{display:'none'}
-                                    } className="report" onClick={this.toReport.bind(this)} >
-                                        <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span></div>
+                                        this.state.reportFlag ? {display: 'inline-block'} : {display: 'none'}
+                                    } className="report" onClick={this.toReport.bind(this)}>
+                                        <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span>
+                                        </div>
                                     </div>
                                     <div style={
-                                        this.state.shareHidden ? {display:'none'}:{display:'inline-block'}
+                                        this.state.shareHidden ? {display: 'none'} : {display: 'inline-block'}
                                     }>
 
                                         <div className="like" onClick={this.likeFlag.bind(this)} style={
@@ -650,7 +655,7 @@ export default class articleDetail extends React.Component {
                                 </div>
                             </div>
                         )}
-                        renderFooter={this.state.isLoadingHidden?'':() => (
+                        renderFooter={this.state.isLoadingHidden ? '' : () => (
                             <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                                 {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                             </div>)}
@@ -671,12 +676,13 @@ export default class articleDetail extends React.Component {
 
                     {/*举报 start*/}
                     <div className="positionBox" style={
-                        this.state.reportButtonFlag?{display:'block'}:{display:'none'}
+                        this.state.reportButtonFlag ? {display: 'block'} : {display: 'none'}
                     }>
                         <div className="cancelReport" onClick={this.cancelBox}><i onClick={this.cancelBox}></i></div>
                         <List renderHeader={() => '请选择举报原因'}>
                             {data_report.map(i => (
-                                <RadioItem className={this.state.value === i.value?'checked':''} key={i.value} checked={this.state.value === i.value}
+                                <RadioItem className={this.state.value === i.value ? 'checked' : ''} key={i.value}
+                                           checked={this.state.value === i.value}
                                            onChange={() => this.onChange_report(i.value)}>
                                     {i.label}
                                 </RadioItem>
@@ -686,7 +692,10 @@ export default class articleDetail extends React.Component {
                     </div>
                     <div className="postionBox_mask"
                          style={
-                             this.state.reportButtonFlag?{display:'block',height:this.state.clientHeight}:{display:'none',height:this.state.clientHeight}
+                             this.state.reportButtonFlag ? {
+                                 display: 'block',
+                                 height: this.state.clientHeight
+                             } : {display: 'none', height: this.state.clientHeight}
                          }
                          onClick={this.cancelBox}></div>
                     {/*举报 end*/}

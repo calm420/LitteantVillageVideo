@@ -30,6 +30,7 @@ export default class articleList extends React.Component {
             refreshing: false,
             show_bottom_text: true,
             scrollFlag: false,
+            initLoading: true,
         }
     }
 
@@ -50,8 +51,25 @@ export default class articleList extends React.Component {
             version: version
         }, () => {
             // this.getArticleInfoListByType();
-            this.getLittleVideoUserById();
+
             this.getArticleRecommenLittleVideoList();
+            var p1 = new Promise((reslove,reject) =>{
+                this.getLittleVideoUserById(() => {
+                    reslove('getLittleVideoUserById');
+                });
+            })
+            var p2 = new Promise((reslove,reject) =>{
+                this.getArticleRecommenLittleVideoList(false,() => {
+                    reslove('getArticleRecommenLittleVideoList');
+                });
+            })
+            Promise.all([p1,p2]).then((result) =>{
+                //
+                this.setState({
+                    initLoading: false,
+                })
+            })
+
         })
         console.log(document.getElementsByClassName('am-pull-to-refresh-content-wrapper'));
     }
@@ -65,7 +83,7 @@ export default class articleList extends React.Component {
     /**
      * 按页码获取短视频列表
      * **/
-    getArticleRecommenLittleVideoList(clearFlag) {
+    getArticleRecommenLittleVideoList(clearFlag,reslove) {
         var param = {
             "method": 'getArticleRecommenLittleVideoList',
             "userId": this.state.userId,
@@ -87,7 +105,7 @@ export default class articleList extends React.Component {
                         //     console.log(this.state.recommended_video[0], 'recommended_video');
                         // })
                         //获取文章列表
-                        this.getArticleInfoListByType(clearFlag);
+                        this.getArticleInfoListByType(clearFlag,reslove);
                     })
                 } else {
 
@@ -102,7 +120,7 @@ export default class articleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByType(clearFlag) {
+    getArticleInfoListByType(clearFlag,reslove) {
         var _this = this;
         var param = {
             "method": 'getArticleInfoListByType',
@@ -154,6 +172,9 @@ export default class articleList extends React.Component {
                     //调用短视频
                     // this.getArticleRecommenLittleVideoList();
                 }
+                if(reslove){
+                    reslove();
+                }
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -165,7 +186,7 @@ export default class articleList extends React.Component {
     /**
      * 查询用户权限
      * **/
-    getLittleVideoUserById() {
+    getLittleVideoUserById(reslove) {
         var param = {
             "method": 'getLittleVideoUserById',
             "uid": this.state.userId,
@@ -189,6 +210,9 @@ export default class articleList extends React.Component {
                     this.setState({
                         show_bottom_text: false,
                     })
+                }
+                if(reslove){
+                    reslove();
                 }
             },
             onError: function (error) {
@@ -260,9 +284,14 @@ export default class articleList extends React.Component {
             isLoading: true,
             hasMore: true,
             index: val.value,
-            recommended_video: []
+            recommended_video: [],
+            initLoading: true,
         }, () => {
-            this.getArticleRecommenLittleVideoList();
+            this.getArticleRecommenLittleVideoList(false,()=>{
+                this.setState({
+                    initLoading: false,
+                })
+            });
         })
     }
 
@@ -469,9 +498,6 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
-                <div>
-                    <img src="../images/articleListLoading.png" alt=""/>
-                </div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 ? {display: 'none'} : {display: 'block'}
                 }>
@@ -487,57 +513,74 @@ export default class articleList extends React.Component {
                       useOnPan={false}
                       onChange={this.onChange.bind(this)}
                 >
-                    <ListView
-                        ref={el => this.lv = el}
-                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                        renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                {this.state.show_bottom_text ? this.state.isLoading ? '正在加载...' : '已经全部加载完毕' : ''}
-                            </div>)}
-                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list"
-                        pageSize={30}    //每次事件循环（每帧）渲染的行数
-                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                        style={{
-                            height: document.body.clientHeight - 46,
-                        }}
-                        onScroll={this.listViewScroll.bind(this)}
-                        pullToRefresh={<PullToRefresh
-                            onRefresh={this.onRefresh.bind(this, 'left')}
-                            distanceToRefresh={80}
-                        />}
-                    />
+                    <div>
+                        <div className="initImage" style={
+                            this.state.initLoading?{display:'block'}:{display:'none'}
+                        }>
+                            <img src={require('../images/articleListLoading.png')} alt=""/>
+                        </div>
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.show_bottom_text ? this.state.isLoading ? '正在加载...' : '已经全部加载完毕' : ''}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            style={
+                                this.state.initLoading?{display:'none'}:{display:'block',height: document.body.clientHeight - 46}
+                            }
+                            onScroll={this.listViewScroll.bind(this)}
+                            pullToRefresh={<PullToRefresh
+                                onRefresh={this.onRefresh.bind(this, 'left')}
+                                distanceToRefresh={80}
+                            />}
+                        />
+                    </div>
 
-                    <ListView
-                        ref={el => this.lv = el}
-                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                        renderFooter={() => (
-                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                            </div>)}
-                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list"
-                        pageSize={30}    //每次事件循环（每帧）渲染的行数
-                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用+39*
-                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                        style={{
-                            height: document.body.clientHeight - 46,
-                        }}
-                        onScroll={this.listViewScroll.bind(this)}
-                        pullToRefresh={<PullToRefresh
-                            onRefresh={this.onRefresh.bind(this, 'right')}
-                            distanceToRefresh={80}
-                        />}
-                    />
+                    <div>
+                        <div className="initImage" style={
+                            this.state.initLoading?{display:'block'}:{display:'none'}
+                        }>
+                            <img src={require('../images/articleListLoading.png')} alt=""/>
+                        </div>
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用+39*
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            style={
+                                this.state.initLoading?{display:'none',height: document.body.clientHeight - 46}:{display:'block',height: document.body.clientHeight - 46}
+                            }
+                            onScroll={this.listViewScroll.bind(this)}
+                            pullToRefresh={<PullToRefresh
+                                onRefresh={this.onRefresh.bind(this, 'right')}
+                                distanceToRefresh={80}
+                            />}
+                        />
+                    </div>
+
+
+
                 </Tabs>
                 <div className="toTop" style={
                     this.state.scrollFlag ? {display: 'block'} : {display: 'none'}

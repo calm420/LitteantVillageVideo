@@ -13,6 +13,7 @@ export default class WaitlookThroughDetail extends React.Component {
             isRec: 0,
             isTop: 0,
             data: {},
+            clientHeight: document.body.clientHeight,
             textareaValue: ""
         }
     }
@@ -36,6 +37,18 @@ export default class WaitlookThroughDetail extends React.Component {
         } else if (type == 2) {
             calm.getDiscussInfoById(id)
         }
+        window.addEventListener('resize', calm.onWindowResize)
+    }
+
+
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        setTimeout(() => {
+            calm.setState({
+                clientHeight: document.body.clientHeight,
+            })
+        }, 100)
     }
     /**
      * 自媒体文章
@@ -185,9 +198,9 @@ export default class WaitlookThroughDetail extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                alert(JSON.stringify(result))
                 if (result.success) {
                     Toast.success('成功');
-                    //关闭当前窗口，不刷新上一个页面
                     var data = {
                         method: 'finish',
                     };
@@ -201,7 +214,6 @@ export default class WaitlookThroughDetail extends React.Component {
             }
         });
     }
-
 
 
     render() {
@@ -221,7 +233,7 @@ export default class WaitlookThroughDetail extends React.Component {
         const { isPass, isRec, isTop } = this.state;
         return (
             <div id="waitLookThrough" style={{
-                height: document.body.clientHeight
+                height: calm.state.clientHeight
             }}>
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content">
@@ -304,13 +316,14 @@ export default class WaitlookThroughDetail extends React.Component {
 
                                 </div>
                                 <div className="sameBack description">审核说明:
-                        <List>
+                            <List>
                                         <TextareaItem
                                             rows={3}
                                             placeholder="请在此处输入审核的说明／不通过的原因"
                                             onChange={v => _this.setState({
                                                 textareaValue: v
                                             })}
+                                            count={30}
                                         />
                                     </List>
                                 </div>
@@ -345,6 +358,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 onChange={v => _this.setState({
                                                     textareaValue: v
                                                 })}
+                                                count={30}
                                             />
                                         </List>
                                     </div>
@@ -370,6 +384,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                                     onChange={v => _this.setState({
                                                         textareaValue: v
                                                     })}
+                                                    count={30}
                                                 />
                                             </List>
                                         </div>

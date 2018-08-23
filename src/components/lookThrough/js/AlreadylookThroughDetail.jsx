@@ -29,8 +29,18 @@ export default class AlreadylookThroughDetail extends React.Component {
             id, type, auditId
         })
         calm.getUnionByAId(id, auditId, type)
+        window.addEventListener('resize', calm.onWindowResize)
     }
 
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        setTimeout(() => {
+            calm.setState({
+                clientHeight: document.body.clientHeight,
+            })
+        }, 100)
+    }
     /**
       * 单选按钮的改变
       */
@@ -218,7 +228,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         const { isPass, isRec, isTop } = this.state;
         return (
             <div id="alreadyLookThrough" style={{
-                height: document.body.clientHeight
+                height: calm.state.clientHeight
             }}>
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content">

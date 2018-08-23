@@ -42,10 +42,18 @@
       width: calc(~"100% - 38px");
       position: relative;
     }
+    .topMsg{
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      overflow: hidden;
+    }
     .author{
       color: #666;
       font-size: 13px;
-      line-height: 17px;
+      vertical-align: middle;
+      line-height: 28px;
+      max-width: calc(~"100% - 115px");
     }
     .photo{
       width: 28px;
@@ -57,10 +65,11 @@
     }
     .type{
       margin-left: 10px;
+      line-height: 28px;
       img{
         width: 48px;
         height: 17px;
-        vertical-align: bottom;
+        vertical-align: middle;
       }
     }
     .title{
@@ -71,21 +80,21 @@
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-      margin-top: 12px;
+      margin-top: 5px;
       line-height: 20px;
     }
     .time{
       font-size: 12px;
       color: #666;
-      margin-top: 12px;
+      margin-top: 8px;
     }
   }
   .status{
     i{
       background: url("../img/icon_passNo.png") no-repeat;
       background-size: 100%;
-      width: 52px;
-      height: 40px;
+      width: 56px;
+      height: 43px;
       position: absolute;
       right: -6px;
       top: -10px;

@@ -1,12 +1,16 @@
-#myCollection{
-  .my_flex{
+#myCollection {
+  /*解决listview高度无法撑开的关键*/
+  .am-pull-to-refresh-content-wrapper {
+    min-height: 100vh;
+  }
+  .my_flex {
     align-items: center;
     -webkit-align-items: center;
   }
-  .am-list-body{
+  .am-list-body {
     background-color: #f4f4f4 !important;
   }
-  .item{
+  .item {
     background-color: #fff;
     padding: 15px;
     font-size: 16px;
@@ -15,18 +19,18 @@
     -moz-border-radius: 2px;
     border-radius: 2px;
     margin-top: 10px;
-    .right{
+    .right {
       width: calc(~"100% - 38px");
     }
-    video{
+    video {
       margin: 10px 0;
     }
-    .author{
+    .author {
       color: #333;
       font-size: 13px;
       line-height: 17px;
     }
-    .photo{
+    .photo {
       width: 30px;
       height: 30px;
       -webkit-border-radius: 50%;
@@ -37,14 +41,14 @@
     .bottom {
       font-size: 12px;
       color: #999;
-      &>span{
+      & > span {
         margin-right: 10px;
       }
     }
-    .title{
+    .title {
       font-size: 15px;
       word-break: break-all;
-      overflow : hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 3;
@@ -53,11 +57,11 @@
       line-height: 20px;
       margin-bottom: 10px;
     }
-    .time{
+    .time {
       font-size: 12px;
       color: #999;
       margin-top: 3px;
-      &.small{
+      &.small {
         font-size: 10px;
       }
     }

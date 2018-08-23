@@ -1,3 +1,9 @@
+#myCollection {
+  /*解决listview高度无法撑开的关键*/
+}
+#myCollection .am-pull-to-refresh-content-wrapper {
+  min-height: 100vh;
+}
 #myCollection .my_flex {
   align-items: center;
   -webkit-align-items: center;

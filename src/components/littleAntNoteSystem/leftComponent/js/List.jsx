@@ -73,6 +73,12 @@ export default class List extends React.Component {
                     // this.getListData(1); //获取发布列表
                     this.refresh(this.state.tabsIndex);
                 })
+                break;
+            case 'exit_editor':
+                this.setState({
+                    editorId:null,
+                });
+                break;
         }
     }
 
@@ -235,7 +241,7 @@ export default class List extends React.Component {
                 <div style={
                     this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
                 } className="row">
-                    <div className="title text_hidden">{rowData.articleTitle}</div>
+                    <div className="title"><span className="title_text text_hidden">{rowData.articleTitle}</span><span className="title_state state_noThrough"><i className="i_title_state"></i>未通过<span className="state-tips"><i className="state-tipArrow"></i><div>未通过原因：</div><div className="tips-text">未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因</div></span></span></div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
                         <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>
@@ -255,7 +261,7 @@ export default class List extends React.Component {
                 <div style={
                     this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
                 } className="row">
-                    <div className="title text_hidden">{rowData.articleTitle}</div>
+                    <div className="title text_hidden"><span className="title_text">{rowData.articleTitle}</span></div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
                         <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>

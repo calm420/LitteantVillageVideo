@@ -1,5 +1,9 @@
 #articleList {
   position: relative;
+  /*解决listview高度无法撑开的关键*/
+}
+#articleList .am-pull-to-refresh-content-wrapper {
+  min-height: 100vh;
 }
 #articleList .am-tabs-pane-wrap {
   overflow: hidden;
@@ -9,7 +13,7 @@
 }
 #articleList .am-tabs-default-bar-tab {
   font-size: 17px;
-  color: #676C6F ;
+  color: #676C6F;
 }
 #articleList .am-tabs-default-bar-tab-active {
   color: #4285F4;
@@ -228,4 +232,18 @@
 }
 #articleList .video_box::-webkit-scrollbar {
   display: none;
+}
+#articleList .toTop {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 2.5rem;
+  bottom: 2.5rem;
+  z-index: 999;
+  -webkit-transition: 2s;
+  transition: 2s;
+}
+#articleList .toTop img {
+  width: 100%;
+  height: 100%;
 }

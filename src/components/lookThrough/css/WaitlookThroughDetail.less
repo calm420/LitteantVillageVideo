@@ -18,13 +18,17 @@
         margin-bottom: 15px;
     }
     .topMsg{
-        font-size: 12px;
         height: 28px;
-        line-height: 28px;
-        span{
-            vertical-align: top;
-            display: inline-block;
-        }
+        font-size: 12px;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        text-align: left;
+        overflow: hidden;
         .photo{
             width: 28px;
             height: 28px;
@@ -133,5 +137,26 @@
             line-height: 18px;
             color: #333;
         }
+    }
+
+    .editor_image,.editor_video{
+        max-width: 100%;
+        margin: 10px auto 0 auto;
+        display: block;
+    }
+    .editor_video{
+        padding: 5px;
+    }
+    .editor_text{
+        font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "Apple Color Emoji", "Emoji Symbols Font", "Segoe UI Symbol", Arial, sans-serif;
+        font-style: normal;
+        font-size: 16px;
+        word-wrap: break-word;
+        hyphens: auto;
+        line-height: 1.6;
+        /*字体颜色影响插件*/
+        color: #000000;
+        text-align: left;
+        border:1px solid #fff
     }
 }

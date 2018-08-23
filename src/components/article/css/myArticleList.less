@@ -1,15 +1,19 @@
 #myArticleList {
-  .am-tabs-pane-wrap{
+  /*解决listview高度无法撑开的关键*/
+  .am-pull-to-refresh-content-wrapper {
+    min-height: 100vh;
+  }
+  .am-tabs-pane-wrap {
     overflow: hidden;
   }
-  .am-list-view-scrollview-content{
+  .am-list-view-scrollview-content {
     width: 100%;
   }
-  .am-tabs-default-bar-tab{
+  .am-tabs-default-bar-tab {
     font-size: 17px;
-    color: #676C6F ;
+    color: #676C6F;
   }
-  .am-tabs-default-bar-tab-active{
+  .am-tabs-default-bar-tab-active {
     color: #4285F4;
   }
   .leftBox {
@@ -17,7 +21,7 @@
     margin-right: 10%;
     display: inline-block;
   }
-  .item{
+  .item {
     padding: 15px;
   }
   .title {
@@ -26,7 +30,7 @@
     line-height: 20px;
     margin-bottom: 10px;
     word-break: break-all;
-    overflow : hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -35,7 +39,7 @@
   .bottom {
     font-size: 12px;
     color: #999;
-    &>div{
+    & > div {
       margin-right: 10px;
     }
     .read {

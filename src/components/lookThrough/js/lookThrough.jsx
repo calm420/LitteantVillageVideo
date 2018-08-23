@@ -269,6 +269,7 @@ export default class lookThrough extends React.Component {
                                         <span className='author text_hidden'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
                                         <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                     </div>
+                                    <span>{rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span>优先</span>) : ""}</span>
                                     <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                     <div className='title'>{rowData.littleVideoInfo.videoContent}</div>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
@@ -283,27 +284,28 @@ export default class lookThrough extends React.Component {
                                             <span className='author text_hidden'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                             <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                         </div>
+                                        <span>{rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span>置顶</span>) : ""}</span>
                                         <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                         <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                     </div>
                                 </div>
-                                    :
-                                    rowData.discussInfo ?
-                                        <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowData.auditId)}>
-                                            <img className='photo' src={rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.avatar : ""} alt="" />
-                                            <div className='right'>
-                                                <div className="topMsg my_flex">
-                                                    <span className='author text_hidden'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
-                                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
-                                                </div>
-                                                <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
-                                                <div className='title'>{rowData.discussInfo.discussContent}</div>
-                                                <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
+                                :
+                                rowData.discussInfo ?
+                                    <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowData.auditId)}>
+                                        <img className='photo' src={rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.avatar : ""} alt="" />
+                                        <div className='right'>
+                                            <div className="topMsg my_flex">
+                                                <span className='author text_hidden'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
+                                                <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
                                             </div>
+                                            <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
+                                            <div className='title'>{rowData.discussInfo.discussContent}</div>
+                                            <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
                                         </div>
-                                        :
-                                        ""
+                                    </div>
+                                    :
+                                    ""
                     }
                 </div>
             )

@@ -1,4 +1,10 @@
 (node) util.print is deprecated. Use console.log instead.
+#myArticleList {
+  /*解决listview高度无法撑开的关键*/
+}
+#myArticleList .am-pull-to-refresh-content-wrapper {
+  min-height: 100vh;
+}
 #myArticleList .am-tabs-pane-wrap {
   overflow: hidden;
 }
@@ -7,7 +13,7 @@
 }
 #myArticleList .am-tabs-default-bar-tab {
   font-size: 17px;
-  color: #676C6F ;
+  color: #676C6F;
 }
 #myArticleList .am-tabs-default-bar-tab-active {
   color: #4285F4;

@@ -1,8 +1,8 @@
 #articleList {
   position: relative;
+  /*解决listview高度无法撑开的关键*/
   .am-pull-to-refresh-content-wrapper {
-    height: 100vh;
-    overflow-y: auto;
+    min-height: 100vh;
   }
 
   .am-tabs-pane-wrap {

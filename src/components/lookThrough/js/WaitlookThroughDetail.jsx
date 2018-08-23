@@ -198,7 +198,7 @@ export default class WaitlookThroughDetail extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                alert(JSON.stringify(result))
+                // alert(JSON.stringify(result))
                 if (result.success) {
                     Toast.success('成功');
                     var data = {
@@ -388,45 +388,12 @@ export default class WaitlookThroughDetail extends React.Component {
                                         </div>
                                     </div>
                                     :
-<<<<<<< HEAD
                                     ""
                     }
-                    <div className="submit_button">
-                        <Button type='warning' onClick={_this.submit}>提交</Button>
-=======
-                                    calm.state.type == 2 ?
-                                        <div>
-                                            <div className="isDangerArea">
-                                                <List renderHeader={() => '审核：'}>
-                                                    {data2.map(i => (
-                                                        <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                                            {i.label}
-                                                            {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                        </RadioItem>
-                                                    ))}
-                                                </List>
-                                            </div>
-                                            <div className="sameBack description">审核说明:
-                                        <List>
-                                                    <TextareaItem
-                                                        rows={3}
-                                                        placeholder="请在此处输入审核的说明／不通过的原因"
-                                                        onChange={v => _this.setState({
-                                                            textareaValue: v
-                                                        })}
-                                                        count={30}
-                                                    />
-                                                </List>
-                                            </div>
-                                        </div>
-                                        :
-                                        ""
-                        }
-                        <div className="submitBtn">
-                            <Button type='warning' onClick={_this.submit}>提交</Button>
-                        </div>
->>>>>>> a3449853f82958284e98d4eec5d8f5c3cb8f9ac4
-                    </div>
+                </div>
+
+                <div className="submitBtn">
+                    <Button type='warning' onClick={_this.submit}>提交</Button>
                 </div>
 
             </div>

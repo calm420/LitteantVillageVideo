@@ -156,7 +156,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
                     var data = {
-                        method: 'finishForRefresh',
+                        method: 'finish',
                     };
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
@@ -275,8 +275,8 @@ export default class AlreadylookThroughDetail extends React.Component {
                                             <div>
                                                 <div className='sameBack'>
                                                     <div className='topMsg'>
-                                                        <img className="photo" src={calm.state.data.littleVideoInfo.userInfo.avatar} alt="" />
-                                                        <span className='author'>{calm.state.data.littleVideoInfo.userInfo.userName}</span>
+                                                        <img className="photo" src={calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.avatar:""} alt="" />
+                                                        <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName:""}</span>
                                                         <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
                                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                     </div>

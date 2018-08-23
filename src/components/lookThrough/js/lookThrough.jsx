@@ -39,7 +39,7 @@ export default class lookThrough extends React.Component {
         calm.getArticleAndLittleVideoIsNo();
         // window.addEventListener('scroll', calm.scrollHandle);
     }
-   
+
     // scrollHandler() {
     //     console.log("出发了滚动事件")
     //     console.log(window.pageYOffset)
@@ -251,7 +251,6 @@ export default class lookThrough extends React.Component {
                 </div>
             )
         }
-
         const row2 = (rowData, sectionID, rowID) => {
             return (
                 <div>
@@ -260,8 +259,9 @@ export default class lookThrough extends React.Component {
                             <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowData.auditId)}>
                                 <img className='photo' src={rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.avatar : ""} alt="" />
                                 <div className="right">
-                                    <span className='author'>{rowData.littleVideoInfo.userInfo ?rowData.littleVideoInfo.userInfo.userName:""}</span>
+                                    <span className='author'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
                                     <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                    <span>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? "通过" : "未通过") : ""}</span>
                                     <span className='title'>{rowData.littleVideoInfo.videoContent}</span>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
@@ -273,22 +273,11 @@ export default class lookThrough extends React.Component {
                                     <div className="right">
                                         <span className='author'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                         <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
+                                        <span>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? "通过" : "未通过") : ""}</span>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                         <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                     </div>
                                 </div>
-                                :
-                                rowData.articleInfo ?
-                                    <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowData.auditId)}>
-                                        <img className='photo' src={rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.avatar : ""} alt="" />
-                                        <div className="right">
-                                            <span className='author'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
-                                            <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
-                                            <div className='title'>{rowData.articleInfo.articleTitle}</div>
-                                            <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
-
-                                        </div>
-                                    </div>
                                     :
                                     rowData.discussInfo ?
                                         <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowData.auditId)}>
@@ -296,9 +285,9 @@ export default class lookThrough extends React.Component {
                                             <div className='right'>
                                                 <span className='author'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
                                                 <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                                <span>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? "通过" : "未通过") : ""}</span>
                                                 <div className='title'>{rowData.discussInfo.discussContent}</div>
                                                 <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
-
                                             </div>
                                         </div>
                                         :
@@ -311,7 +300,7 @@ export default class lookThrough extends React.Component {
             <div id="lookThrough" style={{
                 height: document.body.clientHeight
             }}>
-                <div className='emptyDiv' style={{display:calm.initDataSource.length == 0 ? "block" :'none'}}>
+                <div className='emptyDiv' style={{ display: calm.initDataSource.length == 0 ? "block" : 'none' }}>
                     <div className='emptyIcon'></div>
                 </div>
                 <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false} onChange={calm.onChange} >

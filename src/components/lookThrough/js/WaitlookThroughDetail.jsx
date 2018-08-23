@@ -13,7 +13,7 @@ export default class WaitlookThroughDetail extends React.Component {
             isRec: 0,
             isTop: 0,
             data: {},
-            textareaValue:""
+            textareaValue: ""
         }
     }
 
@@ -189,7 +189,7 @@ export default class WaitlookThroughDetail extends React.Component {
                     Toast.success('成功');
                     //关闭当前窗口，并刷新上一个页面
                     var data = {
-                        method: 'finishForRefresh',
+                        method: 'finish',
                     };
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
@@ -246,8 +246,8 @@ export default class WaitlookThroughDetail extends React.Component {
                                         <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                     </div>
-                                    <div>{calm.state.data.videoContent}</div>
                                     <div className="textCont">
+                                        <div className='video_title'>{calm.state.data.videoContent}</div>
                                         <video
                                             controls="controls"
                                             preload="auto"

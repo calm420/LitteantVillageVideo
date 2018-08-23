@@ -28,7 +28,8 @@ export default class articleList extends React.Component {
                 response: []
             },
             refreshing: false,
-            show_bottom_text: true,
+            show_bottom_text:true,
+            scrollFlag: false,
         }
     }
 
@@ -39,8 +40,10 @@ export default class articleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
-        var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
+        var machineType = searchArray[1]?searchArray[1].split('=')[1]:'';
+        var version = searchArray[2]?searchArray[2].split('=')[1]:'';
+        // console.log(machineType);
+        // console.log(version);
         this.setState({
             userId: userId,
             machineType: machineType,
@@ -171,6 +174,8 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     var data = result.response;
+                    // console.log(data,'data');
+                    // console.log(Boolean(0))
                     if (data.schoolId) {
                         this.setState({
                             userRoot: true,
@@ -338,9 +343,33 @@ export default class articleList extends React.Component {
         });
     }
 
+    toTop = ()=>{
+        if ($(".am-list-view-scrollview").scrollTop()) {
+            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
+            this.setState({
+                scrollFlag: false,
+            })
+        }
+    }
+
+    listViewScroll(e){
+        console.log(e.target.scrollTop);
+        if(e.target.scrollTop >= 200){
+            this.setState({
+                scrollFlag:true,
+            })
+        }else{
+            this.setState({
+                scrollFlag:false,
+            })
+        }
+
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            // console.log(rowData,'rowData');
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
@@ -455,6 +484,71 @@ export default class articleList extends React.Component {
                       useOnPan={false}
                       onChange={this.onChange.bind(this)}
                 >
+                    <div style={{
+                        height: document.documentElement.clientHeight - 46,
+                        backgroundColor: '#f4f4f4'
+                    }}>
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.show_bottom_text?this.state.isLoading ? '正在加载...' : '已经全部加载完毕':''}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            style={{
+                                height: document.body.clientHeight - 46,
+                            }}
+                            onScroll={this.listViewScroll.bind(this)}
+                            pullToRefresh={<PullToRefresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                                // distanceToRefresh={80}
+
+                            />}
+                        />
+                    </div>
+
+                    <div style={{
+                        height: document.documentElement.clientHeight - 46,
+                        backgroundColor: '#f4f4f4'
+                    }}>
+                        {/*热点*/}
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderFooter={() => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用+39*
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            style={{
+                                height: document.body.clientHeight - 46,
+                            }}
+                            onScroll={this.listViewScroll.bind(this)}
+                            pullToRefresh={<PullToRefresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                                // distanceToRefresh={80}
+                            />}
+                        />
+                    </div>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -507,6 +601,9 @@ export default class articleList extends React.Component {
                         />}
                     />
                 </Tabs>
+                <div className="toTop" style={
+                    this.state.scrollFlag?{display:'block'}:{display:'none'}
+                } onClick={this.toTop.bind(this)}><img src={require('../images/toTop.png')}/></div>
             </div>
         );
     }

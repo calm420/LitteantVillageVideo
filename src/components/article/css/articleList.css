@@ -3,7 +3,7 @@
   position: relative;
 }
 #articleList .am-pull-to-refresh-content-wrapper {
-  height: 667px !important;
+  height: 100vh;
   overflow-y: auto;
 }
 #articleList .am-tabs-pane-wrap {
@@ -233,4 +233,18 @@
 }
 #articleList .video_box::-webkit-scrollbar {
   display: none;
+}
+#articleList .toTop {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 2.5rem;
+  bottom: 2.5rem;
+  z-index: 999;
+  -webkit-transition: 2s;
+  transition: 2s;
+}
+#articleList .toTop img {
+  width: 100%;
+  height: 100%;
 }

@@ -23,7 +23,7 @@ export default class articleList extends React.Component {
             isLoading: true,
             hasMore: true,
             index: 0,
-            userRoot: false,
+            userRoot: true,
             recommended_video: {
                 response: []
             },

@@ -11,6 +11,7 @@ export default class powerList extends React.Component {
         power_List = this;
         this.state = {
             userId: "",
+            clientHeight: document.body.clientHeight
         };
 
     }
@@ -97,7 +98,7 @@ export default class powerList extends React.Component {
         var _this = this;
         return (
             <div id="powerList">
-                <div className="my_flex listCont">
+                <div className="my_flex listCont" style={{height: this.state.clientHeight - 20}}>
                     {this.state.listArr}
                 </div>
             </div>

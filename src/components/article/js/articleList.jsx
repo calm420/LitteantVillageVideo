@@ -28,7 +28,7 @@ export default class articleList extends React.Component {
                 response: []
             },
             refreshing: false,
-            show_bottom_text:true,
+            show_bottom_text: true,
         }
     }
 
@@ -39,19 +39,23 @@ export default class articleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        var machineType = searchArray[1]?searchArray[1].split('=')[1]:'';
-        var version = searchArray[2]?searchArray[2].split('=')[1]:'';
+        var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
+        var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
         console.log(machineType);
         console.log(version);
         this.setState({
             userId: userId,
-            machineType:machineType,
-            version:version
+            machineType: machineType,
+            version: version
         }, () => {
             // this.getArticleInfoListByType();
             this.getLittleVideoUserById();
             this.getArticleRecommenLittleVideoList();
         })
+        // console.log(document.getElementsByClassName('am-pull-to-refresh-content'));
+        // for (var i = 0; i < document.getElementsByClassName('am-pull-to-refresh-content').length; i++) {
+        //     document.getElementsByClassName('am-pull-to-refresh-content')[i].style.height = document.body.clientHeight
+        // }
     }
 
 
@@ -175,7 +179,7 @@ export default class articleList extends React.Component {
                 console.log(result, 'user');
                 if (result.success) {
                     var data = result.response;
-                    console.log(data,'data');
+                    console.log(data, 'data');
                     console.log(Boolean(0))
                     if (data.schoolId) {
                         console.log(data.schoolId);
@@ -187,7 +191,7 @@ export default class articleList extends React.Component {
                             userRoot: false,
                         })
                     }
-                }else{
+                } else {
                     this.setState({
                         show_bottom_text: false,
                     })
@@ -222,7 +226,7 @@ export default class articleList extends React.Component {
 
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-        console.log(divPull,'divPull')
+        console.log(divPull, 'divPull')
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({
             defaultPageNo: 1, refreshing: true
@@ -236,7 +240,7 @@ export default class articleList extends React.Component {
     toDetail(id) {
         console.log("触发跳转事件");
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType="+this.state.machineType+"&version="+this.state.version);
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version);
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -336,20 +340,20 @@ export default class articleList extends React.Component {
     //     });
     // }
 
-    toPerfectInfo = ()=>{
+    toPerfectInfo = () => {
         console.log('去完善资料');
         var data = {
             method: 'perfectUserInfo',
         };
         Bridge.callHandler(data, null, function (error) {
-            Toast.info('跳转完善资料失败',1)
+            Toast.info('跳转完善资料失败', 1)
         });
     }
 
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData,'rowData');
+            console.log(rowData, 'rowData');
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
@@ -477,7 +481,7 @@ export default class articleList extends React.Component {
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
                                 <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                    {this.state.show_bottom_text?this.state.isLoading ? '正在加载...' : '已经全部加载完毕':''}
+                                    {this.state.show_bottom_text ? this.state.isLoading ? '正在加载...' : '已经全部加载完毕' : ''}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
                             className="am-list"

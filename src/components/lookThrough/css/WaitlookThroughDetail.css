@@ -10,8 +10,8 @@
   display: none;
 }
 #waitLookThrough .content {
-  height: calc(100% - 75px);
   overflow-y: auto;
+  height: 100%;
 }
 #waitLookThrough .sameBack {
   background-color: #fff;
@@ -35,6 +35,9 @@
   display: flex;
   text-align: left;
   overflow: hidden;
+  -webkit-flex-wrap: wrap;
+  /* Safari 6.1+ */
+  flex-wrap: wrap;
 }
 #waitLookThrough .topMsg .photo {
   width: 28px;

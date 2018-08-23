@@ -9,8 +9,9 @@
     font-size: 15px;
     color: #333;
     .content {
-        height: calc(~"100% - 75px");
+        //height: calc(~"100% - 75px");
         overflow-y: auto;
+        height: 100%;
     }
     .sameBack {
         background-color: #fff;
@@ -34,6 +35,8 @@
         display: flex;
         text-align: left;
         overflow: hidden;
+        -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+        flex-wrap: wrap;
         .photo {
             width: 28px;
             height: 28px;

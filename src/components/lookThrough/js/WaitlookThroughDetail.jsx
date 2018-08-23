@@ -305,7 +305,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List> */}
-                                            <List renderHeader={() => '置顶：'}>
+                                            <List className='toFirst' renderHeader={() => '置顶：'}>
                                                 {isTopData.map(i => (
                                                     <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
                                                         {i.label}
@@ -332,7 +332,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                 :
                                 calm.state.type == 1 ?
                                     <div>
-                                        <div className="isDangerArea">
+                                        <div className="isDangerArea priority">
                                             <List renderHeader={() => '审核：'}>
                                                 {data2.map(i => (
                                                     <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
@@ -341,7 +341,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                                     </RadioItem>
                                                 ))}
                                             </List>
-                                            <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                            <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
                                                 {isRecData.map(i => (
                                                     <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                         {i.label}
@@ -393,11 +393,11 @@ export default class WaitlookThroughDetail extends React.Component {
                                         :
                                         ""
                         }
+                        <div className="submit_button">
+                            <Button type='warning' onClick={_this.submit}>提交</Button>
+                        </div>
+                    </div>
 
-                    </div>
-                    <div className="submitBtn">
-                        <Button type='warning' onClick={_this.submit}>提交</Button>
-                    </div>
                 </div>
             </div>
 

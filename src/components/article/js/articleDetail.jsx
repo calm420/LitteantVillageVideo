@@ -466,7 +466,7 @@ export default class articleDetail extends React.Component {
                 }>
                     <List className="listCont line_public ">
                         <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar : ""} multipleLine>
-                            {rowData.discussUser ? rowData.discussUser.userName : ""}
+                            <span>{rowData.discussUser ? rowData.discussUser.userName : ""}</span>
                             <Brief>{rowData.discussContent}</Brief>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}

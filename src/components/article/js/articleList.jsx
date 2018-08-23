@@ -29,6 +29,7 @@ export default class articleList extends React.Component {
             },
             refreshing: false,
             show_bottom_text:true,
+            scrollFlag: false,
         }
     }
 
@@ -41,8 +42,8 @@ export default class articleList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var machineType = searchArray[1]?searchArray[1].split('=')[1]:'';
         var version = searchArray[2]?searchArray[2].split('=')[1]:'';
-        console.log(machineType);
-        console.log(version);
+        // console.log(machineType);
+        // console.log(version);
         this.setState({
             userId: userId,
             machineType:machineType,
@@ -175,8 +176,8 @@ export default class articleList extends React.Component {
                 console.log(result, 'user');
                 if (result.success) {
                     var data = result.response;
-                    console.log(data,'data');
-                    console.log(Boolean(0))
+                    // console.log(data,'data');
+                    // console.log(Boolean(0))
                     if (data.schoolId) {
                         console.log(data.schoolId);
                         this.setState({
@@ -346,10 +347,33 @@ export default class articleList extends React.Component {
         });
     }
 
+    toTop = ()=>{
+        if ($(".am-list-view-scrollview").scrollTop()) {
+            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
+            this.setState({
+                scrollFlag: false,
+            })
+        }
+    }
+
+    listViewScroll(e){
+        console.log(e.target.scrollTop);
+        if(e.target.scrollTop >= 200){
+            this.setState({
+                scrollFlag:true,
+            })
+        }else{
+            this.setState({
+                scrollFlag:false,
+            })
+        }
+
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData,'rowData');
+            // console.log(rowData,'rowData');
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
@@ -491,10 +515,12 @@ export default class articleList extends React.Component {
                             style={{
                                 height: document.body.clientHeight - 46,
                             }}
+                            onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
                                 refreshing={this.state.refreshing}
                                 onRefresh={this.onRefresh}
                                 // distanceToRefresh={80}
+
                             />}
                         />
                     </div>
@@ -523,6 +549,7 @@ export default class articleList extends React.Component {
                             style={{
                                 height: document.body.clientHeight - 46,
                             }}
+                            onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
                                 refreshing={this.state.refreshing}
                                 onRefresh={this.onRefresh}
@@ -531,6 +558,9 @@ export default class articleList extends React.Component {
                         />
                     </div>
                 </Tabs>
+                <div className="toTop" style={
+                    this.state.scrollFlag?{display:'block'}:{display:'none'}
+                } onClick={this.toTop.bind(this)}><img src={require('../images/toTop.png')}/></div>
             </div>
         );
     }

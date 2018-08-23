@@ -22,18 +22,21 @@
   width: 100%;
 }
 #articleDetail .title {
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 20px;
+  line-height: 40px;
   word-break: break-all;
   color: #000;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 #articleDetail .at {
   font-size: 12px;
-  margin: 10px 0;
+  margin: 5px 0 10px;
 }
 #articleDetail .at .author {
   display: inline-block;
   padding-right: 10px;
+  color: #999;
 }
 #articleDetail .at .createTime {
   display: inline-block;

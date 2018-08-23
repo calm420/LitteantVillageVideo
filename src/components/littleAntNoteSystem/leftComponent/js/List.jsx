@@ -86,7 +86,6 @@ export default class List extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "LIST");
                 if (result.success) {
                     if (type == 0) {
                         this.initDataSourceForDraft = this.initDataSourceForDraft.concat(result.response);
@@ -182,7 +181,6 @@ export default class List extends React.Component {
     }
 
     openEditor(id) {
-        console.log('编辑:'+id);
         this.setState({
             editorId: id,
         })
@@ -190,7 +188,6 @@ export default class List extends React.Component {
     }
 
     deleteArticle(id) {
-        console.log('删除');
         var param = {
             "method": 'deleteArticleInfoByType',
             "articleIds": id,
@@ -198,7 +195,6 @@ export default class List extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "delete");
                 if (result.success) {
                     this.refresh(this.state.tabsIndex);
                     this.props.submit('删除',id)

@@ -3,11 +3,13 @@ import {ImagePicker, InputItem, Toast} from 'antd-mobile';
 import '../css/ReadPanel.less';
 import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6
+var _this;
 export default class ReadPanel extends React.Component {
     constructor(props) {
         super(props);
         var loginUserStr = sessionStorage.getItem("loginUser");
         var loginUser = JSON.parse(loginUserStr);
+        _this = this;
         this.state = {
             title: 'app',
             open: false,
@@ -46,6 +48,7 @@ export default class ReadPanel extends React.Component {
                 status: 0,// 0草稿 1 发布
             },
             author: '',
+            userId: loginUser.uid,
             // user:JSON.parse(sessionStorage.getItem("loginUser"))
         };
         this.handleChange = this.handleChange.bind(this)
@@ -53,7 +56,7 @@ export default class ReadPanel extends React.Component {
 
     componentDidMount() {
         var _this = this;
-        //监听ｐｏｓｔｍｅｓｓａｇｅ消息接受
+        //监听postmessage消息接受
         window.addEventListener('message', (e) => {
             this.onMessage(e);
         })
@@ -67,14 +70,36 @@ export default class ReadPanel extends React.Component {
     //接受消息
     onMessage(e) {
         if (e.data) {
-            // console.log(JSON.parse(e.data),'e.data  ');
-            var labelData = JSON.parse(e.data);
-            if (labelData.method == 'submit') {
-                console.log(labelData.label, '标签');
-                console.log(labelData.title, '标题');
-                console.log(labelData.author, '作者');
-                this.updateArticleInfo(labelData.title, labelData.label, labelData.author, labelData.type, []);
+            var iframeData = JSON.parse(e.data);
+            if (iframeData.method == 'submit') {
+                var article = iframeData.article;
+                var imageList = [];
+                var attacheMents = article.attacheMents;
+                var newAttachMents = [];
+                for (var k in attacheMents) {
+                    newAttachMents.push({
+                        userId: _this.state.userId,
+                        type: attacheMents[k].type == 'image' ? 0 : 1,
+                        path: attacheMents[k].path,
+                        coverPath: attacheMents[k].cover,
+                        isCover: attacheMents[k].isMainCover,
+                        articleId: _this.state.artId,
+                        attachmentId: attacheMents[k].attachmentId || -1,
+                    })
+
+                    if (attacheMents[k].isMainCover) {
+                        imageList.push(attacheMents[k].cover);
+
+                    }
+                }
+                this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
+            } else if (iframeData.method == 'openPrieview') {
+                this.props.setPanel('openPrieview', iframeData.label);
             }
+            // else if(labelData.method == 'closePrieview'){
+            //     console.log('关闭遮罩层');
+            //     this.props.setPanel('closePrieview')
+            // }
         }
 
     }
@@ -228,19 +253,18 @@ export default class ReadPanel extends React.Component {
     //     });
     // }
 
-    updateArticleInfo(title, html, author, type, imgArray) {
+    updateArticleInfo(title, html, author, type, imgArray, articleAttachments) {
         var param = {
             "method": 'updateArticleInfo',
             "articleId": this.state.artId,
             "articleTitle": title,
-            "articleImgs": imgArray,
             "articleContent": html,
             "status": type,
             "author": author,
+            "articleAttachments": JSON.stringify(articleAttachments)
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'updateArticleInfo')
                 if (result.success) {
                     Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
                     this.initEditor();
@@ -263,15 +287,19 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result)
                 if (result.success) {
-                    this.setState({
-                        writeFlag: !this.state.writeFlag,
-                        artId: result.response,
-                        title_editor: '未命名'
-                    }, () => {
-                        this.props.submit('init', this.state.artId)
-                    })
+                    //向富文本发送清空编辑器内容的要求,这里的清空只是简单的reload,延迟300 解决闪烁的问题
+                    var ifm = document.getElementById('iframe_box');
+                    ifm.contentWindow.postMessage(JSON.stringify({method: 'clearRichTestSign'}), '*');
+                    setTimeout(function () {
+                        _this.setState({
+                            writeFlag: !_this.state.writeFlag,
+                            artId: result.response,
+                            title_editor: '未命名'
+                        }, () => {
+                            _this.props.submit('init', _this.state.artId)
+                        })
+                    }, 300)
                 } else {
                     Toast.fail("创建失败");
                 }
@@ -323,12 +351,12 @@ export default class ReadPanel extends React.Component {
                 this.getArticleInfoById(data);
                 break;
             case "删除":
-                if(data == this.state.artId){
+                if (data == this.state.artId) {
                     this.setState({
-                        writeFlag:false,
-                        artId:null,
+                        writeFlag: false,
+                        artId: null,
                     })
-                }else{
+                } else {
                     console.log('删除的不是编辑状态的');
                 }
                 break;
@@ -343,13 +371,72 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '根据id获取文章')
                 if (result.success) {
-                    console.log(result.response, '编辑的内容');
+                    var attacheMents = [];
+
+                    // console.log(result.response, '编辑的内容');
+                    // var DOM = document.createElement('div');
+                    // DOM.innerHTML = result.response.articleContent;
+                    // var images = DOM.querySelectorAll('img');
+                    // var videos = DOM.querySelectorAll('video');
+                    // console.log(result.response.articleContent);
+                    // for(var i=0;i < images.length;i++){
+                    //     console.log($(images[i]).attr('cover'),'cover');
+                    //     if($(images[i]).attr('cover')){
+                    //         attacheMents.push({
+                    //             type:'image',
+                    //             cover:$(images[i]).attr('cover'),
+                    //             path: $(images[i]).attr('src'),
+                    //             isMainCover: false,
+                    //         })
+                    //     }
+                    //
+                    // }
+                    // for(var j=0;j < videos.length;j++){
+                    //     console.log($(videos[j]).attr('cover'),'videoCover');
+                    //     if($(videos[j]).attr('cover')){
+                    //         attacheMents.push({
+                    //             type:'video',
+                    //             cover:$(videos[j]).attr('cover'),
+                    //             path: $(videos[j]).attr('src'),
+                    //             isMainCover: false,
+                    //         })
+                    //     }
+                    // }
+                    //
+                    // console.log(attacheMents,'attacheMents');
+                    // var coverImage = result.response.articleImgs;
+                    //
+                    // coverImage = coverImage.split(',');
+                    // console.log(coverImage,'coverImage');
+                    // for(var i=0;i<coverImage.length;i++){
+                    //     console.log(coverImage[i],'coverImage');
+                    // }
+                    // console.log(result.response.articleImgs);
+                    // console.log(document.getElementById('box'));
                     //发送消息
+                    var attacheMents = result.response.articleAttachments;
+                    var newAttachMents = [];
+                    for (var k in attacheMents) {
+                        newAttachMents.push({
+                            type: attacheMents[k].type == 0 ? 'image' : 'video',
+                            cover: attacheMents[k].coverPath,
+                            path: attacheMents[k].path,
+                            isMainCover: attacheMents[k].isCover,
+                            attachmentId: attacheMents[k].attachmentId,
+                        })
+                    }
                     var data = {};
                     data.method = 'editor';
-                    data.response = result.response;
+                    data.article = {
+                        title: result.response.articleTitle,
+                        content: result.response.articleContent,
+                        author: result.response.author,
+                        type: result.response.status,
+                        attacheMents: newAttachMents
+                    };
+                    // return;
+                    //发送消息
                     var ifm = document.getElementById('iframe_box');
                     ifm.contentWindow.postMessage(JSON.stringify(data), '*');
                     var res = result.response;
@@ -439,7 +526,9 @@ export default class ReadPanel extends React.Component {
                             {/*formats={this.state.formats}*/}
                             {/*bounds={'.app'}*/}
                             {/*/>*/}
-                            <iframe id="iframe_box" src="https://192.168.50.163:6443/richText/"
+                            {/*<iframe id="iframe_box" src="https://www.maaee.com:6443/richText/"
+                                    frameborder="0"></iframe>*/}
+                            <iframe id="iframe_box" src="https://192.168.50.29:6443/richText/"
                                     frameborder="0"></iframe>
 
                         </div>

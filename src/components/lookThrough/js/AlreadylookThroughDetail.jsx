@@ -60,8 +60,6 @@ export default class AlreadylookThroughDetail extends React.Component {
     * 是否推荐
     */
     recChange = (value) => {
-
-        console.log(value,"vvv")
         this.setState({
             isRec: value
         })
@@ -71,8 +69,6 @@ export default class AlreadylookThroughDetail extends React.Component {
      * 是否置顶
      */
     topChange = (value) => {
-
-        console.log(value,"inin")
         this.setState({
             isTop: value
         })
@@ -186,7 +182,6 @@ export default class AlreadylookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result)
                 if (result.success) {
                     calm.setState({
                         data: result.response,

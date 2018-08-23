@@ -23,7 +23,7 @@
 }
 #lookThrough .am-tabs-default-bar-tab {
   font-size: 17px;
-  color: #676C6F;
+  color: #676C6F ;
 }
 #lookThrough .am-tabs-default-bar-tab-active {
   color: #4285F4;
@@ -41,6 +41,12 @@
 #lookThrough .item .right {
   width: calc(100% - 38px);
   position: relative;
+}
+#lookThrough .item .topMsg {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  overflow: hidden;
 }
 #lookThrough .item .author {
   color: #666;

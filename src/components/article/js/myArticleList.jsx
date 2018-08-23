@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView, Button, List, Picker, Tag,PullToRefresh
+    Toast, DatePicker, ListView, Button, List, Picker, Tag, PullToRefresh
 } from 'antd-mobile';
 import '../css/myArticleList.less';
 
@@ -18,8 +18,8 @@ export default class myArticleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
-            index:0,
-            refreshing:false,
+            index: 0,
+            refreshing: false,
 
         }
     }
@@ -42,10 +42,11 @@ export default class myArticleList extends React.Component {
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.initDataSource = [];
-        this.setState({defaultPageNo: 1, refreshing: true,dataSource:dataSource.cloneWithRows(this.initDataSource),isLoading: true,
-            hasMore: true,},()=>{
-            this.getArticleInfoListByStatus();
+        this.setState({
+            defaultPageNo: 1,
+            refreshing: true,
+        }, () => {
+            this.getArticleInfoListByStatus(true);
         });
 
     };
@@ -53,7 +54,8 @@ export default class myArticleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByStatus() {
+    getArticleInfoListByStatus(clearFlag) {
+        var _this = this;
         var param = {
             "method": 'getArticleInfoListByStatus',
             "userId": this.state.userId,
@@ -62,14 +64,22 @@ export default class myArticleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'列表数据');
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
+
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initDataSource.splice(0);
+                        _this.state.dataSource = [];
+                        _this.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+
                     this.initDataSource = this.initDataSource.concat(result.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading:true,
-                        refreshing:false,
+                        isLoading: true,
+                        refreshing: false,
                     })
                     if (this.initDataSource.length == result.pager.rsCount) {
                         this.setState({
@@ -108,7 +118,7 @@ export default class myArticleList extends React.Component {
     toDetail(id) {
         console.log(id);
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId +"&type=3");
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3");
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -206,8 +216,9 @@ export default class myArticleList extends React.Component {
                         <div className="title">{rowData.articleTitle}</div>
                         <div className="images">
                             <div className="videoBox">
-                                <div onClick={this.toDetail.bind(this,rowData.articleId)} className="videoMask"></div>
-                                <img onClick={this.toDetail.bind(this,rowData.articleId)} className="playImg" src={require('../images/videoClick.png')} alt=""/>
+                                <div onClick={this.toDetail.bind(this, rowData.articleId)} className="videoMask"></div>
+                                <img onClick={this.toDetail.bind(this, rowData.articleId)} className="playImg"
+                                     src={require('../images/videoClick.png')} alt=""/>
                                 <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                             </div>
                         </div>
@@ -239,35 +250,30 @@ export default class myArticleList extends React.Component {
             <div id="myArticleList" style={{
                 height: document.body.clientHeight
             }}>
-                    <div style={{
-                        height: document.documentElement.clientHeight - 43.5,
-                        backgroundColor: '#f4f4f4'
-                    }}>
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            style={{
-                                height: document.body.clientHeight - 43.5,
-                            }}
-                            pullToRefresh={<PullToRefresh
-                                refreshing={this.state.refreshing}
-                                onRefresh={this.onRefresh}
-                            />}
-                        />
-                    </div>
+                <ListView
+                    ref={el => this.lv = el}
+                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                    renderFooter={() => (
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                            {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                        </div>)}
+                    renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                    className="am-list"
+                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                    //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                    onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                    style={{
+                        height: document.body.clientHeight,
+                    }}
+                    pullToRefresh={<PullToRefresh
+                        onRefresh={this.onRefresh}
+                        distanceToRefresh={80}
+                    />}
+                />
             </div>
         );
     }

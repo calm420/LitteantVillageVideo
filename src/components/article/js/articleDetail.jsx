@@ -36,6 +36,8 @@ export default class articleDetail extends React.Component {
             checkVersion:false, //是否显示举报按钮
             shareHidden: false, //分享后ｈｉｄｄｅｎ
             isLoadingHidden:false,
+            scrollTo: '',  //评论完成后scroll滚动至,
+            textareaFocus: false,
         }
     }
 
@@ -82,20 +84,84 @@ export default class articleDetail extends React.Component {
             machineType: machineType,
             version: version
         }, () => {
-            this.getArticleInfoById();
-            this.getUserLikeLog();
-            this.getDiscussInfoList();
-            this.getUserFavorite();
+            let p1 = new Promise((resolve,reject) =>{
+                this.getArticleInfoById(function(){
+                    resolve('getArticleInfoById');
+                });
+            });
+            let p2 = new Promise((resolve,reject) =>{
+                this.getUserLikeLog(function(){
+                    resolve('getUserLikeLog');
+                });
+            });
+            let p3 = new Promise((resolve,reject) =>{
+                this.getDiscussInfoList(function(){
+                    resolve('getDiscussInfoList');
+                });
+            });
+            let p4 = new Promise((resolve,reject) =>{
+                this.getUserFavorite(function(){
+                    resolve('getUserFavorite');
+                });
+            })
+            Promise.all([p1,p2,p3,p4]).then((result) => {
+                console.log(result);
+                console.log('请求完毕');
+                this.setState({
+                    scrollTo:$('.list-view-section-body')[0].offsetTop
+                })
+                // console.log($('.list-view-section-body')[0].offsetTop);
+
+            }).catch((error) => {
+                console.log('promise出错');
+            })
         })
 
 
-        $("#text").keydown(function (event) {
-            console.log(this, "this")
-            if (event.keyCode == 13) {
-                // alert('你按下了Enter');
-                theLike.saveDiscussInfo();
+        // $("#text").keydown(function (event) {
+        //     // $("#text").val(event.keyCode);
+        //     // return;
+        //     if (event.keyCode == 13) {
+        //         // alert('你按下了Enter');
+        //         theLike.saveDiscussInfo();
+        //
+        //     }
+        // });
+        window.addEventListener('resize', this.onWindwoResize);
 
-            }
+    }
+
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        // setTimeout(() => {
+            theLike.setState({
+                clientHeight: theLike.state.clientHeight,
+            })
+        // }, 100)
+
+    }
+
+
+    //评论框获取焦点事件
+    textareaFocus(){
+
+        this.setState({
+            textareaFocus: true,
+        })
+        // console.log('获取焦点');
+        // console.log($('#text'));
+        // return;
+        // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
+        setTimeout(function () {
+            document.body.scrollTop = document.body.scrollHeight;
+        }, 400);
+    }
+
+
+    textareaBlurs(){
+        this.setState({
+            textareaFocus: false,
         })
     }
 
@@ -103,7 +169,7 @@ export default class articleDetail extends React.Component {
     /**
      * 获取评论列表
      * **/
-    getDiscussInfoList() {
+    getDiscussInfoList(reslove) {
         var param = {
             "method": 'getDiscussInfoList',
             "videoId": this.state.artId,
@@ -140,6 +206,9 @@ export default class articleDetail extends React.Component {
                         })
                     }
                 }
+                if(reslove){
+                    reslove();
+                }
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -169,7 +238,7 @@ export default class articleDetail extends React.Component {
 
 
     // 判断用户是否已经点赞
-    getUserLikeLog() {
+    getUserLikeLog(reslove) {
         var JsonParameter = {
             userId: this.state.userId,
             targetId: this.state.artId,
@@ -190,6 +259,9 @@ export default class articleDetail extends React.Component {
                         likeFlag: data.currentUserIsLike
                     })
                 }
+                if(reslove){
+                    reslove();
+                }
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -201,7 +273,7 @@ export default class articleDetail extends React.Component {
     /**
      * 按文章id获取详情信息
      * **/
-    getArticleInfoById() {
+    getArticleInfoById(reslove) {
         var headers = {};
         if (this.state.machineType != '' && this.state.version != '') {
             headers = {
@@ -233,6 +305,9 @@ export default class articleDetail extends React.Component {
                     })
                     //文章阅读量+1
                     this.addArticleReadCount()
+                }
+                if(reslove){
+                    reslove();
                 }
             },
             onError: function (error) {
@@ -303,7 +378,7 @@ export default class articleDetail extends React.Component {
     }
 
     // 判断是否收藏
-    getUserFavorite() {
+    getUserFavorite(reslove) {
         var param = {
             "method": 'getUserFavorite',
             "userId": this.state.userId,
@@ -320,6 +395,9 @@ export default class articleDetail extends React.Component {
                 } else {
                     Toast.info('+1?');
                 }
+                if(reslove){
+                    reslove();
+                }
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -327,6 +405,8 @@ export default class articleDetail extends React.Component {
         });
     }
 
+
+    //点击收藏
     changePent() {
         var userFavoriteInfoJson = {
             userId: this.state.userId,
@@ -381,9 +461,14 @@ export default class articleDetail extends React.Component {
                         clientHeight: document.body.clientHeight,
                         isLoading: true,
                         hasMore: true,
-                        commitText: ''
+                        commitText: '',
                     }, () => {
-                        window.location.reload()
+                        // ssdasd23123-=-09;
+
+                        this.getDiscussInfoList(function(){
+                            $(".am-list-view-scrollview").animate({scrollTop: 4107}, 1000);
+                        });
+                        // window.location.reload()
                         // theLike.getDiscussInfoList();
                     })
                 } else {
@@ -435,10 +520,10 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = ()=>{
-        console.log('分享');
-        console.log(window.location.href,'url');
-        console.log($('.content').text(),'标题');
-        console.log(this.state.data.author,'作者');
+        // console.log('分享');
+        // console.log(window.location.href,'url');
+        // console.log($('.content').text(),'标题');
+        // console.log(this.state.data.author,'作者');
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,
@@ -466,7 +551,7 @@ export default class articleDetail extends React.Component {
                 }>
                     <List className="listCont line_public ">
                         <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar : ""} multipleLine>
-                            {rowData.discussUser ? rowData.discussUser.userName : ""}
+                            <span>{rowData.discussUser ? rowData.discussUser.userName : ""}</span>
                             <Brief>{rowData.discussContent}</Brief>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
@@ -492,17 +577,29 @@ export default class articleDetail extends React.Component {
                                 autoHeight
                                 value={this.state.commitText}
                                 onChange={this.commitChange.bind(this)}
+                                onFocus={this.textareaFocus.bind(this)}
+                                onBlur={this.textareaBlurs.bind(this)}
                             />
-                            <div className="pent" onClick={this.changePent.bind(this)}>
-                                <img
-                                    src={this.state.collection ? require("../images/fillPent.png") : require("../images/pent.png")}
-                                    alt=""/>
+                            <div style={
+                                this.state.textareaFocus?{display:'none'}:{display:'inline-block'}
+                            }>
+                                <div className="pent" onClick={this.changePent.bind(this)}>
+                                    <img
+                                        src={this.state.collection ? require("../images/fillPent.png") : require("../images/pent.png")}
+                                        alt=""/>
+                                </div>
+                                <div className="share" onClick={this.toShare}>
+                                    <img
+                                        src={require("../images/share.png")}
+                                        alt=""/>
+                                </div>
                             </div>
-                            <div className="share" onClick={this.toShare}>
-                                <img
-                                    src={require("../images/share.png")}
-                                    alt=""/>
+                            <div style={
+                                this.state.textareaFocus?{display:'inline-block'}:{display:'none'}
+                            }>
+                                <Button className='commit_button' type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>
                             </div>
+
                             {/*<div style={*/}
                                 {/*this.state.reportFlag?{display:'inline-block'}:{display:'none'}*/}
                             {/*} className="report" onClick={this.toReport.bind(this)}>*/}
@@ -532,7 +629,7 @@ export default class articleDetail extends React.Component {
                                         <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span></div>
                                     </div>
                                     <div style={
-                                        this.state.shareHidden ? {display:'none'}:{display:'block'}
+                                        this.state.shareHidden ? {display:'none'}:{display:'inline-block'}
                                     }>
 
                                         <div className="like" onClick={this.likeFlag.bind(this)} style={

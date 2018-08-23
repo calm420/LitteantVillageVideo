@@ -264,7 +264,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                     <span className='title'>审核结果：</span>
                                                     {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                     {calm.state.data.auditInfo.istop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
-                                                    {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已推荐</span> : <span>未推荐</span>}
+                                                    {/* {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已推荐</span> : <span>未推荐</span>} */}
                                                     <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                         重新审核
                                                 </div>
@@ -315,7 +315,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                     <div className='result'>
                                                         <span className='title'>审核结果：</span>
                                                         {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                                        {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已推荐</span> : <span>未推荐</span>}
+                                                        {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
                                                         <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                             重新审核
                                                         </div>
@@ -383,14 +383,13 @@ export default class AlreadylookThroughDetail extends React.Component {
                                         ))}
                                     </List>
                                     <div style={{ display: calm.state.isShow ? "block" : "none" }}>
-                                        <List renderHeader={() => '推荐：'}>
+                                        {/* <List renderHeader={() => '推荐：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}
-                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
                                                 </RadioItem>
                                             ))}
-                                        </List>
+                                        </List> */}
                                         <List renderHeader={() => '置顶：'}>
                                             {isTopData.map(i => (
                                                 <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
@@ -430,7 +429,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List>
-                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '推荐：'}>
+                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}

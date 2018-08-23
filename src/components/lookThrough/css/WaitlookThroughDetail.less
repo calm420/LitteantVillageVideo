@@ -1,24 +1,28 @@
 #waitLookThrough {
+    .fatherDiv {
+        position: relative;
+        height: 100%;
+    }
     video::-webkit-media-controls-fullscreen-button {
         display: none;
     }
     font-size: 15px;
     color: #333;
-    .content{
+    .content {
         height: calc(~"100% - 75px");
         overflow-y: auto;
     }
-    .sameBack{
+    .sameBack {
         background-color: #fff;
         padding: 15px;
     }
-    .title{
+    .title {
         font-size: 18px;
         line-height: 20px;
         margin-bottom: 15px;
         color: #000;
     }
-    .topMsg{
+    .topMsg {
         height: 28px;
         font-size: 12px;
         -webkit-align-items: center;
@@ -30,7 +34,7 @@
         display: flex;
         text-align: left;
         overflow: hidden;
-        .photo{
+        .photo {
             width: 28px;
             height: 28px;
             -webkit-border-radius: 50%;
@@ -38,34 +42,33 @@
             border-radius: 50%;
             margin-right: 10px;
         }
-        .type{
-            img{
+        .type {
+            img {
                 width: 48px;
                 height: 17px;
                 vertical-align: middle;
             }
         }
-        .time{
+        .time {
             color: #999;
             margin: 0 10px;
         }
     }
-    .textCont{
+    .textCont {
         margin-top: 15px;
         font-size: 15px;
         color: #333;
         line-height: 22px;
         word-break: break-all;
-        img{
+        img {
             max-width: 100%;
         }
-        video{
+        video {
             max-width: 100%;
         }
-        .video_title{
-            margin-bottom:10px;
+        .video_title {
+            margin-bottom: 10px;
         }
-
     }
     .isDangerArea {
         margin: 15px 0 10px;
@@ -87,7 +90,6 @@
             line-height: 36px;
             vertical-align: bottom;
         }
-
         .am-list-body {
             float: left;
             border: 0;
@@ -112,7 +114,6 @@
             height: 11px;
             border-width: 0 1px 1px 0;
             top: 0;
-
         }
         .am-radio-inner {
             border: 1px #999999 solid;
@@ -121,51 +122,49 @@
             background-color: #fff;
             left: 0 !important;
         }
-        .am-radio-checked .am-radio-inner{
+        .am-radio-checked .am-radio-inner {
             border: 1px #4285F4 solid;
         }
-        .am-list-header{
+        .am-list-header {
             padding: 16px 15px;
         }
-        .toFirst{
+        .toFirst {
             border-top: 10px #f4f4f4 solid;
         }
-        &.priority{
-            .am-list-item:first-child{
+        &.priority {
+            .am-list-item:first-child {
                 padding-left: 30px;
             }
-            .toPriority{
+            .toPriority {
                 border-top: 10px #f4f4f4 solid;
-                .am-list-item:first-child{
+                .am-list-item:first-child {
                     padding-left: 0;
                 }
             }
         }
-
-
     }
-    .description{
+    .description {
         font-size: 15px;
         color: #666;
-        .am-list .am-list-item.am-textarea-item{
+        .am-list .am-list-item.am-textarea-item {
             padding: 0;
         }
-        textarea{
+        textarea {
             font-size: 13px;
             line-height: 18px;
             color: #333;
         }
     }
-
-    .editor_image,.editor_video{
+    .editor_image,
+    .editor_video {
         max-width: 100%;
         margin: 10px auto 0 auto;
         display: block;
     }
-    .editor_video{
+    .editor_video {
         padding: 5px;
     }
-    .editor_text{
+    .editor_text {
         font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "Apple Color Emoji", "Emoji Symbols Font", "Segoe UI Symbol", Arial, sans-serif;
         font-style: normal;
         font-size: 16px;
@@ -175,6 +174,6 @@
         /*字体颜色影响插件*/
         color: #000000;
         text-align: left;
-        border:1px solid #fff
+        border: 1px solid #fff
     }
 }

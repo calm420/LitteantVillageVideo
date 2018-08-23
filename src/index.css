@@ -81,7 +81,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;
@@ -722,6 +722,7 @@ hr {
   color: #333;
   background: transparent;
 }
+/* 通用编辑文章样子*/
 .editor_text {
   font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "Apple Color Emoji", "Emoji Symbols Font", "Segoe UI Symbol", Arial, sans-serif;
   font-style: normal;
@@ -732,7 +733,7 @@ hr {
   /*字体颜色影响插件*/
   color: #000000;
   text-align: left;
-  border: 1px solid #ffffff;
+  border: 1px solid #fff;
 }
 .editor_image,
 .editor_video {

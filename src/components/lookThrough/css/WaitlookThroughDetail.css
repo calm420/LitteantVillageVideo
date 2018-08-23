@@ -17,6 +17,7 @@
   font-size: 18px;
   line-height: 20px;
   margin-bottom: 15px;
+  color: #000;
 }
 #waitLookThrough .topMsg {
   height: 28px;
@@ -122,6 +123,18 @@
 }
 #waitLookThrough .isDangerArea .am-list-header {
   padding: 16px 15px;
+}
+#waitLookThrough .isDangerArea .toFirst {
+  border-top: 10px #f4f4f4 solid;
+}
+#waitLookThrough .isDangerArea.priority .am-list-item:first-child {
+  padding-left: 30px;
+}
+#waitLookThrough .isDangerArea.priority .toPriority {
+  border-top: 10px #f4f4f4 solid;
+}
+#waitLookThrough .isDangerArea.priority .toPriority .am-list-item:first-child {
+  padding-left: 0;
 }
 #waitLookThrough .description {
   font-size: 15px;

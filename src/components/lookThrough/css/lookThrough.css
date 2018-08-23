@@ -23,7 +23,7 @@
 }
 #lookThrough .am-tabs-default-bar-tab {
   font-size: 17px;
-  color: #676C6F ;
+  color: #676C6F;
 }
 #lookThrough .am-tabs-default-bar-tab-active {
   color: #4285F4;
@@ -49,11 +49,12 @@
   overflow: hidden;
 }
 #lookThrough .item .author {
+  margin-right: 10px;
   color: #666;
   font-size: 13px;
   vertical-align: middle;
   line-height: 28px;
-  max-width: calc(100% - 115px);
+  max-width: calc(100% - 88px);
 }
 #lookThrough .item .photo {
   width: 28px;
@@ -64,13 +65,41 @@
   margin-right: 10px;
 }
 #lookThrough .item .type {
-  margin-left: 10px;
+  margin-right: 10px;
   line-height: 28px;
 }
 #lookThrough .item .type img {
   width: 48px;
   height: 17px;
   vertical-align: middle;
+}
+#lookThrough .item .toFirst {
+  width: 32px;
+  height: 17px;
+  line-height: 17px;
+  box-sizing: border-box;
+  border: 1px #D84759 solid;
+  color: #D84759;
+  font-size: 12px;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: inline-block;
+}
+#lookThrough .item .toPriority {
+  width: 32px;
+  height: 17px;
+  line-height: 17px;
+  box-sizing: border-box;
+  border: 1px #4285F4 solid;
+  color: #4285F4;
+  font-size: 12px;
+  text-align: center;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: inline-block;
 }
 #lookThrough .item .title {
   font-size: 15px;
@@ -87,6 +116,15 @@
   font-size: 12px;
   color: #666;
   margin-top: 8px;
+}
+#lookThrough .reviewed .item .author {
+  max-width: calc(100% - 35px);
+}
+#lookThrough .reviewed .topMsg {
+  width: calc(100% - 60px);
+  -webkit-flex-wrap: wrap;
+  /* Safari 6.1+ */
+  flex-wrap: wrap;
 }
 #lookThrough .status i {
   background: url("../img/icon_passNo.png") no-repeat;

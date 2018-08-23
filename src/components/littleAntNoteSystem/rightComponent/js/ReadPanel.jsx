@@ -534,7 +534,7 @@ export default class ReadPanel extends React.Component {
                             {/*formats={this.state.formats}*/}
                             {/*bounds={'.app'}*/}
                             {/*/>*/}
-                            <iframe id="iframe_box" src="https://192.168.50.186:6443/richText/" frameborder="0">
+                            <iframe id="iframe_box" src="https://www.maaee.com:6443/richText/" frameborder="0">
                             </iframe>
 
                             {/*<iframe id="iframe_box" src="https://www.maaee.com:6443/richText/"

@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #waitLookThrough {
   font-size: 15px;
   color: #333;
@@ -19,13 +20,17 @@
   margin-bottom: 15px;
 }
 #waitLookThrough .topMsg {
-  font-size: 12px;
   height: 28px;
-  line-height: 28px;
-}
-#waitLookThrough .topMsg span {
-  vertical-align: top;
-  display: inline-block;
+  font-size: 12px;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+  overflow: hidden;
 }
 #waitLookThrough .topMsg .photo {
   width: 28px;

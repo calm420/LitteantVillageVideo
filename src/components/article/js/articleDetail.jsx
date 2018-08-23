@@ -557,7 +557,7 @@ export default class articleDetail extends React.Component {
                                         <div className="i_report" onClick={this.toReport.bind(this)}><span>举报</span></div>
                                     </div>
                                     <div style={
-                                        this.state.shareHidden ? {display:'none'}:{display:'block'}
+                                        this.state.shareHidden ? {display:'none'}:{display:'inline-block'}
                                     }>
 
                                         <div className="like" onClick={this.likeFlag.bind(this)} style={

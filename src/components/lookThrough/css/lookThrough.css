@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #lookThrough {
   color: #333;
 }
@@ -40,11 +41,20 @@
 }
 #lookThrough .item .right {
   width: calc(100% - 38px);
+  position: relative;
+}
+#lookThrough .item .topMsg {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  overflow: hidden;
 }
 #lookThrough .item .author {
   color: #666;
   font-size: 13px;
-  line-height: 17px;
+  vertical-align: middle;
+  line-height: 28px;
+  max-width: calc(100% - 115px);
 }
 #lookThrough .item .photo {
   width: 28px;
@@ -56,11 +66,12 @@
 }
 #lookThrough .item .type {
   margin-left: 10px;
+  line-height: 28px;
 }
 #lookThrough .item .type img {
   width: 48px;
   height: 17px;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 #lookThrough .item .title {
   font-size: 15px;
@@ -70,11 +81,27 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  margin-top: 8px;
+  margin-top: 5px;
   line-height: 20px;
 }
 #lookThrough .item .time {
   font-size: 12px;
   color: #666;
   margin-top: 8px;
+}
+#lookThrough .status i {
+  background: url("../img/icon_passNo.png") no-repeat;
+  background-size: 100%;
+  width: 56px;
+  height: 43px;
+  position: absolute;
+  right: -6px;
+  top: -10px;
+  font-size: 0;
+  z-index: 11;
+  display: block;
+}
+#lookThrough .status i.pass {
+  background: url("../img/icon_pass.png") no-repeat;
+  background-size: 100%;
 }

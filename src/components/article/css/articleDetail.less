@@ -338,21 +338,56 @@
     opacity: 0.5;
   }
 
+  //.commit_button{
+  //  width: 68px;
+  //  display: inline-block;
+  //  height: 38px !important;
+  //  line-height: 38px !important;
+  //  background: #4380eb;
+  //  font-size: 15px;
+  //  vertical-align: middle;
+  //}
   .commit_button{
     width: 68px;
     display: inline-block;
-    position: absolute;
-    top: 10px;
-    height: 38px !important;
+    height: 100%;
     line-height: 38px !important;
     background: #4380eb;
     font-size: 15px;
+    vertical-align: middle;
+    position: relative;
+    color: #fff;
+    border-radius: 3px;
+    span{
+      vertical-align: middle;
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+    }
   }
-
   //
   //.am-list .commentList .am-list-view-scrollview{
   //  overflow: hidden;
   //}
   ////隐藏滚动条
   //.am-list-body{overflow: hidden}
+  .comments_send{
+    padding: 10px 15px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    .am-list-item{
+      padding: 0;
+    }
+    .am-list-item{
+      min-height: 38px !important;
+      margin-right: 15px;
+    }
+    .pent, .share{
+      margin-top: 9px;
+    }
+  }
 }

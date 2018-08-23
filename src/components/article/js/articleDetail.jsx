@@ -37,7 +37,7 @@ export default class articleDetail extends React.Component {
             shareHidden: false, //分享后ｈｉｄｄｅｎ
             isLoadingHidden:false,
             scrollTo: '',  //评论完成后scroll滚动至,
-            textareaFocus: true,
+            textareaFocus: false,
         }
     }
 
@@ -145,6 +145,10 @@ export default class articleDetail extends React.Component {
 
     //评论框获取焦点事件
     textareaFocus(){
+
+        this.setState({
+            textareaFocus: true,
+        })
         // console.log('获取焦点');
         // console.log($('#text'));
         // return;
@@ -152,6 +156,13 @@ export default class articleDetail extends React.Component {
         setTimeout(function () {
             document.body.scrollTop = document.body.scrollHeight;
         }, 400);
+    }
+
+
+    textareaBlurs(){
+        this.setState({
+            textareaFocus: false,
+        })
     }
 
 
@@ -567,6 +578,7 @@ export default class articleDetail extends React.Component {
                                 value={this.state.commitText}
                                 onChange={this.commitChange.bind(this)}
                                 onFocus={this.textareaFocus.bind(this)}
+                                onBlur={this.textareaBlurs.bind(this)}
                             />
                             <div style={
                                 this.state.textareaFocus?{display:'none'}:{display:'inline-block'}

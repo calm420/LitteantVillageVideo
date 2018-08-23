@@ -261,7 +261,8 @@ export default class lookThrough extends React.Component {
                                 <div className="right">
                                     <span className='author'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
                                     <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
-                                    <span>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? "通过" : "未通过") : ""}</span>
+                                    <span>{rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "":<span>优先</span> ):""}</span>
+                                    <span className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</span>
                                     <span className='title'>{rowData.littleVideoInfo.videoContent}</span>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
@@ -273,7 +274,8 @@ export default class lookThrough extends React.Component {
                                     <div className="right">
                                         <span className='author'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                         <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
-                                        <span>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? "通过" : "未通过") : ""}</span>
+                                        <span>{rowData.articleInfo.isTop == 1 ? <span>置顶</span>:""}</span>
+                                        <span className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</span>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                         <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                     </div>
@@ -285,7 +287,7 @@ export default class lookThrough extends React.Component {
                                             <div className='right'>
                                                 <span className='author'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
                                                 <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
-                                                <span>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? "通过" : "未通过") : ""}</span>
+                                                <span className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</span>
                                                 <div className='title'>{rowData.discussInfo.discussContent}</div>
                                                 <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
                                             </div>

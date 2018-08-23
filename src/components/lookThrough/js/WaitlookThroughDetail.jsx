@@ -156,7 +156,7 @@ export default class WaitlookThroughDetail extends React.Component {
                     auditMark: calm.state.textareaValue,
                     auditorId: calm.state.auditorId,
                     istop: calm.state.isTop,
-                    isRecommend: calm.state.isRec
+                    // isRecommend: calm.state.isRec
                 },
             };
         } else if (calm.state.type == 1) {
@@ -187,7 +187,7 @@ export default class WaitlookThroughDetail extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
-                    //关闭当前窗口，并刷新上一个页面
+                    //关闭当前窗口，不刷新上一个页面
                     var data = {
                         method: 'finish',
                     };
@@ -285,14 +285,13 @@ export default class WaitlookThroughDetail extends React.Component {
                                         ))}
                                     </List>
                                     <div style={{ display: calm.state.isShow ? "block" : "none" }}>
-                                        <List renderHeader={() => '推荐：'}>
+                                        {/* <List renderHeader={() => '推荐：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}
-                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
                                                 </RadioItem>
                                             ))}
-                                        </List>
+                                        </List> */}
                                         <List renderHeader={() => '置顶：'}>
                                             {isTopData.map(i => (
                                                 <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
@@ -328,7 +327,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List>
-                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '推荐：'}>
+                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}

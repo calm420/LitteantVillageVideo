@@ -40,6 +40,7 @@
     border-radius: 2px;
     .right{
       width: calc(~"100% - 38px");
+      position: relative;
     }
     .author{
       color: #666;
@@ -70,13 +71,31 @@
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-      margin-top: 8px;
+      margin-top: 12px;
       line-height: 20px;
     }
     .time{
       font-size: 12px;
       color: #666;
-      margin-top: 8px;
+      margin-top: 12px;
+    }
+  }
+  .status{
+    i{
+      background: url("../img/icon_passNo.png") no-repeat;
+      background-size: 100%;
+      width: 52px;
+      height: 40px;
+      position: absolute;
+      right: -6px;
+      top: -10px;
+      font-size: 0;
+      z-index: 11;
+      display: block;
+      &.pass{
+        background: url("../img/icon_pass.png") no-repeat;
+        background-size: 100%;
+      }
     }
   }
 }

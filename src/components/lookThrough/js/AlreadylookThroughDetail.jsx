@@ -118,7 +118,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                     auditMark: calm.state.textareaValue,
                     auditorId: 3,
                     istop: calm.state.isTop,
-                    isRecommend: calm.state.isRec
+                    // isRecommend: calm.state.isRec
                 },
             }
         } else if (calm.state.type == 1) {
@@ -153,7 +153,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
-                    //关闭当前窗口，并刷新上一个页面
+                    //关闭当前窗口，不刷新上一个页面
                     var data = {
                         method: 'finish',
                     };

@@ -3,7 +3,7 @@
   position: relative;
 }
 #articleList .am-pull-to-refresh-content-wrapper {
-  height: 667px !important;
+  height: 100vh;
   overflow-y: auto;
 }
 #articleList .am-tabs-pane-wrap {

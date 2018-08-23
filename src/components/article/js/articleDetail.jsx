@@ -90,13 +90,37 @@ export default class articleDetail extends React.Component {
 
 
         $("#text").keydown(function (event) {
-            console.log(this, "this")
+            console.log(this, "this");
+            // $("#text").val(event.keyCode);
+            // return;
             if (event.keyCode == 13) {
                 // alert('你按下了Enter');
                 theLike.saveDiscussInfo();
 
             }
-        })
+        });
+        window.addEventListener('resize', this.onWindwoResize);
+    }
+
+    //监听窗口改变时间
+    onWindwoResize() {
+        // this
+        // setTimeout(() => {
+            theLike.setState({
+                clientHeight: theLike.state.clientHeight,
+            })
+        // }, 100)
+
+    }
+
+    textareaFocus(){
+        console.log('获取焦点');
+        console.log($('#text'));
+        // return;
+        // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
+        setTimeout(function () {
+            document.body.scrollTop = document.body.scrollHeight;
+        }, 400);
     }
 
 
@@ -492,6 +516,7 @@ export default class articleDetail extends React.Component {
                                 autoHeight
                                 value={this.state.commitText}
                                 onChange={this.commitChange.bind(this)}
+                                onFocus={this.textareaFocus.bind(this)}
                             />
                             <div className="pent" onClick={this.changePent.bind(this)}>
                                 <img

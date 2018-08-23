@@ -1,16 +1,21 @@
 #articleList {
   position: relative;
-  .am-tabs-pane-wrap{
+  .am-pull-to-refresh-content-wrapper {
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .am-tabs-pane-wrap {
     overflow: hidden;
   }
-  .am-list-view-scrollview-content{
+  .am-list-view-scrollview-content {
     width: 100%;
   }
-  .am-tabs-default-bar-tab{
+  .am-tabs-default-bar-tab {
     font-size: 17px;
-    color: #676C6F ;
+    color: #676C6F;
   }
-  .am-tabs-default-bar-tab-active{
+  .am-tabs-default-bar-tab-active {
     color: #4285F4;
   }
   .leftBox {
@@ -18,7 +23,7 @@
     margin-right: 10%;
     display: inline-block;
   }
-  .item{
+  .item {
     padding: 15px;
   }
   .title {
@@ -27,19 +32,19 @@
     line-height: 20px;
     margin-bottom: 10px;
     word-break: break-all;
-    overflow : hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    &.minHeight{
+    &.minHeight {
       min-height: 47px
-  }
+    }
   }
   .bottom {
     font-size: 12px;
     color: #999;
-    &>div{
+    & > div {
       margin-right: 10px;
     }
     .read {
@@ -101,9 +106,9 @@
       transform: translate(-50%, -50%);
     }
   }
-  .artEmptyDiv{
+  .artEmptyDiv {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 0;
     width: 100%;
     z-index: 99;
@@ -113,7 +118,7 @@
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    .emptyIcon{
+    .emptyIcon {
       background: url("../images/icon_empty.png") no-repeat;
       width: 194px;
       height: 105px;
@@ -121,13 +126,13 @@
       text-align: center;
       margin: 0 auto;
     }
-    .text{
+    .text {
       color: #999;
       font-size: 14px;
       padding: 33px 0 50px;
       line-height: 22px;
     }
-    .btn{
+    .btn {
       color: #4285f4;
       border: 1px #4285f4 solid;
       -webkit-border-radius: 2px;
@@ -142,12 +147,12 @@
     }
   }
 
-  .video_box{
+  .video_box {
     //border: 1px solid red;
     overflow-x: auto;
     width: 100%;
     white-space: nowrap;
-    .gradient_bgT{
+    .gradient_bgT {
       background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Safari 5.1 - 6.0 */
       background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Opera 11.1 - 12.0 */
       background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Firefox 3.6 - 15 */
@@ -160,11 +165,11 @@
       box-sizing: border-box;
       min-height: 50px;
     }
-    .gradient_bgB{
-      background: -webkit-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Safari 5.1 - 6.0 */
-      background: -o-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Opera 11.1 - 12.0 */
-      background: -moz-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Firefox 3.6 - 15 */
-      background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.2)); /* 标准的语法 */
+    .gradient_bgB {
+      background: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)); /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)); /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)); /* Firefox 3.6 - 15 */
+      background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)); /* 标准的语法 */
       position: absolute;
       bottom: 0;
       left: 0;
@@ -174,7 +179,7 @@
       box-sizing: border-box;
       font-size: 12px;
     }
-    .video_row{
+    .video_row {
       width: 172px;
       height: 215px;
       display: inline-block;
@@ -185,19 +190,19 @@
       -moz-border-radius: 4px;
       border-radius: 4px;
       overflow: hidden;
-      .video_firstImage{
+      .video_firstImage {
         width: 100%;
         height: 100%;
 
       }
-      .like{
+      .like {
         position: absolute;
         bottom: 9px;
         right: 8px;
         color: white;
         letter-spacing: 1px;
       }
-      .read{
+      .read {
         position: absolute;
         bottom: 9px;
         left: 9px;
@@ -205,12 +210,12 @@
         background: url("../images/icon_play.png") no-repeat left center;
         background-size: 8px;
         padding-left: 13px;
-        span{
+        span {
           transform: rotate(90deg);
           display: inline-block;
         }
       }
-      .video_content{
+      .video_content {
         color: white;
         font-size: 15px;
         line-height: 20px;
@@ -224,12 +229,28 @@
 
       }
     }
-    .video_row:nth-last-child(1){
+    .video_row:nth-last-child(1) {
       margin-right: 5px;
     }
   }
   .video_box::-webkit-scrollbar {
     display: none;
+  }
+
+  .toTop {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 2.5rem;
+    bottom: 2.5rem;
+    z-index: 999;
+    -webkit-transition: 2s;
+    transition: 2s;
+  }
+
+  .toTop img {
+    width: 100%;
+    height: 100%;
   }
 
 }

@@ -246,10 +246,12 @@ export default class WaitlookThroughDetail extends React.Component {
                                         <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                     </div>
+                                    <div>{calm.state.data.videoContent}</div>
                                     <div className="textCont">
                                         <video
                                             controls="controls"
                                             preload="auto"
+                                            poster={calm.state.data.coverPath}
                                             style={{ objectFit: "fill", width: "100%" }}
                                             src={calm.state.data.videoPath}>
                                         </video>

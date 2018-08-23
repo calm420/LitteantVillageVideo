@@ -218,6 +218,7 @@ export default class lookThrough extends React.Component {
                                 <div className='right'>
                                     <span className='author'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
                                     <span className="type">{/*类型：短视频*/} <img src={require("../img/icon_video.png")} /></span>
+                                    <span className='title'>{rowData.littleVideoInfo.videoContent}</span>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
                             </div>
@@ -261,6 +262,7 @@ export default class lookThrough extends React.Component {
                                 <div className="right">
                                     <span className='author'>{rowData.littleVideoInfo.userInfo ?rowData.littleVideoInfo.userInfo.userName:""}</span>
                                     <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                    <span className='title'>{rowData.littleVideoInfo.videoContent}</span>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
                             </div>

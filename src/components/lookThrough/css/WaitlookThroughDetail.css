@@ -61,7 +61,7 @@
   font-size: 15px;
   color: #333;
   line-height: 22px;
-  word-break: break-all;
+  word-break: break-word;
 }
 #waitLookThrough .textCont img {
   max-width: 100%;

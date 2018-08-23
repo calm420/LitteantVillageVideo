@@ -391,11 +391,11 @@ export default class WaitlookThroughDetail extends React.Component {
                                         :
                                         ""
                         }
-                        <div className="submitBtn">
-                            <Button type='warning' onClick={_this.submit}>提交</Button>
-                        </div>
-                    </div>
 
+                    </div>
+                </div>
+                <div className="submitBtn">
+                    <Button type='warning' onClick={_this.submit}>提交</Button>
                 </div>
             </div>
 

@@ -222,8 +222,7 @@ export default class articleDetail extends React.Component {
                             })
                         }
                         $(".ql-image").click(function (e) {
-                            console.log(123);
-                            console.log(e);
+
                         });
                     })
                     //文章阅读量+1

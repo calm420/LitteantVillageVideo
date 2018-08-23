@@ -38,6 +38,7 @@ export default class articleDetail extends React.Component {
             isLoadingHidden: false,
             scrollTo: '',  //评论完成后scroll滚动至,
             textareaFocus: false,
+            isPhone: 'Android',
         }
     }
 
@@ -74,8 +75,17 @@ export default class articleDetail extends React.Component {
                 shareHidden: true,
             })
         }
-        //
-        // return;
+
+        var phoneType = navigator.userAgent;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            this.setState({
+                isPhone: 'ios',
+            })
+        } else {
+            this.setState({
+                isPhone: 'Android',
+            })
+        }
 
         this.setState({
             artId: artId,
@@ -111,12 +121,13 @@ export default class articleDetail extends React.Component {
                 this.setState({
                     scrollTo: $('.list-view-section-body')[0].offsetTop
                 })
-                // console.log($('.list-view-section-body')[0].offsetTop);
 
             }).catch((error) => {
                 console.log('promise出错');
             })
         })
+
+        console.log(this.state.isPhone, 'isPhone');
 
 
         // $("#text").keydown(function (event) {
@@ -136,20 +147,22 @@ export default class articleDetail extends React.Component {
     onWindwoResize() {
         // this
         // setTimeout(() => {
-        // Toast.info(theLike.state.clientHeight+'由大变小',1);
-        if(theLike.state.clientHeight > document.body.clientHeight){
-            // Toast.info('键盘弹起');
-            theLike.setState({
-                textareaFocus: true,
-                clientHeight: document.body.clientHeight,
-            })
-        }else{
-            // Toast.info('键盘收起');
-            theLike.setState({
-                textareaFocus: false,
-                clientHeight: document.body.clientHeight,
-            })
+        if (theLike.state.isPhone == 'Android') {
+            if (theLike.state.clientHeight > document.body.clientHeight) {
+                // Toast.info('键盘弹起');
+                theLike.setState({
+                    textareaFocus: true,
+                    clientHeight: document.body.clientHeight,
+                })
+            } else {
+                // Toast.info('键盘收起');
+                theLike.setState({
+                    textareaFocus: false,
+                    clientHeight: document.body.clientHeight,
+                })
+            }
         }
+
         // }, 100)
 
     }
@@ -158,16 +171,34 @@ export default class articleDetail extends React.Component {
     //评论框获取焦点事件
     textareaFocus() {
         var height = document.body.scrollHeight;
-        // console.log('获取焦点');
-        // console.log($('#text'));
-        // return;
-        // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
-        // document.body.scrollTop = document.body.scrollHeight;
-        setTimeout(function () {
-            document.body.scrollTop = height;
-        }, 150);
+        if (theLike.state.isPhone == 'Android') {
+            // console.log('获取焦点');
+            // console.log($('#text'));
+            // return;
+            // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
+            // document.body.scrollTop = document.body.scrollHeight;
+            setTimeout(function () {
+                document.body.scrollTop = height;
+            }, 150);
+        } else {
+            setTimeout(function () {
+                document.body.scrollTop = height;
+                theLike.setState({
+                    textareaFocus: true,
+                })
+            }, 150);
+        }
+
     }
 
+    textareaBlur() {
+        if (theLike.state.isPhone == 'ios') {
+            theLike.setState({
+                textareaFocus: false,
+            })
+        }
+
+    }
 
 
     /**
@@ -442,7 +473,7 @@ export default class articleDetail extends React.Component {
     //评论
     saveDiscussInfo() {
         console.log(theLike.state.commitText, 'commitText');
-        Toast.info('触发')
+        // Toast.info('触发')
         if (theLike.state.commitText == '') {
             Toast.info('请输入评论内容!', 1)
             return;
@@ -468,10 +499,9 @@ export default class articleDetail extends React.Component {
                         hasMore: true,
                         commitText: '',
                     }, () => {
-
                         this.getDiscussInfoList(function () {
                             // console.log($(".am-list-view-scrollview")[0]);
-                            $(".am-list-view-scrollview")[0].scrollTop =  theLike.state.scrollTo;
+                            $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
                         });
                         // window.location.reload()
                         // theLike.getDiscussInfoList();
@@ -583,6 +613,7 @@ export default class articleDetail extends React.Component {
                                 value={this.state.commitText}
                                 onChange={this.commitChange.bind(this)}
                                 onFocus={this.textareaFocus.bind(this)}
+                                onBlur={this.textareaBlur.bind(this)}
                             />
                             <div style={
                                 this.state.textareaFocus ? {display: 'none'} : {display: 'inline-block'}
@@ -601,7 +632,8 @@ export default class articleDetail extends React.Component {
                             <div style={
                                 this.state.textareaFocus ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <Button className='commit_button' type="primary" onClick={this.saveDiscussInfo.bind(this)}>发送</Button>
+                                <Button className='commit_button' type="primary"
+                                        onClick={this.saveDiscussInfo.bind(this)}>发送</Button>
                             </div>
 
                             {/*<div style={*/}

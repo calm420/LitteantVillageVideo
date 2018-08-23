@@ -4,7 +4,7 @@ import {
 } from 'antd-mobile';
 import '../css/articleList.less';
 
-const dataSource = new ListView.DataSource({
+var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const tabs = [
@@ -50,20 +50,17 @@ export default class articleList extends React.Component {
             machineType: machineType,
             version: version
         }, () => {
-            // this.getArticleInfoListByType();
-
-            this.getArticleRecommenLittleVideoList();
-            var p1 = new Promise((reslove,reject) =>{
+            var p1 = new Promise((reslove, reject) => {
                 this.getLittleVideoUserById(() => {
                     reslove('getLittleVideoUserById');
                 });
             })
-            var p2 = new Promise((reslove,reject) =>{
-                this.getArticleRecommenLittleVideoList(false,() => {
+            var p2 = new Promise((reslove, reject) => {
+                this.getArticleRecommenLittleVideoList(false, () => {
                     reslove('getArticleRecommenLittleVideoList');
                 });
             })
-            Promise.all([p1,p2]).then((result) =>{
+            Promise.all([p1, p2]).then((result) => {
                 //
                 this.setState({
                     initLoading: false,
@@ -71,7 +68,6 @@ export default class articleList extends React.Component {
             })
 
         })
-        console.log(document.getElementsByClassName('am-pull-to-refresh-content-wrapper'));
     }
 
 
@@ -83,7 +79,7 @@ export default class articleList extends React.Component {
     /**
      * 按页码获取短视频列表
      * **/
-    getArticleRecommenLittleVideoList(clearFlag,reslove) {
+    getArticleRecommenLittleVideoList(clearFlag, reslove) {
         var param = {
             "method": 'getArticleRecommenLittleVideoList',
             "userId": this.state.userId,
@@ -105,7 +101,7 @@ export default class articleList extends React.Component {
                         //     console.log(this.state.recommended_video[0], 'recommended_video');
                         // })
                         //获取文章列表
-                        this.getArticleInfoListByType(clearFlag,reslove);
+                        this.getArticleInfoListByType(clearFlag, reslove);
                     })
                 } else {
 
@@ -120,7 +116,7 @@ export default class articleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByType(clearFlag,reslove) {
+    getArticleInfoListByType(clearFlag, reslove) {
         var _this = this;
         var param = {
             "method": 'getArticleInfoListByType',
@@ -140,8 +136,8 @@ export default class articleList extends React.Component {
 
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
                         _this.initDataSource.splice(0);
-                        _this.state.dataSource = [];
-                        _this.state.dataSource = new ListView.DataSource({
+                        dataSource = [];
+                        dataSource = new ListView.DataSource({
                             rowHasChanged: (row1, row2) => row1 !== row2,
                         });
                     }
@@ -172,7 +168,7 @@ export default class articleList extends React.Component {
                     //调用短视频
                     // this.getArticleRecommenLittleVideoList();
                 }
-                if(reslove){
+                if (reslove) {
                     reslove();
                 }
             },
@@ -211,7 +207,7 @@ export default class articleList extends React.Component {
                         show_bottom_text: false,
                     })
                 }
-                if(reslove){
+                if (reslove) {
                     reslove();
                 }
             },
@@ -242,6 +238,7 @@ export default class articleList extends React.Component {
     };
 
     onRefresh = (str) => {
+
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
 
         if (str == 'left') {
@@ -257,6 +254,7 @@ export default class articleList extends React.Component {
             // this.getLittleVideoUserById();
             this.getArticleRecommenLittleVideoList(true);
         });
+
 
     };
 
@@ -287,7 +285,7 @@ export default class articleList extends React.Component {
             recommended_video: [],
             initLoading: true,
         }, () => {
-            this.getArticleRecommenLittleVideoList(false,()=>{
+            this.getArticleRecommenLittleVideoList(false, () => {
                 this.setState({
                     initLoading: false,
                 })
@@ -515,7 +513,7 @@ export default class articleList extends React.Component {
                 >
                     <div>
                         <div className="initImage" style={
-                            this.state.initLoading?{display:'block'}:{display:'none'}
+                            this.state.initLoading ? {display: 'block'} : {display: 'none'}
                         }>
                             <img src={require('../images/articleListLoading.png')} alt=""/>
                         </div>
@@ -536,7 +534,10 @@ export default class articleList extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={
-                                this.state.initLoading?{display:'none'}:{display:'block',height: document.body.clientHeight - 46}
+                                this.state.initLoading ? {display: 'none'} : {
+                                    display: 'block',
+                                    height: document.body.clientHeight - 46
+                                }
                             }
                             onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
@@ -548,7 +549,7 @@ export default class articleList extends React.Component {
 
                     <div>
                         <div className="initImage" style={
-                            this.state.initLoading?{display:'block'}:{display:'none'}
+                            this.state.initLoading ? {display: 'block'} : {display: 'none'}
                         }>
                             <img src={require('../images/articleListLoading.png')} alt=""/>
                         </div>
@@ -569,7 +570,10 @@ export default class articleList extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={
-                                this.state.initLoading?{display:'none',height: document.body.clientHeight - 46}:{display:'block',height: document.body.clientHeight - 46}
+                                this.state.initLoading ? {
+                                    display: 'none',
+                                    height: document.body.clientHeight - 46
+                                } : {display: 'block', height: document.body.clientHeight - 46}
                             }
                             onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
@@ -578,7 +582,6 @@ export default class articleList extends React.Component {
                             />}
                         />
                     </div>
-
 
 
                 </Tabs>

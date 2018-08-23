@@ -106,7 +106,6 @@ export default class AlreadylookThroughDetail extends React.Component {
      * 点击提交按钮
      */
     submit() {
-      
         var param;
         if (calm.state.type == 0) {
             param = {
@@ -149,7 +148,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             }
 
         };
-        console.log(param,"huhuhu")
+        console.log(param, "huhuhu")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
@@ -183,7 +182,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,"re")
+                console.log(result, "re")
                 if (result.success) {
                     calm.setState({
                         data: result.response,
@@ -275,16 +274,15 @@ export default class AlreadylookThroughDetail extends React.Component {
                                             <div>
                                                 <div className='sameBack'>
                                                     <div className='topMsg'>
-                                                        <img className="photo" src={calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.avatar:""} alt="" />
-                                                        <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName:""}</span>
+                                                        <img className="photo" src={calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.avatar : ""} alt="" />
+                                                        <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName : ""}</span>
                                                         <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
                                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                     </div>
-                                                    
                                                     <div className='textCont'>
-                                                    <div className='video_title'>{calm.state.data.littleVideoInfo.videoContent}</div>
+                                                        <div className='video_title'>{calm.state.data.littleVideoInfo.videoContent}</div>
                                                         <video
-                                                        poster={calm.state.data.littleVideoInfo.coverPath}
+                                                            poster={calm.state.data.littleVideoInfo.coverPath}
                                                             style={{ width: "100%" }}
                                                             controls="controls"
                                                             preload="load"

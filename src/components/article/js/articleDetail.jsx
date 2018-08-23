@@ -597,7 +597,7 @@ export default class articleDetail extends React.Component {
                             <div style={
                                 this.state.textareaFocus?{display:'inline-block'}:{display:'none'}
                             }>
-                                <Button className='commit_button' type="primary" onClick={this.saveDiscussInfo.bind(this)}>评论</Button>
+                                <Button className='commit_button' type="primary" onClick={this.saveDiscussInfo.bind(this)}>发送</Button>
                             </div>
 
                             {/*<div style={*/}

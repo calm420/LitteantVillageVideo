@@ -268,8 +268,8 @@ export default class lookThrough extends React.Component {
                                     <div className="topMsg my_flex">
                                         <span className='author text_hidden'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
                                         <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                        <span>{rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span className='toPriority'>优先</span>) : ""}</span>
                                     </div>
-                                    <span>{rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span>优先</span>) : ""}</span>
                                     <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                     <div className='title'>{rowData.littleVideoInfo.videoContent}</div>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
@@ -283,8 +283,8 @@ export default class lookThrough extends React.Component {
                                         <div className="topMsg my_flex">
                                             <span className='author text_hidden'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                             <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
+                                            <span>{rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span className='toFirst'>置顶</span>) : ""}</span>
                                         </div>
-                                        <span>{rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span>置顶</span>) : ""}</span>
                                         <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                         <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
@@ -331,7 +331,7 @@ export default class lookThrough extends React.Component {
                                     {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list"
+                            className="am-list noReviewed"
                             pageSize={30}    //每次事件循环（每帧）渲染的行数
                             //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                             scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
@@ -357,7 +357,7 @@ export default class lookThrough extends React.Component {
                                     {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row2}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list"
+                            className="am-list reviewed"
                             pageSize={30}    //每次事件循环（每帧）渲染的行数
                             //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                             scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行

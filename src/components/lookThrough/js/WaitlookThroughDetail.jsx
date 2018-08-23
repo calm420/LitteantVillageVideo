@@ -284,7 +284,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                             </RadioItem>
                                         ))}
                                     </List>
-                                    <div style={{ display: calm.state.isShow ? "block" : "none" }}>
+                                    <div className="toFirst" style={{ display: calm.state.isShow ? "block" : "none" }}>
                                         {/* <List renderHeader={() => '推荐：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
@@ -318,7 +318,7 @@ export default class WaitlookThroughDetail extends React.Component {
                             :
                             calm.state.type == 1 ?
                                 <div>
-                                    <div className="isDangerArea">
+                                    <div className="isDangerArea priority">
                                         <List renderHeader={() => '审核：'}>
                                             {data2.map(i => (
                                                 <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
@@ -327,7 +327,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List>
-                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                        <List className="toPriority" style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}

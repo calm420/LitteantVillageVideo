@@ -156,7 +156,7 @@ export default class articleDetail extends React.Component {
         // document.body.scrollTop = document.body.scrollHeight;
         setTimeout(function () {
             document.body.scrollTop = height;
-        }, 50);
+        }, 150);
     }
 
 

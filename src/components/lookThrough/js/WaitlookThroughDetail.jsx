@@ -214,7 +214,7 @@ export default class WaitlookThroughDetail extends React.Component {
             }
         });
     }
-
+  
 
     render() {
         var _this = this;
@@ -314,7 +314,7 @@ export default class WaitlookThroughDetail extends React.Component {
 
                                 </div>
                                 <div className="sameBack description">审核说明:
-                            <List>
+                                <List>
                                         <TextareaItem
                                             rows={3}
                                             placeholder="请在此处输入审核的说明／不通过的原因"

@@ -16,10 +16,13 @@
   padding: 15px;
 }
 #alreadyLookThrough .title {
-  font-size: 18px;
-  line-height: 20px;
+  font-size: 20px;
+  line-height: 22px;
   margin-bottom: 15px;
-  color: #000;
+  word-break: break-word;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 #alreadyLookThrough .topMsg {
   font-size: 12px;
@@ -153,6 +156,7 @@
 #alreadyLookThrough .review .title {
   color: #666;
   font-size: 15px;
+  font-weight: normal;
 }
 #alreadyLookThrough .review .time {
   float: right;

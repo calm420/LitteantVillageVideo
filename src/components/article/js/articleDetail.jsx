@@ -82,24 +82,41 @@ export default class articleDetail extends React.Component {
             machineType: machineType,
             version: version
         }, () => {
-            this.getArticleInfoById();
-            this.getUserLikeLog();
-            this.getDiscussInfoList();
-            this.getUserFavorite();
+            let p1 = new Promise((resolve,reject) =>{
+                this.getArticleInfoById(resolve,reject);
+            });
+            let p2 = new Promise((resolve,reject) =>{
+                this.getUserLikeLog(resolve,reject);
+            });
+            let p3 = new Promise((resolve,reject) =>{
+                this.getDiscussInfoList(resolve,reject);
+            });
+            let p4 = new Promise((resolve,reject) =>{
+                this.getUserFavorite(resolve,reject);
+            })
+            Promise.all([p1,p2,p3,p4]).then((result) => {
+                console.log('不管你请求成功没有，反正我都请求完了');
+
+            }).catch((error) => {
+                console.log(error)
+            })
         })
 
 
-        $("#text").keydown(function (event) {
-            console.log(this, "this");
-            // $("#text").val(event.keyCode);
-            // return;
-            if (event.keyCode == 13) {
-                // alert('你按下了Enter');
-                theLike.saveDiscussInfo();
-
-            }
-        });
+        // $("#text").keydown(function (event) {
+        //     // $("#text").val(event.keyCode);
+        //     // return;
+        //     if (event.keyCode == 13) {
+        //         // alert('你按下了Enter');
+        //         theLike.saveDiscussInfo();
+        //
+        //     }
+        // });
         window.addEventListener('resize', this.onWindwoResize);
+        setTimeout(function(){
+            console.log($('.list-view-section-body')[0].offsetTop);
+
+        },1000)
     }
 
     //监听窗口改变时间
@@ -113,9 +130,11 @@ export default class articleDetail extends React.Component {
 
     }
 
+
+    //评论框获取焦点事件
     textareaFocus(){
-        console.log('获取焦点');
-        console.log($('#text'));
+        // console.log('获取焦点');
+        // console.log($('#text'));
         // return;
         // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
         setTimeout(function () {
@@ -258,6 +277,7 @@ export default class articleDetail extends React.Component {
                     //文章阅读量+1
                     this.addArticleReadCount()
                 }
+                resolve('success');
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -351,6 +371,8 @@ export default class articleDetail extends React.Component {
         });
     }
 
+
+    //点击收藏
     changePent() {
         var userFavoriteInfoJson = {
             userId: this.state.userId,
@@ -405,9 +427,12 @@ export default class articleDetail extends React.Component {
                         clientHeight: document.body.clientHeight,
                         isLoading: true,
                         hasMore: true,
-                        commitText: ''
+                        commitText: '',
                     }, () => {
-                        window.location.reload()
+                        // ssdasd23123-=-09;
+                        $(".am-list-view-scrollview").animate({scrollTop: 4107}, 1000);
+                        this.getDiscussInfoList();
+                        // window.location.reload()
                         // theLike.getDiscussInfoList();
                     })
                 } else {
@@ -459,10 +484,10 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = ()=>{
-        console.log('分享');
-        console.log(window.location.href,'url');
-        console.log($('.content').text(),'标题');
-        console.log(this.state.data.author,'作者');
+        // console.log('分享');
+        // console.log(window.location.href,'url');
+        // console.log($('.content').text(),'标题');
+        // console.log(this.state.data.author,'作者');
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,

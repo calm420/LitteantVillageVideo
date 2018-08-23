@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #waitLookThrough {
   font-size: 15px;
   color: #333;
@@ -155,5 +154,5 @@
   /*字体颜色影响插件*/
   color: #000000;
   text-align: left;
-  border: 1px solid #ffffff;
+  border: 1px solid #fff;
 }

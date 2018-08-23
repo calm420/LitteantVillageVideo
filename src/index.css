@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 html,
 body {
   height: 100%;
@@ -82,7 +81,7 @@ hr {
   font-size: 14px;
 }
 .color_red {
-  color: #f46a55;
+  color: #F46A55;
 }
 .line_item {
   height: 8px;

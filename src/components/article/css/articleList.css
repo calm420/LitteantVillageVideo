@@ -2,8 +2,8 @@
 #articleList {
   position: relative;
 }
-#articleList .am-pull-to-refresh-content {
-  height: 100% !important;
+#articleList .am-pull-to-refresh-content-wrapper {
+  height: 667px !important;
   overflow-y: auto;
 }
 #articleList .am-tabs-pane-wrap {

@@ -226,7 +226,7 @@ export default class List extends React.Component {
             dataSourceForDraft: dataSource.cloneWithRows(this.initDataSourceForDraft),
             defaultPageNoForDraft: 1,
             isLoadingLeftForDraft: false,
-            hasMoreForDraft: true,
+            i_title_statehasMoreForDraft: true,
             showOperId: null, // 显示编辑框按钮flag
         }, () => {
             this.getListData(0)
@@ -243,7 +243,7 @@ export default class List extends React.Component {
                 } className="row">
                     <div className="title">
                         <span className="title_text text_hidden">{rowData.articleTitle}</span>
-                        <span className={rowData.auditInfo?rowData.auditInfo.isPass == 1?'state_through':'state_noThrough':'title_state state_noAudit'}>
+                        <span className={rowData.auditInfo?rowData.auditInfo.isPass == 1?'title_state state_through':'title_state state_noThrough':'title_state state_noAudit'}>
                         <i className='i_title_state'></i>
                             {rowData.auditInfo?rowData.auditInfo.isPass == 1?'审核通过':'未通过':'待审核'}
                             <span className="state-tips">

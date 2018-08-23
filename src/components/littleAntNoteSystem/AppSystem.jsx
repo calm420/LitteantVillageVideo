@@ -1,10 +1,10 @@
 import React from 'react';
 import {Drawer, NavBar, Radio, Toast, Modal} from 'antd-mobile';
 
-
 import './AppSystem.less'
 import List from './leftComponent/js/List'
 import ReadPanel from './rightComponent/js/ReadPanel'
+
 var _this;
 const alert = Modal.alert;
 export default class AppSystem extends React.Component {
@@ -16,14 +16,13 @@ export default class AppSystem extends React.Component {
             open: false,
             user: JSON.parse(sessionStorage.getItem("loginUser")),
             clientHeight: document.body.clientHeight,
-            maskFlag:false,
+            maskFlag: false,
         };
     }
 
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
         Bridge.setRefreshAble("false");
-        console.log(JSON.parse(sessionStorage.getItem("loginUser")))
         if (this.state.user) {
 
         } else {
@@ -40,7 +39,6 @@ export default class AppSystem extends React.Component {
         console.log(data, 'in AppSystem');
         this.refs.listToReadPanel.accept(type, data)
     }
-
 
     /**
      * 重新审核弹出框
@@ -67,10 +65,10 @@ export default class AppSystem extends React.Component {
         location.hash = "Login"
     }
 
-    setPanel(key,html) {
+    setPanel(key, html) {
         console.log(key);
         console.log(html);
-        if(key == 'openPrieview'){
+        if (key == 'openPrieview') {
             _this.setState({
                 maskFlag: true,
                 label: html,
@@ -79,7 +77,7 @@ export default class AppSystem extends React.Component {
         console.log(_this.state.maskFlag)
     }
 
-    closeMask(){
+    closeMask() {
         _this.setState({
             maskFlag: false
         })
@@ -111,10 +109,10 @@ export default class AppSystem extends React.Component {
                     {/*</div>*/}
                 </NavBar>
                 <div className="black_bg" style={
-                   this.state.maskFlag? {display: 'inline-block'}:{display:'none'}
+                    this.state.maskFlag ? {display: 'inline-block'} : {display: 'none'}
                 } onClick={this.closeMask}></div>
                 <div className="preview" style={
-                    this.state.maskFlag? {display: 'inline-block'}:{display:'none'}
+                    this.state.maskFlag ? {display: 'inline-block'} : {display: 'none'}
                 } dangerouslySetInnerHTML={{
                     __html: this.state.label
                 }}></div>

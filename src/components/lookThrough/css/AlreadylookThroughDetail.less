@@ -2,9 +2,10 @@
     video::-webkit-media-controls-fullscreen-button {
         display: none;
     }
+    position: relative;
     .content{
         color: #333;
-        height: calc(~"100% - 75px");
+        height: 100%;
         overflow-y: auto;
         box-sizing: border-box;
         font-size: 15px;
@@ -57,6 +58,10 @@
         }
         video{
             max-width: 100%;
+            
+        }
+        .video_title{
+            margin-bottom:10px;
         }
 
     }
@@ -171,6 +176,18 @@
         .pass{
             color: #4CAF00;
         }
+    }
+    .reCheckCont {
+        padding-bottom: 75px;
+        .submitBtn{
+            position: fixed;
+            background-color: #f4f4f4;
+            bottom:0;
+            padding: 15px;
+        }
+    }
+    .result span{
+        font-size: 13px;
     }
 
 }

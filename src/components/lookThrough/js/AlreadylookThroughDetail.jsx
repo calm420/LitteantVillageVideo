@@ -44,8 +44,8 @@ export default class AlreadylookThroughDetail extends React.Component {
         if (value == 0) {
             calm.setState({
                 isShow: false,
-                isRec: "",
-                isTop: ""
+                isRec: 0,
+                isTop: 0
             })
         }
         this.setState({
@@ -60,8 +60,6 @@ export default class AlreadylookThroughDetail extends React.Component {
     * 是否推荐
     */
     recChange = (value) => {
-
-        console.log(value,"vvv")
         this.setState({
             isRec: value
         })
@@ -71,8 +69,6 @@ export default class AlreadylookThroughDetail extends React.Component {
      * 是否置顶
      */
     topChange = (value) => {
-
-        console.log(value,"inin")
         this.setState({
             isTop: value
         })
@@ -153,6 +149,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             }
 
         };
+        console.log(param,"huhuhu")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
@@ -186,7 +183,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result)
+                console.log(result,"re")
                 if (result.success) {
                     calm.setState({
                         data: result.response,
@@ -225,7 +222,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 height: document.body.clientHeight
             }}>
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
+                <div className="content">
                     {
                         // 自媒体文章
                         calm.state.type == 0 ?
@@ -254,7 +251,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                         {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div className='result'>
                                                     <span className='title'>审核结果：</span>
                                                     {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                     {calm.state.data.auditInfo.istop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
@@ -283,8 +280,11 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                         <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
                                                         <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                     </div>
+                                                    
                                                     <div className='textCont'>
+                                                    <div className='video_title'>{calm.state.data.littleVideoInfo.videoContent}</div>
                                                         <video
+                                                        poster={calm.state.data.littleVideoInfo.coverPath}
                                                             style={{ width: "100%" }}
                                                             controls="controls"
                                                             preload="load"
@@ -304,7 +304,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                             {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                         </div>
                                                     </div>
-                                                    <div>
+                                                    <div className='result'>
                                                         <span className='title'>审核结果：</span>
                                                         {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                         {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已推荐</span> : <span>未推荐</span>}
@@ -348,7 +348,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                                 {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                             </div>
                                                         </div>
-                                                        <div>
+                                                        <div className='result'>
                                                             <span className='title'>审核结果：</span>
                                                             {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                             <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
@@ -365,7 +365,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                     }
                     {
                         calm.state.type == 0 ?
-                            <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                            <div className="reCheckCont" style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                                 <div className="isDangerArea">
                                     <List renderHeader={() => '审核：'}>
                                         {passData.map(i => (
@@ -413,7 +413,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                             </div>
                             :
                             calm.state.type == 1 ?
-                                <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                                <div className="reCheckCont" style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                                     <div className="isDangerArea">
                                         <List renderHeader={() => '审核：'}>
                                             {passData.map(i => (
@@ -451,7 +451,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                 </div>
                                 :
                                 calm.state.type == 2 ?
-                                    <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                                    <div className="reCheckCont" style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                                         <div className="isDangerArea">
                                             <List renderHeader={() => '审核：'}>
                                                 {passData.map(i => (

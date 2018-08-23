@@ -455,7 +455,7 @@ export default class articleList extends React.Component {
                     this.state.userRoot || this.state.index == 1 ? {display: 'none'} : {display: 'block'}
                 }>
                     <div className='emptyIcon'></div>
-                    <div className='text'>请完善资料后查看相关内容</div>
+                    <div className='text'>请完善基本信息，以获取本校动态消息</div>
                     <span className='btn' onClick={this.toPerfectInfo}>完善资料</span>
                     {/*<span>完善资料</span>*/}
                 </div>

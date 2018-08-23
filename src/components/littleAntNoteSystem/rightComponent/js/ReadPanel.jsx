@@ -56,7 +56,7 @@ export default class ReadPanel extends React.Component {
 
     componentDidMount() {
         var _this = this;
-        //监听ｐｏｓｔｍｅｓｓａｇｅ消息接受
+        //监听postmessage消息接受
         window.addEventListener('message', (e) => {
             this.onMessage(e);
         })
@@ -70,37 +70,31 @@ export default class ReadPanel extends React.Component {
     //接受消息
     onMessage(e) {
         if (e.data) {
-            // console.log(JSON.parse(e.data),'e.data  ');
             var iframeData = JSON.parse(e.data);
             if (iframeData.method == 'submit') {
                 var article = iframeData.article;
-                console.log(article.content, '标签');
-                console.log(article.title, '标题');
-                console.log(article.author, '作者');
-                console.log(article.attacheMents,'附件');
                 var imageList = [];
                 var attacheMents = article.attacheMents;
                 var newAttachMents = [];
-                for(var k in attacheMents){
+                for (var k in attacheMents) {
                     newAttachMents.push({
-                        userId:_this.state.userId,
-                        type:attacheMents[k].type == 'image'?0:1,
-                        path:attacheMents[k].path,
-                        coverPath:attacheMents[k].cover,
-                        isCover:attacheMents[k].isMainCover,
-                        articleId: _this.state.artId
+                        userId: _this.state.userId,
+                        type: attacheMents[k].type == 'image' ? 0 : 1,
+                        path: attacheMents[k].path,
+                        coverPath: attacheMents[k].cover,
+                        isCover: attacheMents[k].isMainCover,
+                        articleId: _this.state.artId,
+                        attachmentId: attacheMents[k].attachmentId || -1,
                     })
 
-                    if(attacheMents[k].isMainCover){
+                    if (attacheMents[k].isMainCover) {
                         imageList.push(attacheMents[k].cover);
 
                     }
                 }
-                console.log(newAttachMents,'newAttachMents');
-                this.updateArticleInfo(article.title, article.content, article.author, article.type,imageList, newAttachMents);
-            }else if(iframeData.method == 'openPrieview'){
-                console.log('开启遮罩层');
-                this.props.setPanel('openPrieview',iframeData.label);
+                this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
+            } else if (iframeData.method == 'openPrieview') {
+                this.props.setPanel('openPrieview', iframeData.label);
             }
             // else if(labelData.method == 'closePrieview'){
             //     console.log('关闭遮罩层');
@@ -259,7 +253,7 @@ export default class ReadPanel extends React.Component {
     //     });
     // }
 
-    updateArticleInfo(title, html, author, type, imgArray,articleAttachments) {
+    updateArticleInfo(title, html, author, type, imgArray, articleAttachments) {
         var param = {
             "method": 'updateArticleInfo',
             "articleId": this.state.artId,
@@ -267,11 +261,10 @@ export default class ReadPanel extends React.Component {
             "articleContent": html,
             "status": type,
             "author": author,
-            "articleAttachments":JSON.stringify(articleAttachments)
+            "articleAttachments": JSON.stringify(articleAttachments)
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'updateArticleInfo')
                 if (result.success) {
                     Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
                     this.initEditor();
@@ -294,15 +287,19 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result)
                 if (result.success) {
-                    this.setState({
-                        writeFlag: !this.state.writeFlag,
-                        artId: result.response,
-                        title_editor: '未命名'
-                    }, () => {
-                        this.props.submit('init', this.state.artId)
-                    })
+                    //向富文本发送清空编辑器内容的要求,这里的清空只是简单的reload,延迟300 解决闪烁的问题
+                    var ifm = document.getElementById('iframe_box');
+                    ifm.contentWindow.postMessage(JSON.stringify({method: 'clearRichTestSign'}), '*');
+                    setTimeout(function () {
+                        _this.setState({
+                            writeFlag: !_this.state.writeFlag,
+                            artId: result.response,
+                            title_editor: '未命名'
+                        }, () => {
+                            _this.props.submit('init', _this.state.artId)
+                        })
+                    }, 300)
                 } else {
                     Toast.fail("创建失败");
                 }
@@ -354,12 +351,12 @@ export default class ReadPanel extends React.Component {
                 this.getArticleInfoById(data);
                 break;
             case "删除":
-                if(data == this.state.artId){
+                if (data == this.state.artId) {
                     this.setState({
-                        writeFlag:false,
-                        artId:null,
+                        writeFlag: false,
+                        artId: null,
                     })
-                }else{
+                } else {
                     console.log('删除的不是编辑状态的');
                 }
                 break;
@@ -374,7 +371,6 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '根据id获取文章')
                 if (result.success) {
                     var attacheMents = [];
 
@@ -419,15 +415,15 @@ export default class ReadPanel extends React.Component {
                     // console.log(result.response.articleImgs);
                     // console.log(document.getElementById('box'));
                     //发送消息
-                    console.log(result.response.articleAttachments,'articleAttachments');
                     var attacheMents = result.response.articleAttachments;
                     var newAttachMents = [];
-                    for(var k in attacheMents){
+                    for (var k in attacheMents) {
                         newAttachMents.push({
-                            type: attacheMents[k].type == 0?'image':'video',
+                            type: attacheMents[k].type == 0 ? 'image' : 'video',
                             cover: attacheMents[k].coverPath,
                             path: attacheMents[k].path,
                             isMainCover: attacheMents[k].isCover,
+                            attachmentId: attacheMents[k].attachmentId,
                         })
                     }
                     var data = {};
@@ -437,9 +433,8 @@ export default class ReadPanel extends React.Component {
                         content: result.response.articleContent,
                         author: result.response.author,
                         type: result.response.status,
-                        attacheMents:newAttachMents
+                        attacheMents: newAttachMents
                     };
-                    console.log(newAttachMents);
                     // return;
                     //发送消息
                     var ifm = document.getElementById('iframe_box');
@@ -531,8 +526,11 @@ export default class ReadPanel extends React.Component {
                             {/*formats={this.state.formats}*/}
                             {/*bounds={'.app'}*/}
                             {/*/>*/}
-                            <iframe id="iframe_box" src="https://192.168.50.186:6443/richText/"
-                                    frameborder="0"></iframe>
+                            <iframe id="iframe_box" src="https://www.maaee.com:6443/richText/" frameborder="0">
+                            </iframe>
+
+                            {/*<iframe id="iframe_box" src="https://www.maaee.com:6443/richText/"
+                                    frameborder="0"></iframe>*/}
 
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 import React from "react";
-import { ListView,PullToRefresh,Toast } from 'antd-mobile';
+import {ListView, PullToRefresh, Toast} from 'antd-mobile';
 import '../css/myCollection.less'
+
 var calm;
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -15,11 +16,12 @@ export default class myCollection extends React.Component {
             defaultPageNo: 1,
             isLoading: true,
             hasMore: true,
-            refreshing:false,
+            refreshing: false,
             dividendNumber: 4,
-            videoObj:[],
+            videoObj: [],
         }
     }
+
     componentDidMount() {
         console.log("scscsc")
         document.title = "收藏列表"
@@ -29,21 +31,18 @@ export default class myCollection extends React.Component {
         var auditorId = searchArray[0].split('=')[1];
         console.log(auditorId)
         calm.setState({
-            auditorId:auditorId
-        },()=>{
+            auditorId: auditorId
+        }, () => {
             calm.getUserFavoriteByUserId();
         })
 
     }
 
 
-
-
-
     /**
      * 收藏列表
      */
-    getUserFavoriteByUserId() {
+    getUserFavoriteByUserId(clearFlag) {
         var param = {
             "method": 'getUserFavoriteByUserId',
             "userId": calm.state.auditorId,
@@ -52,13 +51,22 @@ export default class myCollection extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                var videoList = [],videoObj = [];
+                var videoList = [], videoObj = [];
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
+
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        calm.initDataSource.splice(0);
+                        calm.state.dataSource = [];
+                        calm.state.dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+
                     calm.initDataSource = calm.initDataSource.concat(result.response);
                     var res = this.initDataSource;
-                    res.forEach((value,index)=>{
-                        if(value.littleVideoInfo){
+                    res.forEach((value, index) => {
+                        if (value.littleVideoInfo) {
                             videoList.push(value.littleVideoInfo.videoPath);
                             videoObj.push(value.littleVideoInfo);
                         }
@@ -66,8 +74,8 @@ export default class myCollection extends React.Component {
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
                         isLoading: true,
-                        videoList:videoList,
-                        videoObj:videoObj
+                        videoList: videoList,
+                        videoObj: videoObj
                     })
                     if (calm.initDataSource.length == result.pager.rsCount) {
                         calm.setState({
@@ -77,7 +85,7 @@ export default class myCollection extends React.Component {
                     }
                     calm.setState({
                         waitLookThroughData: result.response,
-                        refreshing:false,
+                        refreshing: false,
                     })
                 }
             },
@@ -110,7 +118,7 @@ export default class myCollection extends React.Component {
     /**
      * 跳转文章详情页面
      */
-    toArticleDetail(id){
+    toArticleDetail(id) {
         var url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.auditorId + "&type=1");
         var data = {
             method: 'openNewPage',
@@ -122,33 +130,33 @@ export default class myCollection extends React.Component {
     }
 
 
-
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        this.initDataSource = [];
-        this.setState({defaultPageNo: 1, refreshing: true,dataSource:dataSource.cloneWithRows(this.initDataSource),isLoading: true,
-            hasMore: true,},()=>{
-            this.getUserFavoriteByUserId();
+        this.setState({
+            defaultPageNo: 1,
+            refreshing: true,
+        }, () => {
+            this.getUserFavoriteByUserId(true);
         });
 
     };
 
 
     //播放视频
-    playVideo(videoPath){
-        console.log(Math.ceil(this.state.videoList.length / this.state.dividendNumber),'recommended_pageCount');
-        console.log(Math.ceil((this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath)) / this.state.dividendNumber),'recommended_pageNo')
+    playVideo(videoPath) {
+        console.log(Math.ceil(this.state.videoList.length / this.state.dividendNumber), 'recommended_pageCount');
+        console.log(Math.ceil((this.state.videoList.indexOf(videoPath) == 0 ? 1 : this.state.videoList.indexOf(videoPath)) / this.state.dividendNumber), 'recommended_pageNo')
         console.log(this.state.videoList);
-        console.log(this.state.videoList.indexOf(videoPath),'index');
-        console.log(this.state.videoObj,'videoObj')
+        console.log(this.state.videoList.indexOf(videoPath), 'index');
+        console.log(this.state.videoObj, 'videoObj')
         console.log(videoPath)
         // return;
         var data = {
             method: 'playArticleVideo',
             videos: this.state.videoObj,
             position: this.state.videoList.indexOf(videoPath),
-            pageNo: Math.ceil((this.state.videoList.indexOf(videoPath)==0?1:this.state.videoList.indexOf(videoPath)) / this.state.dividendNumber),
+            pageNo: Math.ceil((this.state.videoList.indexOf(videoPath) == 0 ? 1 : this.state.videoList.indexOf(videoPath)) / this.state.dividendNumber),
             pageCount: Math.ceil(this.state.videoList.length / this.state.dividendNumber)
         };
         Bridge.callHandler(data, null, function (error) {
@@ -167,38 +175,44 @@ export default class myCollection extends React.Component {
                                 {
                                     rowData.littleVideoInfo.userInfo ?
                                         <div className='my_flex'>
-                                            <img className='photo' src={rowData.littleVideoInfo.userInfo.avatar} alt="" />
+                                            <img className='photo' src={rowData.littleVideoInfo.userInfo.avatar}
+                                                 alt=""/>
                                             <div className="right">
-                                                <span className='author'>{rowData.littleVideoInfo.userInfo.userName}</span>
-                                                <div className='time small'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
+                                                <span
+                                                    className='author'>{rowData.littleVideoInfo.userInfo.userName}</span>
+                                                <div
+                                                    className='time small'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                             </div>
                                         </div>
                                         :
                                         ""
                                 }
                                 <video
-                                    style={{ width: "100%" }}
+                                    style={{width: "100%"}}
                                     // controls="controls"
-                                    onClick={this.playVideo.bind(this,rowData.littleVideoInfo.videoPath)}
+                                    onClick={this.playVideo.bind(this, rowData.littleVideoInfo.videoPath)}
                                     preload="auto"
                                     src={rowData.littleVideoInfo.videoPath}
-                                    poster={rowData.littleVideoInfo.coverPath?rowData.littleVideoInfo.coverPath:rowData.littleVideoInfo.firstUrl}
-                                    >
+                                    poster={rowData.littleVideoInfo.coverPath ? rowData.littleVideoInfo.coverPath : rowData.littleVideoInfo.firstUrl}
+                                >
                                 </video>
                                 <div className="bottom">
                                     <span className='read'>{rowData.littleVideoInfo.readCount}阅读</span>
                                     <span className='like'>{rowData.littleVideoInfo.likeCount}点赞</span>
-                                    <span className='time'>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime))? "今天":WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
+                                    <span
+                                        className='time'>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime)) ? "今天" : WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
                                 </div>
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div className='item' onClick={calm.toArticleDetail.bind(this,rowData.articleInfo.articleId)}>
+                                <div className='item'
+                                     onClick={calm.toArticleDetail.bind(this, rowData.articleInfo.articleId)}>
                                     <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                     <div className="bottom">
                                         <span className='read'>{rowData.articleInfo.readCount}阅读</span>
                                         <span className='like'>{rowData.articleInfo.likeCount}点赞</span>
-                                        <span className='time'>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime))? "今天":WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
+                                        <span
+                                            className='time'>{WebServiceUtil.formatYMD(new Date().getTime()) == (WebServiceUtil.formatYMD(rowData.favoriteTime)) ? "今天" : WebServiceUtil.formatYMD(rowData.favoriteTime)}</span>
                                     </div>
                                 </div>
                                 :
@@ -212,7 +226,7 @@ export default class myCollection extends React.Component {
             <div id="myCollection" style={{
                 height: document.body.clientHeight
             }}>
-                <div className='emptyDiv' style={{display:calm.initDataSource.length == 0 ? "block" :"none"}
+                <div className='emptyDiv' style={{display: calm.initDataSource.length == 0 ? "block" : "none"}
                 }>
                     <div className='emptyIcon'></div>
                 </div>
@@ -221,7 +235,7 @@ export default class myCollection extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -237,8 +251,8 @@ export default class myCollection extends React.Component {
                         height: document.body.clientHeight,
                     }}
                     pullToRefresh={<PullToRefresh
-                        refreshing={this.state.refreshing}
                         onRefresh={this.onRefresh}
+                        distanceToRefresh={80}
                     />}
                 />
             </div>

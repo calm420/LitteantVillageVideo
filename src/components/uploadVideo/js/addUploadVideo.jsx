@@ -29,7 +29,10 @@ export default class addUploadVideo extends React.Component {
                 isRecommend: 0,
                 show: false,
                 tagText: [],
-                cheData: {}
+                cheData: {},
+                firstUrl: "",
+                height:"",
+                width:""
 
             }],
             tagData: [],
@@ -108,9 +111,9 @@ export default class addUploadVideo extends React.Component {
      * 类型的改变
      */
     onChangeRadio = (index, value) => {
-        if(value !=1){
+        if (value != 1) {
             calm.setState({
-                showDelete:false
+                showDelete: false
             })
             calm.state.addVideoList[index].cheData = {};
         }
@@ -138,8 +141,11 @@ export default class addUploadVideo extends React.Component {
             let item = res.split("?");
             newArr.picPath = item[0],
                 newArr.picName = item[1].split("=")[1]
-            calm.state.addVideoList[index].videoUrl = newArr.picPath
+            calm.state.addVideoList[index].videoUrl = newArr.picPath;
             calm.buildAddList()
+            calm.upload_video_pic(index)
+            calm.buildAddList()
+
         }, function (error) {
             console.log(error);
         });
@@ -149,7 +155,6 @@ export default class addUploadVideo extends React.Component {
      * 添加标签
      */
     addTag(index) {
-
         $(`.calmTagDiv`).slideDown();
         $(`.tagBack`).show();
         calm.setState({
@@ -162,7 +167,6 @@ export default class addUploadVideo extends React.Component {
      * 添加挑战
      */
     addChan(index) {
-
         $('.calmChaDiv').slideDown();
         $('.tagBack').show();
         calm.setState({
@@ -195,6 +199,73 @@ export default class addUploadVideo extends React.Component {
 
         })
     }
+    //首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
+    getBlobBydataURI(dataURI, type) {
+        var binary = atob(dataURI.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], { type: type });
+    }
+
+    upload_video_pic(index) {
+        console.log(index, 'index');
+        var video;//video标签
+        var scale = 0.8;//第一帧图片与源视频的比例
+        // var videoList = $(".upload_box_video");
+        // console.log(videoList,'videoList');
+        // for(var i=0;i<videoList.length;i++){
+        //
+        // }
+        //ｖｉｄｅｏ标签
+        video = document.getElementsByClassName("upload_box_video")[index];//赋值标签
+        console.log(video, "ahahah")
+        video.setAttribute("crossOrigin", 'Anonymous');
+        video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
+            console.log("执行了")
+            var canvas = document.createElement('canvas');//canvas画布
+            canvas.width = video.videoWidth * scale;
+            canvas.height = video.videoHeight * scale;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//画图
+            var image = canvas.toDataURL("image/png");
+            var $Blob = calm.getBlobBydataURI(image, 'image/jpeg');
+            var formData = new FormData();
+            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+            console.log(video.videoWidth,"video.videoWidth")
+            calm.state.addVideoList[index].width = video.videoWidth;
+            calm.state.addVideoList[index].height = video.videoHeight;
+            console.log(video.videoHeight,"video.videoHeight")
+            $.ajax({
+                type: "POST",
+                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                enctype: 'multipart/form-data',
+                data: formData,
+                // 告诉jQuery不要去处理发送的数据
+                processData: false,
+                // 告诉jQuery不要去设置Content-Type请求头
+                contentType: false,
+                // xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                //     var xhr = jQuery.ajaxSettings.xhr();
+                //     xhr.upload.onload = function () {
+                //         console.log('huoqudangqiansuoluetu!');
+                //         console.log(xhr);
+                //     };
+                //     xhr.upload.onprogress = function (ev) {
+                //         console.log('yyyyyyyyy!');
+                //         console.log(xhr);
+                //     };
+                //     return xhr;
+                // },
+                success: function (res) {
+                    console.log(res, 'base64');
+                    calm.state.addVideoList[index].firstUrl = res;
+                    calm.buildAddList();
+                }
+            });
+        })
+    }
+
     /**
      * 根据数据数组构建批量上传列表
      */
@@ -233,7 +304,7 @@ export default class addUploadVideo extends React.Component {
                         <button className="uploadBtn" onClick={calm.uploadMp4.bind(this, i)}>上传视频</button>
                         :
                         <div className="upload_file">
-                            <video
+                            <video className="upload_box_video"
                                 onClick={calm.mp4Preview.bind(this, calm.state.addVideoList[i])}
                                 src={calm.state.addVideoList[i].videoUrl}></video>
                             {/* <div
@@ -258,7 +329,7 @@ export default class addUploadVideo extends React.Component {
                     </List>
                 </div>
                 <div className="line_public flex_container"></div>
-                    <div className="my_flex sameBack">
+                <div className="my_flex sameBack">
                     <span className="textTitle">描述</span>
                     <TextareaItem
                         className="add_element"
@@ -274,15 +345,15 @@ export default class addUploadVideo extends React.Component {
                     <div className="my_flex sameBack">
                         <div className="textTitle">挑战</div>
                         <div className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</div>
-                       <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
-                           <div className='tagTitle textOver'>
-                               <span className="del_tag" onClick={calm.deleteCha.bind(this, i)}>删除</span>
-                               <span className='preIcon'>#</span>
-                               {calm.state.addVideoList[i].cheData.label}</div>
-                           <div className='tagText'>
-                               {calm.state.addVideoList[i].cheData.extra}
-                           </div>
-                       </div>
+                        <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
+                            <div className='tagTitle textOver'>
+                                <span className="del_tag" onClick={calm.deleteCha.bind(this, i)}>删除</span>
+                                <span className='preIcon'>#</span>
+                                {calm.state.addVideoList[i].cheData.label}</div>
+                            <div className='tagText'>
+                                {calm.state.addVideoList[i].cheData.extra}
+                            </div>
+                        </div>
 
                     </div>
                     <div className="line_public flex_container"></div>
@@ -290,24 +361,24 @@ export default class addUploadVideo extends React.Component {
                 <div className='my_flex sameBack'>
                     <div className="textTitle">标签</div>
                     <div className='my_flex tagDiv'>
-                    {
-                        calm.state.addVideoList[i].tagText.map((v, i) => {
-                            return (
-                                <div className="spanTag">
-                                    <span className="textOver">{v.tagTitle}</span>
-                                    <span className="del_tag" onClick={calm.deleteTag.bind(this, v, useIndex)}></span>
-                                </div>
-                            )
-                        })
-                    }
+                        {
+                            calm.state.addVideoList[i].tagText.map((v, i) => {
+                                return (
+                                    <div className="spanTag">
+                                        <span className="textOver">{v.tagTitle}</span>
+                                        <span className="del_tag" onClick={calm.deleteTag.bind(this, v, useIndex)}></span>
+                                    </div>
+                                )
+                            })
+                        }
 
-                    {
-                        calm.state.addVideoList[i].tagText.length == 3 ?
-                            ""
-                            :
-                            <div className='tagBtn' onClick={calm.addTag.bind(this, i)}>添加标签</div>
+                        {
+                            calm.state.addVideoList[i].tagText.length == 3 ?
+                                ""
+                                :
+                                <div className='tagBtn' onClick={calm.addTag.bind(this, i)}>添加标签</div>
 
-                    }
+                        }
                     </div>
                 </div>
 
@@ -345,7 +416,11 @@ export default class addUploadVideo extends React.Component {
             userId: calm.state.uid,
             show: false,
             tagText: [],
-            cheData: {}
+            cheData: {},
+            firstUrl:"",
+            height:"",
+            width:""
+
         })
         this.buildAddList()
     }
@@ -389,21 +464,27 @@ export default class addUploadVideo extends React.Component {
     batchLittleVideoInfo() {
         var newArr = []
         calm.state.addVideoList.forEach(function (v, i) {
-            if($.isEmptyObject(v.cheData)){
+            if ($.isEmptyObject(v.cheData)) {
                 newArr.push({
-                    status:1,
+                    status: 1,
                     coverPath: v.coverPath,
                     videoPath: v.videoUrl,
+                    firstUrl:v.firstUrl,
+                    width:v.width,
+                    height:v.height,
                     videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
                     userId: v.userId,
                     videoContent: v.videoContent,   // 心情描述 
                     tags: []
                 })
-            }else {
+            } else {
                 newArr.push({
-                    status:1,
+                    status: 1,
                     coverPath: v.coverPath,
                     videoPath: v.videoUrl,
+                    firstUrl:v.firstUrl,
+                    width:v.width,
+                    height:v.height,
                     videoType: v.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
                     userId: v.userId,
                     videoContent: v.videoContent,   // 心情描述 
@@ -424,6 +505,7 @@ export default class addUploadVideo extends React.Component {
             "method": 'batchLittleVideoInfo',
             "videoJson": JSON.stringify(newArr),
         };
+        console.log(newArr,"param")
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -452,8 +534,8 @@ export default class addUploadVideo extends React.Component {
     chaInputChange = (value) => {
         calm.setState({
             challengeValue: value,
-            showTextOrList:true,
-            chaChangeValue:""
+            showTextOrList: true,
+            chaChangeValue: ""
         }, () => {
             calm.getChasByContent()
         })
@@ -485,7 +567,7 @@ export default class addUploadVideo extends React.Component {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
-                                        extra:<div>{str}<div className='blueTxt'>点击发起</div></div>
+                                        extra: <div>{str}<div className='blueTxt'>点击发起</div></div>
 
                                     })
                                     return;
@@ -531,7 +613,7 @@ export default class addUploadVideo extends React.Component {
 
         })
         // $('.deleteCha').show();
-        calm.setState({ challengeData: [], challengeValue: "", showTextOrList: true, chaContent: "" ,chaChangeValue:""})
+        calm.setState({ challengeData: [], challengeValue: "", showTextOrList: true, chaContent: "", chaChangeValue: "" })
 
 
     }
@@ -688,8 +770,8 @@ export default class addUploadVideo extends React.Component {
     /**
      * 挑战改变
      */
-    chaChange (i) {
-      
+    chaChange(i) {
+
 
         calm.setState({
             challengeValue: i.label
@@ -777,26 +859,26 @@ export default class addUploadVideo extends React.Component {
                         </InputItem>
                     </div>
                     <div className='challenge'>
-                    {
-                        calm.state.showTextOrList ?
-                            <List>
-                                {calm.state.challengeData.map(i => (
-                                    <RadioItem className={calm.state.chaChangeValue === i.value?'checked':''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                        <div className='topTitle textOver'><span className='preIcon'>#</span>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
-                                    </RadioItem>
-                                ))}
-                            </List>
-                            :
-                            <TextareaItem
-                                className="add_element"
-                                placeholder="请输入挑战的表述"
-                                value={calm.state.chaContent}
-                                onChange={calm.chaOnChange.bind(this)}
-                                rows={5}
-                                count={50}
-                            />
+                        {
+                            calm.state.showTextOrList ?
+                                <List>
+                                    {calm.state.challengeData.map(i => (
+                                        <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
+                                            <div className='topTitle textOver'><span className='preIcon'>#</span>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                                :
+                                <TextareaItem
+                                    className="add_element"
+                                    placeholder="请输入挑战的表述"
+                                    value={calm.state.chaContent}
+                                    onChange={calm.chaOnChange.bind(this)}
+                                    rows={5}
+                                    count={50}
+                                />
 
-                    }
+                        }
                     </div>
                     <div className="bottomBox">
                         <span className="close" onClick={calm.cancelChaSubmit}>取消</span>

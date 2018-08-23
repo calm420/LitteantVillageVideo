@@ -1,6 +1,11 @@
 #waitLookThrough {
   font-size: 15px;
   color: #333;
+  height: 100%;
+}
+#waitLookThrough .fatherDiv {
+  position: relative;
+  height: 100%;
 }
 #waitLookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
@@ -30,7 +35,9 @@
   display: -ms-flexbox;
   display: flex;
   text-align: left;
-  overflow: hidden;
+  -webkit-flex-wrap: wrap;
+  /* Safari 6.1+ */
+  flex-wrap: wrap;
 }
 #waitLookThrough .topMsg .photo {
   width: 28px;

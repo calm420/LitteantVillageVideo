@@ -32,7 +32,9 @@
   display: -ms-flexbox;
   display: flex;
   text-align: left;
-  overflow: hidden;
+  -webkit-flex-wrap: wrap;
+  /* Safari 6.1+ */
+  flex-wrap: wrap;
 }
 #alreadyLookThrough .topMsg .photo {
   width: 28px;

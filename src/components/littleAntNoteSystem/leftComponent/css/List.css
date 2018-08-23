@@ -25,16 +25,6 @@
   position: relative;
   top: -2px;
 }
-#List .row .title .title_state .i_title_state {
-  background: url("../img/state_noThrough.png") no-repeat;
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  background-size: 100% 100%;
-  position: relative;
-  top: 2px;
-  margin-right: 4px;
-}
 #List .row .row_bottom {
   font-size: 12px;
 }
@@ -111,6 +101,16 @@
   position: relative;
   cursor: pointer;
 }
+#List .state_noThrough .i_title_state {
+  background: url("../img/state_noThrough.png") no-repeat;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  background-size: 100% 100%;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+}
 #List .state_noThrough:hover .state-tips {
   display: block;
 }
@@ -124,14 +124,14 @@
   color: #fff;
   z-index: 100;
   padding: 10px;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   text-align: left;
   display: none;
   cursor: default;
 }
 #List .state-tips .tips-text {
-  font-size: 15px;
+  font-size: 14px;
   margin-top: 8px;
 }
 #List .state-tipArrow {

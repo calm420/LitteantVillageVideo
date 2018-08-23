@@ -31,7 +31,7 @@ export default class List extends React.Component {
             isLoadingLeftForDraft: false,
             hasMoreForDraft: true,
             showOperId: null, // 显示编辑框按钮flag,
-            editorId:null,//编辑id
+            editorId: null,//编辑id
         };
     }
 
@@ -40,13 +40,13 @@ export default class List extends React.Component {
         this.getListData(1)
     }
 
-    accept(type,id) {
-        console.log(type,'TYPE')
+    accept(type, id) {
+        console.log(type, 'TYPE')
         switch (type) {
             case "init":
                 this.setState({
                     tabsIndex: 1,
-                    editorId:id
+                    editorId: id
                 }, () => {
                     // // console.log(this.state.tabsIndex)
                     // this.getListData(0); //获取草稿箱列表
@@ -57,8 +57,8 @@ export default class List extends React.Component {
             case 1:
                 this.setState({
                     tabsIndex: 1,
-                    editorId:null
-                },()=>{
+                    editorId: null
+                }, () => {
                     // this.getListData(0); //获取草稿箱列表
                     // this.getListData(1); //获取发布列表
                     this.refresh(this.state.tabsIndex);
@@ -66,9 +66,9 @@ export default class List extends React.Component {
                 break;
             case 0:
                 this.setState({
-                    tabsIndex:0,
-                    editorId:null,
-                },()=>{
+                    tabsIndex: 0,
+                    editorId: null,
+                }, () => {
                     // this.getListData(0); //获取草稿箱列表
                     // this.getListData(1); //获取发布列表
                     this.refresh(this.state.tabsIndex);
@@ -76,7 +76,7 @@ export default class List extends React.Component {
                 break;
             case 'exit_editor':
                 this.setState({
-                    editorId:null,
+                    editorId: null,
                 });
                 break;
         }
@@ -190,7 +190,7 @@ export default class List extends React.Component {
         this.setState({
             editorId: id,
         })
-        this.props.submit('编辑',id)
+        this.props.submit('编辑', id)
     }
 
     deleteArticle(id) {
@@ -203,7 +203,7 @@ export default class List extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     this.refresh(this.state.tabsIndex);
-                    this.props.submit('删除',id)
+                    this.props.submit('删除', id)
                 } else {
                     Toast.fail("删除失败");
                 }
@@ -214,7 +214,7 @@ export default class List extends React.Component {
         });
     }
 
-    refresh(index){
+    refresh(index) {
         this.initDataSource = [];
         this.initDataSourceForDraft = [];
         this.setState({
@@ -228,7 +228,7 @@ export default class List extends React.Component {
             isLoadingLeftForDraft: false,
             hasMoreForDraft: true,
             showOperId: null, // 显示编辑框按钮flag
-        },()=>{
+        }, () => {
             this.getListData(0)
             this.getListData(1)
         })
@@ -239,17 +239,30 @@ export default class List extends React.Component {
             // console.log(rowData);
             return (
                 <div style={
-                    this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
+                    this.state.editorId == rowData.articleId ? {background: "#E8F1FF"} : {}
                 } className="row">
-                    <div className="title"><span className="title_text text_hidden">{rowData.articleTitle}</span><span className="title_state state_noThrough"><i className="i_title_state"></i>未通过<span className="state-tips"><i className="state-tipArrow"></i><div>未通过原因：</div><div className="tips-text">未通过原因未通过原因未通过原因未通过原因未通过原因未通过原因</div></span></span></div>
+                    <div className="title">
+                        <span className="title_text text_hidden">{rowData.articleTitle}</span>
+                        <span className={rowData.auditInfo?rowData.auditInfo.isPass == 1?'state_through':'state_noThrough':'title_state state_noAudit'}>
+                        <i className='i_title_state'></i>
+                            {rowData.auditInfo?rowData.auditInfo.isPass == 1?'审核通过':'未通过':'待审核'}
+                            <span className="state-tips">
+                                <i className='state-tipArrow'></i>
+                                <div>未通过原因：</div>
+                                <div  className="tips-text">{rowData.auditInfo && rowData.auditInfo.isPass == 0?rowData.auditInfo.auditMark:'无'}</div>
+                            </span>
+                        </span>
+                    </div>
                     <div className="row_bottom">
                         <div className="time">{WebServiceUtil.formatAllTime(rowData.createTime)}</div>
                         <button className="oper" onClick={this.showOperBox.bind(this, rowData.articleId)}>
                             <div className="operBox" style={
                                 this.state.showOperId == rowData.articleId ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <div className="operBox_row" onClick={this.openEditor.bind(this,rowData.articleId)}><i className="menu_edit"></i><span>编辑</span></div>
-                                <div className="operBox_row" onClick={this.deleteArticle.bind(this,rowData.articleId)}><i className="menu_del"></i><span>删除</span></div>
+                                <div className="operBox_row" onClick={this.openEditor.bind(this, rowData.articleId)}><i
+                                    className="menu_edit"></i><span>编辑</span></div>
+                                <div className="operBox_row" onClick={this.deleteArticle.bind(this, rowData.articleId)}>
+                                    <i className="menu_del"></i><span>删除</span></div>
                             </div>
                         </button>
                     </div>
@@ -259,7 +272,7 @@ export default class List extends React.Component {
         const rowForDraft = (rowData) => {
             return (
                 <div style={
-                    this.state.editorId == rowData.articleId?{background:"#E8F1FF"}:{}
+                    this.state.editorId == rowData.articleId ? {background: "#E8F1FF"} : {}
                 } className="row">
                     <div className="title text_hidden"><span className="title_text">{rowData.articleTitle}</span></div>
                     <div className="row_bottom">
@@ -268,8 +281,10 @@ export default class List extends React.Component {
                             <div className="operBox" style={
                                 this.state.showOperId == rowData.articleId ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <div className="operBox_row" onClick={this.openEditor.bind(this,rowData.articleId)}><i className="menu_edit"></i><span>编辑</span></div>
-                                <div className="operBox_row" onClick={this.deleteArticle.bind(this,rowData.articleId)}><i className="menu_del"></i><span>删除</span></div>
+                                <div className="operBox_row" onClick={this.openEditor.bind(this, rowData.articleId)}><i
+                                    className="menu_edit"></i><span>编辑</span></div>
+                                <div className="operBox_row" onClick={this.deleteArticle.bind(this, rowData.articleId)}>
+                                    <i className="menu_del"></i><span>删除</span></div>
                             </div>
                         </button>
                     </div>
@@ -316,7 +331,7 @@ export default class List extends React.Component {
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSourceForDraft}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div  className="loading_text">
+                                <div className="loading_text">
                                     {this.state.isLoadingLeft ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={rowForDraft}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

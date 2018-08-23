@@ -438,7 +438,8 @@ export default class articleDetail extends React.Component {
 
     //评论
     saveDiscussInfo() {
-        console.log(theLike.state.commitText, 'commitText')
+        console.log(theLike.state.commitText, 'commitText');
+        Toast.info('触发')
         if (theLike.state.commitText == '') {
             Toast.info('请输入评论内容!', 1)
             return;

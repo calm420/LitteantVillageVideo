@@ -107,6 +107,7 @@ export default class articleDetail extends React.Component {
             Promise.all([p1, p2, p3, p4]).then((result) => {
                 console.log(result);
                 console.log('请求完毕');
+                //评论成功后要跳转的位置   向上偏移200
                 this.setState({
                     scrollTo: $('.list-view-section-body')[0].offsetTop
                 })
@@ -135,9 +136,20 @@ export default class articleDetail extends React.Component {
     onWindwoResize() {
         // this
         // setTimeout(() => {
-        theLike.setState({
-            clientHeight: document.body.clientHeight,
-        })
+        // Toast.info(theLike.state.clientHeight+'由大变小',1);
+        if(theLike.state.clientHeight > document.body.clientHeight){
+            // Toast.info('键盘弹起');
+            theLike.setState({
+                textareaFocus: true,
+                clientHeight: document.body.clientHeight,
+            })
+        }else{
+            // Toast.info('键盘收起');
+            theLike.setState({
+                textareaFocus: false,
+                clientHeight: document.body.clientHeight,
+            })
+        }
         // }, 100)
 
     }
@@ -146,9 +158,6 @@ export default class articleDetail extends React.Component {
     //评论框获取焦点事件
     textareaFocus() {
         var height = document.body.scrollHeight;
-        this.setState({
-            textareaFocus: true,
-        })
         // console.log('获取焦点');
         // console.log($('#text'));
         // return;
@@ -159,12 +168,6 @@ export default class articleDetail extends React.Component {
         }, 150);
     }
 
-
-    textareaBlurs() {
-        this.setState({
-            textareaFocus: false,
-        })
-    }
 
 
     /**
@@ -467,8 +470,8 @@ export default class articleDetail extends React.Component {
                     }, () => {
 
                         this.getDiscussInfoList(function () {
-                            console.log($(".am-list-view-scrollview")[0]);
-                            $(".am-list-view-scrollview")[0].scrollTop =  4107;
+                            // console.log($(".am-list-view-scrollview")[0]);
+                            $(".am-list-view-scrollview")[0].scrollTop =  theLike.state.scrollTo;
                         });
                         // window.location.reload()
                         // theLike.getDiscussInfoList();
@@ -580,7 +583,6 @@ export default class articleDetail extends React.Component {
                                 value={this.state.commitText}
                                 onChange={this.commitChange.bind(this)}
                                 onFocus={this.textareaFocus.bind(this)}
-                                onBlur={this.textareaBlurs.bind(this)}
                             />
                             <div style={
                                 this.state.textareaFocus ? {display: 'none'} : {display: 'inline-block'}

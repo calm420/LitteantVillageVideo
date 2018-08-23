@@ -469,6 +469,9 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
+                <div>
+                    <img src="../images/articleListLoading.png" alt=""/>
+                </div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 ? {display: 'none'} : {display: 'block'}
                 }>

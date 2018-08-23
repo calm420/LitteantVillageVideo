@@ -35,6 +35,7 @@ export default class articleDetail extends React.Component {
             reportButtonFlag: false,
             checkVersion:false, //是否显示举报按钮
             shareHidden: false, //分享后ｈｉｄｄｅｎ
+            isLoadingHidden:false,
         }
     }
 
@@ -111,6 +112,11 @@ export default class articleDetail extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, '评论列表');
+                if(result.pager.rsCount <= 0){
+                    this.setState({
+                        isLoadingHidden: true,
+                    })
+                }
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
                     if (this.initDataSource.length == 0 && result.response.length == 0) {
@@ -547,7 +553,7 @@ export default class articleDetail extends React.Component {
                                 </div>
                             </div>
                         )}
-                        renderFooter={() => (
+                        renderFooter={this.state.isLoadingHidden?'':() => (
                             <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                                 {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                             </div>)}

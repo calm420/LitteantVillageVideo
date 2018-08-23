@@ -41,8 +41,6 @@ export default class articleList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
         var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
-        console.log(machineType);
-        console.log(version);
         this.setState({
             userId: userId,
             machineType: machineType,
@@ -52,10 +50,7 @@ export default class articleList extends React.Component {
             this.getLittleVideoUserById();
             this.getArticleRecommenLittleVideoList();
         })
-        // console.log(document.getElementsByClassName('am-pull-to-refresh-content'));
-        // for (var i = 0; i < document.getElementsByClassName('am-pull-to-refresh-content').length; i++) {
-        //     document.getElementsByClassName('am-pull-to-refresh-content')[i].style.height = document.body.clientHeight
-        // }
+        console.log(document.getElementsByClassName('am-pull-to-refresh-content'));
     }
 
 
@@ -75,7 +70,6 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '短视频');
                 if (result.success) {
                     this.setState({
                         recommended_video: result,
@@ -115,7 +109,6 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
                     // this.setState({
@@ -176,13 +169,9 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'user');
                 if (result.success) {
                     var data = result.response;
-                    console.log(data, 'data');
-                    console.log(Boolean(0))
                     if (data.schoolId) {
-                        console.log(data.schoolId);
                         this.setState({
                             userRoot: true,
                         })
@@ -208,7 +197,6 @@ export default class articleList extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
-        console.log('触底事件')
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoading && !this.state.hasMore) {
@@ -226,7 +214,6 @@ export default class articleList extends React.Component {
 
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-        console.log(divPull, 'divPull')
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         this.setState({
             defaultPageNo: 1, refreshing: true
@@ -238,7 +225,6 @@ export default class articleList extends React.Component {
     };
 
     toDetail(id) {
-        console.log("触发跳转事件");
         if (id) {
             let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version);
             var data = {
@@ -270,10 +256,6 @@ export default class articleList extends React.Component {
 
     //播放视频
     toPlayVideo(videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
-        console.log(videoIndex);
-        console.log(recommended_video);
-        console.log(recommended_pageCount);
-        console.log(recommended_pageNo);
         var data = {
             method: 'playArticleVideo',
             videos: recommended_video,
@@ -341,7 +323,6 @@ export default class articleList extends React.Component {
     // }
 
     toPerfectInfo = () => {
-        console.log('去完善资料');
         var data = {
             method: 'perfectUserInfo',
         };
@@ -353,7 +334,6 @@ export default class articleList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData, 'rowData');
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);

@@ -732,3 +732,71 @@ hr {
 ::-webkit-scrollbar-button{
   background-color: initial;
 } /* 滑轨两头的监听按钮颜色 */
+
+
+
+/*通用文章编辑样式 */
+.write_article{
+  margin: 0;
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+}
+.write_article_cont{
+  margin: 0;
+  height:100%;
+  position: relative;
+  overflow: hidden;
+}
+.edit_cont{
+  margin-top:0;
+  height: 100%;
+  position: relative;
+}
+.edit_btn{
+  height: 54px;
+  background: #F7F8FC;
+  position: fixed;
+  bottom: 0;
+  width: calc(~"100% - 250px");
+  border-top: 20px solid #fff;
+  text-align: right;
+  margin-top: 20px;
+  .edit_btn_cont{
+    padding: 0 75px;
+    margin-top: 8px;
+    button{
+      border-radius: 2px;
+      border: none;
+      font-size: 16px;
+      margin-left: 50px;
+      cursor: pointer;
+    }
+    .publish{
+      background: #4380EB;
+      color: #fff;
+      padding: 10px 25px;
+    }
+    .Preview{
+      color: #333;
+      background: transparent;
+    }
+  }
+}
+.editor_text{
+  font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", "Apple Color Emoji", "Emoji Symbols Font", "Segoe UI Symbol", Arial, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  word-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.6;
+  /*字体颜色影响插件*/
+  color: #000000;
+  text-align: left;
+  border:1px solid #fff
+}
+.editor_image,.editor_video{
+  max-width: 100%;
+  margin: 10px auto 10px auto;
+  display: block;
+}

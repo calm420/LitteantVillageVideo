@@ -45,7 +45,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 $('body').css('height', '100%');
             }
         });
-      
+
     }
 
     //监听窗口改变时间
@@ -212,9 +212,9 @@ export default class AlreadylookThroughDetail extends React.Component {
                     calm.setState({
                         data: result.response,
                         textareaValue: result.response.auditInfo ? result.response.auditInfo.auditMark : "",
-                        isPass: result.response.auditInfo ? result.response.auditInfo.isPass:"",
-                        isTop: result.response.auditInfo? result.response.auditInfo.istop:"",
-                        isRec: result.response.auditInfo ? result.response.auditInfo.isRecommend:"",
+                        isPass: result.response.auditInfo ? result.response.auditInfo.isPass : "",
+                        isTop: result.response.auditInfo ? result.response.auditInfo.istop : "",
+                        isRec: result.response.auditInfo ? result.response.auditInfo.isRecommend : "",
                         isShow: result.response.auditInfo ? (result.response.auditInfo.isPass == 1 ? true : false) : ""
                     })
                 }
@@ -501,7 +501,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                     :
                                     ""
                     }
-                    <div className="submitBtn noPosition"  style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                    <div className="submitBtn noPosition" style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                         <Button type='warning' onClick={_this.submit}>提交</Button>
                     </div>
                 </div>

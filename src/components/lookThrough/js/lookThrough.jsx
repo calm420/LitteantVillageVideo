@@ -117,13 +117,14 @@ export default class lookThrough extends React.Component {
         console.log(val)
         if (val.value == 1) {
             var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "alreadyLookThough?id="+calm.state.auditorId);
-            var data = {
-                method: 'openNewPage',
-                url: urlW
-            };
-            Bridge.callHandler(data, null, function (error) {
-                window.location.href = urlW;
-            });
+            window.location.href = urlW;
+            // var data = {
+            //     method: 'openNewPage',
+            //     url: urlW
+            // };
+            // Bridge.callHandler(data, null, function (error) {
+            //     window.location.href = urlW;
+            // });
             // calm.initDataSource = [];
             // calm.setState({
             //     dataSource: dataSource.cloneWithRows(calm.initDataSource),

@@ -157,13 +157,14 @@ export default class alreadyLookThough extends React.Component {
         }
         if (val.value == 0) {
             var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "lookThrough?id=" + calm.state.auditorId);
-            var data = {
-                method: 'openNewPage',
-                url: urlW
-            };
-            Bridge.callHandler(data, null, function (error) {
-                window.location.href = urlW;
-            });
+            window.location.href = urlW;
+            // var data = {
+            //     method: 'openNewPage',
+            //     url: urlW
+            // };
+            // Bridge.callHandler(data, null, function (error) {
+            //     window.location.href = urlW;
+            // });
         }
     }
     render() {

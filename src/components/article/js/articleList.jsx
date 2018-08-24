@@ -230,9 +230,9 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     var data = result.response;
-                    // console.log(data,'data');
+                    console.log(data,'data');
                     // console.log(Boolean(0))
-                    if (data.schoolId) {
+                    if (data?data.schoolId:null) {
                         this.setState({
                             userRoot: true,
                         })

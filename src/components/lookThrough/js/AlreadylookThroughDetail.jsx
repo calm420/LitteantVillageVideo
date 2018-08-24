@@ -30,6 +30,22 @@ export default class AlreadylookThroughDetail extends React.Component {
         })
         calm.getUnionByAId(id, auditId, type)
         window.addEventListener('resize', calm.onWindowResize)
+
+        /**
+         * 防止软键盘挡住页面
+         */
+        var winHeight = $(window).height(); // 获取当前页面高度  
+        $(window).resize(function () {
+            var resizeHeight = $(this).height();
+            if (winHeight - resizeHeight > 50) {
+                // 软键盘弹出  
+                $('body').css('height', winHeight + 'px');
+            } else {
+                //软键盘收起
+                $('body').css('height', '100%');
+            }
+        });
+      
     }
 
     //监听窗口改变时间
@@ -45,7 +61,6 @@ export default class AlreadylookThroughDetail extends React.Component {
       * 单选按钮的改变
       */
     radioChange = (value) => {
-
         if (value == 1) {
             calm.setState({
                 isShow: true
@@ -404,11 +419,13 @@ export default class AlreadylookThroughDetail extends React.Component {
                                 <div className="sameBack description">审核说明:
                                     <List>
                                         <TextareaItem
+                                            ref={el => calm.autoFocusInst = el}
                                             rows={3}
                                             placeholder="请在此处输入审核的说明／不通过的原因"
                                             onChange={v => _this.setState({
                                                 textareaValue: v
                                             })}
+                                            count={30}
                                             value={calm.state.textareaValue}
                                         />
                                     </List>
@@ -440,10 +457,12 @@ export default class AlreadylookThroughDetail extends React.Component {
                                         <List>
                                             <TextareaItem
                                                 rows={3}
+                                                ref={el => calm.autoFocusInst = el}
                                                 placeholder="请在此处输入审核的说明／不通过的原因"
                                                 onChange={v => _this.setState({
                                                     textareaValue: v
                                                 })}
+                                                count={30}
                                                 value={calm.state.textareaValue}
                                             />
                                         </List>
@@ -467,10 +486,12 @@ export default class AlreadylookThroughDetail extends React.Component {
                                         <List>
                                                 <TextareaItem
                                                     rows={3}
+                                                    ref={el => calm.autoFocusInst = el}
                                                     placeholder="请在此处输入审核的说明／不通过的原因"
                                                     onChange={v => _this.setState({
                                                         textareaValue: v
                                                     })}
+                                                    count={30}
                                                     value={calm.state.textareaValue}
                                                 />
                                             </List>

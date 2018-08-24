@@ -26,7 +26,11 @@ export default class alreadyLookThough extends React.Component {
     }
     componentWillMount() {
         document.title = "审核列表";
+        // if (this.contentNode) {
+        //     this.contentNode.removeEventListener('scroll', this.onScrollHandle.bind(this));
+        //   }
     }
+
     componentDidMount() {
         document.title = "审核列表"
         var locationHref = window.location.href;
@@ -37,8 +41,19 @@ export default class alreadyLookThough extends React.Component {
             auditorId
         })
         calm.getArticleAndLittleVideo();
+       
+        // if (this.contentNode) {
+        //     this.contentNode.addEventListener('scroll', this.onScrollHandle.bind(this));
+        //   }
         // window.addEventListener('scroll', calm.scrollHandle);
 
+    }
+    onScrollHandle(event) {
+        const clientHeight = event.target.clientHeight
+        const scrollHeight = event.target.scrollHeight
+        const scrollTop = event.target.scrollTop
+        const isBottom = (clientHeight + scrollTop === scrollHeight)
+        console.log('is bottom:' + isBottom)
     }
     // scrollHandle(){
     //     var sTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -141,7 +156,7 @@ export default class alreadyLookThough extends React.Component {
             })
         }
         if (val.value == 0) {
-            var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "lookThrough?id="+calm.state.auditorId);
+            var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "lookThrough?id=" + calm.state.auditorId);
             var data = {
                 method: 'openNewPage',
                 url: urlW

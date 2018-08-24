@@ -73,11 +73,15 @@ export default class articleList extends React.Component {
     refurbishNoom() {
         var _this = this;
         var touchstartNum;
+        var touchFlag;
+        var transformNum;
         window.addEventListener('touchstart', function (e) {
             touchstartNum = e.targetTouches[0].pageY
+            touchFlag = true
         })
 
         window.addEventListener('touchmove', function (event) {
+
             var touch = event.targetTouches[0];
             var touchDistance = touch.pageY - touchstartNum;
 
@@ -89,8 +93,17 @@ export default class articleList extends React.Component {
 
             //1.向下拉动  2.最顶端的向下拉动   3.距离超过300
             if (touch.clientY >= 300 && _this.state.noomPullFlag && touchDistance > 0) {
+                if (touchFlag) {
+                    if (_this.state.index == 0) {
+                        transformNum = document.getElementsByClassName('am-pull-to-refresh-content')[0].style.transform
+                    } else {
+                        transformNum = document.getElementsByClassName('am-pull-to-refresh-content')[1].style.transform
+                    }
+
+                    touchFlag = false
+                }
                 dom.css({
-                    "transform": "translate3d(0px, 115px, 0px)"
+                    "transform": transformNum
                 })
             }
         })

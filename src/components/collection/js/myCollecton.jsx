@@ -266,7 +266,7 @@ export default class myCollection extends React.Component {
             <div id="myCollection" style={{
                 height: document.body.clientHeight
             }}>
-                <div className='emptyDiv' style={{display: calm.initDataSource.length == 0 ? "block" : "none"}
+                <div className='emptyDiv emptyImgBg' style={{display: calm.initDataSource.length == 0 ? "block" : "none"}
                 }>
                     <div className='emptyIcon'></div>
                 </div>

@@ -418,13 +418,27 @@ export default class WaitlookThroughDetail extends React.Component {
                     {
                         calm.state.type == 0 ?
                             <div className="calm">
-                                <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="">
-                                    <div>审核人：{calm.state.auditUser}<span>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span> </div>
-                                    <div>审核说明：{calm.state.auditMark}</div>
-                                    <div>审核结果：
-                                    {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                    <div className='line_public'>
+                                        <span className='title'>审核人：</span>{calm.state.auditUser}
+                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
+
+                                    </div>
+                                    <div className='line_public'>
+                                        <span className='title'>审核说明：</span>
+                                        <div className='reCont'>
+                                            {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                        </div>
+                                    </div>
+                                    <div className='result'>
+                                        <span className='title'>审核结果：</span>
+                                        {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                         {calm.state.data.isTop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
-                                        <span onClick={calm.showAlert}>重新审核</span>
+                                        <div className="reBtn" onClick={calm.showAlert}>
+                                            重新审核
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 <div style={{ display: calm.state.showMark ? "block" : "none" }}>
@@ -454,10 +468,10 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 ))}
                                             </List>
                                         </div>
-
                                     </div>
-                                    <div className="sameBack description">审核说明:
-                                <List>
+                                </div>
+                                <div className="sameBack description">审核说明:
+                                    <List>
                                             <TextareaItem
                                                 rows={3}
                                                 placeholder="请在此处输入审核的说明／不通过的原因"
@@ -468,19 +482,34 @@ export default class WaitlookThroughDetail extends React.Component {
                                             />
                                         </List>
                                     </div>
-                                </div>
-                            </div>
+                             </div>
+
                             :
                             calm.state.type == 1 ?
                                 <div className="calm">
-                                    <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="">
-                                        <div>审核人：{calm.state.auditUser}<span>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span></div>
-                                        <div>审核说明：{calm.state.auditMark}</div>
-                                        <div>审核结果：
-                                        {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                            {calm.state.isRec == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
-                                            <span onClick={calm.showAlert}>重新审核</span>
+                                    <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                        <div className='line_public'>
+                                            <span className='title'>审核人：</span>{calm.state.auditUser}
+                                            <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
+
                                         </div>
+                                        <div className='line_public'>
+                                            <span className='title'>审核说明：</span>
+                                            <div className='reCont'>
+                                                {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                            </div>
+                                        </div>
+                                        <div className='result'>
+                                            <span className='title'>审核结果：</span>
+                                            {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                            {calm.state.isRec == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
+                                            <div className="reBtn" onClick={calm.showAlert}>
+                                                重新审核
+                                            </div>
+                                        <div>
+                                    </div>
+
+                                </div>
                                     </div>
                                     <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                         <div className="isDangerArea priority">
@@ -503,7 +532,7 @@ export default class WaitlookThroughDetail extends React.Component {
 
                                         </div>
                                         <div className="sameBack description">审核说明:
-                                        <List>
+                                            <List>
                                                 <TextareaItem
                                                     rows={3}
                                                     placeholder="请在此处输入审核的说明／不通过的原因"
@@ -519,38 +548,53 @@ export default class WaitlookThroughDetail extends React.Component {
                                 :
                                 calm.state.type == 2 ?
                                     <div className="calm">
-                                        <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="">
-                                            <div>审核人：{calm.state.auditUser}<span>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span></div>
-                                            <div>审核说明：{calm.state.auditMark}</div>
-                                            <div>审核结果：
-                                            {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                                <span onClick={calm.showAlert}>重新审核</span>
+                                        <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                            <div className='line_public'>
+                                                <span className='title'>审核人：</span>{calm.state.auditUser}
+                                                <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
+
                                             </div>
+                                            <div className='line_public'>
+                                                <span className='title'>审核说明：</span>
+                                                <div className='reCont'>
+                                                    {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                                </div>
+                                            </div>
+                                            <div className='result'>
+                                                <span className='title'>审核结果：</span>
+                                                {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                                <div className="reBtn" onClick={calm.showAlert}>
+                                                    重新审核
+                                                </div>
+                                            <div>
+
+                                    </div>
+                                                <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                                    <div className="isDangerArea">
+                                                        <List renderHeader={() => '审核：'}>
+                                                            {data2.map(i => (
+                                                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                                    {i.label}
+                                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                                </RadioItem>
+                                                            ))}
+                                                        </List>
+                                                    </div>
+                                                    <div className="sameBack description">审核说明:
+                                                        <List>
+                                                            <TextareaItem
+                                                                rows={3}
+                                                                placeholder="请在此处输入审核的说明／不通过的原因"
+                                                                onChange={v => _this.setState({
+                                                                    textareaValue: v
+                                                                })}
+                                                                count={30}
+                                                            />
+                                                        </List>
+                                                    </div>
+                                                </div>
                                         </div>
-                                        <div style={{ display: calm.state.showMark ? "block" : "none" }}>
-                                            <div className="isDangerArea">
-                                                <List renderHeader={() => '审核：'}>
-                                                    {data2.map(i => (
-                                                        <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                                            {i.label}
-                                                            {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                        </RadioItem>
-                                                    ))}
-                                                </List>
-                                            </div>
-                                            <div className="sameBack description">审核说明:
-                                                     <List>
-                                                    <TextareaItem
-                                                        rows={3}
-                                                        placeholder="请在此处输入审核的说明／不通过的原因"
-                                                        onChange={v => _this.setState({
-                                                            textareaValue: v
-                                                        })}
-                                                        count={30}
-                                                    />
-                                                </List>
-                                            </div>
-                                        </div>
+                                    </div>
                                     </div>
                                     :
                                     ""

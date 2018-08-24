@@ -227,6 +227,12 @@ export default class articleList extends React.Component {
                         this.setState({
                             userRoot: false,
                         })
+                        //
+                        if(this.state.index == 0){
+                            this.setState({
+                                initLoading: false,
+                            })
+                        }
                     }
                 } else {
                     this.setState({

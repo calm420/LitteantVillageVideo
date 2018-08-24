@@ -1,7 +1,8 @@
 import React from "react";
-import { List, Radio, TextareaItem, Toast, Button, Icon } from 'antd-mobile';
+import { List, Radio, TextareaItem, Toast, Modal, Button, Icon } from 'antd-mobile';
 import "../css/WaitlookThroughDetail.less"
 const RadioItem = Radio.RadioItem;
+const alert = Modal.alert;
 var calm;
 
 export default class WaitlookThroughDetail extends React.Component {
@@ -10,11 +11,12 @@ export default class WaitlookThroughDetail extends React.Component {
         calm = this;
         this.state = {
             // isPass: 0,
-            isRec: 0,
-            isTop: 0,
+            // isRec: 0,
+            // isTop: 0,
             data: {},
             clientHeight: document.body.clientHeight,
-            textareaValue: ""
+            textareaValue: "",
+            showMark: true
         }
     }
     componentDidMount() {
@@ -37,9 +39,9 @@ export default class WaitlookThroughDetail extends React.Component {
             calm.getDiscussInfoById(id)
         }
         window.addEventListener('resize', calm.onWindowResize);
-         /**
-         * 防止软键盘挡住页面
-         */
+        /**
+        * 防止软键盘挡住页面
+        */
         var winHeight = $(window).height(); // 获取当前页面高度  
         $(window).resize(function () {
             var resizeHeight = $(this).height();
@@ -74,16 +76,28 @@ export default class WaitlookThroughDetail extends React.Component {
             onResponse: result => {
                 console.log(result)
                 if (result.success) {
-                    if(result.response.auditInfo.isPass == 1){
+                    if (result.response.auditId > 0) {
                         calm.setState({
-                            isRec:result.response.auditInfo.isRecommend,
-                            isTop:result.response.auditInfo.istop
+                            showStatus: true,
+                            showMark: false
+                        })
+                    }
+                    if (result.response.auditInfo.isPass == 1) {
+                        calm.setState({
+                            isShow: true,
+                            isRec: result.response.isRecommend,
+                            isTop: result.response.isTop
                         })
                     }
                     calm.setState({
                         data: result.response,
-                        isPass:result.response.auditInfo.isPass,
-                       
+                        isPass: result.response.auditInfo.isPass,
+                        auditUser: result.response.auditInfo.auditorUserName,
+                        textareaValue: result.response.auditInfo.auditMark,
+                        auditMark: result.response.auditInfo.auditMark,
+                        auditingTime: result.response.auditInfo.auditingTime,
+                        isRec: result.response.isRecommend,
+                        isTop: result.response.isTop
                     })
                 }
             },
@@ -104,16 +118,28 @@ export default class WaitlookThroughDetail extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result));
                 if (result.success) {
-                    if(result.response.auditInfo.isPass == 1){
+                    if (result.response.auditId > 0) {
                         calm.setState({
-                            isRec:result.response.auditInfo.isRecommend,
-                            isTop:result.response.auditInfo.istop
+                            showStatus: true,
+                            showMark: false
                         })
                     }
-                   
+                    if (result.response.auditInfo.isPass == 1) {
+                        calm.setState({
+                            isShow: true,
+                            isRec: result.response.isRecommend,
+                            isTop: result.response.istop
+                        })
+                    }
                     calm.setState({
                         data: result.response,
-                        isPass:result.response.auditInfo.isPass,
+                        isPass: result.response.auditInfo.isPass,
+                        auditUser: result.response.auditInfo.auditorUserName,
+                        auditMark: result.response.auditInfo.auditMark,
+                        textareaValue: result.response.auditInfo.auditMark,
+                        auditingTime: result.response.auditInfo.auditingTime,
+                        isTop: result.response.istop,
+                        isRec: result.response.isRecommend,
 
                     })
                 }
@@ -134,11 +160,22 @@ export default class WaitlookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                if (result.success) {
-                    calm.setState({
-                        data: result.response,
-                        isPass:result.response.auditInfo.isPass,
 
+                if (result.success) {
+                    if (result.response.auditId > 0) {
+                        calm.setState({
+                            showStatus: true,
+                            showMark: false
+                        })
+                    }
+                    calm.setState({
+                        isShow: true,
+                        data: result.response,
+                        isPass: result.response.auditInfo.isPass,
+                        auditUser: result.response.auditInfo.auditorUserName,
+                        auditMark: result.response.auditInfo.auditMark,
+                        textareaValue: result.response.auditInfo.auditMark,
+                        auditingTime: result.response.auditInfo.auditingTime,
                     })
                 }
             },
@@ -151,8 +188,8 @@ export default class WaitlookThroughDetail extends React.Component {
      * 单选按钮的改变
      */
     redioChange = (value) => {
-        console.log(this.state.isPass,"isPass")
-        console.log(value,"v")
+        console.log(this.state.isPass, "isPass")
+        console.log(value, "v")
         this.state.isPass = value;
         if (value == 1) {
             calm.setState({
@@ -177,7 +214,7 @@ export default class WaitlookThroughDetail extends React.Component {
      * 是否推荐
      */
     recChange = (value) => {
-        console.log(value,"rec")
+        console.log(value, "rec")
         this.setState({
             isRec: value
         })
@@ -187,7 +224,7 @@ export default class WaitlookThroughDetail extends React.Component {
      * 是否置顶
      */
     topChange = (value) => {
-        console.log(value,"top")
+        console.log(value, "top")
         this.setState({
             isTop: value
         })
@@ -197,8 +234,8 @@ export default class WaitlookThroughDetail extends React.Component {
      * 点击提交按钮
      */
     submit() {
-        console.log(calm.state.type,"type")
-        
+        console.log(calm.state.type, "type")
+
         var param;
         //小视频
         if (calm.state.type == 0) {
@@ -239,7 +276,7 @@ export default class WaitlookThroughDetail extends React.Component {
             //     Toast.info("333")
             //     return
             // }
-          
+
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -286,10 +323,34 @@ export default class WaitlookThroughDetail extends React.Component {
         });
     }
 
+    /**
+     * 重新审核弹出框
+     */
+    showAlert = (event) => {
+        event.stopPropagation()
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定重新审核吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => calm.reLook() },
+
+        ], phone);
+    }
+    reLook() {
+        calm.setState({
+            showMark: true
+        })
+    }
+
     render() {
-        console.log(calm.state.isPass,"isPass")
-        console.log(calm.state.isRec,"isRec")
-        console.log(calm.state.isTop,"istop")
+
+        console.log(calm.state.showStatus, "isPass")
 
         var _this = this;
         const data2 = [
@@ -359,51 +420,29 @@ export default class WaitlookThroughDetail extends React.Component {
                     {
                         calm.state.type == 0 ?
                             <div className="calm">
-                                <div className="isDangerArea">
-                                    <List renderHeader={() => '审核：'}>
-                                        {data2.map(i => (
-                                            <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                                {i.label}
-                                                {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                            </RadioItem>
-                                        ))}
-                                    </List>
-                                    <div style={{ display: calm.state.isShow ? "block" : "none" }}>
-                                        {/* <List renderHeader={() => '推荐：'}>
-                                            {isRecData.map(i => (
-                                                <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
-                                                    {i.label}
-                                                </RadioItem>
-                                            ))}
-                                        </List> */}
-                                        <List className='toFirst' renderHeader={() => '置顶：'}>
-                                            {isTopData.map(i => (
-                                                <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
-                                                    {i.label}
-                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                </RadioItem>
-                                            ))}
-                                        </List>
-                                    </div>
+                                <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                    <div className='line_public'>
+                                        <span className='title'>审核人：</span>{calm.state.auditUser}
+                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
 
+                                    </div>
+                                    <div className='line_public'>
+                                        <span className='title'>审核说明：</span>
+                                        <div className='reCont'>
+                                            {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                        </div>
+                                    </div>
+                                    <div className='result'>
+                                        <span className='title'>审核结果：</span>
+                                        {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                        {calm.state.isTop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
+                                        <div className="reBtn" onClick={calm.showAlert}>
+                                            重新审核
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="sameBack description">审核说明:
-                                <List>
-                                        <TextareaItem
-                                            rows={3}
-                                            placeholder="请在此处输入审核的说明／不通过的原因"
-                                            onChange={v => _this.setState({
-                                                textareaValue: v
-                                            })}
-                                            count={30}
-                                        />
-                                    </List>
-                                </div>
-                            </div>
-                            :
-                            calm.state.type == 1 ?
-                                <div className="calm">
-                                    <div className="isDangerArea priority">
+                                <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                    <div className="isDangerArea">
                                         <List renderHeader={() => '审核：'}>
                                             {data2.map(i => (
                                                 <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
@@ -412,18 +451,26 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List>
-                                        <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                        <div style={{ display: calm.state.isShow ? "block" : "none" }}>
+                                            {/* <List renderHeader={() => '推荐：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}
-                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
                                                 </RadioItem>
                                             ))}
-                                        </List>
-
+                                        </List> */}
+                                            <List className='toFirst' renderHeader={() => '置顶：'}>
+                                                {isTopData.map(i => (
+                                                    <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
+                                                        {i.label}
+                                                        {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                    </RadioItem>
+                                                ))}
+                                            </List>
+                                        </div>
                                     </div>
                                     <div className="sameBack description">审核说明:
-                                        <List>
+                                            <List>
                                             <TextareaItem
                                                 rows={3}
                                                 placeholder="请在此处输入审核的说明／不通过的原因"
@@ -435,10 +482,38 @@ export default class WaitlookThroughDetail extends React.Component {
                                         </List>
                                     </div>
                                 </div>
-                                :
-                                calm.state.type == 2 ?
-                                    <div className="calm">
-                                        <div className="isDangerArea">
+
+                            </div>
+
+                            :
+                            calm.state.type == 1 ?
+                                <div className="calm">
+                                    <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                        <div className='line_public'>
+                                            <span className='title'>审核人：</span>{calm.state.auditUser}
+                                            <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
+
+                                        </div>
+                                        <div className='line_public'>
+                                            <span className='title'>审核说明：</span>
+                                            <div className='reCont'>
+                                                {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                            </div>
+                                        </div>
+                                        <div className='result'>
+                                            <span className='title'>审核结果：</span>
+                                            {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                            {calm.state.isRec == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
+                                            <div className="reBtn" onClick={calm.showAlert}>
+                                                重新审核
+                                            </div>
+                                            <div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                        <div className="isDangerArea priority">
                                             <List renderHeader={() => '审核：'}>
                                                 {data2.map(i => (
                                                     <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
@@ -447,9 +522,18 @@ export default class WaitlookThroughDetail extends React.Component {
                                                     </RadioItem>
                                                 ))}
                                             </List>
+                                            <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                                {isRecData.map(i => (
+                                                    <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
+                                                        {i.label}
+                                                        {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                    </RadioItem>
+                                                ))}
+                                            </List>
+
                                         </div>
                                         <div className="sameBack description">审核说明:
-                                        <List>
+                                            <List>
                                                 <TextareaItem
                                                     rows={3}
                                                     placeholder="请在此处输入审核的说明／不通过的原因"
@@ -461,10 +545,62 @@ export default class WaitlookThroughDetail extends React.Component {
                                             </List>
                                         </div>
                                     </div>
+                                </div>
+                                :
+                                calm.state.type == 2 ?
+                                    <div className="calm">
+                                        <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                            <div className='line_public'>
+                                                <span className='title'>审核人：</span>{calm.state.auditUser}
+                                                <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
+
+                                            </div>
+                                            <div className='line_public'>
+                                                <span className='title'>审核说明：</span>
+                                                <div className='reCont'>
+                                                    {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                                </div>
+                                            </div>
+                                            <div className='result'>
+                                                <span className='title'>审核结果：</span>
+                                                {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                                <div className="reBtn" onClick={calm.showAlert}>
+                                                    重新审核
+                                                </div>
+                                                <div>
+
+                                                </div>
+                                                <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                                    <div className="isDangerArea">
+                                                        <List renderHeader={() => '审核：'}>
+                                                            {data2.map(i => (
+                                                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                                    {i.label}
+                                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                                </RadioItem>
+                                                            ))}
+                                                        </List>
+                                                    </div>
+                                                    <div className="sameBack description">审核说明:
+                                                        <List>
+                                                            <TextareaItem
+                                                                rows={3}
+                                                                placeholder="请在此处输入审核的说明／不通过的原因"
+                                                                onChange={v => _this.setState({
+                                                                    textareaValue: v
+                                                                })}
+                                                                count={30}
+                                                            />
+                                                        </List>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     :
                                     ""
                     }
-                    <div className="submitBtn noPosition" style={{marginTop:40}}>
+                    <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
                         <Button type='warning' onClick={_this.submit}>提交</Button>
                     </div>
                 </div>

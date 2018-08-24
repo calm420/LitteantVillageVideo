@@ -273,6 +273,7 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result,'result');
                 if (result.success) {
                     Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
                     this.initEditor();

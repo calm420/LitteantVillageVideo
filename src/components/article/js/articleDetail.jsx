@@ -518,8 +518,8 @@ export default class articleDetail extends React.Component {
                 } else {
                     Toast.info('评论失败!', 1);
                 }
-                $("#text").focus();
-                $("#text").blur();
+                // $("#text").focus();
+                // $("#text").blur();
             },
             onError: function (error) {
                 Toast.fail(error, 1);

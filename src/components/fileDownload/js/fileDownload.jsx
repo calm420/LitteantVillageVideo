@@ -29,6 +29,27 @@ export default class Demo extends React.Component {
                 _this.buildTitle(fileType)
             })
         }
+
+        if (fileType == 'youyang') {
+            document.title = '有样'
+        } else if (fileType == 'littleAntTe') {
+            if (this.state.phone == 'IOS') {
+                document.title = '小蚂蚁移动教学'
+            } else {
+                document.title = '小蚂蚁.教师端'
+            }
+        } else if (fileType == 'littleAntSt') {
+            if (this.state.phone == 'IOS') {
+                document.title = '小蚂蚁移动教学'
+            } else {
+                document.title = '小蚂蚁.学生端'
+            }
+
+        } else if (fileType == 'littleAntFa') {
+            document.title = '小蚂蚁.家长端'
+        } else if (fileType == 'elearning') {
+            document.title = '小蚂蚁云校'
+        }
     }
 
     buildTitle(fileType) {
@@ -63,7 +84,7 @@ export default class Demo extends React.Component {
                     <div>小蚂蚁移动教学</div>
                     <span>科技改变未来，教育成就未来</span>
                 </div>
-            }else{
+            } else {
                 var titleDiv = <div className='textCont'>
                     <div>小蚂蚁.学生端</div>
                     <span>科技改变未来，教育成就未来</span>

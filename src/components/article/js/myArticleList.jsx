@@ -289,6 +289,10 @@ export default class myArticleList extends React.Component {
             <div id="myArticleList" style={{
                 height: document.body.clientHeight
             }}>
+                <div className='emptyDiv' style={{display: this.initDataSource.length == 0 ? "block" : "none"}
+                }>
+                    <div className='emptyIcon'></div>
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

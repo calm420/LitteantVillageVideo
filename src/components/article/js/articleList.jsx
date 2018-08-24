@@ -66,7 +66,6 @@ export default class articleList extends React.Component {
                     initLoading: false,
                 })
             })
-
         })
         this.refurbishNoom()
     }

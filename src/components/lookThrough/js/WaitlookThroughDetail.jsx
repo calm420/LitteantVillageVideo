@@ -403,11 +403,12 @@ export default class WaitlookThroughDetail extends React.Component {
                                     :
                                     ""
                     }
+                    <div className="submitBtn noPosition" style={{marginTop:40}}>
+                        <Button type='warning' onClick={_this.submit}>提交</Button>
+                    </div>
                 </div>
 
-                <div className="submitBtn noPosition">
-                    <Button type='warning' onClick={_this.submit}>提交</Button>
-                </div>
+
 
             </div>
 

@@ -246,7 +246,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 height: calm.state.clientHeight
             }}>
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
+                <div className="content">
                     {
                         // 自媒体文章
                         calm.state.type == 0 ?

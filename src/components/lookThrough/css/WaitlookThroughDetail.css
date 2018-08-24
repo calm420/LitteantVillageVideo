@@ -11,8 +11,8 @@
   display: none;
 }
 #waitLookThrough .content {
-  height: calc(100% - 75px);
   overflow-y: auto;
+  height: 100%;
 }
 #waitLookThrough .sameBack {
   background-color: #fff;

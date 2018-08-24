@@ -156,7 +156,6 @@ const powerAdministrate = (location, cb) => {
         cb(null, require('./components/powerAdministrate/js/powerAdministrate').default)
     }, 'powerAdministrate')
 };
-
 const authorityManagement = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/authorityManagement/js/authorityManagement').default)

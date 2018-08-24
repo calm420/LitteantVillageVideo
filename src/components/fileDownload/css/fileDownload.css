@@ -6,9 +6,29 @@
   width: 110px;
   height: 110px;
   margin: 20px auto 0;
-  background-size: 100%;
+}
+#fileDownload .textCont {
+  font-size: 24px;
+  text-align: center;
+}
+#fileDownload .textCont span {
+  font-size: 14px;
+  padding-top: 10px;
+}
+#fileDownload .downBtn {
+  width: 173px;
+  height: 45px;
+  line-height: 45px;
+  box-sizing: border-box;
+  font-size: 18px;
+  color: #fff;
 }
 #fileDownload.youyang {
   background: url("../img/icon_youyangBg.png") no-repeat;
   background-size: cover;
+  color: #4E8BFD;
+}
+#fileDownload.youyang .topImg {
+  background: url("../img/topImg_youyang.png") no-repeat;
+  background-size: 100%;
 }

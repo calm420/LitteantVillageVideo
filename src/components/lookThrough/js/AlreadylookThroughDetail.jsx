@@ -30,6 +30,22 @@ export default class AlreadylookThroughDetail extends React.Component {
         })
         calm.getUnionByAId(id, auditId, type)
         window.addEventListener('resize', calm.onWindowResize)
+
+        /**
+         * 防止软键盘挡住页面
+         */
+        var winHeight = $(window).height(); // 获取当前页面高度  
+        $(window).resize(function () {
+            var resizeHeight = $(this).height();
+            if (winHeight - resizeHeight > 50) {
+                // 软键盘弹出  
+                $('body').css('height', winHeight + 'px');
+            } else {
+                //软键盘收起
+                $('body').css('height', '100%');
+            }
+        });
+      
     }
 
     //监听窗口改变时间
@@ -45,7 +61,6 @@ export default class AlreadylookThroughDetail extends React.Component {
       * 单选按钮的改变
       */
     radioChange = (value) => {
-
         if (value == 1) {
             calm.setState({
                 isShow: true
@@ -165,7 +180,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                     Toast.success('成功');
                     //关闭当前窗口，不刷新上一个页面
                     var data = {
-                        method: 'finish',
+                        method: 'finishForRefresh',
                     };
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
@@ -197,10 +212,10 @@ export default class AlreadylookThroughDetail extends React.Component {
                     calm.setState({
                         data: result.response,
                         textareaValue: result.response.auditInfo ? result.response.auditInfo.auditMark : "",
-                        isPass: result.response.auditInfo.isPass,
-                        isTop: result.response.auditInfo.istop,
-                        isRec: result.response.auditInfo.isRecommend,
-                        isShow: result.response.auditInfo.isPass == 1 ? true : false
+                        isPass: result.response.auditInfo ? result.response.auditInfo.isPass:"",
+                        isTop: result.response.auditInfo? result.response.auditInfo.istop:"",
+                        isRec: result.response.auditInfo ? result.response.auditInfo.isRecommend:"",
+                        isShow: result.response.auditInfo ? (result.response.auditInfo.isPass == 1 ? true : false) : ""
                     })
                 }
             },
@@ -231,7 +246,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 height: calm.state.clientHeight
             }}>
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                <div className="content">
+                <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
                     {
                         // 自媒体文章
                         calm.state.type == 0 ?
@@ -390,7 +405,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List> */}
-                                        <List renderHeader={() => '置顶：'}>
+                                        <List className='toFirst' renderHeader={() => '置顶：'}>
                                             {isTopData.map(i => (
                                                 <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
                                                     {i.label}
@@ -404,24 +419,23 @@ export default class AlreadylookThroughDetail extends React.Component {
                                 <div className="sameBack description">审核说明:
                                     <List>
                                         <TextareaItem
+                                            ref={el => calm.autoFocusInst = el}
                                             rows={3}
                                             placeholder="请在此处输入审核的说明／不通过的原因"
                                             onChange={v => _this.setState({
                                                 textareaValue: v
                                             })}
+                                            count={30}
                                             value={calm.state.textareaValue}
                                         />
                                     </List>
-                                </div>
-                                <div className="submitBtn">
-                                    <Button type='warning' onClick={_this.submit}>提交</Button>
                                 </div>
 
                             </div>
                             :
                             calm.state.type == 1 ?
                                 <div className="reCheckCont" style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
-                                    <div className="isDangerArea">
+                                    <div className="isDangerArea priority">
                                         <List renderHeader={() => '审核：'}>
                                             {passData.map(i => (
                                                 <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
@@ -429,7 +443,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List>
-                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                        <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}
@@ -443,17 +457,17 @@ export default class AlreadylookThroughDetail extends React.Component {
                                         <List>
                                             <TextareaItem
                                                 rows={3}
+                                                ref={el => calm.autoFocusInst = el}
                                                 placeholder="请在此处输入审核的说明／不通过的原因"
                                                 onChange={v => _this.setState({
                                                     textareaValue: v
                                                 })}
+                                                count={30}
                                                 value={calm.state.textareaValue}
                                             />
                                         </List>
                                     </div>
-                                    <div className="submitBtn">
-                                        <Button type='warning' onClick={_this.submit}>提交</Button>
-                                    </div>
+
 
                                 </div>
                                 :
@@ -472,25 +486,25 @@ export default class AlreadylookThroughDetail extends React.Component {
                                         <List>
                                                 <TextareaItem
                                                     rows={3}
+                                                    ref={el => calm.autoFocusInst = el}
                                                     placeholder="请在此处输入审核的说明／不通过的原因"
                                                     onChange={v => _this.setState({
                                                         textareaValue: v
                                                     })}
+                                                    count={30}
                                                     value={calm.state.textareaValue}
                                                 />
                                             </List>
-                                        </div>
-                                        <div className="submitBtn">
-                                            <Button type='warning' onClick={_this.submit}>提交</Button>
                                         </div>
 
                                     </div>
                                     :
                                     ""
                     }
+                    <div className="submitBtn noPosition"  style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                        <Button type='warning' onClick={_this.submit}>提交</Button>
+                    </div>
                 </div>
-
-
             </div>
         )
     }

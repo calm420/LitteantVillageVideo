@@ -332,10 +332,38 @@
 #articleDetail .commit_button {
   width: 68px;
   display: inline-block;
-  position: absolute;
-  top: 10px;
-  height: 38px !important;
+  height: 100%;
   line-height: 38px !important;
   background: #4380eb;
   font-size: 15px;
+  vertical-align: middle;
+  position: relative;
+  color: #fff;
+  border-radius: 3px;
+}
+#articleDetail .commit_button span {
+  vertical-align: middle;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
+#articleDetail .comments_send {
+  padding: 10px 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+#articleDetail .comments_send .am-list-item {
+  padding: 0;
+}
+#articleDetail .comments_send .am-list-item {
+  min-height: 38px !important;
+  margin-right: 15px;
+}
+#articleDetail .comments_send .pent,
+#articleDetail .comments_send .share {
+  margin-top: 9px;
 }

@@ -37,9 +37,22 @@ export default class WaitlookThroughDetail extends React.Component {
         } else if (type == 2) {
             calm.getDiscussInfoById(id)
         }
-        window.addEventListener('resize', calm.onWindowResize)
+        window.addEventListener('resize', calm.onWindowResize);
+         /**
+         * 防止软键盘挡住页面
+         */
+        var winHeight = $(window).height(); // 获取当前页面高度  
+        $(window).resize(function () {
+            var resizeHeight = $(this).height();
+            if (winHeight - resizeHeight > 50) {
+                // 软键盘弹出  
+                $('body').css('height', winHeight + 'px');
+            } else {
+                //软键盘收起
+                $('body').css('height', '100%');
+            }
+        });
     }
-
 
     //监听窗口改变时间
     onWindwoResize() {
@@ -214,7 +227,7 @@ export default class WaitlookThroughDetail extends React.Component {
             }
         });
     }
-  
+
 
     render() {
         var _this = this;
@@ -284,7 +297,7 @@ export default class WaitlookThroughDetail extends React.Component {
                     }
                     {
                         calm.state.type == 0 ?
-                            <div>
+                            <div className="calm">
                                 <div className="isDangerArea">
                                     <List renderHeader={() => '审核：'}>
                                         {data2.map(i => (
@@ -328,7 +341,7 @@ export default class WaitlookThroughDetail extends React.Component {
                             </div>
                             :
                             calm.state.type == 1 ?
-                                <div>
+                                <div className="calm">
                                     <div className="isDangerArea priority">
                                         <List renderHeader={() => '审核：'}>
                                             {data2.map(i => (
@@ -363,7 +376,7 @@ export default class WaitlookThroughDetail extends React.Component {
                                 </div>
                                 :
                                 calm.state.type == 2 ?
-                                    <div>
+                                    <div className="calm">
                                         <div className="isDangerArea">
                                             <List renderHeader={() => '审核：'}>
                                                 {data2.map(i => (
@@ -392,7 +405,7 @@ export default class WaitlookThroughDetail extends React.Component {
                     }
                 </div>
 
-                <div className="submitBtn">
+                <div className="submitBtn noPosition">
                     <Button type='warning' onClick={_this.submit}>提交</Button>
                 </div>
 

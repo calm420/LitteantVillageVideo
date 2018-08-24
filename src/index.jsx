@@ -69,6 +69,13 @@ const WaitlookThroughDetail = (location, cb) => {
     }, 'WaitlookThroughDetail')
 };
 
+const alreadyLookThough = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/lookThrough/js/alreadyLookThough').default)
+    }, 'alreadyLookThough')
+};
+
+
 /**
  * 已审核详情
  */
@@ -257,6 +264,7 @@ ReactDOM.render(
             <Route path="EditorDemo" getComponent={EditorDemo}/>
             <Route path="lookThrough" getComponent={lookThrough}/>
             <Route path="WaitlookThroughDetail" getComponent={WaitlookThroughDetail}/>
+            <Route path="alreadyLookThough" getComponent={alreadyLookThough}/>
             <Route path="AlreadylookThroughDetail" getComponent={AlreadylookThroughDetail}/>
             <Route path="uploadMusicList" getComponent={uploadMusicList}/>
             <Route path="addUploadMusic" getComponent={addUploadMusic}/>

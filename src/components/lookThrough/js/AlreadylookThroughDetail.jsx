@@ -231,7 +231,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                 height: calm.state.clientHeight
             }}>
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                <div className="content">
+                <div className="content" style={{ height: calm.state.flag == 1 ? "" : "100%" }}>
                     {
                         // 自媒体文章
                         calm.state.type == 0 ?
@@ -390,7 +390,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List> */}
-                                        <List renderHeader={() => '置顶：'}>
+                                        <List className='toFirst' renderHeader={() => '置顶：'}>
                                             {isTopData.map(i => (
                                                 <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
                                                     {i.label}
@@ -413,15 +413,12 @@ export default class AlreadylookThroughDetail extends React.Component {
                                         />
                                     </List>
                                 </div>
-                                <div className="submitBtn">
-                                    <Button type='warning' onClick={_this.submit}>提交</Button>
-                                </div>
 
                             </div>
                             :
                             calm.state.type == 1 ?
                                 <div className="reCheckCont" style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
-                                    <div className="isDangerArea">
+                                    <div className="isDangerArea priority">
                                         <List renderHeader={() => '审核：'}>
                                             {passData.map(i => (
                                                 <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
@@ -429,7 +426,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List>
-                                        <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                        <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
                                             {isRecData.map(i => (
                                                 <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                     {i.label}
@@ -451,9 +448,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                                             />
                                         </List>
                                     </div>
-                                    <div className="submitBtn">
-                                        <Button type='warning' onClick={_this.submit}>提交</Button>
-                                    </div>
+
 
                                 </div>
                                 :
@@ -480,17 +475,15 @@ export default class AlreadylookThroughDetail extends React.Component {
                                                 />
                                             </List>
                                         </div>
-                                        <div className="submitBtn">
-                                            <Button type='warning' onClick={_this.submit}>提交</Button>
-                                        </div>
 
                                     </div>
                                     :
                                     ""
                     }
+                    <div className="submitBtn noPosition"  style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
+                        <Button type='warning' onClick={_this.submit}>提交</Button>
+                    </div>
                 </div>
-
-
             </div>
         )
     }

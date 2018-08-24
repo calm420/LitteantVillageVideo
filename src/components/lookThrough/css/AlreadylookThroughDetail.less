@@ -2,9 +2,11 @@
     video::-webkit-media-controls-fullscreen-button {
         display: none;
     }
-    position: relative;
+    height: 100%;
+    overflow: hidden;
     .content{
         color: #333;
+        //height: calc(~"100% - 75px");
         height: 100%;
         overflow-y: auto;
         box-sizing: border-box;
@@ -133,6 +135,20 @@
         .am-list-header{
             padding: 16px 15px;
         }
+        .toFirst {
+            border-top: 10px #f4f4f4 solid;
+        }
+        &.priority {
+            .am-list-item:first-child {
+                padding-left: 30px;
+            }
+            .toPriority {
+                border-top: 10px #f4f4f4 solid;
+                .am-list-item:first-child {
+                    padding-left: 0;
+                }
+            }
+        }
     }
     .description{
         font-size: 15px;
@@ -186,15 +202,15 @@
         .pass{
             color: #4CAF00;
         }
+
     }
     .reCheckCont {
-        padding-bottom: 75px;
-        .submitBtn{
-            position: fixed;
-            background-color: #f4f4f4;
-            bottom:0;
-            padding: 15px;
-        }
+        //.submitBtn{
+        //    position: fixed;
+        //    background-color: #f4f4f4;
+        //    bottom:0;
+        //    padding: 15px;
+        //}
     }
     .result span{
         font-size: 13px;
@@ -221,5 +237,9 @@
         text-align: left;
         border:1px solid #fff
     }
-
+    @media screen and (max-width: 320px) {
+        .topMsg .time{
+            margin: 0 5px;
+        }
+    }
 }

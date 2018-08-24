@@ -535,7 +535,7 @@ export default class articleList extends React.Component {
                             style={
                                 this.state.initLoading ? {display: 'none'} : {
                                     display: 'block',
-                                    height: document.body.clientHeight - 46
+                                    height: document.body.clientHeight
                                 }
                             }
                             onScroll={this.listViewScroll.bind(this)}
@@ -571,8 +571,8 @@ export default class articleList extends React.Component {
                             style={
                                 this.state.initLoading ? {
                                     display: 'none',
-                                    height: document.body.clientHeight - 46
-                                } : {display: 'block', height: document.body.clientHeight - 46}
+                                    height: document.body.clientHeight
+                                } : {display: 'block', height: document.body.clientHeight}
                             }
                             onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh

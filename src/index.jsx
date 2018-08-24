@@ -183,6 +183,12 @@ const playVideo = (location, cb) => {
     }, 'playVideo')
 };
 
+const fileDownload = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/fileDownload/js/fileDownload').default)
+    }, 'fileDownload')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -243,7 +249,13 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/playVideo?url=http://60.205.86.217/upload8/2018-08-16/10/1ec3d84c-8db5-490d-8d86-5826a91db0dd.mp4" style={{fontSize: '24px'}}>播放视频</Link>
+                            to="/playVideo?url=http://60.205.86.217/upload8/2018-08-16/10/1ec3d84c-8db5-490d-8d86-5826a91db0dd.mp4"
+                            style={{fontSize: '24px'}}>播放视频</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/fileDownload?fileType=youyang"
+                            style={{fontSize: '24px'}}>文件下载</Link>
                     </li>
                 </ul>
             </div>
@@ -285,6 +297,7 @@ ReactDOM.render(
             <Route path="userAdministration" getComponent={userAdministration}/>
             <Route path="accessManagement" getComponent={accessManagement}/>
             <Route path="playVideo" getComponent={playVideo}/>
+            <Route path="fileDownload" getComponent={fileDownload}/>
         </Route>
     </Router>
     ,

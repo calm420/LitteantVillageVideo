@@ -179,7 +179,7 @@ export default class alreadyLookThough extends React.Component {
                                     <div className="topMsg my_flex">
                                         <span className='author text_hidden'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
                                         <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
-                                        <span>{rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span className='toPriority'>优先</span>) : ""}</span>
+                                        {rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span className='toPriority'>优先</span>) : ""}
                                     </div>
                                     <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                     <div className='title'>{rowData.littleVideoInfo.videoContent}</div>
@@ -194,7 +194,7 @@ export default class alreadyLookThough extends React.Component {
                                         <div className="topMsg my_flex">
                                             <span className='author text_hidden'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
                                             <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
-                                            <span>{rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span className='toFirst'>置顶</span>) : ""}</span>
+                                            {rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span className='toFirst'>置顶</span>) : ""}
                                         </div>
                                         <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>

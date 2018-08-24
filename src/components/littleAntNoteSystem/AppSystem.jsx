@@ -23,12 +23,12 @@ export default class AppSystem extends React.Component {
     componentWillMount() {
         //mobile项目全局禁用原生下拉刷新
         Bridge.setRefreshAble("false");
+        document.title = "有样:AR微分享学习平台";
         if (this.state.user) {
 
         } else {
             location.hash = "Login";
         }
-
     }
 
     submit = (type, id) => {

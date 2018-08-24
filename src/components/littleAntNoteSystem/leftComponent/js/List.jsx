@@ -248,7 +248,7 @@ export default class List extends React.Component {
                 } className="row">
                     <div className="title">
                         <span className="title_text text_hidden">{rowData.articleTitle}</span>
-                        <span className={rowData.auditInfo?rowData.auditInfo.isPass == 1?'title_state state_through':rowData.auditInfo.auditId==0?'state_noAudit':'title_state state_noThrough':'title_state state_noAudit'}>
+                        <span className={rowData.auditInfo?rowData.auditInfo.isPass == 1?'title_state state_through':rowData.auditInfo.auditId==0?'title_state state_noAudit':'title_state state_noThrough':'title_state state_noAudit'}>
                         <i className='i_title_state'></i>
                             {rowData.auditInfo?rowData.auditInfo.isPass == 1?'审核通过':rowData.auditInfo.auditId==0?'待审核':'未通过':'待审核'}
                             <span className="state-tips">

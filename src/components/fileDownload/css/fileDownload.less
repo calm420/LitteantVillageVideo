@@ -1,14 +1,81 @@
 #fileDownload {
   height: 100%;
   overflow-y: auto;
+  color:#F56A55;
+  background-color: #fff;
   .topImg{
     width: 110px;
     height: 110px;
-    margin: 20px auto 0;
-    background-size: 100%;
+    margin: 30px auto 0;
+    img{
+      width: 100%;
+    }
+
+  }
+  .textCont{
+    font-size: 24px;
+    text-align: center;
+    span{
+      font-size: 14px;
+      padding-top: 10px;
+    }
+  }
+  .downBtn{
+    margin: 75px auto 10px;
+    text-align: center;
+    width: 100%;
+    height: 46px;
+    span{
+      display: inline-block;
+      padding:13px 18px 13px 42px;
+      box-sizing: border-box;
+      font-size: 18px;
+      color: #fff;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+    }
+    &.IOS{
+      span{
+        background:#F56A55 url("../img/btn_ios.png") no-repeat 18px 11px;
+        background-size: 19px;
+      }
+
+    }
+    &.Android{
+      span{
+        background:#F56A55 url("../img/btn_android.png") no-repeat 14px center;
+        background-size: 26px;
+      }
+
+    }
+  }
+  .bottomImg{
+    padding: 0 20px;
+    img{
+      width: 100%;
+    }
   }
   &.youyang{
-    background: url("../img/icon_youyangBg.png") no-repeat;
-    background-size: cover;
+    .textCont{
+      color: #4E8BFD;
+    }
+    .downBtn{
+      &.IOS{
+        span{
+          background:#4E8BFD url("../img/btn_ios.png") no-repeat 18px 11px;
+          background-size: 19px;
+        }
+
+      }
+      &.Android{
+        span{
+          background:#4E8BFD url("../img/btn_android.png") no-repeat 14px center;
+          background-size: 26px;
+        }
+
+      }
+
+    }
   }
 }

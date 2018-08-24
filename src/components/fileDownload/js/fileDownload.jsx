@@ -2,6 +2,8 @@ import React from 'react';
 import {} from 'antd-mobile';
 import '../css/fileDownload.less'
 
+var imgName = 'youyang';
+var imgNameTe = 'abc';
 export default class Demo extends React.Component {
     constructor(props) {
         super(props);
@@ -11,6 +13,7 @@ export default class Demo extends React.Component {
     }
 
     componentDidMount() {
+        var _this = this
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -18,93 +21,53 @@ export default class Demo extends React.Component {
         this.setState({fileType})
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({phone: 'IOS'})
+            this.setState({phone: 'IOS'}, function () {
+                _this.buildTitle(fileType)
+            })
         } else {
-            this.setState({phone: 'Android'})
+            this.setState({phone: 'Android'}, function () {
+                _this.buildTitle(fileType)
+            })
         }
-        this.buildTitle(fileType)
     }
 
     buildTitle(fileType) {
         if (fileType == 'youyang') {
+            imgName = 'youyang';
             var titleDiv = <div className='textCont'>
-                <div className='topImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
                 <div>有样</div>
                 <span>AR微分享学习平台</span>
-                <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>免费下载{this.state.phone}版</div>
-                <div className='bottomImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
             </div>
         } else if (fileType == 'littleAntTe') {
+            console.log(this.state.phone);
+            if (this.state.phone == 'IOS') {
+                imgName = 'littleAntSt';
+                imgNameTe = 'littleAntTe'
+            } else {
+                imgName = 'littleAntTe';
+            }
+
             var titleDiv = <div className='textCont'>
-                <div className='topImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
                 <div>小蚂蚁.教师端</div>
                 <span>科技改变未来,教育成就未来</span>
-                <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>免费下载{this.state.phone}版</div>
-                <div className='bottomImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
             </div>
         } else if (fileType == 'littleAntSt') {
+            imgName = 'littleAntSt';
             var titleDiv = <div className='textCont'>
-                <div className='topImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
                 <div>小蚂蚁.学生端</div>
                 <span>科技改变未来,教育成就未来</span>
-                <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>免费下载{this.state.phone}版</div>
-                <div className='bottomImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
             </div>
         } else if (fileType == 'littleAntFa') {
+            imgName = 'littleAntFa';
             var titleDiv = <div className='textCont'>
-                <div className='topImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
                 <div>小蚂蚁.家长端</div>
                 <span>科技改变未来,教育成就未来</span>
-                <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>免费下载{this.state.phone}版</div>
-                <div className='bottomImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
             </div>
         } else if (fileType == 'elearning') {
+            imgName = 'elearning';
             var titleDiv = <div className='textCont'>
-                <div className='topImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
                 <div>小蚂蚁.云校</div>
                 <span>科技改变未来,教育成就未来</span>
-                <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>免费下载{this.state.phone}版</div>
-                <div className='bottomImg'>
-                    <img
-                        src="http://60.205.86.217/upload6/2018-02-09/19/805eee4a-b707-49a2-9c75-d5b14ed9227b.jpg?size=100x100"
-                        alt=""/>
-                </div>
             </div>
         }
         this.setState({titleDiv})
@@ -147,11 +110,31 @@ export default class Demo extends React.Component {
     }
 
     render() {
-        return (
-            <div id='fileDownload' className={this.state.fileType}>
-                {this.state.titleDiv}
-            </div>
-        );
+        if (imgNameTe == 'abc') {
+            return (
+                <div id='fileDownload' className={this.state.fileType}>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    {this.state.titleDiv}
+                    <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
+                        <span>免费下载{this.state.phone}版</span></div>
+                    <div className='bottomImg'><img
+                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
+                </div>
+            );
+        } else {
+            return (
+                <div id='fileDownload' className={this.state.fileType}>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    {this.state.titleDiv}
+                    <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
+                        <span>免费下载{this.state.phone}版</span></div>
+                    <div className='bottomImg'><img
+                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
+                </div>
+            );
+        }
+
+
     }
 }
 

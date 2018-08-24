@@ -16,7 +16,7 @@ export default class WaitlookThroughDetail extends React.Component {
             data: {},
             clientHeight: document.body.clientHeight,
             textareaValue: "",
-            showMark:true
+            showMark: true
         }
     }
     componentDidMount() {
@@ -86,16 +86,18 @@ export default class WaitlookThroughDetail extends React.Component {
                         calm.setState({
                             isShow: true,
                             isRec: result.response.isRecommend,
-                            isTop: result.response.istop
+                            isTop: result.response.isTop
                         })
                     }
                     calm.setState({
                         data: result.response,
                         isPass: result.response.auditInfo.isPass,
                         auditUser: result.response.auditInfo.auditorUserName,
-                        textareaValue:result.response.auditInfo.auditMark,
+                        textareaValue: result.response.auditInfo.auditMark,
                         auditMark: result.response.auditInfo.auditMark,
                         auditingTime: result.response.auditInfo.auditingTime,
+                        isRec: result.response.isRecommend,
+                        isTop: result.response.isTop
                     })
                 }
             },
@@ -116,7 +118,7 @@ export default class WaitlookThroughDetail extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result));
                 if (result.success) {
-                    if (result.response.auditId >0) {
+                    if (result.response.auditId > 0) {
                         calm.setState({
                             showStatus: true,
                             showMark: false
@@ -134,7 +136,7 @@ export default class WaitlookThroughDetail extends React.Component {
                         isPass: result.response.auditInfo.isPass,
                         auditUser: result.response.auditInfo.auditorUserName,
                         auditMark: result.response.auditInfo.auditMark,
-                        textareaValue:result.response.auditInfo.auditMark,
+                        textareaValue: result.response.auditInfo.auditMark,
                         auditingTime: result.response.auditInfo.auditingTime,
                         isTop: result.response.istop,
                         isRec: result.response.isRecommend,
@@ -172,7 +174,7 @@ export default class WaitlookThroughDetail extends React.Component {
                         isPass: result.response.auditInfo.isPass,
                         auditUser: result.response.auditInfo.auditorUserName,
                         auditMark: result.response.auditInfo.auditMark,
-                        textareaValue:result.response.auditInfo.auditMark,
+                        textareaValue: result.response.auditInfo.auditMark,
                         auditingTime: result.response.auditInfo.auditingTime,
                     })
                 }
@@ -433,12 +435,10 @@ export default class WaitlookThroughDetail extends React.Component {
                                     <div className='result'>
                                         <span className='title'>审核结果：</span>
                                         {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                        {calm.state.data.isTop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
+                                        {calm.state.isTop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
                                         <div className="reBtn" onClick={calm.showAlert}>
                                             重新审核
                                         </div>
-
-
                                     </div>
                                 </div>
                                 <div style={{ display: calm.state.showMark ? "block" : "none" }}>
@@ -469,9 +469,8 @@ export default class WaitlookThroughDetail extends React.Component {
                                             </List>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="sameBack description">审核说明:
-                                    <List>
+                                    <div className="sameBack description">审核说明:
+                                            <List>
                                             <TextareaItem
                                                 rows={3}
                                                 placeholder="请在此处输入审核的说明／不通过的原因"
@@ -482,7 +481,9 @@ export default class WaitlookThroughDetail extends React.Component {
                                             />
                                         </List>
                                     </div>
-                             </div>
+                                </div>
+
+                            </div>
 
                             :
                             calm.state.type == 1 ?
@@ -506,10 +507,10 @@ export default class WaitlookThroughDetail extends React.Component {
                                             <div className="reBtn" onClick={calm.showAlert}>
                                                 重新审核
                                             </div>
-                                        <div>
-                                    </div>
+                                            <div>
+                                            </div>
 
-                                </div>
+                                        </div>
                                     </div>
                                     <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                         <div className="isDangerArea priority">
@@ -566,9 +567,9 @@ export default class WaitlookThroughDetail extends React.Component {
                                                 <div className="reBtn" onClick={calm.showAlert}>
                                                     重新审核
                                                 </div>
-                                            <div>
+                                                <div>
 
-                                    </div>
+                                                </div>
                                                 <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                                     <div className="isDangerArea">
                                                         <List renderHeader={() => '审核：'}>
@@ -593,8 +594,8 @@ export default class WaitlookThroughDetail extends React.Component {
                                                         </List>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                     :
                                     ""

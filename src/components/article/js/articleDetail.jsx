@@ -692,8 +692,6 @@ export default class articleDetail extends React.Component {
 
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         )}
@@ -712,7 +710,7 @@ export default class articleDetail extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         // useBodyScroll={true}
                         style={{
-                            height: document.body.clientHeight - 53,
+                            height: document.body.clientHeight - (this.state.shareHidden ? 0 : 53),
                         }}
                     />
 

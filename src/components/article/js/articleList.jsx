@@ -31,10 +31,12 @@ export default class articleList extends React.Component {
             show_bottom_text: true,
             scrollFlag: false,
             initLoading: true,
+            noomPullFlag: true,   //list是否滚动到最顶端
         }
     }
 
     componentDidMount() {
+        var _this = this;
         Bridge.setShareAble("false");
         document.title = '文章列表';
         var locationHref = window.location.href;
@@ -43,8 +45,6 @@ export default class articleList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
         var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
-        // console.log(machineType);
-        // console.log(version);
         this.setState({
             userId: userId,
             machineType: machineType,
@@ -66,7 +66,33 @@ export default class articleList extends React.Component {
                     initLoading: false,
                 })
             })
+        })
+        this.refurbishNoom()
+    }
 
+    refurbishNoom() {
+        var _this = this;
+        var touchstartNum;
+        window.addEventListener('touchstart', function (e) {
+            touchstartNum = e.targetTouches[0].pageY
+        })
+
+        window.addEventListener('touchmove', function (event) {
+            var touch = event.targetTouches[0];
+            var touchDistance = touch.pageY - touchstartNum;
+
+            if (_this.state.index == 0) {
+                var dom = $('.am-pull-to-refresh-content').eq(0);
+            } else {
+                var dom = $('.am-pull-to-refresh-content').eq(1);
+            }
+
+            //1.向下拉动  2.最顶端的向下拉动   3.距离超过300
+            if (touch.clientY >= 300 && _this.state.noomPullFlag && touchDistance > 0) {
+                dom.css({
+                    "transform": "translate3d(0px, 115px, 0px)"
+                })
+            }
         })
     }
 
@@ -380,7 +406,11 @@ export default class articleList extends React.Component {
     }
 
     listViewScroll(e) {
-        console.log(e.target.scrollTop);
+        if (e.target.scrollTop == 0) {
+            this.setState({noomPullFlag: true})
+        } else {
+            this.setState({noomPullFlag: false})
+        }
         if (e.target.scrollTop >= 200) {
             this.setState({
                 scrollFlag: true,
@@ -441,7 +471,8 @@ export default class articleList extends React.Component {
                 } else if (image.length > 1) {    //图片大于一张
                     var imageDom = [];
                     for (var i = 0; i < image.length; i++) {
-                        imageDom.push(<div className='imageDiv'><span style={{backgroundImage: 'url(' + image[i] + ')'}} className="image3"
+                        imageDom.push(<div className='imageDiv'><span style={{backgroundImage: 'url(' + image[i] + ')'}}
+                                                                      className="image3"
                         ></span></div>)
                     }
                     dom = <div className="item line_public">
@@ -535,7 +566,7 @@ export default class articleList extends React.Component {
                             style={
                                 this.state.initLoading ? {display: 'none'} : {
                                     display: 'block',
-                                    height: document.body.clientHeight - 46
+                                    height: document.body.clientHeight
                                 }
                             }
                             onScroll={this.listViewScroll.bind(this)}
@@ -571,8 +602,8 @@ export default class articleList extends React.Component {
                             style={
                                 this.state.initLoading ? {
                                     display: 'none',
-                                    height: document.body.clientHeight - 46
-                                } : {display: 'block', height: document.body.clientHeight - 46}
+                                    height: document.body.clientHeight
+                                } : {display: 'block', height: document.body.clientHeight}
                             }
                             onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh

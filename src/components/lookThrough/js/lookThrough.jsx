@@ -11,6 +11,8 @@ const tabs = [
     { title: '已审核', value: "1" },
 ];
 export default class lookThrough extends React.Component {
+
+
     constructor(props) {
         super(props);
         calm = this;
@@ -24,6 +26,16 @@ export default class lookThrough extends React.Component {
             alreadyLookThroudhData: [],
         }
     }
+    // scrollHandler = this.handleScroll.bind(this);
+
+    // _handleScroll(scrollTop) {
+    //     console.log(scrollTop)
+    //     //滚动条距离页面的高度
+    // }
+    // handleScroll(event) {
+    //     let scrollTop = event.srcElement.body.scrollTop;
+    //     this._handleScroll(scrollTop);
+    // }
     componentWillMount() {
         document.title = "审核列表";
     }
@@ -37,6 +49,8 @@ export default class lookThrough extends React.Component {
             auditorId
         })
         calm.getArticleAndLittleVideoIsNo();
+        window.addEventListener('scroll', this.scrollHandler);
+
         // window.addEventListener('scroll', calm.scrollHandle);
     }
 
@@ -116,7 +130,7 @@ export default class lookThrough extends React.Component {
     onChange(val) {
         console.log(val)
         if (val.value == 1) {
-            var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "alreadyLookThough?id="+calm.state.auditorId);
+            var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "alreadyLookThough?id=" + calm.state.auditorId);
             window.location.href = urlW;
             // var data = {
             //     method: 'openNewPage',
@@ -198,7 +212,7 @@ export default class lookThrough extends React.Component {
                 </div>
             )
         }
-       
+
         return (
             <div id="lookThrough" style={{
                 height: document.body.clientHeight

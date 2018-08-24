@@ -231,7 +231,6 @@ export default class articleList extends React.Component {
                 if (result.success) {
                     var data = result.response;
                     console.log(data,'data');
-                    // console.log(Boolean(0))
                     if (data?data.schoolId:null) {
                         this.setState({
                             userRoot: true,
@@ -239,11 +238,17 @@ export default class articleList extends React.Component {
                     } else {
                         this.setState({
                             userRoot: false,
+
                         })
-                        //
                         if(this.state.index == 0){
                             this.setState({
                                 initLoading: false,
+                                show_bottom_text: false,
+                            })
+                        }else{
+                            this.setState({
+                                initLoading: true,
+                                show_bottom_text: true,
                             })
                         }
                     }

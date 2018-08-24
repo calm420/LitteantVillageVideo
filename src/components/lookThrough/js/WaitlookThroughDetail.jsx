@@ -9,7 +9,7 @@ export default class WaitlookThroughDetail extends React.Component {
         super(props);
         calm = this;
         this.state = {
-            isPass: 0,
+            // isPass: 0,
             isRec: 0,
             isTop: 0,
             data: {},
@@ -17,7 +17,6 @@ export default class WaitlookThroughDetail extends React.Component {
             textareaValue: ""
         }
     }
-
     componentDidMount() {
         document.title = "待审核详情页";
         var locationHref = window.location.href;
@@ -73,9 +72,18 @@ export default class WaitlookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result)
                 if (result.success) {
+                    if(result.response.auditInfo.isPass == 1){
+                        calm.setState({
+                            isRec:result.response.auditInfo.isRecommend,
+                            isTop:result.response.auditInfo.istop
+                        })
+                    }
                     calm.setState({
-                        data: result.response
+                        data: result.response,
+                        isPass:result.response.auditInfo.isPass,
+                       
                     })
                 }
             },
@@ -94,9 +102,19 @@ export default class WaitlookThroughDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                // alert(JSON.stringify(result));
                 if (result.success) {
+                    if(result.response.auditInfo.isPass == 1){
+                        calm.setState({
+                            isRec:result.response.auditInfo.isRecommend,
+                            isTop:result.response.auditInfo.istop
+                        })
+                    }
+                   
                     calm.setState({
-                        data: result.response
+                        data: result.response,
+                        isPass:result.response.auditInfo.isPass,
+
                     })
                 }
             },
@@ -118,7 +136,9 @@ export default class WaitlookThroughDetail extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     calm.setState({
-                        data: result.response
+                        data: result.response,
+                        isPass:result.response.auditInfo.isPass,
+
                     })
                 }
             },
@@ -131,17 +151,21 @@ export default class WaitlookThroughDetail extends React.Component {
      * 单选按钮的改变
      */
     redioChange = (value) => {
+        console.log(this.state.isPass,"isPass")
+        console.log(value,"v")
         this.state.isPass = value;
         if (value == 1) {
             calm.setState({
-                isShow: true
+                isShow: true,
+                // isRec:-1,
+                // isTop:-1
             })
         }
         if (value == 0) {
             calm.setState({
                 isShow: false,
-                isRec: 0,
-                isTop: 0
+                // isRec:"",
+                // isTop:""
             })
         }
         this.setState({
@@ -153,6 +177,7 @@ export default class WaitlookThroughDetail extends React.Component {
      * 是否推荐
      */
     recChange = (value) => {
+        console.log(value,"rec")
         this.setState({
             isRec: value
         })
@@ -162,6 +187,7 @@ export default class WaitlookThroughDetail extends React.Component {
      * 是否置顶
      */
     topChange = (value) => {
+        console.log(value,"top")
         this.setState({
             isTop: value
         })
@@ -171,8 +197,23 @@ export default class WaitlookThroughDetail extends React.Component {
      * 点击提交按钮
      */
     submit() {
+        console.log(calm.state.type,"type")
+        
         var param;
+        //小视频
         if (calm.state.type == 0) {
+            // if(calm.state.isPass == ""){
+            //     Toast.info("1")
+            //     return
+            // }
+            // if(calm.state.isPass == "" && calm.state.isTop == ""){
+            //     Toast.info("2")
+            //     return
+            // }
+            // if(calm.state.isPass == 1 && calm.state.isTop == ""){
+            //     Toast.info("3")
+            //     return
+            // }
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -186,6 +227,19 @@ export default class WaitlookThroughDetail extends React.Component {
                 },
             };
         } else if (calm.state.type == 1) {
+            // if(calm.state.isPass == ""){
+            //     Toast.info("1111111")
+            //     return
+            // }
+            // if(calm.state.isPass == "" && calm.state.isRec == ""){
+            //     Toast.info("2222222")
+            //     return
+            // }
+            // if(calm.state.isPass == 1 && calm.state.isRec == ""){
+            //     Toast.info("333")
+            //     return
+            // }
+          
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -198,6 +252,10 @@ export default class WaitlookThroughDetail extends React.Component {
                 },
             };
         } else if (calm.state.type == 2) {
+            // if(calm.state.isPass == ""){
+            //     Toast.info("bububu")
+            //     return
+            // }
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -228,8 +286,11 @@ export default class WaitlookThroughDetail extends React.Component {
         });
     }
 
-
     render() {
+        console.log(calm.state.isPass,"isPass")
+        console.log(calm.state.isRec,"isRec")
+        console.log(calm.state.isTop,"istop")
+
         var _this = this;
         const data2 = [
             { value: 1, label: '通过' },

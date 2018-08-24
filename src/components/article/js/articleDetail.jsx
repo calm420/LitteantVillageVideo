@@ -39,6 +39,7 @@ export default class articleDetail extends React.Component {
             scrollTo: '',  //评论完成后scroll滚动至,
             textareaFocus: false,
             isPhone: 'Android',
+            demoFlag:true,
         }
     }
 
@@ -46,8 +47,6 @@ export default class articleDetail extends React.Component {
         Bridge.setShareAble("false");
         document.title = '校园自媒体';
         var locationHref = window.location.href;
-        // var locationHref = 'http://jiaoxue.maaee.com:8094/?from=singlemessage#/articleDetail?vId=507&userId=38&type=1&machineType=38&version=&access_user=38';
-        // var locationHref = 'jiaoxue.maaee.com:8094/?from=singlemessage&isappinstalled=0#/articleDetail?vId=507&userId=38&type=1&machineType=38&version=&access_user=38'
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         if (locationSearch.indexOf("?") == -1) {  //正常逻辑
             var searchArray = locationSearch.split("&");
@@ -60,12 +59,8 @@ export default class articleDetail extends React.Component {
                 shareHidden: false,
             })
         } else {   //分享逻辑
-            // locationSearch = locationSearch.substr(locationHref.indexOf("?") + 4);
-            // console.log(locationSearch.split('?')[1],'split');
-            // console.log(locationSearch);
             locationSearch = locationSearch.split('?')[1];
             var searchArray = locationSearch.split("&");
-            console.log(searchArray);
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
             var type = searchArray[2].split('=')[1];
@@ -119,14 +114,20 @@ export default class articleDetail extends React.Component {
                 console.log('请求完毕');
                 //评论成功后要跳转的位置   向上偏移200
                 this.setState({
-                    scrollTo: $('.list-view-section-body')[0].offsetTop
-                })
+                    scrollTo: $('.list-view-section-body')[0].offsetTop,
+                    initTextarea: $('#text')[0].clientHeight,
+                },
+                //     ()=>{
+                //     var top = $('.list-view-section-body')[0].offsetTop;
+                //     // console.log($('.list-view-section-body'));
+                //     // Toast.info(top);
+                // }
+                );
 
             }).catch((error) => {
                 console.log('promise出错');
             })
         })
-
         console.log(this.state.isPhone, 'isPhone');
 
 
@@ -155,6 +156,7 @@ export default class articleDetail extends React.Component {
                     clientHeight: document.body.clientHeight,
                 })
             } else {
+                // $('#text').css({height: this.state.initTextarea});
                 // Toast.info('键盘收起');
                 theLike.setState({
                     textareaFocus: false,
@@ -195,7 +197,8 @@ export default class articleDetail extends React.Component {
         if (theLike.state.isPhone == 'ios') {
             theLike.setState({
                 textareaFocus: false,
-            })
+            });
+            // $('#text').css({height: this.state.initTextarea});
         }
 
     }
@@ -489,7 +492,7 @@ export default class articleDetail extends React.Component {
             onResponse: result => {
                 console.log(result, "pinglun");
                 if (result.success) {
-                    Toast.info('评论成功!', 1);
+                    // Toast.info('评论成功!', 1);
                     theLike.initDataSource = [];
                     theLike.setState({
                         dataSource: dataSource.cloneWithRows(theLike.initDataSource),
@@ -499,8 +502,13 @@ export default class articleDetail extends React.Component {
                         hasMore: true,
                         commitText: '',
                     }, () => {
+                        $('#text').css({height: this.state.initTextarea});
+                        // var height = $('#text').css({height});
+                        $('#text').val('');
+                        // Toast.info(height);
                         this.getDiscussInfoList(function () {
                             // console.log($(".am-list-view-scrollview")[0]);
+                            // $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
                             $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
                         });
                         // window.location.reload()
@@ -509,6 +517,8 @@ export default class articleDetail extends React.Component {
                 } else {
                     Toast.info('评论失败!', 1);
                 }
+                $("#text").focus();
+                $("#text").blur();
             },
             onError: function (error) {
                 Toast.fail(error, 1);

@@ -46,9 +46,9 @@ export default class Demo extends React.Component {
                 <span>科技改变未来,教育成就未来</span>
             </div>
         } else if (fileType == 'elearning') {
-            var titleDiv = <div>
+            var titleDiv = <div className='textCont'>
                 <div>小蚂蚁.云校</div>
-                <div>科技改变未来,教育成就未来</div>
+                <span>科技改变未来,教育成就未来</span>
             </div>
         }
         this.setState({titleDiv})

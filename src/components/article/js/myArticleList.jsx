@@ -97,6 +97,15 @@ export default class myArticleList extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
+                    // if(result.pager.rsCount == 0){
+                    //     this.setState({
+                    //         initLoading:true,
+                    //     })
+                    // }else{
+                    //     this.setState({
+                    //         initLoading:false,
+                    //     })
+                    // }
 
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
                         _this.initDataSource.splice(0);
@@ -298,6 +307,7 @@ export default class myArticleList extends React.Component {
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
                         <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                            {/*{this.state.initLoading?'':this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}*/}
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

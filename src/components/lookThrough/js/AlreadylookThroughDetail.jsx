@@ -165,7 +165,7 @@ export default class AlreadylookThroughDetail extends React.Component {
                     Toast.success('成功');
                     //关闭当前窗口，不刷新上一个页面
                     var data = {
-                        method: 'finish',
+                        method: 'finishForRefresh',
                     };
                     Bridge.callHandler(data, null, function (error) {
                         console.log(error);
@@ -197,10 +197,10 @@ export default class AlreadylookThroughDetail extends React.Component {
                     calm.setState({
                         data: result.response,
                         textareaValue: result.response.auditInfo ? result.response.auditInfo.auditMark : "",
-                        isPass: result.response.auditInfo.isPass,
-                        isTop: result.response.auditInfo.istop,
-                        isRec: result.response.auditInfo.isRecommend,
-                        isShow: result.response.auditInfo.isPass == 1 ? true : false
+                        isPass: result.response.auditInfo ? result.response.auditInfo.isPass:"",
+                        isTop: result.response.auditInfo? result.response.auditInfo.istop:"",
+                        isRec: result.response.auditInfo ? result.response.auditInfo.isRecommend:"",
+                        isShow: result.response.auditInfo ? (result.response.auditInfo.isPass == 1 ? true : false) : ""
                     })
                 }
             },

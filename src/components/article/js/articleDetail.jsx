@@ -53,8 +53,8 @@ export default class articleDetail extends React.Component {
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
             var type = searchArray[2].split('=')[1];
-            var machineType = searchArray[3].split('=')[1];
-            var version = searchArray[4].split('=')[1];
+            var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
+            var version = searchArray[4]?searchArray[4].split('=')[1]:'';
             this.setState({
                 shareHidden: false,
             })
@@ -64,8 +64,8 @@ export default class articleDetail extends React.Component {
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
             var type = searchArray[2].split('=')[1];
-            var machineType = searchArray[3].split('=')[1];
-            var version = searchArray[4].split('=')[1];
+            var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
+            var version = searchArray[4]?searchArray[4].split('=')[1]:'';
             this.setState({
                 shareHidden: true,
             })
@@ -211,6 +211,7 @@ export default class articleDetail extends React.Component {
         var param = {
             "method": 'getDiscussInfoList',
             "videoId": this.state.artId,
+            "type": 0,
             "pageNo": this.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -492,7 +493,7 @@ export default class articleDetail extends React.Component {
             onResponse: result => {
                 console.log(result, "pinglun");
                 if (result.success) {
-                    // Toast.info('评论成功!', 1);
+                    Toast.info('评论成功!', 1);
                     theLike.initDataSource = [];
                     theLike.setState({
                         dataSource: dataSource.cloneWithRows(theLike.initDataSource),

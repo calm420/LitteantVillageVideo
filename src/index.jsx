@@ -254,7 +254,27 @@ class Index extends React.Component {
                     <li>
                         <Link
                             to="/fileDownload?fileType=youyang"
-                            style={{fontSize: '24px'}}>文件下载</Link>
+                            style={{fontSize: '24px'}}>文件下载youyang</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/fileDownload?fileType=littleAntTe"
+                            style={{fontSize: '24px'}}>文件下载littleAntTe</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/fileDownload?fileType=littleAntSt"
+                            style={{fontSize: '24px'}}>文件下载littleAntSt</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/fileDownload?fileType=littleAntFa"
+                            style={{fontSize: '24px'}}>文件下载littleAntFa</Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/fileDownload?fileType=elearning"
+                            style={{fontSize: '24px'}}>文件下载elearning</Link>
                     </li>
                 </ul>
             </div>

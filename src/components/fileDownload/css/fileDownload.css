@@ -1,12 +1,16 @@
-(node) util.print is deprecated. Use console.log instead.
 #fileDownload {
   height: 100%;
   overflow-y: auto;
+  color: #F56A55;
+  background-color: #fff;
 }
 #fileDownload .topImg {
   width: 110px;
   height: 110px;
-  margin: 20px auto 0;
+  margin: 30px auto 0;
+}
+#fileDownload .topImg img {
+  width: 100%;
 }
 #fileDownload .textCont {
   font-size: 24px;
@@ -17,19 +21,43 @@
   padding-top: 10px;
 }
 #fileDownload .downBtn {
-  width: 173px;
-  height: 45px;
-  line-height: 45px;
+  margin: 75px auto 10px;
+  text-align: center;
+  width: 100%;
+  height: 46px;
+}
+#fileDownload .downBtn span {
+  display: inline-block;
+  padding: 13px 18px 13px 42px;
   box-sizing: border-box;
   font-size: 18px;
   color: #fff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
-#fileDownload.youyang {
-  background: url("../img/icon_youyangBg.png") no-repeat;
-  background-size: cover;
+#fileDownload .downBtn.IOS span {
+  background: #F56A55 url("../img/btn_ios.png") no-repeat 18px 11px;
+  background-size: 19px;
+}
+#fileDownload .downBtn.Android span {
+  background: #F56A55 url("../img/btn_android.png") no-repeat 14px center;
+  background-size: 26px;
+}
+#fileDownload .bottomImg {
+  padding: 0 20px;
+}
+#fileDownload .bottomImg img {
+  width: 100%;
+}
+#fileDownload.youyang .textCont {
   color: #4E8BFD;
 }
-#fileDownload.youyang .topImg {
-  background: url("../img/topImg_youyang.png") no-repeat;
-  background-size: 100%;
+#fileDownload.youyang .downBtn.IOS span {
+  background: #4E8BFD url("../img/btn_ios.png") no-repeat 18px 11px;
+  background-size: 19px;
+}
+#fileDownload.youyang .downBtn.Android span {
+  background: #4E8BFD url("../img/btn_android.png") no-repeat 14px center;
+  background-size: 26px;
 }

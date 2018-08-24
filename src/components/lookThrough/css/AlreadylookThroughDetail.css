@@ -1,5 +1,6 @@
 #alreadyLookThrough {
-  position: relative;
+  height: 100%;
+  overflow: hidden;
 }
 #alreadyLookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
@@ -131,6 +132,18 @@
 #alreadyLookThrough .isDangerArea .am-list-header {
   padding: 16px 15px;
 }
+#alreadyLookThrough .isDangerArea .toFirst {
+  border-top: 10px #f4f4f4 solid;
+}
+#alreadyLookThrough .isDangerArea.priority .am-list-item:first-child {
+  padding-left: 30px;
+}
+#alreadyLookThrough .isDangerArea.priority .toPriority {
+  border-top: 10px #f4f4f4 solid;
+}
+#alreadyLookThrough .isDangerArea.priority .toPriority .am-list-item:first-child {
+  padding-left: 0;
+}
 #alreadyLookThrough .description {
   font-size: 15px;
   color: #666;
@@ -184,15 +197,6 @@
 #alreadyLookThrough .review .pass {
   color: #4CAF00;
 }
-#alreadyLookThrough .reCheckCont {
-  padding-bottom: 75px;
-}
-#alreadyLookThrough .reCheckCont .submitBtn {
-  position: fixed;
-  background-color: #f4f4f4;
-  bottom: 0;
-  padding: 15px;
-}
 #alreadyLookThrough .result span {
   font-size: 13px;
 }
@@ -216,4 +220,9 @@
   color: #000000;
   text-align: left;
   border: 1px solid #fff;
+}
+@media screen and (max-width: 320px) {
+  #alreadyLookThrough .topMsg .time {
+    margin: 0 5px;
+  }
 }

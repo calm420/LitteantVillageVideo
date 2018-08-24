@@ -257,6 +257,10 @@ hr {
   z-index: 99;
   border-radius: 4px;
 }
+.submitBtn.noPosition {
+  padding: 15px;
+  position: static;
+}
 .submitBtn .am-button-primary {
   background-color: #F56A55;
   border: 1PX solid #F56A55;

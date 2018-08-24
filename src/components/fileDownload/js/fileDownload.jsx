@@ -43,31 +43,44 @@ export default class Demo extends React.Component {
             if (this.state.phone == 'IOS') {
                 imgName = 'littleAntSt';
                 imgNameTe = 'littleAntTe'
+                var titleDiv = <div className='textCont'>
+                    <div>小蚂蚁移动教学</div>
+                    <span>科技改变未来，教育成就未来</span>
+                </div>
             } else {
                 imgName = 'littleAntTe';
+                var titleDiv = <div className='textCont'>
+                    <div>小蚂蚁.教师端</div>
+                    <span>科技改变未来，教育成就未来</span>
+                </div>
             }
 
-            var titleDiv = <div className='textCont'>
-                <div>小蚂蚁.教师端</div>
-                <span>科技改变未来,教育成就未来</span>
-            </div>
+
         } else if (fileType == 'littleAntSt') {
             imgName = 'littleAntSt';
-            var titleDiv = <div className='textCont'>
-                <div>小蚂蚁.学生端</div>
-                <span>科技改变未来,教育成就未来</span>
-            </div>
+            if (this.state.phone == 'IOS') {
+                var titleDiv = <div className='textCont'>
+                    <div>小蚂蚁移动教学</div>
+                    <span>科技改变未来，教育成就未来</span>
+                </div>
+            }else{
+                var titleDiv = <div className='textCont'>
+                    <div>小蚂蚁.学生端</div>
+                    <span>科技改变未来，教育成就未来</span>
+                </div>
+            }
+
         } else if (fileType == 'littleAntFa') {
             imgName = 'littleAntFa';
             var titleDiv = <div className='textCont'>
                 <div>小蚂蚁.家长端</div>
-                <span>科技改变未来,教育成就未来</span>
+                <span>科技改变未来，教育成就未来</span>
             </div>
         } else if (fileType == 'elearning') {
             imgName = 'elearning';
             var titleDiv = <div className='textCont'>
-                <div>小蚂蚁.云校</div>
-                <span>科技改变未来,教育成就未来</span>
+                <div>小蚂蚁云校</div>
+                <span>科技改变未来，教育成就未来</span>
             </div>
         }
         this.setState({titleDiv})

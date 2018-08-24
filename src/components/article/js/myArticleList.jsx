@@ -20,7 +20,7 @@ export default class myArticleList extends React.Component {
             hasMore: true,
             index: 0,
             refreshing: false,
-
+            noomPullFlag: true,   //list是否滚动到最顶端
         }
     }
 
@@ -36,8 +36,39 @@ export default class myArticleList extends React.Component {
         }, () => {
             this.getArticleInfoListByStatus();
         })
+        this.refurbishNoom()
     }
 
+    refurbishNoom() {
+        var _this = this;
+        var touchstartNum;
+        var touchFlag;
+        var transformNum;
+        window.addEventListener('touchstart', function (e) {
+            touchstartNum = e.targetTouches[0].pageY
+            touchFlag = true
+        })
+
+        window.addEventListener('touchmove', function (event) {
+
+            var touch = event.targetTouches[0];
+            var touchDistance = touch.pageY - touchstartNum;
+
+            var dom = $('.am-pull-to-refresh-content').eq(0);
+
+            //1.向下拉动  2.最顶端的向下拉动   3.距离超过300
+            if (touch.clientY >= 300 && _this.state.noomPullFlag && touchDistance > 0) {
+                if (touchFlag) {
+                    transformNum = document.getElementsByClassName('am-pull-to-refresh-content')[0].style.transform
+
+                    touchFlag = false
+                }
+                dom.css({
+                    "transform": transformNum
+                })
+            }
+        })
+    }
 
     onRefresh = () => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
@@ -173,6 +204,14 @@ export default class myArticleList extends React.Component {
         // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
     }
 
+    listViewScroll(e) {
+        if (e.target.scrollTop == 0) {
+            this.setState({noomPullFlag: true})
+        } else {
+            this.setState({noomPullFlag: false})
+        }
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -250,6 +289,10 @@ export default class myArticleList extends React.Component {
             <div id="myArticleList" style={{
                 height: document.body.clientHeight
             }}>
+                <div className='emptyDiv' style={{display: this.initDataSource.length == 0 ? "block" : "none"}
+                }>
+                    <div className='emptyIcon'></div>
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -269,6 +312,7 @@ export default class myArticleList extends React.Component {
                     style={{
                         height: document.body.clientHeight,
                     }}
+                    onScroll={this.listViewScroll.bind(this)}
                     pullToRefresh={<PullToRefresh
                         onRefresh={this.onRefresh}
                         distanceToRefresh={80}

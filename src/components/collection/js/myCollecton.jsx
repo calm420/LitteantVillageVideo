@@ -19,6 +19,7 @@ export default class myCollection extends React.Component {
             refreshing: false,
             dividendNumber: 4,
             videoObj: [],
+            noomPullFlag: true,   //list是否滚动到最顶端
         }
     }
 
@@ -35,7 +36,46 @@ export default class myCollection extends React.Component {
         }, () => {
             calm.getUserFavoriteByUserId();
         })
+        this.refurbishNoom()
+    }
 
+    refurbishNoom() {
+        var _this = this;
+        var touchstartNum;
+        var touchFlag;
+        var transformNum;
+        window.addEventListener('touchstart', function (e) {
+            touchstartNum = e.targetTouches[0].pageY
+            touchFlag = true
+        })
+
+        window.addEventListener('touchmove', function (event) {
+
+            var touch = event.targetTouches[0];
+            var touchDistance = touch.pageY - touchstartNum;
+
+            var dom = $('.am-pull-to-refresh-content').eq(0);
+
+            //1.向下拉动  2.最顶端的向下拉动   3.距离超过300
+            if (touch.clientY >= 300 && _this.state.noomPullFlag && touchDistance > 0) {
+                if (touchFlag) {
+                    transformNum = document.getElementsByClassName('am-pull-to-refresh-content')[0].style.transform
+
+                    touchFlag = false
+                }
+                dom.css({
+                    "transform": transformNum
+                })
+            }
+        })
+    }
+
+    listViewScroll(e) {
+        if (e.target.scrollTop == 0) {
+            this.setState({noomPullFlag: true})
+        } else {
+            this.setState({noomPullFlag: false})
+        }
     }
 
 
@@ -250,6 +290,7 @@ export default class myCollection extends React.Component {
                     style={{
                         height: document.body.clientHeight,
                     }}
+                    onScroll={this.listViewScroll.bind(this)}
                     pullToRefresh={<PullToRefresh
                         onRefresh={this.onRefresh}
                         distanceToRefresh={80}

@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #lookThrough {
   color: #333;
 }
@@ -23,7 +24,7 @@
 }
 #lookThrough .am-tabs-default-bar-tab {
   font-size: 17px;
-  color: #676C6F;
+  color: #676C6F ;
 }
 #lookThrough .am-tabs-default-bar-tab-active {
   color: #4285F4;
@@ -74,7 +75,7 @@
   height: 100%;
 }
 #lookThrough .item .toFirst {
-  padding: 0.5px 3px;
+  padding: .5px 3px;
   border: 1px #D84759 solid;
   color: #D84759;
   font-size: 12px;

@@ -613,7 +613,7 @@ export default class articleDetail extends React.Component {
                     <div className="commit" style={
                         this.state.shareHidden ? {display: 'none'} : {display: 'inline-block'}
                     }>
-                        <div id={this.state.reportFlag ? 'textAndReport' : 'textNo'}>
+                        <div id={this.state.reportFlag ? 'textAndReport' : 'textNo'} className="comments_send">
                             <TextareaItem
                                 id="text"
                                 placeholder="请输入评论内容"
@@ -642,8 +642,8 @@ export default class articleDetail extends React.Component {
                             <div style={
                                 this.state.textareaFocus ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <Button className='commit_button' type="primary"
-                                        onClick={this.saveDiscussInfo.bind(this)}>发送</Button>
+                                <a className='commit_button' type="primary"
+                                        onClick={this.saveDiscussInfo.bind(this)}><span>发送</span></a>
                             </div>
 
                             {/*<div style={*/}

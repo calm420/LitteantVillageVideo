@@ -441,9 +441,8 @@ export default class articleList extends React.Component {
                 } else if (image.length > 1) {    //图片大于一张
                     var imageDom = [];
                     for (var i = 0; i < image.length; i++) {
-                        imageDom.push(<img className="image3"
-                                           src={image[i]}
-                                           alt=""/>)
+                        imageDom.push(<div className='imageDiv'><span style={{backgroundImage: 'url(' + image[i] + ')'}} className="image3"
+                        ></span></div>)
                     }
                     dom = <div className="item line_public">
                         <div className="title">{rowData.articleTitle}</div>

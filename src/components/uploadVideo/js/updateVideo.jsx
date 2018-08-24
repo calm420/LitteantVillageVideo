@@ -20,7 +20,9 @@ export default class updateVideo extends React.Component {
             tagText: [], //存标签
             videoContent: "哈哈哈",  //存心情
             videoType: "",   //视频类型
-            videoUrl: "shishi",
+            videoUrl: "",
+            height: "",
+            width: "",
             show: true,  //挑战的显示与隐藏
             tagData: [], //标签数据
             tagChangeData: [],
@@ -31,7 +33,8 @@ export default class updateVideo extends React.Component {
             showTextOrList: true,
             chaContent: "",
             showDelete: true,
-            isNewTag: 0   //0不是   1是
+            isNewTag: 0   //0不是   1是,
+
         }
     }
 
@@ -66,9 +69,12 @@ export default class updateVideo extends React.Component {
                     calm.setState({
                         coverPath: result.response.coverPath,
                         videoUrl: result.response.videoPath,
+                        firstUrl: result.response.firstUrl,
+                        width:result.response.width,
+                        height:result.response.height,
                         videoContent: result.response.videoContent,
                         videoType: result.response.videoType,
-                        initType:result.response.videoType
+                        initType: result.response.videoType
                     })
                     result.response.tags.map((v, i) => {
                         if (v.tagType == 2 && calm.state.videoType == 1) {
@@ -176,6 +182,7 @@ export default class updateVideo extends React.Component {
             calm.setState({
                 videoUrl: newArr.picPath
             })
+            calm.upload_video_pic();
         }, function (error) {
             console.log(error);
         });
@@ -186,9 +193,9 @@ export default class updateVideo extends React.Component {
     * 类型的改变
     */
     onChangeRadio = (value) => {
-        if(calm.state.initType!==1 && value == 1){
+        if (calm.state.initType !== 1 && value == 1) {
             calm.setState({
-                showDelete:false
+                showDelete: false
             })
         }
         if (value == 1) {
@@ -258,10 +265,10 @@ export default class updateVideo extends React.Component {
     * 搜索关键字结果
     */
     getTagsByContent() {
-        if (calm.state.searchValue == "") {
-            Toast.info("请输入搜索的关键词")
-            return;
-        }
+        // if (calm.state.searchValue == "") {
+        //     Toast.info("请输入搜索的关键词")
+        //     return;
+        // }
         calm.setState({ tagData: [] }, () => {
             var param = {
                 "method": 'getTagsByContent',
@@ -417,10 +424,10 @@ export default class updateVideo extends React.Component {
      * 挑战搜索结果
      */
     getChasByContent() {
-        if (calm.state.challengeValue == "") {
-            Toast.info("请输入搜索的关键词")
-            return;
-        }
+        // if (calm.state.challengeValue == "") {
+        //     Toast.info("请输入搜索的关键词")
+        //     return;
+        // }
         calm.setState({ challengeData: [] }, () => {
             var param = {
                 "method": 'getTagsByContent',
@@ -463,7 +470,72 @@ export default class updateVideo extends React.Component {
 
     }
 
+    //首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
+    getBlobBydataURI(dataURI, type) {
+        var binary = atob(dataURI.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], { type: type });
+    }
 
+    upload_video_pic() {
+        var video;//video标签
+        var scale = 0.8;//第一帧图片与源视频的比例
+        // var videoList = $(".upload_box_video");
+        // console.log(videoList,'videoList');
+        // for(var i=0;i<videoList.length;i++){
+        //
+        // }
+        //ｖｉｄｅｏ标签
+        video = document.getElementsByClassName("upload_box_video")[0];//赋值标签
+        console.log(video, "ahahah")
+        video.setAttribute("crossOrigin", 'Anonymous');
+        video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
+            console.log("执行了")
+            var canvas = document.createElement('canvas');//canvas画布
+            canvas.width = video.videoWidth * scale;
+            canvas.height = video.videoHeight * scale;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//画图
+            var image = canvas.toDataURL("image/png");
+            var $Blob = calm.getBlobBydataURI(image, 'image/jpeg');
+            var formData = new FormData();
+            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+            console.log(video.videoWidth, "video.videoWidth")
+            calm.state.width = video.videoWidth;
+            calm.state.height = video.videoHeight;
+            console.log(video.videoHeight, "video.videoHeight")
+            $.ajax({
+                type: "POST",
+                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                enctype: 'multipart/form-data',
+                data: formData,
+                // 告诉jQuery不要去处理发送的数据
+                processData: false,
+                // 告诉jQuery不要去设置Content-Type请求头
+                contentType: false,
+                // xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                //     var xhr = jQuery.ajaxSettings.xhr();
+                //     xhr.upload.onload = function () {
+                //         console.log('huoqudangqiansuoluetu!');
+                //         console.log(xhr);
+                //     };
+                //     xhr.upload.onprogress = function (ev) {
+                //         console.log('yyyyyyyyy!');
+                //         console.log(xhr);
+                //     };
+                //     return xhr;
+                // },
+                success: function (res) {
+                    console.log(res, 'base64');
+                    calm.setState({
+                        firstUrl: res
+                    })
+                }
+            });
+        })
+    }
     /** 
   * 标签搜索框
   */
@@ -503,9 +575,12 @@ export default class updateVideo extends React.Component {
     */
     updateLittleVideoInfo() {
         var obj = {
-            status:1,
+            status: 1,
             coverPath: calm.state.coverPath,
             videoPath: calm.state.videoUrl,
+            firstUrl: calm.state.firstUrl,
+            width:calm.state.width,
+            height:calm.state.height,
             videoType: calm.state.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
             userId: calm.state.uid,
             videoContent: calm.state.videoContent,   // 心情描述 
@@ -582,7 +657,7 @@ export default class updateVideo extends React.Component {
                                 <button className="uploadBtn" onClick={calm.uploadMp4.bind(this)}>上传视频</button>
                                 :
                                 <div className="upload_file">
-                                    <video
+                                    <video className="upload_box_video"
                                         onClick={calm.mp4Preview.bind(this, calm.state.videoUrl)}
                                         src={calm.state.videoUrl}></video>
                                     {/* <div

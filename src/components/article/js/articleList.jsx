@@ -11,10 +11,12 @@ const tabs = [
     {title: '本校', value: '0'},
     {title: '热点', value: '1'},
 ];
+var that;
 export default class articleList extends React.Component {
 
     constructor(props) {
         super(props);
+        that = this;
         this.initDataSource = [];
         this.state = {
             dataSource: dataSource.cloneWithRows(this.initDataSource),
@@ -68,6 +70,20 @@ export default class articleList extends React.Component {
             })
         })
         // this.refurbishNoom()
+
+        //监听滚动事件
+        $('.am-list-view-scrollview').on('scroll', function (e) {
+            console.log(e.target.scrollTop, 'scrollTop');
+            if (e.target.scrollTop >= 200) {
+                that.setState({
+                    scrollFlag: true,
+                })
+            } else {
+                that.setState({
+                    scrollFlag: false,
+                })
+            }
+        });
     }
 
     refurbishNoom() {
@@ -230,22 +246,24 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     var data = result.response;
-                    console.log(data,'data');
-                    if (data?data.schoolId:null) {
+                    if (data ? data.schoolId : null) {
                         this.setState({
                             userRoot: true,
+                            show_bottom_text:true,
                         })
+                        console.log('此用户root为true')
                     } else {
                         this.setState({
                             userRoot: false,
 
                         })
-                        if(this.state.index == 0){
+                        if (this.state.index == 0) {
                             this.setState({
                                 initLoading: false,
                                 show_bottom_text: false,
                             })
-                        }else{
+                            console.log('此用户root为false')
+                        } else {
                             this.setState({
                                 initLoading: true,
                                 show_bottom_text: true,
@@ -421,29 +439,32 @@ export default class articleList extends React.Component {
     }
 
     toTop = () => {
-        if ($(".am-list-view-scrollview").scrollTop()) {
+        // if ($(".am-list-view-scrollview").scrollTop()) {
             $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
-            this.setState({
-                scrollFlag: false,
-            })
-        }
+        // console.log(document.getElementsByClassName("am-list-view-scrollview"));
+        // document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
+        this.setState({
+            scrollFlag: false,
+        })
+        // }
     }
 
     listViewScroll(e) {
-        if (e.target.scrollTop == 0) {
-            this.setState({noomPullFlag: true})
-        } else {
-            this.setState({noomPullFlag: false})
-        }
-        if (e.target.scrollTop >= 200) {
-            this.setState({
-                scrollFlag: true,
-            })
-        } else {
-            this.setState({
-                scrollFlag: false,
-            })
-        }
+        // if (e.target.scrollTop == 0) {
+        //     this.setState({noomPullFlag: true})
+        // } else {
+        //     this.setState({noomPullFlag: false})
+        // }
+        // console.log(e.target.scrollTop, 'scrollTop');
+        // if (e.target.scrollTop >= 200) {
+        //     this.setState({
+        //         scrollFlag: true,
+        //     })
+        // } else {
+        //     this.setState({
+        //         scrollFlag: false,
+        //     })
+        // }
 
     }
 
@@ -575,7 +596,7 @@ export default class articleList extends React.Component {
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
                                     {this.state.show_bottom_text ? this.state.isLoading ? '正在加载...' : '已经全部加载完毕' : ''}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -611,7 +632,7 @@ export default class articleList extends React.Component {
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
                                     {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -627,7 +648,7 @@ export default class articleList extends React.Component {
                                 this.state.initLoading ? {
                                     display: 'none',
                                     height: document.body.clientHeight
-                                } : {display: 'block', height: document.body.clientHeight}
+                                } : {display: 'block', height: document.body.clientHeight }
                             }
                             onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh

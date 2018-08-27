@@ -811,6 +811,7 @@ hr {
 .editor_video{
   object-fit: contain;
   background: #000;
+  height: 200px;
   //background: #000;
 }
 .video_content{
@@ -819,40 +820,15 @@ hr {
 .emptyImgBg{
   z-index: -1;
 }
-@media screen and (min-width:1200px){
-  .editor_video{
-    height:67vh
-  }
-}
-@media screen and (min-width: 960px) and (max-width: 1199px) {
-  .editor_video{
-    height:55vh
-  }
-}
-@media screen and (min-width: 768px) and (max-width: 959px) {
-  .editor_video{
-    height:45vh
-  }
-}
-@media only screen and (min-width: 480px) and (max-width: 767px){
-  .editor_video{
-    height:28vh
-  }
-}
-@media only screen and(min-width: 415px) and (max-width: 479px) {
-  .editor_video{
-    height:27vh
-  }
-}
-@media only screen and (min-width: 375px) and (max-width: 414px) {
-  .editor_video{
-    height:26vh
-  }
+//audio::-webkit-media-controls-enclosure, video::-webkit-media-controls-enclosure{
+//  //background: red;
+//}
+//audio::-webkit-media-controls-panel, video::-webkit-media-controls-panel{
+//  transform: translateY(10px);
+//  height: 40px;
+//  background: rgba(255,255,255,0.8);
+//}
+//video::-webkit-media-controls-overlay-play-button{
+//  opacity: 0.8;
+//}
 
-}
-@media only screen and (max-width: 374px) {
-  .editor_video{
-    height:23vh
-  }
-
-}

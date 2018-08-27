@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #fileDownload {
   height: 100%;
   overflow-y: auto;
@@ -37,11 +38,11 @@
   border-radius: 2px;
 }
 #fileDownload .downBtn.IOS span {
-  background: #F56A55 url("../img/btn_ios.png") no-repeat 18px 11px;
+  background: #f56a55 url("../img/btn_ios.png") no-repeat 18px 11px;
   background-size: 19px;
 }
 #fileDownload .downBtn.Android span {
-  background: #F56A55 url("../img/btn_android.png") no-repeat 14px center;
+  background: #f56a55 url("../img/btn_android.png") no-repeat 14px center;
   background-size: 26px;
 }
 #fileDownload .bottomImg {
@@ -54,10 +55,10 @@
   color: #4E8BFD;
 }
 #fileDownload.youyang .downBtn.IOS span {
-  background: #4E8BFD url("../img/btn_ios.png") no-repeat 18px 11px;
+  background: #4e8bfd url("../img/btn_ios.png") no-repeat 18px 11px;
   background-size: 19px;
 }
 #fileDownload.youyang .downBtn.Android span {
-  background: #4E8BFD url("../img/btn_android.png") no-repeat 14px center;
+  background: #4e8bfd url("../img/btn_android.png") no-repeat 14px center;
   background-size: 26px;
 }

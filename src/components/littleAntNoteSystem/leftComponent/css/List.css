@@ -1,9 +1,10 @@
+(node) util.print is deprecated. Use console.log instead.
 #List .am-list-body {
   background: transparent;
 }
 #List .row {
   background: transparent;
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5 ;
   padding: 15px;
   color: #333;
   text-align: left;
@@ -19,7 +20,7 @@
 }
 #List .row .title .title_state {
   font-size: 12px;
-  width: 60px;
+  width: 55px;
   text-align: right;
   display: inline-block;
   position: relative;
@@ -94,10 +95,10 @@
   background: #E8F1FF;
 }
 #List .state_through {
-  color: #25A968;
+  color: #25A968 ;
 }
 #List .state_noThrough {
-  color: #DE4F43;
+  color: #DE4F43 ;
   position: relative;
   cursor: pointer;
 }
@@ -135,7 +136,7 @@
   margin-top: 8px;
 }
 #List .state-tipArrow {
-  border-color: transparent transparent #424a58 transparent;
+  border-color: transparent transparent #424a58 transparent ;
   border-width: 7px;
   width: 0;
   height: 0;
@@ -145,5 +146,5 @@
   right: 31px;
 }
 #List .state_noAudit {
-  color: #4A90E2;
+  color: #4A90E2 ;
 }

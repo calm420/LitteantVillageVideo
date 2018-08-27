@@ -91,6 +91,8 @@ export default class articleDetail extends React.Component {
             machineType: machineType,
             version: version
         }, () => {
+            //获取用户信息
+            this.getLittleVideoUserById();
             let p1 = new Promise((resolve, reject) => {
                 this.getArticleInfoById(function () {
                     resolve('getArticleInfoById');
@@ -477,6 +479,33 @@ export default class articleDetail extends React.Component {
         });
     }
 
+
+    /**
+     * 获取用户信息
+     */
+    getLittleVideoUserById = (userId)=>{
+        var param = {
+            "method": 'getLittleVideoUserById',
+            "uid": this.state.userId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+
+                console.log(result,"re")
+                if (result.msg == '调用成功' || result.success) {
+                    this.setState({
+                        user: result.response
+                    })
+                } else {
+                    Toast.fail('失败,1')
+                }
+            },
+            onError: function (error) {
+                // Toast.info('获取列表失败', error);
+            }
+        });
+    }
+
     //评论
     saveDiscussInfo() {
         console.log(theLike.state.commitText, 'commitText');
@@ -497,24 +526,31 @@ export default class articleDetail extends React.Component {
                 console.log(result, "pinglun");
                 if (result.success) {
                     Toast.info('评论成功!', 1);
-                    theLike.initDataSource = [];
+                    var commitObj = {
+                        discussUser:{
+                            userName:this.state.user.userName,
+                            avatar: this.state.user.avatar
+                        },
+                        discussContent: this.state.commitText
+                    }
+                    this.initDataSource.unshift(commitObj);
                     theLike.setState({
-                        dataSource: dataSource.cloneWithRows(theLike.initDataSource),
-                        defaultPageNo: 1,
-                        clientHeight: document.body.clientHeight,
-                        isLoading: true,
-                        hasMore: true,
+                        dataSource: dataSource.cloneWithRows(this.initDataSource),
                         commitText: '',
                     }, () => {
                         $('#text').css({height: this.state.initTextarea});
                         // var height = $('#text').css({height});
                         $('#text').val('');
                         // Toast.info(height);
-                        this.getDiscussInfoList(function () {
-                            // console.log($(".am-list-view-scrollview")[0]);
-                            // $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
-                            $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
-                        });
+                        // console.log(this.initDataSource);
+                        console.log(this.initDataSource,'评论list');
+                        $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
+
+                        // this.getDiscussInfoList(function () {
+                        //     // console.log($(".am-list-view-scrollview")[0]);
+                        //     // $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
+                        //     $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
+                        // });
                         // window.location.reload()
                         // theLike.getDiscussInfoList();
                     })

@@ -45,7 +45,7 @@ export default class articleDetail extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '校园自媒体';
+        // document.title = '校园自媒体';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         if (locationSearch.indexOf("?") == -1) {  //正常逻辑
@@ -330,6 +330,7 @@ export default class articleDetail extends React.Component {
             onResponse: result => {
                 console.log(result, "detail");
                 if (result.success) {
+                    document.title = result.response.articleTitle;
                     this.setState({
                         data: result.response,
                         checkVersion: result.isIosCheckVersion //是否显示举报按钮

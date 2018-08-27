@@ -92,6 +92,7 @@ export default class ReadPanel extends React.Component {
 
                     }
                 }
+                // refresh
                 this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
             } else if (iframeData.method == 'openPrieview') {
                 this.props.setPanel('openPrieview', iframeData.label);
@@ -273,6 +274,7 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result,'result');
                 if (result.success) {
                     Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
                     this.initEditor();

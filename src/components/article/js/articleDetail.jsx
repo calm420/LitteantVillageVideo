@@ -55,6 +55,8 @@ export default class articleDetail extends React.Component {
             var type = searchArray[2].split('=')[1];
             var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
             var version = searchArray[4]?searchArray[4].split('=')[1]:'';
+            console.log(machineType);
+            console.log(version);
             this.setState({
                 shareHidden: false,
             })
@@ -317,7 +319,7 @@ export default class articleDetail extends React.Component {
         if (this.state.machineType != '' && this.state.version != '') {
             headers = {
                 "machineType": 'ios',
-                "version": 100
+                "version": this.state.version
             }
         }
         var param = {
@@ -518,8 +520,8 @@ export default class articleDetail extends React.Component {
                 } else {
                     Toast.info('评论失败!', 1);
                 }
-                $("#text").focus();
-                $("#text").blur();
+                // $("#text").focus();
+                // $("#text").blur();
             },
             onError: function (error) {
                 Toast.fail(error, 1);

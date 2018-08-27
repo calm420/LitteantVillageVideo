@@ -804,16 +804,18 @@ hr {
   border:1px solid #fff
 }
 .editor_image,.editor_video{
-  max-width: 100%;
+  width: 100%;
   margin: 10px auto 10px auto;
   display: block;
 }
 .editor_video{
-  max-height: 300px;
+  height: 300px;
+  object-fit: contain;
+  background: #000;
   //background: #000;
 }
 .video_content{
-  background: #000;
+  //background: #000;
 }
 .emptyImgBg{
   z-index: -1;

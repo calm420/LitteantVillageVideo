@@ -97,7 +97,7 @@ export default class Login extends React.Component {
                         <p className="title2"><span>AR微分享学习平台</span></p>
                     </div>
                     <div className="ThinkChange">{this.state.loginImg}</div>
-                    <div className="ThinkChange_text">请使用有样app扫码授权登录</div>
+                    <div className="ThinkChange_text">请使用有样APP扫码授权登录</div>
                 </div>
                 
             </div>

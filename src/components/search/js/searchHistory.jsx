@@ -130,6 +130,20 @@ export default class searchHistory extends React.Component {
          }
          return arr;
       };
+
+    /**
+     * 返回搜索结果页面
+     */
+    cancelPage = () => {
+        var data = {
+            method: 'finish',
+        };
+
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
+
     render() {
         return (
             <div id='searchHistory'>
@@ -139,7 +153,7 @@ export default class searchHistory extends React.Component {
                         onClear={value => console.log(value, 'onClear')}
                         onFocus={() => console.log('onFocus')}
                         onBlur={() => console.log('onBlur')}
-                        onCancel={() => console.log("onCancle")}
+                        onCancel={this.cancelPage}
                         onChange={this.onChange}
                         showCancelButton={calm.state.showCancelButton}
                         placeholder="请输入搜索内容"

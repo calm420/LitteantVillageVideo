@@ -165,13 +165,20 @@ export default class serachResult extends React.Component {
      * 返回搜索结果页面
      */
     toSearchHistory = () => {
-        var url = WebServiceUtil.mobileServiceURL + "searchHistory";
+        // var url = WebServiceUtil.mobileServiceURL + "searchHistory";
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: url
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
         var data = {
-            method: 'openNewPage',
-            url: url
+            method: 'finish',
         };
+
         Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
+            console.log(error);
         });
         // var data = {
         //     method: 'finishForRefresh',

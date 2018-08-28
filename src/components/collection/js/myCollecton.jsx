@@ -36,7 +36,7 @@ export default class myCollection extends React.Component {
         }, () => {
             calm.getUserFavoriteByUserId();
         })
-        this.refurbishNoom()
+        // this.refurbishNoom()
     }
 
     refurbishNoom() {

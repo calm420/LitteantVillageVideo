@@ -71,7 +71,6 @@ export default class serachResult extends React.Component {
      * 视频搜索结果
      */
     searchVideo = (value) => {
-        
         var param = {
             "method": 'searchVideoLiketest',
             "test": value,
@@ -79,16 +78,13 @@ export default class serachResult extends React.Component {
             "pageNo": calm.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
-                console.log(result.response.littleVideoInfo,"result")
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.state.pageCount = result.pager.pageCount;
                     calm.state.pageNo = result.pager.pageNo;
                     // calm.state.videoData = result.response.littleVideoInfo
-                    console.log(calm.state.videoData,"calm.state.videoData")
                     calm.setState({
                         videoData:calm.state.videoData.concat(result.response.littleVideoInfo)
                     })
@@ -123,7 +119,6 @@ export default class serachResult extends React.Component {
             return;
         }
         currentPageNo += 1;
-        console.log(currentPageNo,"currentpgno")
         _this.setState({
             isLoading: true,
             defaultPageNo: currentPageNo,
@@ -142,7 +137,6 @@ export default class serachResult extends React.Component {
      * 点击搜索事件
      */
     serach = () => {
-
         // alert(JSON.stringify(calm.state.clientHeight))
         /**
          * 取session数据
@@ -158,9 +152,9 @@ export default class serachResult extends React.Component {
         calm.setState({
             searchHistory: newSearchArray
         })
-        if(calm.state.searghValue == ""){
-            return
-        }
+        // if(calm.state.searghValue == ""){
+        //     return
+        // }
         calm.state.searchHistory.push(calm.state.value)
         calm.setState({
             searchHistory: calm.state.searchHistory
@@ -216,7 +210,6 @@ export default class serachResult extends React.Component {
        * Tab栏切换
        */
     tagOnChange(val) {
-        // console.log(val.value, "VALUE")
         // if(val.value == 3){
         //     calm.initDataSource = [];
         //     calm.setState({

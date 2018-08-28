@@ -36,7 +36,7 @@ export default class myArticleList extends React.Component {
         }, () => {
             this.getArticleInfoListByStatus();
         })
-        this.refurbishNoom()
+        // this.refurbishNoom()
     }
 
     refurbishNoom() {

@@ -11,6 +11,8 @@ const tabs = [
     {title: '本校', value: '0'},
     {title: '热点', value: '1'},
 ];
+var AscrollView;
+var BscrollView;
 var that;
 export default class articleList extends React.Component {
 
@@ -38,6 +40,8 @@ export default class articleList extends React.Component {
     }
 
     componentDidMount() {
+        AscrollView = $('.am-list-view-scrollview').eq(0);
+        BscrollView = $('.am-list-view-scrollview').eq(1);
         var _this = this;
         Bridge.setShareAble("false");
         document.title = '文章列表';
@@ -71,18 +75,43 @@ export default class articleList extends React.Component {
         })
         // this.refurbishNoom()
 
-        //监听滚动事件
-        $('.am-list-view-scrollview').on('scroll', function (e) {
+        // console.log($('.am-list-view-scrollview').eq(0));
+        // console.log($('.am-list-view-scrollview').eq(1));
+        $('.am-list-view-scrollview').eq(0).on('scroll',(e) =>{
             if (e.target.scrollTop >= 200) {
-                that.setState({
-                    scrollFlag: true,
-                })
+                if(this.state.scrollFlag){
+
+                }else{
+                    // Toast.info('开启:'+this.state.scrollFlag,1)
+                    this.setState({
+                        scrollFlag: true,
+                    },()=>{
+                        // Toast.info('开启了显示'+this.state.scrollFlag,1)
+                    })
+                }
+
             } else {
-                that.setState({
-                    scrollFlag: false,
-                })
+                if(this.state.scrollFlag){
+                    // Toast.info('关闭了显示',1)
+                    this.setState({
+                        scrollFlag: false,
+                    })
+                }
+
             }
-        });
+        })
+        //监听滚动事件
+        // $('.am-list-view-scrollview').on('scroll',  (e) => {
+        //     if (e.target.scrollTop >= 200) {
+        //         this.setState({
+        //             scrollFlag: true,
+        //         })
+        //     } else {
+        //         this.setState({
+        //             scrollFlag: false,
+        //         })
+        //     }
+        // });
     }
 
     refurbishNoom() {
@@ -187,11 +216,11 @@ export default class articleList extends React.Component {
 
 
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                        _this.initDataSource.splice(0);
-                        dataSource = [];
-                        dataSource = new ListView.DataSource({
-                            rowHasChanged: (row1, row2) => row1 !== row2,
-                        });
+                        // _this.initDataSource.splice(0);
+                        // dataSource = [];
+                        // dataSource = new ListView.DataSource({
+                        //     rowHasChanged: (row1, row2) => row1 !== row2,
+                        // });
                     }
 
 
@@ -317,6 +346,30 @@ export default class articleList extends React.Component {
         }, () => {
             // this.getLittleVideoUserById();
             this.getArticleRecommenLittleVideoList(true);
+            // Toast.info('重新绑定事件'+this.state.index);
+            //监听滚动事件
+            $('.am-list-view-scrollview').eq(this.state.index).on('scroll',(e) =>{
+                if (e.target.scrollTop >= 200) {
+                    if(this.state.scrollFlag){
+
+                    }else{
+                        this.setState({
+                            scrollFlag: true,
+                        },()=>{
+                            // Toast.info('开启了显示'+this.state.scrollFlag,1)
+                        })
+                    }
+
+                } else {
+                    if(this.state.scrollFlag){
+                        // Toast.info('关闭了显示',1)
+                        this.setState({
+                            scrollFlag: false,
+                        })
+                    }
+
+                }
+            })
         });
 
 
@@ -348,7 +401,37 @@ export default class articleList extends React.Component {
             index: val.value,
             recommended_video: [],
             initLoading: true,
+            scrollFlag:false,
         }, () => {
+            // console.log(AscrollView,'AscrollView');
+            // console.log(BscrollView,'BscrollView');
+            // console.log(AscrollView[0].scrollTop,'AscrollView---Top');
+            // console.log(BscrollView[0].scrollTop,'BscrollView---Top');
+
+            // console.log($('.am-list-view-scrollview').eq(val.value)[0].scrollTop,'scrollTop');
+            $('.am-list-view-scrollview').eq(val.value).on('scroll',(e) =>{
+                if (e.target.scrollTop >= 200) {
+                    if(this.state.scrollFlag){
+
+                    }else{
+
+                        this.setState({
+                            scrollFlag: true,
+                        },()=>{
+                            // Toast.info('开启了显示'+this.state.scrollFlag,1)
+                        })
+                    }
+
+                } else {
+                    if(this.state.scrollFlag){
+                        // Toast.info('关闭了显示',1)
+                        this.setState({
+                            scrollFlag: false,
+                        })
+                    }
+
+                }
+            })
             this.getArticleRecommenLittleVideoList(false, () => {
                 this.setState({
                     initLoading: false,
@@ -414,17 +497,6 @@ export default class articleList extends React.Component {
     }
 
 
-    // toPerfectData(){
-    //     let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId +"&type=1");
-    //     var data = {
-    //         method: 'openNewPage',
-    //         url: url
-    //     };
-    //     Bridge.callHandler(data, null, function (error) {
-    //         window.location.href = url;
-    //     });
-    // }
-
     toPerfectInfo = () => {
         var data = {
             method: 'perfectUserInfo',
@@ -436,12 +508,13 @@ export default class articleList extends React.Component {
 
     toTop = () => {
         // if ($(".am-list-view-scrollview").scrollTop()) {
-            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
-            setTimeout(function(){
-                document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
-            },1000)
+            // setTimeout(function(){
+            //     document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
+            // },1000)
         this.setState({
             scrollFlag: false,
+        },()=>{
+            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
         })
         // }
     }

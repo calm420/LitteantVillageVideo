@@ -832,3 +832,18 @@ hr {
 //  opacity: 0.8;
 //}
 
+
+/* 视频全屏和下载屏蔽 */
+
+video::-internal-media-controls-download-button {
+  display:none;
+}
+video::-webkit-media-controls-enclosure {
+  overflow:hidden;
+}
+video::-webkit-media-controls-panel {
+  width: calc(~"100% + 50px");
+}
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}

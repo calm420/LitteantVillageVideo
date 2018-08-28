@@ -123,7 +123,7 @@ export default class serachResult extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            _this.searchVideo(calm.state.searghValue);
+            _this.searchVideo(calm.state.value);
         });
     };
 

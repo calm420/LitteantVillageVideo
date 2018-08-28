@@ -216,11 +216,11 @@ export default class articleList extends React.Component {
 
 
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                        // _this.initDataSource.splice(0);
-                        // dataSource = [];
-                        // dataSource = new ListView.DataSource({
-                        //     rowHasChanged: (row1, row2) => row1 !== row2,
-                        // });
+                        _this.initDataSource.splice(0);
+                        dataSource = [];
+                        dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
                     }
 
 

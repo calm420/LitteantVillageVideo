@@ -85,6 +85,9 @@ export default class serachResult extends React.Component {
                     calm.state.pageCount = result.pager.pageCount;
                     calm.state.pageNo = result.pager.pageNo;
                     // calm.state.videoData = result.response.littleVideoInfo
+                    if(calm.state.defaultPageNo==1){
+                        calm.state.videoData.splice(0);
+                    }
                     calm.setState({
                         videoData:calm.state.videoData.concat(result.response.littleVideoInfo)
                     })
@@ -131,7 +134,7 @@ export default class serachResult extends React.Component {
      * 搜索输入框改变的时候
      */
     onChange = (value) => {
-        this.setState({ value });
+        this.setState({ value,defaultPageNo:1 });
     };
     /**
      * 点击搜索事件

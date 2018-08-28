@@ -269,7 +269,8 @@ export default class serachResult extends React.Component {
                     tabs={tabs}
                     useOnPan={false}
                     onChange={calm.tagOnChange}
-                    initialPage={0} tabs={tabs} >
+                    initialPage={0}
+                >
                     <div style={{
                         height: calm.state.clientHeight - 36 - 44,
                         backgroundColor: '#f4f4f4'

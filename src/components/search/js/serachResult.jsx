@@ -71,6 +71,7 @@ export default class serachResult extends React.Component {
      * 视频搜索结果
      */
     searchVideo = (value) => {
+        this.setState({isLoadingLeft:true});
         var param = {
             "method": 'searchVideoLiketest',
             "test": value,
@@ -94,7 +95,8 @@ export default class serachResult extends React.Component {
                     calm.initDataSource = calm.initDataSource.concat(result.response.littleVideoInfo);
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
-                        isLoading: false
+                        isLoading: false,
+                        isLoadingLeft:false
                     })
                     if (calm.initDataSource.length == result.pager.rsCount) {
                         calm.setState({

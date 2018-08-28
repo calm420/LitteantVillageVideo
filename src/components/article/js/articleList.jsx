@@ -184,7 +184,7 @@ export default class articleList extends React.Component {
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
                     // this.setState({
-                    //     random_index: parseInt(result.response.length / 2)
+                    //    dex: parseInt(result.response.length / 2)
                     // })
                     // console.log(this.state.recommended_video,'recommended_video');
 

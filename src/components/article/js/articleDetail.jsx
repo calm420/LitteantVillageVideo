@@ -55,8 +55,7 @@ export default class articleDetail extends React.Component {
             var type = searchArray[2].split('=')[1];
             var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
             var version = searchArray[4]?searchArray[4].split('=')[1]:'';
-            console.log(machineType);
-            console.log(version);
+            var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
             this.setState({
                 shareHidden: false,
             })
@@ -68,11 +67,12 @@ export default class articleDetail extends React.Component {
             var type = searchArray[2].split('=')[1];
             var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
             var version = searchArray[4]?searchArray[4].split('=')[1]:'';
+            var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
             this.setState({
                 shareHidden: true,
             })
         }
-
+        document.title = decodeURI(articleTitle);
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             this.setState({
@@ -115,7 +115,6 @@ export default class articleDetail extends React.Component {
             })
             Promise.all([p1, p2, p3, p4]).then((result) => {
                 console.log(result);
-                console.log('请求完毕');
                 //评论成功后要跳转的位置   向上偏移200
                 this.setState({
                     scrollTo: $('.list-view-section-body')[0].offsetTop,
@@ -123,7 +122,6 @@ export default class articleDetail extends React.Component {
                 },
                 //     ()=>{
                 //     var top = $('.list-view-section-body')[0].offsetTop;
-                //     // console.log($('.list-view-section-body'));
                 //     // Toast.info(top);
                 // }
                 );
@@ -132,7 +130,6 @@ export default class articleDetail extends React.Component {
                 console.log('promise出错');
             })
         })
-        console.log(this.state.isPhone, 'isPhone');
 
 
         // $("#text").keydown(function (event) {
@@ -178,9 +175,6 @@ export default class articleDetail extends React.Component {
     textareaFocus() {
         var height = document.body.scrollHeight;
         if (theLike.state.isPhone == 'Android') {
-            // console.log('获取焦点');
-            // console.log($('#text'));
-            // return;
             // $('#text')[0].scrollTop = $('#text')[0].scrollHeight - (theLike.state.clientHeight - 66);
             // document.body.scrollTop = document.body.scrollHeight;
             setTimeout(function () {
@@ -263,11 +257,9 @@ export default class articleDetail extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
-        console.log('触底事件')
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoading && !this.state.hasMore) {
-            console.log('阻止请求')
             return;
         }
         currentPageNo += 1;
@@ -297,7 +289,6 @@ export default class articleDetail extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     var data = JSON.parse(result.response);
-                    console.log(data.currentUserIsLike, '是否点赞');
                     this.setState({
                         likeFlag: data.currentUserIsLike
                     })
@@ -332,7 +323,6 @@ export default class articleDetail extends React.Component {
             onResponse: result => {
                 console.log(result, "detail");
                 if (result.success) {
-                    document.title = result.response.articleTitle;
                     this.setState({
                         data: result.response,
                         checkVersion: result.isIosCheckVersion //是否显示举报按钮
@@ -371,7 +361,6 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                // console.log(result);
                 if (result.success) {
                     //文章阅读量+1
                 } else {
@@ -391,7 +380,6 @@ export default class articleDetail extends React.Component {
         this.setState({
             likeFlag: !this.state.likeFlag
         }, () => {
-            console.log(this.state.likeFlag ? '点赞' : '取消点赞');
             var param = {
                 "method": 'changeArticleLikeCount',
                 "userId": this.state.userId,
@@ -400,9 +388,7 @@ export default class articleDetail extends React.Component {
             };
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: result => {
-                    console.log(result, '点赞之后');
                     if (result.success) {
-                        console.log(this.state.likeFlag);
                         // this.state.data.likeCount = result.response;
                         var data = this.state.data;
                         data.likeCount = result.response;
@@ -431,7 +417,6 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '是否收藏');
                 if (result.success) {
                     this.setState({
                         collection: result.response ? true : false,
@@ -464,7 +449,6 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '点击收藏/取消');
                 if (result.success) {
                     this.setState({
                         collection: !this.state.collection
@@ -490,7 +474,6 @@ export default class articleDetail extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-
                 console.log(result,"re")
                 if (result.msg == '调用成功' || result.success) {
                     this.setState({
@@ -539,11 +522,7 @@ export default class articleDetail extends React.Component {
                         commitText: '',
                     }, () => {
                         $('#text').css({height: this.state.initTextarea});
-                        // var height = $('#text').css({height});
                         $('#text').val('');
-                        // Toast.info(height);
-                        // console.log(this.initDataSource);
-                        console.log(this.initDataSource,'评论list');
                         $(".am-list-view-scrollview")[0].scrollTop = theLike.state.scrollTo;
 
                         // this.getDiscussInfoList(function () {
@@ -597,7 +576,6 @@ export default class articleDetail extends React.Component {
     }
 
     cancelBox = () => {
-        console.log('cancel')
         this.setState({
             reportFlag: true,
             reportButtonFlag: false,
@@ -605,10 +583,6 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = () => {
-        // console.log('分享');
-        // console.log(window.location.href,'url');
-        // console.log($('.content').text(),'标题');
-        // console.log(this.state.data.author,'作者');
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,

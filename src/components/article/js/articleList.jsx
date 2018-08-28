@@ -73,7 +73,6 @@ export default class articleList extends React.Component {
 
         //监听滚动事件
         $('.am-list-view-scrollview').on('scroll', function (e) {
-            console.log(e.target.scrollTop, 'scrollTop');
             if (e.target.scrollTop >= 200) {
                 that.setState({
                     scrollFlag: true,
@@ -151,7 +150,6 @@ export default class articleList extends React.Component {
                     }, () => {
                         var obj = [];
                         // obj[`recommended_video[${this.state.defaultPageNo-1}]`] = result.response;
-                        // console.log(obj)
                         // this.setState(obj,()=>{
                         //     console.log(this.state.recommended_video[0], 'recommended_video');
                         // })
@@ -186,7 +184,6 @@ export default class articleList extends React.Component {
                     // this.setState({
                     //     random_index: parseInt(result.response.length / 2)
                     // })
-                    // console.log(this.state.recommended_video,'recommended_video');
 
 
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -293,7 +290,6 @@ export default class articleList extends React.Component {
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoading && !this.state.hasMore) {
-            console.log('阻止请求')
             return;
         }
         currentPageNo += 1;
@@ -326,9 +322,9 @@ export default class articleList extends React.Component {
 
     };
 
-    toDetail(id) {
+    toDetail(id,articleTitle) {
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version);
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version+'&articleTitle='+((articleTitle)));
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -441,37 +437,19 @@ export default class articleList extends React.Component {
     toTop = () => {
         // if ($(".am-list-view-scrollview").scrollTop()) {
             $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
-        // console.log(document.getElementsByClassName("am-list-view-scrollview"));
-        // document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
+            setTimeout(function(){
+                document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
+            },1000)
         this.setState({
             scrollFlag: false,
         })
         // }
     }
 
-    listViewScroll(e) {
-        // if (e.target.scrollTop == 0) {
-        //     this.setState({noomPullFlag: true})
-        // } else {
-        //     this.setState({noomPullFlag: false})
-        // }
-        // console.log(e.target.scrollTop, 'scrollTop');
-        // if (e.target.scrollTop >= 200) {
-        //     this.setState({
-        //         scrollFlag: true,
-        //     })
-        // } else {
-        //     this.setState({
-        //         scrollFlag: false,
-        //     })
-        // }
-
-    }
 
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            // console.log(rowData,'rowData');
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
@@ -536,9 +514,9 @@ export default class articleList extends React.Component {
                             <div className="title">{rowData.articleTitle}</div>
                             <div className="images">
                                 <div className="videoBox">
-                                    <div onClick={this.toDetail.bind(this, rowData.articleId)}
+                                    <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}
                                          className="videoMask"></div>
-                                    <img onClick={this.toDetail.bind(this, rowData.articleId)} className="playImg"
+                                    <img onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="playImg"
                                          src={require('../images/videoClick.png')} alt=""/>
                                     <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                                 </div>
@@ -564,7 +542,7 @@ export default class articleList extends React.Component {
             }
 
             return (
-                <div onClick={rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId)}>
+                <div onClick={rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}>
                     {dom}
                 </div>
             )
@@ -614,7 +592,6 @@ export default class articleList extends React.Component {
                                     height: document.body.clientHeight
                                 }
                             }
-                            onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
                                 onRefresh={this.onRefresh.bind(this, 'left')}
                                 distanceToRefresh={80}
@@ -650,7 +627,6 @@ export default class articleList extends React.Component {
                                     height: document.body.clientHeight
                                 } : {display: 'block', height: document.body.clientHeight }
                             }
-                            onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
                                 onRefresh={this.onRefresh.bind(this, 'right')}
                                 distanceToRefresh={80}

@@ -91,9 +91,13 @@ export default class Login extends React.Component {
     render() {
         return (
             <div id="Login">
-                <div className="ThinkChange_cont empty_center">
+                <div className="ThinkChange_cont">
+                    <div className="Thinkhead">
+                        <p className="title"><span>有样</span></p>
+                        <p className="title2"><span>AR微分享学习平台</span></p>
+                    </div>
                     <div className="ThinkChange">{this.state.loginImg}</div>
-                    <div className="ThinkChange_text">扫码登录</div>
+                    <div className="ThinkChange_text">请使用有样app扫码授权登录</div>
                 </div>
                 
             </div>

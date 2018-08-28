@@ -11,6 +11,8 @@ const tabs = [
     {title: '本校', value: '0'},
     {title: '热点', value: '1'},
 ];
+var AscrollView;
+var BscrollView;
 var that;
 export default class articleList extends React.Component {
 
@@ -38,6 +40,8 @@ export default class articleList extends React.Component {
     }
 
     componentDidMount() {
+        AscrollView = $('.am-list-view-scrollview').eq(0);
+        BscrollView = $('.am-list-view-scrollview').eq(1);
         var _this = this;
         Bridge.setShareAble("false");
         document.title = '文章列表';
@@ -71,19 +75,43 @@ export default class articleList extends React.Component {
         })
         // this.refurbishNoom()
 
-        //监听滚动事件
-        $('.am-list-view-scrollview').on('scroll', function (e) {
-            console.log(e.target.scrollTop, 'scrollTop');
+        // console.log($('.am-list-view-scrollview').eq(0));
+        // console.log($('.am-list-view-scrollview').eq(1));
+        $(document).on('scroll', '.am-list-view-scrollview', (e) => {
             if (e.target.scrollTop >= 200) {
-                that.setState({
-                    scrollFlag: true,
-                })
+                if (this.state.scrollFlag) {
+
+                } else {
+                    // Toast.info('开启:'+this.state.scrollFlag,1)
+                    this.setState({
+                        scrollFlag: true,
+                    }, () => {
+                        // Toast.info('开启了显示'+this.state.scrollFlag,1)
+                    })
+                }
+
             } else {
-                that.setState({
-                    scrollFlag: false,
-                })
+                if (this.state.scrollFlag) {
+                    // Toast.info('关闭了显示',1)
+                    this.setState({
+                        scrollFlag: false,
+                    })
+                }
+
             }
-        });
+        })
+        //监听滚动事件
+        // $('.am-list-view-scrollview').on('scroll',  (e) => {
+        //     if (e.target.scrollTop >= 200) {
+        //         this.setState({
+        //             scrollFlag: true,
+        //         })
+        //     } else {
+        //         this.setState({
+        //             scrollFlag: false,
+        //         })
+        //     }
+        // });
     }
 
     refurbishNoom() {
@@ -126,11 +154,6 @@ export default class articleList extends React.Component {
     }
 
 
-    getRandom() {
-        return parseInt(Math.random() * (15 - 5 + 1) + 5);
-    }
-
-
     /**
      * 按页码获取短视频列表
      * **/
@@ -151,7 +174,6 @@ export default class articleList extends React.Component {
                     }, () => {
                         var obj = [];
                         // obj[`recommended_video[${this.state.defaultPageNo-1}]`] = result.response;
-                        // console.log(obj)
                         // this.setState(obj,()=>{
                         //     console.log(this.state.recommended_video[0], 'recommended_video');
                         // })
@@ -184,9 +206,8 @@ export default class articleList extends React.Component {
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
                     // this.setState({
-                    //     random_index: parseInt(result.response.length / 2)
+                    //    dex: parseInt(result.response.length / 2)
                     // })
-                    // console.log(this.state.recommended_video,'recommended_video');
 
 
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -197,22 +218,31 @@ export default class articleList extends React.Component {
                         });
                     }
 
-
                     var initLength = this.initDataSource.length;
                     this.initDataSource = this.initDataSource.concat(result.response);
                     if (this.state.recommended_video.response.length > 0 && result.response.length > 0) {
+                        console.log(2);
+                        //往文章数组里面添加一组小视频数据
                         this.initDataSource.splice((result.response.length / 2) + initLength, 0, this.state.recommended_video);
                     } else {
-                        this.setState({
-                            recommended_video: {
-                                response: []
-                            }
-                        })
+                        console.log(1);
+                        // this.setState({
+                        //     recommended_video: {
+                        //         response: []
+                        //     }
+                        // })
+                        this.state.recommended_video = {response: []}
                     }
+                    // Toast.info('设置数据之前');
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true,
                         refreshing: false,
+                    }, () => {
+
+                        if (reslove) {
+                            reslove();
+                        }
                     })
                     if ((this.initDataSource.length - (this.state.recommended_video.response.length == 0 ? 0 : 1)) >= result.pager.rsCount) {
                         this.setState({
@@ -222,10 +252,32 @@ export default class articleList extends React.Component {
                     }
                     //调用短视频
                     // this.getArticleRecommenLittleVideoList();
+                    console.log('重新绑定')
+                    // 监听滚动事件
+                    $('.am-list-view-scrollview').on('scroll', (e) => {
+                        if (e.target.scrollTop >= 200) {
+                            if (this.state.scrollFlag) {
+
+                            } else {
+                                this.setState({
+                                    scrollFlag: true,
+                                }, () => {
+                                    // Toast.info('开启了显示'+this.state.scrollFlag,1)
+                                })
+                            }
+
+                        } else {
+                            if (this.state.scrollFlag) {
+                                // Toast.info('关闭了显示',1)
+                                this.setState({
+                                    scrollFlag: false,
+                                })
+                            }
+
+                        }
+                    })
                 }
-                if (reslove) {
-                    reslove();
-                }
+
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -249,7 +301,7 @@ export default class articleList extends React.Component {
                     if (data ? data.schoolId : null) {
                         this.setState({
                             userRoot: true,
-                            show_bottom_text:true,
+                            show_bottom_text: true,
                         })
                         console.log('此用户root为true')
                     } else {
@@ -293,7 +345,6 @@ export default class articleList extends React.Component {
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoading && !this.state.hasMore) {
-            console.log('阻止请求')
             return;
         }
         currentPageNo += 1;
@@ -306,6 +357,7 @@ export default class articleList extends React.Component {
     };
 
     onRefresh = (str) => {
+
 
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
 
@@ -321,14 +373,16 @@ export default class articleList extends React.Component {
         }, () => {
             // this.getLittleVideoUserById();
             this.getArticleRecommenLittleVideoList(true);
+            // Toast.info('重新绑定事件'+this.state.index);
+
         });
 
 
     };
 
-    toDetail(id) {
+    toDetail(id, articleTitle) {
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version);
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version + '&articleTitle=' + ((articleTitle)));
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -352,7 +406,37 @@ export default class articleList extends React.Component {
             index: val.value,
             recommended_video: [],
             initLoading: true,
+            scrollFlag: false,
         }, () => {
+            // console.log(AscrollView,'AscrollView');
+            // console.log(BscrollView,'BscrollView');
+            // console.log(AscrollView[0].scrollTop,'AscrollView---Top');
+            // console.log(BscrollView[0].scrollTop,'BscrollView---Top');
+
+            // console.log($('.am-list-view-scrollview').eq(val.value)[0].scrollTop,'scrollTop');
+            // $('.am-list-view-scrollview').eq(val.value).on('scroll',(e) =>{
+            //     if (e.target.scrollTop >= 200) {
+            //         if(this.state.scrollFlag){
+            //
+            //         }else{
+            //
+            //             this.setState({
+            //                 scrollFlag: true,
+            //             },()=>{
+            //                 // Toast.info('开启了显示'+this.state.scrollFlag,1)
+            //             })
+            //         }
+            //
+            //     } else {
+            //         if(this.state.scrollFlag){
+            //             // Toast.info('关闭了显示',1)
+            //             this.setState({
+            //                 scrollFlag: false,
+            //             })
+            //         }
+            //
+            //     }
+            // })
             this.getArticleRecommenLittleVideoList(false, () => {
                 this.setState({
                     initLoading: false,
@@ -418,17 +502,6 @@ export default class articleList extends React.Component {
     }
 
 
-    // toPerfectData(){
-    //     let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id +"&userId=" + this.state.userId +"&type=1");
-    //     var data = {
-    //         method: 'openNewPage',
-    //         url: url
-    //     };
-    //     Bridge.callHandler(data, null, function (error) {
-    //         window.location.href = url;
-    //     });
-    // }
-
     toPerfectInfo = () => {
         var data = {
             method: 'perfectUserInfo',
@@ -440,39 +513,22 @@ export default class articleList extends React.Component {
 
     toTop = () => {
         // if ($(".am-list-view-scrollview").scrollTop()) {
-            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
-        // console.log(document.getElementsByClassName("am-list-view-scrollview"));
-        // document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
+        // setTimeout(function(){
+        //     document.getElementsByClassName("am-list-view-scrollview")[0].scrollTop = 0;
+        // },1000)
         this.setState({
             scrollFlag: false,
+        }, () => {
+            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
         })
         // }
     }
 
-    listViewScroll(e) {
-        // if (e.target.scrollTop == 0) {
-        //     this.setState({noomPullFlag: true})
-        // } else {
-        //     this.setState({noomPullFlag: false})
-        // }
-        // console.log(e.target.scrollTop, 'scrollTop');
-        // if (e.target.scrollTop >= 200) {
-        //     this.setState({
-        //         scrollFlag: true,
-        //     })
-        // } else {
-        //     this.setState({
-        //         scrollFlag: false,
-        //     })
-        // }
-
-    }
 
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            // console.log(rowData,'rowData');
-            var image = rowData.articleImgArray || [];
+            var image = rowData.articleImgArray?rowData.articleImgArray:[];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             // console.log(rowData,'整体循环中的rowData')
@@ -536,9 +592,10 @@ export default class articleList extends React.Component {
                             <div className="title">{rowData.articleTitle}</div>
                             <div className="images">
                                 <div className="videoBox">
-                                    <div onClick={this.toDetail.bind(this, rowData.articleId)}
+                                    <div onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
                                          className="videoMask"></div>
-                                    <img onClick={this.toDetail.bind(this, rowData.articleId)} className="playImg"
+                                    <img onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
+                                         className="playImg"
                                          src={require('../images/videoClick.png')} alt=""/>
                                     <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                                 </div>
@@ -564,7 +621,8 @@ export default class articleList extends React.Component {
             }
 
             return (
-                <div onClick={rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId)}>
+                <div
+                    onClick={rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}>
                     {dom}
                 </div>
             )
@@ -614,7 +672,6 @@ export default class articleList extends React.Component {
                                     height: document.body.clientHeight
                                 }
                             }
-                            onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
                                 onRefresh={this.onRefresh.bind(this, 'left')}
                                 distanceToRefresh={80}
@@ -648,9 +705,8 @@ export default class articleList extends React.Component {
                                 this.state.initLoading ? {
                                     display: 'none',
                                     height: document.body.clientHeight
-                                } : {display: 'block', height: document.body.clientHeight }
+                                } : {display: 'block', height: document.body.clientHeight}
                             }
-                            onScroll={this.listViewScroll.bind(this)}
                             pullToRefresh={<PullToRefresh
                                 onRefresh={this.onRefresh.bind(this, 'right')}
                                 distanceToRefresh={80}

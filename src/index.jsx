@@ -248,7 +248,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/playVideo?url=http://60.205.86.217/upload8/2018-08-16/10/1ec3d84c-8db5-490d-8d86-5826a91db0dd.mp4"
+                            to="/playVideo?videoId=126"
                             style={{fontSize: '24px'}}>播放视频</Link>
                     </li>
                     <li>

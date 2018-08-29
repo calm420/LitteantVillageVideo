@@ -7,6 +7,7 @@ export default class playVideo extends React.Component {
         super(props);
         calm = this;
         this.state = {
+            data: {}
         }
     }
     componentDidMount() {
@@ -20,28 +21,58 @@ export default class playVideo extends React.Component {
         } else {
             phone = 'android'
         }
-        console.log(phone, "ppp")
         if (phone = 'android') {
             //分享逻辑
             locationSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
             var searchArray = locationSearch.split("&");
-            var url = searchArray[0].split('=')[1];
+            var videoId = searchArray[0].split('=')[1];
+            calm.getLittleVideoById(videoId);
             this.setState({
-                url: url,
-            })
-        } 
-        if (phone = 'ios') {
-            //分享逻辑
-            shareSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
-            alert(JSON.stringify(shareSearch))
-
-            var searchArray = locationSearch.split("&");
-            var url = searchArray[0].split('=')[1];
-            this.setState({
-                url: url,
+                videoId: videoId,
             })
         }
+        if (phone = 'ios') {
+            //分享逻辑
+            var shareSearch = locationSearch.substr(locationSearch.indexOf("?") + 1);
+            var videoId = shareSearch.split("=")[1];
+            calm.getLittleVideoById(videoId);
+            this.setState({
+                videoId: videoId,
+            })
+        }
+
     }
+
+    /**
+     * 获取视频对象
+     */
+    getLittleVideoById() {
+        var param = {
+            "method": 'getLittleVideoById',
+            "videoId": 126,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' || result.success) {
+                    if (WebServiceUtil.isEmpty(result.response) == false) {
+                        calm.setState({
+                            data: result.response
+                        })
+                    } else {
+                        // Toast.fail('失败,1')
+                    }
+                } else {
+                    // Toast.fail('失败,1')
+                }
+            },
+            onError: function (error) {
+                // Toast.info('获取列表失败', error);
+            }
+        });
+    }
+    /**
+     * 点击播放
+     */
     Load = (event) => {
         event.stopPropagation()
         var phoneType = navigator.userAgent;
@@ -59,18 +90,29 @@ export default class playVideo extends React.Component {
     }
     render() {
         return (
-            <div id="playVideo">
-                <video
-                    className="videoDiv"
-                    src={this.state.url}
-                    controls="controls"
-                    webkit-playsinline
-                    playsinline
-                    x5-playsinline
-                    x-webkit-airplay="allow"
-                ></video>
-                <span onClick={calm.Load}>下载</span>
+            <div>
+                <div id="playVideo">
+                <div>
+                    <img src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
+                    <span>{calm.state.data.userInfo ? calm.state.data.userInfo.userName:""}</span>
+                    <span>{calm.state.data.videoContent}</span>
+                </div>
+                    <video
+                        className="videoDiv"
+                        src={calm.state.data.videoPath}
+                        controls
+                        autoPlay
+                        x5-playsinline="true"
+                        playsinline="true"
+                        webkit-playsinline="true"
+                        playsinline
+                    >
+                    </video>
+                    <span onClick={calm.Load}>去下载</span>
+                </div>
             </div>
+
         )
     }
 }
+

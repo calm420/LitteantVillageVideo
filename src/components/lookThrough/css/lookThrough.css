@@ -1,4 +1,3 @@
-(node) util.print is deprecated. Use console.log instead.
 #lookThrough {
   color: #333;
 }
@@ -113,7 +112,7 @@
   margin-top: 9px;
 }
 #lookThrough .reviewed .item .author {
-  max-width: calc(100% - 35px);
+  max-width: calc(100% - 100px);
 }
 #lookThrough .reviewed .topMsg {
   width: calc(100% - 60px);
@@ -136,4 +135,50 @@
 #lookThrough .status i.pass {
   background: url("../img/icon_pass.png") no-repeat;
   background-size: 100%;
+}
+#lookThrough .updateModel {
+  width: 100%;
+  background-color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  height: 349px;
+}
+#lookThrough .tag-vedio {
+  height: 350px;
+  background: #000;
+}
+#lookThrough .tagAddPanel_bg {
+  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 980;
+  top: 0;
+  left: 0;
+  display: none;
+}
+#lookThrough .sameBackNew {
+  padding: 5px 15px 15px 15px !important;
+}
+#lookThrough video::-webkit-media-controls:not(.audio-only) [pseudo="-webkit-media-controls-panel"] [pseudo="-internal-media-controls-overflow-button"] {
+  display: none;
+}
+#lookThrough video::-internal-media-controls-download-button {
+  display: none;
+}
+#lookThrough video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+#lookThrough video::-webkit-media-controls-panel {
+  width: calc(150%);
+}
+#lookThrough video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+#lookThrough #waitLookThrough {
+  height: 425px;
+  overflow-y: auto;
 }

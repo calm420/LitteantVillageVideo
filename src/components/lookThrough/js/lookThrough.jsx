@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, WhiteSpace, ListView,Button,List, Radio, TextareaItem, Toast, Modal, } from 'antd-mobile';
+import { Tabs, WhiteSpace, ListView, Button, List, Radio, TextareaItem, Toast, Modal, } from 'antd-mobile';
 const RadioItem = Radio.RadioItem;
 const alert = Modal.alert;
 import '../css/lookThrough.less';
@@ -46,7 +46,7 @@ export default class lookThrough extends React.Component {
         })
         calm.getArticleAndLittleVideoIsNo();
         window.addEventListener('resize', calm.onWindowResize);
-        $(".updateModel").hide()
+        $(".tagAddPanel_bg").hide();
 
     }
     /**
@@ -115,18 +115,20 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type, index) {
-        console.log(calm.state.textareaValue,"calm.state.textareaValue")
+        console.log(calm.state.textareaValue, "calm.state.textareaValue")
         calm.setState({
-            textareaValue:"",
-            index:index
-        },()=>{
-            $(".updateModel").show()
-            console.log(calm.state.textareaValue,"calm.state.textareaValue")
+            textareaValue: "",
+            index: index
+        }, () => {
+            $(".updateModel").slideDown()
+            // $(".updateModel").show()
+            $(".tagAddPanel_bg").show();
+            console.log(calm.state.textareaValue, "calm.state.textareaValue")
         })
         calm.setState({
-            isShow:false
+            isShow: false
         })
-       
+
         calm.setState({
             id, type
         })
@@ -189,13 +191,16 @@ export default class lookThrough extends React.Component {
      * 点击确定
      */
     sure() {
-       
+
     }
     /**
      * 点击取消
      */
     cancle() {
-        $(".updateModel").hide()
+        $(".updateModel").slideUp()
+        // $(".updateModel").hide()
+        $(".tagAddPanel_bg").hide();
+        
     }
 
 
@@ -382,7 +387,7 @@ export default class lookThrough extends React.Component {
      */
     submit() {
         calm.setState({
-            textareaValue:""
+            textareaValue: ""
         })
         var param;
         //小视频
@@ -457,9 +462,11 @@ export default class lookThrough extends React.Component {
                 // alert(JSON.stringify(result))
                 if (result.success) {
                     Toast.success('成功');
-                    $(".updateModel").hide();
+                    $(".updateModel").slideUp();
+                    // $(".updateModel").hide();
+                    $(".tagAddPanel_bg").hide();
                     calm.setState({
-                        initDataSource:calm.initDataSource.splice(calm.state.index,1)
+                        initDataSource: calm.initDataSource.splice(calm.state.index, 1)
                     })
                 }
             },
@@ -597,197 +604,64 @@ export default class lookThrough extends React.Component {
                         />
                     </div>
                 </Tabs>
-                <div className="updateModel" style={{ width: "100%", height: "500px", position: "absolute", left: "0", padding:"10px 0 0 0", bottom: "0" }}>
-                <div id="waitLookThrough">
-                {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                <div className="content">
-                    {
-                        calm.state.type == 0 ?
-                            <div className="sameBack sameBackNew">
-                                <div className='title'>{calm.state.data.articleTitle}</div>
-                                <div className='topMsg'>
-                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                    <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
-                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                    <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
-                                </div>
-                                <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
-                            </div>
-                            :
-                            calm.state.type == 1 ?
-                                <div className="sameBack">
-                                    <div className='topMsg'>
-                                        <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                        <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
-                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                        <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
-                                    </div>
-                                    <div className="textCont">
-                                        <div className='video_title'>{calm.state.data.videoContent}</div>
-                                        <video
-                                            controls="controls"
-                                            preload="auto"
-                                            className="tag-vedio"
-                                            controlslist="nodownload nofullscreen"
-                                            x5-video-player-type="h5"
-                                            playsinline="true"
-                                            webkit-playsinline="true"
-                                            poster={calm.state.data.coverPath}
-                                            style={{ objectFit: "contain", width: "100%" }}
-                                            src={calm.state.data.videoPath}>
-                                        </video>
-                                    </div>
-                                </div>
-                                :
-                                calm.state.type == 2 ?
-                                    <div className="sameBack">
+                <div className="updateModel" style={{display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
+                    <div id="waitLookThrough">
+                        {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
+                        <div className="content">
+                            {
+                                calm.state.type == 0 ?
+                                    <div className="sameBack sameBackNew">
+                                        <div className='title'>{calm.state.data.articleTitle}</div>
                                         <div className='topMsg'>
                                             <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                            <span className='author'>{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
+                                            <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
                                             <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                            <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                            <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                         </div>
-                                        <div className="textCont">
-                                            {calm.state.data.discussContent}
-                                        </div>
+                                        <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
                                     </div>
-                                    : ""
-                    }
-                    {
-                        calm.state.type == 0 ?
-                            <div className="calm">
-                                <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
-                                    <div className='line_public'>
-                                        <span className='title'>审核人：</span>{calm.state.auditUser}
-                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
-
-                                    </div>
-                                    <div className='line_public'>
-                                        <span className='title'>审核说明：</span>
-                                        <div className='reCont'>
-                                            {calm.state.auditMark ? calm.state.auditMark : "无"}
-                                        </div>
-                                    </div>
-                                    <div className='result'>
-                                        <span className='title'>审核结果：</span>
-                                        {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                        {calm.state.isTop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
-                                        <div className="reBtn" onClick={calm.showAlert}>
-                                            重新审核
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style={{ display: calm.state.showMark ? "block" : "none" }}>
-                                    <div className="isDangerArea">
-                                        <List renderHeader={() => '审核：'}>
-                                            {data2.map(i => (
-                                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                                    {i.label}
-                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                </RadioItem>
-                                            ))}
-                                        </List>
-                                        <div style={{ display: calm.state.isShow ? "block" : "none" }}>
-                                            {/* <List renderHeader={() => '推荐：'}>
-                                            {isRecData.map(i => (
-                                                <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
-                                                    {i.label}
-                                                </RadioItem>
-                                            ))}
-                                        </List> */}
-                                            <List className='toFirst' renderHeader={() => '置顶：'}>
-                                                {isTopData.map(i => (
-                                                    <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
-                                                        {i.label}
-                                                        {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                    </RadioItem>
-                                                ))}
-                                            </List>
-                                        </div>
-                                    </div>
-                                    <div className="sameBack description">审核说明:
-                                            <List>
-                                            <TextareaItem
-                                                rows={3}
-                                                placeholder="请在此处输入审核的说明／不通过的原因"
-                                                onChange={v => _this.setState({
-                                                    textareaValue: v
-                                                })}
-                                                value={calm.state.textareaValue}
-
-                                                count={30}
-                                            />
-                                        </List>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            :
-                            calm.state.type == 1 ?
-                                <div className="calm">
-                                    <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
-                                        <div className='line_public'>
-                                            <span className='title'>审核人：</span>{calm.state.auditUser}
-                                            <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
-
-                                        </div>
-                                        <div className='line_public'>
-                                            <span className='title'>审核说明：</span>
-                                            <div className='reCont'>
-                                                {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                    :
+                                    calm.state.type == 1 ?
+                                        <div className="sameBack">
+                                            <div className='topMsg'>
+                                                <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
+                                                <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                                <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                                <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                            </div>
+                                            <div className="textCont">
+                                                <div className='video_title'>{calm.state.data.videoContent}</div>
+                                                <video
+                                                    controls="controls"
+                                                    preload="auto"
+                                                    className="tag-vedio"
+                                                    controlslist="nodownload nofullscreen"
+                                                    x5-video-player-type="h5"
+                                                    playsinline="true"
+                                                    webkit-playsinline="true"
+                                                    poster={calm.state.data.coverPath}
+                                                    style={{ objectFit: "contain", width: "100%" }}
+                                                    src={calm.state.data.videoPath}>
+                                                </video>
                                             </div>
                                         </div>
-                                        <div className='result'>
-                                            <span className='title'>审核结果：</span>
-                                            {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                            {calm.state.isRec == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
-                                            <div className="reBtn" onClick={calm.showAlert}>
-                                                重新审核
+                                        :
+                                        calm.state.type == 2 ?
+                                            <div className="sameBack">
+                                                <div className='topMsg'>
+                                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
+                                                    <span className='author'>{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
+                                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                                </div>
+                                                <div className="textCont">
+                                                    {calm.state.data.discussContent}
+                                                </div>
                                             </div>
-                                            <div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div style={{ display: calm.state.showMark ? "block" : "none" }}>
-                                        <div className="isDangerArea priority">
-                                            <List renderHeader={() => '审核：'}>
-                                                {data2.map(i => (
-                                                    <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                                        {i.label}
-                                                        {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                    </RadioItem>
-                                                ))}
-                                            </List>
-                                            <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
-                                                {isRecData.map(i => (
-                                                    <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
-                                                        {i.label}
-                                                        {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                    </RadioItem>
-                                                ))}
-                                            </List>
-
-                                        </div>
-                                        <div className="sameBack description">审核说明:
-                                            <List>
-                                                <TextareaItem
-                                                    rows={3}
-                                                    placeholder="请在此处输入审核的说明／不通过的原因"
-                                                    onChange={v => _this.setState({
-                                                        textareaValue: v
-                                                    })}
-                                                    value={calm.state.textareaValue}
-
-                                                    count={30}
-                                                />
-                                            </List>
-                                        </div>
-                                    </div>
-                                </div>
-                                :
-                                calm.state.type == 2 ?
+                                            : ""
+                            }
+                            {
+                                calm.state.type == 0 ?
                                     <div className="calm">
                                         <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
                                             <div className='line_public'>
@@ -803,49 +677,182 @@ export default class lookThrough extends React.Component {
                                             </div>
                                             <div className='result'>
                                                 <span className='title'>审核结果：</span>
-                                                {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                                {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                                {calm.state.isTop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
                                                 <div className="reBtn" onClick={calm.showAlert}>
                                                     重新审核
+                                        </div>
+                                            </div>
+                                        </div>
+                                        <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                            <div className="isDangerArea">
+                                                <List renderHeader={() => '审核：'}>
+                                                    {data2.map(i => (
+                                                        <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                            {i.label}
+                                                            {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                        </RadioItem>
+                                                    ))}
+                                                </List>
+                                                <div style={{ display: calm.state.isShow ? "block" : "none" }}>
+                                                    {/* <List renderHeader={() => '推荐：'}>
+                                            {isRecData.map(i => (
+                                                <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
+                                                    {i.label}
+                                                </RadioItem>
+                                            ))}
+                                        </List> */}
+                                                    <List className='toFirst' renderHeader={() => '置顶：'}>
+                                                        {isTopData.map(i => (
+                                                            <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
+                                                                {i.label}
+                                                                {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                            </RadioItem>
+                                                        ))}
+                                                    </List>
                                                 </div>
-                                                <div>
+                                            </div>
+                                            <div className="sameBack description">审核说明:
+                                            <List>
+                                                    <TextareaItem
+                                                        rows={3}
+                                                        placeholder="请在此处输入审核的说明／不通过的原因"
+                                                        onChange={v => _this.setState({
+                                                            textareaValue: v
+                                                        })}
+                                                        value={calm.state.textareaValue}
+
+                                                        count={30}
+                                                    />
+                                                </List>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    :
+                                    calm.state.type == 1 ?
+                                        <div className="calm">
+                                            <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                                <div className='line_public'>
+                                                    <span className='title'>审核人：</span>{calm.state.auditUser}
+                                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
 
                                                 </div>
-                                                <div style={{ display: calm.state.showMark ? "block" : "none" }}>
-                                                    <div className="isDangerArea">
-                                                        <List renderHeader={() => '审核：'}>
-                                                            {data2.map(i => (
-                                                                <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
-                                                                    {i.label}
-                                                                    {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
-                                                                </RadioItem>
-                                                            ))}
-                                                        </List>
+                                                <div className='line_public'>
+                                                    <span className='title'>审核说明：</span>
+                                                    <div className='reCont'>
+                                                        {calm.state.auditMark ? calm.state.auditMark : "无"}
                                                     </div>
-                                                    <div className="sameBack description">审核说明:
-                                                        <List>
-                                                            <TextareaItem
-                                                                rows={3}
-                                                                placeholder="请在此处输入审核的说明／不通过的原因"
-                                                                onChange={v => _this.setState({
-                                                                    textareaValue: v
-                                                                })}
-                                                                value={calm.state.textareaValue}
-                                                                count={30}
-                                                            />
-                                                        </List>
+                                                </div>
+                                                <div className='result'>
+                                                    <span className='title'>审核结果：</span>
+                                                    {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                                    {calm.state.isRec == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
+                                                    <div className="reBtn" onClick={calm.showAlert}>
+                                                        重新审核
+                                            </div>
+                                                    <div>
                                                     </div>
+
+                                                </div>
+                                            </div>
+                                            <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                                <div className="isDangerArea priority">
+                                                    <List renderHeader={() => '审核：'}>
+                                                        {data2.map(i => (
+                                                            <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                                {i.label}
+                                                                {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                            </RadioItem>
+                                                        ))}
+                                                    </List>
+                                                    <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                                        {isRecData.map(i => (
+                                                            <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
+                                                                {i.label}
+                                                                {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                            </RadioItem>
+                                                        ))}
+                                                    </List>
+
+                                                </div>
+                                                <div className="sameBack description">审核说明:
+                                            <List>
+                                                        <TextareaItem
+                                                            rows={3}
+                                                            placeholder="请在此处输入审核的说明／不通过的原因"
+                                                            onChange={v => _this.setState({
+                                                                textareaValue: v
+                                                            })}
+                                                            value={calm.state.textareaValue}
+
+                                                            count={30}
+                                                        />
+                                                    </List>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    :
-                                    ""
-                    }
-                    {/* <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
+                                        :
+                                        calm.state.type == 2 ?
+                                            <div className="calm">
+                                                <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
+                                                    <div className='line_public'>
+                                                        <span className='title'>审核人：</span>{calm.state.auditUser}
+                                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
+
+                                                    </div>
+                                                    <div className='line_public'>
+                                                        <span className='title'>审核说明：</span>
+                                                        <div className='reCont'>
+                                                            {calm.state.auditMark ? calm.state.auditMark : "无"}
+                                                        </div>
+                                                    </div>
+                                                    <div className='result'>
+                                                        <span className='title'>审核结果：</span>
+                                                        {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
+                                                        <div className="reBtn" onClick={calm.showAlert}>
+                                                            重新审核
+                                                </div>
+                                                        <div>
+
+                                                        </div>
+                                                        <div style={{ display: calm.state.showMark ? "block" : "none" }}>
+                                                            <div className="isDangerArea">
+                                                                <List renderHeader={() => '审核：'}>
+                                                                    {data2.map(i => (
+                                                                        <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
+                                                                            {i.label}
+                                                                            {/*<List.Item.Brief>{i.extra}</List.Item.Brief>*/}
+                                                                        </RadioItem>
+                                                                    ))}
+                                                                </List>
+                                                            </div>
+                                                            <div className="sameBack description">审核说明:
+                                                        <List>
+                                                                    <TextareaItem
+                                                                        rows={3}
+                                                                        placeholder="请在此处输入审核的说明／不通过的原因"
+                                                                        onChange={v => _this.setState({
+                                                                            textareaValue: v
+                                                                        })}
+                                                                        value={calm.state.textareaValue}
+                                                                        count={30}
+                                                                    />
+                                                                </List>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            :
+                                            ""
+                            }
+                            {/* <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
                         <Button type='warning' onClick={_this.submit}>提交</Button>
                     </div> */}
-                </div>
-            </div>
+                        </div>
+                    </div>
                     <div className="bottomBox">
                         <span className="close" onClick={calm.cancle}>取消</span>
                         <span className="bind" onClick={_this.submit}>确定</span>

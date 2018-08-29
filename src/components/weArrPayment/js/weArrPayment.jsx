@@ -134,10 +134,6 @@ export default class weArrPayment extends React.Component {
             "userLocation": '',
             "payType": 0,
         };
-
-        console.log(param)
-        return
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {

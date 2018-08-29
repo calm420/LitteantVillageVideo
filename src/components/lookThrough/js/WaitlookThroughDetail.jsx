@@ -10,9 +10,6 @@ export default class WaitlookThroughDetail extends React.Component {
         super(props);
         calm = this;
         this.state = {
-            // isPass: 0,
-            // isRec: 0,
-            // isTop: 0,
             data: {},
             clientHeight: document.body.clientHeight,
             textareaValue: "",
@@ -604,9 +601,6 @@ export default class WaitlookThroughDetail extends React.Component {
                         <Button type='warning' onClick={_this.submit}>提交</Button>
                     </div>
                 </div>
-
-
-
             </div>
 
         )

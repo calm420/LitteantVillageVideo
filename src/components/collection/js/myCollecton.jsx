@@ -269,6 +269,7 @@ export default class myCollection extends React.Component {
                 <div className='emptyDiv emptyImgBg' style={{display: calm.initDataSource.length == 0 ? "block" : "none"}
                 }>
                     <div className='emptyIcon'></div>
+                    <div className="emptyText">还没有任何收藏，快去逛逛吧~</div>
                 </div>
                 {/* 未审核 */}
                 <ListView

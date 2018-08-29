@@ -13,22 +13,34 @@ export default class playVideo extends React.Component {
         document.title = "视频播放"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        if (locationSearch.indexOf("?") == -1) {  //正常逻辑
-            var searchArray = locationSearch.split("&");
-            var url = searchArray[0].split('=')[1];
-            this.setState({
-                url: url,
-            })
-        } else {   //分享逻辑
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        console.log(phone, "ppp")
+        if (phone = 'android') {
+            //分享逻辑
             locationSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
             var searchArray = locationSearch.split("&");
             var url = searchArray[0].split('=')[1];
             this.setState({
                 url: url,
             })
+        } 
+        if (phone = 'ios') {
+            //分享逻辑
+            shareSearch = locationSearch.substr(locationHref.indexOf("?") + 1);
+            alert(JSON.stringify(shareSearch))
+
+            var searchArray = locationSearch.split("&");
+            var url = searchArray[0].split('=')[1];
+            this.setState({
+                url: url,
+            })
         }
-        console.log($(".videoDiv"))
-        $(".videoDiv").webkitDisplayingFullscreen
     }
     Load = (event) => {
         event.stopPropagation()
@@ -48,14 +60,14 @@ export default class playVideo extends React.Component {
     render() {
         return (
             <div id="playVideo">
-                <video 
-                    className="videoDiv"  
-                    src={this.state.url} 
+                <video
+                    className="videoDiv"
+                    src={this.state.url}
                     controls="controls"
-                    webkit-playsinline 
-                    playsinline 
-                    x5-playsinline 
-                    x-webkit-airplay="allow" 
+                    webkit-playsinline
+                    playsinline
+                    x5-playsinline
+                    x-webkit-airplay="allow"
                 ></video>
                 <span onClick={calm.Load}>下载</span>
             </div>

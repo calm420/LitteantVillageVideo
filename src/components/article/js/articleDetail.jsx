@@ -57,7 +57,7 @@ export default class articleDetail extends React.Component {
             var version = searchArray[4]?searchArray[4].split('=')[1]:'';
             var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
             this.setState({
-                shareHidden: true,
+                shareHidden: false,
             })
         } else {   //分享逻辑
             locationSearch = locationSearch.split('?')[1];
@@ -553,10 +553,12 @@ export default class articleDetail extends React.Component {
                     var commitObj = {
                         discussUser:{
                             userName:this.state.user.userName,
-                            avatar: this.state.user.avatar
+                            avatar: this.state.user.avatar,
                         },
-                        discussContent: this.state.commitText
+                        discussContent: this.state.commitText,
+                        createTime: new Date().getTime(),
                     }
+                    console.log(commitObj,'commitObj');
                     this.initDataSource.unshift(commitObj);
                     theLike.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
@@ -797,7 +799,7 @@ export default class articleDetail extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         // useBodyScroll={true}
                         style={{
-                            height: document.body.clientHeight - (this.state.shareHidden ? 0 : 53),
+                            height: document.body.clientHeight - (this.state.shareHidden ? 53 : 53),
                         }}
                     />
 

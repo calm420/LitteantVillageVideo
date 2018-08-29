@@ -41,6 +41,8 @@ export default class serachResult extends React.Component {
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
+       
+        $(".am-tabs-default-bar-tab").css("display","none")
         document.title = "搜索结果"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

@@ -301,6 +301,7 @@ export default class myArticleList extends React.Component {
                 <div className='emptyDiv emptyImgBg' style={{display: this.initDataSource.length == 0 ? "block" : "none"}
                 }>
                     <div className='emptyIcon'></div>
+                    <div className="emptyText">还没有发布文章，快去发布吧~</div>
                 </div>
                 <ListView
                     ref={el => this.lv = el}

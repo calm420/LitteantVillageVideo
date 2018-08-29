@@ -689,10 +689,13 @@ export default class articleDetail extends React.Component {
                         this.state.shareHidden?{display:'inline-block'}:{display:'none'}
                     }>
                         <div className='download_img_box'>
-                            <img className="download_img" src={require("../images/fillPent.png")} alt=""/>
+                            <img className="download_img" src={require("../images/youyangLogo.png")} alt=""/>
                         </div>
-                        <div className="download_describe">有样App什么什么什么的描述</div>
-                        <div className="download_button" onClick={this.downloadApp}>立即下载</div>
+                        <div className="download_describe">
+                            <p className="downloadTitle">有样AR微分享</p>
+                            <p className="downloadIntro">据说下载的人都变成学霸了！</p>
+                        </div>
+                        <div className="download_button" onClick={this.downloadApp}>去下载</div>
                     </div>
                     <div className="commit" style={
                         this.state.shareHidden ? {display: 'none'} : {display: 'inline-block'}

@@ -37,7 +37,7 @@ export default class weArrPayment extends React.Component {
             userId: "",
             channel: 'alipayjs',    //支付方式
             rechargeType: 1,    //消费类型
-            payPrice: 0.01,   //消费金额
+            payPrice: 200,   //消费金额
             successDisPlay: true,
             userData: {}
         };
@@ -176,7 +176,7 @@ export default class weArrPayment extends React.Component {
     changeRechargeType = (type) => {
         console.log(type)
         if (type == 1) {
-            this.setState({payPrice: 0.01})
+            this.setState({payPrice:200})
             $(".payBall").removeClass('active')
             $('#theFirst').addClass('active')
         } else if (type == 2) {
@@ -218,7 +218,7 @@ export default class weArrPayment extends React.Component {
                                 <div id="theFirst" className='payBall active'
                                      onClick={this.changeRechargeType.bind(this, 1)}>
                                     <div>六个月</div>
-                                    <span>0.01</span>元
+                                    <span>200</span>元
                                 </div>
                                 <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 2)}>
                                     <div>一年</div>

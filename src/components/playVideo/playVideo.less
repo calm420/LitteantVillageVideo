@@ -1,12 +1,23 @@
 #playVideo{
     background: #000000;
     height: 100vh;
+
+    /* 视频全屏和下载屏蔽 */
+
+    video::-internal-media-controls-download-button {
+        display:none;
+    }
+
+    video::-webkit-media-controls-enclosure {
+        overflow:hidden;
+    }
+
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 30px);
+    }
     video::-webkit-media-controls-fullscreen-button {
         display: none;
     }
-    video::-webkit-media-controls-enclosure{ overflow: hidden; }
-
-    video::-webkit-media-controls-panel{ width: calc(100% + 30px); }
     .videoDiv {
         display: block;
         width: 100%;

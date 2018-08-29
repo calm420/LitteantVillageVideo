@@ -271,6 +271,47 @@ export default class articleDetail extends React.Component {
         });
     };
 
+    //计算时间差
+    timeDifference(date) {
+        var date1 = date;  //开始时间
+        var date2 = new Date();    //结束时间
+        var date3 = date2.getTime() - new Date(date1).getTime();   //时间差的毫秒数
+
+        //------------------------------
+
+        //计算出相差天数
+        var days = Math.floor(date3 / (24 * 3600 * 1000))
+
+        //计算出小时数
+
+        var leave1 = date3 % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
+        var hours = Math.floor(leave1 / (3600 * 1000))
+        //计算相差分钟数
+        var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+        var minutes = Math.floor(leave2 / (60 * 1000))
+        //计算相差秒数
+        var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
+        var seconds = Math.round(leave3 / 1000);
+
+        if (days == 0) {
+            if (days == 0 && hours == 0) {
+                if (days == 0 && hours == 0 && minutes == 0) {
+                    if (days == 0 && hours == 0 && minutes == 0 && seconds <= 30) {
+                        return "刚刚"
+                    } else {
+                        return seconds + "秒前"
+                    }
+                } else {
+                    return minutes + '分钟前';
+                }
+            } else {
+                return hours + "小时前";
+            }
+        } else {
+            return days + "天前"
+        }
+        // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
+    }
 
     // 判断用户是否已经点赞
     getUserLikeLog(reslove) {
@@ -621,6 +662,7 @@ export default class articleDetail extends React.Component {
             {value: 6, label: '其他'},
         ];
         const row = (rowData, sectionID, rowID) => {
+            var time = this.timeDifference(rowData.createTime);
             return (
                 <div style={
                     rowData.demoFlag ? {display: 'none'} : {}
@@ -629,7 +671,7 @@ export default class articleDetail extends React.Component {
                         <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar : ""} multipleLine>
                             <span>{rowData.discussUser ? rowData.discussUser.userName : ""}</span>
                             <Brief>{rowData.discussContent}</Brief>
-                            <span className="releaseTime">3天前</span>
+                            <span className="releaseTime">{time}</span>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
                         {/*{rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>*/}

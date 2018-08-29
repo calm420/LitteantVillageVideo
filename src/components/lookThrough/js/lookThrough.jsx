@@ -597,7 +597,7 @@ export default class lookThrough extends React.Component {
                         />
                     </div>
                 </Tabs>
-                <div className="updateModel" style={{ width: "100%", height: "600px", position: "absolute", left: "0", padding:"10px 0 0 0", bottom: "0" }}>
+                <div className="updateModel" style={{ width: "100%", height: "500px", position: "absolute", left: "0", padding:"10px 0 0 0", bottom: "0" }}>
                 <div id="waitLookThrough">
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content">
@@ -847,8 +847,8 @@ export default class lookThrough extends React.Component {
                 </div>
             </div>
                     <div className="bottomBox">
-                        <span className="close" onClick={_this.submit}>确定</span>
-                        <span className="bind" onClick={calm.cancle}>取消</span>
+                        <span className="close" onClick={calm.cancle}>取消</span>
+                        <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>
                 <div className="tagAddPanel_bg"></div>

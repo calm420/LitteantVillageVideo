@@ -46,7 +46,7 @@ export default class lookThrough extends React.Component {
         })
         calm.getArticleAndLittleVideoIsNo();
         window.addEventListener('resize', calm.onWindowResize);
-        $(".hehe").hide()
+        $(".updateModel").hide()
 
     }
     /**
@@ -120,7 +120,7 @@ export default class lookThrough extends React.Component {
             textareaValue:"",
             index:index
         },()=>{
-            $(".hehe").show()
+            $(".updateModel").show()
             console.log(calm.state.textareaValue,"calm.state.textareaValue")
         })
         calm.setState({
@@ -195,7 +195,7 @@ export default class lookThrough extends React.Component {
      * 点击取消
      */
     cancle() {
-        $(".hehe").hide()
+        $(".updateModel").hide()
     }
 
 
@@ -457,7 +457,7 @@ export default class lookThrough extends React.Component {
                 // alert(JSON.stringify(result))
                 if (result.success) {
                     Toast.success('成功');
-                    $(".hehe").hide();
+                    $(".updateModel").hide();
                     calm.setState({
                         initDataSource:calm.initDataSource.splice(calm.state.index,1)
                     })
@@ -597,13 +597,13 @@ export default class lookThrough extends React.Component {
                         />
                     </div>
                 </Tabs>
-                <div className="hehe" style={{ width: "100%", height: "400px", backgroundColor: "red", position: "absolute", left: "0", bottom: "0" }}>
+                <div className="updateModel" style={{ width: "100%", height: "600px", position: "absolute", left: "0", padding:"10px 0 0 0", bottom: "0" }}>
                 <div id="waitLookThrough">
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
                 <div className="content">
                     {
                         calm.state.type == 0 ?
-                            <div className="sameBack">
+                            <div className="sameBack sameBackNew">
                                 <div className='title'>{calm.state.data.articleTitle}</div>
                                 <div className='topMsg'>
                                     <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
@@ -627,8 +627,13 @@ export default class lookThrough extends React.Component {
                                         <video
                                             controls="controls"
                                             preload="auto"
+                                            className="tag-vedio"
+                                            controlslist="nodownload nofullscreen"
+                                            x5-video-player-type="h5"
+                                            playsinline="true"
+                                            webkit-playsinline="true"
                                             poster={calm.state.data.coverPath}
-                                            style={{ objectFit: "fill", width: "100%" }}
+                                            style={{ objectFit: "contain", width: "100%" }}
                                             src={calm.state.data.videoPath}>
                                         </video>
                                     </div>
@@ -841,11 +846,12 @@ export default class lookThrough extends React.Component {
                     </div> */}
                 </div>
             </div>
-                    <div >
-                        <span onClick={_this.submit}>确定</span>
-                        <span onClick={calm.cancle}>取消</span>
+                    <div className="bottomBox">
+                        <span className="close" onClick={_this.submit}>确定</span>
+                        <span className="bind" onClick={calm.cancle}>取消</span>
                     </div>
                 </div>
+                <div className="tagAddPanel_bg"></div>
             </div>
         )
     }

@@ -140,4 +140,51 @@
       }
     }
   }
+  .updateModel {
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    z-index: 999;
+    height: 349px;
+  }
+  .tag-vedio{
+    height: 350px;
+    background: #000;
+  }
+  .tagAddPanel_bg {
+    background: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 980;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  .sameBackNew{
+    padding:5px 15px 15px 15px !important;
+  }
+  video::-webkit-media-controls:not(.audio-only) [pseudo="-webkit-media-controls-panel"] [pseudo="-internal-media-controls-overflow-button"]{
+    display: none;
+  }
+  video::-internal-media-controls-download-button {
+    display:none;
+  }
+
+  video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+  }
+
+  video::-webkit-media-controls-panel {
+    width: calc(100% + 50px);
+  }
+  video::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+  #waitLookThrough{
+    height: 525px;
+    overflow-y: auto;
+  }
 }

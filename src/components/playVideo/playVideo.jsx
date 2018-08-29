@@ -14,6 +14,11 @@ export default class playVideo extends React.Component {
         document.title = "有样AR微分享"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var videoId = locationSearch.split('=')[1];
+        calm.getLittleVideoById(videoId);
+        this.setState({
+            videoId: videoId,
+        })
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -30,7 +35,7 @@ export default class playVideo extends React.Component {
             this.setState({
                 videoId: videoId,
             })
-        }
+        } 
         if (phone = 'ios') {
             //分享逻辑
             var shareSearch = locationSearch.substr(locationSearch.indexOf("?") + 1);
@@ -39,12 +44,11 @@ export default class playVideo extends React.Component {
             this.setState({
                 videoId: videoId,
             })
-        }
-
+        } 
         this.videoElement = document.getElementsByTagName('video')[0];
-        this.videoElement.setAttribute('playsinline','true');
-        this.videoElement.setAttribute('x5-playsinline','true');
-        this.videoElement.setAttribute('webkit-playsinline','true');
+        this.videoElement.setAttribute('playsinline', 'true');
+        this.videoElement.setAttribute('x5-playsinline', 'true');
+        this.videoElement.setAttribute('webkit-playsinline', 'true');
     }
 
     /**
@@ -96,31 +100,31 @@ export default class playVideo extends React.Component {
         return (
             <div>
                 <div id="playVideo">
-                <div className="videoHead">
-                    <img className="userFace" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
-                    <div className="userMessage">
-                        <div className="userName text_hidden">{calm.state.data.userInfo ? calm.state.data.userInfo.userName:""}</div>
-                        <div className="userinfo text_hidden">{calm.state.data.videoContent}</div>
+                    <div className="videoHead">
+                        <img className="userFace" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
+                        <div className="userMessage">
+                            <div className="userName text_hidden">{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</div>
+                            <div className="userinfo text_hidden">{calm.state.data.videoContent}</div>
+                        </div>
                     </div>
-                </div>
-                <div className="videoCont">
-                    <video
-                        className="videoDiv empty_center"
-                        src={calm.state.data.videoPath}
-                        poster={calm.state.data.coverPath}
-                        controls
-                        autoPlay
-                        x5-playsinline="true"
-                        playsinline="true"
-                        webkit-playsinline="true"
-                        controlslist="nodownload nofullscreen"
-                        webkit-playsinline="true"
-                    >
-                    </video>
-                </div>
+                    <div className="videoCont">
+                        <video
+                            className="videoDiv empty_center"
+                            src={calm.state.data.videoPath}
+                            poster={calm.state.data.coverPath}
+                            controls
+                            autoPlay
+                            x5-playsinline="true"
+                            playsinline="true"
+                            webkit-playsinline="true"
+                            controlslist="nodownload nofullscreen"
+                            webkit-playsinline="true"
+                        >
+                        </video>
+                    </div>
                     <div className="download_box">
                         <div className='download_img_box'>
-                            <img className="download_img" src={require("./images/youyangLogo.png")} alt=""/>
+                            <img className="download_img" src={require("./images/youyangLogo.png")} alt="" />
                         </div>
                         <div className="download_describe">
                             <p className="downloadTitle">有样AR微分享</p>

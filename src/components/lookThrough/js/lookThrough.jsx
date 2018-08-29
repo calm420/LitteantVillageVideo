@@ -115,10 +115,18 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type, index) {
+        console.log(calm.state.textareaValue,"calm.state.textareaValue")
         calm.setState({
-            textareaValue:""
+            textareaValue:"",
+            index:index
+        },()=>{
+            $(".hehe").show()
+            console.log(calm.state.textareaValue,"calm.state.textareaValue")
         })
-        $(".hehe").show()
+        calm.setState({
+            isShow:false
+        })
+       
         calm.setState({
             id, type
         })
@@ -373,7 +381,11 @@ export default class lookThrough extends React.Component {
      * 点击提交按钮
      */
     submit() {
-        console.log(calm.state.type, "type")
+        calm.setState({
+            textareaValue:""
+        })
+        console.log(calm.state.index, "index")
+        return
         var param;
         //小视频
         if (calm.state.type == 0) {
@@ -446,8 +458,8 @@ export default class lookThrough extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result))
                 if (result.success) {
-
                     Toast.success('成功');
+                    calm.initDataSource.splice(calm.state.index,1)
                     $(".hehe").hide();
                 }
             },
@@ -695,6 +707,8 @@ export default class lookThrough extends React.Component {
                                                 onChange={v => _this.setState({
                                                     textareaValue: v
                                                 })}
+                                                value={calm.state.textareaValue}
+
                                                 count={30}
                                             />
                                         </List>
@@ -758,6 +772,8 @@ export default class lookThrough extends React.Component {
                                                     onChange={v => _this.setState({
                                                         textareaValue: v
                                                     })}
+                                                    value={calm.state.textareaValue}
+
                                                     count={30}
                                                 />
                                             </List>
@@ -807,6 +823,7 @@ export default class lookThrough extends React.Component {
                                                                 onChange={v => _this.setState({
                                                                     textareaValue: v
                                                                 })}
+                                                                value={calm.state.textareaValue}
                                                                 count={30}
                                                             />
                                                         </List>

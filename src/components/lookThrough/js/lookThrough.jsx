@@ -46,12 +46,7 @@ export default class lookThrough extends React.Component {
         })
         calm.getArticleAndLittleVideoIsNo();
         window.addEventListener('resize', calm.onWindowResize);
-
-        // window.addEventListener('scroll', this.scrollHandler);
-        // var args = [100,0]
-        // console.log(...args)
-        // ListView.scrollTo(...args)
-        // console.log(ListView,"ListView")
+        $(".hehe").hide()
 
     }
     /**
@@ -120,6 +115,9 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type, index) {
+        calm.setState({
+            textareaValue:""
+        })
         $(".hehe").show()
         calm.setState({
             id, type
@@ -183,7 +181,7 @@ export default class lookThrough extends React.Component {
      * 点击确定
      */
     sure() {
-        $(".hehe").hide()
+       
     }
     /**
      * 点击取消
@@ -376,7 +374,6 @@ export default class lookThrough extends React.Component {
      */
     submit() {
         console.log(calm.state.type, "type")
-
         var param;
         //小视频
         if (calm.state.type == 0) {
@@ -449,13 +446,9 @@ export default class lookThrough extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result))
                 if (result.success) {
+
                     Toast.success('成功');
-                    var data = {
-                        method: 'finish',
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                        console.log(error);
-                    });
+                    $(".hehe").hide();
                 }
             },
             onError: function (error) {
@@ -591,10 +584,10 @@ export default class lookThrough extends React.Component {
                         />
                     </div>
                 </Tabs>
-                <div className="hehe" style={{ width: "100%", height: "300px", backgroundColor: "red", position: "absolute", left: "0", bottom: "0" }}>
+                <div className="hehe" style={{ width: "100%", height: "400px", backgroundColor: "red", position: "absolute", left: "0", bottom: "0" }}>
                 <div id="waitLookThrough">
                 {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                <div className="content">111
+                <div className="content">
                     {
                         calm.state.type == 0 ?
                             <div className="sameBack">
@@ -825,13 +818,13 @@ export default class lookThrough extends React.Component {
                                     :
                                     ""
                     }
-                    <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
+                    {/* <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
                         <Button type='warning' onClick={_this.submit}>提交</Button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
                     <div >
-                        <span onClick={calm.sure}>确定</span>
+                        <span onClick={_this.submit}>确定</span>
                         <span onClick={calm.cancle}>取消</span>
                     </div>
                 </div>

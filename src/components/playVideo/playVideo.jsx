@@ -11,7 +11,7 @@ export default class playVideo extends React.Component {
         }
     }
     componentDidMount() {
-        document.title = "视频播放"
+        document.title = "有样AR微分享"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var phoneType = navigator.userAgent;
@@ -41,15 +41,19 @@ export default class playVideo extends React.Component {
             })
         }
 
+        this.videoElement = document.getElementsByTagName('video')[0];
+        this.videoElement.setAttribute('playsinline','true');
+        this.videoElement.setAttribute('x5-playsinline','true');
+        this.videoElement.setAttribute('webkit-playsinline','true');
     }
 
     /**
      * 获取视频对象
      */
-    getLittleVideoById() {
+    getLittleVideoById(videoId) {
         var param = {
             "method": 'getLittleVideoById',
-            "videoId": 126,
+            "videoId": videoId,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -103,6 +107,7 @@ export default class playVideo extends React.Component {
                     <video
                         className="videoDiv empty_center"
                         src={calm.state.data.videoPath}
+                        poster={calm.state.data.coverPath}
                         controls
                         autoPlay
                         x5-playsinline="true"

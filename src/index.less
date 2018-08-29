@@ -837,7 +837,14 @@ hr {
 //  opacity: 0.8;
 //}
 
-
+.textOver2{
+  word-break: break-all;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 /* 视频全屏和下载屏蔽 */
 
 video::-internal-media-controls-download-button {

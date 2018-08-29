@@ -623,7 +623,7 @@ export default class lookThrough extends React.Component {
                                     </div>
                                     :
                                     calm.state.type == 1 ?
-                                        <div className="sameBack">
+                                        <div className="sameBack sameBackTop sameBackBottom">
                                             <div className='topMsg'>
                                                 <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
                                                 <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
@@ -631,7 +631,7 @@ export default class lookThrough extends React.Component {
                                                 <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                             </div>
                                             <div className="textCont">
-                                                <div className='video_title'>{calm.state.data.videoContent}</div>
+                                                <div className='video_title textOver2'>{calm.state.data.videoContent}</div>
                                                 <video
                                                     controls="controls"
                                                     preload="auto"
@@ -648,7 +648,7 @@ export default class lookThrough extends React.Component {
                                         </div>
                                         :
                                         calm.state.type == 2 ?
-                                            <div className="sameBack">
+                                            <div className="sameBack sameBackTop">
                                                 <div className='topMsg'>
                                                     <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
                                                     <span className='author'>{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
@@ -713,7 +713,7 @@ export default class lookThrough extends React.Component {
                                                     </List>
                                                 </div>
                                             </div>
-                                            <div className="sameBack description">审核说明:
+                                            <div className="sameBack description sameBackTop">审核说明:
                                             <List>
                                                     <TextareaItem
                                                         rows={3}
@@ -778,7 +778,7 @@ export default class lookThrough extends React.Component {
                                                     </List>
 
                                                 </div>
-                                                <div className="sameBack description">审核说明:
+                                                <div className="sameBack description sameBackTop">审核说明:
                                             <List>
                                                         <TextareaItem
                                                             rows={3}
@@ -829,7 +829,7 @@ export default class lookThrough extends React.Component {
                                                                     ))}
                                                                 </List>
                                                             </div>
-                                                            <div className="sameBack description">审核说明:
+                                                            <div className="sameBack description sameBackTop">审核说明:
                                                         <List>
                                                                     <TextareaItem
                                                                         rows={3}

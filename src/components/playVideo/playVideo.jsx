@@ -92,23 +92,37 @@ export default class playVideo extends React.Component {
         return (
             <div>
                 <div id="playVideo">
-                <div>
-                    <img src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
-                    <span>{calm.state.data.userInfo ? calm.state.data.userInfo.userName:""}</span>
-                    <span>{calm.state.data.videoContent}</span>
+                <div className="videoHead">
+                    <img className="userFace" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar:""} alt=""/>
+                    <div className="userMessage">
+                        <div className="userName text_hidden">{calm.state.data.userInfo ? calm.state.data.userInfo.userName:""}</div>
+                        <div className="userinfo text_hidden">{calm.state.data.videoContent}</div>
+                    </div>
                 </div>
+                <div className="videoCont">
                     <video
-                        className="videoDiv"
+                        className="videoDiv empty_center"
                         src={calm.state.data.videoPath}
                         controls
                         autoPlay
                         x5-playsinline="true"
                         playsinline="true"
                         webkit-playsinline="true"
-                        playsinline
+                        controlslist="nodownload nofullscreen"
+                        webkit-playsinline="true"
                     >
                     </video>
-                    <span onClick={calm.Load}>去下载</span>
+                </div>
+                    <div className="download_box">
+                        <div className='download_img_box'>
+                            <img className="download_img" src={require("./images/youyangLogo.png")} alt=""/>
+                        </div>
+                        <div className="download_describe">
+                            <p className="downloadTitle">有样AR微分享</p>
+                            <p className="downloadIntro">据说下载的人都变成学霸了！</p>
+                        </div>
+                        <div className="download_button" onClick={calm.Load}>去下载</div>
+                    </div>
                 </div>
             </div>
 

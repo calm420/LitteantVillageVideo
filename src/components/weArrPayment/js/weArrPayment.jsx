@@ -16,8 +16,8 @@ export default class weArrPayment extends React.Component {
         this.state = {
             userId: "",
             channel: 'alipayjs',    //支付方式
-            rechargeType: 0,    //消费类型
-            payPrice: 200,   //消费金额
+            rechargeType: 1,    //消费类型
+            payPrice: 0.01,   //消费金额
             successDisPlay: true,
             userData:{}
         };
@@ -112,6 +112,9 @@ export default class weArrPayment extends React.Component {
             "userLocation": '',
             "payType": 0,
         };
+
+        console.log(param)
+    
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
@@ -153,8 +156,8 @@ export default class weArrPayment extends React.Component {
      */
     changeRechargeType = (type) => {
         console.log(type)
-        if (type == 0) {
-            this.setState({payPrice: 200})
+        if (type == 1) {
+            this.setState({payPrice: 0.01})
             $(".payBall").removeClass('active')
             $('#theFirst').addClass('active')
         } else if (type == 1) {
@@ -192,11 +195,11 @@ export default class weArrPayment extends React.Component {
                     <div className='rechargeAmount M15'>
                         <div className='title'>充值金额<span>（购买会员后可玩转AR教材）</span></div>
                         <div className="my_flex">
-                            <div id="theFirst" className='payBall active' onClick={this.changeRechargeType.bind(this, 0)}>
+                            <div id="theFirst" className='payBall active' onClick={this.changeRechargeType.bind(this, 1)}>
                                 <div>六个月</div>
-                                <span>200</span>元
+                                <span>0.01</span>元
                             </div>
-                            <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 1)}>
+                            <div id="theSecond" className='payBall' onClick={this.changeRechargeType.bind(this, 2)}>
                                 <div>一年</div>
                                 <span>320</span>元
                             </div>

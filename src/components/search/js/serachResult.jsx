@@ -71,6 +71,7 @@ export default class serachResult extends React.Component {
      * 视频搜索结果
      */
     searchVideo = (value) => {
+        this.setState({isLoadingLeft:true});
         var param = {
             "method": 'searchVideoLiketest',
             "test": value,
@@ -85,13 +86,17 @@ export default class serachResult extends React.Component {
                     calm.state.pageCount = result.pager.pageCount;
                     calm.state.pageNo = result.pager.pageNo;
                     // calm.state.videoData = result.response.littleVideoInfo
+                    if(calm.state.defaultPageNo==1){
+                        calm.state.videoData.splice(0);
+                    }
                     calm.setState({
                         videoData:calm.state.videoData.concat(result.response.littleVideoInfo)
                     })
                     calm.initDataSource = calm.initDataSource.concat(result.response.littleVideoInfo);
                     calm.setState({
                         dataSource: dataSource.cloneWithRows(calm.initDataSource),
-                        isLoading: false
+                        isLoading: false,
+                        isLoadingLeft:false
                     })
                     if (calm.initDataSource.length == result.pager.rsCount) {
                         calm.setState({
@@ -123,7 +128,7 @@ export default class serachResult extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            _this.searchVideo(calm.state.searghValue);
+            _this.searchVideo(calm.state.value);
         });
     };
 
@@ -131,7 +136,7 @@ export default class serachResult extends React.Component {
      * 搜索输入框改变的时候
      */
     onChange = (value) => {
-        this.setState({ value });
+        this.setState({ value,defaultPageNo:1 });
     };
     /**
      * 点击搜索事件

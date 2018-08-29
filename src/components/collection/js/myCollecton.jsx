@@ -158,8 +158,8 @@ export default class myCollection extends React.Component {
     /**
      * 跳转文章详情页面
      */
-    toArticleDetail(id) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.auditorId + "&type=1");
+    toArticleDetail(id,articleTitle) {
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.auditorId + "&type=1&machineType=&version=&articleTitle=" + ((articleTitle)));
         var data = {
             method: 'openNewPage',
             url: url
@@ -246,7 +246,7 @@ export default class myCollection extends React.Component {
                             :
                             rowData.articleInfo ?
                                 <div className='item'
-                                     onClick={calm.toArticleDetail.bind(this, rowData.articleInfo.articleId)}>
+                                     onClick={calm.toArticleDetail.bind(this, rowData.articleInfo.articleId,rowData.articleInfo.articleTitle)}>
                                     <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                     <div className="bottom">
                                         <span className='read'>{rowData.articleInfo.readCount}阅读</span>

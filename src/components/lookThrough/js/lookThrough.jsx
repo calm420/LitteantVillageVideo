@@ -140,16 +140,14 @@ export default class lookThrough extends React.Component {
         } else if (type == 2) {
             calm.getDiscussInfoById(id)
         }
-        console.log(index)
-        return
-        var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
-        var data = {
-            method: 'openNewPage',
-            url: urlW
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = urlW;
-        });
+        // var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: urlW
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = urlW;
+        // });
     }
 
     //tab栏切换事件
@@ -198,7 +196,10 @@ export default class lookThrough extends React.Component {
      */
     cancle() {
         $(".updateModel").slideUp()
-        // $(".updateModel").hide()
+        if(calm.state.type == 1){
+            $(".updateModel video")[0].pause()
+            $(".updateModel video")[0].currentTime = 0;
+        }
         $(".tagAddPanel_bg").hide();
         
     }

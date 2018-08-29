@@ -56,6 +56,8 @@ export default class articleDetail extends React.Component {
             var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
             var version = searchArray[4]?searchArray[4].split('=')[1]:'';
             var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
+            console.log(articleTitle,'articleTitle');
+            console.log(decodeURI(articleTitle),'decodeURI(articleTitle)');
             this.setState({
                 shareHidden: false,
             })

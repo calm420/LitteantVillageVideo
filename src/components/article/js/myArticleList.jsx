@@ -155,10 +155,10 @@ export default class myArticleList extends React.Component {
         });
     };
 
-    toDetail(id) {
+    toDetail(id,articleTitle) {
         console.log(id);
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3");
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3&machineType=&version=&articleTitle=" + ((articleTitle)));
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -264,8 +264,8 @@ export default class myArticleList extends React.Component {
                         <div className="title">{rowData.articleTitle}</div>
                         <div className="images">
                             <div className="videoBox">
-                                <div onClick={this.toDetail.bind(this, rowData.articleId)} className="videoMask"></div>
-                                <img onClick={this.toDetail.bind(this, rowData.articleId)} className="playImg"
+                                <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="videoMask"></div>
+                                <img onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="playImg"
                                      src={require('../images/videoClick.png')} alt=""/>
                                 <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                             </div>
@@ -289,7 +289,7 @@ export default class myArticleList extends React.Component {
 
             }
             return (
-                <div onClick={this.toDetail.bind(this, rowData.articleId)}>
+                <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}>
                     {dom}
                 </div>
             )

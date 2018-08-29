@@ -41,10 +41,10 @@ export default class Login extends React.Component {
                     if(WebServiceUtil.isEmpty(sessionStorage.getItem("loginUser"))){
                         sessionStorage.setItem("loginUser",JSON.stringify(user));
                     }
-                    location.hash="AppSystem";
-                    /*if(uuid == machineId){
+                    //location.hash="AppSystem";
+                    if(uuid == machineId){
                         location.hash="AppSystem";
-                    }*/
+                    }
                     console.log("data==============>"+data);
                 }
             }

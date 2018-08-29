@@ -629,6 +629,7 @@ export default class articleDetail extends React.Component {
                         <Item align="top" thumb={rowData.discussUser ? rowData.discussUser.avatar : ""} multipleLine>
                             <span>{rowData.discussUser ? rowData.discussUser.userName : ""}</span>
                             <Brief>{rowData.discussContent}</Brief>
+                            <span className="releaseTime">3天前</span>
                         </Item>
                         {/*<Item extra={WebServiceUtil.formatYMD(rowData.createTime)} align="top" thumb={rowData.discussUser.avatar} multipleLine>*/}
                         {/*{rowData.discussUser.userName} <Brief>{rowData.discussContent}</Brief>*/}

@@ -53,7 +53,7 @@ export default class playVideo extends React.Component {
     getLittleVideoById(videoId) {
         var param = {
             "method": 'getLittleVideoById',
-            "videoId": 126,
+            "videoId": videoId,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {

@@ -47,11 +47,6 @@ export default class lookThrough extends React.Component {
         calm.getArticleAndLittleVideoIsNo();
         window.addEventListener('resize', calm.onWindowResize);
         $(".hehe").hide()
-        // window.addEventListener('scroll', this.scrollHandler);
-        // var args = [100,0]
-        // console.log(...args)
-        // ListView.scrollTo(...args)
-        // console.log(ListView,"ListView")
 
     }
     /**
@@ -120,6 +115,9 @@ export default class lookThrough extends React.Component {
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type, index) {
+        calm.setState({
+            textareaValue:""
+        })
         $(".hehe").show()
         calm.setState({
             id, type

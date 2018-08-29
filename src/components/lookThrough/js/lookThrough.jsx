@@ -384,8 +384,6 @@ export default class lookThrough extends React.Component {
         calm.setState({
             textareaValue:""
         })
-        console.log(calm.state.index, "index")
-        return
         var param;
         //小视频
         if (calm.state.type == 0) {
@@ -459,8 +457,10 @@ export default class lookThrough extends React.Component {
                 // alert(JSON.stringify(result))
                 if (result.success) {
                     Toast.success('成功');
-                    calm.initDataSource.splice(calm.state.index,1)
                     $(".hehe").hide();
+                    calm.setState({
+                        initDataSource:calm.initDataSource.splice(calm.state.index,1)
+                    })
                 }
             },
             onError: function (error) {
@@ -494,9 +494,10 @@ export default class lookThrough extends React.Component {
         })
     }
     render() {
-
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            // console.log(rowData,"rowData")
+            rowData = rowData || {}
             return (
                 <div>
                     {

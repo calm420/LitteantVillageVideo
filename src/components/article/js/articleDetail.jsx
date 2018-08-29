@@ -57,7 +57,7 @@ export default class articleDetail extends React.Component {
             var version = searchArray[4]?searchArray[4].split('=')[1]:'';
             var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
             this.setState({
-                shareHidden: false,
+                shareHidden: true,
             })
         } else {   //分享逻辑
             locationSearch = locationSearch.split('?')[1];
@@ -594,6 +594,23 @@ export default class articleDetail extends React.Component {
         });
     }
 
+    downloadApp = ()=>{
+        console.log('下载App');
+        var url;
+        if(this.state.isPhone == 'ios'){
+            url = "https://itunes.apple.com/cn/app/apple-store/id1423189213?mt=8";
+        }else{
+            url = "http://60.205.86.217/upload7_app/2018-08-28/14/e9c3c09b-f9da-4d7e-8ad3-b810d17a1bf8.apk";
+        }
+
+        // var $eleForm = $("<form method='get'></form>");
+        // $eleForm.attr("action",url);
+        // $(document.body).append($eleForm);
+        // //提交表单，实现下载npm st
+        // $eleForm.submit();
+        window.open(url);
+    }
+
     render() {
         const data_report = [
             {value: 0, label: '广告及垃圾信息'},
@@ -623,7 +640,17 @@ export default class articleDetail extends React.Component {
         // var articleContent = this.state.data.articleContent
         return (
             <div id="articleDetail" style={{height: document.body.clientHeight}}>
+
                 <div className="inner">
+                    <div className="download_box" style={
+                        this.state.shareHidden?{display:'inline-block'}:{display:'none'}
+                    }>
+                        <div className='download_img_box'>
+                            <img className="download_img" src={require("../images/fillPent.png")} alt=""/>
+                        </div>
+                        <div className="download_describe">有样App什么什么什么的描述</div>
+                        <div className="download_button" onClick={this.downloadApp}>立即下载</div>
+                    </div>
                     <div className="commit" style={
                         this.state.shareHidden ? {display: 'none'} : {display: 'inline-block'}
                     }>

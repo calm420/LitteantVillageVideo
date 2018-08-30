@@ -175,12 +175,7 @@ export default class lookThrough extends React.Component {
             })
         }
     }
-    /**
-     * 点击确定
-     */
-    sure() {
-
-    }
+   
     /**
      * 点击取消
      */
@@ -197,7 +192,6 @@ export default class lookThrough extends React.Component {
 
 
     //--------//
-
     //监听窗口改变时间
     onWindwoResize() {
         // this
@@ -383,18 +377,6 @@ export default class lookThrough extends React.Component {
         var param;
         //小视频
         if (calm.state.type == 0) {
-            // if(calm.state.isPass == ""){
-            //     Toast.info("1")
-            //     return
-            // }
-            // if(calm.state.isPass == "" && calm.state.isTop == ""){
-            //     Toast.info("2")
-            //     return
-            // }
-            // if(calm.state.isPass == 1 && calm.state.isTop == ""){
-            //     Toast.info("3")
-            //     return
-            // }
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -408,18 +390,6 @@ export default class lookThrough extends React.Component {
                 },
             };
         } else if (calm.state.type == 1) {
-            // if(calm.state.isPass == ""){
-            //     Toast.info("1111111")
-            //     return
-            // }
-            // if(calm.state.isPass == "" && calm.state.isRec == ""){
-            //     Toast.info("2222222")
-            //     return
-            // }
-            // if(calm.state.isPass == 1 && calm.state.isRec == ""){
-            //     Toast.info("333")
-            //     return
-            // }
 
             param = {
                 "method": 'saveAuditInfo',
@@ -433,10 +403,6 @@ export default class lookThrough extends React.Component {
                 },
             };
         } else if (calm.state.type == 2) {
-            // if(calm.state.isPass == ""){
-            //     Toast.info("bububu")
-            //     return
-            // }
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -452,7 +418,7 @@ export default class lookThrough extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result))
                 if (result.success) {
-                    Toast.success('成功');
+                    Toast.success("成功", 1, "", false)
                     $(".updateModel").slideUp();
                     // $(".updateModel").hide();
                     $(".tagAddPanel_bg").hide();
@@ -514,7 +480,7 @@ export default class lookThrough extends React.Component {
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type)}>
+                                <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type,rowID)}>
                                     <img className='photo' src={rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.avatar : ""} alt="" />
                                     <div className='right'>
                                         <div className="topMsg my_flex">
@@ -529,7 +495,7 @@ export default class lookThrough extends React.Component {
                                 </div>
                                 :
                                 rowData.discussInfo ?
-                                    <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type)}>
+                                    <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type,rowID)}>
                                         <img className='photo' src={rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.avatar : ""} alt="" />
                                         <div className='right'>
                                             <div className="topMsg my_flex">
@@ -840,9 +806,6 @@ export default class lookThrough extends React.Component {
                                             :
                                             ""
                             }
-                            {/* <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
-                        <Button type='warning' onClick={_this.submit}>提交</Button>
-                    </div> */}
                         </div>
                     </div>
                     <div className="bottomBox">

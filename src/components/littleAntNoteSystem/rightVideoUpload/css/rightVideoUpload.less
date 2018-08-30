@@ -1,0 +1,178 @@
+#rightVideoUpload {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  .click_head{
+    height: 52px;
+    box-shadow: 0 2px 3px 0 rgba(179,179,179,0.50);
+    font-size: 14px;
+    color: #666;
+    line-height: 52px;
+    a{
+      color: #4380EB;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+  .headBox{
+    width: 100%;
+    height: 178px;
+    padding-top: 30px;
+    .title{
+      width:calc(~"100% - 281px");
+      display: inline-block;
+      box-sizing: border-box;
+      float: left;
+      height: 174px;
+      background: #F5F6FA;
+      .am-list-item{
+        background: transparent;
+      }
+      .am-list-item .am-input-control input{
+        color: #333;
+        font-size: 24px;
+      }
+      .am-list-item.am-input-item{
+        padding-top: 25px;
+        padding-left: 25px;
+        height:149px;
+      }
+      .am-list-item.am-list-item-middle .am-list-line{
+        align-items: flex-start;
+      }
+    }
+    .image{
+      float: right;
+      display: inline-block;
+      box-sizing: border-box;
+      width: 261px;
+      height: 174px;
+      background: #F5F6FA;
+      .am-image-picker-list .am-image-picker-item .am-image-picker-item-content{
+        border-radius: 0;
+      }
+      .am-image-picker{
+        height: 100%;
+      }
+      .am-image-picker-list .am-image-picker-upload-btn{
+        background: url("../img/add_img.png") no-repeat;
+        width: 54px;
+        height: 54px;
+        margin: 0;
+        background-size: 100% 100%;
+        border: none;
+        cursor: pointer;
+
+      }
+      .img_text{
+        padding: 0 40px;
+        color: #666;
+        line-height: 20px;
+      }
+      //position: relative;
+      //img{
+      //  width: 50px;
+      //  height: 50px;
+      //  position: absolute;
+      //  top: 50%;
+      //  left: 50%;
+      //  transform: translate(-50%,-50%);
+      //}
+    }
+
+  }
+  .am-image-picker-list,.am-image-picker-list .am-flexbox{
+    padding:0;
+    margin:0;
+    width: 100%;
+    height: 100%;
+
+  }
+  .am-image-picker{
+    position: relative;
+  }
+  .am-flexbox{
+    display: block !important;
+  }
+  .am-image-picker-list{
+    overflow: hidden;
+    position: absolute;
+    left:0;
+    top: 0;
+  }
+  .am-flexbox-item {
+    width: 100%;
+    height: 100%;
+  }
+  .am-image-picker-list .am-image-picker-upload-btn input{
+    width: 100%;
+    cursor: pointer;
+  }
+  .image .am-image-picker-list .am-image-picker-upload-btn {
+    left: 50%;
+    margin-left: -32px !important;
+  }
+  .quill{
+    .ql-container.ql-snow{
+      min-height: calc(~"100vh - 470px");
+      max-height: calc(~"100vh - 150px");
+      overflow-y: auto;
+    }
+    .ql-editor{
+      font-size: 16px;
+      color: #333;
+      line-height: 23px;
+    }
+  }
+  .ql-toolbar.ql-snow, .ql-container.ql-snow{
+    background: #F5F6FA;
+    padding: 10px;
+    border: none;
+    margin-bottom: 10px;
+  }
+  input::-webkit-input-placeholder, textarea::-webkit-input-placeholder, ReactQuill::-webkit-input-placeholder {
+    color: #999;
+  }
+  input:-moz-placeholder, textarea:-moz-placeholder , ReactQuill:-moz-placeholder {
+    color: #999;
+  }
+  input::-moz-placeholder, textarea::-moz-placeholder, ReactQuill::-moz-placeholder {
+    color: #999;
+  }
+  input:-ms-input-placeholder, textarea:-ms-input-placeholder, ReactQuill:-ms-input-placeholder {
+    color: #999;
+  }
+  .empty_draft{
+    background: url("../img/empty_draft.png") no-repeat;
+    width: 233px;
+    height: 200px;
+    background-size: 100% 100% ;
+    color: #999;
+    span{
+      padding-top: 240px;
+      display: inline-block;
+      padding-left: 50px;
+    }
+  }
+  .am-image-picker-list .am-image-picker-upload-btn:before, .am-image-picker-list .am-image-picker-upload-btn:after{
+    background: transparent;
+  }
+  .author{
+    background: #F5F6FA;
+    margin-top: 8px;
+    .am-list-item.am-input-item{
+      background: #F5F6FA;
+      .am-input-control input{
+        padding: 0 10px;
+      }
+    }
+  }
+  .ql-editor.ql-blank::before {
+    font-style: normal;
+  }
+  #iframe_box{
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}

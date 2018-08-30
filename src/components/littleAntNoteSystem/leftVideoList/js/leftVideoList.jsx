@@ -42,7 +42,7 @@ export default class leftVideoList extends React.Component {
     }
 
     accept(type, id) {
-        console.log(type, 'TYPE')
+        console.log(type, 'TYPE!!!!!!!!');
         switch (type) {
             case "init":
                 this.setState({
@@ -91,10 +91,10 @@ export default class leftVideoList extends React.Component {
 
     getListData(type) {  //0  1
         var param = {
-            "method": 'getLittleVideoInfoListByUserId',
-            // "userId": JSON.parse(sessionStorage.getItem("loginUser")).uid,
-            "userId": 19,
-            // "status": type,
+            "method": 'getUserVideoListByStatus',
+            "userId": JSON.parse(sessionStorage.getItem("loginUser")).uid,
+            // "userId": 19,
+            "status": 1,  //已发布  0 草稿
             pageNo: '-1'
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

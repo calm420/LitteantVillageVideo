@@ -47,6 +47,11 @@ export default class AppSystem extends React.Component {
         this.refs.listToReadPanel.accept(type, data)
     }
 
+    submitInVideo = (info) =>{
+        console.log(info,'123456');
+        this.refs.listByVideo.accept(info,1);
+    }
+
     /**
      * 重新审核弹出框
      */
@@ -171,7 +176,7 @@ export default class AppSystem extends React.Component {
                         </div>
                         <div className="right" style={{height: this.state.clientHeight - 54}}>
                             <RightVideoUpload
-                                // submit={this.submit}
+                                submitInVideo={this.submitInVideo}
                                 ref='appSystemToVideo'
                                 // setPanel={this.setPanel}
                             />

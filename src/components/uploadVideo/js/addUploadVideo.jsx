@@ -682,15 +682,18 @@ export default class addUploadVideo extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-
-                    Toast.success('成功');
+                    // Toast.success('成功');
                     // 关闭当前窗口，并刷新上一个页面
-                    var data = {
-                        method: 'finishForRefresh',
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                        console.log(error);
-                    });
+                    // var data = {
+                    //     method: 'finishForRefresh',
+                    // };
+                    // Bridge.callHandler(data, null, function (error) {
+                    //     console.log(error);
+                    // });
+                    var data = {};
+                    data.method = '发布成功';
+                    window.parent.postMessage(JSON.stringify(data), '*');
+                    window.location.reload();
                 }
             },
             onError: function (error) {

@@ -48,7 +48,13 @@ export default class updateVideo extends React.Component {
         calm.setState({
             vid
         })
-        calm.getLittleVideoById(vid)
+        calm.getLittleVideoById(vid);
+        window.addEventListener('message', (e) => {
+                console.log(e, '编辑时候的e');
+                if(e.data == 'refresh'){
+                    window.location.reload();
+                }
+        })
     }
     /**
      * 根据视频ID获取视频对象
@@ -66,6 +72,7 @@ export default class updateVideo extends React.Component {
                             show: false
                         })
                     }
+                    console.log(result,'lidonglidonglodong');
                     calm.setState({
                         coverPath: result.response.coverPath,
                         videoUrl: result.response.videoPath,

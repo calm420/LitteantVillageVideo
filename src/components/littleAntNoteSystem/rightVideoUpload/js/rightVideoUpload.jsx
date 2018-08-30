@@ -61,6 +61,8 @@ export default class rightVideoUpload extends React.Component {
                     writeFlag: true,
                     vId: data,
                 });
+                var ifm = document.getElementById('iframe_box_updata');
+                ifm.contentWindow.postMessage('refresh', '*');
                 break;
             case "删除":
                 if (data == this.state.artId) {
@@ -94,7 +96,7 @@ export default class rightVideoUpload extends React.Component {
                     <div style={
                         this.state.vId ? {display: 'block'} : {display: 'none'}
                     }>
-                        <iframe id="iframe_box"
+                        <iframe id="iframe_box_updata"
                                 src={"http://192.168.50.186:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
                                 frameborder="0"></iframe>
                     </div>

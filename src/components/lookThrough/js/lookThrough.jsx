@@ -103,32 +103,30 @@ export default class lookThrough extends React.Component {
         });
     };
 
-
     scroll(e) {
         calm.setState({
             scrollTop: e.target.scrollTop
         })
-        // console.log(calm.state.scrollTop,"p")
     }
 
     /**
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type, index) {
-        console.log(calm.state.textareaValue, "calm.state.textareaValue")
+        setTimeout(() => {
+            $(".content").scrollTop(0)
+        },100)
         calm.setState({
             textareaValue: "",
             index: index
         }, () => {
             $(".updateModel").slideDown()
-            // $(".updateModel").show()
             $(".tagAddPanel_bg").show();
             console.log(calm.state.textareaValue, "calm.state.textareaValue")
         })
         calm.setState({
             isShow: false
         })
-
         calm.setState({
             id, type
         })
@@ -140,14 +138,6 @@ export default class lookThrough extends React.Component {
         } else if (type == 2) {
             calm.getDiscussInfoById(id)
         }
-        // var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: urlW
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = urlW;
-        // });
     }
 
     //tab栏切换事件
@@ -196,12 +186,12 @@ export default class lookThrough extends React.Component {
      */
     cancle() {
         $(".updateModel").slideUp()
-        if(calm.state.type == 1){
+        if (calm.state.type == 1) {
             $(".updateModel video")[0].pause()
             $(".updateModel video")[0].currentTime = 0;
         }
         $(".tagAddPanel_bg").hide();
-        
+
     }
 
 
@@ -502,6 +492,7 @@ export default class lookThrough extends React.Component {
         })
     }
     render() {
+       
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             // console.log(rowData,"rowData")
@@ -605,10 +596,10 @@ export default class lookThrough extends React.Component {
                         />
                     </div>
                 </Tabs>
-                <div className="updateModel" style={{display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
+                <div className="updateModel" style={{ display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
                     <div id="waitLookThrough">
                         {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                        <div className="content">
+                        <div className="content" ref="contentDOM">
                             {
                                 calm.state.type == 0 ?
                                     <div className="sameBack sameBackNew">

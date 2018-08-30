@@ -193,7 +193,8 @@ export default class leftVideoList extends React.Component {
     }
 
     openEditor(id) {
-        console.log('编辑小视频')
+        console.log('编辑小视频');
+        this.props.submitForvideo('编辑', id)
     }
 
     deleteLittleVideoInfoByType(id) {

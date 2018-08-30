@@ -11,6 +11,7 @@ export default class rightVideoUpload extends React.Component {
         this.state = {
             writeFlag: false,
             userId: loginUser.uid,
+            vId:null,
             // user:JSON.parse(sessionStorage.getItem("loginUser"))
         };
     }
@@ -36,6 +37,29 @@ export default class rightVideoUpload extends React.Component {
         })
     }
 
+    //接受来自list => appSystem 的消息
+    accept(type, data) {
+        switch (type) {
+            case "编辑":
+                console.log(data);
+                this.setState({
+                    writeFlag:true,
+                    vId: data,
+                });
+                break;
+            case "删除":
+                if (data == this.state.artId) {
+                    this.setState({
+                        writeFlag: false,
+                        vId: null,
+                    })
+                } else {
+                    console.log('删除的不是编辑状态的');
+                }
+                break;
+        }
+    }
+
 
     render() {
         return (
@@ -45,7 +69,16 @@ export default class rightVideoUpload extends React.Component {
                 </div>
 
                 <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
-                    <iframe id="iframe_box" src={"http://192.168.50.186:8094/#/addUploadVideo?ident="+this.state.userId} frameborder="0"></iframe>
+                    <div style={
+                        this.state.vId?{display:'none'}:{display:'block'}
+                    }>
+                        <iframe id="iframe_box" src={"http://192.168.50.186:8094/#/addUploadVideo?ident="+this.state.userId} frameborder="0"></iframe>
+                    </div>
+                    <div style={
+                        this.state.vId?{display:'block'}:{display:'none'}
+                    }>
+                        <iframe id="iframe_box" src={"http://192.168.50.186:8094/#/updateVideo?ident="+this.state.userId+"&vId="+this.state.vId} frameborder="0"></iframe>
+                    </div>
                 </div>
 
 

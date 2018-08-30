@@ -38,6 +38,10 @@ export default class AppSystem extends React.Component {
         this.refs.listByNoom.accept(type, id)
     }
 
+    submitForvideo = (type,id) =>{
+        this.refs.appSystemToVideo.accept(type,id)
+    }
+
     submitForList = (type, data) => {
         console.log(data, 'in AppSystem');
         this.refs.listToReadPanel.accept(type, data)
@@ -161,14 +165,14 @@ export default class AppSystem extends React.Component {
                     <div id='main'>
                         <div className="left">
                             <LeftVideoList
-                                // ref='listByNoom'
-                                // submit={this.submitForList}
+                                 ref='listByVideo'
+                                 submitForvideo={this.submitForvideo}
                             />
                         </div>
                         <div className="right" style={{height: this.state.clientHeight - 54}}>
                             <RightVideoUpload
                                 // submit={this.submit}
-                                // ref='listToReadPanel'
+                                ref='appSystemToVideo'
                                 // setPanel={this.setPanel}
                             />
                         </div>

@@ -103,32 +103,30 @@ export default class lookThrough extends React.Component {
         });
     };
 
-
     scroll(e) {
         calm.setState({
             scrollTop: e.target.scrollTop
         })
-        // console.log(calm.state.scrollTop,"p")
     }
 
     /**
     * 跳转未审核页面
     */
     toWaitLookThrough(id, type, index) {
-        console.log(calm.state.textareaValue, "calm.state.textareaValue")
+        setTimeout(() => {
+            $(".content").scrollTop(0)
+        },100)
         calm.setState({
             textareaValue: "",
             index: index
         }, () => {
             $(".updateModel").slideDown()
-            // $(".updateModel").show()
             $(".tagAddPanel_bg").show();
             console.log(calm.state.textareaValue, "calm.state.textareaValue")
         })
         calm.setState({
             isShow: false
         })
-
         calm.setState({
             id, type
         })
@@ -140,14 +138,6 @@ export default class lookThrough extends React.Component {
         } else if (type == 2) {
             calm.getDiscussInfoById(id)
         }
-        // var urlW = encodeURI(WebServiceUtil.mobileServiceURL + "WaitlookThroughDetail?id=" + id + "&type=" + type + "&auditorId=" + calm.state.auditorId);
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: urlW
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = urlW;
-        // });
     }
 
     //tab栏切换事件
@@ -185,29 +175,23 @@ export default class lookThrough extends React.Component {
             })
         }
     }
-    /**
-     * 点击确定
-     */
-    sure() {
-
-    }
+   
     /**
      * 点击取消
      */
     cancle() {
         $(".updateModel").slideUp()
-        if(calm.state.type == 1){
+        if (calm.state.type == 1) {
             $(".updateModel video")[0].pause()
             $(".updateModel video")[0].currentTime = 0;
         }
         $(".tagAddPanel_bg").hide();
-        
+
     }
 
 
 
     //--------//
-
     //监听窗口改变时间
     onWindwoResize() {
         // this
@@ -393,18 +377,6 @@ export default class lookThrough extends React.Component {
         var param;
         //小视频
         if (calm.state.type == 0) {
-            // if(calm.state.isPass == ""){
-            //     Toast.info("1")
-            //     return
-            // }
-            // if(calm.state.isPass == "" && calm.state.isTop == ""){
-            //     Toast.info("2")
-            //     return
-            // }
-            // if(calm.state.isPass == 1 && calm.state.isTop == ""){
-            //     Toast.info("3")
-            //     return
-            // }
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -418,18 +390,6 @@ export default class lookThrough extends React.Component {
                 },
             };
         } else if (calm.state.type == 1) {
-            // if(calm.state.isPass == ""){
-            //     Toast.info("1111111")
-            //     return
-            // }
-            // if(calm.state.isPass == "" && calm.state.isRec == ""){
-            //     Toast.info("2222222")
-            //     return
-            // }
-            // if(calm.state.isPass == 1 && calm.state.isRec == ""){
-            //     Toast.info("333")
-            //     return
-            // }
 
             param = {
                 "method": 'saveAuditInfo',
@@ -443,10 +403,6 @@ export default class lookThrough extends React.Component {
                 },
             };
         } else if (calm.state.type == 2) {
-            // if(calm.state.isPass == ""){
-            //     Toast.info("bububu")
-            //     return
-            // }
             param = {
                 "method": 'saveAuditInfo',
                 "auditInfoJson": {
@@ -462,7 +418,7 @@ export default class lookThrough extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result))
                 if (result.success) {
-                    Toast.success('成功');
+                    Toast.success("成功", 1, "", false)
                     $(".updateModel").slideUp();
                     // $(".updateModel").hide();
                     $(".tagAddPanel_bg").hide();
@@ -502,6 +458,7 @@ export default class lookThrough extends React.Component {
         })
     }
     render() {
+       
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             // console.log(rowData,"rowData")
@@ -523,7 +480,7 @@ export default class lookThrough extends React.Component {
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type)}>
+                                <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type,rowID)}>
                                     <img className='photo' src={rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.avatar : ""} alt="" />
                                     <div className='right'>
                                         <div className="topMsg my_flex">
@@ -538,7 +495,7 @@ export default class lookThrough extends React.Component {
                                 </div>
                                 :
                                 rowData.discussInfo ?
-                                    <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type)}>
+                                    <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type,rowID)}>
                                         <img className='photo' src={rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.avatar : ""} alt="" />
                                         <div className='right'>
                                             <div className="topMsg my_flex">
@@ -605,10 +562,10 @@ export default class lookThrough extends React.Component {
                         />
                     </div>
                 </Tabs>
-                <div className="updateModel" style={{display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
+                <div className="updateModel" style={{ display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
                     <div id="waitLookThrough">
                         {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                        <div className="content">
+                        <div className="content" ref="contentDOM">
                             {
                                 calm.state.type == 0 ?
                                     <div className="sameBack sameBackNew">
@@ -687,7 +644,7 @@ export default class lookThrough extends React.Component {
                                         </div>
                                         <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                             <div className="isDangerArea">
-                                                <List renderHeader={() => '审核：'}>
+                                                <List className="line_public" renderHeader={() => '审核：'}>
                                                     {data2.map(i => (
                                                         <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
                                                             {i.label}
@@ -760,7 +717,7 @@ export default class lookThrough extends React.Component {
                                             </div>
                                             <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                                 <div className="isDangerArea priority">
-                                                    <List renderHeader={() => '审核：'}>
+                                                    <List className="line_public"  renderHeader={() => '审核：'}>
                                                         {data2.map(i => (
                                                             <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
                                                                 {i.label}
@@ -820,7 +777,7 @@ export default class lookThrough extends React.Component {
                                                         </div>
                                                         <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                                             <div className="isDangerArea">
-                                                                <List renderHeader={() => '审核：'}>
+                                                                <List className="line_public"  renderHeader={() => '审核：'}>
                                                                     {data2.map(i => (
                                                                         <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
                                                                             {i.label}
@@ -849,9 +806,6 @@ export default class lookThrough extends React.Component {
                                             :
                                             ""
                             }
-                            {/* <div className="submitBtn noPosition" style={{ marginTop: 40 }}>
-                        <Button type='warning' onClick={_this.submit}>提交</Button>
-                    </div> */}
                         </div>
                     </div>
                     <div className="bottomBox">

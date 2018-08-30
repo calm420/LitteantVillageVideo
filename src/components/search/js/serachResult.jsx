@@ -181,7 +181,7 @@ export default class serachResult extends React.Component {
         //     window.location.href = url;
         // });
         var data = {
-            method: 'finish',
+            method: 'finishForRefresh',
         };
 
         Bridge.callHandler(data, null, function (error) {

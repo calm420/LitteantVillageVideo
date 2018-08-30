@@ -601,13 +601,19 @@ export default class updateVideo extends React.Component {
                 }
             }
         })
+        if(obj.firstUrl.length == 0 || obj.width.length == 0 || obj.height.length == 0){
+            Toast.info("视频参数错误，请重新上传")
+            return 
+        }
+        if(obj.videoContent.length == 0){
+            Toast.info("心情描述不能为空")
+            return
+        }
         var param = {
             "method": 'updateLittleVideoInfo',
             "videoId": calm.state.vid,
             "videoDatas": obj,
         };
-
-        console.log(param)
 
 
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

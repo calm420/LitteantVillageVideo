@@ -304,6 +304,10 @@ export default class alreadyLookThough extends React.Component {
                     Toast.success("成功", 1, "", false)
                     $(".updateModel").slideUp();
                     $(".tagAddPanel_bg").hide();
+                    if (calm.state.type == 1) {
+                        $(".updateModel video")[0].pause()
+                        $(".updateModel video")[0].currentTime = 0;
+                    }
                     calm.initDataSource.forEach((v,i)=>{
                         if(calm.state.index == i){
                             v.auditInfo.isPass = calm.state.isPass;

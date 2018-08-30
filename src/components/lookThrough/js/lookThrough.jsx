@@ -422,6 +422,10 @@ export default class lookThrough extends React.Component {
                     $(".updateModel").slideUp();
                     // $(".updateModel").hide();
                     $(".tagAddPanel_bg").hide();
+                    if (calm.state.type == 1) {
+                        $(".updateModel video")[0].pause()
+                        $(".updateModel video")[0].currentTime = 0;
+                    }
                     calm.setState({
                         initDataSource: calm.initDataSource.splice(calm.state.index, 1)
                     })

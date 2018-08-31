@@ -149,7 +149,7 @@ export default class addUploadVideo extends React.Component {
         });
     }
 
-    getImage(i){
+    getImage(i) {
         $('#upload_image_').bind('change', function (evt) {
             // var newFile = getFileURL(document.getElementById('upload_video_').files[0])
             console.log($('#upload_image_').val(), "evt")
@@ -194,8 +194,8 @@ export default class addUploadVideo extends React.Component {
                         console.log(res, "res")
                         calm.state.addVideoList[i].coverPath = res;
                         calm.buildAddList();
-                        calm.upload_video_pic(i)
-                        calm.buildAddList()
+                        // calm.upload_video_pic(i)
+                        // calm.buildAddList()
                         //返回在线图片地址
                     }
                 });
@@ -450,16 +450,19 @@ export default class addUploadVideo extends React.Component {
                         <span className="uploadSupport">(jpg格式)</span>
                     </span>
                     {calm.state.addVideoList[i].coverPath.length == 0 ?
-                        <div>
+                        <div className="parentDiv">
                             <button className="uploadBtn" onClick={calm.uploadImage.bind(this, i)}>上传封面</button>
-                            <input name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
+                            <input className="calm40" name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
                         </div>
                         // accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
                         :
                         <div className="upload_file">
                             <img onClick={calm.imgPreview.bind(this, calm.state.addVideoList[i].coverPath)}
                                 className="imgTag" src={calm.state.addVideoList[i].coverPath} />
-                            <div className="icon_pointer" onClick={calm.uploadImage.bind(this, i)}>更换</div>
+                            <div>
+                                <div className="icon_pointer" onClick={calm.uploadImage.bind(this, i)}>更换</div>
+                                <input name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
+                            </div>
                         </div>
                     }
 
@@ -471,9 +474,9 @@ export default class addUploadVideo extends React.Component {
                         <span className="uploadSupport">(MP4格式)</span>
                     </span>
                     {calm.state.addVideoList[i].videoUrl.length == 0 ?
-                        <div>
+                        <div className="parentDiv">
                             <button className="uploadBtn" onClick={calm.getIndex.bind(this, i)}>上传视频</button>
-                            <input name="upload_video_" id="upload_video_" onClick={calm.getIndex.bind(this, i)} type="file" accept="video/*" class="hidd" />
+                            <input className="calm40" name="upload_video_" id="upload_video_" onClick={calm.getIndex.bind(this, i)} type="file" accept="video/*" class="hidd" />
                         </div>
                         :
                         <div className="upload_file">
@@ -482,7 +485,10 @@ export default class addUploadVideo extends React.Component {
                                 src={calm.state.addVideoList[i].videoUrl}></video>
                             {/* <div
                                 className="musicIcon" /> */}
-                            <div className="icon_pointer" onClick={calm.uploadMp4.bind(this, i)}>更换</div>
+                            <div>
+                                <div className="icon_pointer" onClick={calm.uploadMp4.bind(this, i)}>更换</div>
+                                <input name="upload_video_" id="upload_video_" onClick={calm.getIndex.bind(this, i)} type="file" accept="video/*" class="hidd" />
+                            </div>
                         </div>
 
                     }

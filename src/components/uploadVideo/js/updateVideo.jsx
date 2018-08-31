@@ -591,7 +591,8 @@ export default class updateVideo extends React.Component {
                 {
                     tagTitle: calm.state.cheData.label,
                     tagType: 2,   //挑战
-                    tagContent: calm.state.cheData.extra
+                    tagContent: calm.state.cheData.extra,
+                    tagId:calm.state.cheData.value
                 },
             ]
         }

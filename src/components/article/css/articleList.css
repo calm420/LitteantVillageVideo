@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #articleList {
   position: relative;
   /*解决listview高度无法撑开的关键*/
@@ -270,4 +271,42 @@
 #articleList .initImage img {
   max-width: 100%;
   max-height: 100%;
+}
+@media only screen and (min-width: 767px) {
+  #articleList .rightBox {
+    height: 105px;
+  }
+  #articleList .title.minHeight {
+    min-height: 82px;
+  }
+  #articleList .images {
+    overflow: hidden;
+  }
+  #articleList .images img {
+    display: inline-block;
+    width: 96px;
+    height: 105px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding-right: 5px;
+  }
+  #articleList .images .imageDiv {
+    float: left;
+    width: 33.3%;
+    height: 105px;
+    margin-bottom: 10px;
+    padding-right: 5px;
+    box-sizing: border-box;
+  }
+}
+#articleList .icon-release {
+  background: url(../images/icon-release.png) no-repeat;
+  background-size: 100% 100%;
+  width: 18px;
+  height: 27px;
+  display: inline-block;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  z-index: 10;
 }

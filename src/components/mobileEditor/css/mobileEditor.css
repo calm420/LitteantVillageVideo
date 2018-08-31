@@ -1,4 +1,16 @@
+(node) util.print is deprecated. Use console.log instead.
+body {
+  overflow: hidden;
+}
+#mobileEditor {
+  overflow: hidden;
+  height: 100%;
+}
 #iframe_mobile {
   width: 100%;
   height: 100vh;
+}
+.mobile-iframe {
+  border: none;
+  width: 100%;
 }

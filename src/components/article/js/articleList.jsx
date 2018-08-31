@@ -649,7 +649,7 @@ export default class articleList extends React.Component {
                     <span className='btn' onClick={this.toPerfectInfo}>完善资料</span>
                     {/*<span>完善资料</span>*/}
                 </div>
-                <div onClick={this.publishArt}>发</div>
+                <div onClick={this.publishArt} className="icon-release"></div>
                 <Tabs tabs={tabs}
                       initalPage={0}
                       swipeable={false}

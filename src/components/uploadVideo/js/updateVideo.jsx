@@ -618,11 +618,6 @@ export default class updateVideo extends React.Component {
             "videoDatas": obj,
         };
 
-<<<<<<< HEAD
-
-=======
-        console.log(param)
->>>>>>> v1.0.3
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {

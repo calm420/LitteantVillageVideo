@@ -38,50 +38,51 @@ export default class leftVideoList extends React.Component {
     componentWillMount() {
         // this.getListData(0)
         //获取小视频发布列表
-        this.getListData(1)
+        this.getListData(1);
+        this.getListData(0);
     }
 
     accept(type, id) {
         console.log(type, 'TYPE!!!!!!!!');
         switch (type) {
-            case "init":
-                this.setState({
-                    tabsIndex: 1,
-                    editorId: id
-                }, () => {
-                    // // console.log(this.state.tabsIndex)
-                    // this.getListData(0); //获取草稿箱列表
-                    // this.getListData(1); //获取发布列表
-                    this.refresh(this.state.tabsIndex);
-                });
-                break;
-            case 1:
-                this.setState({
-                    tabsIndex: 1,
-                    editorId: null
-                }, () => {
-                    // this.getListData(0); //获取草稿箱列表
-                    // this.getListData(1); //获取发布列表
-                    this.refresh(this.state.tabsIndex);
-                });
-                break;
-            case 0:
-                this.setState({
-                    tabsIndex: 0,
-                    editorId: null,
-                }, () => {
-                    // this.getListData(0); //获取草稿箱列表
-                    // this.getListData(1); //获取发布列表
-                    this.refresh(this.state.tabsIndex);
-                })
-                break;
-            case 'exit_editor':
-                this.setState({
-                    editorId: null,
-                }, () => {
-                    this.refresh(this.state.tabsIndex);
-                });
-                break;
+            // case "init":
+            //     this.setState({
+            //         tabsIndex: 1,
+            //         editorId: id
+            //     }, () => {
+            //         // // console.log(this.state.tabsIndex)
+            //         // this.getListData(0); //获取草稿箱列表
+            //         // this.getListData(1); //获取发布列表
+            //         this.refresh(this.state.tabsIndex);
+            //     });
+            //     break;
+            // case 1:
+            //     this.setState({
+            //         tabsIndex: 1,
+            //         editorId: null
+            //     }, () => {
+            //         // this.getListData(0); //获取草稿箱列表
+            //         // this.getListData(1); //获取发布列表
+            //         this.refresh(this.state.tabsIndex);
+            //     });
+            //     break;
+            // case 0:
+            //     this.setState({
+            //         tabsIndex: 0,
+            //         editorId: null,
+            //     }, () => {
+            //         // this.getListData(0); //获取草稿箱列表
+            //         // this.getListData(1); //获取发布列表
+            //         this.refresh(this.state.tabsIndex);
+            //     })
+            //     break;
+            // case 'exit_editor':
+            //     this.setState({
+            //         editorId: null,
+            //     }, () => {
+            //         this.refresh(this.state.tabsIndex);
+            //     });
+            //     break;
             case 'refresh':
                 this.refresh(this.state.tabsIndex);
                 break;
@@ -94,7 +95,7 @@ export default class leftVideoList extends React.Component {
             "method": 'getUserVideoListByStatus',
             "userId": JSON.parse(sessionStorage.getItem("loginUser")).uid,
             // "userId": 19,
-            "status": 1,  //已发布  0 草稿
+            "status": type,  //已发布  0 草稿
             pageNo: '-1'
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

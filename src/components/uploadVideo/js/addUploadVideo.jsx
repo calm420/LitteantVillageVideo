@@ -637,15 +637,22 @@ export default class addUploadVideo extends React.Component {
         this.buildAddList()
     }
 
+
+    //取消编辑
+    cancelEditor(){
+        console.log('取消编辑');
+    }
+
     /**
      * 保存视频信息
      */
-    batchLittleVideoInfo() {
+    batchLittleVideoInfo(type) {
+        console.log(type,'in upload type');
         var newArr = []
         calm.state.addVideoList.forEach(function (v, i) {
             if ($.isEmptyObject(v.cheData)) {
                 newArr.push({
-                    status: 1,
+                    status: type,
                     coverPath: v.coverPath,
                     videoPath: v.videoUrl,
                     firstUrl: v.firstUrl,
@@ -658,7 +665,7 @@ export default class addUploadVideo extends React.Component {
                 })
             } else {
                 newArr.push({
-                    status: 1,
+                    status: type,
                     coverPath: v.coverPath,
                     videoPath: v.videoUrl,
                     firstUrl: v.firstUrl,
@@ -698,12 +705,14 @@ export default class addUploadVideo extends React.Component {
                     // });
                     var data = {};
                     data.method = '发布成功';
+                    data.type = type;
                     window.parent.postMessage(JSON.stringify(data), '*');
                     window.location.reload();
                 }
             },
             onError: function (error) {
                 // message.error(error);
+                Toast.fail(type == 0?'保存失败':'发布失败');
             }
         });
     }
@@ -1070,7 +1079,9 @@ export default class addUploadVideo extends React.Component {
                     </div>
                 </div>
                 <div className='submitBtn'>
-                    <Button type="warning" onClick={this.batchLittleVideoInfo}>提交</Button>
+                    <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this,1)}>提交</Button>
+                    <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this,0)}>保存</Button>
+                    <Button type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</Button>
                 </div>
             </div>
         );

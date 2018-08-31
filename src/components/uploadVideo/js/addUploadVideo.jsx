@@ -408,7 +408,7 @@ export default class addUploadVideo extends React.Component {
             var useIndex = i;
             arr.push(<div className="listCont">
                 {/*删除按钮*/}
-                <div className="icon_delete" onClick={calm.showListAlert.bind(this, i)}
+                <div className="icon_delete icon_pointer" onClick={calm.showListAlert.bind(this, i)}
                     style={{ display: listArr.length == 1 ? 'none' : 'block' }}></div>
                 <div className="my_flex sameBack">
                     <span className="textTitle">封面
@@ -989,7 +989,9 @@ export default class addUploadVideo extends React.Component {
     render() {
         return (
             <div id="addUploadVideo">
-            <div className="header"><span  onClick={this.cancelEditor.bind(this)}>返回</span><span className="addVideo">添加视频</span> </div>
+           {/* <div className="header"><span  onClick={this.cancelEditor.bind(this)}>返回</span><span className="addVideo">添加视频</span> </div>*/}
+           <div className="articleEditorCont">
+               <div className="videoContent editor_boxlist">
                 <div id="progress" style={{ display: "none" }}>
                     <div className="progress">
                         <div className="progress-bar" style={{ width: "0%" }}></div>
@@ -998,7 +1000,7 @@ export default class addUploadVideo extends React.Component {
                 </div>
                 <div className="addList">
                     {this.state.addListArr}
-                    <div className="addBtn sameBack" onClick={this.addList}>
+                    <div className="addBtn sameBack icon_pointer" onClick={this.addList}>
                         <span>添加视频<Icon type="plus" /></span>
                     </div>
                 </div>
@@ -1079,10 +1081,12 @@ export default class addUploadVideo extends React.Component {
                         <span className="bind" onClick={calm.submitChaArr}>确 定</span>
                     </div>
                 </div>
-                <div className='submitBtn'>
-                    <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this, 1)}>提交</Button>
-                    <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this, 0)}>保存</Button>
-                    {/* <Button type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</Button> */}
+               </div>
+           </div>
+                <div className='bottom_nav'>
+                    <a className="button_btn preview_button button_btnLeft" type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</a>
+                    <a className="button_btn preview_button" type="warning" onClick={this.batchLittleVideoInfo.bind(this, 0)}>保存</a>
+                    <a className="button_btn submit_button" type="warning" onClick={this.batchLittleVideoInfo.bind(this, 1)}>提交</a>
                 </div>
 
             </div>

@@ -39,7 +39,7 @@ export default class rightVideoUpload extends React.Component {
                 _this.setState({
                     writeFlag: false,
                 })
-                Toast.info('发布成功',1);
+                Toast.info(iframeData.type == 0?'保存成功':'发布成功',1);
                 this.props.submitInVideo('refresh');
                 break;
         }

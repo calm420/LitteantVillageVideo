@@ -804,9 +804,9 @@ export default class updateVideo extends React.Component {
                                 <span className="uploadSupport">(jpg格式)</span>
                             </span>
                             {calm.state.coverPath.length == 0 ?
-                                <div>
+                                <div className="parentDiv">
                                     <button className="uploadBtn" onClick={calm.uploadImage.bind(this)}>上传封面</button>
-                                    <input name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
+                                    <input className="calm40" name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
                                 </div>
                                 :
                                 <div className="upload_file">
@@ -814,7 +814,7 @@ export default class updateVideo extends React.Component {
                                         className="imgTag" src={calm.state.coverPath} />
                                     <div>
                                         <div className="icon_pointer" onClick={calm.getImage.bind(this)}>更换</div>
-                                        <input name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
+                                        <input className="calm20" name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
                                     </div>
                                 </div>
                             }
@@ -827,9 +827,9 @@ export default class updateVideo extends React.Component {
                                 <span className="uploadSupport">(MP4格式)</span>
                             </span>
                             {calm.state.videoUrl.length == 0 ?
-                                <div>
+                                <div className="parentDiv">
                                     <button className="uploadBtn" onClick={calm.uploadMp4.bind(this)}>上传视频</button>
-                                    <input name="upload_video_" id="upload_video_" onClick={calm.getIndex} type="file" accept="video/*" class="hidd" />
+                                    <input className="calm40"  name="upload_video_" id="upload_video_" onClick={calm.getIndex} type="file" accept="video/*" class="hidd" />
                                 </div>
                                 :
                                 <div className="upload_file">
@@ -840,7 +840,7 @@ export default class updateVideo extends React.Component {
                                     className="musicIcon" /> */}
                                     <div>
                                         <div className="icon_pointer" onClick={calm.getIndex.bind(this)}>修改</div>
-                                        <input name="upload_video_" id="upload_video_" onClick={calm.getIndex} type="file" accept="video/*" class="hidd" />
+                                        <input className="calm20" name="upload_video_" id="upload_video_" onClick={calm.getIndex} type="file" accept="video/*" class="hidd" />
                                     </div>
                                 </div>
 

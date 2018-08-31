@@ -461,7 +461,7 @@ export default class addUploadVideo extends React.Component {
                                 className="imgTag" src={calm.state.addVideoList[i].coverPath} />
                             <div>
                                 <div className="icon_pointer" onClick={calm.uploadImage.bind(this, i)}>更换</div>
-                                <input name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
+                                <input className="calm20"  name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
                             </div>
                         </div>
                     }
@@ -487,7 +487,7 @@ export default class addUploadVideo extends React.Component {
                                 className="musicIcon" /> */}
                             <div>
                                 <div className="icon_pointer" onClick={calm.uploadMp4.bind(this, i)}>更换</div>
-                                <input name="upload_video_" id="upload_video_" onClick={calm.getIndex.bind(this, i)} type="file" accept="video/*" class="hidd" />
+                                <input className="calm20" name="upload_video_" id="upload_video_" onClick={calm.getIndex.bind(this, i)} type="file" accept="video/*" class="hidd" />
                             </div>
                         </div>
 

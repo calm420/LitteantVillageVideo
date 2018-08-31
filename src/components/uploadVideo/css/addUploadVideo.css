@@ -1,6 +1,19 @@
 #addUploadVideo {
   height: 100% !important;
 }
+#addUploadVideo .parentDiv {
+  position: relative;
+}
+#addUploadVideo .calm40 {
+  display: inline-block;
+  overflow: hidden;
+  opacity: 0;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 #addUploadVideo .preIcon {
   color: #EDB74A;
   padding-right: 5px;

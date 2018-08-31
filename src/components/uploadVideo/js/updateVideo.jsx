@@ -48,7 +48,13 @@ export default class updateVideo extends React.Component {
         calm.setState({
             vid
         })
-        calm.getLittleVideoById(vid)
+        calm.getLittleVideoById(vid);
+        window.addEventListener('message', (e) => {
+            console.log(e, '编辑时候的e');
+            if (e.data == 'refresh') {
+                window.location.reload();
+            }
+        })
     }
     /**
      * 根据视频ID获取视频对象
@@ -66,12 +72,13 @@ export default class updateVideo extends React.Component {
                             show: false
                         })
                     }
+                    console.log(result, 'lidonglidonglodong');
                     calm.setState({
                         coverPath: result.response.coverPath,
                         videoUrl: result.response.videoPath,
                         firstUrl: result.response.firstUrl,
-                        width:result.response.width,
-                        height:result.response.height,
+                        width: result.response.width,
+                        height: result.response.height,
                         videoContent: result.response.videoContent,
                         videoType: result.response.videoType,
                         initType: result.response.videoType
@@ -490,10 +497,8 @@ export default class updateVideo extends React.Component {
         // }
         //ｖｉｄｅｏ标签
         video = document.getElementsByClassName("upload_box_video")[0];//赋值标签
-        console.log(video, "ahahah")
         video.setAttribute("crossOrigin", 'Anonymous');
         video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
-            console.log("执行了")
             var canvas = document.createElement('canvas');//canvas画布
             canvas.width = video.videoWidth * scale;
             canvas.height = video.videoHeight * scale;
@@ -502,10 +507,8 @@ export default class updateVideo extends React.Component {
             var $Blob = calm.getBlobBydataURI(image, 'image/jpeg');
             var formData = new FormData();
             formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
-            console.log(video.videoWidth, "video.videoWidth")
             calm.state.width = video.videoWidth;
             calm.state.height = video.videoHeight;
-            console.log(video.videoHeight, "video.videoHeight")
             $.ajax({
                 type: "POST",
                 url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
@@ -579,8 +582,8 @@ export default class updateVideo extends React.Component {
             coverPath: calm.state.coverPath,
             videoPath: calm.state.videoUrl,
             firstUrl: calm.state.firstUrl,
-            width:calm.state.width,
-            height:calm.state.height,
+            width: calm.state.width,
+            height: calm.state.height,
             videoType: calm.state.videoType,   // 视频类型0:普通视频 1:话题/挑战视频 2:广告视频 非空
             userId: calm.state.uid,
             videoContent: calm.state.videoContent,   // 心情描述 
@@ -615,18 +618,28 @@ export default class updateVideo extends React.Component {
             "videoDatas": obj,
         };
 
+<<<<<<< HEAD
 
+=======
+        console.log(param)
+>>>>>>> v1.0.3
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
-                    Toast.success('成功');
-                    // 关闭当前窗口，并刷新上一个页面
-                    var data = {
-                        method: 'finishForRefresh',
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                        console.log(error);
-                    });
+                    // Toast.success('成功');
+                    // // 关闭当前窗口，并刷新上一个页面
+                    // var data = {
+                    //     method: 'finishForRefresh',
+                    // };
+                    // Bridge.callHandler(data, null, function (error) {
+                    //     console.log(error);
+                    // });
+
+                    var data = {};
+                    data.method = '编辑成功';
+                    data.type = 3;
+                    window.parent.postMessage(JSON.stringify(data), '*');
+                    window.location.reload();
                 }
             },
             onError: function (error) {
@@ -635,9 +648,123 @@ export default class updateVideo extends React.Component {
         });
     }
 
+    /**
+     * 获取图片在线路径
+     */
+    getImage() {
+        $('#upload_video_').unbind("change");
+        $('#upload_image_').bind('change', function (evt) {
+            if (document.getElementById('upload_image_').files[0]) {
+                var formData = new FormData();
+                formData.append("file" + 0, document.getElementById('upload_image_').files[0]);
+                formData.append("name" + 0, document.getElementById('upload_image_').files[0].name);
+                $.ajax({
+                    type: "POST",
+                    url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    // 告诉jQuery不要去处理发送的数据
+                    processData: false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType: false,
+                    xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                        var xhr = jQuery.ajaxSettings.xhr();
+                        xhr.upload.onload = function () {
+                            console.log('上传完成隐藏进度条');
+                            $('.progressText').text('上传完成')
+                            setTimeout(function () {
+                                $('#progress')[0].style.display = 'none';
+                                $('.progress-bar')[0].style.width = '0%';
+                                $('.progressText').text('进度: 0%');
+                            }, 500);
+                        };
+                        xhr.upload.onprogress = function (ev) {
+                            if ($('#progress')[0].style.display == 'none') {
+                                $('#progress')[0].style.display = 'block';
+                            } else {
+                                // console.log(((ev.loaded / ev.total) * 100).toFixed(0) + '%', 'ev');
+                                //显示进度条
+                                $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
+                                $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
+                            }
+                        };
+                        return xhr;
+                    },
+                    success: function (res) {
+                        calm.setState({
+                            coverPath: res
+                        })
+
+                    }
+                });
+            }
+
+        });
+    }
+
+    /**
+     * 获取视频在线路径
+     */
+    getVideo() {
+        $('#upload_video_').unbind("change");
+        $('#upload_video_').bind('change', function (evt) {
+            if (document.getElementById('upload_video_').files[0]) {
+                var formData = new FormData();
+                formData.append("file" + 0, document.getElementById('upload_video_').files[0]);
+                formData.append("name" + 0, document.getElementById('upload_video_').files[0].name);
+                $.ajax({
+                    type: "POST",
+                    url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    // 告诉jQuery不要去处理发送的数据
+                    processData: false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType: false,
+                    xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                        var xhr = jQuery.ajaxSettings.xhr();
+                        xhr.upload.onload = function () {
+                            console.log('上传完成隐藏进度条');
+                            $('.progressText').text('上传完成')
+                            setTimeout(function () {
+                                $('#progress')[0].style.display = 'none';
+                                $('.progress-bar')[0].style.width = '0%';
+                                $('.progressText').text('进度: 0%');
+                            }, 500);
+                        };
+                        xhr.upload.onprogress = function (ev) {
+                            if ($('#progress')[0].style.display == 'none') {
+                                $('#progress')[0].style.display = 'block';
+                            } else {
+                                // console.log(((ev.loaded / ev.total) * 100).toFixed(0) + '%', 'ev');
+                                //显示进度条
+                                $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
+                                $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
+                            }
+                        };
+                        return xhr;
+                    },
+                    success: function (res) {
+                        calm.setState({
+                            videoUrl: res
+                        })
+                        calm.upload_video_pic();
+                        //返回在线图片地址
+                    }
+                });
+            }
+
+        });
+    }
     render() {
         return (
             <div id="addUploadVideo">
+                <div id="progress" style={{ display: "none" }}>
+                    <div className="progress">
+                        <div className="progress-bar" style={{ width: "0%" }}></div>
+                    </div>
+                    <div className="progressText">进度: 0%</div>
+                </div>
                 <div className="addList">
                     <div className="listCont">
                         <div className="my_flex sameBack">
@@ -646,12 +773,18 @@ export default class updateVideo extends React.Component {
                                 <span className="uploadSupport">(jpg格式)</span>
                             </span>
                             {calm.state.coverPath.length == 0 ?
-                                <button className="uploadBtn" onClick={calm.uploadImage.bind(this)}>上传封面</button>
+                                <div className="parentDiv">
+                                    <button className="uploadBtn">上传封面</button>
+                                    <input className="calm40" name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
+                                </div>
                                 :
                                 <div className="upload_file">
                                     <img onClick={calm.imgPreview.bind(this, calm.state.coverPath)}
                                         className="imgTag" src={calm.state.coverPath} />
-                                    <div className="icon_pointer" onClick={calm.uploadImage.bind(this)}>更换</div>
+                                    <div>
+                                        <div className="icon_pointer">更换</div>
+                                        <input className="calm20" name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
+                                    </div>
                                 </div>
                             }
 
@@ -663,7 +796,10 @@ export default class updateVideo extends React.Component {
                                 <span className="uploadSupport">(MP4格式)</span>
                             </span>
                             {calm.state.videoUrl.length == 0 ?
-                                <button className="uploadBtn" onClick={calm.uploadMp4.bind(this)}>上传视频</button>
+                                <div className="parentDiv">
+                                    <button className="uploadBtn">上传视频</button>
+                                    <input className="calm40" name="upload_video_" id="upload_video_" onClick={calm.getVideo} type="file" accept="video/*" class="hidd" />
+                                </div>
                                 :
                                 <div className="upload_file">
                                     <video className="upload_box_video"
@@ -671,7 +807,10 @@ export default class updateVideo extends React.Component {
                                         src={calm.state.videoUrl}></video>
                                     {/* <div
                                     className="musicIcon" /> */}
-                                    <div className="icon_pointer" onClick={calm.uploadMp4.bind(this)}>修改</div>
+                                    <div>
+                                        <div className="icon_pointer">修改</div>
+                                        <input className="calm20" name="upload_video_" id="upload_video_" onClick={calm.getVideo} type="file" accept="video/*" class="hidd" />
+                                    </div>
                                 </div>
 
                             }

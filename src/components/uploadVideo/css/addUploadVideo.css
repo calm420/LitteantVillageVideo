@@ -1,5 +1,57 @@
 #addUploadVideo {
   height: 100% !important;
+  /*进度条 box*/
+  /*进度条*/
+  /*进度文本*/
+}
+#addUploadVideo .parentDiv {
+  position: relative;
+}
+#addUploadVideo .calm40 {
+  overflow: hidden;
+  opacity: 0;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#addUploadVideo .calm20 {
+  overflow: hidden;
+  opacity: 0;
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+#addUploadVideo .progress {
+  margin: 0;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 10px #ccc;
+}
+#addUploadVideo #progress {
+  width: 300px;
+  position: absolute;
+  top: 30%;
+  right: 40%;
+  z-index: 999;
+  height: 50px;
+}
+#addUploadVideo #progress .progress-bar {
+  height: 10px;
+}
+#addUploadVideo #progress .progress-bar {
+  background-color: #4380eb;
+}
+#addUploadVideo .progressText {
+  font-size: 14px;
+  color: #4380eb;
+}
+#addUploadVideo .progressText {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
 #addUploadVideo .parentDiv {
   position: relative;
@@ -287,7 +339,7 @@
   white-space: inherit;
 }
 #addUploadVideo .challenge .blueTxt {
-  color: #4285F4 ;
+  color: #4285F4;
   font-size: 15px;
   margin: 8px 0;
 }

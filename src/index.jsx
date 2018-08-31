@@ -188,6 +188,13 @@ const fileDownload = (location, cb) => {
     }, 'fileDownload')
 };
 
+//手机编辑器
+const mobileEditor = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/mobileEditor/js/mobileEditor').default)
+    }, 'mobileEditor')
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -276,6 +283,11 @@ class Index extends React.Component {
                             to="/fileDownload?fileType=elearning"
                             style={{fontSize: '24px'}}>文件下载elearning</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/mobileEditor?userId=31"
+                            style={{fontSize: '24px'}}>手机编辑器</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -317,6 +329,7 @@ ReactDOM.render(
             <Route path="accessManagement" getComponent={accessManagement}/>
             <Route path="playVideo" getComponent={playVideo}/>
             <Route path="fileDownload" getComponent={fileDownload}/>
+            <Route path="mobileEditor" getComponent={mobileEditor}/>
         </Route>
     </Router>
     ,

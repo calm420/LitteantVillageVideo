@@ -630,7 +630,7 @@ export default class updateVideo extends React.Component {
             "videoId": calm.state.vid,
             "videoDatas": obj,
         };
-        
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {

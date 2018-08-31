@@ -1,0 +1,181 @@
+(node) util.print is deprecated. Use console.log instead.
+#rightVideoUpload {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+#rightVideoUpload .click_head {
+  height: 52px;
+  box-shadow: 0 2px 3px 0 rgba(179, 179, 179, 0.5);
+  font-size: 14px;
+  color: #666;
+  line-height: 52px;
+}
+#rightVideoUpload .click_head a {
+  color: #4380EB;
+  font-size: 16px;
+  cursor: pointer;
+}
+#rightVideoUpload .headBox {
+  width: 100%;
+  height: 178px;
+  padding-top: 30px;
+}
+#rightVideoUpload .headBox .title {
+  width: calc(100% - 281px);
+  display: inline-block;
+  box-sizing: border-box;
+  float: left;
+  height: 174px;
+  background: #F5F6FA;
+}
+#rightVideoUpload .headBox .title .am-list-item {
+  background: transparent;
+}
+#rightVideoUpload .headBox .title .am-list-item .am-input-control input {
+  color: #333;
+  font-size: 24px;
+}
+#rightVideoUpload .headBox .title .am-list-item.am-input-item {
+  padding-top: 25px;
+  padding-left: 25px;
+  height: 149px;
+}
+#rightVideoUpload .headBox .title .am-list-item.am-list-item-middle .am-list-line {
+  align-items: flex-start;
+}
+#rightVideoUpload .headBox .image {
+  float: right;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 261px;
+  height: 174px;
+  background: #F5F6FA;
+}
+#rightVideoUpload .headBox .image .am-image-picker-list .am-image-picker-item .am-image-picker-item-content {
+  border-radius: 0;
+}
+#rightVideoUpload .headBox .image .am-image-picker {
+  height: 100%;
+}
+#rightVideoUpload .headBox .image .am-image-picker-list .am-image-picker-upload-btn {
+  background: url("../img/add_img.png") no-repeat;
+  width: 54px;
+  height: 54px;
+  margin: 0;
+  background-size: 100% 100%;
+  border: none;
+  cursor: pointer;
+}
+#rightVideoUpload .headBox .image .img_text {
+  padding: 0 40px;
+  color: #666;
+  line-height: 20px;
+}
+#rightVideoUpload .am-image-picker-list,
+#rightVideoUpload .am-image-picker-list .am-flexbox {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+#rightVideoUpload .am-image-picker {
+  position: relative;
+}
+#rightVideoUpload .am-flexbox {
+  display: block !important;
+}
+#rightVideoUpload .am-image-picker-list {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#rightVideoUpload .am-flexbox-item {
+  width: 100%;
+  height: 100%;
+}
+#rightVideoUpload .am-image-picker-list .am-image-picker-upload-btn input {
+  width: 100%;
+  cursor: pointer;
+}
+#rightVideoUpload .image .am-image-picker-list .am-image-picker-upload-btn {
+  left: 50%;
+  margin-left: -32px !important;
+}
+#rightVideoUpload .quill .ql-container.ql-snow {
+  min-height: calc(100vh - 470px);
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+#rightVideoUpload .quill .ql-editor {
+  font-size: 16px;
+  color: #333;
+  line-height: 23px;
+}
+#rightVideoUpload .ql-toolbar.ql-snow,
+#rightVideoUpload .ql-container.ql-snow {
+  background: #F5F6FA;
+  padding: 10px;
+  border: none;
+  margin-bottom: 10px;
+}
+#rightVideoUpload input::-webkit-input-placeholder,
+#rightVideoUpload textarea::-webkit-input-placeholder,
+#rightVideoUpload ReactQuill::-webkit-input-placeholder {
+  color: #999;
+}
+#rightVideoUpload input:-moz-placeholder,
+#rightVideoUpload textarea:-moz-placeholder,
+#rightVideoUpload ReactQuill:-moz-placeholder {
+  color: #999;
+}
+#rightVideoUpload input::-moz-placeholder,
+#rightVideoUpload textarea::-moz-placeholder,
+#rightVideoUpload ReactQuill::-moz-placeholder {
+  color: #999;
+}
+#rightVideoUpload input:-ms-input-placeholder,
+#rightVideoUpload textarea:-ms-input-placeholder,
+#rightVideoUpload ReactQuill:-ms-input-placeholder {
+  color: #999;
+}
+#rightVideoUpload .empty_draft {
+  background: url("../img/empty_draft.png") no-repeat;
+  width: 233px;
+  height: 200px;
+  background-size: 100% 100% ;
+  color: #999;
+}
+#rightVideoUpload .empty_draft span {
+  padding-top: 240px;
+  display: inline-block;
+  padding-left: 50px;
+}
+#rightVideoUpload .am-image-picker-list .am-image-picker-upload-btn:before,
+#rightVideoUpload .am-image-picker-list .am-image-picker-upload-btn:after {
+  background: transparent;
+}
+#rightVideoUpload .author {
+  background: #F5F6FA;
+  margin-top: 8px;
+}
+#rightVideoUpload .author .am-list-item.am-input-item {
+  background: #F5F6FA;
+}
+#rightVideoUpload .author .am-list-item.am-input-item .am-input-control input {
+  padding: 0 10px;
+}
+#rightVideoUpload .ql-editor.ql-blank::before {
+  font-style: normal;
+}
+#rightVideoUpload #iframe_box {
+  width: 100%;
+  height: 100vh;
+  border: none;
+}
+#rightVideoUpload #iframe_box_updata {
+  width: 100%;
+  height: 100vh;
+  border: none;
+}

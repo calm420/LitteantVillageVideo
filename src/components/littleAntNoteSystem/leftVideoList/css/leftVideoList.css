@@ -1,0 +1,150 @@
+(node) util.print is deprecated. Use console.log instead.
+#leftVideoList .am-list-body {
+  background: transparent;
+}
+#leftVideoList .row {
+  background: transparent;
+  border-bottom: 1px solid #E5E5E5 ;
+  padding: 15px;
+  color: #333;
+  text-align: left;
+}
+#leftVideoList .row .title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+#leftVideoList .row .title .title_text {
+  width: 160px;
+  display: inline-block;
+}
+#leftVideoList .row .title .title_state {
+  font-size: 12px;
+  width: 55px;
+  text-align: right;
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
+#leftVideoList .row .row_bottom {
+  font-size: 12px;
+}
+#leftVideoList .row .row_bottom .time {
+  display: inline-block;
+  text-align: left;
+  box-sizing: border-box;
+  padding-right: 50px;
+  font-family: Helvetica;
+}
+#leftVideoList .row .row_bottom .oper {
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  background: url("../img/menu_more.png") no-repeat;
+  width: 19px;
+  height: 8px;
+  background-size: 100% 100%;
+  border: none;
+  vertical-align: middle;
+  top: 3px;
+  float: right;
+  cursor: pointer;
+}
+#leftVideoList .row .row_bottom .oper .operBox {
+  width: 96px;
+  position: absolute;
+  top: 15px;
+  left: 100%;
+  background: white;
+  -webkit-transform: translate(-100%, 0%);
+  -ms-transform: translate(-100%, 0%);
+  transform: translate(-100%, 0%);
+  text-align: center;
+  z-index: 1;
+  box-shadow: 0 2px 4px 0 #DADFF7;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+#leftVideoList .row .row_bottom .oper .operBox .operBox_row {
+  padding: 10px 0px;
+  border-bottom: 1px solid #eee;
+}
+#leftVideoList .row .row_bottom .oper .operBox .operBox_row i {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 10px;
+}
+#leftVideoList .row .row_bottom .oper .operBox .operBox_row .menu_del {
+  background: url("../img/menu_del.png") no-repeat;
+  background-size: 100% 100%;
+}
+#leftVideoList .row .row_bottom .oper .operBox .operBox_row .menu_edit {
+  background: url("../img/menu_edit.png") no-repeat;
+  background-size: 100% 100%;
+}
+#leftVideoList .row .row_bottom .oper .operBox .operBox_row span {
+  position: relative;
+  top: -2px;
+}
+#leftVideoList .row .row_bottom .oper .operBox_row:last-child {
+  border-bottom: none;
+}
+#leftVideoList .row .select {
+  background: #E8F1FF;
+}
+#leftVideoList .state_through {
+  color: #25A968 ;
+}
+#leftVideoList .state_noThrough {
+  color: #DE4F43 ;
+  position: relative;
+  cursor: pointer;
+}
+#leftVideoList .state_noThrough .i_title_state {
+  background: url("../img/state_noThrough.png") no-repeat;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  background-size: 100% 100%;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+}
+#leftVideoList .state_noThrough:hover .state-tips {
+  display: block;
+}
+#leftVideoList .state-tips {
+  background: #424a58;
+  width: 200px;
+  height: 105px;
+  position: absolute;
+  right: -15px;
+  top: 25px;
+  color: #fff;
+  z-index: 100;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: left;
+  display: none;
+  cursor: default;
+}
+#leftVideoList .state-tips .tips-text {
+  font-size: 14px;
+  margin-top: 8px;
+}
+#leftVideoList .state-tipArrow {
+  border-color: transparent transparent #424a58 transparent ;
+  border-width: 7px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  top: -13px;
+  right: 31px;
+}
+#leftVideoList .state_noAudit {
+  color: #4A90E2 ;
+}

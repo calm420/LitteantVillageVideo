@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #lookThrough {
   color: #333;
 }
@@ -146,7 +147,7 @@
   height: 349px;
 }
 #lookThrough .tag-vedio {
-  height: 350px;
+  height: 250px;
   background: #000;
 }
 #lookThrough .tagAddPanel_bg {
@@ -163,6 +164,12 @@
 #lookThrough .sameBackNew {
   padding: 5px 15px 15px 15px !important;
 }
+#lookThrough .sameBackTop {
+  padding-top: 0 !important;
+}
+#lookThrough .sameBackBottom {
+  padding-bottom: 0 !important;
+}
 #lookThrough video::-webkit-media-controls:not(.audio-only) [pseudo="-webkit-media-controls-panel"] [pseudo="-internal-media-controls-overflow-button"] {
   display: none;
 }
@@ -178,7 +185,17 @@
 #lookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
-#lookThrough #waitLookThrough {
+#lookThrough #waitLookThrough,
+#lookThrough #alreadyLookThrough {
   height: 425px;
   overflow-y: auto;
+}
+#lookThrough .reCont {
+  display: inline-block;
+}
+#lookThrough .reCheckCont {
+  border-top: 10px solid #f6f6f6;
+}
+#lookThrough .auditTOP {
+  padding-top: 5px !important;
 }

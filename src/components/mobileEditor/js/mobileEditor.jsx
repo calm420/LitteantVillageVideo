@@ -1,5 +1,5 @@
 import React from "react";
-import {} from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import "../css/mobileEditor.less"
 
 var _this;
@@ -19,6 +19,42 @@ export default class mobileEditor extends React.Component {
         setTimeout(function () {
             _this.getLittleVideoUserById(id)
         }, 100)
+        window.addEventListener('message', (e) => {
+            this.onMessage(e);
+        })
+    }
+
+    //接受消息
+    onMessage(e) {
+        if (e.data) {
+            var iframeData = JSON.parse(e.data);
+            if (iframeData.method == 'mobile-submit') {
+                //发布文章
+                _this.saveArticleInfo(iframeData.param)
+            }
+        }
+
+    }
+
+    /**
+     * 发布文章
+     * @param param
+     */
+    saveArticleInfo(param) {
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.msg == '调用成功' || result.success) {
+                    if (param.articleInfoJson.status === 0) {
+                        Toast.success('保存成功', 1)
+                    } else {
+                        Toast.success('发布成功', 1)
+                    }
+                }
+            },
+            onError: function (error) {
+
+            }
+        });
     }
 
     getLittleVideoUserById(id) {

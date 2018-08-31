@@ -524,11 +524,23 @@ export default class articleList extends React.Component {
         // }
     }
 
+    publishArt = () => {
+        var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
+        console.log(url);
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
 
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            var image = rowData.articleImgArray?rowData.articleImgArray:[];
+            var image = rowData.articleImgArray ? rowData.articleImgArray : [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             // console.log(rowData,'整体循环中的rowData')
@@ -637,6 +649,7 @@ export default class articleList extends React.Component {
                     <span className='btn' onClick={this.toPerfectInfo}>完善资料</span>
                     {/*<span>完善资料</span>*/}
                 </div>
+                <div onClick={this.publishArt}>发</div>
                 <Tabs tabs={tabs}
                       initalPage={0}
                       swipeable={false}

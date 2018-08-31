@@ -1,13 +1,14 @@
 import React from 'react';
-import { Button, Toast, List, Icon, Modal, TextareaItem, Radio, InputItem, Tag } from 'antd-mobile';
+import {Button, Toast, List, Icon, Modal, TextareaItem, Radio, InputItem, Tag} from 'antd-mobile';
 
 import '../css/addUploadVideo.less'
+
 var calm;
 const RadioItem = Radio.RadioItem;
 const typeDate = [
-    { value: 0, label: '普通类型' },
-    { value: 2, label: '广告视频' },
-    { value: 1, label: '挑战视频' },
+    {value: 0, label: '普通类型'},
+    {value: 2, label: '广告视频'},
+    {value: 1, label: '挑战视频'},
 ];
 
 export default class updateVideo extends React.Component {
@@ -56,6 +57,7 @@ export default class updateVideo extends React.Component {
             }
         })
     }
+
     /**
      * 根据视频ID获取视频对象
      */
@@ -105,6 +107,7 @@ export default class updateVideo extends React.Component {
             }
         });
     }
+
     /**
      * 输入框改变的回调
      * @param type  videoContent心情
@@ -116,6 +119,7 @@ export default class updateVideo extends React.Component {
             videoContent: value
         })
     }
+
     /**
      * 封面预览
      */
@@ -138,9 +142,10 @@ export default class updateVideo extends React.Component {
         $('.calmChaDiv').slideDown();
         $('.tagBack').show();
     }
+
     /**
-    * 封面上传
-    */
+     * 封面上传
+     */
     uploadImage(event) {
         event.stopPropagation()
         var data = {
@@ -160,6 +165,7 @@ export default class updateVideo extends React.Component {
             console.log(error);
         });
     }
+
     /**
      * mp4预览
      */
@@ -172,6 +178,7 @@ export default class updateVideo extends React.Component {
 
         });
     }
+
     /**
      * 视频上传
      */
@@ -197,8 +204,8 @@ export default class updateVideo extends React.Component {
 
 
     /**
-    * 类型的改变
-    */
+     * 类型的改变
+     */
     onChangeRadio = (value) => {
         if (calm.state.initType !== 1 && value == 1) {
             calm.setState({
@@ -232,8 +239,8 @@ export default class updateVideo extends React.Component {
 
 
     /**
-    * 标签点击确定的回调
-    */
+     * 标签点击确定的回调
+     */
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
@@ -256,27 +263,28 @@ export default class updateVideo extends React.Component {
         calm.state.tagText = calm.state.tagText.concat(tagTextData);
         var arr = calm.state.tagText;
         calm.state.tagText = calm.makeArr(arr, "tagTitle")
-        calm.setState({ tagData: [], tagChangeData: [], searchValue: "" })
-    }
-    /**
-       * 取消标签
-       */
-    cancelSubmit() {
-        $(`.calmTagDiv`).slideUp();
-        $(`.tagBack`).hide();
-        calm.setState({ tagData: [] })
-        calm.setState({ searchValue: '' })
+        calm.setState({tagData: [], tagChangeData: [], searchValue: ""})
     }
 
     /**
-    * 搜索关键字结果
-    */
+     * 取消标签
+     */
+    cancelSubmit() {
+        $(`.calmTagDiv`).slideUp();
+        $(`.tagBack`).hide();
+        calm.setState({tagData: []})
+        calm.setState({searchValue: ''})
+    }
+
+    /**
+     * 搜索关键字结果
+     */
     getTagsByContent() {
         // if (calm.state.searchValue == "") {
         //     Toast.info("请输入搜索的关键词")
         //     return;
         // }
-        calm.setState({ tagData: [] }, () => {
+        calm.setState({tagData: []}, () => {
             var param = {
                 "method": 'getTagsByContent',
                 "tagContent": calm.state.searchValue,
@@ -305,7 +313,7 @@ export default class updateVideo extends React.Component {
                                     onChange={calm.tagChange.bind(this, v)}
                                 >{v.tagTitle}</Tag>)
                             })
-                            calm.setState({ tagData: arr })
+                            calm.setState({tagData: arr})
                         }
                     } else {
                         Toast.fail(result.msg, 5);
@@ -318,6 +326,7 @@ export default class updateVideo extends React.Component {
         })
 
     }
+
     /**
      * 标签改变
      */
@@ -332,11 +341,12 @@ export default class updateVideo extends React.Component {
             })
         }
     }
+
     /**
-    * 去重
-    * @param arr
-    * @returns {*}
-    */
+     * 去重
+     * @param arr
+     * @returns {*}
+     */
     makeArr(arr, properties) {
         for (var i = 0; i < arr.length - 1; i++) {
             for (var j = i + 1; j < arr.length; j++) {
@@ -348,7 +358,6 @@ export default class updateVideo extends React.Component {
         }
         return arr
     }
-
 
 
     /**
@@ -376,22 +385,22 @@ export default class updateVideo extends React.Component {
         })
     }
 
-    /** 
+    /**
      * 挑战取消回调
-    */
+     */
     cancelChaSubmit() {
         $(`.calmChaDiv`).slideUp();
         $(`.tagBack`).hide();
-        calm.setState({ challengeData: [] })
-        calm.setState({ challengeValue: '' })
-        calm.setState({ chaContent: "" })
-        calm.setState({ showTextOrList: true })
+        calm.setState({challengeData: []})
+        calm.setState({challengeValue: ''})
+        calm.setState({chaContent: ""})
+        calm.setState({showTextOrList: true})
     }
 
 
     /**
-    * 挑战点击确定回调
-    */
+     * 挑战点击确定回调
+     */
     submitChaArr() {
         $(`.calmChaDiv`).slideUp();
         $(`.tagBack`).hide();
@@ -409,7 +418,7 @@ export default class updateVideo extends React.Component {
 
         })
         // $('.deleteCha').show();
-        calm.setState({ challengeData: [], challengeValue: "", showTextOrList: true, chaContent: "" })
+        calm.setState({challengeData: [], challengeValue: "", showTextOrList: true, chaContent: ""})
 
 
     }
@@ -435,7 +444,7 @@ export default class updateVideo extends React.Component {
         //     Toast.info("请输入搜索的关键词")
         //     return;
         // }
-        calm.setState({ challengeData: [] }, () => {
+        calm.setState({challengeData: []}, () => {
             var param = {
                 "method": 'getTagsByContent',
                 "tagContent": calm.state.challengeValue,
@@ -452,7 +461,9 @@ export default class updateVideo extends React.Component {
                                     arr.push({
                                         value: v.tagId,
                                         label: v.tagTitle,
-                                        extra: <div>{v.tagContent}<div className='blueTxt'>点击发起</div></div>
+                                        extra: <div>{v.tagContent}
+                                            <div className='blueTxt'>点击发起</div>
+                                        </div>
                                     })
                                     return;
                                 }
@@ -463,7 +474,7 @@ export default class updateVideo extends React.Component {
                                         extra: v.tagContent
                                     })
                             })
-                            calm.setState({ challengeData: arr })
+                            calm.setState({challengeData: arr})
                         }
                     } else {
                         Toast.fail(result.msg, 5);
@@ -484,7 +495,7 @@ export default class updateVideo extends React.Component {
         for (var i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
         }
-        return new Blob([new Uint8Array(array)], { type: type });
+        return new Blob([new Uint8Array(array)], {type: type});
     }
 
     upload_video_pic() {
@@ -539,9 +550,10 @@ export default class updateVideo extends React.Component {
             });
         })
     }
-    /** 
-  * 标签搜索框
-  */
+
+    /**
+     * 标签搜索框
+     */
     searchInputChange = (value) => {
         calm.setState({
             searchValue: value
@@ -558,6 +570,7 @@ export default class updateVideo extends React.Component {
         $(`.calmTagDiv`).slideDown();
         $(`.tagBack`).show();
     }
+
     /**
      * 删除标签
      */
@@ -574,8 +587,8 @@ export default class updateVideo extends React.Component {
     }
 
     /**
-    * 保存视频信息
-    */
+     * 保存视频信息
+     */
     updateLittleVideoInfo() {
         var obj = {
             status: 1,
@@ -604,13 +617,20 @@ export default class updateVideo extends React.Component {
                 }
             }
         })
+        if (obj.firstUrl.length == 0 || obj.width.length == 0 || obj.height.length == 0) {
+            Toast.info("视频参数错误，请重新上传")
+            return
+        }
+        if (obj.videoContent.length == 0) {
+            Toast.info("心情描述不能为空")
+            return
+        }
         var param = {
             "method": 'updateLittleVideoInfo',
             "videoId": calm.state.vid,
             "videoDatas": obj,
         };
-
-        console.log(param)
+        
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: function (result) {
                 if (result.msg == '调用成功' && result.success == true) {
@@ -744,12 +764,13 @@ export default class updateVideo extends React.Component {
 
         });
     }
+
     render() {
         return (
             <div id="addUploadVideo">
-                <div id="progress" style={{ display: "none" }}>
+                <div id="progress" style={{display: "none"}}>
                     <div className="progress">
-                        <div className="progress-bar" style={{ width: "0%" }}></div>
+                        <div className="progress-bar" style={{width: "0%"}}></div>
                     </div>
                     <div className="progressText">进度: 0%</div>
                 </div>
@@ -757,21 +778,23 @@ export default class updateVideo extends React.Component {
                     <div className="listCont">
                         <div className="my_flex sameBack">
                             <span className="textTitle">封面
-                            <p style={{ margin: 0, height: 3 }}></p>
+                            <p style={{margin: 0, height: 3}}></p>
                                 <span className="uploadSupport">(jpg格式)</span>
                             </span>
                             {calm.state.coverPath.length == 0 ?
                                 <div className="parentDiv">
                                     <button className="uploadBtn">上传封面</button>
-                                    <input className="calm40" name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
+                                    <input className="calm40" name="upload_image_" id="upload_image_"
+                                           onClick={calm.getImage} type="file" accept="image/jpg" class="hidd"/>
                                 </div>
                                 :
                                 <div className="upload_file">
                                     <img onClick={calm.imgPreview.bind(this, calm.state.coverPath)}
-                                        className="imgTag" src={calm.state.coverPath} />
+                                         className="imgTag" src={calm.state.coverPath}/>
                                     <div>
                                         <div className="icon_pointer">更换</div>
-                                        <input className="calm20" name="upload_image_" id="upload_image_" onClick={calm.getImage} type="file" accept="image/jpg" class="hidd" />
+                                        <input className="calm20" name="upload_image_" id="upload_image_"
+                                               onClick={calm.getImage} type="file" accept="image/jpg" class="hidd"/>
                                     </div>
                                 </div>
                             }
@@ -780,24 +803,26 @@ export default class updateVideo extends React.Component {
                         <div className="line_public flex_container"></div>
                         <div className="my_flex sameBack">
                             <span className="textTitle">视频
-                            <p style={{ margin: 0, height: 3 }}></p>
+                            <p style={{margin: 0, height: 3}}></p>
                                 <span className="uploadSupport">(MP4格式)</span>
                             </span>
                             {calm.state.videoUrl.length == 0 ?
                                 <div className="parentDiv">
                                     <button className="uploadBtn">上传视频</button>
-                                    <input className="calm40" name="upload_video_" id="upload_video_" onClick={calm.getVideo} type="file" accept="video/*" class="hidd" />
+                                    <input className="calm40" name="upload_video_" id="upload_video_"
+                                           onClick={calm.getVideo} type="file" accept="video/*" class="hidd"/>
                                 </div>
                                 :
                                 <div className="upload_file">
                                     <video className="upload_box_video"
-                                        onClick={calm.mp4Preview.bind(this, calm.state.videoUrl)}
-                                        src={calm.state.videoUrl}></video>
+                                           onClick={calm.mp4Preview.bind(this, calm.state.videoUrl)}
+                                           src={calm.state.videoUrl}></video>
                                     {/* <div
                                     className="musicIcon" /> */}
                                     <div>
                                         <div className="icon_pointer">修改</div>
-                                        <input className="calm20" name="upload_video_" id="upload_video_" onClick={calm.getVideo} type="file" accept="video/*" class="hidd" />
+                                        <input className="calm20" name="upload_video_" id="upload_video_"
+                                               onClick={calm.getVideo} type="file" accept="video/*" class="hidd"/>
                                     </div>
                                 </div>
 
@@ -832,12 +857,14 @@ export default class updateVideo extends React.Component {
 
                         <div className="line_public flex_container"></div>
 
-                        <div style={{ display: calm.state.show ? "block" : "none" }}>
+                        <div style={{display: calm.state.show ? "block" : "none"}}>
                             <div className="my_flex sameBack">
                                 <span className="textTitle">挑战</span>
-                                <span className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this)}>添加挑战</span>
+                                <span className='tagBtn' style={{display: !(calm.state.showDelete) ? "block" : "none"}}
+                                      onClick={calm.addChan.bind(this)}>添加挑战</span>
 
-                                <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
+                                <div className='challengeTag'
+                                     style={{display: calm.state.showDelete ? "block" : "none"}}>
                                     <div className='tagTitle textOver'>
                                         <span className="del_tag" onClick={calm.deleteCha.bind(this)}>删除</span>
                                         <span className='preIcon'>#</span>
@@ -882,9 +909,9 @@ export default class updateVideo extends React.Component {
                     display: "none",
                 }}></div>
                 <div className={`calmTagDiv tagCont`}
-                    style={{
-                        display: "none",
-                    }}
+                     style={{
+                         display: "none",
+                     }}
                 >
                     {/* {useIndex} */}
                     <div className="tagInput">
@@ -909,9 +936,9 @@ export default class updateVideo extends React.Component {
                 </div>
                 {/* 添加挑战 */}
                 <div className={`calmChaDiv tagCont`}
-                    style={{
-                        display: "none",
-                    }}
+                     style={{
+                         display: "none",
+                     }}
                 >
                     {
                         calm.state.showTextOrList ?
@@ -932,8 +959,10 @@ export default class updateVideo extends React.Component {
                             calm.state.showTextOrList ?
                                 <List>
                                     {calm.state.challengeData.map(i => (
-                                        <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                            <span className='preIcon'>#</span>{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
+                                        <RadioItem key={i.value} checked={calm.state.chaChangeValue === i.value}
+                                                   onChange={() => calm.chaChange(i)}>
+                                            <span
+                                                className='preIcon'>#</span>{i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
                                         </RadioItem>
                                     ))}
                                 </List>

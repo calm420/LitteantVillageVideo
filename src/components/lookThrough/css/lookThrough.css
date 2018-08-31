@@ -185,10 +185,17 @@
 #lookThrough video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
-#lookThrough #waitLookThrough {
+#lookThrough #waitLookThrough,
+#lookThrough #alreadyLookThrough {
   height: 425px;
   overflow-y: auto;
 }
 #lookThrough .reCont {
   display: inline-block;
+}
+#lookThrough .reCheckCont {
+  border-top: 10px solid #f6f6f6;
+}
+#lookThrough .auditTOP {
+  padding-top: 5px !important;
 }

@@ -655,6 +655,32 @@ export default class addUploadVideo extends React.Component {
         newArr.forEach((v, i) => {
             v.tags = v.tags.concat(calm.state.addVideoList[i].tagText)
         })
+
+
+        var submitFlag = true;
+        for (var i = 0; i < newArr.length; i++) {
+            if (newArr[i].coverPath.length == 0 || newArr[i].videoPath.length == 0 || newArr[i].videoContent.length == 0) {
+                submitFlag = false
+                break
+            }
+        }
+        if (!submitFlag) {
+            Toast.fail('数据存在空值，请检查', 2)
+            return
+        }
+        
+        var calmFlag = true;
+        for (var i = 0; i < newArr.length; i++) {
+            if ( newArr[i].width.length == 0 || newArr[i].height.length == 0 || newArr[i].firstUrl.length == 0) {
+                calmFlag = false
+                break
+            }
+        }
+        if (!calmFlag) {
+            Toast.fail('视频参数错误，请重新上传', 2)
+            return
+        }
+
         var param = {
             "method": 'batchLittleVideoInfo',
             "videoJson": JSON.stringify(newArr),

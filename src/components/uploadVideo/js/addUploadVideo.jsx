@@ -1008,7 +1008,7 @@ export default class addUploadVideo extends React.Component {
                 <div className="tagBack" style={{
                     display: "none",
                 }}></div>
-                <div className={`calmTagDiv tagCont`}
+                <div className={`calmTagDiv calmTagDivNew tagCont`}
                     style={{
                         display: "none",
                     }}
@@ -1035,7 +1035,7 @@ export default class addUploadVideo extends React.Component {
                     </div>
                 </div>
                 {/* 添加挑战 */}
-                <div className={`calmChaDiv tagCont`}
+                <div className={`calmChaDiv calmTagDivNew tagCont`}
                     style={{
                         display: "none",
                     }}

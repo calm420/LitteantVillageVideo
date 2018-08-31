@@ -697,6 +697,16 @@ export default class updateVideo extends React.Component {
         });
     }
 
+    //取消编辑
+    cancelEditor() {
+        var data = {};
+            data.method = '取消成功';
+            data.type = 2;
+            window.parent.postMessage(JSON.stringify(data), '*');
+            window.location.reload();
+        console.log('取消成功');
+    }
+
     /**
      * 获取视频在线路径
      */
@@ -967,6 +977,7 @@ export default class updateVideo extends React.Component {
                     </div>
                 </div>
                 <div className='bottom_nav'>
+                    <a className="button_btn preview_button button_btnLeft" type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</a>
                     <a className="button_btn submit_button" type="warning" onClick={calm.updateLittleVideoInfo}>提交</a>
                 </div>
 

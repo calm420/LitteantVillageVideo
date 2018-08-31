@@ -646,7 +646,8 @@ export default class addUploadVideo extends React.Component {
                         {
                             tagTitle: v.cheData.label,
                             tagType: 2,   //挑战
-                            tagContent: v.cheData.extra
+                            tagContent: v.cheData.extra,
+                            tagId:v.cheData.value
                         }
                     ]
                 })
@@ -753,7 +754,6 @@ export default class addUploadVideo extends React.Component {
                                         value: v.tagId,
                                         label: v.tagTitle,
                                         extra: <div>{str}<div className='blueTxt'>点击发起</div></div>
-
                                     })
                                     return;
                                 }
@@ -967,11 +967,10 @@ export default class addUploadVideo extends React.Component {
      * 挑战改变
      */
     chaChange(i) {
-
+        console.log(i,"item")
         calm.setState({
             challengeValue: i.label
         }, () => {
-
         })
 
         if (i.value == 0) {
@@ -981,7 +980,7 @@ export default class addUploadVideo extends React.Component {
         }
         calm.setState({
             cheData: i,
-            chaChangeValue: i.value,
+            chaChangeValue: i.value,  // 挑战ID
         });
 
     };

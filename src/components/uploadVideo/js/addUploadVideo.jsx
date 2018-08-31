@@ -72,16 +72,18 @@ export default class addUploadVideo extends React.Component {
      * 获取视频路径
      */
     getVideo(i) {
-        console.log(i, "iiii")
-        console.log($('.progressText'), "$('.progressText')")
-        $('#upload_video_').unbind("change");
-        $('#upload_video_').bind('change', function (evt) {
+        // console.log(i, "iiii")
+        // console.log($('.progressText'), "$('.progressText')")
+        console.log($('.upload_video_').eq(i),"hah")
+        $('.upload_video_').eq(i).unbind("change");
+        $('.upload_video_').eq(i).bind('change', function (evt) {
             // var newFile = getFileURL(document.getElementById('upload_video_').files[0])
-            console.log($('#upload_video_').val(), "evt")
-            if (document.getElementById('upload_video_').files[0]) {
+            console.log($('.upload_video_').val(), "evt")
+            console.log(evt.target.files[0],"evt")
+            if (evt.target.files[0]) {
                 var formData = new FormData();
-                formData.append("file" + 0, document.getElementById('upload_video_').files[0]);
-                formData.append("name" + 0, document.getElementById('upload_video_').files[0].name);
+                formData.append("file" + 0, evt.target.files[0]);
+                formData.append("name" + 0, evt.target.files[0].name);
                 $.ajax({
                     type: "POST",
                     url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
@@ -122,6 +124,7 @@ export default class addUploadVideo extends React.Component {
                     },
                     success: function (res) {
                         console.log(res, "res")
+                        console.log(i,"iuy")
                         calm.state.addVideoList[i].videoUrl = res;
                         calm.buildAddList();
                         calm.upload_video_pic(i)
@@ -136,12 +139,14 @@ export default class addUploadVideo extends React.Component {
      * 获取图片路径
      */
     getImage(i) {
-        $('#upload_video_').unbind("change");
-        $('#upload_image_').bind('change', function (evt) {
-            if (document.getElementById('upload_image_').files[0]) {
+        console.log(i,"点击")
+        $('#upload_video_').eq(i).unbind("change");
+        $('.upload_image_').eq(i).bind('change', function (evt) {
+            console.log("chufale")
+            if (evt.target.files[0]) {
                 var formData = new FormData();
-                formData.append("file" + 0, document.getElementById('upload_image_').files[0]);
-                formData.append("name" + 0, document.getElementById('upload_image_').files[0].name);
+                formData.append("file" + 0, evt.target.files[0]);
+                formData.append("name" + 0, evt.target.files[0].name);
                 $.ajax({
                     type: "POST",
                     url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
@@ -181,7 +186,8 @@ export default class addUploadVideo extends React.Component {
                         return xhr;
                     },
                     success: function (res) {
-                        console.log(res, "res")
+                        console.log(res, "res1111")
+                        console.log(i,"iuy")
                         calm.state.addVideoList[i].coverPath = res;
                         calm.buildAddList();
                         // calm.upload_video_pic(i)
@@ -349,7 +355,7 @@ export default class addUploadVideo extends React.Component {
         //
         // }
         //ｖｉｄｅｏ标签
-        video = document.getElementsByClassName("upload_box_video")[index];//赋值标签
+        video = $('.upload_box_video').eq(index)[0];//赋值标签
         video.setAttribute("crossOrigin", 'Anonymous');
         video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
             var canvas = document.createElement('canvas');//canvas画布
@@ -405,8 +411,6 @@ export default class addUploadVideo extends React.Component {
                 <div className="icon_delete" onClick={calm.showListAlert.bind(this, i)}
                     style={{ display: listArr.length == 1 ? 'none' : 'block' }}></div>
                 <div className="my_flex sameBack">
-
-
                     <span className="textTitle">封面
                         <p style={{ margin: 0, height: 3 }}></p>
                         <span className="uploadSupport">(jpg格式)</span>
@@ -414,7 +418,7 @@ export default class addUploadVideo extends React.Component {
                     {calm.state.addVideoList[i].coverPath.length == 0 ?
                         <div className="parentDiv">
                             <button className="uploadBtn">上传封面</button>
-                            <input className="calm40" name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
+                            <input className="calm40 upload_image_" name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, useIndex)} type="file" accept="image/jpg" class="hidd" />
                         </div>
                         :
                         <div className="upload_file">
@@ -422,7 +426,7 @@ export default class addUploadVideo extends React.Component {
                                 className="imgTag" src={calm.state.addVideoList[i].coverPath} />
                             <div>
                                 <div className="icon_pointer">更换</div>
-                                <input className="calm20" name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, i)} type="file" accept="image/jpg" class="hidd" />
+                                <input className="calm20 upload_image_" name="upload_image_" id="upload_image_" onClick={calm.getImage.bind(this, useIndex)} type="file" accept="image/jpg" class="hidd" />
                             </div>
                         </div>
                     }
@@ -437,7 +441,7 @@ export default class addUploadVideo extends React.Component {
                     {calm.state.addVideoList[i].videoUrl.length == 0 ?
                         <div className="parentDiv">
                             <button className="uploadBtn">上传视频</button>
-                            <input className="calm40" name="upload_video_" id="upload_video_" onClick={calm.getVideo.bind(this, i)} type="file" accept="video/*" class="hidd" />
+                            <input className="calm40 upload_video_"  name="upload_video_" id="upload_video_" onClick={calm.getVideo.bind(this, i)} type="file" accept="video/*" class="hidd" />
                         </div>
                         :
                         <div className="upload_file">
@@ -446,7 +450,7 @@ export default class addUploadVideo extends React.Component {
                                 src={calm.state.addVideoList[i].videoUrl}></video>
                             <div>
                                 <div className="icon_pointer">更换</div>
-                                <input className="calm20" name="upload_video_" id="upload_video_" onClick={calm.getVideo.bind(this, i)} type="file" accept="video/*" class="hidd" />
+                                <input className="calm20 upload_video_" name="upload_video_" id="upload_video_" onClick={calm.getVideo.bind(this, i)} type="file" accept="video/*" class="hidd" />
                             </div>
                         </div>
 
@@ -599,7 +603,12 @@ export default class addUploadVideo extends React.Component {
 
     //取消编辑
     cancelEditor() {
-        console.log('取消编辑');
+        var data = {};
+                    data.method = '取消成功';
+                    data.type = 2;
+                    window.parent.postMessage(JSON.stringify(data), '*');
+                    window.location.reload();
+        console.log('取消成功');
     }
 
     /**

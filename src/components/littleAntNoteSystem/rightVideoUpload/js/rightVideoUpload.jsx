@@ -42,6 +42,23 @@ export default class rightVideoUpload extends React.Component {
                 Toast.info(iframeData.type == 0?'保存成功':'发布成功',1);
                 this.props.submitInVideo('refresh');
                 break;
+            case '取消成功':
+                console.log('调用了发布成功');
+                _this.setState({
+                    writeFlag: false,
+                })
+                Toast.info(iframeData.type == 2?'取消成功':"",1);
+                this.props.submitInVideo('refresh');
+                break;
+            case '编辑成功':
+                console.log('调用了发布成功');
+                _this.setState({
+                    writeFlag: false,
+                })
+                Toast.info(iframeData.type == 3?'编辑成功':"",1);
+                this.props.submitInVideo('refresh');
+                break;
+                
         }
     }
 
@@ -90,14 +107,14 @@ export default class rightVideoUpload extends React.Component {
                         this.state.vId ? {display: 'none'} : {display: 'block'}
                     }>
                         <iframe id="iframe_box"
-                                src={"http://192.168.50.186:8094/#/addUploadVideo?ident=" + this.state.userId}
+                                src={"http://192.168.50.72:8094/#/addUploadVideo?ident=" + this.state.userId}
                                 frameborder="0"></iframe>
                     </div>
                     <div style={
                         this.state.vId ? {display: 'block'} : {display: 'none'}
                     }>
                         <iframe id="iframe_box_updata"
-                                src={"http://192.168.50.186:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
+                                src={"http://192.168.50.72:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
                                 frameborder="0"></iframe>
                     </div>
                 </div>

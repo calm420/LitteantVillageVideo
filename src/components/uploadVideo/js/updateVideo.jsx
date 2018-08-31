@@ -326,7 +326,7 @@ export default class updateVideo extends React.Component {
             calm.state.tagChangeData.push(data);
         } else {
             calm.state.tagChangeData.forEach((v, i) => {
-                if (v.id == data.id) {
+                if (v.tagId == data.tagId) {
                     calm.state.tagChangeData.splice(i, 1)
                 }
             })
@@ -634,7 +634,7 @@ export default class updateVideo extends React.Component {
                     data.method = '编辑成功';
                     data.type = 3;
                     window.parent.postMessage(JSON.stringify(data), '*');
-                    window.location.reload();
+                    window.parent.location.reload();
                 }
             },
             onError: function (error) {
@@ -703,7 +703,7 @@ export default class updateVideo extends React.Component {
             data.method = '取消成功';
             data.type = 2;
             window.parent.postMessage(JSON.stringify(data), '*');
-            window.location.reload();
+            window.parent.location.reload();
         console.log('取消成功');
     }
 
@@ -928,7 +928,7 @@ export default class updateVideo extends React.Component {
                             </div>
                         </div>
                         {/* 添加挑战 */}
-                        <div className={`calmChaDiv tagCont`}
+                        <div className={`calmChaDiv calmTagDivNew tagCont`}
                             style={{
                                 display: "none",
                             }}

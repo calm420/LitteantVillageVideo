@@ -1,8 +1,33 @@
 #addUploadVideo {
+  width: 380px;
+  position: absolute;
+  top: 0;
+  right: 0;
   height: 100% !important;
   /*进度条 box*/
   /*进度条*/
   /*进度文本*/
+}
+#addUploadVideo .submitBtn {
+  display: flex;
+}
+#addUploadVideo .submitBtn .warning {
+  flex: 1;
+}
+#addUploadVideo .header {
+  z-index: 222;
+  height: 45px;
+  width: 100%;
+  line-height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #dfe0e3;
+}
+#addUploadVideo .header .addVideo {
+  display: inline-block;
+  width: 85%;
+  text-align: center;
+  font-size: 16px;
+  color: #4380eb;
 }
 #addUploadVideo .parentDiv {
   position: relative;
@@ -52,19 +77,6 @@
   margin-top: 10px;
   width: 100%;
   text-align: center;
-}
-#addUploadVideo .parentDiv {
-  position: relative;
-}
-#addUploadVideo .calm40 {
-  display: inline-block;
-  overflow: hidden;
-  opacity: 0;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 #addUploadVideo .preIcon {
   color: #EDB74A;

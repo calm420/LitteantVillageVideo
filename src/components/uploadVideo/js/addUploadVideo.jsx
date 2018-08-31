@@ -604,10 +604,10 @@ export default class addUploadVideo extends React.Component {
     //取消编辑
     cancelEditor() {
         var data = {};
-                    data.method = '取消成功';
-                    data.type = 2;
-                    window.parent.postMessage(JSON.stringify(data), '*');
-                    window.location.reload();
+            data.method = '取消成功';
+            data.type = 2;
+            window.parent.postMessage(JSON.stringify(data), '*');
+            window.location.reload();
         console.log('取消成功');
     }
 
@@ -989,6 +989,7 @@ export default class addUploadVideo extends React.Component {
     render() {
         return (
             <div id="addUploadVideo">
+            <div className="header"><span  onClick={this.cancelEditor.bind(this)}>返回</span><span className="addVideo">添加视频</span> </div>
                 <div id="progress" style={{ display: "none" }}>
                     <div className="progress">
                         <div className="progress-bar" style={{ width: "0%" }}></div>
@@ -1081,7 +1082,7 @@ export default class addUploadVideo extends React.Component {
                 <div className='submitBtn'>
                     <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this, 1)}>提交</Button>
                     <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this, 0)}>保存</Button>
-                    <Button type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</Button>
+                    {/* <Button type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</Button> */}
                 </div>
 
             </div>

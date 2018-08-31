@@ -1,5 +1,30 @@
 #addUploadVideo {
+    width: 380px;
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 100% !important;
+    .submitBtn {
+        display: flex;
+        .warning{
+            flex: 1;
+        }
+    }
+    .header {
+        z-index: 222;
+        height: 45px;
+        width: 100%;
+        line-height: 45px;
+        background: #fff;
+        border-bottom: 1px solid #dfe0e3;
+        .addVideo {
+            display: inline-block;
+            width: 85%;
+            text-align: center;
+            font-size: 16px;
+            color: #4380eb;
+        }
+    }
     .parentDiv {
         position: relative;
     }
@@ -29,7 +54,7 @@
     }
     /*进度条*/
     #progress {
-      // background: #000;
+        // background: #000;
         width: 300px;
         position: absolute;
         top: 30%;
@@ -45,7 +70,7 @@
     }
     .progressText {
         font-size: 14px;
-        color:  #4380eb;
+        color: #4380eb;
     }
     /*进度文本*/
     .progressText {

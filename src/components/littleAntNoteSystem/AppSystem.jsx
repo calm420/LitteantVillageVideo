@@ -126,7 +126,7 @@ export default class AppSystem extends React.Component {
                     </div>
                     <div className="changeTabs" style={
                         this.state.tabsIndex == 1 ? {background: '#2E68CD'} : {paddingBottom:'5px'}
-                    } data-index={1} onClick={this.changeTabsIndex.bind(this, 1)}>小视频
+                    } data-index={1} onClick={this.changeTabsIndex.bind(this, 1)}><span className="icon-menu icon-video"></span>小视频
                         <i></i>
                     </div>
                     {/*<div className="logo">校园自媒体</div>*/}

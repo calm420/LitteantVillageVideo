@@ -112,7 +112,7 @@ export default class AppSystem extends React.Component {
 
     changeTabsIndex(index) {
         console.log(index);
-        if(index == 1){
+        if(index == 0){
             this.setState({
                 flag:1
             })
@@ -148,12 +148,12 @@ export default class AppSystem extends React.Component {
                     <div className="changeTabs" style={
                         this.state.tabsIndex == 0 ? {background: '#2E68CD'} : {paddingBottom:'5px'}
                     } data-index={0} onClick={this.changeTabsIndex.bind(this, 0)}><span className="icon-menu icon-Media"></span>校园自媒体
-                        {_this.state.flag == 0 ? <i></i> :"" }
+                        {_this.state.flag == 1 ? <i></i> :"" }
                     </div>
                     <div className="changeTabs" style={
                         this.state.tabsIndex == 1 ? {background: '#2E68CD'} : {paddingBottom:'5px'}
                     } data-index={1} onClick={this.changeTabsIndex.bind(this, 1)}><span className="icon-menu icon-video"></span>小视频
-                        {_this.state.flag == 1 ?<i></i>:""}
+                        {_this.state.flag == 0?<i></i>:""}
                     </div>
                     {/*<div className="logo">校园自媒体</div>*/}
                     {/*<div className="userInfo">*/}

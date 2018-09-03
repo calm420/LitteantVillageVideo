@@ -370,6 +370,14 @@ export default class ReadPanel extends React.Component {
                     console.log('删除的不是编辑状态的');
                 }
                 break;
+            case "closeMask":
+                var data = {};
+                data.method = 'closeMask';
+                //发送消息
+                var ifm = document.getElementById('iframe_box');
+                ifm.contentWindow.postMessage(JSON.stringify(data), '*');
+                break;
+
         }
     }
 

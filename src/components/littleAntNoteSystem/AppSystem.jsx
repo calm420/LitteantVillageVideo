@@ -19,7 +19,7 @@ export default class AppSystem extends React.Component {
             user: JSON.parse(sessionStorage.getItem("loginUser")),
             clientHeight: document.body.clientHeight,
             maskFlag: false,
-            tabsIndex: 1, //选择自媒体文章还是小视频添加
+            tabsIndex: 0, //选择自媒体文章还是小视频添加
         };
     }
 
@@ -95,6 +95,7 @@ export default class AppSystem extends React.Component {
         _this.setState({
             maskFlag: false
         })
+        _this.refs.listToReadPanel.accept('closeMask')
     }
 
     changeTabsIndex(index) {

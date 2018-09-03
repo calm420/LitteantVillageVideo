@@ -526,7 +526,6 @@ export default class articleList extends React.Component {
 
     publishArt = () => {
         var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-        console.log(url);
         var data = {
             method: 'openNewPage',
             url: url

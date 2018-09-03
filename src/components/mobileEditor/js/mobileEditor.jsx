@@ -33,6 +33,20 @@ export default class mobileEditor extends React.Component {
             if (iframeData.method == 'mobile-submit') {
                 //发布文章
                 _this.saveArticleInfo(iframeData.article)
+            } else if (iframeData.method == 'unloadFilesForEdit') {
+                Bridge.callHandler(iframeData, function (res) {
+                    // 拿到照片地址
+
+                    var ifm = document.getElementById('iframe_mobile');
+                    var data = {
+                        method: 'callbackSrc',
+                        res: res,
+                    }
+                    ifm.contentWindow.postMessage(JSON.stringify(data), '*');
+
+                }, function (error) {
+                    console.log(error);
+                });
             }
         }
 
@@ -122,7 +136,7 @@ export default class mobileEditor extends React.Component {
     render() {
         return (
             <div id="mobileEditor">
-                <iframe id="iframe_mobile" className="mobile-iframe" src="https://192.168.50.29:6443/mobileEditor/"
+                <iframe id="iframe_mobile" className="mobile-iframe" src="https://www.maaee.com:6443/mobileEditor/"
                         frameborder="0"></iframe>
 
             </div>

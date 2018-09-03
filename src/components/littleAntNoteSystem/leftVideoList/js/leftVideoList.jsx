@@ -181,7 +181,6 @@ export default class leftVideoList extends React.Component {
     }
 
     showOperBox(id) {
-        console.log(id)
         if (id == this.state.showOperId) {
             this.setState({
                 showOperId: null,

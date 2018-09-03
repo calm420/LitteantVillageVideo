@@ -39,7 +39,9 @@ export default class AppSystem extends React.Component {
     }
 
     submitForvideo = (type,id) =>{
-        this.refs.appSystemToVideo.accept(type,id)
+        console.log(type,'type')
+        console.log(id,'id')
+            this.refs.appSystemToVideo.accept(type,id)
     }
 
     submitForList = (type, data) => {

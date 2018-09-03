@@ -171,11 +171,14 @@
 }
 #rightVideoUpload #iframe_box {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   border: none;
 }
 #rightVideoUpload #iframe_box_updata {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   border: none;
+}
+#rightVideoUpload .write_article > div {
+  height: 100%;
 }

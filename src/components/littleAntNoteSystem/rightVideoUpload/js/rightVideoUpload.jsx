@@ -99,7 +99,7 @@ export default class rightVideoUpload extends React.Component {
         return (
             <div id="rightVideoUpload">
                 <div className="click_head" style={!this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
-                    点击 "<a onClick={this.createVideo.bind(this)}>添加小视频</a>"，创建一个小视频
+                    点击 "<a onClick={this.createVideo.bind(this)}>添加小视频</a>"，批量创建小视频
                 </div>
 
                 <div className="write_article" style={this.state.writeFlag ? {display: 'block'} : {display: "none"}}>
@@ -107,14 +107,16 @@ export default class rightVideoUpload extends React.Component {
                         this.state.vId ? {display: 'none'} : {display: 'block'}
                     }>
                         <iframe id="iframe_box"
-                                src={"http://192.168.50.72:8094/#/addUploadVideo?ident=" + this.state.userId}
+                                src={"http://jiaoxue.maaee.com:8094/#/addUploadVideo?ident=" + this.state.userId}
+                                // src={"http://192.168.50.72:8094/#/addUploadVideo?ident=" + this.state.userId}
                                 frameborder="0"></iframe>
                     </div>
                     <div style={
                         this.state.vId ? {display: 'block'} : {display: 'none'}
                     }>
                         <iframe id="iframe_box_updata"
-                                src={"http://192.168.50.72:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
+                                src={"http://jiaoxue.maaee.com:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
+                                // src={"http://192.168.50.72:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
                                 frameborder="0"></iframe>
                     </div>
                 </div>

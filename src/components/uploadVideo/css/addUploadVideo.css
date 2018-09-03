@@ -1,9 +1,49 @@
 (node) util.print is deprecated. Use console.log instead.
 #addUploadVideo {
+  width: 100%;
   height: 100% !important;
+  background: #fff;
   /*进度条 box*/
   /*进度条*/
   /*进度文本*/
+}
+#addUploadVideo .videoContent {
+  position: relative;
+  border: 1px solid #ccc;
+  width: 374px;
+  margin: 20px auto 20px auto;
+  text-align: center;
+  transition: 2s;
+  background: #fff;
+  padding: 0;
+  min-height: 150px;
+  border-top: 0px solid transparent;
+}
+#addUploadVideo .articleEditorCont {
+  height: calc(100% - 54px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#addUploadVideo .submitBtn {
+  display: flex;
+}
+#addUploadVideo .submitBtn .warning {
+  flex: 1;
+}
+#addUploadVideo .header {
+  z-index: 222;
+  height: 45px;
+  width: 100%;
+  line-height: 45px;
+  background: #fff;
+  border-bottom: 1px solid #dfe0e3;
+}
+#addUploadVideo .header .addVideo {
+  display: inline-block;
+  width: 85%;
+  text-align: center;
+  font-size: 16px;
+  color: #4380eb;
 }
 #addUploadVideo .parentDiv {
   position: relative;
@@ -29,23 +69,24 @@
 #addUploadVideo .progress {
   margin: 0;
   box-sizing: border-box;
-  box-shadow: 0px 0px 10px #ccc;
 }
 #addUploadVideo #progress {
-  width: 300px;
+  display: none;
+  width: 100%;
   position: absolute;
-  top: 30%;
-  right: 40%;
+  top: 0;
+  right: 0;
   z-index: 999;
   height: 50px;
 }
 #addUploadVideo #progress .progress-bar {
-  height: 10px;
+  height: 6px;
 }
 #addUploadVideo #progress .progress-bar {
   background-color: #4380eb;
 }
 #addUploadVideo .progressText {
+  display: none;
   font-size: 14px;
   color: #4380eb;
 }
@@ -61,6 +102,7 @@
 #addUploadVideo .addList {
   height: calc(100% - 75px);
   overflow-y: auto;
+  background: #f6f6f6;
 }
 #addUploadVideo .tagBack {
   position: absolute;
@@ -389,4 +431,55 @@
 }
 #addUploadVideo .startTitle .preIcon {
   margin-left: 5px;
+}
+#addUploadVideo .bottom_nav {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+  background: #f7f8fc;
+  padding: 10px 0;
+}
+#addUploadVideo .preview_button {
+  border: 1px solid #4380eb;
+  background: transparent;
+  color: #4380eb;
+}
+#addUploadVideo .submit_button {
+  border: 1px solid #4380eb;
+  background: #4380eb;
+  color: #fff;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+#addUploadVideo .button_btnLeft {
+  margin-left: 0;
+}
+#addUploadVideo .button_btn {
+  border-radius: 4px;
+  padding: 8px 26px;
+  margin-left: 25px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+}
+#addUploadVideo .editor_boxlist {
+  -webkit-box-shadow: 0 0 6px rgba(63, 70, 82, 0.5);
+  -moz-box-shadow: 0 0 6px rgba(63, 70, 82, 0.5);
+  box-shadow: 0 0 6px rgba(63, 70, 82, 0.5);
+}
+#addUploadVideo .icon_pointer {
+  cursor: pointer;
+}
+#addUploadVideo .calmTagDivNew {
+  width: 380px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  /* IE 9 */
+  -moz-transform: translateX(-50%);
+  /* Firefox */
+  -webkit-transform: translateX(-50%);
+  /* Safari 和 Chrome */
+  -o-transform: translateX(-50%);
 }

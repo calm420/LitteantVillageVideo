@@ -33,6 +33,20 @@ export default class mobileEditor extends React.Component {
             if (iframeData.method == 'mobile-submit') {
                 //发布文章
                 _this.saveArticleInfo(iframeData.article)
+            } else if (iframeData.method == 'unloadFilesForEdit') {
+                Bridge.callHandler(iframeData, function (res) {
+                    // 拿到照片地址
+
+                    var ifm = document.getElementById('iframe_mobile');
+                    var data = {
+                        method: 'callbackSrc',
+                        res: res,
+                    }
+                    ifm.contentWindow.postMessage(JSON.stringify(data), '*');
+
+                }, function (error) {
+                    console.log(error);
+                });
             }
         }
 

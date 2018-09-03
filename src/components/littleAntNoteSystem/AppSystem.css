@@ -121,7 +121,7 @@
   width: 320px;
   box-shadow: #282d36 0px 0px 8px;
   background-color: #fff;
-  padding: 10px;
+  padding: 10px 15px;
   height: 93%;
   z-index: 10000000;
 }
@@ -174,4 +174,28 @@
 #AppSystem .icon-video {
   background: url("img/iconvideo.png") no-repeat;
   background-size: 100% 100%;
+}
+#AppSystem .title {
+  font-size: 20px;
+  line-height: 22px;
+  word-break: break-word;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 10px 0 12px;
+  text-align: left;
+}
+#AppSystem .head_info {
+  font-size: 12px;
+  margin: 5px 0 10px;
+  text-align: left;
+}
+#AppSystem .head_info .author {
+  display: inline-block;
+  padding-right: 10px;
+  color: #999;
+}
+#AppSystem .head_info .head_info_date {
+  display: inline-block;
+  color: #999;
 }

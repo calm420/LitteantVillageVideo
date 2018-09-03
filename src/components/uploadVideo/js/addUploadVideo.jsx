@@ -60,7 +60,11 @@ export default class addUploadVideo extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
-        this.buildAddList()
+        this.buildAddList();
+        //监听postmessage消息接受
+        window.addEventListener('message', (e) => {
+            this.onMessage(e);
+        })
 
         // $('#upload_video').click(function () {
         //     $('#upload_video_').click();
@@ -68,6 +72,16 @@ export default class addUploadVideo extends React.Component {
 
 
     }
+
+
+    onMessage(e){
+        console.warn(e,'eeeeeeeeeeeeeeeeeeeeeeeeee');
+        if(e.data == 'refresh'){
+            console.warn('添加');
+            window.location.reload();
+        }
+    }
+
     /**
      * 获取视频路径
      */
@@ -614,8 +628,8 @@ export default class addUploadVideo extends React.Component {
         data.method = '取消成功';
         data.type = 2;
         window.parent.postMessage(JSON.stringify(data), '*');
-        window.location.reload();
-        console.log('取消成功');
+        // window.location.reload();
+        // console.log('取消成功');
     }
 
     /**

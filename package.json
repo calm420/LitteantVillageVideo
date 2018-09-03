@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "lib/index",
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --port 8094",
+    "start": "webpack-dev-server --host 0.0.0.0 --port 7094",
     "build": "webpack -p --display-optimization-bailout --progress --colors",
     "develop": "webpack --config webpack.config.js"
   },

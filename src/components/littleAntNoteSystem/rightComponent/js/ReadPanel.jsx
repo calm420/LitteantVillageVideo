@@ -95,7 +95,7 @@ export default class ReadPanel extends React.Component {
                 // refresh
                 this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
             } else if (iframeData.method == 'openPrieview') {
-                this.props.setPanel('openPrieview', iframeData.label);
+                this.props.setPanel('openPrieview', iframeData.response);
             }else if(iframeData.method == 'exit_editor'){
                 console.log('取消编辑');
                 this.setState({
@@ -370,6 +370,14 @@ export default class ReadPanel extends React.Component {
                     console.log('删除的不是编辑状态的');
                 }
                 break;
+            case "closeMask":
+                var data = {};
+                data.method = 'closeMask';
+                //发送消息
+                var ifm = document.getElementById('iframe_box');
+                ifm.contentWindow.postMessage(JSON.stringify(data), '*');
+                break;
+
         }
     }
 

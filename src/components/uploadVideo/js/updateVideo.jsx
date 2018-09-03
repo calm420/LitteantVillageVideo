@@ -49,14 +49,16 @@ export default class updateVideo extends React.Component {
         calm.setState({
             vid
         })
+        console.log(vid,'vidvidvid')
         calm.getLittleVideoById(vid);
         window.addEventListener('message', (e) => {
-            console.log(e, '编辑时候的e');
+            // console.log(e, '编辑时候的e');
             if (e.data == 'refresh') {
                 window.location.reload();
             }
         })
     }
+
 
     /**
      * 根据视频ID获取视频对象
@@ -648,7 +650,7 @@ export default class updateVideo extends React.Component {
                     data.method = '编辑成功';
                     data.type = 3;
                     window.parent.postMessage(JSON.stringify(data), '*');
-                    window.parent.location.reload();
+                    window.location.reload();
                 }
             },
             onError: function (error) {
@@ -717,7 +719,8 @@ export default class updateVideo extends React.Component {
             data.method = '取消成功';
             data.type = 2;
             window.parent.postMessage(JSON.stringify(data), '*');
-            window.parent.location.reload();
+            window.location.reload();
+            // window.parent.location.reload();
         console.log('取消成功');
     }
 

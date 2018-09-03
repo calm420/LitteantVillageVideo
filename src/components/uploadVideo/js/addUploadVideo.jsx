@@ -60,7 +60,11 @@ export default class addUploadVideo extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
-        this.buildAddList()
+        this.buildAddList();
+        //监听postmessage消息接受
+        window.addEventListener('message', (e) => {
+            this.onMessage(e);
+        })
 
         // $('#upload_video').click(function () {
         //     $('#upload_video_').click();
@@ -68,6 +72,16 @@ export default class addUploadVideo extends React.Component {
 
 
     }
+
+
+    onMessage(e){
+        console.warn(e,'eeeeeeeeeeeeeeeeeeeeeeeeee');
+        if(e.data == 'refresh'){
+            console.warn('添加');
+            window.location.reload();
+        }
+    }
+
     /**
      * 获取视频路径
      */
@@ -328,13 +342,14 @@ export default class addUploadVideo extends React.Component {
      * 删除挑战
      */
     deleteCha(index) {
+        console.log(index);
         calm.state.addVideoList[index].cheData = {};
-        calm.setState({
-            showDelete: false
-        }, () => {
-            calm.buildAddList();
+        calm.buildAddList();
+        // calm.setState({
+        //     showDelete: false
+        // }, () => {
 
-        })
+        // })
     }
     //首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
     getBlobBydataURI(dataURI, type) {
@@ -486,17 +501,20 @@ export default class addUploadVideo extends React.Component {
                 <div style={{ display: calm.state.addVideoList[i].show ? "block" : "none" }}>
                     <div className="my_flex sameBack">
                         <div className="textTitle">挑战</div>
-                        <div className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</div>
-                        <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
-                            <div className='tagTitle textOver'>
-                                <span className="del_tag" onClick={calm.deleteCha.bind(this, i)}>删除</span>
-                                <span className='preIcon'>#</span>
-                                {calm.state.addVideoList[i].cheData.label}</div>
-                            <div className='tagText'>
-                                {calm.state.addVideoList[i].cheData.extra}
+                        {$.isEmptyObject(calm.state.addVideoList[i].cheData) == true ?
+                            <div className='tagBtn' onClick={calm.addChan.bind(this, i)}>添加挑战</div>
+                            :
+                            <div className='challengeTag'>
+                                <div className='tagTitle textOver'>
+                                    <span className="del_tag" onClick={calm.deleteCha.bind(this, useIndex)}>删除</span>
+                                    <span className='preIcon'>#</span>
+                                    {calm.state.addVideoList[i].cheData.label}
+                                </div>
+                                <div className='tagText'>
+                                    {calm.state.addVideoList[i].cheData.extra}
+                                </div>
                             </div>
-                        </div>
-
+                        }
                     </div>
                     <div className="line_public flex_container"></div>
                 </div>
@@ -548,6 +566,9 @@ export default class addUploadVideo extends React.Component {
             Toast.fail('最大只允许一次上传十个视频', 2)
             return
         }
+        calm.setState({
+            showDelete: false
+        })
         this.state.addVideoList.push({
             videoUrl: '',
             coverPath: '',
@@ -607,8 +628,8 @@ export default class addUploadVideo extends React.Component {
         data.method = '取消成功';
         data.type = 2;
         window.parent.postMessage(JSON.stringify(data), '*');
-        window.location.reload();
-        console.log('取消成功');
+        // window.location.reload();
+        // console.log('取消成功');
     }
 
     /**
@@ -647,7 +668,7 @@ export default class addUploadVideo extends React.Component {
                             tagTitle: v.cheData.label,
                             tagType: 2,   //挑战
                             tagContent: v.cheData.extra,
-                            tagId:v.cheData.value
+                            tagId: v.cheData.value
                         }
                     ]
                 })
@@ -967,7 +988,7 @@ export default class addUploadVideo extends React.Component {
      * 挑战改变
      */
     chaChange(i) {
-        console.log(i,"item")
+        console.log(i, "item")
         calm.setState({
             challengeValue: i.label
         }, () => {

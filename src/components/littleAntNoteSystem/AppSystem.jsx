@@ -84,7 +84,7 @@ export default class AppSystem extends React.Component {
         console.log(key);
         console.log(res);
         var html = <div>
-            <div className="title">{res.title}</div>
+            <div className="preview_title">{res.title}</div>
             <div className="head_info">
                 <div className="author">{res.author}</div>
                 <div className="head_info_date">{res.date}</div>

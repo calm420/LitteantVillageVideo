@@ -30,7 +30,7 @@ export default class AppSystem extends React.Component {
         document.title = "有样:AR微分享学习平台";
         if (this.state.user) {
 
-        } else {
+        } else{
             location.hash = "Login";
         }
     }
@@ -80,9 +80,20 @@ export default class AppSystem extends React.Component {
         location.hash = "Login"
     }
 
-    setPanel(key, html) {
+    setPanel(key, res) {
         console.log(key);
-        console.log(html);
+        console.log(res);
+        var html = <div>
+            <div className="title">{res.title}</div>
+            <div className="head_info">
+                <div className="author">{res.author}</div>
+                <div className="head_info_date">{res.date}</div>
+            </div>
+            <div dangerouslySetInnerHTML={{
+                __html: res.label
+            }}></div>
+        </div>;
+        console.log(html,'html');
         if (key == 'openPrieview') {
             _this.setState({
                 maskFlag: true,
@@ -161,9 +172,9 @@ export default class AppSystem extends React.Component {
                     } onClick={this.closeMask}></div>
                     <div className="preview" style={
                         this.state.maskFlag ? {display: 'inline-block'} : {display: 'none'}
-                    } dangerouslySetInnerHTML={{
-                        __html: this.state.label
-                    }}></div>
+                    }>
+                        {this.state.label}
+                    </div>
                     <div id='main'>
                         <div className="left">
                             <List

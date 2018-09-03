@@ -95,7 +95,7 @@ export default class ReadPanel extends React.Component {
                 // refresh
                 this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
             } else if (iframeData.method == 'openPrieview') {
-                this.props.setPanel('openPrieview', iframeData.label);
+                this.props.setPanel('openPrieview', iframeData.response);
             }else if(iframeData.method == 'exit_editor'){
                 console.log('取消编辑');
                 this.setState({

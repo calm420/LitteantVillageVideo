@@ -13,7 +13,7 @@ export default class mobileEditor extends React.Component {
     }
 
     componentDidMount() {
-        document.title = "手机编辑器";
+        document.title = "发布文章";
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -83,12 +83,14 @@ export default class mobileEditor extends React.Component {
                 if (result.success) {
                     Toast.info(type == 0 ? '保存成功' : '发布成功', 1);
                     //关闭
-                    var data = {
-                        method: 'finish',
-                    };
-                    Bridge.callHandler(data, null, function (error) {
-                        console.log(error);
-                    });
+                    setTimeout(function () {
+                        var data = {
+                            method: 'finish',
+                        };
+                        Bridge.callHandler(data, null, function (error) {
+                            console.log(error);
+                        });
+                    }, 1000)
                 } else {
                     Toast.fail("保存/发布失败");
                 }

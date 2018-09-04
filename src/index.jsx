@@ -195,6 +195,16 @@ const mobileEditor = (location, cb) => {
     }, 'mobileEditor')
 };
 
+
+
+/**
+ * 错题本
+ */
+const wrongQuestion = (location, cb) =>{
+    require.ensure([], require => {
+        cb(null, require('./components/wrongQuestion/js/wrongQuestion').default)
+    }, 'wrongQuestion')
+}
 import './index.less';
 
 class Index extends React.Component {
@@ -288,6 +298,11 @@ class Index extends React.Component {
                             to="/mobileEditor?userId=31"
                             style={{fontSize: '24px'}}>手机编辑器</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/wrongQuestion?"
+                            style={{fontSize: '24px'}}>错题本</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -330,6 +345,7 @@ ReactDOM.render(
             <Route path="playVideo" getComponent={playVideo}/>
             <Route path="fileDownload" getComponent={fileDownload}/>
             <Route path="mobileEditor" getComponent={mobileEditor}/>
+            <Route path="wrongQuestion" getComponent={wrongQuestion}/>
         </Route>
     </Router>
     ,

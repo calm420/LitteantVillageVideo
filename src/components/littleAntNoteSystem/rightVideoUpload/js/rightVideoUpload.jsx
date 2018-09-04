@@ -83,6 +83,7 @@ export default class rightVideoUpload extends React.Component {
 
     //接受来自list => appSystem 的消息
     accept(type, data) {
+        console.log(data,"data")
         switch (type) {
             case "编辑":
                 console.log(data);
@@ -119,16 +120,16 @@ export default class rightVideoUpload extends React.Component {
                         this.state.vId ? {display: 'none'} : {display: 'block'}
                     }>
                         <iframe id="iframe_box_add"
-                                src={"http://jiaoxue.maaee.com:8094/#/addUploadVideo?ident=" + this.state.userId}
-                                // src={"http://192.168.50.72:8094/#/addUploadVideo?ident=" + this.state.userId}
+                                src={"http://jiaoxue.maaee.com:7094/#/addUploadVideo?ident=" + this.state.userId}
+                                // src={"http://192.168.50.72:7094/#/addUploadVideo?ident=" + this.state.userId}
                                 frameborder="0"></iframe>
                     </div>
                     <div style={
                         this.state.vId ? {display: 'block'} : {display: 'none'}
                     }>
                         <iframe id="iframe_box_updata"
-                                src={"http://jiaoxue.maaee.com:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
-                                // src={"http://192.168.50.72:8094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
+                                src={"http://jiaoxue.maaee.com:7094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
+                                // src={"http://192.168.50.72:7094/#/updateVideo?ident=" + this.state.userId + "&vId=" + this.state.vId}
                                 frameborder="0"></iframe>
                     </div>
                 </div>

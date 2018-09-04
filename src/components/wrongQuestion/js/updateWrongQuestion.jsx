@@ -1,6 +1,6 @@
 import React from 'react';
 var calm;
-export default class wrongQuestion extends React.Component {
+export default class updateWrongQuestion extends React.Component {
     constructor(props){
         super(props);
         calm = this;
@@ -13,7 +13,7 @@ export default class wrongQuestion extends React.Component {
     }
     render(){
         return(
-            <div id="wrongQuestion" style={{ height: calm.state.clientHeight }}>错题本</div>
+            <div id="updateWrongQuestion" style={{ height: calm.state.clientHeight }}>错题本</div>
         )
     }
 }

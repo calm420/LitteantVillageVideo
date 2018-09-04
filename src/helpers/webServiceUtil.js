@@ -15,7 +15,7 @@ const apiWebServiceURLOfLocals = "http://" + localDomain + ":6012/Excoord_Little
 const apiWebServiceURLOfRemote = "http://www.maaee.com:6012/Excoord_LittleVideoApiServer/webservice";
 var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
 //小蚂蚁mobile地址
-const mobileURLOfLocal = "http://" + localUrl + ":8094/#/";
+const mobileURLOfLocal = "http://" + localUrl + ":7094/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8094/#/";
 
 

@@ -200,10 +200,25 @@ const mobileEditor = (location, cb) => {
 /**
  * 错题本
  */
-const wrongQuestion = (location, cb) =>{
+const publishWrongQuestion = (location, cb) =>{
     require.ensure([], require => {
-        cb(null, require('./components/wrongQuestion/js/wrongQuestion').default)
-    }, 'wrongQuestion')
+        cb(null, require('./components/wrongQuestion/js/publishWrongQuestion').default)
+    }, 'publishWrongQuestion')
+}
+const updateWrongQuestion = (location, cb) =>{
+    require.ensure([], require => {
+        cb(null, require('./components/wrongQuestion/js/updateWrongQuestion').default)
+    }, 'updateWrongQuestion')
+}
+const projectManage = (location, cb) =>{
+    require.ensure([], require => {
+        cb(null, require('./components/wrongQuestion/js/projectManage').default)
+    }, 'projectManage')
+}
+const wrongQuestionDetail = (location, cb) =>{
+    require.ensure([], require => {
+        cb(null, require('./components/wrongQuestion/js/wrongQuestionDetail').default)
+    }, 'wrongQuestionDetail')
 }
 import './index.less';
 
@@ -300,7 +315,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/wrongQuestion?"
+                            to="/publishWrongQuestion?"
                             style={{fontSize: '24px'}}>错题本</Link>
                     </li>
                 </ul>
@@ -345,7 +360,10 @@ ReactDOM.render(
             <Route path="playVideo" getComponent={playVideo}/>
             <Route path="fileDownload" getComponent={fileDownload}/>
             <Route path="mobileEditor" getComponent={mobileEditor}/>
-            <Route path="wrongQuestion" getComponent={wrongQuestion}/>
+            <Route path="publishWrongQuestion" getComponent={publishWrongQuestion}/>
+            <Route path="updateWrongQuestion" getComponent={updateWrongQuestion}/>
+            <Route path="projectManage" getComponent={projectManage}/>
+            <Route path="wrongQuestionDetail" getComponent={wrongQuestionDetail}/>
         </Route>
     </Router>
     ,

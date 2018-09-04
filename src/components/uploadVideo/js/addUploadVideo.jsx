@@ -60,7 +60,11 @@ export default class addUploadVideo extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var uid = locationSearch.split("&")[0].split("=")[1];
         this.setState({ "uid": uid });
-        this.buildAddList()
+        this.buildAddList();
+        //监听postmessage消息接受
+        window.addEventListener('message', (e) => {
+            this.onMessage(e);
+        })
 
         // $('#upload_video').click(function () {
         //     $('#upload_video_').click();
@@ -68,18 +72,28 @@ export default class addUploadVideo extends React.Component {
 
 
     }
+
+
+    onMessage(e){
+        console.warn(e,'eeeeeeeeeeeeeeeeeeeeeeeeee');
+        if(e.data == 'refresh'){
+            console.warn('添加');
+            window.location.reload();
+        }
+    }
+
     /**
      * 获取视频路径
      */
     getVideo(i) {
         // console.log(i, "iiii")
         // console.log($('.progressText'), "$('.progressText')")
-        console.log($('.upload_video_').eq(i),"hah")
+        console.log($('.upload_video_').eq(i), "hah")
         $('.upload_video_').eq(i).unbind("change");
         $('.upload_video_').eq(i).bind('change', function (evt) {
             // var newFile = getFileURL(document.getElementById('upload_video_').files[0])
             console.log($('.upload_video_').val(), "evt")
-            console.log(evt.target.files[0],"evt")
+            console.log(evt.target.files[0], "evt")
             if (evt.target.files[0]) {
                 var formData = new FormData();
                 formData.append("file" + 0, evt.target.files[0]);
@@ -108,7 +122,7 @@ export default class addUploadVideo extends React.Component {
                             console.log(ev)
                             console.log(ev.loaded, "ev")
                             console.log(ev.total, "ev")
-                            if(ev.loaded == ev.total){
+                            if (ev.loaded == ev.total) {
                                 $('.progress-bar')[0].style.width = '100%';
                             }
                             if ($('#progress')[0].style.display == 'none') {
@@ -124,7 +138,7 @@ export default class addUploadVideo extends React.Component {
                     },
                     success: function (res) {
                         console.log(res, "res")
-                        console.log(i,"iuy")
+                        console.log(i, "iuy")
                         calm.state.addVideoList[i].videoUrl = res;
                         calm.buildAddList();
                         calm.upload_video_pic(i)
@@ -139,7 +153,7 @@ export default class addUploadVideo extends React.Component {
      * 获取图片路径
      */
     getImage(i) {
-        console.log(i,"点击")
+        console.log(i, "点击")
         $('#upload_video_').eq(i).unbind("change");
         $('.upload_image_').eq(i).bind('change', function (evt) {
             console.log("chufale")
@@ -168,8 +182,8 @@ export default class addUploadVideo extends React.Component {
                             }, 500);
                         };
                         xhr.upload.onprogress = function (ev) {
-                            console.log(ev,"ev")
-                            if(ev.loaded == ev.total){
+                            console.log(ev, "ev")
+                            if (ev.loaded == ev.total) {
                                 $('.progress-bar')[0].style.width = '100%';
                             }
                             if ($('#progress')[0].style.display == 'none') {
@@ -179,7 +193,7 @@ export default class addUploadVideo extends React.Component {
                                 // console.log(((ev.loaded / ev.total) * 100).toFixed(0) + '%', 'ev');
                                 //显示进度条
                                 $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
-                                console.log($('.progress-bar')[0].style.width,"hhehehhe")
+                                console.log($('.progress-bar')[0].style.width, "hhehehhe")
                                 $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
                             }
                         };
@@ -187,7 +201,7 @@ export default class addUploadVideo extends React.Component {
                     },
                     success: function (res) {
                         console.log(res, "res1111")
-                        console.log(i,"iuy")
+                        console.log(i, "iuy")
                         calm.state.addVideoList[i].coverPath = res;
                         calm.buildAddList();
                         // calm.upload_video_pic(i)
@@ -328,13 +342,14 @@ export default class addUploadVideo extends React.Component {
      * 删除挑战
      */
     deleteCha(index) {
+        console.log(index);
         calm.state.addVideoList[index].cheData = {};
-        calm.setState({
-            showDelete: false
-        }, () => {
-            calm.buildAddList();
+        calm.buildAddList();
+        // calm.setState({
+        //     showDelete: false
+        // }, () => {
 
-        })
+        // })
     }
     //首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
     getBlobBydataURI(dataURI, type) {
@@ -408,7 +423,7 @@ export default class addUploadVideo extends React.Component {
             var useIndex = i;
             arr.push(<div className="listCont">
                 {/*删除按钮*/}
-                <div className="icon_delete" onClick={calm.showListAlert.bind(this, i)}
+                <div className="icon_delete icon_pointer" onClick={calm.showListAlert.bind(this, i)}
                     style={{ display: listArr.length == 1 ? 'none' : 'block' }}></div>
                 <div className="my_flex sameBack">
                     <span className="textTitle">封面
@@ -441,7 +456,7 @@ export default class addUploadVideo extends React.Component {
                     {calm.state.addVideoList[i].videoUrl.length == 0 ?
                         <div className="parentDiv">
                             <button className="uploadBtn">上传视频</button>
-                            <input className="calm40 upload_video_"  name="upload_video_" id="upload_video_" onClick={calm.getVideo.bind(this, i)} type="file" accept="video/*" class="hidd" />
+                            <input className="calm40 upload_video_" name="upload_video_" id="upload_video_" onClick={calm.getVideo.bind(this, i)} type="file" accept="video/*" class="hidd" />
                         </div>
                         :
                         <div className="upload_file">
@@ -486,17 +501,20 @@ export default class addUploadVideo extends React.Component {
                 <div style={{ display: calm.state.addVideoList[i].show ? "block" : "none" }}>
                     <div className="my_flex sameBack">
                         <div className="textTitle">挑战</div>
-                        <div className='tagBtn' style={{ display: !(calm.state.showDelete) ? "block" : "none" }} onClick={calm.addChan.bind(this, i)}>添加挑战</div>
-                        <div className='challengeTag' style={{ display: calm.state.showDelete ? "block" : "none" }} >
-                            <div className='tagTitle textOver'>
-                                <span className="del_tag" onClick={calm.deleteCha.bind(this, i)}>删除</span>
-                                <span className='preIcon'>#</span>
-                                {calm.state.addVideoList[i].cheData.label}</div>
-                            <div className='tagText'>
-                                {calm.state.addVideoList[i].cheData.extra}
+                        {$.isEmptyObject(calm.state.addVideoList[i].cheData) == true ?
+                            <div className='tagBtn' onClick={calm.addChan.bind(this, i)}>添加挑战</div>
+                            :
+                            <div className='challengeTag'>
+                                <div className='tagTitle textOver'>
+                                    <span className="del_tag" onClick={calm.deleteCha.bind(this, useIndex)}>删除</span>
+                                    <span className='preIcon'>#</span>
+                                    {calm.state.addVideoList[i].cheData.label}
+                                </div>
+                                <div className='tagText'>
+                                    {calm.state.addVideoList[i].cheData.extra}
+                                </div>
                             </div>
-                        </div>
-
+                        }
                     </div>
                     <div className="line_public flex_container"></div>
                 </div>
@@ -548,6 +566,9 @@ export default class addUploadVideo extends React.Component {
             Toast.fail('最大只允许一次上传十个视频', 2)
             return
         }
+        calm.setState({
+            showDelete: false
+        })
         this.state.addVideoList.push({
             videoUrl: '',
             coverPath: '',
@@ -604,11 +625,11 @@ export default class addUploadVideo extends React.Component {
     //取消编辑
     cancelEditor() {
         var data = {};
-                    data.method = '取消成功';
-                    data.type = 2;
-                    window.parent.postMessage(JSON.stringify(data), '*');
-                    window.location.reload();
-        console.log('取消成功');
+        data.method = '取消成功';
+        data.type = 2;
+        window.parent.postMessage(JSON.stringify(data), '*');
+        // window.location.reload();
+        // console.log('取消成功');
     }
 
     /**
@@ -646,7 +667,8 @@ export default class addUploadVideo extends React.Component {
                         {
                             tagTitle: v.cheData.label,
                             tagType: 2,   //挑战
-                            tagContent: v.cheData.extra
+                            tagContent: v.cheData.extra,
+                            tagId: v.cheData.value
                         }
                     ]
                 })
@@ -668,10 +690,10 @@ export default class addUploadVideo extends React.Component {
             Toast.fail('数据存在空值，请检查', 2)
             return
         }
-        
+
         var calmFlag = true;
         for (var i = 0; i < newArr.length; i++) {
-            if ( newArr[i].width.length == 0 || newArr[i].height.length == 0 || newArr[i].firstUrl.length == 0) {
+            if (newArr[i].width.length == 0 || newArr[i].height.length == 0 || newArr[i].firstUrl.length == 0) {
                 calmFlag = false
                 break
             }
@@ -753,7 +775,6 @@ export default class addUploadVideo extends React.Component {
                                         value: v.tagId,
                                         label: v.tagTitle,
                                         extra: <div>{str}<div className='blueTxt'>点击发起</div></div>
-
                                     })
                                     return;
                                 }
@@ -833,6 +854,7 @@ export default class addUploadVideo extends React.Component {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
         var tagTextData = []
+        console.log(calm.state.tagChangeData, "改变的标签")
         calm.state.tagChangeData.forEach((v, i) => {
             if (v.tagId == 0) {
                 tagTextData.push({
@@ -849,7 +871,6 @@ export default class addUploadVideo extends React.Component {
 
         })
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.state.addVideoList[calm.state.tagIndex].tagText.concat(tagTextData);
-
         var arr = calm.state.addVideoList[calm.state.tagIndex].tagText;
         calm.state.addVideoList[calm.state.tagIndex].tagText = calm.makeArr(arr, "tagTitle")
         calm.buildAddList();
@@ -887,20 +908,20 @@ export default class addUploadVideo extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                if (v.tagId == 0) {
-                                    // calm.setState({
-                                    //     isNewTag:0
-                                    // })
-                                    calm.setState.isNewTag = 0;
-                                    arr.push(<Tag
-                                        selected={false}
-                                        onChange={calm.tagChange.bind(this, v)}
-                                    >{v.tagTitle}</Tag>)
-                                    return
-                                }
-                                calm.setState({
-                                    isNewTag: 0
-                                })
+                                // // if (v.tagId == 0) {
+                                // //     // calm.setState({
+                                // //     //     isNewTag:0
+                                // //     // })
+                                // //     calm.setState.isNewTag = 0;
+                                // //     arr.push(<Tag
+                                // //         selected={false}
+                                // //         onChange={calm.tagChange.bind(this, v)}
+                                // //     >{v.tagTitle}</Tag>)
+                                // //     return
+                                // // }
+                                // calm.setState({
+                                //     isNewTag: 0
+                                // })
                                 arr.push(<Tag
                                     selected={false}
                                     onChange={calm.tagChange.bind(this, v)}
@@ -923,12 +944,23 @@ export default class addUploadVideo extends React.Component {
      * 标签改变
      */
     tagChange(data, status) {
+        // console.log(status,"status")
         if (status) {
             calm.state.tagChangeData.push(data);
+            console.log(calm.state.tagChangeData, "tagChangeData")
+
         } else {
+            // console.log(status,"status")
+            console.log(calm.state.tagChangeData, "tagChangeData1")
             calm.state.tagChangeData.forEach((v, i) => {
-                if (v.id == data.id) {
+                console.log(data, "data")
+                console.log(v, "V")
+                if (v.tagId == data.tagId) {
                     calm.state.tagChangeData.splice(i, 1)
+                    calm.setState({
+                        tagChangeData: calm.state.tagChangeData
+                    })
+                    console.log(calm.state.tagChangeData, "tagChangeData2")
                 }
             })
         }
@@ -956,12 +988,10 @@ export default class addUploadVideo extends React.Component {
      * 挑战改变
      */
     chaChange(i) {
-
-
+        console.log(i, "item")
         calm.setState({
             challengeValue: i.label
         }, () => {
-
         })
 
         if (i.value == 0) {
@@ -971,7 +1001,7 @@ export default class addUploadVideo extends React.Component {
         }
         calm.setState({
             cheData: i,
-            chaChangeValue: i.value,
+            chaChangeValue: i.value,  // 挑战ID
         });
 
     };
@@ -989,99 +1019,104 @@ export default class addUploadVideo extends React.Component {
     render() {
         return (
             <div id="addUploadVideo">
-                <div id="progress" style={{ display: "none" }}>
-                    <div className="progress">
-                        <div className="progress-bar" style={{ width: "0%" }}></div>
-                    </div>
-                    <div className="progressText">进度: 0%</div>
-                </div>
-                <div className="addList">
-                    {this.state.addListArr}
-                    <div className="addBtn sameBack" onClick={this.addList}>
-                        <span>添加视频<Icon type="plus" /></span>
-                    </div>
-                </div>
-                {/* 添加标签 */}
-                <div className="tagBack" style={{
-                    display: "none",
-                }}></div>
-                <div className={`calmTagDiv tagCont`}
-                    style={{
-                        display: "none",
-                    }}
-                >
-                    {/* {useIndex} */}
-                    <div className="tagInput">
-                        <InputItem
-                            placeholder="请输入标签"
-                            onChange={calm.searchInputChange}
-                            value={calm.state.searchValue}
+                {/* <div className="header"><span  onClick={this.cancelEditor.bind(this)}>返回</span><span className="addVideo">添加视频</span> </div>*/}
+                <div className="articleEditorCont">
+                    <div className="videoContent editor_boxlist">
+                        <div id="progress" style={{ display: "none" }}>
+                            <div className="progress">
+                                <div className="progress-bar" style={{ width: "0%" }}></div>
+                            </div>
+                            <div className="progressText">进度: 0%</div>
+                        </div>
+                        <div className="addList">
+                            {this.state.addListArr}
+                            <div className="addBtn sameBack icon_pointer" onClick={this.addList}>
+                                <span>添加视频<Icon type="plus" /></span>
+                            </div>
+                        </div>
+                        {/* 添加标签 */}
+                        <div className="tagBack" style={{
+                            display: "none",
+                        }}></div>
+                        <div className={`calmTagDiv calmTagDivNew tagCont`}
+                            style={{
+                                display: "none",
+                            }}
                         >
-                        </InputItem>
+                            {/* {useIndex} */}
+                            <div className="tagInput">
+                                <InputItem
+                                    placeholder="请输入标签"
+                                    onChange={calm.searchInputChange}
+                                    value={calm.state.searchValue}
+                                >
+                                </InputItem>
 
-                        {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
-                    </div>
-                    <div className="classTags">
-                        {
-                            calm.state.tagData
-                        }
-                    </div>
-                    <div className="bottomBox">
-                        <span className="close" onClick={calm.cancelSubmit}>取消</span>
-                        <span className="bind" onClick={calm.submitTagArr}>确 定</span>
-                    </div>
-                </div>
-                {/* 添加挑战 */}
-                <div className={`calmChaDiv tagCont`}
-                    style={{
-                        display: "none",
-                    }}
-                >
-                    {
-                        calm.state.showTextOrList ?
-                            ""
-                            :
-                            <div className='startTitle'>发起挑战<span className='preIcon'>#</span></div>
-                    }
-                    <div className="tagInput">
-                        <InputItem
-                            placeholder="请输入挑战"
-                            onChange={calm.chaInputChange}
-                            value={calm.state.challengeValue}
+                                {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
+                            </div>
+                            <div className="classTags">
+                                {
+                                    calm.state.tagData
+                                }
+                            </div>
+                            <div className="bottomBox">
+                                <span className="close" onClick={calm.cancelSubmit}>取消</span>
+                                <span className="bind" onClick={calm.submitTagArr}>确 定</span>
+                            </div>
+                        </div>
+                        {/* 添加挑战 */}
+                        <div className={`calmChaDiv calmTagDivNew tagCont`}
+                            style={{
+                                display: "none",
+                            }}
                         >
-                        </InputItem>
-                    </div>
-                    <div className='challenge'>
-                        {
-                            calm.state.showTextOrList ?
-                                <List>
-                                    {calm.state.challengeData.map(i => (
-                                        <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                            <div className='topTitle textOver'><span className='preIcon'>#</span>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
-                                        </RadioItem>
-                                    ))}
-                                </List>
-                                :
-                                <TextareaItem
-                                    className="add_element"
-                                    placeholder="请输入挑战的表述"
-                                    value={calm.state.chaContent}
-                                    onChange={calm.chaOnChange.bind(this)}
-                                    rows={5}
-                                    count={50}
-                                />
+                            {
+                                calm.state.showTextOrList ?
+                                    ""
+                                    :
+                                    <div className='startTitle'>发起挑战<span className='preIcon'>#</span></div>
+                            }
+                            <div className="tagInput">
+                                <InputItem
+                                    placeholder="请输入挑战"
+                                    onChange={calm.chaInputChange}
+                                    value={calm.state.challengeValue}
+                                >
+                                </InputItem>
+                            </div>
+                            <div className='challenge'>
+                                {
+                                    calm.state.showTextOrList ?
+                                        <List>
+                                            {calm.state.challengeData.map(i => (
+                                                <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
+                                                    <div className='topTitle textOver'><span className='preIcon'>#</span>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
+                                                </RadioItem>
+                                            ))}
+                                        </List>
+                                        :
+                                        <TextareaItem
+                                            className="add_element"
+                                            placeholder="请输入挑战的表述"
+                                            value={calm.state.chaContent}
+                                            onChange={calm.chaOnChange.bind(this)}
+                                            rows={5}
+                                            count={50}
+                                        />
 
-                        }
-                    </div>
-                    <div className="bottomBox">
-                        <span className="close" onClick={calm.cancelChaSubmit}>取消</span>
-                        <span className="bind" onClick={calm.submitChaArr}>确 定</span>
+                                }
+                            </div>
+                            <div className="bottomBox">
+                                <span className="close" onClick={calm.cancelChaSubmit}>取消</span>
+                                <span className="bind" onClick={calm.submitChaArr}>确 定</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className='submitBtn'>
-                    <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this, 1)}>提交</Button>
-                    <Button type="warning" onClick={this.batchLittleVideoInfo.bind(this, 0)}>保存</Button>
-                    <Button type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</Button>
+                <div className='bottom_nav'>
+                    <a className="button_btn preview_button button_btnLeft" type="warning" onClick={this.cancelEditor.bind(this)}>取消编辑</a>
+                    <a className="button_btn preview_button" type="warning" onClick={this.batchLittleVideoInfo.bind(this, 0)}>保存</a>
+                    <a className="button_btn submit_button" type="warning" onClick={this.batchLittleVideoInfo.bind(this, 1)}>提交</a>
                 </div>
 
             </div>

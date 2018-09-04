@@ -181,7 +181,7 @@ export default class leftVideoList extends React.Component {
     }
 
     showOperBox(id) {
-        console.log(id)
+        this.props.submitForvideo
         if (id == this.state.showOperId) {
             this.setState({
                 showOperId: null,
@@ -207,7 +207,7 @@ export default class leftVideoList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    console.log('删除成功')
+                    console.log('删除成功');
                     this.refresh(this.state.tabsIndex);
                     // this.props.submit('删除', id)
                 } else {

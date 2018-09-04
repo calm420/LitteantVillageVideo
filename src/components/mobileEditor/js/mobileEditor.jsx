@@ -33,6 +33,20 @@ export default class mobileEditor extends React.Component {
             if (iframeData.method == 'mobile-submit') {
                 //发布文章
                 _this.saveArticleInfo(iframeData.article)
+            } else if (iframeData.method == 'unloadFilesForEdit') {
+                Bridge.callHandler(iframeData, function (res) {
+                    // 拿到照片地址
+
+                    var ifm = document.getElementById('iframe_mobile');
+                    var data = {
+                        method: 'callbackSrc',
+                        res: res,
+                    }
+                    ifm.contentWindow.postMessage(JSON.stringify(data), '*');
+
+                }, function (error) {
+                    console.log(error);
+                });
             }
         }
 
@@ -122,7 +136,12 @@ export default class mobileEditor extends React.Component {
     render() {
         return (
             <div id="mobileEditor">
+<<<<<<< HEAD
                 <iframe id="iframe_mobile" className="mobile-iframe" src="https://192.168.50.163:6443/mobileEditor/"
+=======
+                <iframe id="iframe_mobile" className="mobile-iframe"
+                        src="http://jiaoxue.maaee.com:8094/richTextMobileEditor/"
+>>>>>>> 7409c4b780881ba84c04af93669fec9b22eb55fd
                         frameborder="0"></iframe>
 
             </div>

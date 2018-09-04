@@ -19,7 +19,8 @@ export default class AppSystem extends React.Component {
             user: JSON.parse(sessionStorage.getItem("loginUser")),
             clientHeight: document.body.clientHeight,
             maskFlag: false,
-            tabsIndex: 1, //选择自媒体文章还是小视频添加
+            tabsIndex: 0, //选择自媒体文章还是小视频添加
+            flag:1
         };
     }
 
@@ -29,7 +30,7 @@ export default class AppSystem extends React.Component {
         document.title = "有样:AR微分享学习平台";
         if (this.state.user) {
 
-        } else {
+        } else{
             location.hash = "Login";
         }
     }
@@ -39,7 +40,9 @@ export default class AppSystem extends React.Component {
     }
 
     submitForvideo = (type,id) =>{
-        this.refs.appSystemToVideo.accept(type,id)
+        console.log(type,'type')
+        console.log(id,'id')
+            this.refs.appSystemToVideo.accept(type,id)
     }
 
     submitForList = (type, data) => {
@@ -77,9 +80,20 @@ export default class AppSystem extends React.Component {
         location.hash = "Login"
     }
 
-    setPanel(key, html) {
+    setPanel(key, res) {
         console.log(key);
-        console.log(html);
+        console.log(res);
+        var html = <div>
+            <div className="preview_title">{res.title}</div>
+            <div className="head_info">
+                <div className="author">{res.author}</div>
+                <div className="head_info_date">{res.date}</div>
+            </div>
+            <div dangerouslySetInnerHTML={{
+                __html: res.label
+            }}></div>
+        </div>;
+        console.log(html,'html');
         if (key == 'openPrieview') {
             _this.setState({
                 maskFlag: true,
@@ -93,14 +107,26 @@ export default class AppSystem extends React.Component {
         _this.setState({
             maskFlag: false
         })
+        _this.refs.listToReadPanel.accept('closeMask')
     }
 
     changeTabsIndex(index) {
-        console.log('进入');
         console.log(index);
+        if(index == 0){
+            this.setState({
+                flag:1
+            })
+        }else {
+            this.setState({
+                flag:0
+            })
+        }
+        console.log('进入');
         this.setState({
             tabsIndex: index
         })
+      
+
     }
 
     render() {
@@ -120,12 +146,14 @@ export default class AppSystem extends React.Component {
                     ]}
                 >
                     <div className="changeTabs" style={
-                        this.state.tabsIndex == 0 ? {borderBottom: '3px solid #ccc',paddingBottom:'5px'} : {borderBottom: '3px solid #4380eb',paddingBottom:'5px'}
-                    } data-index={0} onClick={this.changeTabsIndex.bind(this, 0)}>校园自媒体
+                        this.state.tabsIndex == 0 ? {background: '#2E68CD'} : {paddingBottom:'5px'}
+                    } data-index={0} onClick={this.changeTabsIndex.bind(this, 0)}><span className="icon-menu icon-Media"></span>校园自媒体
+                        {_this.state.flag == 1 ? <i></i> :"" }
                     </div>
-                    <div className="" style={
-                        this.state.tabsIndex == 1 ? {borderBottom: '3px solid #ccc',paddingBottom:'5px'} : {borderBottom: '3px solid #4380eb',paddingBottom:'5px'}
-                    } data-index={1} onClick={this.changeTabsIndex.bind(this, 1)}>小视频
+                    <div className="changeTabs" style={
+                        this.state.tabsIndex == 1 ? {background: '#2E68CD'} : {paddingBottom:'5px'}
+                    } data-index={1} onClick={this.changeTabsIndex.bind(this, 1)}><span className="icon-menu icon-video"></span>小视频
+                        {_this.state.flag == 0?<i></i>:""}
                     </div>
                     {/*<div className="logo">校园自媒体</div>*/}
                     {/*<div className="userInfo">*/}
@@ -144,9 +172,9 @@ export default class AppSystem extends React.Component {
                     } onClick={this.closeMask}></div>
                     <div className="preview" style={
                         this.state.maskFlag ? {display: 'inline-block'} : {display: 'none'}
-                    } dangerouslySetInnerHTML={{
-                        __html: this.state.label
-                    }}></div>
+                    }>
+                        {this.state.label}
+                    </div>
                     <div id='main'>
                         <div className="left">
                             <List
@@ -183,7 +211,6 @@ export default class AppSystem extends React.Component {
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }

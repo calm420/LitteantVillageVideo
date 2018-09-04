@@ -236,7 +236,8 @@ export default class articleDetail extends React.Component {
                     // this.initDataSource = this.initDataSource.concat(result.response);
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading: false
+                        isLoading: false,
+                        commit_count: result.pager.rsCount
                     })
                     if (this.initDataSource.length == result.pager.rsCount) {
                         this.setState({
@@ -565,6 +566,7 @@ export default class articleDetail extends React.Component {
                     theLike.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         commitText: '',
+                        commit_count:(this.state.commit_count + 1),
                     }, () => {
                         $('#text').css({height: this.state.initTextarea});
                         $('#text').val('');
@@ -784,6 +786,7 @@ export default class articleDetail extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="commit_title">评论总数量({this.state.commit_count})</div>
                             </div>
                         )}
                         renderFooter={this.state.isLoadingHidden ? '' : () => (

@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Modal, Toast
 } from 'antd-mobile';
-import "../css/projectManage.less"
+import "../css/publishWrongQuestion.less"
 
 const alert = Modal.alert;
 const prompt = Modal.prompt;
@@ -343,55 +343,57 @@ export default class projectManage extends React.Component {
 
     render() {
         return (
-            <div id="projectManage" style={{ height: calm.state.clientHeight }}>
-                <div>已选科目
-                    {
-                        calm.state.alreadySelectData.map((v, i) => {
-                            return (
-                                <span className={v.oldFlag ? "active" : ""} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
-                            )
-                        })
-                    }
-                    <span onClick={calm.addProject}>添加科目</span>
-                </div>
-                <div className="hehehe">
-                    <div>所有科目
-                        {
-                            calm.state.allProjectData.length == 0 ?
-                                ""
-                                :
-                                <span onClick={calm.manageProject}>管理</span>
-                        }
-                    </div>
-                    {/* 需要高亮的 */}
-                    {
-                        calm.state.activeData.map((v, i) => {
-                            return (
-                                <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active" : ""} >{v.content}</span>
-                            )
-                        })
-                    }
-                    {/* 除了高亮之后剩下的全部 */}
-                    {
-                        calm.state.noActiveData.map((v, i) => {
-                            return (
-                                <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active" : ""} >{v.content}</span>
-                            )
-                        })
-                    }
-                    {/* 新添加的 */}
-                    {
-                        calm.state.allProjectData.map((v, i) => {
-                            return (
-                                <span className="fatherSpan">
-                                    <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active" : ""}>{v.content}</span>
-                                    <span className="delete" style={{ display: "none" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>
+            <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
+               <div className="cont">
+                   <div><div className='title'>已选科目</div>
+                       {
+                           calm.state.alreadySelectData.map((v, i) => {
+                               return (
+                                   <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                               )
+                           })
+                       }
+                       <span className='spanTag' onClick={calm.addProject}>+添加科目</span>
+                   </div>
+                   <div className="allProject">
+                           <div className='title'>所有科目
+                           {
+                               calm.state.allProjectData.length == 0 ?
+                                   ""
+                                   :
+                                   <span onClick={calm.manageProject}>管理</span>
+                           }
+                            </div>
+                       {/* 需要高亮的 */}
+                       {
+                           calm.state.activeData.map((v, i) => {
+                               return (
+                                   <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                               )
+                           })
+                       }
+                       {/* 除了高亮之后剩下的全部 */}
+                       {
+                           calm.state.noActiveData.map((v, i) => {
+                               return (
+                                   <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                               )
+                           })
+                       }
+                       {/* 新添加的 */}
+                       {
+                           calm.state.allProjectData.map((v, i) => {
+                               return (
+                                   <span className="fatherSpan">
+                                    <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"}>{v.content}</span>
+                                    <span className="delete del_tag" style={{ display: "none" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>
                                 </span>
-                            )
-                        })
-                    }
-                </div>
-                <button onClick={calm.saveProject}>保存</button>
+                               )
+                           })
+                       }
+                   </div>
+               </div>
+                <div className='nextBtn' onClick={calm.saveProject}><span>保存</span></div>
             </div>
         )
     }

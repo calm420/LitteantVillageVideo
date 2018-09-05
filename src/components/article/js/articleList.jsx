@@ -623,15 +623,16 @@ export default class articleList extends React.Component {
                         friendsAttachments.splice(i, 1);
                     }
                 }
-                dom = <div className="" onClick={this.toThemeTaskDetail.bind(this,rowData.cid)}>
+                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this,rowData.cid)}>
                     <div className="list_head">
                         <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt=""/>
                         </div>
                         <div className="userName">{rowData.userInfo.userName}</div>
                         <div className="createTime"></div>
-                        <div className="tags">{rowData.type?'主题任务':'错题本'}</div>
+
                     </div>
+                    <div className="tags">{rowData.type?'主题任务':'错题本'}</div>
                     <div className="list_content">{rowData.content}</div>
                     <div className="list_image" style={
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
@@ -640,14 +641,12 @@ export default class articleList extends React.Component {
                             if(value.type == 0){
                                 return <img style={
                                     friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
-                                        maxWidth: '33.3333%',
                                         display: 'inline-block'
                                     }
                                 } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
-                                        maxWidth: '33.3333%',
                                         display: 'inline-block'
                                     }
                                 }>
@@ -659,9 +658,9 @@ export default class articleList extends React.Component {
                         })}
                     </div>
                     <div className="list_bottom">
-                        <div className="list_bottom_item">分享</div>
-                        <div className="list_bottom_item">评论</div>
-                        <div className="list_bottom_item">点赞</div>
+                        <div className="list_bottom_item"><i className="i-share"></i></div>
+                        <div className="list_bottom_item"><i className="i-comments"></i><span>12</span></div>
+                        <div className="list_bottom_item"><i className="i-praise"></i><span>8</span></div>
                     </div>
                 </div>
             } else {

@@ -400,19 +400,27 @@
   }
   .circleList{
     padding: 15px 15px 0 15px;
-    border-bottom: 10px solid #e5e5e5;
+    border-bottom: 15px solid #e5e5e5;
     position: relative;
     .tags{
       display: inline-block;
-      width: 75px;
-      height: 21px;
       position: absolute;
-      right: 0;
-      top:0;
+      right: 14px;
+      top: -6px;
     }
     .tag-ThemeTask{
       background: url("../images/tag-ThemeTask.png") no-repeat;
       background-size: 100% 100%;
+      width: 75px;
+      height: 21px;
+      display: inline-block;
+    }
+    .tag-WrongTopic{
+      background: url("../images/tag-WrongTopic.png") no-repeat;
+      background-size: 100% 100%;
+      width: 75px;
+      height: 21px;
+      display: inline-block;
     }
     .list_bottom{
       padding: 10px 35px;
@@ -548,7 +556,7 @@
       }
     }
     &:first-child{
-      margin-top: 10px;
+      margin-top: 15px;
     }
     &:last-child .circleList{
       border-bottom: none;

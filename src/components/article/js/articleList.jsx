@@ -632,7 +632,7 @@ export default class articleList extends React.Component {
                         <div className="createTime"></div>
 
                     </div>
-                    <div className="tags">{rowData.type?'主题任务':'错题本'}</div>
+                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic"}>{rowData.type?'':''}</span></div>
                     <div className="list_content">{rowData.content}</div>
                     <div className="list_image" style={
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}

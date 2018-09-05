@@ -34,10 +34,10 @@
 #publishWrongQuestion .title {
   font-size: 15px;
   color: #333;
-  padding: 14px 0 4px;
+  padding: 18px 0 0;
 }
 #publishWrongQuestion .am-list-header {
-  padding: 14px 0;
+  padding: 18px 0 0;
   color: #333;
   font-size: 15px;
 }
@@ -48,6 +48,12 @@
 }
 #publishWrongQuestion .leftWrongQuestion {
   height: 100%;
+}
+#publishWrongQuestion .leftWrongQuestion .title {
+  padding: 14px 0 14px;
+}
+#publishWrongQuestion .leftWrongQuestion .am-list-header {
+  padding: 14px 0 14px;
 }
 #publishWrongQuestion .leftWrongQuestion .am-textarea-control {
   padding: 0;
@@ -67,7 +73,7 @@
   height: 100%;
 }
 #publishWrongQuestion .rightTag .am-list-header {
-  padding: 14px 0 0 ;
+  padding: 18px 0 0;
 }
 #publishWrongQuestion .rightTag .am-list-item .am-list-line .am-list-content {
   border: 1px #AEAEAE solid !important;
@@ -113,7 +119,7 @@
 }
 #publishWrongQuestion .rightTag .addTag {
   color: #AEAEAE;
-  border: 1px #AEAEAE solid;
+  border: 1px #AEAEAE dashed;
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
@@ -142,7 +148,7 @@
   display: inline-block;
 }
 #publishWrongQuestion .moreTag .title {
-  padding: 14px 0 4px;
+  padding: 18px 0 0;
 }
 #publishWrongQuestion .imgDiv {
   position: relative;
@@ -374,7 +380,7 @@
   float: right;
   font-size: 13px;
   color: #666;
-  line-height: 22px;
+  line-height: 17px;
 }
 #publishWrongQuestion .fatherSpan {
   display: inline-block;

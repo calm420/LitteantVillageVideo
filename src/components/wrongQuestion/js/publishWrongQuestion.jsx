@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, TextareaItem, Tag, InputItem, Radio, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import '../css/publishWrongQuestion.less'
 const RadioItem = Radio.RadioItem;
 var calm;
 export default class publishWrongQuestion extends React.Component {
@@ -61,15 +62,19 @@ export default class publishWrongQuestion extends React.Component {
      * 去选择标签
      */
     nextStep() {
-        $(".rightTag").show()
-        $(".leftWrongQuestion").hide()
+        $(".rightTag").show();
+        $(".leftWrongQuestion").hide();
+        $(".tabWrap .wrongQuestion").removeClass('active');
+        $(".tabWrap .tag").addClass('active');
     }
     /**
      * 返回错题
      */
     backWrongQuestion() {
-        $(".rightTag").hide()
-        $(".leftWrongQuestion").show()
+        $(".rightTag").hide();
+        $(".leftWrongQuestion").show();
+        $(".tabWrap .tag").removeClass('active');
+        $(".tabWrap .wrongQuestion").addClass('active');
     }
 
     upload_video_pic() {
@@ -460,14 +465,14 @@ export default class publishWrongQuestion extends React.Component {
         const { understandValue, projectValue } = this.state;
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
-                <div>
-                    <span className="wrongQuestion" onClick={calm.backWrongQuestion} >错题本</span>
+                <div className='tabWrap line_public'>
+                    <span className="wrongQuestion active" onClick={calm.backWrongQuestion} >错题本</span>
                     <span className="tag" onClick={calm.nextStep}>标签</span>
                 </div>
                 <div className="leftWrongQuestion">
 
-                    <div>
-                        <div>上传题干</div>
+                    <div className='item'>
+                        <div className='title'>上传题干</div>
                         {
                             calm.state.theQuestionArr.map((v, i) => {
                                 return (
@@ -484,8 +489,8 @@ export default class publishWrongQuestion extends React.Component {
                         }
                         <button onClick={calm.addTheQusetion}>添加</button>
                     </div>
-                    <div>
-                        <div>上传正解</div>
+                    <div className='item'>
+                        <div className='title'>上传正解</div>
                         {
                             calm.state.theAnswerArr.map((v, i) => {
                                 return (
@@ -502,7 +507,7 @@ export default class publishWrongQuestion extends React.Component {
                         }
                         <button onClick={calm.addTheAnswer}>添加</button>
                     </div>
-                    <div>
+                    <div className='item'>
                         <List renderHeader={() => '添加备注'}>
                             <TextareaItem
                                 rows={5}

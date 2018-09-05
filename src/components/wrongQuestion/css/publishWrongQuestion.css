@@ -3,6 +3,37 @@
   height: 100% !important;
   background: #fff;
 }
+#publishWrongQuestion .tabWrap span {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  font-size: 17px;
+  height: 44px !important;
+  line-height: 44px !important;
+  color: #676C6F;
+}
+#publishWrongQuestion .tabWrap span.active {
+  color: #4285F4;
+  position: relative;
+}
+#publishWrongQuestion .tabWrap span.active::before {
+  content: '';
+  position: absolute;
+  background-color: #4285F4;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 1px;
+  left: 50%;
+  width: 16px;
+  height: 2.5PX;
+  margin-left: -8px;
+  border-radius: 1px;
+}
+#publishWrongQuestion .leftWrongQuestion {
+  padding: 0 15px;
+}
 #publishWrongQuestion .calmTagDivNew {
   width: 380px !important;
   left: 50%;
@@ -27,7 +58,6 @@
 #publishWrongQuestion .del_tag {
   width: 13px;
   height: 13px;
-  background: url("../imgs/icon_close.png") no-repeat;
   background-size: 100% 100%;
   display: inline-block;
   position: absolute;
@@ -128,7 +158,6 @@
   display: inline-block;
 }
 #publishWrongQuestion .tagBtn {
-  background: url("../imgs/icon_uploadS.png") no-repeat;
   width: 36px;
   height: 36px;
   background-size: 100%;

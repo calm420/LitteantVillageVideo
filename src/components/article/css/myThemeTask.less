@@ -1,0 +1,185 @@
+#myThemeTask{
+  .circleList{
+    padding: 15px 15px 0 15px;
+    border-bottom: 15px solid #e5e5e5;
+    position: relative;
+    .tags{
+      display: inline-block;
+      position: absolute;
+      right: 14px;
+      top: -6px;
+    }
+    .tag-ThemeTask{
+      background: url("../images/tag-ThemeTask.png") no-repeat;
+      background-size: 100% 100%;
+      width: 75px;
+      height: 21px;
+      display: inline-block;
+    }
+    .tag-WrongTopic{
+      width: 75px;
+      height: 21px;
+      display: inline-block;
+    }
+    .tag-WrongTopic-red{
+      background: url("../images/tag-WrongTopic-red.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .tag-WrongTopic-orange{
+      background: url("../images/tag-WrongTopic-orange.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .tag-WrongTopic-green{
+      background: url("../images/tag-WrongTopic-green.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .tag-WrongTopic-yellow{
+      background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .list_bottom{
+      padding: 10px 35px;
+      margin-top: 10px;
+      position: relative;
+      display: flex;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      height: 35px;
+      justify-content: space-between;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      &:after {
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: 15px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }
+    }
+  }
+  .list_item{
+    margin-top: 0;
+    .list_head{
+      height: 40px;
+      margin-bottom: 13px;
+      .headPic{
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        float: left;
+        margin-right: 10px;
+        img{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+      .userName{
+        display: inline-block;
+        color: #333;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .createTime{
+        display: inline-block;
+        color: #999;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+    }
+    .list_image{
+      margin-top: 10px;
+
+      img{
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 2px;
+        margin-right: 8px;
+      }
+      .video_tag{
+        position: relative;
+        width: 110px;
+        height: 110px;
+        overflow: hidden;
+        border-radius: 2px;
+        margin-right: 8px;
+        video{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .video_tag_play{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          width: 20px;
+          height: 20px;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+          background: white;
+
+        }
+      }
+    }
+    .list_bottom_item{
+      display: inline-block;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      i{
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+      }
+      .i-share{
+        background:url("../images/share.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .i-comments{
+        background:url("../images/comments.png") no-repeat;
+        background-size: 100% 100%;
+        width: 16px;
+        height: 14px;
+      }
+      .i-praise{
+        background:url("../images/praise.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      span{
+        position: relative;
+        left:5px;
+        top:-2px;
+      }
+    }
+    &:first-child{
+      margin-top: 15px;
+    }
+    &:last-child .circleList{
+      border-bottom: none;
+    }
+  }
+  .list_content{
+    color: #333;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}

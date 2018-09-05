@@ -19,7 +19,8 @@ export default class projectManage extends React.Component {
             allProjectData: [],
             activeStr: "",
             newB: [],
-            newBStr: ""
+            newBStr: "",
+            showDelete: 0
         }
     }
 
@@ -72,12 +73,14 @@ export default class projectManage extends React.Component {
                         newArr.push({
                             content: v.courseName,
                             flag: true,
-                            id: v.cid
+                            id: v.cid,
+                            uid: v.uid
                         })
                         oldArr.push({
                             content: v.courseName,
                             oldFlag: true,
-                            id: v.cid
+                            id: v.cid,
+                            uid: v.uid
                         })
                     })
                     calm.setState({
@@ -101,7 +104,7 @@ export default class projectManage extends React.Component {
         } else {
             phone = 'android'
         }
-        prompt('请输入科目名称', '', [
+        prompt('请输入科目名称', 　'(最多四个字)', [
             { text: '取消' },
             { text: '立即添加', onPress: value => calm.saveProjectName(value) },
         ], 'default', "", [], phone)
@@ -110,13 +113,10 @@ export default class projectManage extends React.Component {
      * 保存科目
      */
     saveProjectName(value) {
-        calm.state.allProjectData.push({
-            content: value,
-            flag: false
-        });
-        calm.setState({
-            allProjectData: calm.state.allProjectData
-        })
+        if (value == "") {
+            Toast.info("请输入科目名称")
+            return
+        }
         var param = {
             "method": "saveCourse",
             "courseJson": {
@@ -125,25 +125,15 @@ export default class projectManage extends React.Component {
                 "uid": calm.state.userId
             }
         }
-       
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    var newArr = [],
-                        oldArr = []
-                        result.response = result.response 
-                        result.response.forEach((v, i) => {
-                        newArr.push({
-                            content: v.courseName,
-                            flag: true
-                        })
-                        oldArr.push({
-                            content: v.courseName,
-                            oldFlag: true
-                        })
-                    })
+                    calm.state.allProjectData.push({
+                        content: value,
+                        flag: false,
+                    });
                     calm.setState({
-                        activeData: newArr, alreadySelectData: oldArr
+                        allProjectData: calm.state.allProjectData
                     })
                 } else {
                     Toast.info(result.msg);
@@ -171,7 +161,8 @@ export default class projectManage extends React.Component {
                         newArr.push({
                             content: v.courseName,
                             flag: false,
-                            cid: v.cid
+                            cid: v.cid,
+                            uid: v.uid
                         })
                     })
                     calm.setState({
@@ -221,7 +212,8 @@ export default class projectManage extends React.Component {
             calm.state.alreadySelectData.push({
                 content: v.content,
                 oldFlag: true,
-                id:v.id
+                id: v.id,
+                uid: v.uid
             })
         }
         calm.setState({
@@ -233,16 +225,17 @@ export default class projectManage extends React.Component {
     /**
      * 点击没有高亮的
      */
-    clickNoActive(v, index){
+    clickNoActive(v, index) {
         console.log(v)
-        if(v.flag == false){
+        if (v.flag == false) {
             calm.state.noActiveData[index].flag = true;
             calm.state.alreadySelectData.push({
                 content: v.content,
                 oldFlag: true,
-                id:v.cid
+                id: v.cid,
+                uid: v.uid
             })
-        }else { 
+        } else {
             calm.state.noActiveData[index].flag = false;
             calm.state.alreadySelectData.forEach((item, i) => {
                 if (v.content == item.content) {
@@ -265,7 +258,9 @@ export default class projectManage extends React.Component {
             calm.state.allProjectData[index].flag = true;
             calm.state.alreadySelectData.push({
                 content: v.content,
-                oldFlag: true
+                oldFlag: true,
+                id: v.cid,
+                uid: v.uid
             })
         } else {
             calm.state.allProjectData[index].flag = false;
@@ -285,7 +280,7 @@ export default class projectManage extends React.Component {
      * 删除
      */
     deleAllProjectData(value, index, e) {
-        console.log(value, "index")
+        console.log(value, "index1")
         calm.state.allProjectData.forEach((item, i) => {
             if (value.content == item.content) {
                 calm.state.allProjectData.splice(i, 1);
@@ -300,12 +295,111 @@ export default class projectManage extends React.Component {
             alreadySelectData: calm.state.alreadySelectData,
             allProjectData: calm.state.allProjectData
         })
+        var param = {
+            "method": "deleteCourse",
+            "courseId": value.uid
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                    var newArr = []
+                    result.response.forEach((v, i) => {
+                        newArr.push({
+                            content: v.courseName,
+                            flag: false,
+                            cid: v.cid,
+                            uid: v.uid
+                        })
+                    })
+                    calm.setState({
+                        noActiveData: newArr,
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    /**
+     * 删除
+     */
+    delenoActiveData(value, index, e) {
+        console.log(value, "index2")
+        calm.state.noActiveData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.noActiveData.splice(i, 1);
+            }
+        })
+        calm.state.alreadySelectData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.alreadySelectData.splice(i, 1);
+            }
+        })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            noActiveData: calm.state.noActiveData
+        })
+        var param = {
+            "method": "deleteCourse",
+            "courseId": value.cid
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                  Toast.info("删除成功")
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 删除
+     */
+    deleteactiveData(value, index, e) {
+        console.log(value, "index333")
+        calm.state.activeData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.activeData.splice(i, 1);
+            }
+        })
+        calm.state.alreadySelectData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.alreadySelectData.splice(i, 1);
+            }
+        })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            activeData: calm.state.activeData
+        })
+        var param = {
+            "method": "deleteCourse",
+            "courseId": value.id
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                  Toast.info("删除成功")
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
     /**
      * 点击管理
      */
     manageProject() {
-        $(".delete").show();
+        calm.setState({
+            showDelete: 1
+        })
     }
 
     /**
@@ -363,36 +457,42 @@ export default class projectManage extends React.Component {
                                    :
                                    <span onClick={calm.manageProject}>管理</span>
                            }
-                            </div>
-                       {/* 需要高亮的 */}
-                       {
-                           calm.state.activeData.map((v, i) => {
-                               return (
-                                   <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
-                               )
-                           })
-                       }
-                       {/* 除了高亮之后剩下的全部 */}
-                       {
-                           calm.state.noActiveData.map((v, i) => {
-                               return (
-                                   <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
-                               )
-                           })
-                       }
-                       {/* 新添加的 */}
-                       {
-                           calm.state.allProjectData.map((v, i) => {
-                               return (
-                                   <span className="fatherSpan">
-                                    <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"}>{v.content}</span>
-                                    <span className="delete del_tag" style={{ display: "none" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>
-                                </span>
-                               )
-                           })
-                       }
-                   </div>
-               </div>
+                        </div>
+                        {/* 需要高亮的 */}
+                        {
+                            calm.state.activeData.map((v, i) => {
+                                return (
+                                    <span className="fatherSpan">
+                                        <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                                        {v.uid == 0 ? " " : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleteactiveData.bind(this, v, i)}>删除</span>}
+                                    </span>
+                                )
+                            })
+                        }
+                        {/* 除了高亮之后剩下的全部 */}
+                        {
+                            calm.state.noActiveData.map((v, i) => {
+                                return (
+                                    <span className="fatherSpan">
+                                        <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                                        {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.delenoActiveData.bind(this, v, i)}>删除</span>}
+                                    </span>
+                                )
+                            })
+                        }
+                        {/* 新添加的 */}
+                        {
+                            calm.state.allProjectData.map((v, i) => {
+                                return (
+                                    <span className="fatherSpan">
+                                        <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"}>{v.content}</span>
+                                        {v.uid == 0 ? "":<span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
+                                    </span>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
                 <div className='nextBtn' onClick={calm.saveProject}><span>保存</span></div>
             </div>
         )

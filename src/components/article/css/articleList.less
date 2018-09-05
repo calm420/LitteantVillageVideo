@@ -400,7 +400,7 @@
   }
   .circleList{
     padding: 15px 15px 0 15px;
-    border-bottom: 15px solid #e5e5e5;
+    border-bottom: 15px solid #f6f6f6;
     position: relative;
     .tags{
       display: inline-block;
@@ -436,7 +436,7 @@
       background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
       background-size: 100% 100%;
     }
-    .list_bottom{
+    .list_bottom, .detail_bottom{
       padding: 10px 35px;
       margin-top: 10px;
       position: relative;
@@ -468,6 +468,13 @@
         -webkit-transform: scaleY(0.5);
         -ms-transform: scaleY(0.5);
         transform: scaleY(0.5);
+      }
+    }
+    .detail_bottom{
+      padding: 10px 0;
+      height: 15px;
+      .list_bottom_item{
+        flex: 1;
       }
     }
   }
@@ -502,9 +509,15 @@
         line-height: 1.6;
       }
     }
-    .list_image{
-    margin-top: 10px;
-
+    .list_image, .image_detail{
+      margin-top: 10px;
+      span{
+        font-size: 14px;
+        color: #666;
+        padding: 10px 0;
+        display: inline-block;
+        line-height: 1;
+      }
       img{
         width: 110px;
         height: 110px;
@@ -576,11 +589,169 @@
       border-bottom: none;
     }
   }
-  .list_content{
+  .list_content, .content_detail{
     color: #333;
     font-size: 16px;
     line-height: 20px;
+    word-break: break-word;
   }
 
+  .asOfDate{
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+  }
+  .commit_title{
+    border-top: 10px solid #f6f6f6;
+    font-size: 14px;
+    color: #333;
+    padding: 15px;
+  }
+  .am-list-view-scrollview-content{
+    width: 100% !important;
+  }
+  .am-list-item, .am-list-item .am-list-line .am-list-content, .am-list-item .am-list-line{
+    padding: 0;
+  }
+  .tag-course{
+    padding: 0px 4px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    float: right;
+    margin-left: 2px;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .tag-course-blue{
+    border-color: #4285F4;
+    color: #4285F4;
+  }
+  .courseList{
+    padding-left: 50px;
+  }
+  .people_image_list{
+    margin-top: 10px;
+    img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    }
+  }
+  .insetPeople > div{
+    display: inline-block;
+  }
+  .lookAll{
+    float: right;
+    font-size: 12px;
+    color: #999;
+    i{
+      width: 6px;
+      height: 6px;
+      border-top: 1px solid #999;
+      border-right: 1px solid #999;
+      transform: rotate(45deg);
+      position: relative;
+      top: -1px;
+      margin-left: 3px;
+      display: inline-block;
+    }
+  }
+  /* 评论 */
+  .input_box{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    img{
+      width: 100%;
+      height: 40px;
+    }
+    //.image_input_box{
+    //  display: inline-block;
+    //  img{
+    //    width: 50px;
+    //    height: 50px;
+    //  }
+    //}
+    //.textarea_commit{
+    //  width: 80%;
+    //  height: 30px;
+    //  line-height: 30px;
+    //  display: inline-block;
+    //  border: 1px solid #ccc;
+    //}
+  }
+  .appendImage_item{
+    width: 74px;
+    height: 74px;
+    object-fit: cover;
+  }
+  .commit_box{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 136px;
+    background: white;
+    z-index: 10;
+    &  > div{
+      padding: 6px 15px;
+      .import{
+        width: 274px;
+        height: 111px;
+        background: #f3f3f3;
+        padding:  4px 13px 8px 13px;
+        float: left;
+      input{
+        background: transparent;
+        width: 100%;
+        padding: 10px 0;
+        border: none;
+      }
+      }
+      .send{
+        width: 35px;
+        float: right;
+        text-align: right;
+        height: 123px;
+        .btn-blue{
+          color: #4285F4;
+          font-size: 16px;
+          position: relative;
+          top: 77px;
+        }
+        .AddImage{
+          width: 20px;
+          height: 18px;
+          background: url("../images/AddImage.png") no-repeat;
+          background-size: 100% 100%;
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+  #appendImage{
+    .image_item{
+      width: 74px;
+      height: 74px;
+      position: relative;
+      display: inline-block;
+      .delete_upload_image{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: black;
+        width: 20px;
+        height: 20px;
+        img{
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
 
+  }
 }

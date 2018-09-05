@@ -592,7 +592,15 @@ export default class articleList extends React.Component {
                 window.location.href = url;
             });
         } else if (type == '') {
-            console.log('错题本');
+            var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId=" + this.state.userId;
+            // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
+            var data = {
+                method: 'openNewPage',
+                url: url
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
         }
 
     }
@@ -655,7 +663,7 @@ export default class articleList extends React.Component {
                         {friendsAttachments.map((value, index) => {
                             if(value.type == 0){
                                 return <img style={
-                                    friendsAttachments.length == 1 ? {width: '100%',height:'100%'} : {
+                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
                                 } src={value.path} alt=""/>

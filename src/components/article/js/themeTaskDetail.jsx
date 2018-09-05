@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Toast, DatePicker, PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
 } from 'antd-mobile';
-import '../css/themeTaskDetail.less';
+import '../css/articleList.less';
 
 var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -238,21 +238,27 @@ export default class articleList extends React.Component {
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
-                dom = <div>
+                dom = <div className="list_item" style={{marginTop:'0'}}>
+                    <div className="circleList">
                     <div className="list_head">
                         <div className="head_pic">
                             <img src={rowData.discussUser.avatar} alt=""/>
                         </div>
-                        <div className="userName">{rowData.discussUser.userName}</div>
+                        <div className="courseList">
+                            <div className="userName">{this.state.detail.userInfo.userName}</div>
+                            <span className="tag-course tag-course-blue">语文</span>
+                        </div>
                         <div className="time">{this.timeDifference(rowData.createTime)}</div>
                     </div>
                     <div className="list_content">{rowData.discussContent}</div>
+                </div>
                 </div>
             }
             return dom
         };
         return (
             <div id="themeTaskDetail" style={{height: document.body.clientHeight}}>
+                <div id="articleList">
                 {/*主题计划*/}
                 <div style={
                     this.state.detail.type == 1 ? {display: 'block'} : {display: 'none'}
@@ -261,17 +267,21 @@ export default class articleList extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderSectionHeader={sectionData => (
-                            <div>
-                                <div className="head_box">
-                                    <img className="headPic" src={this.state.detail.userInfo.avatar} alt=""/>
-                                    <div className="userName">{this.state.detail.userInfo.userName}</div>
+                            <div className="list_item" style={{marginTop:'0'}}>
+                                <div className="circleList">
+                                <div className="list_head">
+                                    <div className="headPic"><img src={this.state.detail.userInfo.avatar} alt=""/></div>
+                                    <div className="courseList">
+                                        <div className="userName">{this.state.detail.userInfo.userName}</div>
+                                        <span className="tag-course tag-course-blue">语文</span>
+                                    </div>
                                     <div className="time"></div>
                                 </div>
                                 <div className="content_detail">{this.state.detail.content}</div>
                                 <div className="image_detail">
                                     {this.state.detail.friendsAttachments.map((value, index) => {
                                         if (value.type == 0) {
-                                            return <img src={value.path} alt=""/>
+                                            return <img src={value.path} alt=""  style={{width: '200', height: '113'}} />
                                         } else {
                                             return <div className="video_tag">
                                                 <video style={{width: '100%', height: '100%'}} src={value.path} alt=""/>
@@ -283,35 +293,38 @@ export default class articleList extends React.Component {
                                 <div className="asOfDate">
                                     截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                 <div className="detail_bottom">
-                                    <div>分享</div>
-                                    <div>点赞</div>
+                                    <div className="list_bottom_item"><i className="i-share"></i></div>
+                                    <div className="list_bottom_item"><i className="i-praise"></i><span>8</span></div>
                                 </div>
-                                <div className="insetPeople">
-                                    <div>参与的人</div>
-                                    <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部</div>
-                                </div>
-                                <div className="people_image_list">
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
-                                    <img
-                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                        alt=""/>
+                            </div>
+                                <div className="commit_title">
+                                    <div className="insetPeople">
+                                        <div>参与的人</div>
+                                        <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
+                                    </div>
+                                    <div className="people_image_list">
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                        <img
+                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                            alt=""/>
+                                    </div>
                                 </div>
                                 <div className="commit_title">全部评论({this.state.commit_count})</div>
                             </div>
@@ -344,24 +357,29 @@ export default class articleList extends React.Component {
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderSectionHeader={sectionData => (
-                            <div>
-                                <div className="head_box">
-                                    <img className="headPic" src={this.state.detail.userInfo.avatar} alt=""/>
-                                    <div className="userName">{this.state.detail.userInfo.userName}</div>
+                            <div className="list_item" style={{marginTop:'0'}}>
+                            <div className="circleList">
+                                <div className="list_head">
+                                    <div className="headPic"><img src={this.state.detail.userInfo.avatar} alt=""/></div>
+                                    <div className="courseList">
+                                        <div className="userName">{this.state.detail.userInfo.userName}</div>
+                                        <span className="tag-course tag-course-blue">语文</span>
+                                    </div>
                                     <div className="time"></div>
+
                                 </div>
                                 <div className="content_detail">{this.state.detail.content}</div>
                                 <div className="image_detail">
                                     <div>
-                                        题干
+                                        <span>题干</span>
                                         <div>
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.fatherType == 0) {
                                                     if (value.type == 0) {
-                                                        return <img src={value.path} alt=""/>
+                                                        return <img src={value.path} alt="" style={{width: '200px', height: '113px'}} />
                                                     } else {
                                                         return <div className="video_tag">
-                                                            <video style={{width: '100%', height: '100%'}}
+                                                            <video style={{width: '200px', height: '113px'}}
                                                                    src={value.path} alt=""/>
                                                             <div className="video_tag_play"></div>
                                                         </div>
@@ -372,15 +390,15 @@ export default class articleList extends React.Component {
                                         </div>
                                     </div>
                                     <div>
-                                        正解
+                                        <span>正解</span>
                                         <div>
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.fatherType == 1) {
                                                     if (value.type == 0) {
-                                                        return <img src={value.path} alt=""/>
+                                                        return <img src={value.path} alt=""  style={{width: '200', height: '113'}} />
                                                     } else {
                                                         return <div className="video_tag">
-                                                            <video style={{width: '100%', height: '100%'}}
+                                                            <video style={{width: '200', height: '113'}}
                                                                    src={value.path} alt=""/>
                                                             <div className="video_tag_play"></div>
                                                         </div>
@@ -394,9 +412,10 @@ export default class articleList extends React.Component {
                                 <div className="asOfDate">
                                     截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                 <div className="detail_bottom">
-                                    <div>分享</div>
-                                    <div>点赞</div>
+                                    <div className="list_bottom_item"><i className="i-share"></i></div>
+                                    <div className="list_bottom_item"><i className="i-praise"></i><span>8</span></div>
                                 </div>
+                            </div>
                                 <div className="commit_title">全部评论({this.state.commit_count})</div>
                             </div>
                         )}
@@ -430,20 +449,25 @@ export default class articleList extends React.Component {
                 <div className="commit_box" style={
                     this.state.commitFlag?{display:'block'}:{display:'none'}
                 }>
-                    <input type="text" id="commit" placeholder="请输入评论内容"/>
-                    <Button onClick={this.sendCommit}>发送</Button>
                     <div>
-                        <div id="appendImage">
-                            {this.state.domImage}
+                        <div className="import">
+                            <input type="text" id="commit" placeholder="请输入评论内容"/>
+                            <div id="appendImage">
+                                {this.state.domImage}
+                            </div>
                         </div>
-                        <div onClick={this.selectedImage}>
-                            <img className="addPic" src={require('../images/add-pic.png')} alt=""/>
+                        <div className="send">
+                            <div onClick={this.selectedImage}>
+                                <img className="AddImage" src={require('../images/AddImage.png')} alt=""/>
+                            </div>
+                            <span className="btn-blue" onClick={this.sendCommit}>发送</span>
                         </div>
                     </div>
                 </div>
                 <div className="mask" style={
                     this.state.commitFlag?{display:'block'}:{display:'none'}
                 } onClick={this.closeCommitBox}></div>
+            </div>
             </div>
         );
     }

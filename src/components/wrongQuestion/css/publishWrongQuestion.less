@@ -63,10 +63,12 @@
             margin-bottom: 40px;
             textarea{
                 background-color:#F5F5F5;
-                padding: 10px;
+                padding: 7px 10px;
                 font-size: 13px;
                 color: #666;
-                height: 80px;
+                height: 100px;
+                width: 100%;
+                box-sizing: border-box;
             }
         }
     }
@@ -84,7 +86,7 @@
             color:#AEAEAE!important;
             padding: 0 5px;
             line-height: 21px;
-
+            max-width: 98px;
         }
         .am-radio-inner::after{
             display: none;
@@ -92,8 +94,8 @@
         .am-list-item{
             min-height: 22px !important;
             padding: 0 ;
-            margin-top: 10px;
-            margin-right: 10px;
+            margin-top: 12px;
+            margin-right: 12px;
         }
         .am-list-line{
             padding-right: 0;
@@ -171,6 +173,7 @@
             background-color: rgba(0,0,0,0.4);
             width: 25px;
             height: 100%;
+            z-index: 1;
             span{
                 background: url("../image/icon_delete.png") no-repeat;
                 font-size: 0;
@@ -186,6 +189,7 @@
                 -ms-transform: translate(-50%,-50%);
                 -o-transform: translate(-50%,-50%);
                 transform: translate(-50%,-50%);
+                z-index: 99;
             }
         }
 
@@ -214,6 +218,9 @@
         -moz-transform: translateX(-50%); /* Firefox */
         -webkit-transform: translateX(-50%); /* Safari 和 Chrome */
         -o-transform: translateX(-50%);
+        .bottomBox{
+            padding: 10px 0;
+        }
     }
     .tagBack {
         position: absolute;
@@ -260,9 +267,9 @@
             input {
                 font-size: 15px;
                 color: #333;
-                background: url("../image/icon_search.png") no-repeat 5px center;
+                background: url("../image/icon_search.png") no-repeat 8px center;
                 background-size: 15px;
-                padding-left: 25px;
+                padding-left: 28px;
                 padding-right: 5px;
             }
         }
@@ -270,7 +277,7 @@
     .classTags {
         padding-right: 15px;
         padding-top: 10px;
-        height: calc(~"100% - 111px");
+        height: calc(~"100% - 116px");
         overflow-y: auto;
         box-sizing: border-box;
         .am-tag-normal::before,
@@ -311,8 +318,8 @@
         border: 1px #AEAEAE solid;
         padding: 0 5px;
         font-size: 13px;
-        margin-right: 10px;
-        margin-top: 10px;
+        margin-right: 12px;
+        margin-top: 12px;
         height: 23px;
         line-height:23px;
         -webkit-border-radius: 1px;
@@ -324,6 +331,9 @@
         position: relative;
         max-width: 110px;
         display: inline-block;
+        &.add{
+            border: 1px #AEAEAE dashed;
+        }
     }
     .tagBtn {
         //background: url("../imgs/icon_uploadS.png") no-repeat;
@@ -394,8 +404,8 @@
         display: inline-block;
         position: relative;
         .del_tag{
-            right: 2px;
-            top: 3px;
+            right: 5px;
+            top: 6px;
         }
     }
 }

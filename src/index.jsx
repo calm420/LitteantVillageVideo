@@ -195,6 +195,29 @@ const mobileEditor = (location, cb) => {
     }, 'mobileEditor')
 };
 
+//发布主题页面
+const themeTask = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/themeTask/js/themeTask').default)
+    }, 'themeTask')
+};
+
+//主题详情页面
+const themeTaskDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/article/js/themeTaskDetail').default)
+    }, 'themeTaskDetail')
+};
+
+//选择部分可见页面
+const selectedPeople = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/themeTask/js/selectedPeople').default)
+    }, 'selectedPeople')
+};
+
+
+
 import './index.less';
 
 class Index extends React.Component {
@@ -204,25 +227,27 @@ class Index extends React.Component {
             <div className="body">
                 <h1>Stages list</h1>
                 <ul role="nav">
-                    <li><Link to="/s1">ListView + Carousel</Link></li>
+                    {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     <li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
                     <li><Link to="/articleList?userId=31&machineType=ios&version=100"
                               style={{fontSize: '24px'}}>ios文章列表</Link></li>
                     <li><Link to="/articleList?userId=31"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
-                    <li><Link to="/myArticleList?userId=3"
-                              style={{fontSize: '24px'}}>我的文章列表</Link></li>
+                    <li><Link to="/themeTask?userId=17"
+                              style={{fontSize: '24px'}}>发布主题</Link></li>
+                    {/*<li><Link to="/myArticleList?userId=3"*/}
+                              {/*style={{fontSize: '24px'}}>我的文章列表</Link></li>*/}
                     <li><Link to="/LoginScanner"
                               style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
-                    <li><Link to="/Login"
-                              style={{fontSize: '24px'}}>二维码登录页</Link></li>
-                    <li><Link to="/EditorDemo"
-                              style={{fontSize: '24px'}}>editorDemo</Link></li>
+                    {/*<li><Link to="/Login"*/}
+                              {/*style={{fontSize: '24px'}}>二维码登录页</Link></li>*/}
+                    {/*<li><Link to="/EditorDemo"*/}
+                              {/*style={{fontSize: '24px'}}>editorDemo</Link></li>*/}
                     <li><Link to="/lookThrough?auditorId=3"
                               style={{fontSize: '24px'}}>审核列表</Link></li>
-                    <li><Link to="/uploadMusicList?ident=23836"
-                              style={{fontSize: '24px'}}>uploadMusicList</Link></li>
+                    {/*<li><Link to="/uploadMusicList?ident=23836"*/}
+                              {/*style={{fontSize: '24px'}}>uploadMusicList</Link></li>*/}
                     <li>
                         <Link
                             to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
@@ -330,6 +355,9 @@ ReactDOM.render(
             <Route path="playVideo" getComponent={playVideo}/>
             <Route path="fileDownload" getComponent={fileDownload}/>
             <Route path="mobileEditor" getComponent={mobileEditor}/>
+            <Route path="themeTask" getComponent={themeTask}/>
+            <Route path="themeTaskDetail" getComponent={themeTaskDetail}/>
+            <Route path="selectedPeople" getComponent={selectedPeople}/>
         </Route>
     </Router>
     ,

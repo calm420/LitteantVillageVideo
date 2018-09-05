@@ -756,6 +756,7 @@ export default class articleList extends React.Component {
                     <span className='btn' onClick={this.toPerfectInfo}>完善资料</span>
                     {/*<span>完善资料</span>*/}
                 </div>
+                {/*发布菜单*/}
                 <div onClick={this.showPubli_box} className="icon-release">
                     <div className="showPubli_box" style={
                         this.state.showPubliFlag ? {display: 'block'} : {display: 'none'}
@@ -765,6 +766,10 @@ export default class articleList extends React.Component {
                         <div onClick={this.publishArt.bind(this, '')}>发布错题本</div>
                     </div>
                 </div>
+                {/*mask*/}
+                <div style={
+                    this.state.showPubliFlag ? {display: 'block'} : {display: 'none'}
+                } onClick={this.showPubli_box} className="mask"></div>
                 <Tabs tabs={tabs}
                       initalPage={0}
                       swipeable={false}

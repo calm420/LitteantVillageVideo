@@ -529,7 +529,8 @@ export default class articleList extends React.Component {
                 })
             } else {
                 //视频
-                var cover = newArr[2]
+                var cover = newArr[2];
+                Toast.info(cover)
                 var dom = that.state.domImage;
                 dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this,url)}><img className="appendImage_item" src={cover} alt=""/>
                     <div className='delete_upload_image' id={url}><img
@@ -548,7 +549,7 @@ export default class articleList extends React.Component {
         } else if (noom == res) {
             return;
         }
-        this.setState({
+        that.setState({
             domImage: dom
         })
 
@@ -645,11 +646,13 @@ export default class articleList extends React.Component {
                                             <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
                                         </div>
                                         <div className="people_image_list">
-                                            {this.state.detail.partakeUserList.map((value, index) => {
+                                            {
+                                                this.state.detail.partakeUserList? this.state.detail.partakeUserList.map((value, index) => {
                                                 return <img
                                                     src={value?value.avatar:''}
                                                     alt=""/>
-                                            })}
+                                            }):{}
+                                            }
 
                                         </div>
                                     </div>

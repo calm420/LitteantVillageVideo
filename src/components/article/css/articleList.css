@@ -392,7 +392,7 @@
 }
 #articleList .circleList {
   padding: 15px 15px 0 15px;
-  border-bottom: 15px solid #e5e5e5;
+  border-bottom: 15px solid #f6f6f6;
   position: relative;
 }
 #articleList .circleList .tags {
@@ -429,7 +429,8 @@
   background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
   background-size: 100% 100%;
 }
-#articleList .circleList .list_bottom {
+#articleList .circleList .list_bottom,
+#articleList .circleList .detail_bottom {
   padding: 10px 35px;
   margin-top: 10px;
   position: relative;
@@ -443,7 +444,8 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-#articleList .circleList .list_bottom:after {
+#articleList .circleList .list_bottom:after,
+#articleList .circleList .detail_bottom:after {
   content: '';
   position: absolute;
   background-color: #e5e5e5;
@@ -461,6 +463,13 @@
   -webkit-transform: scaleY(0.5);
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
+}
+#articleList .circleList .detail_bottom {
+  padding: 10px 0;
+  height: 15px;
+}
+#articleList .circleList .detail_bottom .list_bottom_item {
+  flex: 1;
 }
 #articleList .list_item {
   margin-top: 0;
@@ -494,17 +503,28 @@
   font-size: 13px;
   line-height: 1.6;
 }
-#articleList .list_item .list_image {
+#articleList .list_item .list_image,
+#articleList .list_item .image_detail {
   margin-top: 10px;
 }
-#articleList .list_item .list_image img {
+#articleList .list_item .list_image span,
+#articleList .list_item .image_detail span {
+  font-size: 14px;
+  color: #666;
+  padding: 10px 0;
+  display: inline-block;
+  line-height: 1;
+}
+#articleList .list_item .list_image img,
+#articleList .list_item .image_detail img {
   width: 110px;
   height: 110px;
   object-fit: cover;
   border-radius: 2px;
   margin-right: 8px;
 }
-#articleList .list_item .list_image .video_tag {
+#articleList .list_item .list_image .video_tag,
+#articleList .list_item .image_detail .video_tag {
   position: relative;
   width: 110px;
   height: 110px;
@@ -512,12 +532,14 @@
   border-radius: 2px;
   margin-right: 8px;
 }
-#articleList .list_item .list_image .video_tag video {
+#articleList .list_item .list_image .video_tag video,
+#articleList .list_item .image_detail .video_tag video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-#articleList .list_item .list_image .video_tag .video_tag_play {
+#articleList .list_item .list_image .video_tag .video_tag_play,
+#articleList .list_item .image_detail .video_tag .video_tag_play {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -565,8 +587,74 @@
 #articleList .list_item:last-child .circleList {
   border-bottom: none;
 }
-#articleList .list_content {
+#articleList .list_content,
+#articleList .content_detail {
   color: #333;
   font-size: 16px;
   line-height: 20px;
+}
+#articleList .asOfDate {
+  font-size: 13px;
+  color: #666;
+  margin-top: 10px;
+}
+#articleList .commit_title {
+  border-top: 10px solid #f6f6f6;
+  font-size: 14px;
+  color: #333;
+  padding: 15px;
+}
+#articleList .am-list-view-scrollview-content {
+  width: 100% !important;
+}
+#articleList .am-list-item,
+#articleList .am-list-item .am-list-line .am-list-content,
+#articleList .am-list-item .am-list-line {
+  padding: 0;
+}
+#articleList .tag-course {
+  padding: 0px 4px;
+  font-size: 12px;
+  border-width: 1px;
+  border-style: solid;
+  float: right;
+  margin-left: 2px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+#articleList .tag-course-blue {
+  border-color: #4285F4;
+  color: #4285F4;
+}
+#articleList .courseList {
+  padding-left: 50px;
+}
+#articleList .people_image_list {
+  margin-top: 10px;
+}
+#articleList .people_image_list img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+#articleList .insetPeople > div {
+  display: inline-block;
+}
+#articleList .lookAll {
+  float: right;
+  font-size: 12px;
+  color: #999;
+}
+#articleList .lookAll i {
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid #999;
+  border-right: 1px solid #999;
+  transform: rotate(45deg);
+  position: relative;
+  top: -1px;
+  margin-left: 3px;
+  display: inline-block;
 }

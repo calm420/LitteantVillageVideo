@@ -605,6 +605,12 @@ export default class articleList extends React.Component {
     }
 
 
+    //跳转至朋友圈详情
+    toThemeTaskDetail(cid){
+        console.log(cid,'cid')
+    }
+
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -617,7 +623,7 @@ export default class articleList extends React.Component {
                         friendsAttachments.splice(i, 1);
                     }
                 }
-                dom = <div className="">
+                dom = <div className="" onClick={this.toThemeTaskDetail.bind(this,rowData.cid)}>
                     <div className="list_head">
                         <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt=""/>
@@ -631,12 +637,25 @@ export default class articleList extends React.Component {
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
                     }>
                         {friendsAttachments.map((value, index) => {
-                            return <img style={
-                                friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
-                                    maxWidth: '33.3333%',
-                                    display: 'inline-block'
-                                }
-                            } src={value.path} alt=""/>
+                            if(value.type == 0){
+                                return <img style={
+                                    friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                        maxWidth: '33.3333%',
+                                        display: 'inline-block'
+                                    }
+                                } src={value.path} alt=""/>
+                            }else{
+                                return <div className="video_tag" style={
+                                    friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                        maxWidth: '33.3333%',
+                                        display: 'inline-block'
+                                    }
+                                }>
+                                    <video  style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
+                                    <div className="video_tag_play"></div>
+                                </div>
+                            }
+
                         })}
                     </div>
                     <div className="list_bottom">

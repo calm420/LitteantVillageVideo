@@ -160,24 +160,52 @@ export default class articleList extends React.Component {
         console.log(this.state.imageList,'图片列表');
         console.log(this.state.videoList,'视频列表');
         console.log(this.state.peopleList,'谁可以看列表');
-        console.log('发布成功!');
-        // var param = {
-        //     "method": 'getArticleInfoListByType',
-        //     "userId": this.state.userId,
-        //     "getType": this.state.index,
-        //     "pageNo": this.state.defaultPageNo,
-        // };
-        // WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-        //     onResponse: result => {
-        //         if (result.success) {
-        //
-        //         }
-        //
-        //     },
-        //     onError: function (error) {
-        //         Toast.fail(error, 1);
-        //     }
-        // });
+        var imageList = this.state.imageList;
+        var videoList = this.state.videoList;
+        var friendsAttachments = [];
+        for(var k in imageList){
+            friendsAttachments.push(
+                {
+                    type:0,
+                    fatherType:2,
+                    path:imageList[k]
+                }
+            )
+        }
+        for(var k in videoList){
+            friendsAttachments.push(
+                {
+                    type:1,
+                    fatherType:2,
+                    path:videoList[k]
+                }
+            )
+        }
+        var circleOfFriendsJson={
+            title: $('.input_title').val(),
+            content: $('.textarea_content').val(),
+            endTime: this.state.date.getTime(),
+            uid: this.state.userId,
+            type:1,
+            viewType:0, //0全部可见 1 部分可见
+            friendsAttachments:friendsAttachments
+        };
+        var param = {
+            "method": 'saveThemeChallenge',
+            "circleOfFriendsJson": JSON.stringify(circleOfFriendsJson),
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result,'发布结果')
+                if (result.success) {
+
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
 

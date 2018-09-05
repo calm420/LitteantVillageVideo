@@ -136,6 +136,7 @@ export default class mobileEditor extends React.Component {
     render() {
         return (
             <div id="mobileEditor">
+               {/* <iframe id="iframe_mobile" className="mobile-iframe" src="https://192.168.50.163:6443/mobileEditor/" frameborder="0"></iframe>*/}
                 <iframe id="iframe_mobile" className="mobile-iframe"
                         src="http://jiaoxue.maaee.com:8094/richTextMobileEditor/"
                         frameborder="0"></iframe>

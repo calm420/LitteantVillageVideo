@@ -12,32 +12,44 @@ export default class publishWrongQuestion extends React.Component {
             addNoteValue: "",
             tagData: [],
             tagText: [],
-            projectData:[],
+            projectData: [],
             tagChangeData: [],
             searchValue: "",
-            theQuestionArr:[],
-            theAnswerArr:[]
+            theQuestionArr: [],
+            theQustionVideo: [],
+            theAnswerArr: [],
+            theAnswerVideo: [],
         }
     }
     componentDidMount() {
-        calm.getProject();
+        document.title = '错题本';
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var userId = searchArray[0].split('=')[1];
+        userId = 1;
+        calm.setState({
+            userId
+        })
+        console.log(userId)
+        calm.getProject(userId);
     }
-      /**
-     * 获取科目
-     */
-    getProject(){
+    /**
+   * 获取科目
+   */
+    getProject(userId) {
         var param = {
-            "method":"getCourseByUserId",
-            "userId":1
+            "method": "getCourseByUserId",
+            "userId": userId
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,"result")
+                console.log(result, "result")
                 if (result.success) {
                     calm.setState({
-                        projectData:result.response
+                        projectData: result.response
                     })
-                }   
+                }
 
             },
             onError: function (error) {
@@ -60,10 +72,91 @@ export default class publishWrongQuestion extends React.Component {
         $(".leftWrongQuestion").show()
     }
 
+    upload_video_pic() {
+        var video;//video标签
+        var scale = 0.8;//第一帧图片与源视频的比例
+        // var videoList = $(".upload_box_video");
+        // console.log(videoList,'videoList');
+        // for(var i=0;i<videoList.length;i++){
+        //
+        // }
+        //ｖｉｄｅｏ标签
+        console.log($('.upload_box_video'), "$('.upload_box_video')")
+        video = $('.upload_box_video')[0];//赋值标签
+        video.setAttribute("crossOrigin", 'Anonymous');
+        video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
+            var canvas = document.createElement('canvas');//canvas画布
+            canvas.width = video.videoWidth * scale;
+            canvas.height = video.videoHeight * scale;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//画图
+            var image = canvas.toDataURL("image/png");
+            var $Blob = calm.getBlobBydataURI(image, 'image/jpeg');
+            var formData = new FormData();
+            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+            calm.state.addVideoList[index].width = video.videoWidth;
+            calm.state.addVideoList[index].height = video.videoHeight;
+            $.ajax({
+                type: "POST",
+                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                enctype: 'multipart/form-data',
+                data: formData,
+                // 告诉jQuery不要去处理发送的数据
+                processData: false,
+                // 告诉jQuery不要去设置Content-Type请求头
+                contentType: false,
+                // xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                //     var xhr = jQuery.ajaxSettings.xhr();
+                //     xhr.upload.onload = function () {
+                //         console.log('huoqudangqiansuoluetu!');
+                //         console.log(xhr);
+                //     };
+                //     xhr.upload.onprogress = function (ev) {
+                //         console.log('yyyyyyyyy!');
+                //         console.log(xhr);
+                //     };
+                //     return xhr;
+                // },
+                success: function (res) {
+                    console.log(res, 'base64');
+                    calm.state.addVideoList[index].firstUrl = res;
+                }
+            });
+        })
+    }
+
     /**
      * 提交
      */
-    submit() {
+    saveWrongTopicBook() {
+        var param = {
+            "method": "saveWrongTopicBook",
+            "circleOfFriendsJson": {
+                "friendsAttachments": [],
+                "fTags":calm.state.tagText,
+                "uid": calm.state.userId,
+                "type": 0,
+                "mastery": calm.state.mastery,//0不懂   1略懂    2基本懂   3完全懂
+                "mark": calm.state.addNoteValue,
+                "cid": calm.state.cid //科目IDs
+            }
+        }
+        console.log(param)
+        return
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "result")
+                if (result.success) {
+                    calm.setState({
+                        projectData: result.response
+                    })
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+
         console.log(calm.state.addNoteValue, "value")
     }
 
@@ -74,16 +167,19 @@ export default class publishWrongQuestion extends React.Component {
     underChange = (item) => {
         console.log('value', item);
         this.setState({
-            understandValue: item.value
+            understandValue: item.value,
+            mastery: item.label
         });
     };
     /**
      * 选择科目
      */
     projectChange = (item) => {
+
         console.log('value', item);
         this.setState({
-            projectValue: item.courseName
+            projectValue: item.courseName,
+            cid: item.cid
         });
     };
 
@@ -91,7 +187,7 @@ export default class publishWrongQuestion extends React.Component {
      * 更多科目
      */
     moreProject() {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage");
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);
         var data = {
             method: 'openNewPage',
             url: url
@@ -105,6 +201,10 @@ export default class publishWrongQuestion extends React.Component {
      * 添加标签
      */
     addTag() {
+        if(calm.state.cid == undefined){
+            Toast.info("请先选择科目")
+            return
+        }
         $(`.calmTagDiv`).slideDown();
         $(`.tagBack`).show();
     }
@@ -117,27 +217,27 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             searchValue: value
         }, () => {
-            calm.getTagsByContent()
+            calm.getTagsByTagTitle()
         })
     }
 
     /**
-* 搜索关键字结果
-*/
-    getTagsByContent() {
+    * 搜索关键字结果
+    */
+    getTagsByTagTitle() {
         if (calm.state.searchValue == "") {
             Toast.info("请输入搜索的关键词")
             return;
         }
         calm.setState({ tagData: [] }, () => {
             var param = {
-                "method": 'getTagsByContent',
-                "tagContent": calm.state.searchValue,
-                "tagType": 1,
+                "method": 'getTagsByTagTitle',
+                "tagTitle": calm.state.searchValue,
                 "pageNo": -1
             }
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
+                    console.log(result, "resu")
                     if (result.msg == '调用成功' || result.success == true) {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
@@ -218,20 +318,13 @@ export default class publishWrongQuestion extends React.Component {
         var tagTextData = []
         console.log(calm.state.tagChangeData, "改变的标签")
         calm.state.tagChangeData.forEach((v, i) => {
-            if (v.tagId == 0) {
-                tagTextData.push({
-                    tagTitle: v.tagTitle,
-                    tagType: 1,
-                })
-            } else {
-                tagTextData.push({
-                    tagTitle: v.tagTitle,
-                    tagType: 1,
-                    tagId: v.tagId
-                })
-            }
-
+            tagTextData.push({
+                cid: calm.state.cid,
+                tagTitle: v.tagTitle,
+                uid: calm.state.userId,
+            })
         })
+        console.log(tagTextData,"tagTextData")
         calm.state.tagText = calm.state.tagText.concat(tagTextData);
         var arr = calm.state.tagText;
         calm.state.tagText = calm.makeArr(arr, "tagTitle")
@@ -277,7 +370,24 @@ export default class publishWrongQuestion extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
-            alert(JSON.stringify(res));
+            // var res = 'http:suhdjghjaasd?type=1'
+            var newArr = res.split("?");
+            var type = newArr[1].split("=")[1]
+            var imgUrl = newArr[0];
+            calm.upload_video_pic()
+            if (type == 1) {
+                calm.state.theQuestionArr.push({
+                    type:1,
+                    url:imgUrl,
+                })
+            }
+            if (type == 2) {
+                calm.state.theQustionVideo.push(imgUrl);
+            }
+            calm.setState({
+                theQuestionArr: calm.state.theQuestionArr,
+                theQustionVideo: calm.state.theQustionVideo
+            })
             console.log(res, "res")
         }, function (error) {
             console.log(error);
@@ -288,17 +398,29 @@ export default class publishWrongQuestion extends React.Component {
      */
     addTheAnswer() {
         var data = {
-            method: 'selectImages',
+            method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
-            console.log(res, "res")
+            var newArr = res.split("?");
+            var type = newArr[1].split("=")[1]
+            var imgUrl = newArr[0];
+            if (type == 1) {
+                calm.state.theAnswerArr.push(imgUrl)
+            }
+            if (type == 2) {
+                calm.state.theAnswerVideo.push(imgUrl);
+            }
+            calm.setState({
+                theAnswerArr: calm.state.theAnswerArr,
+                theAnswerVideo: calm.state.theAnswerVideo
+            })
         }, function (error) {
             console.log(error);
         });
     }
 
-  
+
 
     render() {
         const understandData = [
@@ -308,15 +430,15 @@ export default class publishWrongQuestion extends React.Component {
             },
             {
                 value: "略懂",
-                label: "35"
+                label: "1"
             },
             {
                 value: "基本懂",
-                label: "70"
+                label: "2"
             },
             {
                 value: "完全懂",
-                label: "100"
+                label: "3"
             }
         ]
         const projectData = [
@@ -341,9 +463,16 @@ export default class publishWrongQuestion extends React.Component {
                     <div>
                         <div>上传题干</div>
                         {
-                            calm.state.theQuestionArr.map((v,i)=>{
+                            calm.state.theQuestionArr.map((v, i) => {
                                 return (
                                     <img src={v} alt="" />
+                                )
+                            })
+                        }
+                        {
+                            calm.state.theQustionVideo.map((v, i) => {
+                                return (
+                                    <video onClick={calm.clickQuestionVideo.bind(this,i)} className="upload_box_video" src={v} alt="" controls />
                                 )
                             })
                         }
@@ -352,9 +481,16 @@ export default class publishWrongQuestion extends React.Component {
                     <div>
                         <div>上传正解</div>
                         {
-                            calm.state.theAnswerArr.map((v,i)=>{
+                            calm.state.theAnswerArr.map((v, i) => {
                                 return (
                                     <img src={v} alt="" />
+                                )
+                            })
+                        }
+                        {
+                            calm.state.theAnswerVideo.map((v, i) => {
+                                return (
+                                    <video src={v} alt="" controls />
                                 )
                             })
                         }
@@ -438,7 +574,7 @@ export default class publishWrongQuestion extends React.Component {
                             <span className="bind" onClick={calm.submitTagArr}>确 定</span>
                         </div>
                     </div>
-                    <div onClick={calm.submit}>提交</div>
+                    <div onClick={calm.saveWrongTopicBook}>提交</div>
                 </div>
 
                 {/* <span>上传</span>

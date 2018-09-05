@@ -5,6 +5,8 @@
     min-height: 100vh;
   }
 
+
+
   .am-tabs-pane-wrap {
     overflow: hidden;
   }
@@ -314,6 +316,49 @@
     top: 8px;
     right: 12px;
     z-index: 10;
+    .showPubli_box{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 150px;
+      height: 100px;
+      background: white;
+      transform: translate(0,100%);
+      box-shadow: 0px 0px 5px #ccc;
+    }
   }
+
+  .list_item{
+    margin-top: 10px;
+    .list_head{
+      .headPic{
+        display: inline-block;
+        img{
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .userName{
+        display: inline-block;
+
+      }
+      .createTime{
+        display: inline-block;
+
+      }
+      .tags{
+        display: inline-block;
+
+      }
+
+    }
+    .list_bottom_item{
+      display: inline-block;
+      width: 33.33333%;
+      text-align: center;
+    }
+  }
+
+
 
 }

@@ -211,12 +211,17 @@ export default class articleList extends React.Component {
                 }
             }
             dom =
-                <div>
-                    <div className="date">
+                <div className='my_flex'>
+                    <div className="date" style={
+                        this.state.targetType == 1?{display:'none'}:{display:'block'}
+                    }>
                         <div className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10?'0'+WebServiceUtil.formatMD(rowData.createTime).split('-')[1]:WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
                     </div>
-                    <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
+                    <div className="circleList" style={
+                            this.state.targetType == 1 ? {width:'100%'}:{}
+                        }
+                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
 
                         <div className="list_content">{rowData.type==0?rowData.mark:rowData.content}</div>
                         <div className="list_image" style={
@@ -243,17 +248,17 @@ export default class articleList extends React.Component {
 
                             })}
                         </div>
-                        <div style={
+                        <div className='time' style={
                             rowData.type==0?{display:'none'}:{display:'block'}
                         }>
-                            <div>發布時間:{this.timeDifference(rowData.createTime)}</div>
-                            <div>截止時間:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
+                            <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
+                            <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                             <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
-                            <div className="list_bottom_item" onClick={this.deleteCircle.bind(this, rowData.cfid)}>刪除</div>
+                            <div className="list_bottom_item" onClick={this.deleteCircle.bind(this, rowData.cfid)}><i className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>
@@ -274,7 +279,7 @@ export default class articleList extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

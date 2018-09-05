@@ -1,0 +1,79 @@
+#themeTaskDetail .head_pic img {
+  width: 50px;
+  height: 50px;
+}
+#themeTaskDetail .input_box {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+#themeTaskDetail .input_box img {
+  width: 100%;
+  height: 40px;
+}
+#themeTaskDetail .video_tag {
+  position: relative;
+}
+#themeTaskDetail .video_tag .video_tag_play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background: white;
+}
+#themeTaskDetail .detail_bottom div {
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+#themeTaskDetail .commit_box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: white;
+  z-index: 10;
+}
+#themeTaskDetail .mask {
+  z-index: 9;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.5;
+  height: 100%;
+}
+#themeTaskDetail .appendImage_item {
+  width: 50px;
+  height: 50px;
+}
+#themeTaskDetail .addPic {
+  width: 50px;
+  height: 50px;
+}
+#themeTaskDetail #appendImage .image_item {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: inline-block;
+}
+#themeTaskDetail #appendImage .image_item .delete_upload_image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: black;
+  width: 20px;
+  height: 20px;
+}
+#themeTaskDetail #appendImage .image_item .delete_upload_image img {
+  width: 20px;
+  height: 20px;
+}

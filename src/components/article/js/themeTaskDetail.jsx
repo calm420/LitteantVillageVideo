@@ -21,9 +21,13 @@ export default class articleList extends React.Component {
             isLoading: true,
             hasMore: true,
             commit_count: 0,
-            detail:{
-                type:1
-            }
+            detail: {
+                type: 1,
+                userInfo: {},
+                friendsAttachments: []
+            },
+            commitFlag: false,
+            domImage:[]
         }
     }
 
@@ -40,6 +44,24 @@ export default class articleList extends React.Component {
         }, () => {
             this.gitCircleOfFriendsById();
             this.getDiscussInfoList();
+            $(document).on('click','.delete_upload_image',function(){
+                console.log('delete');
+                console.log(that.state.domImage);
+                console.log($(this).prev().attr('src'))
+                var dom = that.state.domImage;
+                for(var i=0;i< dom.length;i++){
+                    if(dom[i].key == $(this).prev().attr('src')){
+                        dom.splice(i,1);
+                    }
+                }
+                that.setState({
+                    domImage:dom
+                })
+                // for(var k in dom){
+                //     if(dom[k].key == $(this).prev().attr('src')){
+                //     }
+                // }
+            })
         })
     }
 
@@ -58,9 +80,9 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'getDiscussInfoList')
                 if (result.success) {
-                    if(result.response.length <= 0){
-                        this.initDataSource = [{type:'无数据'}]
-                    }else{
+                    if (result.response.length <= 0) {
+                        this.initDataSource = [{type: '无数据'}]
+                    } else {
                         this.initDataSource = this.initDataSource.concat(result.response);
                     }
                     this.setState({
@@ -161,9 +183,9 @@ export default class articleList extends React.Component {
                     this.setState({
                         detail: result.response
                     })
-                    if(result.response.type == 0){
+                    if (result.response.type == 0) {
                         document.title = '错题本';
-                    }else{
+                    } else {
                         document.title = '主题任务';
                     }
                 }
@@ -176,18 +198,46 @@ export default class articleList extends React.Component {
     }
 
 
-
-    lookAll(){
+    lookAll() {
         console.log('查看全部')
+    }
+
+    setCommit = ()=>{
+        this.setState({
+            commitFlag: true
+        })
+    }
+
+    closeCommitBox = ()=>{
+        this.setState({
+            commitFlag: false
+        })
+    }
+
+    sendCommit = () =>{
+        console.log('发送')
+    }
+
+
+    selectedImage = () =>{
+        console.log('selectedImage');
+        var url = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg';
+        var dom = this.state.domImage;
+        dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/><div className='delete_upload_image'><img
+            src={require('../images/close_r.png')} alt=""/></div></div>);
+        // dom.key = url;
+        this.setState({
+            domImage:dom
+        })
     }
 
     render() {
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
-            console.log(rowData.type,'rowData.type')
-            if(rowData.type == '无数据'){
+            // console.log(rowData.type, 'rowData.type')
+            if (rowData.type == '无数据') {
                 dom = <div></div>
-            }else{
+            } else {
                 dom = <div>
                     <div className="list_head">
                         <div className="head_pic">
@@ -205,7 +255,7 @@ export default class articleList extends React.Component {
             <div id="themeTaskDetail" style={{height: document.body.clientHeight}}>
                 {/*主题计划*/}
                 <div style={
-                    this.state.detail.type == 1?{display:'block'}:{display:'none'}
+                    this.state.detail.type == 1 ? {display: 'block'} : {display: 'none'}
                 }>
                     <ListView
                         ref={el => this.lv = el}
@@ -230,7 +280,8 @@ export default class articleList extends React.Component {
                                         }
                                     })}
                                 </div>
-                                <div className="asOfDate">截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                <div className="asOfDate">
+                                    截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                 <div className="detail_bottom">
                                     <div>分享</div>
                                     <div>点赞</div>
@@ -240,13 +291,27 @@ export default class articleList extends React.Component {
                                     <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部</div>
                                 </div>
                                 <div className="people_image_list">
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
-                                    <img src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg" alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
+                                    <img
+                                        src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
+                                        alt=""/>
                                 </div>
                                 <div className="commit_title">全部评论({this.state.commit_count})</div>
                             </div>
@@ -273,36 +338,66 @@ export default class articleList extends React.Component {
 
                 {/*错题本*/}
                 <div style={
-                    this.state.detail.type == 0?{display:'block'}:{display:'none'}
+                    this.state.detail.type == 0 ? {display: 'block'} : {display: 'none'}
                 }>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                         renderSectionHeader={sectionData => (
                             <div>
-                                <div>错题本</div>
-                                {/*<div className="head_box">*/}
-                                    {/*<div className="headPic">*/}
-                                        {/*<img src="" alt=""/>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="userName">{this.state.detail.userInfo.userName}</div>*/}
-                                    {/*<div className="time"></div>*/}
-                                {/*</div>*/}
-                                {/*<div className="content_detail">{this.state.detail.content}</div>*/}
-                                {/*<div className="image_detail">*/}
-                                    {/*{this.state.detail.friendsAttachments.map((value, index) => {*/}
-                                        {/*if (value.type == 0) {*/}
-                                            {/*return <img src={value.path} alt=""/>*/}
-                                        {/*} else {*/}
-                                            {/*return <div className="video_tag">*/}
-                                                {/*<video style={{width: '100%', height: '100%'}} src={value.path} alt=""/>*/}
-                                                {/*<div className="video_tag_play"></div>*/}
-                                            {/*</div>*/}
-                                        {/*}*/}
-                                    {/*})}*/}
-                                {/*</div>*/}
-                                {/*<div className="asOfDate">{}</div>*/}
-                                {/*<div className="commit_title">全部评论({this.state.commit_count})</div>*/}
+                                <div className="head_box">
+                                    <img className="headPic" src={this.state.detail.userInfo.avatar} alt=""/>
+                                    <div className="userName">{this.state.detail.userInfo.userName}</div>
+                                    <div className="time"></div>
+                                </div>
+                                <div className="content_detail">{this.state.detail.content}</div>
+                                <div className="image_detail">
+                                    <div>
+                                        题干
+                                        <div>
+                                            {this.state.detail.friendsAttachments.map((value, index) => {
+                                                if (value.fatherType == 0) {
+                                                    if (value.type == 0) {
+                                                        return <img src={value.path} alt=""/>
+                                                    } else {
+                                                        return <div className="video_tag">
+                                                            <video style={{width: '100%', height: '100%'}}
+                                                                   src={value.path} alt=""/>
+                                                            <div className="video_tag_play"></div>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            })}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        正解
+                                        <div>
+                                            {this.state.detail.friendsAttachments.map((value, index) => {
+                                                if (value.fatherType == 1) {
+                                                    if (value.type == 0) {
+                                                        return <img src={value.path} alt=""/>
+                                                    } else {
+                                                        return <div className="video_tag">
+                                                            <video style={{width: '100%', height: '100%'}}
+                                                                   src={value.path} alt=""/>
+                                                            <div className="video_tag_play"></div>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="asOfDate">
+                                    截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                <div className="detail_bottom">
+                                    <div>分享</div>
+                                    <div>点赞</div>
+                                </div>
+                                <div className="commit_title">全部评论({this.state.commit_count})</div>
                             </div>
                         )}
                         renderFooter={this.state.isLoadingHidden ? '' : () => (
@@ -325,13 +420,30 @@ export default class articleList extends React.Component {
                     />
                 </div>
                 <div className="input_box">
-                    <textarea className="textarea_commit" placeholder="请输入评论内容"/>
-                    <div className="image_input_box">
-                        <img
-                            src='http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
-                            alt=""/>
+                    <img
+                        className="commit_line"
+                        src={require('../images/commit_line.png')}
+                        alt=""
+                        onClick={this.setCommit}
+                    />
+                </div>
+                <div className="commit_box" style={
+                    this.state.commitFlag?{display:'block'}:{display:'none'}
+                }>
+                    <input type="text" id="commit" placeholder="请输入评论内容"/>
+                    <Button onClick={this.sendCommit}>发送</Button>
+                    <div>
+                        <div id="appendImage">
+                            {this.state.domImage}
+                        </div>
+                        <div onClick={this.selectedImage}>
+                            <img className="addPic" src={require('../images/add-pic.png')} alt=""/>
+                        </div>
                     </div>
                 </div>
+                <div className="mask" style={
+                    this.state.commitFlag?{display:'block'}:{display:'none'}
+                } onClick={this.closeCommitBox}></div>
             </div>
         );
     }

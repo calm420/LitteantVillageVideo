@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Modal, Toast
 } from 'antd-mobile';
-import "../css/projectManage.less"
+import "../css/publishWrongQuestion.less"
 
 const alert = Modal.alert;
 const prompt = Modal.prompt;

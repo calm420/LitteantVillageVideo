@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, TextareaItem, Tag, InputItem, Radio, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import '../css/publishWrongQuestion.less'
 const RadioItem = Radio.RadioItem;
 var calm;
 export default class publishWrongQuestion extends React.Component {
@@ -16,33 +17,35 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                {
-                    type: 0, //图片
-                    fatherType: 0,
-                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                }
+                // {
+                //     type: 0, //图片
+                //     fatherType: 0,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
             ],
             theQustionVideo: [
-                {
-                    type: 1,  //视频
-                    fatherType: 0,
-                    path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
-                    coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                }
+                // {
+                //     type: 1,  //视频
+                //     fatherType: 0,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
+                //     coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
             ],
             theAnswerArr: [
-                {
-                    type: 0, //图片
-                    fatherType: 1,
-                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                }
+                // {
+                //     type: 0, //图片
+                //     fatherType: 1,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
             ],
-            theAnswerVideo: [{
-                type: 1,  //视频
-                fatherType: 1,
-                path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
-                coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-            }],
+            theAnswerVideo: [
+                //     {
+                //     type: 1,  //视频
+                //     fatherType: 1,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
+                //     coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
+            ],
         }
     }
     componentDidMount() {
@@ -85,15 +88,19 @@ export default class publishWrongQuestion extends React.Component {
      * 去选择标签
      */
     nextStep() {
-        $(".rightTag").show()
-        $(".leftWrongQuestion").hide()
+        $(".rightTag").show();
+        $(".leftWrongQuestion").hide();
+        $(".tabWrap .wrongQuestion").removeClass('active');
+        $(".tabWrap .tag").addClass('active');
     }
     /**
      * 返回错题
      */
     backWrongQuestion() {
-        $(".rightTag").hide()
-        $(".leftWrongQuestion").show()
+        $(".rightTag").hide();
+        $(".leftWrongQuestion").show();
+        $(".tabWrap .tag").removeClass('active');
+        $(".tabWrap .wrongQuestion").addClass('active');
     }
 
     upload_video_pic() {
@@ -166,9 +173,9 @@ export default class publishWrongQuestion extends React.Component {
             }
         }
         console.log(param)
-        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                alert(JSON.stringify(result))
                 console.log(result, "result")
                 if (result.success) {
                     calm.setState({
@@ -499,139 +506,146 @@ export default class publishWrongQuestion extends React.Component {
         const { understandValue, projectValue } = this.state;
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
-                <div>
-                    <span className="wrongQuestion" onClick={calm.backWrongQuestion} >错题本</span>
+                <div className='tabWrap line_public'>
+                    <span className="wrongQuestion active" onClick={calm.backWrongQuestion} >错题本</span>
                     <span className="tag" onClick={calm.nextStep}>标签</span>
                 </div>
-                <div className="leftWrongQuestion">
+                <div className='tabCont'>
+                    <div className="leftWrongQuestion">
+                        <div className='cont'>
+                            <div className='item'>
+                                <div className='title'>上传题干</div>
+                                {
+                                    calm.state.theQuestionArr.map((v, i) => {
+                                        return (
+                                            <div className='imgDiv'>
+                                                <img src={v.path} alt="" />
+                                                <div className='delete'><span onClick={calm.deleteQuestion.bind(this, i)}>删除</span></div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                {
+                                    calm.state.theQustionVideo.map((v, i) => {
+                                        return (
+                                            <div className='imgDiv'>
+                                                <video  poster={v.coverPath} src={v.path} alt="" controls />
+                                                <div className='delete'><span onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                <div className='addButton' onClick={calm.addTheQusetion}>+ 添加</div>
+                            </div>
+                            <div className='item'>
+                                <div className='title'>上传正解</div>
+                                {
+                                    calm.state.theAnswerArr.map((v, i) => {
+                                        return (
+                                            <div className='imgDiv'>
+                                                <img src={v.path} alt="" />
+                                                <div className='delete'><span onClick={calm.deleteAnswer.bind(this, i)}>删除</span></div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                {
+                                    calm.state.theAnswerVideo.map((v, i) => {
+                                        return (
+                                            <div className='imgDiv'>
+                                                <video poster={v.coverPath} src={v.path} alt="" controls />
+                                                <div className='delete'><span onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                <div className='addButton' onClick={calm.addTheAnswer}>+ 添加</div>
+                            </div>
+                            <div className='item'>
+                                <List renderHeader={() => '添加备注'}>
+                                    <TextareaItem
+                                        rows={5}
+                                        count={30}
+                                        onChange={v => calm.setState({
+                                            addNoteValue: v
+                                        })}
+                                    />
+                                </List>
+                            </div>
+                        </div>
+                        <div className='nextBtn' onClick={calm.nextStep}><span>下一步</span></div>
+                    </div>
+                    <div className="rightTag" style={{ display: "none" }}>
+                        <div className='cont'>
+                            <div className="selectProject">
+                                <div className="title">选择科目</div>
+                                <List>
+                                    {calm.state.projectData.map(i => (
+                                        <RadioItem key={i.value} className={projectValue === i.courseName ? 'checked' : ''} checked={projectValue === i.courseName} onChange={() => this.projectChange(i)}>
+                                            {i.courseName}
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                                <span className='spanTag add' onClick={calm.moreProject}>+更多科目</span>
+                            </div>
+                            <div className="knowDegree">
 
-                    <div>
-                        <div>上传题干</div>
-                        {
-                            calm.state.theQuestionArr.map((v, i) => {
-                                return (
-                                    <div>
-                                        <img style={{ width: "50px" }} src={v.path} alt="" />
-                                        <span onClick={calm.deleteQuestion.bind(this, i)}>删除</span>
-                                    </div>
-                                )
-                            })
-                        }
-                        {
-                            calm.state.theQustionVideo.map((v, i) => {
-                                return (
-                                    <div>
-                                        <video style={{ width: "50px" }} poster={v.coverPath} src={v.path} alt="" controls />
-                                        <span onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span>
-                                    </div>
-                                )
-                            })
-                        }
-                        <button onClick={calm.addTheQusetion}>添加</button>
-                    </div>
-                    <div>
-                        <div>上传正解</div>
-                        {
-                            calm.state.theAnswerArr.map((v, i) => {
-                                return (
-                                    <div>
-                                        <img style={{ width: "50px" }} src={v.path} alt="" />
-                                        <span onClick={calm.deleteAnswer.bind(this, i)}>删除</span>
-                                    </div>
-                                )
-                            })
-                        }
-                        {
-                            calm.state.theAnswerVideo.map((v, i) => {
-                                return (
-                                    <div>
-                                        <video style={{ width: "50px" }} poster={v.coverPath} src={v.path} alt="" controls />
-                                        <span onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span>
-                                    </div>
-                                )
-                            })
-                        }
-                        <button onClick={calm.addTheAnswer}>添加</button>
-                    </div>
-                    <div>
-                        <List renderHeader={() => '添加备注'}>
-                            <TextareaItem
-                                rows={5}
-                                count={30}
-                                onChange={v => calm.setState({
-                                    addNoteValue: v
-                                })}
-                            />
-                        </List>
-                    </div>
-                    <button onClick={calm.nextStep}>下一步</button>
-                </div>
-                <div className="rightTag" style={{ display: "none" }}>
-                    <div className="selectProject">
-                        <List renderHeader={() => '选择科目'}>
-                            {calm.state.projectData.map(i => (
-                                <RadioItem key={i.value} checked={projectValue === i.courseName} onChange={() => this.projectChange(i)}>
-                                    {i.courseName}
-                                </RadioItem>
-                            ))}
-                        </List>
-                        <span onClick={calm.moreProject}>更多科目</span>
-                    </div>
-                    <div className="knowDegree">
-
-                        <List renderHeader={() => '掌握程度'}>
-                            {understandData.map(i => (
-                                <RadioItem key={i.value} checked={understandValue === i.value} onChange={() => this.underChange(i)}>
-                                    {i.value}
-                                </RadioItem>
-                            ))}
-                        </List>
-                    </div>
-                    <div>
-                        <span>更多标签</span>
-                        {
-                            calm.state.tagText.map((v, i) => {
-                                return (
-                                    <div className="spanTag">
-                                        <span className="textOver">{v.tagTitle}</span>
-                                        <span className="del_tag" onClick={calm.deleteTag.bind(this, v)}>删除</span>
-                                    </div>
-                                )
-                            })
-                        }
-                        <button onClick={calm.addTag}>添加标签</button>
-                    </div>
-                    {/* 添加标签 */}
-                    <div className="tagBack" style={{
-                        display: "none",
-                    }}></div>
-                    <div className={`calmTagDiv calmTagDivNew tagCont`}
-                        style={{
+                                <List renderHeader={() => '掌握程度'}>
+                                    {understandData.map(i => (
+                                        <RadioItem key={i.value} className={understandValue === i.value ? "on" : ''} checked={understandValue === i.value} onChange={() => this.underChange(i)}>
+                                            {i.value}
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                            </div>
+                            <div className='moreTag'>
+                                <div className='title'>更多标签</div>
+                                {
+                                    calm.state.tagText.map((v, i) => {
+                                        return (
+                                            <div className="spanTag">
+                                                <span className="textOver">{v.tagTitle}</span>
+                                                <span className="del_tag" onClick={calm.deleteTag.bind(this, v)}>删除</span>
+                                            </div>
+                                        )
+                                    })
+                                }
+                                <span className='addTag spanTag' onClick={calm.addTag}>+添加标签</span>
+                            </div>
+                        </div>
+                        {/* 添加标签 */}
+                        <div className="tagBack" style={{
                             display: "none",
-                        }}
-                    >
-                        {/* {useIndex} */}
-                        <div className="tagInput">
-                            <InputItem
-                                placeholder="请输入标签"
-                                onChange={calm.searchInputChange}
-                                value={calm.state.searchValue}
-                            >
-                            </InputItem>
+                        }}></div>
+                        <div className={`calmTagDiv calmTagDivNew tagCont`}
+                             style={{
+                                 display: "none",
+                             }}
+                        >
+                            {/* {useIndex} */}
+                            <div className="tagInput">
+                                <InputItem
+                                    placeholder="请输入标签"
+                                    onChange={calm.searchInputChange}
+                                    value={calm.state.searchValue}
+                                >
+                                </InputItem>
 
-                            {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
+                                {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
+                            </div>
+                            <div className="classTags">
+                                {
+                                    calm.state.tagData
+                                }
+                            </div>
+                            <div className="bottomBox">
+                                <span className="close" onClick={calm.cancelSubmit}>取消</span>
+                                <span className="bind" onClick={calm.submitTagArr}>确 定</span>
+                            </div>
                         </div>
-                        <div className="classTags">
-                            {
-                                calm.state.tagData
-                            }
-                        </div>
-                        <div className="bottomBox">
-                            <span className="close" onClick={calm.cancelSubmit}>取消</span>
-                            <span className="bind" onClick={calm.submitTagArr}>确 定</span>
-                        </div>
+                        <div className='nextBtn' onClick={calm.saveWrongTopicBook}><span>提交</span></div>
                     </div>
-                    <div onClick={calm.saveWrongTopicBook}>提交</div>
+
                 </div>
 
                 {/* <span>上传</span>

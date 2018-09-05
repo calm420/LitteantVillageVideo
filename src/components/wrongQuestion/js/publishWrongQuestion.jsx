@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, TextareaItem, Tag, InputItem, Radio,Toast } from 'antd-mobile';
+import { List, TextareaItem, Tag, InputItem, Radio, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 const RadioItem = Radio.RadioItem;
 var calm;
@@ -11,12 +11,39 @@ export default class publishWrongQuestion extends React.Component {
             clientHeight: document.body.clientHeight,
             addNoteValue: "",
             tagData: [],
-            tagText:[],
+            tagText: [],
+            projectData:[],
             tagChangeData: [],
             searchValue: "",
+            theQuestionArr:[],
+            theAnswerArr:[]
         }
     }
     componentDidMount() {
+        calm.getProject();
+    }
+      /**
+     * 获取科目
+     */
+    getProject(){
+        var param = {
+            "method":"getCourseByUserId",
+            "userId":1
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result,"result")
+                if (result.success) {
+                    calm.setState({
+                        projectData:result.response
+                    })
+                }   
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
     /**
      * 去选择标签
@@ -56,7 +83,7 @@ export default class publishWrongQuestion extends React.Component {
     projectChange = (item) => {
         console.log('value', item);
         this.setState({
-            projectValue: item.value
+            projectValue: item.courseName
         });
     };
 
@@ -236,10 +263,43 @@ export default class publishWrongQuestion extends React.Component {
                 calm.state.tagText.splice(i, 1)
             }
             calm.setState({
-                tagText:calm.state.tagText
+                tagText: calm.state.tagText
             })
         })
     }
+
+    /**
+     * 添加题干
+     */
+    addTheQusetion() {
+        var data = {
+            method: 'toTakePhoto',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            alert(JSON.stringify(res));
+            console.log(res, "res")
+        }, function (error) {
+            console.log(error);
+        });
+    }
+    /**
+     * 上传答案
+     */
+    addTheAnswer() {
+        var data = {
+            method: 'selectImages',
+        };
+        Bridge.callHandler(data, function (res) {
+            // 拿到照片地址,显示在页面等待上传
+            console.log(res, "res")
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+  
+
     render() {
         const understandData = [
             {
@@ -280,13 +340,25 @@ export default class publishWrongQuestion extends React.Component {
 
                     <div>
                         <div>上传题干</div>
-                        <img src="" alt="" />
-                        <button>添加</button>
+                        {
+                            calm.state.theQuestionArr.map((v,i)=>{
+                                return (
+                                    <img src={v} alt="" />
+                                )
+                            })
+                        }
+                        <button onClick={calm.addTheQusetion}>添加</button>
                     </div>
                     <div>
                         <div>上传正解</div>
-                        <img src="" alt="" />
-                        <button>添加</button>
+                        {
+                            calm.state.theAnswerArr.map((v,i)=>{
+                                return (
+                                    <img src={v} alt="" />
+                                )
+                            })
+                        }
+                        <button onClick={calm.addTheAnswer}>添加</button>
                     </div>
                     <div>
                         <List renderHeader={() => '添加备注'}>
@@ -304,16 +376,16 @@ export default class publishWrongQuestion extends React.Component {
                 <div className="rightTag" style={{ display: "none" }}>
                     <div className="selectProject">
                         <List renderHeader={() => '选择科目'}>
-                            {projectData.map(i => (
-                                <RadioItem key={i.value} checked={projectValue === i.value} onChange={() => this.projectChange(i)}>
-                                    {i.value}
+                            {calm.state.projectData.map(i => (
+                                <RadioItem key={i.value} checked={projectValue === i.courseName} onChange={() => this.projectChange(i)}>
+                                    {i.courseName}
                                 </RadioItem>
                             ))}
                         </List>
                         <span onClick={calm.moreProject}>更多科目</span>
                     </div>
                     <div className="knowDegree">
-                        
+
                         <List renderHeader={() => '掌握程度'}>
                             {understandData.map(i => (
                                 <RadioItem key={i.value} checked={understandValue === i.value} onChange={() => this.underChange(i)}>

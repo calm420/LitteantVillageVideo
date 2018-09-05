@@ -17,9 +17,9 @@ export default class projectManage extends React.Component {
         this.state = {
             clientHeight: document.body.clientHeight,
             alreadySelectData: [],
-            activeData: [],
             allProjectData: [],
-            activeStr: "",
+            activeData: [],
+            allProhectStr: "",
             newB: [],
             newBStr: ""
         }
@@ -27,26 +27,9 @@ export default class projectManage extends React.Component {
 
     componentDidMount() {
         calm.getProject();
-        calm.getCourseByUserIdAndDefianceCourse();
+        // calm.getCourseByUserIdAndDefianceCourse();
     }
 
-
-    /**
-   * 去重
-   * @param arr
-   * @returns {*}
-   */
-    makeArr(arr, properties) {
-        for (var i = 0; i < arr.length - 1; i++) {
-            for (var j = i + 1; j < arr.length; j++) {
-                if (arr[i][properties] == arr[j][properties]) {
-                    arr.splice(j, 1);
-                    j--;
-                }
-            }
-        }
-        return arr
-    }
 
     /**
     * 获取科目
@@ -59,85 +42,19 @@ export default class projectManage extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    var newArr = [],
-                        oldArr = []
-                    result.response.forEach((v, i) => {
-                        newArr.push({
-                            content: v.courseName,
-                            flag: true,
-                            id: v.cid
-                        })
-                        oldArr.push({
-                            content: v.courseName,
-                            oldFlag: true,
-                            id: v.cid
-                        })
-                    })
-                    calm.setState({
-                        activeData: newArr, alreadySelectData: oldArr
-                    })
-
-                }
-            },
-            onError: function (error) {
-                Toast.fail(error, 1);
-            }
-        });
-    }
-    /**
-     * 添加科目
-     */
-    addProject() {
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        prompt('请输入科目名称', '', [
-            { text: '取消' },
-            { text: '立即添加', onPress: value => calm.saveProjectName(value) },
-        ], 'default', "", [], phone)
-    }
-    /**
-     * 保存科目
-     */
-    saveProjectName(value) {
-        calm.state.allProjectData.push({
-            content: value,
-            flag: false
-        });
-        calm.setState({
-            allProjectData: calm.state.allProjectData
-        })
-        var param = {
-            "method": "saveCourseAndUserId",
-            "courseJson": {
-                "courseName": value,
-                "courseType": 1,
-                "uid": 1
-            }
-        }
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: result => {
-                if (result.success) {
-                    var newArr = [],
-                        oldArr = []
+                    var newArr = []
                     result.response.forEach((v, i) => {
                         newArr.push({
                             content: v.courseName,
                             flag: true
                         })
-                        oldArr.push({
-                            content: v.courseName,
-                            oldFlag: true
-                        })
                     })
                     calm.setState({
-                        activeData: newArr, alreadySelectData: oldArr
+                        activeData: newArr,
                     })
-
+                    calm.setState({
+                        alreadySelectData: newArr
+                    })
                 }
             },
             onError: function (error) {
@@ -145,6 +62,7 @@ export default class projectManage extends React.Component {
             }
         });
     }
+
     /**
      * 获取所有科目
      */
@@ -159,11 +77,7 @@ export default class projectManage extends React.Component {
                 if (result.success) {
                     // var newArr = []
                     // result.response.forEach((v, i) => {
-                    //     newArr.push({
-                    //         content:v.courseName,
-                    //         flag:true,
-                    //         cid:v.cid
-                    //     })
+                    //     newArr.push(v.courseName)
                     // })
                     // let A = calm.state.alreadySelectData;
                     // let B = newArr;
@@ -190,7 +104,34 @@ export default class projectManage extends React.Component {
             }
         });
     }
-
+    /**
+     * 保存科目
+     */
+    saveProjectName(value) {
+        calm.state.allProjectData.push({
+            content: value,
+            flag: false
+        });
+        calm.setState({
+            allProjectData: calm.state.allProjectData
+        })
+    }
+    /**
+     * 添加科目
+     */
+    addProject() {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        prompt('请输入科目名称', '', [
+            { text: '取消' },
+            { text: '立即添加', onPress: value => calm.saveProjectName(value) },
+        ], 'default', "", [], phone)
+    }
     /**
      * 点击已科目选项
      * @param {*} e 
@@ -200,50 +141,65 @@ export default class projectManage extends React.Component {
             if (v.content == item.content) {
                 calm.state.alreadySelectData.splice(i, 1)
             }
+            calm.setState({
+                alreadySelectData: calm.state.alreadySelectData
+            })
         })
-        calm.state.activeData.forEach((k, j) => {
-            if (v.content == k.content) {
-                calm.state.activeData[j].flag = false;
+        calm.state.activeData.forEach((item, i) => {
+            if (v.content == item.content) {
+                calm.state.activeData[index].flag = false;
             }
+            calm.setState({
+                activeData: calm.state.activeData
+            })
         })
-        calm.setState({ alreadySelectData: calm.state.alreadySelectData, activeData: calm.state.activeData })
     }
-
     /**
      * 点击高亮
      */
     clickAllProjectActive(v, index, e) {
+        console.log(e.target)
         console.log(index)
         console.log(v)
-        if (v.flag == true) {
-            calm.state.activeData[index].flag = false;
+        if (calm.state.activeData[index].flag == false) {
+
+        } else {
             calm.state.alreadySelectData.forEach((item, i) => {
                 if (v.content == item.content) {
                     calm.state.alreadySelectData.splice(i, 1)
                 }
             })
-        } else {
-            calm.state.activeData[index].flag = true;
-            calm.state.alreadySelectData.push({
-                content: v.content,
-                oldFlag: true
+            calm.setState({
+                alreadySelectData:calm.state.alreadySelectData
             })
+            console.log("dianjile")
         }
-        calm.setState({
-            activeData: calm.state.activeData,
-            alreadySelectData: calm.state.alreadySelectData
-        })
+        // if (calm.state.activeData[index].flag == false) {
+        //     calm.state.activeData[index].flag = true;
+        //     console.log(calm.state.activeData,"calm.state.activeData")
+        // } else {
+        //     calm.state.activeData[index].flag = false;
+        //     console.log(calm.state.activeData,"calm.state.activeData")
+        //     calm.state.alreadySelectData.forEach((item, i) => {
+        //         if (v.content == item.content) {
+        //             calm.state.alreadySelectData.splice(i, 1)
+        //         }
+        //     })
+        // }
+        // calm.setState({
+        //     activeData: calm.state.activeData,
+        // })
 
     }
     /**
      * 点击所有科目子选项
      */
     clickAllProject(v, index, e) {
-        if (v.flag == false) {
+        if (calm.state.allProjectData[index].flag == false) {
             calm.state.allProjectData[index].flag = true;
             calm.state.alreadySelectData.push({
                 content: v.content,
-                oldFlag: true
+                flag: true
             })
         } else {
             calm.state.allProjectData[index].flag = false;
@@ -268,15 +224,17 @@ export default class projectManage extends React.Component {
             if (value.content == item.content) {
                 calm.state.allProjectData.splice(i, 1);
             }
+            calm.setState({
+                allProjectData: calm.state.allProjectData
+            })
         })
         calm.state.alreadySelectData.forEach((item, i) => {
-            if (value.content == item.content) {
+            if (value.content == item) {
                 calm.state.alreadySelectData.splice(i, 1);
             }
-        })
-        calm.setState({
-            alreadySelectData: calm.state.alreadySelectData,
-            allProjectData:calm.state.allProjectData
+            calm.setState({
+                alreadySelectData: calm.state.alreadySelectData
+            })
         })
     }
     /**
@@ -292,7 +250,6 @@ export default class projectManage extends React.Component {
     saveProject() {
 
     }
-
     render() {
         return (
             <div id="projectManage" style={{ height: calm.state.clientHeight }}>
@@ -300,7 +257,7 @@ export default class projectManage extends React.Component {
                     {
                         calm.state.alreadySelectData.map((v, i) => {
                             return (
-                                <span className={v.oldFlag ? "active" : ""} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                                <span className="active" onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
                             )
                         })
                     }
@@ -319,7 +276,9 @@ export default class projectManage extends React.Component {
                     {
                         calm.state.activeData.map((v, i) => {
                             return (
-                                <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active" : ""} >{v.content}</span>
+                                <span className="fatherSpan">
+                                    <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active" : ""}>{v.content}</span>
+                                </span>
                             )
                         })
                     }

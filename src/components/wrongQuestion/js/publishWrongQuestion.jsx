@@ -173,9 +173,9 @@ export default class publishWrongQuestion extends React.Component {
             }
         }
         console.log(param)
-        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                alert(JSON.stringify(result))
                 console.log(result, "result")
                 if (result.success) {
                     calm.setState({

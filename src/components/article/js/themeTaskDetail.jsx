@@ -449,14 +449,18 @@ export default class articleList extends React.Component {
                 <div className="commit_box" style={
                     this.state.commitFlag?{display:'block'}:{display:'none'}
                 }>
-                    <input type="text" id="commit" placeholder="请输入评论内容"/>
-                    <Button onClick={this.sendCommit}>发送</Button>
                     <div>
-                        <div id="appendImage">
-                            {this.state.domImage}
+                        <div className="import">
+                            <input type="text" id="commit" placeholder="请输入评论内容"/>
+                            <div id="appendImage">
+                                {this.state.domImage}
+                            </div>
                         </div>
-                        <div onClick={this.selectedImage}>
-                            <img className="addPic" src={require('../images/add-pic.png')} alt=""/>
+                        <div className="send">
+                            <div onClick={this.selectedImage}>
+                                <img className="AddImage" src={require('../images/AddImage.png')} alt=""/>
+                            </div>
+                            <span className="btn-blue" onClick={this.sendCommit}>发送</span>
                         </div>
                     </div>
                 </div>

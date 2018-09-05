@@ -212,11 +212,16 @@ export default class articleList extends React.Component {
             }
             dom =
                 <div className='my_flex'>
-                    <div className="date">
+                    <div className="date" style={
+                        this.state.targetType == 1?{display:'none'}:{display:'block'}
+                    }>
                         <div className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10?'0'+WebServiceUtil.formatMD(rowData.createTime).split('-')[1]:WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
                     </div>
-                    <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
+                    <div className="circleList" style={
+                            this.state.targetType == 1 ? {width:'100%'}:{}
+                        }
+                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
 
                         <div className="list_content">{rowData.type==0?rowData.mark:rowData.content}</div>
                         <div className="list_image" style={
@@ -274,7 +279,7 @@ export default class articleList extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

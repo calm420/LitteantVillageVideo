@@ -1,6 +1,7 @@
 #myThemeTask .circleList {
   position: relative;
-  width: calc(100% - 65px);
+  width: calc(100% - 40px);
+  padding-left: 15px;
 }
 #myThemeTask .circleList .tags {
   display: inline-block;
@@ -37,7 +38,7 @@
   background-size: 100% 100%;
 }
 #myThemeTask .circleList .list_bottom {
-  padding: 10px 10px;
+  padding: 10px 15px;
   margin-top: 10px;
   position: relative;
   display: flex;
@@ -45,6 +46,7 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   height: 35px;
+  line-height: 35px;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -71,8 +73,11 @@
 }
 #myThemeTask .list_item {
   margin-top: 0;
-  border-bottom: 10px solid #f4f4f4;
-  padding: 15px 15px 15px 0;
+  border-top: 10px solid #f4f4f4;
+  padding: 15px 15px 0 0;
+}
+#myThemeTask .list_item:first-child {
+  border-top: 0;
 }
 #myThemeTask .list_item .list_head {
   height: 40px;
@@ -164,7 +169,7 @@
   background-size: 100% 100%;
 }
 #myThemeTask .list_item .list_bottom_item .i-delete {
-  background: url("../images/icon_delete.png") no-repeat;
+  background: url("../images/icon_delete_power.png") no-repeat;
   background-size: 100% 100%;
 }
 #myThemeTask .list_item .list_bottom_item span {
@@ -182,6 +187,7 @@
   color: #333;
   font-size: 16px;
   line-height: 20px;
+  word-wrap: break-word;
 }
 #myThemeTask .time {
   font-size: 13px;
@@ -192,7 +198,7 @@
 }
 #myThemeTask .date {
   padding-left: 15px;
-  width: 65px;
+  width: 40px;
   box-sizing: border-box;
 }
 #myThemeTask .date .day {

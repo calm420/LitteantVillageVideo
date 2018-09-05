@@ -674,8 +674,8 @@ export default class articleList extends React.Component {
                     </div>
                     <div className="list_bottom">
                         <div className="list_bottom_item"><i className="i-share"></i></div>
-                        <div className="list_bottom_item"><i className="i-comments"></i><span>12</span></div>
-                        <div className="list_bottom_item"><i className="i-praise"></i><span>8</span></div>
+                        <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
+                        <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
                     </div>
                 </div>
             } else {

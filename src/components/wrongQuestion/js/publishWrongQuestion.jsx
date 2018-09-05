@@ -586,7 +586,7 @@ export default class publishWrongQuestion extends React.Component {
                                         </RadioItem>
                                     ))}
                                 </List>
-                                <span className='spanTag' onClick={calm.moreProject}>+更多科目</span>
+                                <span className='spanTag add' onClick={calm.moreProject}>+更多科目</span>
                             </div>
                             <div className="knowDegree">
 

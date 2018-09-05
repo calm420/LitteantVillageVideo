@@ -438,20 +438,25 @@ export default class projectManage extends React.Component {
     render() {
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
-                <div className="cont">
-                    <div><div className='title'>已选科目</div>
-                        {
-                            calm.state.alreadySelectData.map((v, i) => {
-                                return (
-                                    <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
-                                )
-                            })
-                        }
-                        <span className='spanTag' onClick={calm.addProject}>+添加科目</span>
-                    </div>
-                    <div className="allProject">
-                        <div className='title'>所有科目
+               <div className="cont">
+                   <div><div className='title'>已选科目</div>
+                       {
+                           calm.state.alreadySelectData.map((v, i) => {
+                               return (
+                                   <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                               )
+                           })
+                       }
+                       <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
+                   </div>
+                   <div className="allProject">
+                           <div className='title'>所有科目
+                           {
+                               calm.state.allProjectData.length == 0 ?
+                                   ""
+                                   :
                                    <span onClick={calm.manageProject}>管理</span>
+                           }
                         </div>
                         {/* 需要高亮的 */}
                         {

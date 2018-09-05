@@ -240,6 +240,12 @@ const selectedPeople = (location, cb) => {
     }, 'selectedPeople')
 };
 
+const myThemeTask = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/article/js/myThemeTask').default)
+    }, 'myThemeTask')
+};
+
 
 
 import './index.less';
@@ -260,6 +266,10 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>文章列表</Link></li>
                     <li><Link to="/themeTask?userId=17"
                               style={{fontSize: '24px'}}>发布主题</Link></li>
+                    <li><Link to="/myThemeTask?userId=17&targetId=1"
+                              style={{fontSize: '24px'}}>我的主题列表</Link></li>
+                    <li><Link to="/myThemeTask?userId=17&targetId=0"
+                              style={{fontSize: '24px'}}>我的错题本</Link></li>
                     {/*<li><Link to="/myArticleList?userId=3"*/}
                               {/*style={{fontSize: '24px'}}>我的文章列表</Link></li>*/}
                     <li><Link to="/LoginScanner"
@@ -391,6 +401,7 @@ ReactDOM.render(
             <Route path="themeTask" getComponent={themeTask}/>
             <Route path="themeTaskDetail" getComponent={themeTaskDetail}/>
             <Route path="selectedPeople" getComponent={selectedPeople}/>
+            <Route path="myThemeTask" getComponent={myThemeTask}/>
         </Route>
     </Router>
     ,

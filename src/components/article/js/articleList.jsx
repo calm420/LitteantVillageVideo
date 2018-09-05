@@ -615,7 +615,22 @@ export default class articleList extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail(cid){
-        console.log(cid,'cid')
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
+
+    playVideo(event){
+
+        event.stopPropagation();
+        // console.log(e,'eeeeeeeeeeee');
+        // e.nativeEvent.stopImmediatePropagation();
     }
 
 
@@ -631,7 +646,7 @@ export default class articleList extends React.Component {
                         friendsAttachments.splice(i, 1);
                     }
                 }
-                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this,rowData.cid)}>
+                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this,rowData.cfid)}>
                     <div className="list_head">
                         <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt=""/>
@@ -640,7 +655,7 @@ export default class articleList extends React.Component {
                         <div className="createTime"></div>
 
                     </div>
-                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic"}>{rowData.type?'':''}</span></div>
+                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic tag-WrongTopic-orange"}>{rowData.type?'':''}</span></div>
                     <div className="list_content">{rowData.content}</div>
                     <div className="list_image" style={
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
@@ -648,7 +663,7 @@ export default class articleList extends React.Component {
                         {friendsAttachments.map((value, index) => {
                             if(value.type == 0){
                                 return <img style={
-                                    friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                    friendsAttachments.length == 1 ? {width: '100%',height:'100%'} : {
                                         display: 'inline-block'
                                     }
                                 } src={value.path} alt=""/>
@@ -658,8 +673,8 @@ export default class articleList extends React.Component {
                                         display: 'inline-block'
                                     }
                                 }>
-                                    <video  style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
-                                    <div className="video_tag_play"></div>
+                                    <video onClick={this.playVideo.bind(this)}  style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
+                                    <div className="video_tag_play" onClick={this.playVideo.bind(this)}></div>
                                 </div>
                             }
 

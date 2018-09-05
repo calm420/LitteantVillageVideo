@@ -132,7 +132,7 @@ export default class publishWrongQuestion extends React.Component {
             "method": "saveWrongTopicBook",
             "circleOfFriendsJson": {
                 "friendsAttachments": [],
-                "fTags":calm.state.tagText,
+                "fTags": calm.state.tagText,
                 "uid": calm.state.userId,
                 "type": 0,
                 "mastery": calm.state.mastery,//0不懂   1略懂    2基本懂   3完全懂
@@ -201,7 +201,7 @@ export default class publishWrongQuestion extends React.Component {
      * 添加标签
      */
     addTag() {
-        if(calm.state.cid == undefined){
+        if (calm.state.cid == undefined) {
             Toast.info("请先选择科目")
             return
         }
@@ -324,7 +324,7 @@ export default class publishWrongQuestion extends React.Component {
                 uid: calm.state.userId,
             })
         })
-        console.log(tagTextData,"tagTextData")
+        console.log(tagTextData, "tagTextData")
         calm.state.tagText = calm.state.tagText.concat(tagTextData);
         var arr = calm.state.tagText;
         calm.state.tagText = calm.makeArr(arr, "tagTitle")
@@ -377,12 +377,18 @@ export default class publishWrongQuestion extends React.Component {
             calm.upload_video_pic()
             if (type == 1) {
                 calm.state.theQuestionArr.push({
-                    type:1,
-                    url:imgUrl,
+                    type: 1,
+                    url: imgUrl,
                 })
             }
             if (type == 2) {
-                calm.state.theQustionVideo.push(imgUrl);
+                calm.state.theQustionVideo.push(
+                    {
+                        type: 1,
+                        url: imgUrl,
+                        firstUrl: imgUrl
+                    }
+                );
             }
             calm.setState({
                 theQuestionArr: calm.state.theQuestionArr,
@@ -472,7 +478,7 @@ export default class publishWrongQuestion extends React.Component {
                         {
                             calm.state.theQustionVideo.map((v, i) => {
                                 return (
-                                    <video onClick={calm.clickQuestionVideo.bind(this,i)} className="upload_box_video" src={v} alt="" controls />
+                                    <video onClick={calm.clickQuestionVideo.bind(this, i)} className="upload_box_video" src={v} alt="" controls />
                                 )
                             })
                         }

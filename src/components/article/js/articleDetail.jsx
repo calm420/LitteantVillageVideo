@@ -786,7 +786,7 @@ export default class articleDetail extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="commit_title">评论总数量({this.state.commit_count})</div>
+                                <div className="commit_title">总评论{this.state.commit_count}条</div>
                             </div>
                         )}
                         renderFooter={this.state.isLoadingHidden ? '' : () => (

@@ -761,9 +761,10 @@ export default class articleList extends React.Component {
                     <div className="showPubli_box" style={
                         this.state.showPubliFlag ? {display: 'block'} : {display: 'none'}
                     }>
-                        <div onClick={this.publishArt.bind(this, 'article')}>发布文章</div>
-                        <div onClick={this.publishArt.bind(this, 'theme')}>发布主题任务</div>
-                        <div onClick={this.publishArt.bind(this, '')}>发布错题本</div>
+                        <i className="showPubli_box-arrow"></i>
+                        <div className="line_public" onClick={this.publishArt.bind(this, 'article')}><i className="i-WeMedia"></i>发布自媒体</div>
+                        <div className="line_public" onClick={this.publishArt.bind(this, '')}><i className="i-WrongTopic"></i>发布错题本</div>
+                        <div className="line_public" onClick={this.publishArt.bind(this, 'theme')}><i className="i-PublishThematicTasks"></i>发布主题任务</div>
                     </div>
                 </div>
                 {/*mask*/}

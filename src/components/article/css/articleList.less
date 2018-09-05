@@ -132,7 +132,7 @@
     top: 50%;
     left: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 9;
     text-align: center;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
@@ -318,14 +318,49 @@
     z-index: 10;
     .showPubli_box{
       position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 150px;
-      height: 100px;
+      bottom: -12px;
+      right: -2px;
+      width: 130px;
+      height: 157px;
       background: white;
       transform: translate(0,100%);
-      box-shadow: 0px 0px 5px #ccc;
+      box-shadow: 0px 2px 4px 0px rgba(123,123,123,0.5);
       z-index: 9999999;
+      border-radius: 2px;
+      color: #333;
+      font-size: 14px;
+      padding: 0 15px;
+    }
+    .showPubli_box-arrow{
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid white;
+      position: absolute;
+      top: -5px;
+      right: 5px;
+    }
+    .showPubli_box > div{
+      padding: 17px 0
+    }
+    .showPubli_box > div i{
+      width: 13px;
+      height: 15px;
+      display: inline-block;
+      background-size: 100% 100%;
+      position: relative;
+      top: 2px;
+      margin-right: 8px;
+    }
+    .i-PublishThematicTasks{
+      background: url("../images/PublishThematicTasks.png") no-repeat;
+    }
+    .i-WeMedia{
+      background: url("../images/WeMedia.png") no-repeat;
+    }
+    .i-WrongTopic{
+      background: url("../images/WrongTopic.png") no-repeat;
     }
   }
   .mask{

@@ -395,7 +395,7 @@ export default class articleList extends React.Component {
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.fatherType == 1) {
                                                     if (value.type == 0) {
-                                                        return <img src={value.path} alt=""/>
+                                                        return <img src={value.path} alt=""  style={{width: '200', height: '113'}} />
                                                     } else {
                                                         return <div className="video_tag">
                                                             <video style={{width: '200', height: '113'}}

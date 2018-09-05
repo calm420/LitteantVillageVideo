@@ -87,6 +87,7 @@ export default class updateVideo extends React.Component {
                         videoType: result.response.videoType,
                         initType: result.response.videoType
                     })
+                    result.response.tags = result.response.tags || [];
                     result.response.tags.map((v, i) => {
                         if (v.tagType == 2 && calm.state.videoType == 1) {
                             calm.state.cheData.label = v.tagTitle,

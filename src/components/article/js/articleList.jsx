@@ -592,7 +592,15 @@ export default class articleList extends React.Component {
                 window.location.href = url;
             });
         } else if (type == '') {
-            console.log('错题本');
+            var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId=" + this.state.userId;
+            // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
+            var data = {
+                method: 'openNewPage',
+                url: url
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
         }
 
     }

@@ -244,7 +244,7 @@ export default class articleList extends React.Component {
                 console.log(type);
                 if (type == 1) {
                     var imageDiv = $("<img class='upload_box_image' />").attr('src', res);
-                    var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                    var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
                     $(imageBox).append(imageDiv);
                     $('#image_box').append(imageBox);
                     var imageList = that.state.imageList;
@@ -407,39 +407,49 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="themeTask" style={{height: document.body.clientHeight}}>
-                <input type="text" className="input_title" placeholder="主题标题"/>
-                <textarea className="textarea_content" name="" id="" cols="30" rows="10"
-                          placeholder="请输入主题内容"></textarea>
-                <input id='upload' type="file"/>
-                <div>
-                    <div id="image_box"></div>
-                    <div onClick={this.selectFile}>
-                        <img onClick={this.selectFile} className="add-pic" src={require("../images/add-pic.png")} alt=""/>
+                <div className="themeTask-box">
+                    <div className="themeTitle line_public">
+                        <input type="text" className="input_title textarea_form_control" placeholder="主题标题"/>
                     </div>
-                </div>
-                <div>
-                    <div id="progress" >
-                        <div className="progress">
-                            <div className="progress-bar"></div>
+                    <div className="themeTitle themeContent">
+                        <textarea className="textarea_content textarea_form_controlH" name="" id="" cols="30" rows="10"
+                                  placeholder="请输入主题任务内容"></textarea>
+                    </div>
+                    <div>
+                        <input id='upload' type="file"/>
+                    </div>
+                    <div className="addPic-box">
+                        <div id="image_box"></div>
+                        <div onClick={this.selectFile} className="addPic-wrap addPic-content">
+                            <img onClick={this.selectFile} className="addPic" src={require("../images/add-pic.png")} alt=""/>
                         </div>
-                        <div className="progressText">进度: 0%</div>
+                    </div>
+                    <div>
+                        <div id="progress" >
+                            <div className="progress">
+                                <div className="progress-bar"></div>
+                            </div>
+                            <div className="progressText">进度: 0%</div>
+                        </div>
+                    </div>
+                    <div className="line_public top-10">
+                        <DatePicker
+                            mode="date"
+                            title=""
+                            extra="" //默认值
+                            value={this.state.date}
+                            onChange={date => this.setState({ date })}
+                        >
+                            <List.Item arrow="horizontal"><i className="i-icon i_AsDate"></i>截止日期</List.Item>
+                        </DatePicker>
+                    </div>
+                    <div className='toSetPeople am-list-item' onClick={this.toSetPeople}>
+                        <div className="am-list-line"><i className="i-icon i_WhoSee"></i>谁可以看<span>{this.state.peopleList.length>0?'已选'+this.state.peopleList.length+'人':'全部'}</span><div className="am-list-arrow am-list-arrow-horizontal" aria-hidden="true"></div></div>
                     </div>
                 </div>
-                <div>
-                    <DatePicker
-                        mode="date"
-                        title=""
-                        extra="" //默认值
-                        value={this.state.date}
-                        onChange={date => this.setState({ date })}
-                    >
-                        <List.Item arrow="horizontal">截止日期</List.Item>
-                    </DatePicker>
+                <div className="bottom_nav">
+                    <Button onClick={this.releaseTheme} className="button_btn submit_button">发布</Button>
                 </div>
-                <div className='toSetPeople' onClick={this.toSetPeople}>
-                    <div>谁可以看<span>{this.state.peopleList.length>0?'已选'+this.state.peopleList.length+'人':'全部'}</span></div>
-                </div>
-                <Button onClick={this.releaseTheme}>发布</Button>
 
 
 

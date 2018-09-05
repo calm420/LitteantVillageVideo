@@ -16,10 +16,34 @@ export default class publishWrongQuestion extends React.Component {
             projectData: [],
             tagChangeData: [],
             searchValue: "",
-            theQuestionArr: [],
-            theQustionVideo: [],
-            theAnswerArr: [],
-            theAnswerVideo: [],
+            theQuestionArr: [
+                {
+                    type: 0, //图片
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
+            ],
+            theQustionVideo: [
+                {
+                    type: 1,  //视频
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
+                    coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
+            ],
+            theAnswerArr: [
+                {
+                    type: 0, //图片
+                    fatherType: 1,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
+            ],
+            theAnswerVideo: [{
+                type: 1,  //视频
+                fatherType: 1,
+                path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
+                coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+            }],
         }
     }
     componentDidMount() {
@@ -128,15 +152,16 @@ export default class publishWrongQuestion extends React.Component {
             });
         })
     }
-
     /**
      * 提交
      */
     saveWrongTopicBook() {
+        var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
+        var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
         var param = {
             "method": "saveWrongTopicBook",
             "circleOfFriendsJson": {
-                "friendsAttachments": [],
+                "friendsAttachments": ImgArr.concat(VidoeArr),
                 "fTags": calm.state.tagText,
                 "uid": calm.state.userId,
                 "type": 0,
@@ -155,7 +180,6 @@ export default class publishWrongQuestion extends React.Component {
                         projectData: result.response
                     })
                 }
-
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -180,8 +204,6 @@ export default class publishWrongQuestion extends React.Component {
      * 选择科目
      */
     projectChange = (item) => {
-
-        console.log('value', item);
         this.setState({
             projectValue: item.courseName,
             cid: item.cid
@@ -247,20 +269,6 @@ export default class publishWrongQuestion extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                // // if (v.tagId == 0) {
-                                // //     // calm.setState({
-                                // //     //     isNewTag:0
-                                // //     // })
-                                // //     calm.setState.isNewTag = 0;
-                                // //     arr.push(<Tag
-                                // //         selected={false}
-                                // //         onChange={calm.tagChange.bind(this, v)}
-                                // //     >{v.tagTitle}</Tag>)
-                                // //     return
-                                // // }
-                                // calm.setState({
-                                //     isNewTag: 0
-                                // })
                                 arr.push(<Tag
                                     selected={false}
                                     onChange={calm.tagChange.bind(this, v)}
@@ -283,23 +291,15 @@ export default class publishWrongQuestion extends React.Component {
         * 标签改变
         */
     tagChange(data, status) {
-        // console.log(status,"status")
         if (status) {
             calm.state.tagChangeData.push(data);
-            console.log(calm.state.tagChangeData, "tagChangeData")
-
         } else {
-            // console.log(status,"status")
-            console.log(calm.state.tagChangeData, "tagChangeData1")
             calm.state.tagChangeData.forEach((v, i) => {
-                console.log(data, "data")
-                console.log(v, "V")
                 if (v.tagId == data.tagId) {
                     calm.state.tagChangeData.splice(i, 1)
                     calm.setState({
                         tagChangeData: calm.state.tagChangeData
                     })
-                    console.log(calm.state.tagChangeData, "tagChangeData2")
                 }
             })
         }
@@ -378,20 +378,24 @@ export default class publishWrongQuestion extends React.Component {
             // var res = 'http:suhdjghjaasd?type=1'
             var newArr = res.split("?");
             var type = newArr[1].split("=")[1]
-            var imgUrl = newArr[0];
-            calm.upload_video_pic()
+            // calm.upload_video_pic()
             if (type == 1) {
+                var imgUrl = newArr[0];
                 calm.state.theQuestionArr.push({
-                    type: 1,
-                    url: imgUrl,
+                    type: 0, //图片
+                    fatherType: 0, //题干
+                    path: imgUrl
                 })
             }
             if (type == 2) {
+                var videoUrl = newArr[0];
+                var firstUrl = newArr[2].split("=")[1]
                 calm.state.theQustionVideo.push(
                     {
-                        type: 1,
-                        url: imgUrl,
-                        firstUrl: imgUrl
+                        type: 1,  //视频
+                        fatherType: 0, //题干
+                        path: videoUrl,
+                        coverPath: firstUrl
                     }
                 );
             }
@@ -415,12 +419,23 @@ export default class publishWrongQuestion extends React.Component {
             // 拿到照片地址,显示在页面等待上传
             var newArr = res.split("?");
             var type = newArr[1].split("=")[1]
-            var imgUrl = newArr[0];
             if (type == 1) {
-                calm.state.theAnswerArr.push(imgUrl)
+                var imgUrl = newArr[0];
+                calm.state.theAnswerArr.push({
+                    type: 0, //图片
+                    fatherType: 1, //答案
+                    path: imgUrl
+                })
             }
             if (type == 2) {
-                calm.state.theAnswerVideo.push(imgUrl);
+                var videoUrl = newArr[0];
+                var firstUrl = newArr[2].split("=")[1]
+                calm.state.theAnswerVideo.push({
+                    type: 1,  //视频
+                    fatherType: 1,
+                    path: videoUrl, //答案
+                    coverPath: firstUrl
+                });
             }
             calm.setState({
                 theAnswerArr: calm.state.theAnswerArr,
@@ -431,8 +446,42 @@ export default class publishWrongQuestion extends React.Component {
         });
     }
 
-
-
+    /**
+     * 删除问题
+     */
+    deleteQuestion(i) {
+        calm.state.theQuestionArr.splice(i, 1);
+        calm.setState({
+            theQuestionArr: calm.state.theQuestionArr
+        })
+    }
+    /**
+     * 删除答案
+     */
+    deleteAnswer(i) {
+        calm.state.theAnswerArr.splice(i, 1);
+        calm.setState({
+            theAnswerArr: calm.state.theAnswerArr
+        })
+    }
+    /**
+     * 删除答案视频
+     */
+    deleteAnswerVideo(i) {
+        calm.state.theAnswerVideo.splice(i, 1);
+        calm.setState({
+            theAnswerVideo: calm.state.theAnswerVideo
+        })
+    }
+    /**
+     * 删除问题
+     */
+    deleteQuestionVideo(i) {
+        calm.state.theQustionVideo.splice(i, 1);
+        calm.setState({
+            theQustionVideo: calm.state.theQustionVideo
+        })
+    }
     render() {
         const understandData = [
             {
@@ -452,16 +501,6 @@ export default class publishWrongQuestion extends React.Component {
                 label: "3"
             }
         ]
-        const projectData = [
-            {
-                value: "语文",
-                label: "chinese"
-            },
-            {
-                value: "数学",
-                label: "math"
-            },
-        ]
         const { understandValue, projectValue } = this.state;
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
@@ -476,14 +515,20 @@ export default class publishWrongQuestion extends React.Component {
                         {
                             calm.state.theQuestionArr.map((v, i) => {
                                 return (
-                                    <img src={v} alt="" />
+                                    <div>
+                                        <img style={{ width: "50px" }} src={v.path} alt="" />
+                                        <span onClick={calm.deleteQuestion.bind(this, i)}>删除</span>
+                                    </div>
                                 )
                             })
                         }
                         {
                             calm.state.theQustionVideo.map((v, i) => {
                                 return (
-                                    <video onClick={calm.clickQuestionVideo.bind(this, i)} className="upload_box_video" src={v} alt="" controls />
+                                    <div>
+                                        <video style={{ width: "50px" }} poster={v.coverPath} src={v.path} alt="" controls />
+                                        <span onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span>
+                                    </div>
                                 )
                             })
                         }
@@ -494,14 +539,20 @@ export default class publishWrongQuestion extends React.Component {
                         {
                             calm.state.theAnswerArr.map((v, i) => {
                                 return (
-                                    <img src={v} alt="" />
+                                    <div>
+                                        <img style={{ width: "50px" }} src={v.path} alt="" />
+                                        <span onClick={calm.deleteAnswer.bind(this, i)}>删除</span>
+                                    </div>
                                 )
                             })
                         }
                         {
                             calm.state.theAnswerVideo.map((v, i) => {
                                 return (
-                                    <video src={v} alt="" controls />
+                                    <div>
+                                        <video style={{ width: "50px" }} poster={v.coverPath} src={v.path} alt="" controls />
+                                        <span onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span>
+                                    </div>
                                 )
                             })
                         }

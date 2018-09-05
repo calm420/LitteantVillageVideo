@@ -1,8 +1,7 @@
 #myThemeTask{
   .circleList{
-    padding: 15px 15px 0 15px;
-    border-bottom: 15px solid #e5e5e5;
     position: relative;
+    width: calc(~"100% - 65px");
     .tags{
       display: inline-block;
       position: absolute;
@@ -38,7 +37,7 @@
       background-size: 100% 100%;
     }
     .list_bottom{
-      padding: 10px 35px;
+      padding: 10px 10px;
       margin-top: 10px;
       position: relative;
       display: flex;
@@ -74,6 +73,8 @@
   }
   .list_item{
     margin-top: 0;
+    border-bottom: 10px solid #f4f4f4;
+    padding: 15px 15px 15px 0;
     .list_head{
       height: 40px;
       margin-bottom: 13px;
@@ -164,6 +165,11 @@
         background:url("../images/praise.png") no-repeat;
         background-size: 100% 100%;
       }
+      .i-delete{
+        background:url("../images/icon_delete.png") no-repeat;
+        background-size: 100% 100%;
+      }
+
       span{
         position: relative;
         left:5px;
@@ -181,5 +187,25 @@
     color: #333;
     font-size: 16px;
     line-height: 20px;
+  }
+  .time{
+    font-size: 13px;
+    color: #666;
+    &>div{
+      padding-top: 8px;
+    }
+  }
+  .date{
+    padding-left: 15px;
+    width: 65px;
+    box-sizing: border-box;
+    .day{
+      color: #333;
+      font-size: 20px;
+    }
+    .mouth{
+      font-size: 12px;
+      color: #666;
+    }
   }
 }

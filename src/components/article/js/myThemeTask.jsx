@@ -211,7 +211,7 @@ export default class articleList extends React.Component {
                 }
             }
             dom =
-                <div>
+                <div className='my_flex'>
                     <div className="date">
                         <div className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10?'0'+WebServiceUtil.formatMD(rowData.createTime).split('-')[1]:WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
@@ -243,17 +243,17 @@ export default class articleList extends React.Component {
 
                             })}
                         </div>
-                        <div style={
+                        <div className='time' style={
                             rowData.type==0?{display:'none'}:{display:'block'}
                         }>
-                            <div>發布時間:{this.timeDifference(rowData.createTime)}</div>
-                            <div>截止時間:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
+                            <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
+                            <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                             <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
-                            <div className="list_bottom_item" onClick={this.deleteCircle.bind(this, rowData.cfid)}>刪除</div>
+                            <div className="list_bottom_item" onClick={this.deleteCircle.bind(this, rowData.cfid)}><i className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>

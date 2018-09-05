@@ -607,7 +607,14 @@ export default class articleList extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail(cid){
-        console.log(cid,'cid')
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
     }
 
 
@@ -623,7 +630,7 @@ export default class articleList extends React.Component {
                         friendsAttachments.splice(i, 1);
                     }
                 }
-                dom = <div className="" onClick={this.toThemeTaskDetail.bind(this,rowData.cid)}>
+                dom = <div className="" onClick={this.toThemeTaskDetail.bind(this,rowData.cfid)}>
                     <div className="list_head">
                         <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt=""/>

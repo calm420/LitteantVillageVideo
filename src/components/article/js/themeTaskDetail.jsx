@@ -239,18 +239,18 @@ export default class articleList extends React.Component {
                 dom = <div></div>
             } else {
                 dom = <div className="list_item" style={{marginTop:'0'}}>
-                    <div className="circleList">
+                    <div className="circleList circleList-comment line_public">
                     <div className="list_head">
-                        <div className="head_pic">
+                        <div className="headPic">
                             <img src={rowData.discussUser.avatar} alt=""/>
                         </div>
                         <div className="courseList">
                             <div className="userName">{this.state.detail.userInfo.userName}</div>
                             <span className="tag-course tag-course-blue">语文</span>
                         </div>
-                        <div className="time">{this.timeDifference(rowData.createTime)}</div>
+                        <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
-                    <div className="list_content">{rowData.discussContent}</div>
+                    <div className="list_content content_detail-comment">{rowData.discussContent}</div>
                 </div>
                 </div>
             }
@@ -326,7 +326,7 @@ export default class articleList extends React.Component {
                                             alt=""/>
                                     </div>
                                 </div>
-                                <div className="commit_title">全部评论({this.state.commit_count})</div>
+                                <div className="commit_title commit_title-comment">全部评论({this.state.commit_count})</div>
                             </div>
                         )}
                         renderFooter={this.state.isLoadingHidden ? '' : () => (

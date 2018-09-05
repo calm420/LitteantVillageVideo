@@ -486,9 +486,11 @@ export default class articleList extends React.Component {
                 <div className='selectedPeople' style={
                     this.state.selectedFlag?{left:'0%'}:{left:'100%'}
                 }>
-                    <Button onClick={this.selectedComplete}>完成</Button>
+                    <div className="bottom_nav">
+                        <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>
+                    </div>
 
-                    <List>
+                    <List className="selectedPeople_border">
                         {data.map(i => (
                             <RadioItem key={i.value} checked={radioValue === i.value}
                                        onChange={() => this.onChangeRadio(i.value)}>

@@ -64,7 +64,6 @@ export default class articleList extends React.Component {
         })
     }
 
-
     //調用全屏視頻播放
     playVideo(url) {
         console.log(url);
@@ -77,7 +76,6 @@ export default class articleList extends React.Component {
             Toast.info('開啓視頻失敗!');
         });
     }
-
 
     /**
      * 根据用户ｉｄ获取粉丝列表
@@ -152,7 +150,6 @@ export default class articleList extends React.Component {
             this.getUserFans();
         });
     };
-
 
     /**
      * 按查询条件获取列表
@@ -321,7 +318,6 @@ export default class articleList extends React.Component {
 
     }
 
-
     //原生ｊｓ上传
     upload_file = () => {
         $("#upload").click();
@@ -406,14 +402,12 @@ export default class articleList extends React.Component {
         })
     }
 
-
     selectedComplete = () => {
         document.title = '发布主题';
         this.setState({
             selectedFlag: false,
         })
     }
-
 
     render() {
         const data = [

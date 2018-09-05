@@ -24,10 +24,14 @@ export default class articleList extends React.Component {
             detail: {
                 type: 1,
                 userInfo: {},
-                friendsAttachments: []
+                friendsAttachments: [],
+                partakeUserList: [],
             },
             commitFlag: false,
-            domImage:[]
+            domImage: [],
+            islike: false,
+            inputValue: '',  //评论内容
+            friendsAttachments: [],   //附件
         }
     }
 
@@ -44,18 +48,26 @@ export default class articleList extends React.Component {
         }, () => {
             this.gitCircleOfFriendsById();
             this.getDiscussInfoList();
-            $(document).on('click','.delete_upload_image',function(){
-                console.log('delete');
+            $(document).on('click', '.delete_upload_image', function () {
                 console.log(that.state.domImage);
-                console.log($(this).prev().attr('src'))
+                console.log($(this).attr('id'));
+                console.log(that.state.friendsAttachments,'friendsAttachments')
+                var friendsAttachments = that.state.friendsAttachments;
                 var dom = that.state.domImage;
-                for(var i=0;i< dom.length;i++){
-                    if(dom[i].key == $(this).prev().attr('src')){
-                        dom.splice(i,1);
+
+                for(var i = 0;i < friendsAttachments.length;i++){
+                    if (friendsAttachments[i].path == $(this).attr('id')) {
+                        friendsAttachments.splice(i, 1);
+                    }
+                }
+                for (var i = 0; i < dom.length; i++) {
+                    if (dom[i].key == $(this).attr('id')) {
+                        dom.splice(i, 1);
                     }
                 }
                 that.setState({
-                    domImage:dom
+                    domImage: dom,
+                    friendsAttachments:friendsAttachments
                 })
                 // for(var k in dom){
                 //     if(dom[k].key == $(this).prev().attr('src')){
@@ -64,7 +76,6 @@ export default class articleList extends React.Component {
             })
         })
     }
-
 
     /**
      * 获取评论列表
@@ -104,7 +115,6 @@ export default class articleList extends React.Component {
             }
         });
     }
-
 
     //计算时间差
     timeDifference(date) {
@@ -148,7 +158,6 @@ export default class articleList extends React.Component {
         // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
     }
 
-
     /**
      *  ListView数据全部渲染完毕的回调
      */
@@ -167,7 +176,6 @@ export default class articleList extends React.Component {
         });
     };
 
-
     /**
      * 按id查询详情
      * **/
@@ -181,7 +189,8 @@ export default class articleList extends React.Component {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
                     this.setState({
-                        detail: result.response
+                        detail: result.response,
+                        islike: result.response.currentUserIsLike
                     })
                     if (result.response.type == 0) {
                         document.title = '错题本';
@@ -197,38 +206,366 @@ export default class articleList extends React.Component {
         });
     }
 
+    /**
+     * 按id查询详情
+     * **/
+    changeFriendLikeCount() {
+        var param = {
+            "method": 'changeFriendLikeCount',
+            "friendId": this.state.detail.cfid,
+            "userId": this.state.userId,
+            "changeType": this.state.islike ? 1 : 0,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'gitCircleOfFriendsById')
+                if (result.success) {
+                    Toast.info(this.state.islike ? '取消點贊' : '點贊成功');
+                    if (this.state.islike) {
+                        console.log('取消點贊')
+                        var detail = this.state.detail;
+                        detail.likeCount = detail.likeCount - 1
+                        this.setState({
+                            detail: detail,
+                            islike: !this.state.islike
+                        })
+                    } else {
+                        console.log('點贊')
+                        var detail = this.state.detail;
+                        detail.likeCount = detail.likeCount + 1
+                        this.setState({
+                            detail: detail,
+                            islike: !this.state.islike
+                        })
+                    }
+
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
 
     lookAll() {
         console.log('查看全部')
     }
 
-    setCommit = ()=>{
+    setCommit = () => {
         this.setState({
             commitFlag: true
         })
     }
 
-    closeCommitBox = ()=>{
+    closeCommitBox = () => {
         this.setState({
             commitFlag: false
         })
     }
 
-    sendCommit = () =>{
-        console.log('发送')
+    sendCommit = () => {
+
+        var param = {
+            "method": 'saveDiscussInfo',
+            "targetId": this.state.detail.cfid,   //进的文章id
+            "targetType": 2,
+            "discussContent": this.state.inputValue,
+            "userId": this.state.userId,
+            "friendsAttachments": JSON.stringify(this.state.friendsAttachments)
+        };
+        console.log(param);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    Toast.success('评论成功', 1)
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+
+
     }
 
+    selectFile = () => {
+        var noom = ''
+        var phoneType = navigator.userAgent;
+        if (phoneType.indexOf('Android') > -1) {
+            //Android系统,
+            var data = {
+                method: 'selectedImage',
+            };
+            window.parent.Bridge.callHandler(data, function (res) {
+                var newArr = res.split("?");
+                var url = newArr[0];
+                var type = newArr[1].split("=")[1];
+                if (noom == '') {
+                    if (type == 1) {
+                        var imageDiv = $("<img class='upload_box_image' />").attr('src', url);
+                        var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(imageDiv);
+                        $('#image_box').append(imageBox);
+                        var imageList = that.state.imageList;
+                        imageList.push(url);
+                        that.setState({
+                            imageList: imageList
+                        })
+                    } else {
+                        var firstImage = newArr[2].split("=")[1];
+                        var videoDiv = $("<img class='upload_box_video' />").attr({
+                            'src': firstImage,
+                            'videoPath': url
+                        });
+                        //image ---> uploadBox
+                        var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(videoDiv);
 
-    selectedImage = () =>{
-        console.log('selectedImage');
-        var url = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg';
-        var dom = this.state.domImage;
-        dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/><div className='delete_upload_image'><img
-            src={require('../images/close_r.png')} alt=""/></div></div>);
-        // dom.key = url;
-        this.setState({
-            domImage:dom
+                        $('#image_box').append(imageBox);
+                        var videoList = that.state.videoList;
+                        videoList.push(url);
+                        that.setState({
+                            videoList: videoList
+                        })
+                    }
+                    noom = res;
+                } else if (noom == res) {
+                    return;
+                }
+
+            }, function (error) {
+                console.log(error);
+                that.upload_file();
+                that.upload_file();
+            });
+        } else {
+            var data = {
+                method: 'selectedImage',
+            };
+            window.parent.Bridge.callHandler(data, function (res) {
+                var newArr = res.split("?");
+                var url = newArr[0];
+                var type = newArr[1].split("=")[1];
+                // Toast.info(url);
+                if (noom == '') {
+                    if (type == 1) {
+                        var imageDiv = $("<img class='upload_box_image' />").attr('src', url);
+                        var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(imageDiv);
+                        $('#image_box').append(imageBox);
+                        var imageList = that.state.imageList;
+                        imageList.push(url);
+                        that.setState({
+                            imageList: imageList
+                        })
+                    } else {
+                        var firstImage = newArr[2].split("=")[1];
+                        var videoDiv = $("<img class='upload_box_video' />").attr({
+                            'src': firstImage,
+                            'videoPath': url
+                        });
+                        //image ---> uploadBox
+                        var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(videoDiv);
+
+                        $('#image_box').append(imageBox);
+                        var videoList = that.state.videoList;
+                        videoList.push(url);
+                        that.setState({
+                            videoList: videoList
+                        })
+                    }
+                    noom = res;
+                } else if (noom == res) {
+                    return;
+                }
+
+            }, function (error) {
+                console.log(error);
+                that.upload_file();
+                that.upload_file();
+
+            });
+        }
+
+    }
+
+    //原生ｊｓ上传
+    upload_file = () => {
+        $("#upload").click();
+        //取消加绑定change事件解决change事件无法控制
+        $("#upload").off("change");
+        $("#upload").change(function () {
+            if (this.files[0]) {
+                var formData = new FormData();
+                formData.append("file" + 0, this.files[0]);
+                formData.append("name" + 0, this.files[0].name);
+                $.ajax({
+                    type: "POST",
+                    url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    // 告诉jQuery不要去处理发送的数据
+                    processData: false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType: false,
+                    xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                        var xhr = jQuery.ajaxSettings.xhr();
+                        xhr.upload.onload = function () {
+                            // console.log('上传完成隐藏进度条');
+                            $('.progressText').text('上传完成')
+                            // setTimeout(function(){
+                            $('#progress')[0].style.display = 'none';
+                            $('.progress-bar')[0].style.width = '0%';
+                            $('.progressText').text('进度: 0%');
+                            // },500);
+                            console.log('上传完成')
+                        };
+                        xhr.upload.onprogress = function (ev) {
+                            // $('#progress')[0].style.display = 'block';
+                            if ($('#progress').css('display') == 'none') {
+                                $('#progress').css({display: 'block'})
+                            } else {
+                                //显示进度条
+                                $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
+                                $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
+                            }
+                        };
+                        return xhr;
+                    },
+                    success: function (res) {
+                        //返回在线图片地址
+                        var type = res.substring(res.length - 3, res.length);
+                        if (type == 'jpg' || type == 'png' || type == 'gif' || type == 'peg' || type == 'JPG' || type == 'PNG' || type == 'PEG' || type == 'GIF') {
+                            var imageDiv = $("<img class='upload_box_image' />").attr('src', res);
+                            var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                            $(imageBox).append(imageDiv);
+                            $('#image_box').append(imageBox);
+                            var imageList = that.state.imageList;
+                            imageList.push(res);
+                            that.setState({
+                                imageList: imageList
+                            })
+                        } else {//认为是视频
+                            console.log('回调完成')
+                            var videoDiv = $("<video class='upload_box_video' />").attr('src', res);
+                            var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                            $(imageBox).append(videoDiv);
+                            $('#image_box').append(imageBox);
+                            var videoList = that.state.videoList;
+                            videoList.push(res);
+                            that.setState({
+                                videoList: videoList
+                            })
+                            console.log('渲染完成')
+                            // that.upload_video_pic(res, videoDiv);
+
+                        }
+                    }
+                });
+            }
         })
+    }
+
+    //調用全屏視頻播放
+    playVideo(url) {
+        console.log(url);
+        var data = {
+            method: 'playChatVideo',
+            playUrl: url
+        };
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('開啓視頻失敗!');
+        });
+    }
+
+    selectedImage = () => {
+
+
+        var noom = ''
+
+        /*var url = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg';
+
+        // return;
+        var dom = this.state.domImage;
+        dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/>
+            <div className='delete_upload_image'><img
+                src={require('../images/close_r.png')} alt=""/></div>
+        </div>);
+        // dom.key = url;
+
+        this.setState({
+            domImage: dom
+        })*/
+
+        var data = {
+            method: 'selectedImage',
+        };
+        Bridge.callHandler(data, function (res) {
+            // Toast.info(res);
+        // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
+        // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
+        var newArr = res.split("?");
+        var url = newArr[0];
+        var type = newArr[1].split("=")[1];
+        if (noom == '') {
+            if (type == 1) {
+                //图片
+                var dom = that.state.domImage;
+                dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/>
+                    <div className='delete_upload_image' id={url}><img
+                        src={require('../images/close_r.png')} alt=""/></div>
+                </div>)
+
+                that.state.friendsAttachments.push({
+                    cfid: that.state.detail.cid,
+                    type: 0,
+                    fatherType: 2,
+                    coverPath: url,
+                    path: url,
+                })
+            } else {
+                //视频
+                var cover = newArr[2]
+                var dom = that.state.domImage;
+                dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this,url)}><img className="appendImage_item" src={cover} alt=""/>
+                    <div className='delete_upload_image' id={url}><img
+                        src={require('../images/close_r.png')} alt=""/></div>
+                </div>);
+
+                that.state.friendsAttachments.push({
+                    cfid: that.state.cid,
+                    type: 1,
+                    fatherType: 2,
+                    coverPath: cover,
+                    path: url,
+                })
+            }
+            noom = res;
+        } else if (noom == res) {
+            return;
+        }
+        this.setState({
+            domImage: dom
+        })
+
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    likeClick() {
+        this.changeFriendLikeCount();
+        console.log('點贊');
+
+    }
+
+    //评论框输入的回调
+    inputOnChange = (e) => {
+        this.setState({inputValue: e.target.value})
     }
 
     render() {
@@ -238,20 +575,20 @@ export default class articleList extends React.Component {
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
-                dom = <div className="list_item" style={{marginTop:'0'}}>
+                dom = <div className="list_item" style={{marginTop: '0'}}>
                     <div className="circleList">
-                    <div className="list_head">
-                        <div className="head_pic">
-                            <img src={rowData.discussUser.avatar} alt=""/>
+                        <div className="list_head">
+                            <div className="head_pic">
+                                <img src={rowData.discussUser.avatar} alt=""/>
+                            </div>
+                            <div className="courseList">
+                                <div className="userName">{this.state.detail.userInfo.userName}</div>
+                                <span className="tag-course tag-course-blue">语文</span>
+                            </div>
+                            <div className="time">{this.timeDifference(rowData.createTime)}</div>
                         </div>
-                        <div className="courseList">
-                            <div className="userName">{this.state.detail.userInfo.userName}</div>
-                            <span className="tag-course tag-course-blue">语文</span>
-                        </div>
-                        <div className="time">{this.timeDifference(rowData.createTime)}</div>
+                        <div className="list_content">{rowData.discussContent}</div>
                     </div>
-                    <div className="list_content">{rowData.discussContent}</div>
-                </div>
                 </div>
             }
             return dom
@@ -259,215 +596,215 @@ export default class articleList extends React.Component {
         return (
             <div id="themeTaskDetail" style={{height: document.body.clientHeight}}>
                 <div id="articleList">
-                {/*主题计划*/}
-                <div style={
-                    this.state.detail.type == 1 ? {display: 'block'} : {display: 'none'}
-                }>
-                    <ListView
-                        ref={el => this.lv = el}
-                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                        renderSectionHeader={sectionData => (
-                            <div className="list_item" style={{marginTop:'0'}}>
-                                <div className="circleList">
-                                <div className="list_head">
-                                    <div className="headPic"><img src={this.state.detail.userInfo.avatar} alt=""/></div>
-                                    <div className="courseList">
-                                        <div className="userName">{this.state.detail.userInfo.userName}</div>
-                                        <span className="tag-course tag-course-blue">语文</span>
-                                    </div>
-                                    <div className="time"></div>
-                                </div>
-                                <div className="content_detail">{this.state.detail.content}</div>
-                                <div className="image_detail">
-                                    {this.state.detail.friendsAttachments.map((value, index) => {
-                                        if (value.type == 0) {
-                                            return <img src={value.path} alt=""  style={{width: '200', height: '113'}} />
-                                        } else {
-                                            return <div className="video_tag">
-                                                <video style={{width: '100%', height: '100%'}} src={value.path} alt=""/>
-                                                <div className="video_tag_play"></div>
+                    {/*主题计划*/}
+                    <div style={
+                        this.state.detail.type == 1 ? {display: 'block'} : {display: 'none'}
+                    }>
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderSectionHeader={sectionData => (
+                                <div className="list_item" style={{marginTop: '0'}}>
+                                    <div className="circleList">
+                                        <div className="list_head">
+                                            <div className="headPic"><img src={this.state.detail.userInfo.avatar}
+                                                                          alt=""/></div>
+                                            <div className="courseList">
+                                                <div className="userName">{this.state.detail.userInfo.userName}</div>
                                             </div>
-                                        }
-                                    })}
-                                </div>
-                                <div className="asOfDate">
-                                    截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
-                                <div className="detail_bottom">
-                                    <div className="list_bottom_item"><i className="i-share"></i></div>
-                                    <div className="list_bottom_item"><i className="i-praise"></i><span>8</span></div>
-                                </div>
-                            </div>
-                                <div className="commit_title">
-                                    <div className="insetPeople">
-                                        <div>参与的人</div>
-                                        <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
-                                    </div>
-                                    <div className="people_image_list">
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                        <img
-                                            src="http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"
-                                            alt=""/>
-                                    </div>
-                                </div>
-                                <div className="commit_title">全部评论({this.state.commit_count})</div>
-                            </div>
-                        )}
-                        renderFooter={this.state.isLoadingHidden ? '' : () => (
-                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                            </div>)}
-                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list commentList"
-                        pageSize={30}    //每次事件循环（每帧）渲染的行数
-                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                        // useBodyScroll={true}
-                        style={{
-                            height: document.body.clientHeight,
-                        }}
-                    />
-                </div>
-
-                {/*错题本*/}
-                <div style={
-                    this.state.detail.type == 0 ? {display: 'block'} : {display: 'none'}
-                }>
-                    <ListView
-                        ref={el => this.lv = el}
-                        dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                        renderSectionHeader={sectionData => (
-                            <div className="list_item" style={{marginTop:'0'}}>
-                            <div className="circleList">
-                                <div className="list_head">
-                                    <div className="headPic"><img src={this.state.detail.userInfo.avatar} alt=""/></div>
-                                    <div className="courseList">
-                                        <div className="userName">{this.state.detail.userInfo.userName}</div>
-                                        <span className="tag-course tag-course-blue">语文</span>
-                                    </div>
-                                    <div className="time"></div>
-
-                                </div>
-                                <div className="content_detail">{this.state.detail.content}</div>
-                                <div className="image_detail">
-                                    <div>
-                                        <span>题干</span>
-                                        <div>
+                                            <div className="time"></div>
+                                        </div>
+                                        <div className="content_detail">{this.state.detail.content}</div>
+                                        <div className="image_detail">
                                             {this.state.detail.friendsAttachments.map((value, index) => {
-                                                if (value.fatherType == 0) {
-                                                    if (value.type == 0) {
-                                                        return <img src={value.path} alt="" style={{width: '200px', height: '113px'}} />
-                                                    } else {
-                                                        return <div className="video_tag">
-                                                            <video style={{width: '200px', height: '113px'}}
-                                                                   src={value.path} alt=""/>
-                                                            <div className="video_tag_play"></div>
-                                                        </div>
-                                                    }
+                                                if (value.type == 0) {
+                                                    return <img src={value.path} alt=""
+                                                                style={{width: '200', height: '113'}}/>
+                                                } else {
+                                                    return <div className="video_tag">
+                                                        <video style={{width: '100%', height: '100%'}} src={value.path}
+                                                               alt=""/>
+                                                        <div className="video_tag_play"></div>
+                                                    </div>
                                                 }
-
                                             })}
                                         </div>
-                                    </div>
-                                    <div>
-                                        <span>正解</span>
-                                        <div>
-                                            {this.state.detail.friendsAttachments.map((value, index) => {
-                                                if (value.fatherType == 1) {
-                                                    if (value.type == 0) {
-                                                        return <img src={value.path} alt=""  style={{width: '200', height: '113'}} />
-                                                    } else {
-                                                        return <div className="video_tag">
-                                                            <video style={{width: '200', height: '113'}}
-                                                                   src={value.path} alt=""/>
-                                                            <div className="video_tag_play"></div>
-                                                        </div>
-                                                    }
-                                                }
-
-                                            })}
+                                        <div className="asOfDate">
+                                            截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                        <div className="detail_bottom">
+                                            <div className="list_bottom_item"><i className="i-share"></i></div>
+                                            <div className="list_bottom_item"
+                                                 onClick={this.likeClick.bind(this, this.state.detail.cfid)}><i
+                                                className="i-praise"></i><span>{this.state.detail.likeCount}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="commit_title">
+                                        <div className="insetPeople">
+                                            <div>参与的人</div>
+                                            <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
+                                        </div>
+                                        <div className="people_image_list">
+                                            {this.state.detail.partakeUserList.map((value, index) => {
+                                                return <img
+                                                    src={value?value.avatar:''}
+                                                    alt=""/>
+                                            })}
+
+                                        </div>
+                                    </div>
+                                    <div className="commit_title">全部评论({this.state.commit_count})</div>
                                 </div>
-                                <div className="asOfDate">
-                                    截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
-                                <div className="detail_bottom">
-                                    <div className="list_bottom_item"><i className="i-share"></i></div>
-                                    <div className="list_bottom_item"><i className="i-praise"></i><span>8</span></div>
+                            )}
+                            renderFooter={this.state.isLoadingHidden ? '' : () => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list commentList"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            // useBodyScroll={true}
+                            style={{
+                                height: document.body.clientHeight,
+                            }}
+                        />
+                    </div>
+
+                    {/*错题本*/}
+                    <div style={
+                        this.state.detail.type == 0 ? {display: 'block'} : {display: 'none'}
+                    }>
+                        <ListView
+                            ref={el => this.lv = el}
+                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                            renderSectionHeader={sectionData => (
+                                <div className="list_item" style={{marginTop: '0'}}>
+                                    <div className="circleList">
+                                        <div className="list_head">
+                                            <div className="headPic"><img src={this.state.detail.userInfo.avatar}
+                                                                          alt=""/></div>
+                                            <div className="courseList">
+                                                <div className="userName">{this.state.detail.userInfo.userName}</div>
+                                                <span className="tag-course tag-course-blue">语文</span>
+                                            </div>
+                                            <div className="time"></div>
+
+                                        </div>
+                                        <div className="content_detail">{this.state.detail.content}</div>
+                                        <div className="image_detail">
+                                            <div>
+                                                <span>题干</span>
+                                                <div>
+                                                    {this.state.detail.friendsAttachments.map((value, index) => {
+                                                        if (value.fatherType == 0) {
+                                                            if (value.type == 0) {
+                                                                return <img src={value.path} alt=""
+                                                                            style={{width: '200px', height: '113px'}}/>
+                                                            } else {
+                                                                return <div className="video_tag">
+                                                                    <video style={{width: '200px', height: '113px'}}
+                                                                           src={value.path} alt=""/>
+                                                                    <div className="video_tag_play"></div>
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    })}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span>正解</span>
+                                                <div>
+                                                    {this.state.detail.friendsAttachments.map((value, index) => {
+                                                        if (value.fatherType == 1) {
+                                                            if (value.type == 0) {
+                                                                return <img src={value.path} alt=""
+                                                                            style={{width: '200', height: '113'}}/>
+                                                            } else {
+                                                                return <div className="video_tag">
+                                                                    <video style={{width: '200', height: '113'}}
+                                                                           src={value.path} alt=""/>
+                                                                    <div className="video_tag_play"></div>
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="asOfDate">
+                                            截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                        <div className="detail_bottom">
+                                            <div className="list_bottom_item"><i className="i-share"></i></div>
+                                            <div className="list_bottom_item"><i className="i-praise"></i><span>8</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="commit_title">全部评论({this.state.commit_count})</div>
+                                </div>
+                            )}
+                            renderFooter={this.state.isLoadingHidden ? '' : () => (
+                                <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
+                                </div>)}
+                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                            className="am-list commentList"
+                            pageSize={30}    //每次事件循环（每帧）渲染的行数
+                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                            // useBodyScroll={true}
+                            style={{
+                                height: document.body.clientHeight,
+                            }}
+                        />
+                    </div>
+                    <div className="input_box">
+                        <img
+                            className="commit_line"
+                            src={require('../images/commit_line.png')}
+                            alt=""
+                            onClick={this.setCommit}
+                        />
+                    </div>
+                    <div className="commit_box" style={
+                        this.state.commitFlag ? {display: 'block'} : {display: 'none'}
+                    }>
+                        <div>
+                            <div className="import">
+                                <input
+                                    type="text"
+                                    id="commit"
+                                    placeholder="请输入评论内容"
+                                    value={this.state.inputValue}
+                                    onChange={this.inputOnChange}
+                                />
+                                <div id="appendImage">
+                                    {this.state.domImage}
                                 </div>
                             </div>
-                                <div className="commit_title">全部评论({this.state.commit_count})</div>
+                            <div className="send">
+                                <div onClick={this.selectedImage}>
+                                    <img className="AddImage" src={require('../images/AddImage.png')} alt=""/>
+                                </div>
+                                <span className="btn-blue" onClick={this.sendCommit}>发送</span>
                             </div>
-                        )}
-                        renderFooter={this.state.isLoadingHidden ? '' : () => (
-                            <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
-                                {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                            </div>)}
-                        renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                        className="am-list commentList"
-                        pageSize={30}    //每次事件循环（每帧）渲染的行数
-                        //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                        scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                        onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                        onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                        initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                        scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                        // useBodyScroll={true}
-                        style={{
-                            height: document.body.clientHeight,
-                        }}
-                    />
-                </div>
-                <div className="input_box">
-                    <img
-                        className="commit_line"
-                        src={require('../images/commit_line.png')}
-                        alt=""
-                        onClick={this.setCommit}
-                    />
-                </div>
-                <div className="commit_box" style={
-                    this.state.commitFlag?{display:'block'}:{display:'none'}
-                }>
-                    <div>
-                        <div className="import">
-                            <input type="text" id="commit" placeholder="请输入评论内容"/>
-                            <div id="appendImage">
-                                {this.state.domImage}
-                            </div>
-                        </div>
-                        <div className="send">
-                            <div onClick={this.selectedImage}>
-                                <img className="AddImage" src={require('../images/AddImage.png')} alt=""/>
-                            </div>
-                            <span className="btn-blue" onClick={this.sendCommit}>发送</span>
                         </div>
                     </div>
+                    <div className="mask" style={
+                        this.state.commitFlag ? {display: 'block'} : {display: 'none'}
+                    } onClick={this.closeCommitBox}></div>
                 </div>
-                <div className="mask" style={
-                    this.state.commitFlag?{display:'block'}:{display:'none'}
-                } onClick={this.closeCommitBox}></div>
-            </div>
             </div>
         );
     }

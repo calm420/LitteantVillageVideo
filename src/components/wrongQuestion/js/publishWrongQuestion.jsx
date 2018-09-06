@@ -54,7 +54,7 @@ export default class publishWrongQuestion extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        alert(JSON.stringify(userId))
+        // alert(JSON.stringify(userId))
         // userId = 1;
         calm.setState({
             userId
@@ -166,7 +166,7 @@ export default class publishWrongQuestion extends React.Component {
             "circleOfFriendsJson": {
                 "friendsAttachments": ImgArr.concat(VidoeArr),
                 "fTags": calm.state.tagText,
-                "userId": calm.state.userId,
+                "uid": calm.state.userId,
                 "type": 0,
                 "mastery": calm.state.mastery,//0不懂   1略懂    2基本懂   3完全懂
                 "mark": calm.state.addNoteValue,
@@ -375,14 +375,14 @@ export default class publishWrongQuestion extends React.Component {
      * 添加题干
      */
     addTheQusetion() {
-        var calm = "";
+        var noom = "";
         var data = {
             method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
             // var res = 'http:suhdjghjaasd?type=1'
-            if (calm == "") {
+            if (noom == "") {
                 var newArr = res.split("?");
                 var type = newArr[1].split("=")[1]
                 // calm.upload_video_pic()
@@ -410,7 +410,7 @@ export default class publishWrongQuestion extends React.Component {
                     theQuestionArr: calm.state.theQuestionArr,
                     theQustionVideo: calm.state.theQustionVideo
                 })
-                calm = res;
+                noom = res;
             }else if(noom == res){
                 return
             }
@@ -421,35 +421,42 @@ export default class publishWrongQuestion extends React.Component {
      * 上传答案
      */
     addTheAnswer() {
+        var tempClam = "";
         var data = {
             method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
-            // 拿到照片地址,显示在页面等待上传
-            var newArr = res.split("?");
-            var type = newArr[1].split("=")[1]
-            if (type == 1) {
-                var imgUrl = newArr[0];
-                calm.state.theAnswerArr.push({
-                    type: 0, //图片
-                    fatherType: 1, //答案
-                    path: imgUrl
+            if(tempClam == ""){
+                // 拿到照片地址,显示在页面等待上传
+                var newArr = res.split("?");
+                var type = newArr[1].split("=")[1]
+                if (type == 1) {
+                    var imgUrl = newArr[0];
+                    calm.state.theAnswerArr.push({
+                        type: 0, //图片
+                        fatherType: 1, //答案
+                        path: imgUrl
+                    })
+                }
+                if (type == 2) {
+                    var videoUrl = newArr[0];
+                    var firstUrl = newArr[2].split("=")[1]
+                    calm.state.theAnswerVideo.push({
+                        type: 1,  //视频
+                        fatherType: 1,
+                        path: videoUrl, //答案
+                        coverPath: firstUrl
+                    });
+                }
+                calm.setState({
+                    theAnswerArr: calm.state.theAnswerArr,
+                    theAnswerVideo: calm.state.theAnswerVideo
                 })
+                tempClam = res;
+            }else if(tempClam == res){
+                return
             }
-            if (type == 2) {
-                var videoUrl = newArr[0];
-                var firstUrl = newArr[2].split("=")[1]
-                calm.state.theAnswerVideo.push({
-                    type: 1,  //视频
-                    fatherType: 1,
-                    path: videoUrl, //答案
-                    coverPath: firstUrl
-                });
-            }
-            calm.setState({
-                theAnswerArr: calm.state.theAnswerArr,
-                theAnswerVideo: calm.state.theAnswerVideo
-            })
+
         }, function (error) {
             console.log(error);
         });

@@ -28,6 +28,7 @@ export default class articleList extends React.Component {
             imageList: [],
             //视频数组
             videoList: [],
+            peopleFlag:true
         }
     }
 
@@ -114,7 +115,7 @@ export default class articleList extends React.Component {
     }
 
     onChangeCheck = (val) => {
-        console.log(val);
+        console.log(val,'vallllll');
         var list = this.state.peopleList;
 
         if (list.indexOf(val) == -1) {
@@ -128,7 +129,27 @@ export default class articleList extends React.Component {
         })
     }
 
+
+    closeWindow(){
+        var data = {
+            method: 'finishForRefresh',
+        };
+        Bridge.callHandler(data, null, function (error) {
+            console.log(error);
+        });
+    }
+
     onChangeRadio = (value) => {
+        console.log(value)
+        if(value == 0){
+            that.setState({
+                peopleFlag:true,
+            })
+        }else{
+            that.setState({
+                peopleFlag:false,
+            })
+        }
         that.setState({
             radioValue: value
         })
@@ -212,7 +233,8 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, '发布结果')
                 if (result.success) {
-                    Toast.success('發布成功')
+                    Toast.success('發布成功');
+                    this.closeWindow();
                 }
 
             },
@@ -223,7 +245,7 @@ export default class articleList extends React.Component {
     }
 
     selectFile = () => {
-        var noom = ''
+        var noom = '';
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('Android') > -1) {
             //Android系统,
@@ -463,7 +485,7 @@ export default class articleList extends React.Component {
                     </div>
                     <div className='toSetPeople am-list-item' onClick={this.toSetPeople}>
                         <div className="am-list-line"><i
-                            className="i-icon i_WhoSee"></i>谁可以看<span>{this.state.peopleList.length > 0 ? '已选' + this.state.peopleList.length + '人' : '全部'}</span>
+                            className="i-icon i_WhoSee"></i>谁可以看<span>{this.state.peopleFlag?'全部':this.state.peopleList.length > 0 ? '已选' + this.state.peopleList.length + '人' : '全部'}</span>
                             <div className="am-list-arrow am-list-arrow-horizontal" aria-hidden="true"></div>
                         </div>
                     </div>

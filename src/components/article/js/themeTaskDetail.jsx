@@ -644,7 +644,7 @@ export default class articleList extends React.Component {
                                     <div className="commit_title">
                                         <div className="insetPeople">
                                             <div>参与的人</div>
-                                            <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
+                                            {/*<div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>*/}
                                         </div>
                                         <div className="people_image_list">
                                             {

@@ -622,7 +622,7 @@ export default class articleList extends React.Component {
                                                 if (value.type == 0) {
                                                     return <img src={value.path} alt=""  />
                                                 } else {
-                                                    return <div className="video_tag">
+                                                    return <div className="video_tag" style={{verticalAlign: 'middle'}}>
                                                         <video style={{width: '100%', height: '100%'}} src={value.path}
                                                                alt=""/>
                                                         <div className="video_tag_play"></div>
@@ -709,7 +709,7 @@ export default class articleList extends React.Component {
                                                                 return <img src={value.path} alt=""
                                                                             style={{width: '200px', height: '113px'}}/>
                                                             } else {
-                                                                return <div className="video_tag">
+                                                                return <div className="video_tag" style={{verticalAlign: 'middle'}}>
                                                                     <video src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
@@ -728,7 +728,7 @@ export default class articleList extends React.Component {
                                                                 return <img src={value.path} alt=""
                                                                             style={{width: '200', height: '113'}}/>
                                                             } else {
-                                                                return <div className="video_tag">
+                                                                return <div className="video_tag"  style={{verticalAlign: 'middle'}}>
                                                                     <video style={{width: '200', height: '113'}}
                                                                            src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>

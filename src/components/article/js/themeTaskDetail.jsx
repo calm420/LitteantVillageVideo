@@ -80,7 +80,7 @@ export default class articleList extends React.Component {
     /**
      * 获取评论列表
      * **/
-    getDiscussInfoList() {
+    getDiscussInfoList(clear) {
         var param = {
             "method": 'getDiscussInfoList',
             "type": 2,
@@ -91,6 +91,13 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'getDiscussInfoList')
                 if (result.success) {
+                    if (clear) {    //拉动刷新  获取数据之后再清除原有数据
+                        this.initDataSource.splice(0);
+                        dataSource = [];
+                        dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
                     if (result.response.length <= 0) {
                         this.initDataSource = [{type: '无数据'}]
                     } else {
@@ -278,7 +285,13 @@ export default class articleList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    Toast.success('评论成功', 1)
+                    Toast.success('评论成功', 1);
+                    this.setState({
+                        inputValue:'',
+                        friendsAttachments:[],
+                    })
+                    this.closeCommitBox();
+                    this.getDiscussInfoList(true);
                 }
 
             },
@@ -692,8 +705,14 @@ export default class articleList extends React.Component {
                                             <div className="headPic"><img src={this.state.detail.userInfo.avatar}
                                                                           alt=""/></div>
                                             <div className="courseList">
+
+                                                {/*<div className="userName">{this.state.detail.userInfo.userName}</div>*/}
+                                                {/*<span className="tag-course tag-course-blue">{this.state.detail.courseInfo.courseName}</span>*/}
+
                                                 <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
-                                                {/*<span className="tag-course tag-course-blue">语文</span>*/}
+                                                <span style={
+                                                    this.state.detail.courseInfo?{display:'block'}:{display:'none'}
+                                                } className="tag-course tag-course-blue">{this.state.detail.courseInfo?this.state.detail.courseInfo.courseName:''}</span>
                                             </div>
                                             <div className="time"></div>
 
@@ -744,7 +763,7 @@ export default class articleList extends React.Component {
                                             {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom">
                                             <div className="list_bottom_item"><i className="i-share"></i></div>
-                                            <div className="list_bottom_item"><i className="i-praise"></i><span>8</span>
+                                            <div className="list_bottom_item"><i className="i-praise"></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>

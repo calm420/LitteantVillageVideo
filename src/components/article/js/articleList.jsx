@@ -652,7 +652,7 @@ export default class articleList extends React.Component {
                         <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt=""/>
                         </div>
-                        <div className="userName">{rowData.userInfo.userName}</div>
+                        <div className="userName text_hidden">{rowData.userInfo.userName}</div>
                         <div className="createTime"></div>
 
                     </div>

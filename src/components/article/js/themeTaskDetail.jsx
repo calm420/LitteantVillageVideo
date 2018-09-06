@@ -620,8 +620,7 @@ export default class articleList extends React.Component {
                                         <div className="image_detail">
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.type == 0) {
-                                                    return <img src={value.path} alt=""
-                                                                style={{width: '200', height: '113'}}/>
+                                                    return <img src={value.path} alt=""  />
                                                 } else {
                                                     return <div className="video_tag">
                                                         <video style={{width: '100%', height: '100%'}} src={value.path}
@@ -711,8 +710,7 @@ export default class articleList extends React.Component {
                                                                             style={{width: '200px', height: '113px'}}/>
                                                             } else {
                                                                 return <div className="video_tag">
-                                                                    <video style={{width: '200px', height: '113px'}}
-                                                                           src={value.path} alt=""/>
+                                                                    <video src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
                                                             }
@@ -773,8 +771,12 @@ export default class articleList extends React.Component {
                         />
                     </div>
                     <div className="input_box">
-                        <span className="commit_line" onClick={this.setCommit}>
-                        </span>
+                        <div className="commit_line" onClick={this.setCommit}>
+                            <span className="commit_line-left"></span>
+                            <span className="commit_line-center"></span>
+                            <span className="commit_line-right"></span>
+                            <span className="commit_line-right-img"></span>
+                        </div>
                     </div>
                     <div className="commit_box" style={
                         this.state.commitFlag ? {display: 'block'} : {display: 'none'}

@@ -54,6 +54,7 @@ export default class publishWrongQuestion extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
+        alert(JSON.stringify(userId))
         // userId = 1;
         calm.setState({
             userId
@@ -158,6 +159,7 @@ export default class publishWrongQuestion extends React.Component {
      * 提交
      */
     saveWrongTopicBook() {
+        
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
         var param = {

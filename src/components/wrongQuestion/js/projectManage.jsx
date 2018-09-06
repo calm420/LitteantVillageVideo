@@ -30,7 +30,7 @@ export default class projectManage extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        // userId = 1;
+        userId = 1;
         calm.setState({
             userId
         })

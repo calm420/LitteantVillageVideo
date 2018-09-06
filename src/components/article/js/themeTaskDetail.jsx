@@ -584,8 +584,8 @@ export default class articleList extends React.Component {
                             <img src={rowData.discussUser.avatar} alt=""/>
                         </div>
                         <div className="courseList">
-                            <div className="userName">{this.state.detail.userInfo.userName}</div>
-                            <span className="tag-course tag-course-blue">语文</span>
+                            <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
+                            {/*<span className="tag-course tag-course-blue">语文</span>*/}
                         </div>
                         <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
@@ -692,8 +692,8 @@ export default class articleList extends React.Component {
                                             <div className="headPic"><img src={this.state.detail.userInfo.avatar}
                                                                           alt=""/></div>
                                             <div className="courseList">
-                                                <div className="userName">{this.state.detail.userInfo.userName}</div>
-                                                <span className="tag-course tag-course-blue">语文</span>
+                                                <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
+                                                {/*<span className="tag-course tag-course-blue">语文</span>*/}
                                             </div>
                                             <div className="time"></div>
 

@@ -643,7 +643,7 @@ export default class articleList extends React.Component {
                                     <div className="commit_title">
                                         <div className="insetPeople">
                                             <div>参与的人</div>
-                                            <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
+                                            {/*<div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>*/}
                                         </div>
                                         <div className="people_image_list">
                                             {
@@ -740,8 +740,8 @@ export default class articleList extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="asOfDate">
-                                            截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                        {/*<div className="asOfDate">*/}
+                                            {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom">
                                             <div className="list_bottom_item"><i className="i-share"></i></div>
                                             <div className="list_bottom_item"><i className="i-praise"></i><span>8</span>

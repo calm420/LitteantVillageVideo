@@ -693,7 +693,7 @@ export default class articleList extends React.Component {
                                                                           alt=""/></div>
                                             <div className="courseList">
                                                 <div className="userName">{this.state.detail.userInfo.userName}</div>
-                                                <span className="tag-course tag-course-blue">语文</span>
+                                                <span className="tag-course tag-course-blue">{this.state.detail.courseInfo.courseName}</span>
                                             </div>
                                             <div className="time"></div>
 
@@ -744,7 +744,7 @@ export default class articleList extends React.Component {
                                             {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom">
                                             <div className="list_bottom_item"><i className="i-share"></i></div>
-                                            <div className="list_bottom_item"><i className="i-praise"></i><span>8</span>
+                                            <div className="list_bottom_item"><i className="i-praise"></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>

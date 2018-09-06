@@ -54,7 +54,8 @@ export default class publishWrongQuestion extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        userId = 1;
+        alert(JSON.stringify(userId))
+        // userId = 1;
         calm.setState({
             userId
         })
@@ -158,6 +159,7 @@ export default class publishWrongQuestion extends React.Component {
      * 提交
      */
     saveWrongTopicBook() {
+        
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
         var param = {
@@ -172,15 +174,17 @@ export default class publishWrongQuestion extends React.Component {
                 "cid": calm.state.cid //科目IDs
             }
         }
-        console.log(param)
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                alert(JSON.stringify(result))
-                console.log(result, "result")
                 if (result.success) {
-                    calm.setState({
-                        projectData: result.response
-                    })
+                    Toast.info("提交成功");
+                     //关闭当前窗口，不刷新上一个页面
+                     var data = {
+                        method: 'finishForRefresh',
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                        console.log(error);
+                    });
                 }
             },
             onError: function (error) {

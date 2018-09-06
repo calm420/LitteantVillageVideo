@@ -30,7 +30,7 @@ export default class projectManage extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        userId = 1;
+        // userId = 1;
         calm.setState({
             userId
         })
@@ -104,7 +104,7 @@ export default class projectManage extends React.Component {
         } else {
             phone = 'android'
         }
-        prompt('请输入科目名称', 　'(最多四个字)', [
+        prompt('请输入科目名称', '(最多四个字)', [
             { text: '取消' },
             { text: '立即添加', onPress: value => calm.saveProjectName(value) },
         ], 'default', "", [], phone)
@@ -127,10 +127,13 @@ export default class projectManage extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result,"resul")
                 if (result.success) {
                     calm.state.allProjectData.push({
-                        content: value,
+                        content: result.response.courseName,
                         flag: false,
+                        id:result.response.cid,
+                        uid:result.response.uid
                     });
                     calm.setState({
                         allProjectData: calm.state.allProjectData
@@ -198,8 +201,6 @@ export default class projectManage extends React.Component {
      * 点击高亮
      */
     clickAllProjectActive(v, index, e) {
-        console.log(index)
-        console.log(v)
         if (v.flag == true) {
             calm.state.activeData[index].flag = false;
             calm.state.alreadySelectData.forEach((item, i) => {
@@ -254,12 +255,14 @@ export default class projectManage extends React.Component {
      * 点击所有科目子选项
      */
     clickAllProject(v, index, e) {
+        console.log(v,"shjkfghjkfghj")
+
         if (v.flag == false) {
             calm.state.allProjectData[index].flag = true;
             calm.state.alreadySelectData.push({
                 content: v.content,
                 oldFlag: true,
-                id: v.cid,
+                id: v.id,
                 uid: v.uid
             })
         } else {
@@ -271,7 +274,8 @@ export default class projectManage extends React.Component {
             })
         }
         calm.setState({
-            allProjectData: calm.state.allProjectData
+            allProjectData: calm.state.allProjectData,
+            alreadySelectData: calm.state.alreadySelectData
         })
 
     }
@@ -350,7 +354,7 @@ export default class projectManage extends React.Component {
             onResponse: result => {
                 console.log(result, "新的新的")
                 if (result.success) {
-                  Toast.info("删除成功")
+                    Toast.info("删除成功")
                 }
             },
             onError: function (error) {
@@ -385,7 +389,7 @@ export default class projectManage extends React.Component {
             onResponse: result => {
                 console.log(result, "新的新的")
                 if (result.success) {
-                  Toast.info("删除成功")
+                    Toast.info("删除成功")
                 }
             },
             onError: function (error) {
@@ -438,25 +442,20 @@ export default class projectManage extends React.Component {
     render() {
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
-               <div className="cont">
-                   <div><div className='title'>已选科目</div>
-                       {
-                           calm.state.alreadySelectData.map((v, i) => {
-                               return (
-                                   <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
-                               )
-                           })
-                       }
-                       <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
-                   </div>
-                   <div className="allProject">
-                           <div className='title'>所有科目
-                           {
-                               calm.state.allProjectData.length == 0 ?
-                                   ""
-                                   :
-                                   <span onClick={calm.manageProject}>管理</span>
-                           }
+                <div className="cont">
+                    <div><div className='title'>已选科目</div>
+                        {
+                            calm.state.alreadySelectData.map((v, i) => {
+                                return (
+                                    <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                                )
+                            })
+                        }
+                        <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
+                    </div>
+                    <div className="allProject">
+                        <div className='title'>所有科目
+                            <span onClick={calm.manageProject}>管理</span>
                         </div>
                         {/* 需要高亮的 */}
                         {
@@ -486,7 +485,7 @@ export default class projectManage extends React.Component {
                                 return (
                                     <span className="fatherSpan">
                                         <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"}>{v.content}</span>
-                                        {v.uid == 0 ? "":<span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
+                                        {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
                                     </span>
                                 )
                             })

@@ -742,8 +742,8 @@ export default class articleList extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="asOfDate">
-                                            截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                        {/*<div className="asOfDate">*/}
+                                            {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom">
                                             <div className="list_bottom_item"><i className="i-share"></i></div>
                                             <div className="list_bottom_item"><i className="i-praise"></i><span>8</span>
@@ -773,12 +773,8 @@ export default class articleList extends React.Component {
                         />
                     </div>
                     <div className="input_box">
-                        <img
-                            className="commit_line"
-                            src={require('../images/commit_line.png')}
-                            alt=""
-                            onClick={this.setCommit}
-                        />
+                        <span className="commit_line" onClick={this.setCommit}>
+                        </span>
                     </div>
                     <div className="commit_box" style={
                         this.state.commitFlag ? {display: 'block'} : {display: 'none'}

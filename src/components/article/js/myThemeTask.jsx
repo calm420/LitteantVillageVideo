@@ -195,6 +195,22 @@ export default class articleList extends React.Component {
     deleteCircle(data, event) {
         event.stopPropagation();
         console.log(data,'要刪除的id');
+        var param = {
+            "method": 'deleteCircleFriendById',
+            "friendId": data,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'getAllCircleOfFriendsByUid')
+                if (result.success) {
+                    Toast.info('刪除成功');
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
 
     }
 

@@ -773,12 +773,8 @@ export default class articleList extends React.Component {
                         />
                     </div>
                     <div className="input_box">
-                        <img
-                            className="commit_line"
-                            src={require('../images/commit_line.png')}
-                            alt=""
-                            onClick={this.setCommit}
-                        />
+                        <span className="commit_line" onClick={this.setCommit}>
+                        </span>
                     </div>
                     <div className="commit_box" style={
                         this.state.commitFlag ? {display: 'block'} : {display: 'none'}

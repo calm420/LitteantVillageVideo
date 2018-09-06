@@ -159,7 +159,6 @@ export default class publishWrongQuestion extends React.Component {
      * 提交
      */
     saveWrongTopicBook() {
-        
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
         var param = {
@@ -167,7 +166,7 @@ export default class publishWrongQuestion extends React.Component {
             "circleOfFriendsJson": {
                 "friendsAttachments": ImgArr.concat(VidoeArr),
                 "fTags": calm.state.tagText,
-                "uid": calm.state.userId,
+                "userId": calm.state.userId,
                 "type": 0,
                 "mastery": calm.state.mastery,//0不懂   1略懂    2基本懂   3完全懂
                 "mark": calm.state.addNoteValue,
@@ -178,8 +177,8 @@ export default class publishWrongQuestion extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     Toast.info("提交成功");
-                     //关闭当前窗口，不刷新上一个页面
-                     var data = {
+                    //关闭当前窗口，不刷新上一个页面
+                    var data = {
                         method: 'finishForRefresh',
                     };
                     Bridge.callHandler(data, null, function (error) {
@@ -259,7 +258,7 @@ export default class publishWrongQuestion extends React.Component {
     */
     getTagsByTagTitle() {
         if (calm.state.searchValue == "") {
-            Toast.info("请输入搜索的关键词")
+            Toast.success("请输入搜索的关键词", 1, "", false)
             return;
         }
         calm.setState({ tagData: [] }, () => {
@@ -376,42 +375,46 @@ export default class publishWrongQuestion extends React.Component {
      * 添加题干
      */
     addTheQusetion() {
+        var calm = "";
         var data = {
             method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
             // var res = 'http:suhdjghjaasd?type=1'
-            var newArr = res.split("?");
-            var type = newArr[1].split("=")[1]
-            // calm.upload_video_pic()
-            if (type == 1) {
-                var imgUrl = newArr[0];
-                calm.state.theQuestionArr.push({
-                    type: 0, //图片
-                    fatherType: 0, //题干
-                    path: imgUrl
-                })
-            }
-            if (type == 2) {
-                var videoUrl = newArr[0];
-                var firstUrl = newArr[2].split("=")[1]
-                calm.state.theQustionVideo.push(
-                    {
-                        type: 1,  //视频
+            if (calm == "") {
+                var newArr = res.split("?");
+                var type = newArr[1].split("=")[1]
+                // calm.upload_video_pic()
+                if (type == 1) {
+                    var imgUrl = newArr[0];
+                    calm.state.theQuestionArr.push({
+                        type: 0, //图片
                         fatherType: 0, //题干
-                        path: videoUrl,
-                        coverPath: firstUrl
-                    }
-                );
+                        path: imgUrl
+                    })
+                }
+                if (type == 2) {
+                    var videoUrl = newArr[0];
+                    var firstUrl = newArr[2].split("=")[1]
+                    calm.state.theQustionVideo.push(
+                        {
+                            type: 1,  //视频
+                            fatherType: 0, //题干
+                            path: videoUrl,
+                            coverPath: firstUrl
+                        }
+                    );
+                }
+                calm.setState({
+                    theQuestionArr: calm.state.theQuestionArr,
+                    theQustionVideo: calm.state.theQustionVideo
+                })
+                calm = res;
+            }else if(noom == res){
+                return
             }
-            calm.setState({
-                theQuestionArr: calm.state.theQuestionArr,
-                theQustionVideo: calm.state.theQustionVideo
-            })
-            console.log(res, "res")
         }, function (error) {
-            console.log(error);
         });
     }
     /**
@@ -533,7 +536,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQustionVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video  poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video poster={v.coverPath} src={v.path} alt="" controls />
                                                 <div className='delete'><span onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
                                         )
@@ -622,9 +625,9 @@ export default class publishWrongQuestion extends React.Component {
                             display: "none",
                         }}></div>
                         <div className={`calmTagDiv calmTagDivNew tagCont`}
-                             style={{
-                                 display: "none",
-                             }}
+                            style={{
+                                display: "none",
+                            }}
                         >
                             {/* {useIndex} */}
                             <div className="tagInput">

@@ -127,10 +127,13 @@ export default class projectManage extends React.Component {
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result,"resul")
                 if (result.success) {
                     calm.state.allProjectData.push({
-                        content: value,
+                        content: result.response.courseName,
                         flag: false,
+                        id:result.response.cid,
+                        uid:result.response.uid
                     });
                     calm.setState({
                         allProjectData: calm.state.allProjectData
@@ -198,8 +201,6 @@ export default class projectManage extends React.Component {
      * 点击高亮
      */
     clickAllProjectActive(v, index, e) {
-        console.log(index)
-        console.log(v)
         if (v.flag == true) {
             calm.state.activeData[index].flag = false;
             calm.state.alreadySelectData.forEach((item, i) => {
@@ -254,12 +255,14 @@ export default class projectManage extends React.Component {
      * 点击所有科目子选项
      */
     clickAllProject(v, index, e) {
+        console.log(v,"shjkfghjkfghj")
+
         if (v.flag == false) {
             calm.state.allProjectData[index].flag = true;
             calm.state.alreadySelectData.push({
                 content: v.content,
                 oldFlag: true,
-                id: v.cid,
+                id: v.id,
                 uid: v.uid
             })
         } else {
@@ -408,7 +411,6 @@ export default class projectManage extends React.Component {
      */
     saveProject() {
         var temoArr = [];
-
         calm.state.alreadySelectData.forEach((v, i) => {
             temoArr.push(v.id)
         })

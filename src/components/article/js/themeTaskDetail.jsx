@@ -529,7 +529,7 @@ export default class articleList extends React.Component {
                 })
             } else {
                 //视频
-                var cover = newArr[2];
+                var cover = newArr[2].split("=")[1];
                 Toast.info(cover)
                 var dom = that.state.domImage;
                 dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this,url)}><img className="appendImage_item" src={cover} alt=""/>
@@ -576,20 +576,21 @@ export default class articleList extends React.Component {
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
-                dom = <div className="list_item" style={{marginTop: '0'}}>
-                    <div className="circleList">
-                        <div className="list_head">
-                            <div className="head_pic">
-                                <img src={rowData.discussUser.avatar} alt=""/>
-                            </div>
-                            <div className="courseList">
-                                <div className="userName">{this.state.detail.userInfo.userName}</div>
-                                <span className="tag-course tag-course-blue">语文</span>
-                            </div>
-                            <div className="time">{this.timeDifference(rowData.createTime)}</div>
+
+                dom = <div className="list_item" style={{marginTop:'0'}}>
+                    <div className="circleList circleList-comment line_public">
+                    <div className="list_head">
+                        <div className="headPic">
+                            <img src={rowData.discussUser.avatar} alt=""/>
                         </div>
-                        <div className="list_content">{rowData.discussContent}</div>
+                        <div className="courseList">
+                            <div className="userName">{this.state.detail.userInfo.userName}</div>
+                            <span className="tag-course tag-course-blue">语文</span>
+                        </div>
+                        <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
+                    <div className="list_content content_detail-comment">{rowData.discussContent}</div>
+                </div>
                 </div>
             }
             return dom
@@ -647,16 +648,15 @@ export default class articleList extends React.Component {
                                         </div>
                                         <div className="people_image_list">
                                             {
-                                                this.state.detail.partakeUserList? this.state.detail.partakeUserList.map((value, index) => {
+                                                this.state.detail.partakeUserList?this.state.detail.partakeUserList.map((value, index) => {
                                                 return <img
                                                     src={value?value.avatar:''}
                                                     alt=""/>
-                                            }):{}
+                                            }):''
                                             }
-
                                         </div>
                                     </div>
-                                    <div className="commit_title">全部评论({this.state.commit_count})</div>
+                                    <div className="commit_title commit_title-comment">全部评论({this.state.commit_count})</div>
                                 </div>
                             )}
                             renderFooter={this.state.isLoadingHidden ? '' : () => (

@@ -10,7 +10,7 @@ var dataSource = new ListView.DataSource({
 const CheckboxItem = Checkbox.CheckboxItem;
 const RadioItem = Radio.RadioItem;
 var that;
-var videoList=[];
+var videoList = [];
 export default class articleList extends React.Component {
 
     constructor(props) {
@@ -22,12 +22,12 @@ export default class articleList extends React.Component {
             defaultPageNo: 1,
             clientHeight: document.body.clientHeight,
             radioValue: 0,
-            peopleList:[],
-            selectedFlag:false,
+            peopleList: [],
+            selectedFlag: false,
             //图片数组
-            imageList:[],
+            imageList: [],
             //视频数组
-            videoList:[],
+            videoList: [],
         }
     }
 
@@ -39,29 +39,43 @@ export default class articleList extends React.Component {
         // var people = locationSearch.split("&")[1].split("=")[1];
         this.setState({
             userId: uid
-        },()=>{
+        }, () => {
             this.getUserFans();
         })
 
 
-
+        $(document).on('click', '.upload_box_video', function () {
+            that.playVideo($(this).attr('videoPath'));
+        })
         //点击上传图片区域的删除  ++ 点击删除视频
         $('#image_box').on('click', '.deleteImage_upload', function () {
-            console.log($(this).next().attr('src'),'deleteThis');
+            console.log($(this).next().attr('src'), 'deleteThis');
             var imageList = that.state.imageList;
             var videoList = that.state.videoList;
-            if(imageList.indexOf($(this).next().attr('src')) != -1){
-                imageList.splice(imageList.indexOf($(this).next().attr('src')),1);
+            if (imageList.indexOf($(this).next().attr('src')) != -1) {
+                imageList.splice(imageList.indexOf($(this).next().attr('src')), 1);
             }
-            if(videoList.indexOf($(this).next().attr('src')) != -1){
-                videoList.splice(videoList.indexOf($(this).next().attr('src')),1);
+            if (videoList.indexOf($(this).next().attr('src')) != -1) {
+                videoList.splice(videoList.indexOf($(this).next().attr('src')), 1);
             }
-            console.log(imageList,'imageList');
-            console.log(videoList,'videoList');
+            console.log(imageList, 'imageList');
+            console.log(videoList, 'videoList');
             $(this).parent().remove();
         })
     }
 
+    //調用全屏視頻播放
+    playVideo(url) {
+        console.log(url);
+        var data = {
+            method: 'playChatVideo',
+            playUrl: url
+        };
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('開啓視頻失敗!');
+        });
+    }
 
     /**
      * 根据用户ｉｄ获取粉丝列表
@@ -103,14 +117,14 @@ export default class articleList extends React.Component {
         console.log(val);
         var list = this.state.peopleList;
 
-        if(list.indexOf(val) == -1){
+        if (list.indexOf(val) == -1) {
             list.push(val);
-        }else{
-            list.splice(list.indexOf(val),1);
+        } else {
+            list.splice(list.indexOf(val), 1);
         }
-        console.log(list,'完成后');
+        console.log(list, '完成后');
         this.setState({
-            peopleList:list,
+            peopleList: list,
         })
     }
 
@@ -137,58 +151,58 @@ export default class articleList extends React.Component {
         });
     };
 
-
     /**
      * 按查询条件获取列表
      * **/
-    releaseTheme = ()=> {
-        var warn='';
-        if(WebServiceUtil.isEmpty($('.input_title').val())){
+    releaseTheme = () => {
+        var warn = '';
+        if (WebServiceUtil.isEmpty($('.input_title').val())) {
             warn = '标题不能为空';
-        }else if(WebServiceUtil.isEmpty($('.textarea_content').val())){
+        } else if (WebServiceUtil.isEmpty($('.textarea_content').val())) {
             warn = '主题内容不能为空';
-        }else if(WebServiceUtil.isEmpty(this.state.date)){
+        } else if (WebServiceUtil.isEmpty(this.state.date)) {
             warn = '截止日期不能为空';
         }
-        if(warn != ''){
-            Toast.fail(warn,1);
+        if (warn != '') {
+            Toast.fail(warn, 1);
             return;
         }
-        console.log($('.input_title').val(),'标题');
-        console.log($('.textarea_content').val(),'内容');
-        console.log(WebServiceUtil.formatYMD(this.state.date.getTime()),'日期')
-        console.log(this.state.imageList,'图片列表');
-        console.log(this.state.videoList,'视频列表');
-        console.log(this.state.peopleList,'谁可以看列表');
+        console.log($('.input_title').val(), '标题');
+        console.log($('.textarea_content').val(), '内容');
+        console.log(WebServiceUtil.formatYMD(this.state.date.getTime()), '日期')
+        console.log(this.state.imageList, '图片列表');
+        console.log(this.state.videoList, '视频列表');
+        console.log(this.state.peopleList, '谁可以看列表');
         var imageList = this.state.imageList;
         var videoList = this.state.videoList;
         var friendsAttachments = [];
-        for(var k in imageList){
+        for (var k in imageList) {
             friendsAttachments.push(
                 {
-                    type:0,
-                    fatherType:2,
-                    path:imageList[k]
+                    type: 0,
+                    fatherType: 2,
+                    path: imageList[k]
                 }
             )
         }
-        for(var k in videoList){
+        for (var k in videoList) {
             friendsAttachments.push(
                 {
-                    type:1,
-                    fatherType:2,
-                    path:videoList[k]
+                    type: 1,
+                    fatherType: 2,
+                    path: videoList[k]
                 }
             )
         }
-        var circleOfFriendsJson={
+        var circleOfFriendsJson = {
             title: $('.input_title').val(),
             content: $('.textarea_content').val(),
             endTime: this.state.date.getTime(),
             uid: this.state.userId,
-            type:1,
-            viewType:0, //0全部可见 1 部分可见
-            friendsAttachments:friendsAttachments
+            type: 1,
+            viewType: this.state.peopleList.length>0?1:0, //0全部可见 1 部分可见
+            Whitelist: this.state.peopleList,
+            friendsAttachments: friendsAttachments
         };
         var param = {
             "method": 'saveThemeChallenge',
@@ -196,9 +210,9 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'发布结果')
+                console.log(result, '发布结果')
                 if (result.success) {
-
+                    Toast.success('發布成功')
                 }
 
             },
@@ -208,119 +222,104 @@ export default class articleList extends React.Component {
         });
     }
 
-
-    // upload_video_pic = (videoPath, videoDiv)=> {
-    //     console.log(videoDiv, 'videoDiv');
-    //     var video;//video标签
-    //     var scale = 0.8;//第一帧图片与源视频的比例
-    //     console.log(videoList.length,'videoList.length');
-    //     //ｖｉｄｅｏ标签
-    //     video = $(".upload_box_video")[videoList.length];//赋值标签
-    //     video.setAttribute("crossOrigin", 'Anonymous');
-    //     video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
-    //         var canvas = document.createElement('canvas');//canvas画布
-    //         canvas.width = video.videoWidth * scale;
-    //         canvas.height = video.videoHeight * scale;
-    //         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//画图
-    //         var image = canvas.toDataURL("image/png");
-    //         var $Blob = that.getBlobBydataURI(image, 'image/jpeg');
-    //         var formData = new FormData();
-    //         formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
-    //             enctype: 'multipart/form-data',
-    //             data: formData,
-    //             // 告诉jQuery不要去处理发送的数据
-    //             processData: false,
-    //             // 告诉jQuery不要去设置Content-Type请求头
-    //             contentType: false,
-    //             success: function (res) {
-    //                 // console.log(res, 'base64');
-    //                 videoList.push({
-    //                     cover: res,
-    //                     videoPath: videoPath,
-    //                     isCover: false,
-    //                 })
-    //                 videoDiv.attr('cover', res);
-    //                 // console.log(videoList, 'videoList');
-    //             }
-    //         });
-    //     })
-    // }
-
-    //首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
-    getBlobBydataURI(dataURI, type) {
-        var binary = atob(dataURI.split(',')[1]);
-        var array = [];
-        for (var i = 0; i < binary.length; i++) {
-            array.push(binary.charCodeAt(i));
-        }
-        return new Blob([new Uint8Array(array)], {type: type});
-    }
-
     selectFile = () => {
+        var noom = ''
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('Android') > -1) {
             //Android系统,
             var data = {
-                method: 'selFilesSuccess',
+                method: 'selectedImage',
             };
             window.parent.Bridge.callHandler(data, function (res) {
+                var newArr = res.split("?");
+                var url = newArr[0];
+                var type = newArr[1].split("=")[1];
+                if(noom=='') {
+                    if (type == 1) {
+                        var imageDiv = $("<img class='upload_box_image' />").attr('src', url);
+                        var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(imageDiv);
+                        $('#image_box').append(imageBox);
+                        var imageList = that.state.imageList;
+                        imageList.push(url);
+                        that.setState({
+                            imageList: imageList
+                        })
+                    } else {
+                        var firstImage = newArr[2].split("=")[1];
+                        var videoDiv = $("<img class='upload_box_video' />").attr({'src':firstImage,'videoPath':url});
+                        //image ---> uploadBox
+                        var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(videoDiv);
 
-                var type = res.substring(res.length - 1, res.length);
-                console.log(type);
-                if (type == 1) {
-                    var imageDiv = $("<img class='upload_box_image' />").attr('src', res);
-                    var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
-                    $(imageBox).append(imageDiv);
-                    $('#image_box').append(imageBox);
-                    var imageList = that.state.imageList;
-                    imageList.push(res);
-                    that.setState({
-                        imageList:imageList
-                    })
-                    //image ---> uploadBox
-                    // var arr = document.getElementsByClassName('upload_box_image');
-                    // if (arr.length != 0) {
-                    //     var array = []
-                    //     arr.forEach(function (v) {
-                    //         array.push(v.currentSrc)
-                    //     })
-                    //     if (!array.includes(res)) {
-                    //         $('#image_box').append(imageBox);
-                    //     }
-                    // } else {
-                    //     $('#image_box').append(imageBox);
-                    // }
-                } else {//认为是视频
-                    var videoDiv = $("<video class='upload_box_video' />").attr('src', res);
-                    //image ---> uploadBox
-                    var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
-                    $(imageBox).append(videoDiv);
-
-                    $('#image_box').append(imageBox);
-                    var videoList = that.state.videoList;
-                    videoList.push(res);
-                    that.setState({
-                        videoList:videoList
-                    })
-                    // that.upload_video_pic(res, videoDiv);
+                        $('#image_box').append(imageBox);
+                        var videoList = that.state.videoList;
+                        videoList.push(url);
+                        that.setState({
+                            videoList: videoList
+                        })
+                    }
+                    noom = res;
+                } else if(noom==res) {
+                    return;
                 }
 
             }, function (error) {
                 console.log(error);
-                this.upload_file();
+                that.upload_file();
+                that.upload_file();
             });
         } else {
-            this.upload_file();
+            var data = {
+                method: 'selectedImage',
+            };
+            window.parent.Bridge.callHandler(data, function (res) {
+                var newArr = res.split("?");
+                var url=newArr[0];
+                var type = newArr[1].split("=")[1];
+                // Toast.info(url);
+                if(noom=='') {
+                    if (type == 1) {
+                        var imageDiv = $("<img class='upload_box_image' />").attr('src', url);
+                        var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(imageDiv);
+                        $('#image_box').append(imageBox);
+                        var imageList = that.state.imageList;
+                        imageList.push(url);
+                        that.setState({
+                            imageList: imageList
+                        })
+                    } else {
+                        var firstImage = newArr[2].split("=")[1];
+                        var videoDiv = $("<img class='upload_box_video' />").attr({'src':firstImage,'videoPath':url});
+                        //image ---> uploadBox
+                        var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
+                        $(imageBox).append(videoDiv);
+
+                        $('#image_box').append(imageBox);
+                        var videoList = that.state.videoList;
+                        videoList.push(url);
+                        that.setState({
+                            videoList: videoList
+                        })
+                    }
+                    noom = res;
+                } else if(noom==res) {
+                    return;
+                }
+
+            }, function (error) {
+                console.log(error);
+                that.upload_file();
+                that.upload_file();
+
+            });
         }
 
     }
 
-
     //原生ｊｓ上传
-    upload_file = ()=>{
+    upload_file = () => {
         $("#upload").click();
         //取消加绑定change事件解决change事件无法控制
         $("#upload").off("change");
@@ -353,7 +352,7 @@ export default class articleList extends React.Component {
                         xhr.upload.onprogress = function (ev) {
                             // $('#progress')[0].style.display = 'block';
                             if ($('#progress').css('display') == 'none') {
-                                $('#progress').css({display:'block'})
+                                $('#progress').css({display: 'block'})
                             } else {
                                 //显示进度条
                                 $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
@@ -373,7 +372,7 @@ export default class articleList extends React.Component {
                             var imageList = that.state.imageList;
                             imageList.push(res);
                             that.setState({
-                                imageList:imageList
+                                imageList: imageList
                             })
                         } else {//认为是视频
                             console.log('回调完成')
@@ -384,7 +383,7 @@ export default class articleList extends React.Component {
                             var videoList = that.state.videoList;
                             videoList.push(res);
                             that.setState({
-                                videoList:videoList
+                                videoList: videoList
                             })
                             console.log('渲染完成')
                             // that.upload_video_pic(res, videoDiv);
@@ -396,29 +395,19 @@ export default class articleList extends React.Component {
         })
     }
 
-    toSetPeople = ()=>{
-        // let url = encodeURI(WebServiceUtil.mobileServiceURL + "selectedPeople?userId="+this.state.userId);
-        // var data = {
-        //     method: 'openNewPage',
-        //     url: url
-        // };
-        // Bridge.callHandler(data, null, function (error) {
-        //     window.location.href = url;
-        // });
+    toSetPeople = () => {
         document.title = '谁可以看';
         this.setState({
             selectedFlag: true,
         })
     }
 
-
-    selectedComplete = ()=>{
+    selectedComplete = () => {
         document.title = '发布主题';
         this.setState({
             selectedFlag: false,
         })
     }
-
 
     render() {
         const data = [
@@ -448,12 +437,13 @@ export default class articleList extends React.Component {
                     </div>
                     <div className="addPic-box">
                         <div id="image_box"></div>
-                        <div onClick={this.selectFile} className="addPic-wrap addPic-content">
-                            <img onClick={this.selectFile} className="addPic" src={require("../images/add-pic.png")} alt=""/>
+                        <div className="addPic-wrap addPic-content">
+                            <img onClick={this.selectFile} className="addPic" src={require("../images/add-pic.png")}
+                                 alt=""/>
                         </div>
                     </div>
                     <div>
-                        <div id="progress" >
+                        <div id="progress">
                             <div className="progress">
                                 <div className="progress-bar"></div>
                             </div>
@@ -466,13 +456,16 @@ export default class articleList extends React.Component {
                             title=""
                             extra="" //默认值
                             value={this.state.date}
-                            onChange={date => this.setState({ date })}
+                            onChange={date => this.setState({date})}
                         >
                             <List.Item arrow="horizontal"><i className="i-icon i_AsDate"></i>截止日期</List.Item>
                         </DatePicker>
                     </div>
                     <div className='toSetPeople am-list-item' onClick={this.toSetPeople}>
-                        <div className="am-list-line"><i className="i-icon i_WhoSee"></i>谁可以看<span>{this.state.peopleList.length>0?'已选'+this.state.peopleList.length+'人':'全部'}</span><div className="am-list-arrow am-list-arrow-horizontal" aria-hidden="true"></div></div>
+                        <div className="am-list-line"><i
+                            className="i-icon i_WhoSee"></i>谁可以看<span>{this.state.peopleList.length > 0 ? '已选' + this.state.peopleList.length + '人' : '全部'}</span>
+                            <div className="am-list-arrow am-list-arrow-horizontal" aria-hidden="true"></div>
+                        </div>
                     </div>
                 </div>
                 <div className="bottom_nav">
@@ -480,11 +473,8 @@ export default class articleList extends React.Component {
                 </div>
 
 
-
-
-
                 <div className='selectedPeople' style={
-                    this.state.selectedFlag?{left:'0%'}:{left:'100%'}
+                    this.state.selectedFlag ? {left: '0%'} : {left: '100%'}
                 }>
                     <div className="bottom_nav">
                         <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>

@@ -271,7 +271,8 @@ export default class projectManage extends React.Component {
             })
         }
         calm.setState({
-            allProjectData: calm.state.allProjectData
+            allProjectData: calm.state.allProjectData,
+            alreadySelectData:calm.state.alreadySelectData
         })
 
     }
@@ -407,6 +408,7 @@ export default class projectManage extends React.Component {
      */
     saveProject() {
         var temoArr = [];
+        
         calm.state.alreadySelectData.forEach((v, i) => {
             temoArr.push(v.id)
         })

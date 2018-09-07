@@ -204,21 +204,13 @@ const publishWrongQuestion = (location, cb) =>{
         cb(null, require('./components/wrongQuestion/js/publishWrongQuestion').default)
     }, 'publishWrongQuestion')
 }
-const updateWrongQuestion = (location, cb) =>{
-    require.ensure([], require => {
-        cb(null, require('./components/wrongQuestion/js/updateWrongQuestion').default)
-    }, 'updateWrongQuestion')
-}
+
 const projectManage = (location, cb) =>{
     require.ensure([], require => {
         cb(null, require('./components/wrongQuestion/js/projectManage').default)
     }, 'projectManage')
 }
-const wrongQuestionDetail = (location, cb) =>{
-    require.ensure([], require => {
-        cb(null, require('./components/wrongQuestion/js/wrongQuestionDetail').default)
-    }, 'wrongQuestionDetail')
-}
+
 //发布主题页面
 const themeTask = (location, cb) => {
     require.ensure([], require => {
@@ -395,9 +387,7 @@ ReactDOM.render(
             <Route path="fileDownload" getComponent={fileDownload}/>
             <Route path="mobileEditor" getComponent={mobileEditor}/>
             <Route path="publishWrongQuestion" getComponent={publishWrongQuestion}/>
-            <Route path="updateWrongQuestion" getComponent={updateWrongQuestion}/>
             <Route path="projectManage" getComponent={projectManage}/>
-            <Route path="wrongQuestionDetail" getComponent={wrongQuestionDetail}/>
             <Route path="themeTask" getComponent={themeTask}/>
             <Route path="themeTaskDetail" getComponent={themeTaskDetail}/>
             <Route path="selectedPeople" getComponent={selectedPeople}/>

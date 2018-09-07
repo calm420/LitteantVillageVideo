@@ -227,7 +227,7 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
-                    Toast.info(this.state.islike ? '取消點贊' : '點贊成功');
+                    // Toast.info(this.state.islike ? '取消點贊' : '點贊成功');
                     if (this.state.islike) {
                         console.log('取消點贊')
                         var detail = this.state.detail;
@@ -365,7 +365,7 @@ export default class articleList extends React.Component {
             } else {
                 //视频
                 var cover = newArr[2].split("=")[1];
-                Toast.info(cover)
+                // Toast.info(cover)
                 var dom = that.state.domImage;
                 dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this,url)}><img className="appendImage_item" src={cover} alt=""/>
                     <div className='delete_upload_image' id={url}><img
@@ -389,9 +389,10 @@ export default class articleList extends React.Component {
         })
 
         }, function (error) {
-            console.log(error);
+            console.log('增加电脑的上传');
         });
     }
+
 
     likeClick() {
         this.changeFriendLikeCount();
@@ -647,6 +648,8 @@ export default class articleList extends React.Component {
                         this.state.commitFlag ? {display: 'block'} : {display: 'none'}
                     } onClick={this.closeCommitBox}></div>
                 </div>
+
+                <input id="upload" type="file"/>
             </div>
         );
     }

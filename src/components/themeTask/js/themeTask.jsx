@@ -498,18 +498,19 @@ export default class articleList extends React.Component {
                 <div className='selectedPeople' style={
                     this.state.selectedFlag ? {left: '0%'} : {left: '100%'}
                 }>
+                    <div className="selectedPeople-cont">
+                        <List className="selectedPeople_border">
+                            {data.map(i => (
+                                <RadioItem key={i.value} checked={radioValue === i.value}
+                                           onChange={() => this.onChangeRadio(i.value)}>
+                                    {i.label}
+                                </RadioItem>
+                            ))}
+                        </List>
+                    </div>
                     <div className="bottom_nav">
                         <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>
                     </div>
-
-                    <List className="selectedPeople_border">
-                        {data.map(i => (
-                            <RadioItem key={i.value} checked={radioValue === i.value}
-                                       onChange={() => this.onChangeRadio(i.value)}>
-                                {i.label}
-                            </RadioItem>
-                        ))}
-                    </List>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

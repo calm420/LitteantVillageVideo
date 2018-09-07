@@ -425,10 +425,11 @@ export default class articleList extends React.Component {
         } else if (str == 'rightright') {
             //圈子的下拉刷新
             divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+            this.initDataSource = [];
             this.setState({
                 defaultPageNo: 1, refreshing: true
             }, () => {
-                // this.getLittleVideoUserById();
+                this.getAllCircleOfFriendsByUid(true);
                 // this.getArticleRecommenLittleVideoList(true);
                 // Toast.info('重新绑定事件'+this.state.index);
 
@@ -651,7 +652,7 @@ export default class articleList extends React.Component {
                         <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt=""/>
                         </div>
-                        <div className="userName">{rowData.userInfo.userName}</div>
+                        <div className="userName text_hidden">{rowData.userInfo.userName}</div>
                         <div className="createTime"></div>
 
                     </div>

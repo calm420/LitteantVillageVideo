@@ -80,7 +80,7 @@ export default class articleList extends React.Component {
     /**
      * 获取评论列表
      * **/
-    getDiscussInfoList() {
+    getDiscussInfoList(clear) {
         var param = {
             "method": 'getDiscussInfoList',
             "type": 2,
@@ -91,6 +91,13 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'getDiscussInfoList')
                 if (result.success) {
+                    if (clear) {    //拉动刷新  获取数据之后再清除原有数据
+                        this.initDataSource.splice(0);
+                        dataSource = [];
+                        dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
                     if (result.response.length <= 0) {
                         this.initDataSource = [{type: '无数据'}]
                     } else {
@@ -278,7 +285,13 @@ export default class articleList extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    Toast.success('评论成功', 1)
+                    Toast.success('评论成功', 1);
+                    this.setState({
+                        inputValue:'',
+                        friendsAttachments:[],
+                    })
+                    this.closeCommitBox();
+                    this.getDiscussInfoList(true);
                 }
 
             },
@@ -584,8 +597,8 @@ export default class articleList extends React.Component {
                             <img src={rowData.discussUser.avatar} alt=""/>
                         </div>
                         <div className="courseList">
-                            <div className="userName">{this.state.detail.userInfo.userName}</div>
-                            <span className="tag-course tag-course-blue">语文</span>
+                            <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
+                            {/*<span className="tag-course tag-course-blue">语文</span>*/}
                         </div>
                         <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
@@ -620,10 +633,9 @@ export default class articleList extends React.Component {
                                         <div className="image_detail">
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.type == 0) {
-                                                    return <img src={value.path} alt=""
-                                                                style={{width: '200', height: '113'}}/>
+                                                    return <img src={value.path} alt=""  />
                                                 } else {
-                                                    return <div className="video_tag">
+                                                    return <div className="video_tag" style={{verticalAlign: 'middle'}}>
                                                         <video style={{width: '100%', height: '100%'}} src={value.path}
                                                                alt=""/>
                                                         <div className="video_tag_play"></div>
@@ -644,7 +656,7 @@ export default class articleList extends React.Component {
                                     <div className="commit_title">
                                         <div className="insetPeople">
                                             <div>参与的人</div>
-                                            <div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>
+                                            {/*<div className="lookAll" onClick={this.lookAll.bind(this)}>查看全部<i></i></div>*/}
                                         </div>
                                         <div className="people_image_list">
                                             {
@@ -693,8 +705,14 @@ export default class articleList extends React.Component {
                                             <div className="headPic"><img src={this.state.detail.userInfo.avatar}
                                                                           alt=""/></div>
                                             <div className="courseList">
-                                                <div className="userName">{this.state.detail.userInfo.userName}</div>
-                                                <span className="tag-course tag-course-blue">语文</span>
+
+                                                {/*<div className="userName">{this.state.detail.userInfo.userName}</div>*/}
+                                                {/*<span className="tag-course tag-course-blue">{this.state.detail.courseInfo.courseName}</span>*/}
+
+                                                <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
+                                                <span style={
+                                                    this.state.detail.courseInfo?{display:'block'}:{display:'none'}
+                                                } className="tag-course tag-course-blue">{this.state.detail.courseInfo?this.state.detail.courseInfo.courseName:''}</span>
                                             </div>
                                             <div className="time"></div>
 
@@ -710,9 +728,8 @@ export default class articleList extends React.Component {
                                                                 return <img src={value.path} alt=""
                                                                             style={{width: '200px', height: '113px'}}/>
                                                             } else {
-                                                                return <div className="video_tag">
-                                                                    <video style={{width: '200px', height: '113px'}}
-                                                                           src={value.path} alt=""/>
+                                                                return <div className="video_tag" style={{verticalAlign: 'middle'}}>
+                                                                    <video src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
                                                             }
@@ -730,7 +747,7 @@ export default class articleList extends React.Component {
                                                                 return <img src={value.path} alt=""
                                                                             style={{width: '200', height: '113'}}/>
                                                             } else {
-                                                                return <div className="video_tag">
+                                                                return <div className="video_tag"  style={{verticalAlign: 'middle'}}>
                                                                     <video style={{width: '200', height: '113'}}
                                                                            src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
@@ -742,11 +759,11 @@ export default class articleList extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="asOfDate">
-                                            截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
+                                        {/*<div className="asOfDate">*/}
+                                            {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom">
                                             <div className="list_bottom_item"><i className="i-share"></i></div>
-                                            <div className="list_bottom_item"><i className="i-praise"></i><span>8</span>
+                                            <div className="list_bottom_item"><i className="i-praise"></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -773,8 +790,12 @@ export default class articleList extends React.Component {
                         />
                     </div>
                     <div className="input_box">
-                        <span className="commit_line" onClick={this.setCommit}>
-                        </span>
+                        <div className="commit_line" onClick={this.setCommit}>
+                            <span className="commit_line-left"></span>
+                            <span className="commit_line-center"></span>
+                            <span className="commit_line-right"></span>
+                            <span className="commit_line-right-img"></span>
+                        </div>
                     </div>
                     <div className="commit_box" style={
                         this.state.commitFlag ? {display: 'block'} : {display: 'none'}

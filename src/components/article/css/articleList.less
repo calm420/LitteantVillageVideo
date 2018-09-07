@@ -501,6 +501,7 @@
         color: #333;
         font-size: 15px;
         line-height: 1.6;
+        max-width: calc(~"100% - 100px");
       }
       .createTime{
         display: inline-block;
@@ -533,6 +534,7 @@
         overflow: hidden;
         border-radius: 2px;
         margin-right: 8px;
+        display: inline-block;
         video{
           width: 100%;
           height: 100%;
@@ -596,6 +598,8 @@
     font-size: 16px;
     line-height: 20px;
     word-break: break-word;
+    box-sizing: border-box;
+    white-space: pre-wrap;
   }
   .content_detail-comment{
     font-size: 15px;
@@ -646,6 +650,23 @@
   }
   .people_image_list{
     margin-top: 10px;
+    padding-bottom: 6px;
+    overflow-x: auto;
+    &::-webkit-scrollbar{
+      width: 12px;
+      height:4px;
+    } /* 这是针对缺省样式 (必须的) */
+
+
+    &::-webkit-scrollbar-thumb{
+      background-color: #ccc;
+      border-radius: 9px;
+      -webkit-border-radius: 9px;
+    } /* 滑块颜色 */
+
+    &::-webkit-scrollbar-button{
+      background-color: initial;
+    } /* 滑轨两头的监听按钮颜色 */
     img{
     width: 40px;
     height: 40px;
@@ -681,7 +702,36 @@
     width: 100%;
     height: 49px;
     z-index: 11;
+    .commit_line-left{
+      background: url("../images/commit_line-bg1.png") no-repeat 0 0;
+      background-size: cover;
+      height: 49px;
+      width: 118px;
+      display: inline-block;
+    }
+    .commit_line-center{
+      background: url("../images/commit_line-bg2.png") repeat-x 0 0;
+      background-size: contain;
+      display: inline-block;
+      background-size: 100% 100%;
+      height: 49px;
+      width: calc(~"100% - 193px");
 
+    }
+    .commit_line-right{
+      background: url("../images/commit_line-bg-3.png") no-repeat 0 0;
+      background-size: cover;
+      height: 49px;
+      width: 30px;
+      display: inline-block;
+    }
+    .commit_line-right-img{
+      background: url("../images/commit_line-img.png") no-repeat 0 0;
+      background-size: cover;
+      height: 49px;
+      width: 45px;
+      display: inline-block;
+    }
     img{
       width: 100%;
       height: 49px;
@@ -771,9 +821,5 @@
     }
 
   }
-.commit_line-left{
-  background: url("../images/commit_line-bg.png") no-repeat 0 0;
-  background-size: 100% 100%;
-  height: 49px;
-}
+
 }

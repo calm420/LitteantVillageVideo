@@ -2,6 +2,12 @@
     width: 100%;
     height: 100% !important;
     background: #fff;
+    .projectManage {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: 222;
+    }
     .tabWrap{
         span{
             display: inline-block;
@@ -46,6 +52,8 @@
         height: calc(~"100% - 64px");
         overflow-y: auto;
         padding: 0 15px;
+    }
+    .projectDiv{
     }
     .leftWrongQuestion{
         height: 100%;
@@ -117,8 +125,8 @@
             color:#4285F4!important;
         }
         input{
-            line-height: 23px;
-            height: 23px;
+            line-height: 27px;
+            height: 27px;
         }
 
         .addTag{
@@ -354,6 +362,7 @@
         color: #4285F4;
     }
     .nextBtn{
+        display: flex;
         height: 64px;
         position: relative;
         padding: 0 15px;

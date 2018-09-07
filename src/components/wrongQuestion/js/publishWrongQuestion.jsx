@@ -1,8 +1,10 @@
 import React from 'react';
-import { List, TextareaItem, Tag, InputItem, Radio, Toast } from 'antd-mobile';
+import { List, TextareaItem, Tag, InputItem, Radio, Modal, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import '../css/publishWrongQuestion.less'
 const RadioItem = Radio.RadioItem;
+const alert = Modal.alert;
+const prompt = Modal.prompt;
 var calm;
 export default class publishWrongQuestion extends React.Component {
     constructor(props) {
@@ -46,6 +48,14 @@ export default class publishWrongQuestion extends React.Component {
                 //     coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
                 // }
             ],
+            alreadySelectData: [],
+            activeData: [],
+            noActiveData: [],
+            allProjectData: [],
+            activeStr: "",
+            newB: [],
+            newBStr: "",
+            showDelete: 0
         }
     }
     componentDidMount() {
@@ -54,13 +64,25 @@ export default class publishWrongQuestion extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        alert(JSON.stringify(userId))
-        // userId = 1;
         calm.setState({
             userId
         })
-        console.log(userId)
         calm.getProject(userId);
+        /**
+        * 防止软键盘挡住页面
+        */
+        var winHeight = $(window).height(); // 获取当前页面高度  
+        $(window).resize(function () {
+            var resizeHeight = $(this).height();
+            if (winHeight - resizeHeight > 50) {
+                // 软键盘弹出  
+                $('body').css('height', winHeight + 'px');
+            } else {
+                //软键盘收起
+                $('body').css('height', '100%');
+            }
+        });
+
     }
     /**
    * 获取科目
@@ -89,6 +111,14 @@ export default class publishWrongQuestion extends React.Component {
      * 去选择标签
      */
     nextStep() {
+        // if(calm.state.theQuestionArr.length == 0 && calm.state.theQustionVideo.length == 0){
+        //     Toast.info("请上传题干");
+        //     return
+        // }
+        // if(calm.state.theAnswerVideo.length == 0 || calm.state.theAnswerArr.length == 0){
+        //     Toast.info("请上传阶梯");
+        //     return
+        // }
         $(".rightTag").show();
         $(".leftWrongQuestion").hide();
         $(".tabWrap .wrongQuestion").removeClass('active');
@@ -98,6 +128,7 @@ export default class publishWrongQuestion extends React.Component {
      * 返回错题
      */
     backWrongQuestion() {
+        $(".projectManage").hide();
         $(".rightTag").hide();
         $(".leftWrongQuestion").show();
         $(".tabWrap .tag").removeClass('active');
@@ -159,6 +190,7 @@ export default class publishWrongQuestion extends React.Component {
      * 提交
      */
     saveWrongTopicBook() {
+
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
         var param = {
@@ -166,13 +198,31 @@ export default class publishWrongQuestion extends React.Component {
             "circleOfFriendsJson": {
                 "friendsAttachments": ImgArr.concat(VidoeArr),
                 "fTags": calm.state.tagText,
-                "userId": calm.state.userId,
+                "uid": calm.state.userId,
                 "type": 0,
                 "mastery": calm.state.mastery,//0不懂   1略懂    2基本懂   3完全懂
                 "mark": calm.state.addNoteValue,
                 "cid": calm.state.cid //科目IDs
             }
         }
+        console.log(param)
+        // if(param.circleOfFriendsJson.friendsAttachments.length == 0){
+        //     Toast.info("请选择科目")
+        //     return
+        // }
+        if (param.circleOfFriendsJson.cid == undefined) {
+            Toast.info("请选择科目")
+            return
+        }
+        if (param.circleOfFriendsJson.mastery == undefined) {
+            Toast.info("请选择掌握程度")
+            return
+        }
+        if (param.circleOfFriendsJson.fTags.length == 0) {
+            Toast.info("请选择标签")
+            return
+        }
+        return
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
@@ -219,14 +269,18 @@ export default class publishWrongQuestion extends React.Component {
      * 更多科目
      */
     moreProject() {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);
-        var data = {
-            method: 'openNewPage',
-            url: url
-        };
-        Bridge.callHandler(data, null, function (error) {
-            window.location.href = url;
-        });
+        calm.getCourseByUserId(calm.state.userId);
+        calm.getCourseByUserIdAndDefianceCourse(calm.state.userId);
+        $(".projectManage").slideDown();
+        $(`.tagBack`).show();
+        // var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);
+        // var data = {
+        //     method: 'openNewPage',
+        //     url: url
+        // };
+        // Bridge.callHandler(data, null, function (error) {
+        //     window.location.href = url;
+        // });
     }
 
     /**
@@ -375,14 +429,14 @@ export default class publishWrongQuestion extends React.Component {
      * 添加题干
      */
     addTheQusetion() {
-        var calm = "";
+        var noom = "";
         var data = {
             method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
             // 拿到照片地址,显示在页面等待上传
             // var res = 'http:suhdjghjaasd?type=1'
-            if (calm == "") {
+            if (noom == "") {
                 var newArr = res.split("?");
                 var type = newArr[1].split("=")[1]
                 // calm.upload_video_pic()
@@ -410,8 +464,8 @@ export default class publishWrongQuestion extends React.Component {
                     theQuestionArr: calm.state.theQuestionArr,
                     theQustionVideo: calm.state.theQustionVideo
                 })
-                calm = res;
-            }else if(noom == res){
+                noom = res;
+            } else if (noom == res) {
                 return
             }
         }, function (error) {
@@ -421,35 +475,42 @@ export default class publishWrongQuestion extends React.Component {
      * 上传答案
      */
     addTheAnswer() {
+        var tempClam = "";
         var data = {
             method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
-            // 拿到照片地址,显示在页面等待上传
-            var newArr = res.split("?");
-            var type = newArr[1].split("=")[1]
-            if (type == 1) {
-                var imgUrl = newArr[0];
-                calm.state.theAnswerArr.push({
-                    type: 0, //图片
-                    fatherType: 1, //答案
-                    path: imgUrl
+            if (tempClam == "") {
+                // 拿到照片地址,显示在页面等待上传
+                var newArr = res.split("?");
+                var type = newArr[1].split("=")[1]
+                if (type == 1) {
+                    var imgUrl = newArr[0];
+                    calm.state.theAnswerArr.push({
+                        type: 0, //图片
+                        fatherType: 1, //答案
+                        path: imgUrl
+                    })
+                }
+                if (type == 2) {
+                    var videoUrl = newArr[0];
+                    var firstUrl = newArr[2].split("=")[1]
+                    calm.state.theAnswerVideo.push({
+                        type: 1,  //视频
+                        fatherType: 1,
+                        path: videoUrl, //答案
+                        coverPath: firstUrl
+                    });
+                }
+                calm.setState({
+                    theAnswerArr: calm.state.theAnswerArr,
+                    theAnswerVideo: calm.state.theAnswerVideo
                 })
+                tempClam = res;
+            } else if (tempClam == res) {
+                return
             }
-            if (type == 2) {
-                var videoUrl = newArr[0];
-                var firstUrl = newArr[2].split("=")[1]
-                calm.state.theAnswerVideo.push({
-                    type: 1,  //视频
-                    fatherType: 1,
-                    path: videoUrl, //答案
-                    coverPath: firstUrl
-                });
-            }
-            calm.setState({
-                theAnswerArr: calm.state.theAnswerArr,
-                theAnswerVideo: calm.state.theAnswerVideo
-            })
+
         }, function (error) {
             console.log(error);
         });
@@ -489,6 +550,414 @@ export default class publishWrongQuestion extends React.Component {
         calm.state.theQustionVideo.splice(i, 1);
         calm.setState({
             theQustionVideo: calm.state.theQustionVideo
+        })
+    }
+
+    /**
+     * 科目管理部分
+     */
+
+    /**
+   * 去重
+   * @param arr
+   * @returns {*}
+   */
+    makeArr(arr, properties) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = i + 1; j < arr.length; j++) {
+                if (arr[i][properties] == arr[j][properties]) {
+                    arr.splice(j, 1);
+                    j--;
+                }
+            }
+        }
+        return arr
+    }
+
+    /**
+    * 获取科目
+    */
+    getCourseByUserId(userId) {
+        var param = {
+            "method": "getCourseByUserId",
+            "userId": userId
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    var newArr = [],
+                        oldArr = []
+                    result.response.forEach((v, i) => {
+                        newArr.push({
+                            content: v.courseName,
+                            flag: true,
+                            id: v.cid,
+                            uid: v.uid
+                        })
+                        oldArr.push({
+                            content: v.courseName,
+                            oldFlag: true,
+                            id: v.cid,
+                            uid: v.uid
+                        })
+                    })
+                    calm.setState({
+                        activeData: newArr, alreadySelectData: oldArr
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 添加科目
+     */
+    addProject() {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        prompt('请输入科目名称', '(建议最多四个字)', [
+            { text: '取消' },
+            { text: '立即添加', onPress: value => calm.saveProjectName(value) },
+        ], 'default', "", [], phone)
+    }
+    /**
+     * 保存科目
+     */
+    saveProjectName(value) {
+        if (value == "") {
+            Toast.info("请输入科目名称")
+            return
+        }
+        var param = {
+            "method": "saveCourse",
+            "courseJson": {
+                "courseName": value,
+                "courseType": 1,
+                "uid": calm.state.userId
+            }
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "resul")
+                if (result.success) {
+                    calm.state.allProjectData.push({
+                        content: result.response.courseName,
+                        flag: false,
+                        id: result.response.cid,
+                        uid: result.response.uid
+                    });
+                    calm.setState({
+                        allProjectData: calm.state.allProjectData
+                    })
+                } else {
+                    Toast.info(result.msg);
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 获取所有科目
+     */
+    getCourseByUserIdAndDefianceCourse(userId) {
+        var param = {
+            "method": "getCourseByUserIdAndDefianceCourse",
+            "userId": userId
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                    var newArr = []
+                    result.response.forEach((v, i) => {
+                        newArr.push({
+                            content: v.courseName,
+                            flag: false,
+                            cid: v.cid,
+                            uid: v.uid
+                        })
+                    })
+                    calm.setState({
+                        noActiveData: newArr,
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    /**
+     * 点击已科目选项
+     * @param {*} e 
+     */
+    clickAlreadyData(v, index, e) {
+        calm.state.alreadySelectData.forEach((item, i) => {
+            if (v.content == item.content) {
+                calm.state.alreadySelectData.splice(i, 1)
+            }
+        })
+        calm.state.activeData.forEach((k, j) => {
+            if (v.content == k.content) {
+                calm.state.activeData[j].flag = false;
+            }
+        })
+        calm.setState({ alreadySelectData: calm.state.alreadySelectData, activeData: calm.state.activeData })
+    }
+
+    /**
+     * 点击高亮
+     */
+    clickAllProjectActive(v, index, e) {
+        if (v.flag == true) {
+            calm.state.activeData[index].flag = false;
+            calm.state.alreadySelectData.forEach((item, i) => {
+                if (v.content == item.content) {
+                    calm.state.alreadySelectData.splice(i, 1)
+                }
+            })
+        } else {
+            calm.state.activeData[index].flag = true;
+            calm.state.alreadySelectData.push({
+                content: v.content,
+                oldFlag: true,
+                id: v.id,
+                uid: v.uid
+            })
+        }
+        calm.setState({
+            activeData: calm.state.activeData,
+            alreadySelectData: calm.state.alreadySelectData
+        })
+
+    }
+    /**
+     * 点击没有高亮的
+     */
+    clickNoActive(v, index) {
+        console.log(v)
+        if (v.flag == false) {
+            calm.state.noActiveData[index].flag = true;
+            calm.state.alreadySelectData.push({
+                content: v.content,
+                oldFlag: true,
+                id: v.cid,
+                uid: v.uid
+            })
+        } else {
+            calm.state.noActiveData[index].flag = false;
+            calm.state.alreadySelectData.forEach((item, i) => {
+                if (v.content == item.content) {
+                    calm.state.alreadySelectData.splice(i, 1)
+                }
+            })
+        }
+
+        calm.setState({
+            noActiveData: calm.state.noActiveData,
+            alreadySelectData: calm.state.alreadySelectData
+        })
+
+    }
+    /**
+     * 点击所有科目子选项
+     */
+    clickAllProject(v, index, e) {
+        console.log(v, "shjkfghjkfghj")
+
+        if (v.flag == false) {
+            calm.state.allProjectData[index].flag = true;
+            calm.state.alreadySelectData.push({
+                content: v.content,
+                oldFlag: true,
+                id: v.id,
+                uid: v.uid
+            })
+        } else {
+            calm.state.allProjectData[index].flag = false;
+            calm.state.alreadySelectData.forEach((item, i) => {
+                if (v.content == item.content) {
+                    calm.state.alreadySelectData.splice(i, 1)
+                }
+            })
+        }
+        calm.setState({
+            allProjectData: calm.state.allProjectData,
+            alreadySelectData: calm.state.alreadySelectData
+        })
+
+    }
+
+    /**
+     * 删除
+     */
+    deleAllProjectData(value, index, e) {
+        console.log(value, "index1")
+        calm.state.allProjectData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.allProjectData.splice(i, 1);
+            }
+        })
+        calm.state.alreadySelectData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.alreadySelectData.splice(i, 1);
+            }
+        })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            allProjectData: calm.state.allProjectData
+        })
+        var param = {
+            "method": "deleteCourse",
+            "courseId": value.uid
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                    var newArr = []
+                    result.response.forEach((v, i) => {
+                        newArr.push({
+                            content: v.courseName,
+                            flag: false,
+                            cid: v.cid,
+                            uid: v.uid
+                        })
+                    })
+                    calm.setState({
+                        noActiveData: newArr,
+                    })
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    /**
+     * 删除
+     */
+    delenoActiveData(value, index, e) {
+        console.log(value, "index2")
+        calm.state.noActiveData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.noActiveData.splice(i, 1);
+            }
+        })
+        calm.state.alreadySelectData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.alreadySelectData.splice(i, 1);
+            }
+        })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            noActiveData: calm.state.noActiveData
+        })
+        var param = {
+            "method": "deleteCourse",
+            "courseId": value.cid
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                    Toast.info("删除成功")
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 删除
+     */
+    deleteactiveData(value, index, e) {
+        console.log(value, "index333")
+        calm.state.activeData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.activeData.splice(i, 1);
+            }
+        })
+        calm.state.alreadySelectData.forEach((item, i) => {
+            if (value.content == item.content) {
+                calm.state.alreadySelectData.splice(i, 1);
+            }
+        })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            activeData: calm.state.activeData
+        })
+        var param = {
+            "method": "deleteCourse",
+            "courseId": value.id
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, "新的新的")
+                if (result.success) {
+                    Toast.info("删除成功")
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 点击管理
+     */
+    manageProject() {
+        calm.setState({
+            showDelete: 1
+        })
+    }
+
+    /**
+     * 点击保存
+     */
+    saveProject() {
+        var temoArr = [];
+        calm.state.alreadySelectData.forEach((v, i) => {
+            temoArr.push(v.id)
+        })
+        var param = {
+            "method": "saveCourseAndUserId",
+            "courseIds": temoArr.join(","),
+            "uid": calm.state.userId
+        }
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    Toast.info('保存成功', 1, "", false);
+                    $(".projectManage").slideUp();
+                    calm.getProject(calm.state.userId);
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 取消
+     */
+    cancleProject() {
+        $(".projectManage").slideUp();
+        $(`.tagBack`).hide();
+        calm.setState({
+            showDelete: 0
         })
     }
     render() {
@@ -635,6 +1104,7 @@ export default class publishWrongQuestion extends React.Component {
                                     placeholder="请输入标签"
                                     onChange={calm.searchInputChange}
                                     value={calm.state.searchValue}
+
                                 >
                                 </InputItem>
 
@@ -658,6 +1128,61 @@ export default class publishWrongQuestion extends React.Component {
                 {/* <span>上传</span>
                 <span>拍照</span>
                 <span>返回</span> */}
+
+
+                <div className="calmTagDivNew projectManage tagCont" style={{ display: 'none' }}>
+                    <div className="cont projectDiv">
+                        <div><div className='title'>已选科目</div>
+                            {
+                                calm.state.alreadySelectData.map((v, i) => {
+                                    return (
+                                        <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                                    )
+                                })
+                            }
+                            <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
+                        </div>
+                        <div className="allProject">
+                            <div className='title'>所有科目
+                            <span onClick={calm.manageProject}>管理</span>
+                            </div>
+                            {/* 需要高亮的 */}
+                            {
+                                calm.state.activeData.map((v, i) => {
+                                    return (
+                                        <span className="fatherSpan">
+                                            <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                                            {v.uid == 0 ? " " : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleteactiveData.bind(this, v, i)}>删除</span>}
+                                        </span>
+                                    )
+                                })
+                            }
+                            {/* 除了高亮之后剩下的全部 */}
+                            {
+                                calm.state.noActiveData.map((v, i) => {
+                                    return (
+                                        <span className="fatherSpan">
+                                            <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                                            {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.delenoActiveData.bind(this, v, i)}>删除</span>}
+                                        </span>
+                                    )
+                                })
+                            }
+                            {/* 新添加的 */}
+                            {
+                                calm.state.allProjectData.map((v, i) => {
+                                    return (
+                                        <span className="fatherSpan">
+                                            <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"}>{v.content}</span>
+                                            {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
+                                        </span>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div className="bottomBox" ><span className="close" onClick={calm.cancleProject}>取消</span><span className="bind" onClick={calm.saveProject}>确定</span></div>
+                </div>
             </div>
         )
     }

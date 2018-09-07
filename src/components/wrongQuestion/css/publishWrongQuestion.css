@@ -3,6 +3,12 @@
   height: 100% !important;
   background: #fff;
 }
+#publishWrongQuestion .projectManage {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 222;
+}
 #publishWrongQuestion .tabWrap span {
   display: inline-block;
   width: 50%;
@@ -83,7 +89,7 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
   font-size: 13px;
-  color: #AEAEAE !important;
+  color: #AEAEAE!important;
   padding: 0 5px;
   line-height: 21px;
   max-width: 98px;
@@ -114,11 +120,11 @@
 }
 #publishWrongQuestion .rightTag .am-radio-item.checked .am-list-line .am-list-content {
   border: 1px #4285F4 solid !important;
-  color: #4285F4 !important;
+  color: #4285F4!important;
 }
 #publishWrongQuestion .rightTag input {
-  line-height: 23px;
-  height: 23px;
+  line-height: 27px;
+  height: 27px;
 }
 #publishWrongQuestion .rightTag .addTag {
   color: #AEAEAE;
@@ -136,16 +142,16 @@
   color: #E60012 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(2).on .am-list-content {
-  border-color: #F39700 !important;
-  color: #F39700 !important;
+  border-color: #F39700!important;
+  color: #F39700!important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(3).on .am-list-content {
-  border-color: #EECF00 !important;
-  color: #EECF00 !important;
+  border-color: #EECF00!important;
+  color: #EECF00!important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(4).on .am-list-content {
-  border-color: #22AC38 !important;
-  color: #22AC38 !important;
+  border-color: #22AC38!important;
+  color: #22AC38!important;
 }
 #publishWrongQuestion .selectProject .am-list {
   display: inline-block;
@@ -256,8 +262,8 @@
 }
 #publishWrongQuestion .tagInput .am-list-item .am-input-control {
   background: #f4f4f4;
-  height: 32px;
-  line-height: 32px;
+  height: 37px;
+  line-height: 39px;
   margin: 0 15px;
   border-radius: 2px;
 }
@@ -293,7 +299,7 @@
   border-radius: 1px;
   margin-left: 15px;
   border: 1px #AEAEAE solid;
-  color: #AEAEAE;
+  color: #AEAEAE  ;
 }
 #publishWrongQuestion .classTags .am-tag-text {
   font-size: 13px;
@@ -347,6 +353,7 @@
   color: #4285F4;
 }
 #publishWrongQuestion .nextBtn {
+  display: flex;
   height: 64px;
   position: relative;
   padding: 0 15px;

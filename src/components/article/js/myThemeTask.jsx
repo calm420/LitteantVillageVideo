@@ -279,7 +279,7 @@ export default class articleList extends React.Component {
                                     } src={value.path} alt="" />
                                 } else {
                                     return <div className="video_tag" style={
-                                        friendsAttachments.length == 1 ? { maxWidth: '100%' } : {
+                                        friendsAttachments.length == 1 ? { width: '200px', height: '113px' } : {
                                             display: 'inline-block'
                                         }
                                     }>

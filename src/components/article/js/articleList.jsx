@@ -406,7 +406,12 @@ export default class articleList extends React.Component {
             defaultPageNo: currentPageNo,
         }, () => {
             if (this.state.index == 2) {
-                this.getAllCircleOfFriendsByUid();
+                this.setState({
+                    defaultPageNoForCircle: this.state.defaultPageNoForCircle+1
+                },()=>{
+                    this.getAllCircleOfFriendsByUid();
+
+                })
             } else {
                 this.getArticleRecommenLittleVideoList();
             }

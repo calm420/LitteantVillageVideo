@@ -285,6 +285,13 @@ export default class articleList extends React.Component {
 
     sendCommit = () => {
 
+
+        console.log(new Date().getTime());
+        console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
+        if(new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
+            Toast.info('截止時間已到，無法參與評論',1);
+            return;
+        }
         if (WebServiceUtil.isEmpty(this.state.inputValue)) {
             Toast.info('评论内容不能为空!', 1)
             return;

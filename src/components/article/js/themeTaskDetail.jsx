@@ -204,7 +204,11 @@ export default class articleList extends React.Component {
                     })
                     var detailArray = result.response.friendsAttachments;
                     for(var k in detailArray){
-                        // if(detailArray.)
+                        if(detailArray[k].faterType == 0){
+                            console.log('題幹已有');
+                        }else if(detailArray[k].faterType == 0){
+                            console.log('題幹已有');
+                        }
                     }
                     if (result.response.type == 0) {
                         document.title = '错题本';

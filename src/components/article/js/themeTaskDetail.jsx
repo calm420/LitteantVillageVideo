@@ -218,6 +218,7 @@ export default class articleList extends React.Component {
      * 按id查询详情
      * **/
     changeFriendLikeCount() {
+
         var param = {
             "method": 'changeFriendLikeCount',
             "friendId": this.state.detail.cfid,
@@ -448,7 +449,7 @@ export default class articleList extends React.Component {
                             <img src={rowData.discussUser.avatar} alt=""/>
                         </div>
                         <div className="courseList">
-                            <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
+                            <div className="userName text_hidden">{rowData.discussUser.userName}</div>
                             {/*<span className="tag-course tag-course-blue">语文</span>*/}
                         </div>
                         <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
@@ -460,9 +461,9 @@ export default class articleList extends React.Component {
                                     return <img onClick={this.showImage.bind(this,rowData.friendsAttachments,value.path)} src={value.path} alt=""/>
                                 }else if(value.type == 1){
                                     return <div className="video_tag">
-                                        <video src={value.path} />
+                                        <video onClick={this.playVideo.bind(this,value.path)} src={value.path} />
                                         {/*<img src="" alt=""/>*/}
-                                        <div className="video_tag_play"></div>
+                                        <div onClick={this.playVideo.bind(this,value.path)} className="video_tag_play"></div>
                                     </div>
                                 }
                             }.bind(this))}

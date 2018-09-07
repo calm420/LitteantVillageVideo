@@ -445,7 +445,7 @@ export default class articleList extends React.Component {
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            this.getArticleRecommenLittleVideoList(true);
+            this.getArticleRecommenLittleVideoList();
             // Toast.info('重新绑定事件'+this.state.index);
 
         });

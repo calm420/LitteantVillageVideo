@@ -108,7 +108,7 @@ export default class articleList extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            this.getAllCircleOfFriendsByUid();
+            this.getCircleOfFriendsByType();
         });
     };
 
@@ -123,7 +123,7 @@ export default class articleList extends React.Component {
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            this.getArticleRecommenLittleVideoList(true);
+            this.getCircleOfFriendsByType(true);
             // Toast.info('重新绑定事件'+this.state.index);
 
         });
@@ -300,7 +300,7 @@ export default class articleList extends React.Component {
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                            <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
+                            <div className="list_bottom_item"><i className={rowData.currentUserIsLike?"i-praise-active":"i-praise"}></i><span>{rowData.likeCount}</span></div>
                             <div className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}><i className="i-delete"></i></div>
                         </div>
                     </div>

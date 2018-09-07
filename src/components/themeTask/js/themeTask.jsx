@@ -177,7 +177,8 @@ export default class articleList extends React.Component {
      * **/
     releaseTheme = () => {
         var warn = '';
-        if (WebServiceUtil.isEmpty($('.input_title').val())) {
+        // WebServiceUtil.isEmpty($('.input_title').val())
+        if (false) {
             warn = '标题不能为空';
         } else if (WebServiceUtil.isEmpty($('.textarea_content').val())) {
             warn = '主题内容不能为空';
@@ -447,9 +448,9 @@ export default class articleList extends React.Component {
         return (
             <div id="themeTask" style={{height: document.body.clientHeight}}>
                 <div className="themeTask-box">
-                    <div className="themeTitle line_public">
-                        <input type="text" className="input_title textarea_form_control" placeholder="主题标题"/>
-                    </div>
+                    {/*<div className="themeTitle line_public">*/}
+                        {/*<input type="text" className="input_title textarea_form_control" placeholder="主题标题"/>*/}
+                    {/*</div>*/}
                     <div className="themeTitle themeContent">
                         <textarea className="textarea_content textarea_form_controlH" name="" id="" cols="30" rows="10"
                                   placeholder="请输入主题任务内容"></textarea>

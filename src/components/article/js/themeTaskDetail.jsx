@@ -48,7 +48,8 @@ export default class articleList extends React.Component {
         }, () => {
             this.gitCircleOfFriendsById();
             this.getDiscussInfoList();
-            $(document).on('click', '.delete_upload_image', function () {
+            $(document).on('click', '.delete_upload_image', function (event) {
+                event.stopPropagation();
                 console.log(that.state.domImage);
                 console.log($(this).attr('id'));
                 console.log(that.state.friendsAttachments,'friendsAttachments')
@@ -273,6 +274,11 @@ export default class articleList extends React.Component {
 
     sendCommit = () => {
 
+        if(WebServiceUtil.isEmpty(this.state.inputValue)){
+            Toast.info('评论内容不能为空!',1)
+            return;
+        }
+
         var param = {
             "method": 'saveDiscussInfo',
             "targetId": this.state.detail.cfid,   //进的文章id
@@ -289,6 +295,7 @@ export default class articleList extends React.Component {
                     this.setState({
                         inputValue:'',
                         friendsAttachments:[],
+                        domImage:[]
                     })
                     this.closeCommitBox();
                     this.getDiscussInfoList(true);
@@ -350,7 +357,7 @@ export default class articleList extends React.Component {
             if (type == 1) {
                 //图片
                 var dom = that.state.domImage;
-                dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/>
+                dom.push(<div key={url} className="image_item"><img onClick={that.showImage.bind(that,[url],url)} className="appendImage_item" src={url} alt=""/>
                     <div className='delete_upload_image' id={url}><img
                         src={require('../images/close_r.png')} alt=""/></div>
                 </div>)
@@ -405,6 +412,28 @@ export default class articleList extends React.Component {
         this.setState({inputValue: e.target.value})
     }
 
+    //客户端打开预览图片
+    showImage(rowData,url,event){
+        event.stopPropagation();
+        var images = [];
+        for(var k in rowData){
+            if(rowData[k].type == 0){
+                images.push(rowData[k].path);
+            }
+        }
+        console.log(images);
+        console.log(url);
+        var data = {
+            method: 'showPhoto',
+            photos: images,
+            currentPhoto: url
+        };
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('打开图片失败!',1);
+        });
+    }
+
     render() {
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
@@ -428,7 +457,7 @@ export default class articleList extends React.Component {
                         <div>
                             {rowData.friendsAttachments.map(function(value,index){
                                 if(value.type == 0){
-                                    return <img src={value.path} alt=""/>
+                                    return <img onClick={this.showImage.bind(this,rowData.friendsAttachments,value.path)} src={value.path} alt=""/>
                                 }else if(value.type == 1){
                                     return <div className="video_tag">
                                         <video src={value.path} />
@@ -436,7 +465,7 @@ export default class articleList extends React.Component {
                                         <div className="video_tag_play"></div>
                                     </div>
                                 }
-                            })}
+                            }.bind(this))}
                         </div>
                 </div>
                 </div>
@@ -468,7 +497,7 @@ export default class articleList extends React.Component {
                                         <div className="image_detail">
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.type == 0) {
-                                                    return <img src={value.path} alt=""  />
+                                                    return <img onClick={this.showImage.bind(this,this.state.detail.friendsAttachments,value.path)} src={value.path} alt=""  />
                                                 } else {
                                                     return <div onClick={this.playVideo.bind(this,value.path)} className="video_tag" style={{verticalAlign: 'middle'}}>
                                                         <video style={{width: '100%', height: '100%'}} src={value.path}
@@ -560,10 +589,10 @@ export default class articleList extends React.Component {
                                                     {this.state.detail.friendsAttachments.map((value, index) => {
                                                         if (value.fatherType == 0) {
                                                             if (value.type == 0) {
-                                                                return <img src={value.path} alt=""
+                                                                return <img onClick={this.showImage.bind(this,this.state.detail.friendsAttachments,value.path)} src={value.path} alt=""
                                                                             style={{width: '200px', height: '113px'}}/>
                                                             } else {
-                                                                return <div className="video_tag" style={{verticalAlign: 'middle'}}>
+                                                                return <div onClick={this.playVideo.bind(this,value.path)} className="video_tag" style={{verticalAlign: 'middle'}}>
                                                                     <video src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
@@ -579,10 +608,10 @@ export default class articleList extends React.Component {
                                                     {this.state.detail.friendsAttachments.map((value, index) => {
                                                         if (value.fatherType == 1) {
                                                             if (value.type == 0) {
-                                                                return <img src={value.path} alt=""
+                                                                return <img onClick={this.showImage.bind(this,this.state.detail.friendsAttachments,value.path)} src={value.path} alt=""
                                                                             style={{width: '200', height: '113'}}/>
                                                             } else {
-                                                                return <div className="video_tag"  style={{verticalAlign: 'middle'}}>
+                                                                return <div onClick={this.playVideo.bind(this,value.path)} className="video_tag"  style={{verticalAlign: 'middle'}}>
                                                                     <video style={{width: '200', height: '113'}}
                                                                            src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>

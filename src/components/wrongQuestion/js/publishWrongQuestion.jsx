@@ -118,10 +118,10 @@ export default class publishWrongQuestion extends React.Component {
      * 去选择标签
      */
     nextStep() {
-        // if(calm.state.theQuestionArr.length == 0 && calm.state.theQustionVideo.length == 0){
-        //     Toast.info("请上传题干");
-        //     return
-        // }
+        if(calm.state.theQuestionArr.length == 0 && calm.state.theQustionVideo.length == 0){
+            Toast.info("请上传题干");
+            return
+        }
      
         $(".rightTag").show();
         $(".leftWrongQuestion").hide();

@@ -207,12 +207,14 @@ export default class articleList extends React.Component {
                 }
             )
         }
+        console.log(videoList,'videoList');
         for (var k in videoList) {
             friendsAttachments.push(
                 {
                     type: 1,
                     fatherType: 2,
-                    path: videoList[k]
+                    path: videoList[k].url,
+                    coverPath: videoList[k].coverPath
                 }
             )
         }
@@ -277,7 +279,7 @@ export default class articleList extends React.Component {
 
                         $('#image_box').append(imageBox);
                         var videoList = that.state.videoList;
-                        videoList.push(url);
+                        videoList.push({url:url,coverPath:firstImage});
                         that.setState({
                             videoList: videoList
                         })
@@ -321,7 +323,7 @@ export default class articleList extends React.Component {
 
                         $('#image_box').append(imageBox);
                         var videoList = that.state.videoList;
-                        videoList.push(url);
+                        videoList.push({url:url,coverPath:firstImage});
                         that.setState({
                             videoList: videoList
                         })
@@ -404,7 +406,7 @@ export default class articleList extends React.Component {
                             $(imageBox).append(videoDiv);
                             $('#image_box').append(imageBox);
                             var videoList = that.state.videoList;
-                            videoList.push(res);
+                            videoList.push({url:res,coverPath: "http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"});
                             that.setState({
                                 videoList: videoList
                             })

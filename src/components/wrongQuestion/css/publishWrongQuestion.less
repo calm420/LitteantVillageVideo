@@ -2,6 +2,12 @@
     width: 100%;
     height: 100% !important;
     background: #fff;
+    .projectManage {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: 222;
+    }
     .tabWrap{
         span{
             display: inline-block;
@@ -47,6 +53,8 @@
         overflow-y: auto;
         padding: 0 15px;
     }
+    .projectDiv{
+    }
     .leftWrongQuestion{
         height: 100%;
         .title{
@@ -64,7 +72,7 @@
             textarea{
                 background-color:#F5F5F5;
                 padding: 7px 10px;
-                font-size: 13px;
+                font-size: 14px;
                 color: #666;
                 height: 100px;
                 width: 100%;
@@ -199,7 +207,7 @@
     .addButton{
         color: #999;
         border: 1px #E0E0E0 solid;
-        font-size: 13px;
+        font-size: 14px;
         line-height: 29px;
         height: 29px;
         box-sizing: border-box;
@@ -356,6 +364,7 @@
         color: #4285F4;
     }
     .nextBtn{
+        display: flex;
         height: 64px;
         position: relative;
         padding: 0 15px;

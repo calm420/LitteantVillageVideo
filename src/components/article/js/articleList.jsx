@@ -664,6 +664,19 @@ export default class articleList extends React.Component {
         });
     }
 
+    toShare = (cid,userName,event) => {
+        event.stopPropagation();
+        var data = {
+            method: 'shareWechat',
+            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid,
+            shareTitle: $('.list_content').text(),
+            shareUserName: userName,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.info('分享文章失败')
+        });
+    }
+
 
     render() {
         var _this = this;
@@ -687,7 +700,7 @@ export default class articleList extends React.Component {
 
                     </div>
                     <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic tag-WrongTopic-orange"}>{rowData.type?'':''}</span></div>
-                    <div className="list_content">{rowData.content}</div>
+                    <div className="list_content">{rowData.type == 1?rowData.content:rowData.mark}</div>
                     <div className="list_image" style={
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
                     }>
@@ -704,7 +717,7 @@ export default class articleList extends React.Component {
                                         display: 'inline-block'
                                     }
                                 } >
-                                    <video onClick={this.playVideo.bind(this,value.path)} style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
+                                    <video poster={value.coverPath} onClick={this.playVideo.bind(this,value.path)} style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
                                     <div onClick={this.playVideo.bind(this,value.path)} className="video_tag_play"></div>
                                 </div>
                             }
@@ -712,7 +725,7 @@ export default class articleList extends React.Component {
                         })}
                     </div>
                     <div className="list_bottom">
-                        <div className="list_bottom_item"><i className="i-share"></i></div>
+                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName)}><i className="i-share"></i></div>
                         <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                         <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
                     </div>

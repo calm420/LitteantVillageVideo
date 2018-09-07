@@ -149,7 +149,7 @@ export default class publishWrongQuestion extends React.Component {
         });
     }
 
-    /**
+    /**false
      * 去选择标签
      */
     nextStep() {

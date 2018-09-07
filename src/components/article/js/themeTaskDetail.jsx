@@ -32,6 +32,8 @@ export default class articleList extends React.Component {
             islike: false,
             inputValue: '',  //评论内容
             friendsAttachments: [],   //附件
+            topicAnswer:false,
+            topicFlag: false,
         }
     }
 
@@ -48,14 +50,15 @@ export default class articleList extends React.Component {
         }, () => {
             this.gitCircleOfFriendsById();
             this.getDiscussInfoList();
-            $(document).on('click', '.delete_upload_image', function () {
+            $(document).on('click', '.delete_upload_image', function (event) {
+                event.stopPropagation();
                 console.log(that.state.domImage);
                 console.log($(this).attr('id'));
-                console.log(that.state.friendsAttachments,'friendsAttachments')
+                console.log(that.state.friendsAttachments, 'friendsAttachments')
                 var friendsAttachments = that.state.friendsAttachments;
                 var dom = that.state.domImage;
 
-                for(var i = 0;i < friendsAttachments.length;i++){
+                for (var i = 0; i < friendsAttachments.length; i++) {
                     if (friendsAttachments[i].path == $(this).attr('id')) {
                         friendsAttachments.splice(i, 1);
                     }
@@ -67,7 +70,7 @@ export default class articleList extends React.Component {
                 }
                 that.setState({
                     domImage: dom,
-                    friendsAttachments:friendsAttachments
+                    friendsAttachments: friendsAttachments
                 })
                 // for(var k in dom){
                 //     if(dom[k].key == $(this).prev().attr('src')){
@@ -199,6 +202,10 @@ export default class articleList extends React.Component {
                         detail: result.response,
                         islike: result.response.currentUserIsLike
                     })
+                    var detailArray = result.response.friendsAttachments;
+                    for(var k in detailArray){
+                        // if(detailArray.)
+                    }
                     if (result.response.type == 0) {
                         document.title = '错题本';
                     } else {
@@ -217,6 +224,7 @@ export default class articleList extends React.Component {
      * 按id查询详情
      * **/
     changeFriendLikeCount() {
+
         var param = {
             "method": 'changeFriendLikeCount',
             "friendId": this.state.detail.cfid,
@@ -273,6 +281,11 @@ export default class articleList extends React.Component {
 
     sendCommit = () => {
 
+        if (WebServiceUtil.isEmpty(this.state.inputValue)) {
+            Toast.info('评论内容不能为空!', 1)
+            return;
+        }
+
         var param = {
             "method": 'saveDiscussInfo',
             "targetId": this.state.detail.cfid,   //进的文章id
@@ -287,8 +300,9 @@ export default class articleList extends React.Component {
                 if (result.success) {
                     Toast.success('评论成功', 1);
                     this.setState({
-                        inputValue:'',
-                        friendsAttachments:[],
+                        inputValue: '',
+                        friendsAttachments: [],
+                        domImage: []
                     })
                     this.closeCommitBox();
                     this.getDiscussInfoList(true);
@@ -304,7 +318,7 @@ export default class articleList extends React.Component {
     }
 
     //調用全屏視頻播放
-    playVideo(url,event) {
+    playVideo(url, event) {
         console.log(url);
         event.stopPropagation();
         var data = {
@@ -341,55 +355,59 @@ export default class articleList extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             // Toast.info(res);
-        // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
-        // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
-        var newArr = res.split("?");
-        var url = newArr[0];
-        var type = newArr[1].split("=")[1];
-        if (noom == '') {
-            if (type == 1) {
-                //图片
-                var dom = that.state.domImage;
-                dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/>
-                    <div className='delete_upload_image' id={url}><img
-                        src={require('../images/close_r.png')} alt=""/></div>
-                </div>)
+            // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
+            // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
+            var newArr = res.split("?");
+            var url = newArr[0];
+            var type = newArr[1].split("=")[1];
+            if (noom == '') {
+                if (type == 1) {
+                    //图片
+                    var dom = that.state.domImage;
+                    dom.push(<div key={url} className="image_item"><img onClick={that.showImage.bind(that, [url], url)}
+                                                                        className="appendImage_item" src={url} alt=""/>
+                        <div className='delete_upload_image' id={url}><img
+                            src={require('../images/close_r.png')} alt=""/></div>
+                    </div>)
 
-                that.state.friendsAttachments.push({
-                    cfid: that.state.detail.cid,
-                    type: 0,
-                    fatherType: 2,
-                    coverPath: url,
-                    path: url,
-                })
-            } else {
-                //视频
-                var cover = newArr[2].split("=")[1];
-                // Toast.info(cover)
-                var dom = that.state.domImage;
-                dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this,url)}><img className="appendImage_item" src={cover} alt=""/>
-                    <div className='delete_upload_image' id={url}><img
-                        src={require('../images/close_r.png')} alt=""/></div>
-                </div>);
+                    that.state.friendsAttachments.push({
+                        cfid: that.state.detail.cid,
+                        type: 0,
+                        fatherType: 4,
+                        coverPath: url,
+                        path: url,
+                    })
+                } else {
+                    //视频
+                    var cover = newArr[2].split("=")[1];
+                    // Toast.info(cover)
+                    var dom = that.state.domImage;
+                    dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
+                        className="appendImage_item" src={cover} alt=""/>
+                        <div className='delete_upload_image' id={url}><img
+                            src={require('../images/close_r.png')} alt=""/></div>
+                    </div>);
 
-                that.state.friendsAttachments.push({
-                    cfid: that.state.cid,
-                    type: 1,
-                    fatherType: 2,
-                    coverPath: cover,
-                    path: url,
-                })
+                    that.state.friendsAttachments.push({
+                        cfid: that.state.cid,
+                        type: 1,
+                        fatherType: 4,
+                        coverPath: cover,
+                        path: url,
+                    })
+                }
+                noom = res;
+            } else if (noom == res) {
+                return;
             }
-            noom = res;
-        } else if (noom == res) {
-            return;
-        }
-        that.setState({
-            domImage: dom
-        })
+            that.setState({
+                domImage: dom
+            })
 
         }, function (error) {
             console.log('增加电脑的上传');
+            that.upload_file();
+            that.upload_file();
         });
     }
 
@@ -403,6 +421,119 @@ export default class articleList extends React.Component {
     //评论框输入的回调
     inputOnChange = (e) => {
         this.setState({inputValue: e.target.value})
+    }
+
+
+    //原生ｊｓ上传
+    upload_file = () => {
+        $("#upload").click();
+        //取消加绑定change事件解决change事件无法控制
+        $("#upload").off("change");
+        $("#upload").change(function () {
+            if (this.files[0]) {
+                var formData = new FormData();
+                formData.append("file" + 0, this.files[0]);
+                formData.append("name" + 0, this.files[0].name);
+                $.ajax({
+                    type: "POST",
+                    url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    // 告诉jQuery不要去处理发送的数据
+                    processData: false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType: false,
+                    // xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                    //     var xhr = jQuery.ajaxSettings.xhr();
+                    //     xhr.upload.onload = function () {
+                    //         // console.log('上传完成隐藏进度条');
+                    //         $('.progressText').text('上传完成')
+                    //         // setTimeout(function(){
+                    //         $('#progress')[0].style.display = 'none';
+                    //         $('.progress-bar')[0].style.width = '0%';
+                    //         $('.progressText').text('进度: 0%');
+                    //         // },500);
+                    //         console.log('上传完成')
+                    //     };
+                    //     xhr.upload.onprogress = function (ev) {
+                    //         // $('#progress')[0].style.display = 'block';
+                    //         if ($('#progress').css('display') == 'none') {
+                    //             $('#progress').css({display: 'block'})
+                    //         } else {
+                    //             //显示进度条
+                    //             $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
+                    //             $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
+                    //         }
+                    //     };
+                    //     return xhr;
+                    // },
+                    success: function (res) {
+                        //返回在线图片地址
+                        var url = res;
+                        var type = res.substring(res.length - 3, res.length);
+                        if (type == 'jpg' || type == 'png' || type == 'gif' || type == 'peg' || type == 'JPG' || type == 'PNG' || type == 'PEG' || type == 'GIF') {
+                            var dom = that.state.domImage;
+                            dom.push(<div key={url} className="image_item"><img
+                                onClick={that.showImage.bind(that, [url], url)} className="appendImage_item" src={url}
+                                alt=""/>
+                                <div className='delete_upload_image' id={url}><img
+                                    src={require('../images/close_r.png')} alt=""/></div>
+                            </div>)
+
+                            that.state.friendsAttachments.push({
+                                cfid: that.state.detail.cid,
+                                type: 0,
+                                fatherType: 4,
+                                coverPath: url,
+                                path: url,
+                            })
+                        } else {//认为是视频
+                            var cover = "http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg";
+                            var dom = that.state.domImage;
+                            dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
+                                className="appendImage_item" src={cover} alt=""/>
+                                <div className='delete_upload_image' id={url}><img
+                                    src={require('../images/close_r.png')} alt=""/></div>
+                            </div>);
+
+                            that.state.friendsAttachments.push({
+                                cfid: that.state.cid,
+                                type: 1,
+                                fatherType: 4,
+                                coverPath: cover,
+                                path: url,
+                            })
+                            // that.upload_video_pic(res, videoDiv);
+
+                        }
+                        that.setState({
+                            domImage: dom
+                        })
+                    }
+                });
+            }
+        })
+    }
+
+    //客户端打开预览图片
+    showImage(rowData, url, event) {
+        event.stopPropagation();
+        var images = [];
+        for (var k in rowData) {
+            if (rowData[k].type == 0) {
+                images.push(rowData[k].path);
+            }
+        }
+        console.log(images);
+        console.log(url);
+        var data = {
+            method: 'showPhoto',
+            photos: images.join(','),
+            currentPhoto: url
+        };
+        window.parent.Bridge.callHandler(data, null, function (error) {
+            Toast.info('打开图片失败!', 1);
+        });
     }
 
     toShare = () => {
@@ -424,33 +555,36 @@ export default class articleList extends React.Component {
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
-                dom = <div className="list_item" style={{marginTop:'0'}}>
+                dom = <div className="list_item" style={{marginTop: '0'}}>
                     <div className="circleList circleList-comment line_public">
-                    <div className="list_head">
-                        <div className="headPic">
-                            <img src={rowData.discussUser.avatar} alt=""/>
+                        <div className="list_head">
+                            <div className="headPic">
+                                <img src={rowData.discussUser.avatar} alt=""/>
+                            </div>
+                            <div className="courseList">
+                                <div className="userName text_hidden">{rowData.discussUser.userName}</div>
+                                {/*<span className="tag-course tag-course-blue">语文</span>*/}
+                            </div>
+                            <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                         </div>
-                        <div className="courseList">
-                            <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
-                            {/*<span className="tag-course tag-course-blue">语文</span>*/}
-                        </div>
-                        <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
-                    </div>
-                    <div className="list_content content_detail-comment">{rowData.discussContent}</div>
+                        <div className="list_content content_detail-comment">{rowData.discussContent}</div>
                         <div className="list_image">
-                            {rowData.friendsAttachments.map(function(value,index){
-                                if(value.type == 0){
-                                    return <img src={value.path} alt=""/>
-                                }else if(value.type == 1){
+                            {rowData.friendsAttachments.map(function (value, index) {
+                                if (value.type == 0) {
+                                    return <img
+                                        onClick={this.showImage.bind(this, rowData.friendsAttachments, value.path)}
+                                        src={value.path} alt=""/>
+                                } else if (value.type == 1) {
                                     return <div className="video_tag">
-                                        <video src={value.path} />
+                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this, value.path)} src={value.path}/>
                                         {/*<img src="" alt=""/>*/}
-                                        <div className="video_tag_play"></div>
+                                        <div onClick={this.playVideo.bind(this, value.path)}
+                                             className="video_tag_play"></div>
                                     </div>
                                 }
-                            })}
+                            }.bind(this))}
                         </div>
-                </div>
+                    </div>
                 </div>
             }
             return dom
@@ -480,10 +614,13 @@ export default class articleList extends React.Component {
                                         <div className="image_detail">
                                             {this.state.detail.friendsAttachments.map((value, index) => {
                                                 if (value.type == 0) {
-                                                    return <img src={value.path} alt=""  />
+                                                    return <img
+                                                        onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
+                                                        src={value.path} alt=""/>
                                                 } else {
-                                                    return <div onClick={this.playVideo.bind(this,value.path)} className="video_tag" style={{verticalAlign: 'middle'}}>
-                                                        <video style={{width: '100%', height: '100%'}} src={value.path}
+                                                    return <div onClick={this.playVideo.bind(this, value.path)}
+                                                                className="video_tag" style={{verticalAlign: 'middle'}}>
+                                                        <video poster={value.coverPath} style={{width: '100%', height: '100%'}} src={value.path}
                                                                alt=""/>
                                                         <div className="video_tag_play"></div>
                                                     </div>
@@ -493,7 +630,8 @@ export default class articleList extends React.Component {
                                         <div className="asOfDate">
                                             截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                         <div className="detail_bottom">
-                                            <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
+                                            <div className="list_bottom_item" onClick={this.toShare}><i
+                                                className="i-share"></i></div>
                                             <div className="list_bottom_item"
                                                  onClick={this.likeClick.bind(this, this.state.detail.cfid)}><i
                                                 className="i-praise"></i><span>{this.state.detail.likeCount}</span>
@@ -507,11 +645,11 @@ export default class articleList extends React.Component {
                                         </div>
                                         <div className="people_image_list">
                                             {
-                                                this.state.detail.partakeUserList?this.state.detail.partakeUserList.map((value, index) => {
-                                                return <img
-                                                    src={value?value.avatar:''}
-                                                    alt=""/>
-                                            }):''
+                                                this.state.detail.partakeUserList ? this.state.detail.partakeUserList.map((value, index) => {
+                                                    return <img
+                                                        src={value ? value.avatar : ''}
+                                                        alt=""/>
+                                                }) : ''
                                             }
                                         </div>
                                     </div>
@@ -556,15 +694,25 @@ export default class articleList extends React.Component {
                                                 {/*<div className="userName">{this.state.detail.userInfo.userName}</div>*/}
                                                 {/*<span className="tag-course tag-course-blue">{this.state.detail.courseInfo.courseName}</span>*/}
 
-                                                <div className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
+                                                <div
+                                                    className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
                                                 <span style={
-                                                    this.state.detail.courseInfo?{display:'block'}:{display:'none'}
-                                                } className="tag-course tag-course-blue">{this.state.detail.courseInfo?this.state.detail.courseInfo.courseName:''}</span>
+                                                    this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
+                                                }
+                                                      className="tag-course tag-course-blue">{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
+                                                <span style={
+                                                    this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
+                                                }
+                                                      className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
+                                                <span style={
+                                                    this.state.detail.fTags ? {display: 'block'} : {display: 'none'}
+                                                }
+                                                      className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
                                             </div>
                                             <div className="time"></div>
 
                                         </div>
-                                        <div className="content_detail">{this.state.detail.content}</div>
+                                        <div className="content_detail">{this.state.detail.mark}</div>
                                         <div className="image_detail">
                                             <div>
                                                 <span>题干</span>
@@ -572,11 +720,16 @@ export default class articleList extends React.Component {
                                                     {this.state.detail.friendsAttachments.map((value, index) => {
                                                         if (value.fatherType == 0) {
                                                             if (value.type == 0) {
-                                                                return <img src={value.path} alt=""
-                                                                            style={{width: '200px', height: '113px'}}/>
+                                                                return <img
+                                                                    onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
+                                                                    src={value.path} alt=""
+                                                                    style={{width: '200px', height: '113px'}}/>
                                                             } else {
-                                                                return <div className="video_tag" style={{verticalAlign: 'middle'}}>
-                                                                    <video src={value.path} alt=""/>
+                                                                return <div
+                                                                    onClick={this.playVideo.bind(this, value.path)}
+                                                                    className="video_tag"
+                                                                    style={{verticalAlign: 'middle'}}>
+                                                                    <video poster={value.coverPath} src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
                                                             }
@@ -591,11 +744,16 @@ export default class articleList extends React.Component {
                                                     {this.state.detail.friendsAttachments.map((value, index) => {
                                                         if (value.fatherType == 1) {
                                                             if (value.type == 0) {
-                                                                return <img src={value.path} alt=""
-                                                                            style={{width: '200', height: '113'}}/>
+                                                                return <img
+                                                                    onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
+                                                                    src={value.path} alt=""
+                                                                    style={{width: '200', height: '113'}}/>
                                                             } else {
-                                                                return <div className="video_tag"  style={{verticalAlign: 'middle'}}>
-                                                                    <video style={{width: '200', height: '113'}}
+                                                                return <div
+                                                                    onClick={this.playVideo.bind(this, value.path)}
+                                                                    className="video_tag"
+                                                                    style={{verticalAlign: 'middle'}}>
+                                                                    <video poster={value.coverPath} style={{width: '200', height: '113'}}
                                                                            src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
@@ -607,10 +765,11 @@ export default class articleList extends React.Component {
                                             </div>
                                         </div>
                                         {/*<div className="asOfDate">*/}
-                                            {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
+                                        {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom">
-                                            <div className="list_bottom_item"><i className="i-share"></i></div>
-                                            <div className="list_bottom_item"><i className="i-praise"></i><span>{this.state.detail.likeCount}</span>
+                                            <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
+                                            <div className="list_bottom_item"><i
+                                                className="i-praise" onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -673,7 +832,9 @@ export default class articleList extends React.Component {
                     } onClick={this.closeCommitBox}></div>
                 </div>
 
-                <input id="upload" type="file"/>
+                <input style={
+                    {display:'none'}
+                } id="upload" type="file"/>
             </div>
         );
     }

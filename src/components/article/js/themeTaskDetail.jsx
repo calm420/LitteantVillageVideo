@@ -336,7 +336,7 @@ export default class articleList extends React.Component {
 
         console.log(new Date().getTime());
         console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
-        if(new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
+        if(this.state.detail.type == 1 && new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
             Toast.info('截止時間已到，無法參與評論',1);
             this.setState({
                 inputValue: '',

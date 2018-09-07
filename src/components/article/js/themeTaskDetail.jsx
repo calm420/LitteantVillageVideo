@@ -425,7 +425,7 @@ export default class articleList extends React.Component {
                         <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
                     <div className="list_content content_detail-comment">{rowData.discussContent}</div>
-                        <div>
+                        <div className="list_image">
                             {rowData.friendsAttachments.map(function(value,index){
                                 if(value.type == 0){
                                     return <img src={value.path} alt=""/>

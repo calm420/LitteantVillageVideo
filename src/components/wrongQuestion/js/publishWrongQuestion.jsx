@@ -1,7 +1,8 @@
 import React from 'react';
-import { List, TextareaItem, Tag, InputItem, Radio, Toast } from 'antd-mobile';
-import { createForm } from 'rc-form';
+import {List, TextareaItem, Tag, InputItem, Radio, Toast} from 'antd-mobile';
+import {createForm} from 'rc-form';
 import '../css/publishWrongQuestion.less'
+
 const RadioItem = Radio.RadioItem;
 var calm;
 export default class publishWrongQuestion extends React.Component {
@@ -48,6 +49,7 @@ export default class publishWrongQuestion extends React.Component {
             ],
         }
     }
+
     componentDidMount() {
         document.title = '错题本';
         var locationHref = window.location.href;
@@ -61,10 +63,16 @@ export default class publishWrongQuestion extends React.Component {
         })
         console.log(userId)
         calm.getProject(userId);
+        window.addEventListener('resize', this.onWindwoResize);
     }
+
+    onWindwoResize() {
+        $('body').height(calm.state.clientHeight).scrollTop(160)
+    }
+
     /**
-   * 获取科目
-   */
+     * 获取科目
+     */
     getProject(userId) {
         var param = {
             "method": "getCourseByUserId",
@@ -85,6 +93,7 @@ export default class publishWrongQuestion extends React.Component {
             }
         });
     }
+
     /**
      * 去选择标签
      */
@@ -94,6 +103,7 @@ export default class publishWrongQuestion extends React.Component {
         $(".tabWrap .wrongQuestion").removeClass('active');
         $(".tabWrap .tag").addClass('active');
     }
+
     /**
      * 返回错题
      */
@@ -155,6 +165,7 @@ export default class publishWrongQuestion extends React.Component {
             });
         })
     }
+
     /**
      * 提交
      */
@@ -242,9 +253,9 @@ export default class publishWrongQuestion extends React.Component {
     }
 
 
-    /** 
-  * 标签搜索框
-  */
+    /**
+     * 标签搜索框
+     */
     searchInputChange = (value) => {
         calm.setState({
             searchValue: value
@@ -254,14 +265,14 @@ export default class publishWrongQuestion extends React.Component {
     }
 
     /**
-    * 搜索关键字结果
-    */
+     * 搜索关键字结果
+     */
     getTagsByTagTitle() {
         if (calm.state.searchValue == "") {
             Toast.success("请输入搜索的关键词", 1, "", false)
             return;
         }
-        calm.setState({ tagData: [] }, () => {
+        calm.setState({tagData: []}, () => {
             var param = {
                 "method": 'getTagsByTagTitle',
                 "tagTitle": calm.state.searchValue,
@@ -279,7 +290,7 @@ export default class publishWrongQuestion extends React.Component {
                                     onChange={calm.tagChange.bind(this, v)}
                                 >{v.tagTitle}</Tag>)
                             })
-                            calm.setState({ tagData: arr })
+                            calm.setState({tagData: arr})
                         }
                     } else {
                         Toast.fail(result.msg, 5);
@@ -292,9 +303,10 @@ export default class publishWrongQuestion extends React.Component {
         })
 
     }
+
     /**
-        * 标签改变
-        */
+     * 标签改变
+     */
     tagChange(data, status) {
         if (status) {
             calm.state.tagChangeData.push(data);
@@ -309,19 +321,20 @@ export default class publishWrongQuestion extends React.Component {
             })
         }
     }
+
     /**
-       * 取消标签
-       */
+     * 取消标签
+     */
     cancelSubmit() {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
-        calm.setState({ tagData: [] })
-        calm.setState({ searchValue: '' })
+        calm.setState({tagData: []})
+        calm.setState({searchValue: ''})
     }
 
     /**
-   * 标签点击确定的回调
-   */
+     * 标签点击确定的回调
+     */
     submitTagArr() {
         $(`.calmTagDiv`).slideUp();
         $(`.tagBack`).hide();
@@ -338,14 +351,14 @@ export default class publishWrongQuestion extends React.Component {
         calm.state.tagText = calm.state.tagText.concat(tagTextData);
         var arr = calm.state.tagText;
         calm.state.tagText = calm.makeArr(arr, "tagTitle")
-        calm.setState({ tagData: [], tagChangeData: [], searchValue: "" })
+        calm.setState({tagData: [], tagChangeData: [], searchValue: ""})
     }
 
     /**
-       * 去重
-       * @param arr
-       * @returns {*}
-       */
+     * 去重
+     * @param arr
+     * @returns {*}
+     */
     makeArr(arr, properties) {
         for (var i = 0; i < arr.length - 1; i++) {
             for (var j = i + 1; j < arr.length; j++) {
@@ -357,6 +370,7 @@ export default class publishWrongQuestion extends React.Component {
         }
         return arr
     }
+
     /**
      * 删除标签
      */
@@ -411,12 +425,13 @@ export default class publishWrongQuestion extends React.Component {
                     theQustionVideo: calm.state.theQustionVideo
                 })
                 noom = res;
-            }else if(noom == res){
+            } else if (noom == res) {
                 return
             }
         }, function (error) {
         });
     }
+
     /**
      * 上传答案
      */
@@ -426,7 +441,7 @@ export default class publishWrongQuestion extends React.Component {
             method: 'toTakePhoto',
         };
         Bridge.callHandler(data, function (res) {
-            if(tempClam == ""){
+            if (tempClam == "") {
                 // 拿到照片地址,显示在页面等待上传
                 var newArr = res.split("?");
                 var type = newArr[1].split("=")[1]
@@ -453,7 +468,7 @@ export default class publishWrongQuestion extends React.Component {
                     theAnswerVideo: calm.state.theAnswerVideo
                 })
                 tempClam = res;
-            }else if(tempClam == res){
+            } else if (tempClam == res) {
                 return
             }
 
@@ -471,6 +486,7 @@ export default class publishWrongQuestion extends React.Component {
             theQuestionArr: calm.state.theQuestionArr
         })
     }
+
     /**
      * 删除答案
      */
@@ -480,6 +496,7 @@ export default class publishWrongQuestion extends React.Component {
             theAnswerArr: calm.state.theAnswerArr
         })
     }
+
     /**
      * 删除答案视频
      */
@@ -489,6 +506,7 @@ export default class publishWrongQuestion extends React.Component {
             theAnswerVideo: calm.state.theAnswerVideo
         })
     }
+
     /**
      * 删除问题
      */
@@ -498,6 +516,7 @@ export default class publishWrongQuestion extends React.Component {
             theQustionVideo: calm.state.theQustionVideo
         })
     }
+
     render() {
         const understandData = [
             {
@@ -517,11 +536,11 @@ export default class publishWrongQuestion extends React.Component {
                 label: "3"
             }
         ]
-        const { understandValue, projectValue } = this.state;
+        const {understandValue, projectValue} = this.state;
         return (
-            <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
+            <div id="publishWrongQuestion" style={{height: calm.state.clientHeight}}>
                 <div className='tabWrap line_public'>
-                    <span className="wrongQuestion active" onClick={calm.backWrongQuestion} >错题本</span>
+                    <span className="wrongQuestion active" onClick={calm.backWrongQuestion}>错题本</span>
                     <span className="tag" onClick={calm.nextStep}>标签</span>
                 </div>
                 <div className='tabCont'>
@@ -533,8 +552,9 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQuestionArr.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <img src={v.path} alt="" />
-                                                <div className='delete'><span onClick={calm.deleteQuestion.bind(this, i)}>删除</span></div>
+                                                <img src={v.path} alt=""/>
+                                                <div className='delete'><span
+                                                    onClick={calm.deleteQuestion.bind(this, i)}>删除</span></div>
                                             </div>
                                         )
                                     })
@@ -543,8 +563,9 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQustionVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video poster={v.coverPath} src={v.path} alt="" controls />
-                                                <div className='delete'><span onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
+                                                <video poster={v.coverPath} src={v.path} alt="" controls/>
+                                                <div className='delete'><span
+                                                    onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
                                         )
                                     })
@@ -557,8 +578,9 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theAnswerArr.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <img src={v.path} alt="" />
-                                                <div className='delete'><span onClick={calm.deleteAnswer.bind(this, i)}>删除</span></div>
+                                                <img src={v.path} alt=""/>
+                                                <div className='delete'><span
+                                                    onClick={calm.deleteAnswer.bind(this, i)}>删除</span></div>
                                             </div>
                                         )
                                     })
@@ -567,8 +589,9 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theAnswerVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video poster={v.coverPath} src={v.path} alt="" controls />
-                                                <div className='delete'><span onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
+                                                <video poster={v.coverPath} src={v.path} alt="" controls/>
+                                                <div className='delete'><span
+                                                    onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
                                             </div>
                                         )
                                     })
@@ -589,24 +612,29 @@ export default class publishWrongQuestion extends React.Component {
                         </div>
                         <div className='nextBtn' onClick={calm.nextStep}><span>下一步</span></div>
                     </div>
-                    <div className="rightTag" style={{ display: "none" }}>
+                    <div className="rightTag" style={{display: "none"}}>
                         <div className='cont'>
                             <div className="selectProject">
                                 <div className="title">选择科目</div>
                                 <List>
                                     {calm.state.projectData.map(i => (
-                                        <RadioItem key={i.value} className={projectValue === i.courseName ? 'checked' : ''} checked={projectValue === i.courseName} onChange={() => this.projectChange(i)}>
+                                        <RadioItem key={i.value}
+                                                   className={projectValue === i.courseName ? 'checked' : ''}
+                                                   checked={projectValue === i.courseName}
+                                                   onChange={() => this.projectChange(i)}>
                                             {i.courseName}
                                         </RadioItem>
                                     ))}
                                 </List>
-                                <span className='spanTag add' onClick={calm.moreProject}>+更多科目</span>
+                                <span className='spanTag add' onClick={calm.moreProject}>更多科目</span>
                             </div>
                             <div className="knowDegree">
 
                                 <List renderHeader={() => '掌握程度'}>
                                     {understandData.map(i => (
-                                        <RadioItem key={i.value} className={understandValue === i.value ? "on" : ''} checked={understandValue === i.value} onChange={() => this.underChange(i)}>
+                                        <RadioItem key={i.value} className={understandValue === i.value ? "on" : ''}
+                                                   checked={understandValue === i.value}
+                                                   onChange={() => this.underChange(i)}>
                                             {i.value}
                                         </RadioItem>
                                     ))}
@@ -619,12 +647,13 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className="spanTag">
                                                 <span className="textOver">{v.tagTitle}</span>
-                                                <span className="del_tag" onClick={calm.deleteTag.bind(this, v)}>删除</span>
+                                                <span className="del_tag"
+                                                      onClick={calm.deleteTag.bind(this, v)}>删除</span>
                                             </div>
                                         )
                                     })
                                 }
-                                <span className='addTag spanTag' onClick={calm.addTag}>+添加标签</span>
+                                <span className='addTag spanTag' onClick={calm.addTag}>添加标签</span>
                             </div>
                         </div>
                         {/* 添加标签 */}
@@ -632,9 +661,9 @@ export default class publishWrongQuestion extends React.Component {
                             display: "none",
                         }}></div>
                         <div className={`calmTagDiv calmTagDivNew tagCont`}
-                            style={{
-                                display: "none",
-                            }}
+                             style={{
+                                 display: "none",
+                             }}
                         >
                             {/* {useIndex} */}
                             <div className="tagInput">

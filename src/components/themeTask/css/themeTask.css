@@ -58,6 +58,9 @@
   transition: 0.5s;
   z-index: 9999999999999999999999999;
 }
+#themeTask .selectedPeople .am-list-view-scrollview {
+  height: calc(100% - 180px) !important;
+}
 #themeTask .toSetPeople {
   width: 100%;
   background: white;
@@ -187,4 +190,120 @@
   background: url("../images/WhoSee.png") no-repeat;
   background-size: 100% 100%;
   top: 17px;
+}
+#themeTask .selectedPeople_border {
+  border-top: 10px solid #f6f6f6;
+  position: relative;
+}
+#themeTask .selectedPeople_border:after {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#themeTask .selectedPeople_border .am-radio-inner {
+  border: 1px #999999 solid;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  left: 0 !important;
+}
+#themeTask .selectedPeople_border .am-radio-inner:after {
+  width: 5px;
+  height: 11px;
+  border-width: 0 1px 1px 0;
+  top: 0;
+}
+#themeTask .selectedPeople_border .am-radio-checked .am-radio-inner {
+  border: 1px #4285F4 solid;
+}
+#themeTask .selectedPeople_border .am-checkbox-inner {
+  width: 18px;
+  height: 18px;
+}
+#themeTask .selectedPeople_border .am-list-item {
+  position: relative;
+}
+#themeTask .selectedPeople_border .am-list-item .am-list-content {
+  color: #666 !important;
+  font-size: 16px;
+  padding-left: 31px;
+  line-height: 36px;
+  vertical-align: bottom;
+}
+#themeTask .selectedPeople_border .am-radio-item {
+  position: relative;
+}
+#themeTask .selectedPeople_border .am-radio-item:after {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#themeTask .am-checkbox-inner {
+  border: 1px #999999 solid;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 0;
+}
+#themeTask .am-checkbox-inner :after {
+  display: block;
+  border-color: #fff;
+  width: 5px;
+  height: 11px;
+  border-width: 0 1px 1px 0;
+  top: 0;
+}
+#themeTask .am-checkbox-checked .am-checkbox-inner {
+  border: 1px #4285F4 solid !important;
+  background: #fff !important;
+}
+#themeTask .am-checkbox-checked .am-checkbox-inner:after {
+  width: 5px;
+  height: 11px;
+  border-width: 0 1px 1px 0;
+  top: 0;
+  right: 5px;
+  border-color: #108ee9;
+}
+#themeTask .am-checkbox-item {
+  left: 34px;
+  width: calc(100% - 49px);
+}
+#themeTask .am-list .am-list-item.am-checkbox-item .am-list-thumb {
+  width: 18px;
+  height: 18px;
+}
+#themeTask .am-list .am-list-item.am-checkbox-item .am-list-thumb .am-checkbox-inner {
+  top: 15px;
+}
+#themeTask .bottom_nav {
+  position: relative;
 }

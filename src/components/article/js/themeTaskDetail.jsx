@@ -227,7 +227,7 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
-                    Toast.info(this.state.islike ? '取消點贊' : '點贊成功');
+                    // Toast.info(this.state.islike ? '取消點贊' : '點贊成功');
                     if (this.state.islike) {
                         console.log('取消點贊')
                         var detail = this.state.detail;
@@ -365,7 +365,7 @@ export default class articleList extends React.Component {
             } else {
                 //视频
                 var cover = newArr[2].split("=")[1];
-                Toast.info(cover)
+                // Toast.info(cover)
                 var dom = that.state.domImage;
                 dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this,url)}><img className="appendImage_item" src={cover} alt=""/>
                     <div className='delete_upload_image' id={url}><img
@@ -389,9 +389,10 @@ export default class articleList extends React.Component {
         })
 
         }, function (error) {
-            console.log(error);
+            console.log('增加电脑的上传');
         });
     }
+
 
     likeClick() {
         this.changeFriendLikeCount();
@@ -411,7 +412,6 @@ export default class articleList extends React.Component {
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
-
                 dom = <div className="list_item" style={{marginTop:'0'}}>
                     <div className="circleList circleList-comment line_public">
                     <div className="list_head">
@@ -425,6 +425,19 @@ export default class articleList extends React.Component {
                         <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
                     <div className="list_content content_detail-comment">{rowData.discussContent}</div>
+                        <div className="list_image">
+                            {rowData.friendsAttachments.map(function(value,index){
+                                if(value.type == 0){
+                                    return <img src={value.path} alt=""/>
+                                }else if(value.type == 1){
+                                    return <div className="video_tag">
+                                        <video src={value.path} />
+                                        {/*<img src="" alt=""/>*/}
+                                        <div className="video_tag_play"></div>
+                                    </div>
+                                }
+                            })}
+                        </div>
                 </div>
                 </div>
             }
@@ -490,7 +503,7 @@ export default class articleList extends React.Component {
                                             }
                                         </div>
                                     </div>
-                                    <div className="commit_title commit_title-comment">全部评论({this.state.commit_count})</div>
+                                    <div className="commit_title">全部评论({this.state.commit_count})</div>
                                 </div>
                             )}
                             renderFooter={this.state.isLoadingHidden ? '' : () => (
@@ -647,6 +660,8 @@ export default class articleList extends React.Component {
                         this.state.commitFlag ? {display: 'block'} : {display: 'none'}
                     } onClick={this.closeCommitBox}></div>
                 </div>
+
+                <input id="upload" type="file"/>
             </div>
         );
     }

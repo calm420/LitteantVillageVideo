@@ -48,6 +48,9 @@ export default class articleList extends React.Component {
         $(document).on('click', '.upload_box_video', function () {
             that.playVideo($(this).attr('videoPath'));
         })
+        $(document).on('click', '.showImage', function () {
+            that.showImage($(this).attr('src'));
+        })
         //点击上传图片区域的删除  ++ 点击删除视频
         $('#image_box').on('click', '.deleteImage_upload', function () {
             console.log($(this).next().attr('src'), 'deleteThis');
@@ -63,6 +66,20 @@ export default class articleList extends React.Component {
             console.log(videoList, 'videoList');
             $(this).parent().remove();
         })
+    }
+
+    //客户端打开预览图片
+    showImage(url) {
+        // console.log(that.state.imageList);
+        // console.log(url);
+        var data = {
+            method: 'showPhoto',
+            photos: that.state.imageList.join(','),
+            currentPhoto: url
+        };
+        window.parent.Bridge.callHandler(data, null, function (error) {
+            Toast.info('打开图片失败!', 1);
+        });
     }
 
     //調用全屏視頻播放
@@ -177,7 +194,8 @@ export default class articleList extends React.Component {
      * **/
     releaseTheme = () => {
         var warn = '';
-        if (WebServiceUtil.isEmpty($('.input_title').val())) {
+        // WebServiceUtil.isEmpty($('.input_title').val())
+        if (false) {
             warn = '标题不能为空';
         } else if (WebServiceUtil.isEmpty($('.textarea_content').val())) {
             warn = '主题内容不能为空';
@@ -211,7 +229,8 @@ export default class articleList extends React.Component {
                 {
                     type: 1,
                     fatherType: 2,
-                    path: videoList[k]
+                    path: videoList[k].url,
+                    coverPath: videoList[k].coverPath
                 }
             )
         }
@@ -258,7 +277,7 @@ export default class articleList extends React.Component {
                 var type = newArr[1].split("=")[1];
                 if(noom=='') {
                     if (type == 1) {
-                        var imageDiv = $("<img class='upload_box_image' />").attr('src', url);
+                        var imageDiv = $("<img class='upload_box_image showImage' />").attr('src', url);
                         var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
                         $(imageBox).append(imageDiv);
                         $('#image_box').append(imageBox);
@@ -273,10 +292,9 @@ export default class articleList extends React.Component {
                         //image ---> uploadBox
                         var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
                         $(imageBox).append(videoDiv);
-
                         $('#image_box').append(imageBox);
                         var videoList = that.state.videoList;
-                        videoList.push(url);
+                        videoList.push({url:url,coverPath:firstImage});
                         that.setState({
                             videoList: videoList
                         })
@@ -302,7 +320,7 @@ export default class articleList extends React.Component {
                 // Toast.info(url);
                 if(noom=='') {
                     if (type == 1) {
-                        var imageDiv = $("<img class='upload_box_image' />").attr('src', url);
+                        var imageDiv = $("<img class='upload_box_image showImage' />").attr('src', url);
                         var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
                         $(imageBox).append(imageDiv);
                         $('#image_box').append(imageBox);
@@ -317,10 +335,9 @@ export default class articleList extends React.Component {
                         //image ---> uploadBox
                         var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
                         $(imageBox).append(videoDiv);
-
                         $('#image_box').append(imageBox);
                         var videoList = that.state.videoList;
-                        videoList.push(url);
+                        videoList.push({url:url,coverPath:firstImage});
                         that.setState({
                             videoList: videoList
                         })
@@ -387,7 +404,7 @@ export default class articleList extends React.Component {
                         //返回在线图片地址
                         var type = res.substring(res.length - 3, res.length);
                         if (type == 'jpg' || type == 'png' || type == 'gif' || type == 'peg' || type == 'JPG' || type == 'PNG' || type == 'PEG' || type == 'GIF') {
-                            var imageDiv = $("<img class='upload_box_image' />").attr('src', res);
+                            var imageDiv = $("<img class='upload_box_image showImage' />").attr('src', res);
                             var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
                             $(imageBox).append(imageDiv);
                             $('#image_box').append(imageBox);
@@ -403,7 +420,7 @@ export default class articleList extends React.Component {
                             $(imageBox).append(videoDiv);
                             $('#image_box').append(imageBox);
                             var videoList = that.state.videoList;
-                            videoList.push(res);
+                            videoList.push({url:res,coverPath: "http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg"});
                             that.setState({
                                 videoList: videoList
                             })
@@ -447,9 +464,9 @@ export default class articleList extends React.Component {
         return (
             <div id="themeTask" style={{height: document.body.clientHeight}}>
                 <div className="themeTask-box">
-                    <div className="themeTitle line_public">
-                        <input type="text" className="input_title textarea_form_control" placeholder="主题标题"/>
-                    </div>
+                    {/*<div className="themeTitle line_public">*/}
+                        {/*<input type="text" className="input_title textarea_form_control" placeholder="主题标题"/>*/}
+                    {/*</div>*/}
                     <div className="themeTitle themeContent">
                         <textarea className="textarea_content textarea_form_controlH" name="" id="" cols="30" rows="10"
                                   placeholder="请输入主题任务内容"></textarea>
@@ -498,18 +515,15 @@ export default class articleList extends React.Component {
                 <div className='selectedPeople' style={
                     this.state.selectedFlag ? {left: '0%'} : {left: '100%'}
                 }>
-                    <div className="bottom_nav">
-                        <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>
-                    </div>
-
-                    <List className="selectedPeople_border">
-                        {data.map(i => (
-                            <RadioItem key={i.value} checked={radioValue === i.value}
-                                       onChange={() => this.onChangeRadio(i.value)}>
-                                {i.label}
-                            </RadioItem>
-                        ))}
-                    </List>
+                    <div className="selectedPeople-cont">
+                        <List className="selectedPeople_border">
+                            {data.map(i => (
+                                <RadioItem key={i.value} checked={radioValue === i.value}
+                                           onChange={() => this.onChangeRadio(i.value)}>
+                                    {i.label}
+                                </RadioItem>
+                            ))}
+                        </List>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -533,6 +547,10 @@ export default class articleList extends React.Component {
                             }
                         }
                     />
+                    </div>
+                    <div className="bottom_nav">
+                        <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>
+                    </div>
                 </div>
             </div>
         );

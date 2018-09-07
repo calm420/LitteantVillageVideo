@@ -273,7 +273,7 @@ export default class articleList extends React.Component {
                             {friendsAttachments.map((value, index) => {
                                 if (value.type == 0) {
                                     return <img style={
-                                        friendsAttachments.length == 1 ? { width: '100%', height: '100%' } : {
+                                        friendsAttachments.length == 1 ? { width: '200px', height: '113px' } : {
                                             display: 'inline-block'
                                         }
                                     } src={value.path} alt="" />

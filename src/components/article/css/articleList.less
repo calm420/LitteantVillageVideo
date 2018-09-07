@@ -516,6 +516,9 @@
     .list_image, .image_detail{
       margin-top: 10px;
       margin-right: -15px;
+      font-size: 0;
+      white-space: normal;
+      margin-bottom: -8px;
       span{
         font-size: 14px;
         color: #666;
@@ -529,6 +532,7 @@
         object-fit: cover;
         border-radius: 2px;
         margin-right: 8px;
+        margin-bottom: 8px;
       }
       .video_tag{
         position: relative;
@@ -538,6 +542,7 @@
         border-radius: 2px;
         margin-right: 8px;
         display: inline-block;
+        margin-bottom: 8px;
         video{
           width: 100%;
           height: 100%;
@@ -556,6 +561,50 @@
           background: url("../images/play-btn.png") no-repeat;
           background-size: 100% 100%;
 
+        }
+      }
+    }
+    @media (max-width: 360px) and (min-width: 340px){
+      .list_image, .image_detail{
+        img{
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 2px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+        }
+        .video_tag{
+          position: relative;
+          width: 100px;
+          height: 100px;
+          overflow: hidden;
+          border-radius: 2px;
+          margin-right: 8px;
+          display: inline-block;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    @media (max-width: 339px){
+      .list_image, .image_detail{
+        img{
+          width: 90px;
+          height: 90px;
+          object-fit: cover;
+          border-radius: 2px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+        }
+        .video_tag{
+          position: relative;
+          width: 90px;
+          height: 90px;
+          overflow: hidden;
+          border-radius: 2px;
+          margin-right: 8px;
+          display: inline-block;
+          margin-bottom: 8px;
         }
       }
     }

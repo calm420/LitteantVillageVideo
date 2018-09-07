@@ -32,6 +32,8 @@ export default class articleList extends React.Component {
             islike: false,
             inputValue: '',  //评论内容
             friendsAttachments: [],   //附件
+            topicAnswer:false,
+            topicFlag: false,
         }
     }
 
@@ -200,6 +202,10 @@ export default class articleList extends React.Component {
                         detail: result.response,
                         islike: result.response.currentUserIsLike
                     })
+                    var detailArray = result.response.friendsAttachments;
+                    for(var k in detailArray){
+                        // if(detailArray.)
+                    }
                     if (result.response.type == 0) {
                         document.title = '错题本';
                     } else {
@@ -522,7 +528,7 @@ export default class articleList extends React.Component {
         console.log(url);
         var data = {
             method: 'showPhoto',
-            photos: images,
+            photos: images.join(','),
             currentPhoto: url
         };
         window.parent.Bridge.callHandler(data, null, function (error) {
@@ -701,7 +707,7 @@ export default class articleList extends React.Component {
                                                 <span style={
                                                     this.state.detail.fTags ? {display: 'block'} : {display: 'none'}
                                                 }
-                                                      className="tag-course tag-course-blue">{this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
+                                                      className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
                                             </div>
                                             <div className="time"></div>
 
@@ -826,7 +832,9 @@ export default class articleList extends React.Component {
                     } onClick={this.closeCommitBox}></div>
                 </div>
 
-                <input id="upload" type="file"/>
+                <input style={
+                    {display:'none'}
+                } id="upload" type="file"/>
             </div>
         );
     }

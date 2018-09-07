@@ -503,7 +503,7 @@ export default class articleList extends React.Component {
                                             }
                                         </div>
                                     </div>
-                                    <div className="commit_title commit_title-comment">全部评论({this.state.commit_count})</div>
+                                    <div className="commit_title">全部评论({this.state.commit_count})</div>
                                 </div>
                             )}
                             renderFooter={this.state.isLoadingHidden ? '' : () => (

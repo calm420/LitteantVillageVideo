@@ -168,7 +168,7 @@
   background: url("../images/praise.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .list_item .list_bottom_item .i-praise-active {
+#myThemeTask .list_item .list_bottom_item .i-praise.i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
 }

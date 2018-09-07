@@ -283,7 +283,7 @@ export default class articleList extends React.Component {
                                             display: 'inline-block'
                                         }
                                     }>
-                                        <video onClick={this.playVideo.bind(this)} style={{ width: '100%', height: '100%' }}
+                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this)} style={{ width: '100%', height: '100%' }}
                                             src={value.path} alt="" />
                                         <div className="video_tag_play" onClick={this.playVideo.bind(this)}></div>
                                     </div>

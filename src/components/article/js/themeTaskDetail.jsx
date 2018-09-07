@@ -290,6 +290,12 @@ export default class articleList extends React.Component {
         console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
         if(new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
             Toast.info('截止時間已到，無法參與評論',1);
+            this.setState({
+                inputValue: '',
+                friendsAttachments: [],
+                domImage: []
+            })
+            this.closeCommitBox();
             return;
         }
         if (WebServiceUtil.isEmpty(this.state.inputValue)) {
@@ -645,7 +651,7 @@ export default class articleList extends React.Component {
                                                 className="i-share"></i></div>
                                             <div className="list_bottom_item"
                                                  onClick={this.likeClick.bind(this, this.state.detail.cfid)}><i
-                                                className="i-praise"></i><span>{this.state.detail.likeCount}</span>
+                                                className={this.state.islike?"i-praise":"i-praise-active"}></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>

@@ -90,6 +90,41 @@ export default class publishWrongQuestion extends React.Component {
         $('body').height(calm.state.clientHeight).scrollTop(160)
     }
 
+    //調用全屏視頻播放
+    playVideo(url,event) {
+        console.log(url);
+        event.stopPropagation();
+        var data = {
+            method: 'playChatVideo',
+            playUrl: url
+        };
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('開啓視頻失敗!');
+        });
+    }
+
+    //客户端打开预览图片
+    showImage(rowData,url,event){
+        event.stopPropagation();
+        var images = [];
+        for(var k in rowData){
+            if(rowData[k].type == 0){
+                images.push(rowData[k].path);
+            }
+        }
+        var data = {
+            method: 'showPhoto',
+            photos: images.join(","),
+            currentPhoto: url
+        };
+        console.log(data)
+
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('打开图片失败!',1);
+        });
+    }
     /**
      * 获取科目
      */
@@ -1025,7 +1060,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQuestionArr.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <img src={v.path} alt="" />
+                                                <img onClick={calm.showImage.bind(this,calm.state.theQuestionArr,v.path)} src={v.path} alt="" />
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestion.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1036,7 +1071,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQustionVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video onClick={calm.playVideo.bind(this,v.path)} poster={v.coverPath} src={v.path} alt="" controls />
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1051,7 +1086,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theAnswerArr.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <img src={v.path} alt="" />
+                                                <img onClick={calm.showImage.bind(this,calm.state.theAnswerArr,v.path)} src={v.path} alt="" />
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswer.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1062,7 +1097,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theAnswerVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video onClick={calm.playVideo.bind(this,v.path)} poster={v.coverPath} src={v.path} alt="" controls />
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
                                             </div>

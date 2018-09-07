@@ -568,6 +568,9 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             theQuestionArr: calm.state.theQuestionArr
         })
+        if (calm.state.theQuestionArr.length == 0 || calm.state.theQustionVideo == 0) {
+            $(".addButtonFirst").addClass("empty")
+        }
        
     }
 
@@ -579,6 +582,9 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             theAnswerArr: calm.state.theAnswerArr
         })
+         if (calm.state.theAnswerArr.length == 0 || calm.state.theAnswerVideo == 0) {
+            $(".addButtonSecond").addClass("empty")
+        }
     }
 
     /**
@@ -589,6 +595,9 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             theAnswerVideo: calm.state.theAnswerVideo
         })
+        if (calm.state.theAnswerArr.length == 0 || calm.state.theAnswerVideo == 0) {
+            $(".addButtonSecond").addClass("empty")
+        }
     }
 
     /**
@@ -599,6 +608,9 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             theQustionVideo: calm.state.theQustionVideo
         })
+        if (calm.state.theQuestionArr.length == 0 || calm.state.theQustionVideo == 0) {
+            $(".addButtonFirst").addClass("empty")
+        }
     }
 
     /**
@@ -1017,15 +1029,11 @@ export default class publishWrongQuestion extends React.Component {
         if (calm.state.theQuestionArr.length != 0 || calm.state.theQustionVideo != 0) {
             $(".addButtonFirst").removeClass("empty")
         }
-        if (calm.state.theQuestionArr.length == 0 || calm.state.theQustionVideo == 0) {
-            $(".addButtonFirst").addClass("empty")
-        }
+        
         if (calm.state.theAnswerArr.length != 0 || calm.state.theAnswerVideo != 0) {
             $(".addButtonSecond").removeClass("empty")
         }
-        if (calm.state.theQuestionArr.length == 0 || calm.state.theQustionVideo == 0) {
-            $(".addButtonSecond").addClass("empty")
-        }
+       
         const understandData = [
             {
                 value: "不懂",

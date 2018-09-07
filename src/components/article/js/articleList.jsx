@@ -627,11 +627,41 @@ export default class articleList extends React.Component {
     }
 
 
-    playVideo(event){
+    playVideo(url,event){
 
         event.stopPropagation();
+        console.log(url);
+        var data = {
+            method: 'playChatVideo',
+            playUrl: url
+        };
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('開啓視頻失敗!');
+        });
         // console.log(e,'eeeeeeeeeeee');
         // e.nativeEvent.stopImmediatePropagation();
+    }
+
+
+    //客户端打开预览图片
+    showImage(rowData,url,event){
+        event.stopPropagation();
+        var images = [];
+        for(var k in rowData){
+            if(rowData[k].type == 0){
+                images.push(rowData[k].path);
+            }
+        }
+        var data = {
+            method: 'showPhoto',
+            photos: images,
+            currentPhoto: url.path
+        };
+        window.parent.Bridge.callHandler(data, function () {
+        }, function (error) {
+            Toast.info('打开图片失败!',1);
+        });
     }
 
 
@@ -667,15 +697,15 @@ export default class articleList extends React.Component {
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
-                                } src={value.path} alt=""/>
+                                } src={value.path} alt="" onClick={this.showImage.bind(this,friendsAttachments,value)}/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
                                         display: 'inline-block'
                                     }
-                                }>
-                                    <video onClick={this.playVideo.bind(this)}  style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
-                                    <div className="video_tag_play" onClick={this.playVideo.bind(this)}></div>
+                                } >
+                                    <video onClick={this.playVideo.bind(this,value.path)} style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
+                                    <div onClick={this.playVideo.bind(this,value.path)} className="video_tag_play"></div>
                                 </div>
                             }
 

@@ -405,6 +405,18 @@ export default class articleList extends React.Component {
         this.setState({inputValue: e.target.value})
     }
 
+    toShare = () => {
+        var data = {
+            method: 'shareWechat',
+            shareUrl: window.location.href,
+            shareTitle: $('.content_detail').text(),
+            shareUserName: this.state.detail.userInfo.userName,
+        };
+        Bridge.callHandler(data, null, function (error) {
+            Toast.info('分享文章失败')
+        });
+    }
+
     render() {
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
@@ -481,7 +493,7 @@ export default class articleList extends React.Component {
                                         <div className="asOfDate">
                                             截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                         <div className="detail_bottom">
-                                            <div className="list_bottom_item"><i className="i-share"></i></div>
+                                            <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
                                             <div className="list_bottom_item"
                                                  onClick={this.likeClick.bind(this, this.state.detail.cfid)}><i
                                                 className="i-praise"></i><span>{this.state.detail.likeCount}</span>

@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-    Toast, DatePicker, PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
+    Toast, DatePicker, PullToRefresh, ListView, Modal, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/myThemeTask.less';
-
+const alert = Modal.alert;
+const prompt = Modal.prompt;
 var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
@@ -81,6 +82,8 @@ export default class articleList extends React.Component {
                             isLoading: false
                         })
                     }
+                    console.log(this.initDataSource,"ddd")
+
                 }
 
             },
@@ -192,9 +195,33 @@ export default class articleList extends React.Component {
         // e.nativeEvent.stopImmediatePropagation();
     }
 
-    deleteCircle(data, event) {
+    /**
+     * 重新审核弹出框
+     */
+    showAlert = (data, index, event) => {
+        event.stopPropagation()
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定删除吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteCircle(data, index, event) },
+
+        ], phone);
+    }
+    deleteCircle = (data, index, event) => {
         event.stopPropagation();
-        console.log(data,'要刪除的id');
+        console.log(data, '要刪除的id');
+        console.log(index, "indexindex")
+        this.initDataSource.splice(index, 1);
+        this.setState({
+            dataSource:dataSource.cloneWithRows(this.initDataSource)
+        })
         var param = {
             "method": 'deleteCircleFriendById',
             "friendId": data,
@@ -229,35 +256,35 @@ export default class articleList extends React.Component {
             dom =
                 <div className='my_flex'>
                     <div className="date" style={
-                        this.state.targetType == 1?{display:'none'}:{display:'block'}
+                        this.state.targetType == 1 ? { display: 'none' } : { display: 'block' }
                     }>
-                        <div className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10?'0'+WebServiceUtil.formatMD(rowData.createTime).split('-')[1]:WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
+                        <div className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
                     </div>
                     <div className="circleList" style={
-                            this.state.targetType == 1 ? {width:'100%'}:{}
-                        }
-                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
+                        this.state.targetType == 1 ? { width: '100%' } : {}
+                    }
+                        onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
 
-                        <div className="list_content">{rowData.type==0?rowData.mark:rowData.content}</div>
+                        <div className="list_content">{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         <div className="list_image" style={
-                            friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
+                            friendsAttachments.length == 0 ? { display: 'none' } : { display: 'block' }
                         }>
                             {friendsAttachments.map((value, index) => {
                                 if (value.type == 0) {
                                     return <img style={
-                                        friendsAttachments.length == 1 ? {width: '100%', height: '100%'} : {
+                                        friendsAttachments.length == 1 ? { width: '100%', height: '100%' } : {
                                             display: 'inline-block'
                                         }
-                                    } src={value.path} alt=""/>
+                                    } src={value.path} alt="" />
                                 } else {
                                     return <div className="video_tag" style={
-                                        friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                        friendsAttachments.length == 1 ? { maxWidth: '100%' } : {
                                             display: 'inline-block'
                                         }
                                     }>
-                                        <video onClick={this.playVideo.bind(this)} style={{width: '100%', height: '100%'}}
-                                               src={value.path} alt=""/>
+                                        <video onClick={this.playVideo.bind(this)} style={{ width: '100%', height: '100%' }}
+                                            src={value.path} alt="" />
                                         <div className="video_tag_play" onClick={this.playVideo.bind(this)}></div>
                                     </div>
                                 }
@@ -265,7 +292,7 @@ export default class articleList extends React.Component {
                             })}
                         </div>
                         <div className='time' style={
-                            rowData.type==0?{display:'none'}:{display:'block'}
+                            rowData.type == 0 ? { display: 'none' } : { display: 'block' }
                         }>
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
                             <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
@@ -274,7 +301,7 @@ export default class articleList extends React.Component {
                             <div className="list_bottom_item"><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                             <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
-                            <div className="list_bottom_item" onClick={this.deleteCircle.bind(this, rowData.cfid)}><i className="i-delete"></i></div>
+                            <div className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}><i className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>
@@ -289,13 +316,13 @@ export default class articleList extends React.Component {
             )
         };
         return (
-            <div id="myThemeTask" style={{height: document.body.clientHeight}}>
+            <div id="myThemeTask" style={{ height: document.body.clientHeight }}>
 
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable

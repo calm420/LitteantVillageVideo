@@ -412,7 +412,6 @@ export default class articleList extends React.Component {
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
-
                 dom = <div className="list_item" style={{marginTop:'0'}}>
                     <div className="circleList circleList-comment line_public">
                     <div className="list_head">
@@ -426,6 +425,19 @@ export default class articleList extends React.Component {
                         <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
                     </div>
                     <div className="list_content content_detail-comment">{rowData.discussContent}</div>
+                        <div>
+                            {rowData.friendsAttachments.map(function(value,index){
+                                if(value.type == 0){
+                                    return <img src={value.path} alt=""/>
+                                }else if(value.type == 1){
+                                    return <div className="video_tag">
+                                        <video src={value.path} />
+                                        {/*<img src="" alt=""/>*/}
+                                        <div className="video_tag_play"></div>
+                                    </div>
+                                }
+                            })}
+                        </div>
                 </div>
                 </div>
             }

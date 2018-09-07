@@ -85,7 +85,9 @@
             font-size: 13px;
             color:#AEAEAE!important;
             padding: 0 5px;
-            line-height: 21px;
+            line-height: 23px;
+            height: 23px;
+            box-sizing: border-box;
             max-width: 98px;
         }
         .am-radio-inner::after{
@@ -260,11 +262,12 @@
         }
         .am-list-item .am-input-control {
             background: #f4f4f4;
-            height: 37px;
-            line-height: 39px;
+            padding: 8px 0;
             margin: 0 15px;
             border-radius: 2px;
             input {
+                line-height: 21px;
+                height: 21px;
                 font-size: 15px;
                 color: #333;
                 background: url("../image/icon_search.png") no-repeat 8px center;
@@ -330,7 +333,6 @@
         box-sizing: border-box;
         position: relative;
         max-width: 110px;
-        display: inline-block;
         &.add{
             border: 1px #AEAEAE dashed;
         }

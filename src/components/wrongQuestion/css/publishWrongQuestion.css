@@ -85,7 +85,9 @@
   font-size: 13px;
   color: #AEAEAE !important;
   padding: 0 5px;
-  line-height: 21px;
+  line-height: 23px;
+  height: 23px;
+  box-sizing: border-box;
   max-width: 98px;
 }
 #publishWrongQuestion .rightTag .am-radio-inner::after {
@@ -117,8 +119,8 @@
   color: #4285F4 !important;
 }
 #publishWrongQuestion .rightTag input {
-  line-height: 23px;
-  height: 23px;
+  line-height: 27px;
+  height: 27px;
 }
 #publishWrongQuestion .rightTag .addTag {
   color: #AEAEAE;
@@ -256,12 +258,13 @@
 }
 #publishWrongQuestion .tagInput .am-list-item .am-input-control {
   background: #f4f4f4;
-  height: 32px;
-  line-height: 32px;
+  padding: 8px 0;
   margin: 0 15px;
   border-radius: 2px;
 }
 #publishWrongQuestion .tagInput .am-list-item .am-input-control input {
+  line-height: 21px;
+  height: 21px;
   font-size: 15px;
   color: #333;
   background: url("../image/icon_search.png") no-repeat 8px center;
@@ -320,11 +323,11 @@
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
+  display: inline-block;
   vertical-align: top;
   box-sizing: border-box;
   position: relative;
   max-width: 110px;
-  display: inline-block;
 }
 #publishWrongQuestion .spanTag.add {
   border: 1px #AEAEAE dashed;

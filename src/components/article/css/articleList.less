@@ -534,7 +534,6 @@
         overflow: hidden;
         border-radius: 2px;
         margin-right: 8px;
-        vertical-align: middle;
         display: inline-block;
         video{
           width: 100%;
@@ -651,6 +650,23 @@
   }
   .people_image_list{
     margin-top: 10px;
+    padding-bottom: 6px;
+    overflow-x: auto;
+    &::-webkit-scrollbar{
+      width: 12px;
+      height:4px;
+    } /* 这是针对缺省样式 (必须的) */
+
+
+    &::-webkit-scrollbar-thumb{
+      background-color: #ccc;
+      border-radius: 9px;
+      -webkit-border-radius: 9px;
+    } /* 滑块颜色 */
+
+    &::-webkit-scrollbar-button{
+      background-color: initial;
+    } /* 滑轨两头的监听按钮颜色 */
     img{
     width: 40px;
     height: 40px;

@@ -293,7 +293,7 @@ export default class publishWrongQuestion extends React.Component {
      */
     addTag() {
         if (calm.state.cid == undefined) {
-            Toast.info("请先选择科目")
+            Toast.info("请先选择科目",1,"",false)
             return
         }
         $(`.calmTagDiv`).slideDown();
@@ -1069,6 +1069,7 @@ export default class publishWrongQuestion extends React.Component {
                                     <TextareaItem
                                         rows={5}
                                         count={30}
+                                        placeholder={'添加备注内容'}
                                         onChange={v => calm.setState({
                                             addNoteValue: v
                                         })}

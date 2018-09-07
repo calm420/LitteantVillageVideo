@@ -432,7 +432,7 @@
 }
 #articleList .circleList .list_bottom,
 #articleList .circleList .detail_bottom {
-  padding: 10px 35px;
+  padding: 5px 15px;
   margin-top: 10px;
   position: relative;
   display: flex;
@@ -466,11 +466,14 @@
   transform: scaleY(0.5);
 }
 #articleList .circleList .detail_bottom {
-  padding: 10px 0;
-  height: 15px;
+  height: 25px;
 }
 #articleList .circleList .detail_bottom .list_bottom_item {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
   flex: 1;
+  height: 15px;
 }
 #articleList .list_item {
   margin-top: 0;
@@ -561,6 +564,8 @@
   text-align: center;
   font-size: 14px;
   color: #666;
+  padding: 5px 20px;
+  height: 25px;
 }
 #articleList .list_item .list_bottom_item i {
   width: 15px;
@@ -802,4 +807,7 @@
 #articleList #appendImage .image_item .delete_upload_image img {
   width: 20px;
   height: 20px;
+}
+#articleList .list-view-section-body .list_item:first-child .circleList-comment {
+  padding-top: 0;
 }

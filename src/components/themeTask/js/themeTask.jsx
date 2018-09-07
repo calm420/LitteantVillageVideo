@@ -524,10 +524,6 @@ export default class articleList extends React.Component {
                                 </RadioItem>
                             ))}
                         </List>
-                    </div>
-                    <div className="bottom_nav">
-                        <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>
-                    </div>
                     <ListView
                         ref={el => this.lv = el}
                         dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -551,6 +547,10 @@ export default class articleList extends React.Component {
                             }
                         }
                     />
+                    </div>
+                    <div className="bottom_nav">
+                        <Button onClick={this.selectedComplete} className="button_btn submit_button">完成</Button>
+                    </div>
                 </div>
             </div>
         );

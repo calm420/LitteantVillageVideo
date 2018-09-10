@@ -88,8 +88,8 @@ export default class articleList extends React.Component {
             <div id="topicWrongList" style={{height: document.body.clientHeight}}>
                 {this.state.listData.map(function(value,index){
                     return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value.cid)}>
-                                <div className="tag-pic"></div>
-                                <div>{value.name}/{value.count}</div>
+                                <div className="tag-pic Wrong-topic-biological"></div>
+                                <div className="tag-text">{value.name}/{value.count}</div>
                            </div>
                 })}
             </div>

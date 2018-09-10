@@ -1229,7 +1229,7 @@ export default class publishWrongQuestion extends React.Component {
                                         )
                                     })
                                 }
-                                <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
+                                <span className='spanTag add' onClick={calm.addProject}>添加科目</span>
                             </div>
                             <div className="allProject">
                                 <div className='title'>所有科目

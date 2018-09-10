@@ -1,43 +1,48 @@
-#myThemeTask{
-  .circleList{
+#myThemeTask {
+  /*解决listview高度无法撑开的关键*/
+  .am-pull-to-refresh-content-wrapper {
+    min-height: 100vh;
+  }
+
+  .circleList {
     position: relative;
     width: calc(~"100% - 40px");
     padding-left: 15px;
-    .tags{
+    .tags {
       display: inline-block;
       position: absolute;
       right: 14px;
       top: -6px;
     }
-    .tag-ThemeTask{
+    .tag-ThemeTask {
       background: url("../images/tag-ThemeTask.png") no-repeat;
       background-size: 100% 100%;
       width: 75px;
       height: 21px;
       display: inline-block;
     }
-    .tag-WrongTopic{
+    .tag-WrongTopic {
       width: 75px;
       height: 21px;
       display: inline-block;
     }
-    .tag-WrongTopic-red{
+    .tag-WrongTopic-red {
       background: url("../images/tag-WrongTopic-red.png") no-repeat;
       background-size: 100% 100%;
     }
-    .tag-WrongTopic-orange{
+    .tag-WrongTopic-orange {
       background: url("../images/tag-WrongTopic-orange.png") no-repeat;
       background-size: 100% 100%;
     }
-    .tag-WrongTopic-green{
+    .tag-WrongTopic-green {
       background: url("../images/tag-WrongTopic-green.png") no-repeat;
       background-size: 100% 100%;
     }
-    .tag-WrongTopic-yellow{
+    .tag-WrongTopic-yellow {
       background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
       background-size: 100% 100%;
     }
-    .list_bottom{
+    .list_bottom {
       padding: 10px 15px;
       margin-top: 10px;
       position: relative;
@@ -73,69 +78,69 @@
       }
     }
   }
-  .list_item{
+  .list_item {
     margin-top: 0;
     border-top: 10px solid #f4f4f4;
     padding: 15px 15px 0 0;
-    &:first-child{
+    &:first-child {
       border-top: 0;
     }
-    .list_head{
+    .list_head {
       height: 40px;
       margin-bottom: 13px;
-      .headPic{
+      .headPic {
         display: inline-block;
         width: 40px;
         height: 40px;
         float: left;
         margin-right: 10px;
-        img{
+        img {
           width: 40px;
           height: 40px;
           border-radius: 50%;
           object-fit: cover;
         }
       }
-      .userName{
+      .userName {
         display: inline-block;
         color: #333;
         font-size: 15px;
         line-height: 1.6;
       }
-      .createTime{
+      .createTime {
         display: inline-block;
         color: #999;
         font-size: 13px;
         line-height: 1.6;
       }
     }
-    .list_image{
+    .list_image {
       margin-top: 10px;
 
-      img{
+      img {
         width: 110px;
         height: 110px;
         object-fit: cover;
         border-radius: 2px;
         margin-right: 8px;
       }
-      .video_tag{
+      .video_tag {
         position: relative;
         width: 110px;
         height: 110px;
         overflow: hidden;
         border-radius: 2px;
         margin-right: 8px;
-        video{
+        video {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
-        .video_tag_play{
+        .video_tag_play {
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%,-50%);
+          transform: translate(-50%, -50%);
           width: 40px;
           height: 40px;
           -webkit-border-radius: 50%;
@@ -147,9 +152,9 @@
         }
       }
     }
-    @media (max-width: 360px) and (min-width: 340px){
-      .list_image, .image_detail{
-        img{
+    @media (max-width: 360px) and (min-width: 340px) {
+      .list_image, .image_detail {
+        img {
           width: 100px;
           height: 100px;
           object-fit: cover;
@@ -157,7 +162,7 @@
           margin-right: 8px;
           margin-bottom: 8px;
         }
-        .video_tag{
+        .video_tag {
           position: relative;
           width: 100px;
           height: 100px;
@@ -169,9 +174,9 @@
         }
       }
     }
-    @media (max-width: 339px){
-      .list_image, .image_detail{
-        img{
+    @media (max-width: 339px) {
+      .list_image, .image_detail {
+        img {
           width: 90px;
           height: 90px;
           object-fit: cover;
@@ -179,7 +184,7 @@
           margin-right: 8px;
           margin-bottom: 8px;
         }
-        .video_tag{
+        .video_tag {
           position: relative;
           width: 90px;
           height: 90px;
@@ -191,74 +196,74 @@
         }
       }
     }
-    .list_bottom_item{
+    .list_bottom_item {
       display: inline-block;
       text-align: center;
       font-size: 14px;
       color: #666;
-      i{
+      i {
         width: 15px;
         height: 15px;
         display: inline-block;
       }
-      .i-share{
-        background:url("../images/share.png") no-repeat;
+      .i-share {
+        background: url("../images/share.png") no-repeat;
         background-size: 100% 100%;
       }
-      .i-comments{
-        background:url("../images/comments.png") no-repeat;
+      .i-comments {
+        background: url("../images/comments.png") no-repeat;
         background-size: 100% 100%;
         width: 16px;
         height: 14px;
       }
-      .i-praise{
-        background:url("../images/praise.png") no-repeat;
+      .i-praise {
+        background: url("../images/praise.png") no-repeat;
         background-size: 100% 100%;
       }
-      .i-praise.i-praise-active{
-        background:url("../images/praiseActive.png") no-repeat;
+      .i-praise.i-praise-active {
+        background: url("../images/praiseActive.png") no-repeat;
         background-size: 100% 100%;
       }
-      .i-delete{
-        background:url("../images/icon_delete_power.png") no-repeat;
+      .i-delete {
+        background: url("../images/icon_delete_power.png") no-repeat;
         background-size: 100% 100%;
       }
 
-      span{
+      span {
         position: relative;
-        left:5px;
-        top:-2px;
+        left: 5px;
+        top: -2px;
       }
     }
-    &:first-child{
+    &:first-child {
       margin-top: 15px;
     }
-    &:last-child .circleList{
+    &:last-child .circleList {
       border-bottom: none;
     }
   }
-  .list_content{
+  .list_content {
     color: #333;
     font-size: 16px;
     line-height: 20px;
     word-wrap: break-word;
   }
-  .time{
+  .time {
     font-size: 13px;
     color: #666;
-    &>div{
+    & > div {
       padding-top: 8px;
     }
   }
-  .date{
+  .date {
     padding-left: 15px;
     width: 40px;
     box-sizing: border-box;
-    .day{
+    .day {
       color: #333;
       font-size: 20px;
     }
-    .mouth{
+    .mouth {
       font-size: 12px;
       color: #666;
     }
@@ -266,5 +271,11 @@
   .i-praise-active {
     background: url("../images/praiseActive.png") no-repeat;
     background-size: 100% 100%;
+  }
+  .filter-content{
+    position: absolute;
+    top: 0;
+    left: 0;
+
   }
 }

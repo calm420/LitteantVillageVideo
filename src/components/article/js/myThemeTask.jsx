@@ -3,6 +3,7 @@ import {
     Toast, DatePicker, PullToRefresh, ListView, Modal, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/myThemeTask.less';
+
 const alert = Modal.alert;
 const prompt = Modal.prompt;
 var dataSource = new ListView.DataSource({
@@ -33,12 +34,69 @@ export default class articleList extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         var targetType = searchArray[1].split('=')[1];
+        var cid = searchArray[2]?searchArray[2].split('=')[1]:0;
+        console.log(cid,'cid')
         this.setState({
             userId: userId,
-            targetType: targetType
+            targetType: targetType,
+            cid:cid
         }, () => {
-            this.getCircleOfFriendsByType();
+            if(cid == 0){
+                this.getCircleOfFriendsByType();
+            }else{
+                this.getCircleOfFriendsByUidAndCid();
+            }
         })
+    }
+
+
+    /**
+     * 錯題本獲取數據
+     * **/
+    getCircleOfFriendsByUidAndCid(clearFlag, reslove) {
+        var _this = this;
+        var param = {
+            "method": 'getCircleOfFriendsByUidAndCid',
+            "uid": this.state.userId,
+            "cid": this.state.cid,
+            "pageNo": this.state.defaultPageNo,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'getCircleOfFriendsByUidAndCid')
+                if (result.success) {
+                    this.state.rsCount = result.pager.rsCount;
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initDataSource.splice(0);
+                        dataSource = [];
+                        dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+                    this.initDataSource = this.initDataSource.concat(result.response);
+                    this.setState({
+                        dataSource: dataSource.cloneWithRows(this.initDataSource),
+                        isLoading: true,
+                        refreshing: false,
+                        initLoading: false
+                    }, () => {
+                        if (reslove) {
+                            reslove();
+                        }
+                    })
+                    if ((this.initDataSource.length >= result.pager.rsCount)) {
+                        this.setState({
+                            hasMore: false,
+                            isLoading: false
+                        })
+                    }
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
 
@@ -82,7 +140,7 @@ export default class articleList extends React.Component {
                             isLoading: false
                         })
                     }
-                    console.log(this.initDataSource,"ddd")
+                    console.log(this.initDataSource, "ddd")
 
                 }
 
@@ -115,15 +173,20 @@ export default class articleList extends React.Component {
     onRefresh = (str) => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
 
-        if (str == 'left') {
-            divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-            // divPull[0].style.height = document.body.clientHeight
-        }
+
+        divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+        // divPull[0].style.height = document.body.clientHeight
+        
         this.setState({
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            this.getCircleOfFriendsByType(true);
+            if(this.state.cid == 0){
+                this.getCircleOfFriendsByType(true);
+
+            }else{
+                this.getCircleOfFriendsByUidAndCid(true);
+            }
             // Toast.info('重新绑定事件'+this.state.index);
 
         });
@@ -176,8 +239,8 @@ export default class articleList extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid;
+    toThemeTaskDetail(cid,rowData) {
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid+'&type='+rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -209,8 +272,8 @@ export default class articleList extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定删除吗?', '', [
-            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.deleteCircle(data, index, event) },
+            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
+            {text: '确定', onPress: () => _this.deleteCircle(data, index, event)},
 
         ], phone);
     }
@@ -220,7 +283,7 @@ export default class articleList extends React.Component {
         console.log(index, "indexindex")
         this.initDataSource.splice(index, 1);
         this.setState({
-            dataSource:dataSource.cloneWithRows(this.initDataSource)
+            dataSource: dataSource.cloneWithRows(this.initDataSource)
         })
         var param = {
             "method": 'deleteCircleFriendById',
@@ -242,6 +305,11 @@ export default class articleList extends React.Component {
     }
 
 
+    setFilter = ()=>{
+        console.log('篩選');
+    }
+
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -256,35 +324,37 @@ export default class articleList extends React.Component {
             dom =
                 <div className='my_flex'>
                     <div className="date" style={
-                        this.state.targetType == 1 ? { display: 'none' } : { display: 'block' }
+                        this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
-                        <div className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
+                        <div
+                            className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
                     </div>
                     <div className="circleList" style={
-                        this.state.targetType == 1 ? { width: '100%' } : {}
+                        this.state.targetType == 1 ? {width: '100%'} : {}
                     }
-                        onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
+                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid,rowData)}>
 
                         <div className="list_content">{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         <div className="list_image" style={
-                            friendsAttachments.length == 0 ? { display: 'none' } : { display: 'block' }
+                            friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
                         }>
                             {friendsAttachments.map((value, index) => {
                                 if (value.type == 0) {
                                     return <img style={
-                                        friendsAttachments.length == 1 ? { width: '200px', height: '113px' } : {
+                                        friendsAttachments.length == 1 ? {width: '200px', height: '113px'} : {
                                             display: 'inline-block'
                                         }
-                                    } src={value.path} alt="" />
+                                    } src={value.path} alt=""/>
                                 } else {
                                     return <div className="video_tag" style={
-                                        friendsAttachments.length == 1 ? { width: '200px', height: '113px' } : {
+                                        friendsAttachments.length == 1 ? {width: '200px', height: '113px'} : {
                                             display: 'inline-block'
                                         }
                                     }>
-                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this)} style={{ width: '100%', height: '100%' }}
-                                            src={value.path} alt="" />
+                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this)}
+                                               style={{width: '100%', height: '100%'}}
+                                               src={value.path} alt=""/>
                                         <div className="video_tag_play" onClick={this.playVideo.bind(this)}></div>
                                     </div>
                                 }
@@ -292,21 +362,23 @@ export default class articleList extends React.Component {
                             })}
                         </div>
                         <div className='time' style={
-                            rowData.type == 0 ? { display: 'none' } : { display: 'block' }
+                            rowData.type == 0 ? {display: 'none'} : {display: 'block'}
                         }>
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
                             <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>
-                            <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                            <div className="list_bottom_item"><i className={rowData.currentUserIsLike?"i-praise-active":"i-praise"}></i><span>{rowData.likeCount}</span></div>
-                            <div className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}><i className="i-delete"></i></div>
+                            <div className="list_bottom_item"><i
+                                className="i-comments"></i><span>{rowData.disContent}</span></div>
+                            <div className="list_bottom_item"><i
+                                className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
+                            </div>
+                            <div className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>
+                                <i className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>
-
-
 
 
             return (
@@ -316,13 +388,18 @@ export default class articleList extends React.Component {
             )
         };
         return (
-            <div id="myThemeTask" style={{ height: document.body.clientHeight }}>
+            <div id="myThemeTask" style={{height: document.body.clientHeight}}>
 
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                    // renderSectionHeader={sectionData => (
+                    //     <div>
+                    //         {/*<button onClick={this.setFilter}>篩選</button>*/}
+                    //     </div>
+                    // )}
                     renderFooter={() => (
-                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -342,6 +419,12 @@ export default class articleList extends React.Component {
                         distanceToRefresh={80}
                     />}
                 />
+
+                <div className="filter-content" style={{
+                    height: this.state.clientHeight
+                }}>
+
+                </div>
 
             </div>
         );

@@ -219,7 +219,7 @@
   /*字体颜色影响插件*/
   color: #000000;
   text-align: left;
-  border: 1px solid #fff;
+  border: 1px solid #ffffff;
 }
 @media screen and (max-width: 320px) {
   #alreadyLookThrough .topMsg .time {

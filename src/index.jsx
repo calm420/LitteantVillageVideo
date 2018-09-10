@@ -238,6 +238,13 @@ const myThemeTask = (location, cb) => {
     }, 'myThemeTask')
 };
 
+// 個人中心錯題本科目列表
+const topicWrongList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/article/js/topicWrongList').default)
+    }, 'topicWrongList')
+};
+
 
 
 import './index.less';
@@ -260,7 +267,9 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>发布主题</Link></li>
                     <li><Link to="/myThemeTask?userId=17&targetId=1"
                               style={{fontSize: '24px'}}>我的主题列表</Link></li>
-                    <li><Link to="/myThemeTask?userId=17&targetId=0"
+                    {/*<li><Link to="/myThemeTask?userId=17&targetId=0"*/}
+                              {/*style={{fontSize: '24px'}}>我的错题本</Link></li>*/}
+                    <li><Link to="/topicWrongList?userId=17"
                               style={{fontSize: '24px'}}>我的错题本</Link></li>
                     {/*<li><Link to="/myArticleList?userId=3"*/}
                               {/*style={{fontSize: '24px'}}>我的文章列表</Link></li>*/}
@@ -392,6 +401,7 @@ ReactDOM.render(
             <Route path="themeTaskDetail" getComponent={themeTaskDetail}/>
             <Route path="selectedPeople" getComponent={selectedPeople}/>
             <Route path="myThemeTask" getComponent={myThemeTask}/>
+            <Route path="topicWrongList" getComponent={topicWrongList}/>
         </Route>
     </Router>
     ,

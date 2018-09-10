@@ -23,7 +23,7 @@ export default class myThemeTask extends React.Component {
             isLoading: true,
             hasMore: true,
             exportFlag: false,
-            exportIdArray:[],
+            exportIdArray: [],
 
         }
     }
@@ -36,16 +36,16 @@ export default class myThemeTask extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         var targetType = searchArray[1].split('=')[1];
-        var cid = searchArray[2]?searchArray[2].split('=')[1]:0;
-        console.log(cid,'cid')
+        var cid = searchArray[2] ? searchArray[2].split('=')[1] : 0;
+        console.log(cid, 'cid')
         this.setState({
             userId: userId,
             targetType: targetType,
-            cid:cid
+            cid: cid
         }, () => {
-            if(cid == 0){
+            if (cid == 0) {
                 this.getCircleOfFriendsByType();
-            }else{
+            } else {
                 this.getCircleOfFriendsByUidAndCid();
             }
         })
@@ -178,15 +178,15 @@ export default class myThemeTask extends React.Component {
 
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         // divPull[0].style.height = document.body.clientHeight
-        
+
         this.setState({
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            if(this.state.cid == 0){
+            if (this.state.cid == 0) {
                 this.getCircleOfFriendsByType(true);
 
-            }else{
+            } else {
                 this.getCircleOfFriendsByUidAndCid(true);
             }
             // Toast.info('重新绑定事件'+this.state.index);
@@ -241,8 +241,8 @@ export default class myThemeTask extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid,rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid+'&type='+rowData.type;
+    toThemeTaskDetail(cid, rowData) {
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + '&type=' + rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -307,27 +307,41 @@ export default class myThemeTask extends React.Component {
     }
 
 
-    setFilter = ()=>{
+    setFilter = () => {
         console.log('篩選');
     }
 
-    setExport = ()=>{
+    setExport = () => {
         console.log('觸發導出事件');
         this.setState({
             exportFlag: true,
         })
     }
 
-    exportTopic = ()=>{
+    exportTopic = () => {
         console.log('導出')
-        console.log('導出成功')
-        this.setState({
-            exportFlag: false,
-        })
+        if(this.state.exportIdArray.length > 0){
+            console.log(this.state.exportIdArray);
+            this.setState({
+                exportFlag: false,
+            })
+            console.log('導出成功')
+        }else{
+            Toast.info('沒有選中的錯題',1);
+        }
+
     }
 
-    checkBoxClick(obj){
-        console.log(obj,'checkBoxClick')
+    checkBoxClick(cfId, obj) {
+        var exportIdArray = this.state.exportIdArray;
+        if (obj.target.checked) {//選中
+            exportIdArray.push(cfId);
+        } else {//取消選中
+            exportIdArray.splice(exportIdArray.indexOf(cfId),1);
+        }
+        this.setState({
+            exportIdArray: exportIdArray
+        })
     }
 
 
@@ -344,7 +358,9 @@ export default class myThemeTask extends React.Component {
             }
             dom =
                 <div className='my_flex'>
-                    <input type="checkbox" onClick={this.checkBoxClick} />
+                    <input style={
+                        this.state.exportFlag?{display:'block'}:{display:'none'}
+                    } type="checkbox" onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
                         this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
@@ -355,7 +371,7 @@ export default class myThemeTask extends React.Component {
                     <div className="circleList" style={
                         this.state.targetType == 1 ? {width: '100%'} : {}
                     }
-                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid,rowData)}>
+                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
 
                         <div className="list_content">{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         <div className="list_image" style={
@@ -443,13 +459,14 @@ export default class myThemeTask extends React.Component {
                 />
 
                 {/*<div className="filter-content" style={{*/}
-                    {/*height: this.state.clientHeight*/}
+                {/*height: this.state.clientHeight*/}
                 {/*}}>*/}
 
                 {/*</div>*/}
                 <button style={
-                    this.state.cid?{display:'inline-block'}:{display:'none'}
-                } className='export-btn' onClick={this.state.exportFlag?this.exportTopic:this.setExport}>{this.state.exportFlag?'確定導出':'導出錯題本'}</button>
+                    this.state.cid ? {display: 'inline-block'} : {display: 'none'}
+                } className='export-btn'
+                        onClick={this.state.exportFlag ? this.exportTopic : this.setExport}>{this.state.exportFlag ? '確定導出' : '導出錯題本'}</button>
 
             </div>
         );

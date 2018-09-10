@@ -94,10 +94,8 @@
   font-size: 13px;
   color: #AEAEAE !important;
   padding: 0 5px;
-  line-height: 23px;
-  height: 23px;
+  line-height: 21px;
   box-sizing: border-box;
-  max-width: 98px;
 }
 #publishWrongQuestion .rightTag .am-radio-inner::after {
   display: none;
@@ -128,8 +126,8 @@
   color: #4285F4 !important;
 }
 #publishWrongQuestion .rightTag input {
-  line-height: 27px;
-  height: 27px;
+  line-height: 23px;
+  height: 23px;
 }
 #publishWrongQuestion .rightTag .addTag {
   color: #AEAEAE;
@@ -301,8 +299,7 @@
   margin-left: 15px;
   margin-bottom: 10px;
   border: 1px #fff solid;
-  height: 23px;
-  line-height: 23px;
+  line-height: 21px;
   cursor: pointer;
   padding: 0;
 }
@@ -319,7 +316,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   display: block;
-  max-width: 70px;
 }
 #publishWrongQuestion .classTags .am-tag-active {
   border: 1px #4285F4 solid;
@@ -332,8 +328,7 @@
   font-size: 13px;
   margin-right: 12px;
   margin-top: 12px;
-  height: 23px;
-  line-height: 23px;
+  line-height: 21px;
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
@@ -341,7 +336,6 @@
   vertical-align: top;
   box-sizing: border-box;
   position: relative;
-  max-width: 110px;
 }
 #publishWrongQuestion .spanTag.add {
   border: 1px #AEAEAE dashed;

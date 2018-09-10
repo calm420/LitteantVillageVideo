@@ -98,6 +98,8 @@
             padding: 0 5px;
             line-height: 21px;
             box-sizing: border-box;
+            word-break: break-word;
+            white-space: inherit;
             //max-width: 98px;
         }
         .am-radio-inner::after{
@@ -307,6 +309,7 @@
             margin-bottom: 10px;
             border: 1px #fff solid;
             line-height: 21px;
+            height: auto;
             cursor: pointer;
             padding: 0;
         }
@@ -318,11 +321,10 @@
         }
         .am-tag-text {
             font-size: 13px;
-            padding: 0 5px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            padding: 1px 5px;
+            word-break: break-word;
             display: block;
+            text-align: left;
             //max-width: 70px;
         }
         .am-tag-active {
@@ -345,6 +347,7 @@
         vertical-align: top;
         box-sizing: border-box;
         position: relative;
+        word-break: break-word;
         //max-width: 110px;
         &.add{
             border: 1px #AEAEAE dashed;

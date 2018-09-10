@@ -1163,7 +1163,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.tagText.map((v, i) => {
                                         return (
                                             <div className="spanTag">
-                                                <span className="textOver">{v.tagTitle}</span>
+                                                <span>{v.tagTitle}</span>
                                                 <span className="del_tag"
                                                     onClick={calm.deleteTag.bind(this, v)}>删除</span>
                                             </div>
@@ -1224,7 +1224,7 @@ export default class publishWrongQuestion extends React.Component {
                             {
                                 calm.state.alreadySelectData.map((v, i) => {
                                     return (
-                                        <span className={v.oldFlag ? "active spanTag text_hidden" : "spanTag text_hidden"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                                        <span className={v.oldFlag ? "active spanTag" : "spanTag"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
                                     )
                                 })
                             }
@@ -1239,7 +1239,7 @@ export default class publishWrongQuestion extends React.Component {
                                 calm.state.activeData.map((v, i) => {
                                     return (
                                         <span className="fatherSpan">
-                                            <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                                            <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag" : "spanTag"} >{v.content}</span>
                                             {v.uid == 0 ? " " : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleteactiveData.bind(this, v, i)}>删除</span>}
                                         </span>
                                     )
@@ -1250,7 +1250,7 @@ export default class publishWrongQuestion extends React.Component {
                                 calm.state.noActiveData.map((v, i) => {
                                     return (
                                         <span className="fatherSpan">
-                                            <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"} >{v.content}</span>
+                                            <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag" : "spanTag"} >{v.content}</span>
                                             {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.delenoActiveData.bind(this, v, i)}>删除</span>}
                                         </span>
                                     )
@@ -1261,7 +1261,7 @@ export default class publishWrongQuestion extends React.Component {
                                 calm.state.allProjectData.map((v, i) => {
                                     return (
                                         <span className="fatherSpan">
-                                            <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag text_hidden" : "spanTag text_hidden"}>{v.content}</span>
+                                            <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag" : "spanTag"}>{v.content}</span>
                                             {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
                                         </span>
                                     )

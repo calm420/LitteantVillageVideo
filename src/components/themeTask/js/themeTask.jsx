@@ -114,7 +114,6 @@ export default class articleList extends React.Component {
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true,
-                        refreshing: false,
                     })
                     if (this.initDataSource.length >= result.pager.rsCount) {
                         this.setState({
@@ -455,6 +454,7 @@ export default class articleList extends React.Component {
         ];
         const {radioValue} = this.state;
         const row = (rowData, sectionID, rowID) => {
+            console.log(rowData);
             return (
                 <CheckboxItem key={rowData.fansUser.uid} onChange={() => this.onChangeCheck(rowData.fansUser.uid)}>
                     {rowData.fansUser.userName}
@@ -491,7 +491,7 @@ export default class articleList extends React.Component {
                     </div>
                     <div className="line_public top-10">
                         <DatePicker
-                            mode="date"
+                            // mode="date"
                             title=""
                             extra="" //默认值
                             value={this.state.date}

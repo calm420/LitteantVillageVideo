@@ -42,14 +42,29 @@ export default class articleList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var userId = searchArray[0].split('=')[1];
-        var cid = searchArray[1] ? searchArray[1].split('=')[1] : '';
+        if (locationSearch.indexOf("?") == -1) {  //正常逻辑
+            var searchArray = locationSearch.split("&");
+            var userId = searchArray[0].split('=')[1];
+            var cid = searchArray[1].split('=')[1];
+            this.setState({
+                shareHidden: false,
+            })
+        } else {   //分享逻辑
+            locationSearch = locationSearch.split('?')[1];
+            var searchArray = locationSearch.split("&");
+            var userId = searchArray[0].split('=')[1];
+            var cid = searchArray[1].split('=')[1];
+            this.setState({
+                shareHidden: true,
+            })
+        }
         this.setState({
             userId: userId,
             cid: cid
         }, () => {
             this.gitCircleOfFriendsById();
             this.getDiscussInfoList();
+            this.getUserLikeLog();
             $(document).on('click', '.delete_upload_image', function (event) {
                 event.stopPropagation();
                 console.log(that.state.domImage);
@@ -79,6 +94,40 @@ export default class articleList extends React.Component {
             })
         })
     }
+
+
+    /**
+     * 判斷用戶是否點贊
+     * **/
+    getUserLikeLog() {
+        var _this = this;
+        var JsonParameter={
+            "userId": this.state.userId,
+            "targetId": this.state.cid,
+            "targetType": 2,
+        }
+        var param = {
+            "method": 'getUserLikeLog',
+            "JsonParameter":JSON.stringify(JsonParameter)
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result);
+                if (result.success) {
+                    var response = JSON.parse(result.response);
+                    this.setState({
+                        islike: response.currentUserIsLike
+                    })
+
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
 
     /**
      * 获取评论列表
@@ -200,11 +249,14 @@ export default class articleList extends React.Component {
                 if (result.success) {
                     this.setState({
                         detail: result.response,
-                        islike: result.response.currentUserIsLike
                     })
                     var detailArray = result.response.friendsAttachments;
                     for(var k in detailArray){
-                        // if(detailArray.)
+                        if(detailArray[k].faterType == 0){
+                            console.log('題幹已有');
+                        }else if(detailArray[k].faterType == 0){
+                            console.log('題幹已有');
+                        }
                     }
                     if (result.response.type == 0) {
                         document.title = '错题本';
@@ -281,6 +333,19 @@ export default class articleList extends React.Component {
 
     sendCommit = () => {
 
+
+        console.log(new Date().getTime());
+        console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
+        if(this.state.detail.type == 1 && new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
+            Toast.info('截止時間已到，無法參與評論',1);
+            this.setState({
+                inputValue: '',
+                friendsAttachments: [],
+                domImage: []
+            })
+            this.closeCommitBox();
+            return;
+        }
         if (WebServiceUtil.isEmpty(this.state.inputValue)) {
             Toast.info('评论内容不能为空!', 1)
             return;
@@ -629,12 +694,14 @@ export default class articleList extends React.Component {
                                         </div>
                                         <div className="asOfDate">
                                             截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
-                                        <div className="detail_bottom">
+                                        <div className="detail_bottom" style={
+                                            this.state.shareHidden?{display:'none'}:{display:'block'}
+                                        }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i
                                                 className="i-share"></i></div>
                                             <div className="list_bottom_item"
                                                  onClick={this.likeClick.bind(this, this.state.detail.cfid)}><i
-                                                className="i-praise"></i><span>{this.state.detail.likeCount}</span>
+                                                className={this.state.islike?"i-praise-active":"i-praise"}></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -766,10 +833,12 @@ export default class articleList extends React.Component {
                                         </div>
                                         {/*<div className="asOfDate">*/}
                                         {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
-                                        <div className="detail_bottom">
+                                        <div className="detail_bottom" style={
+                                            this.state.shareHidden?{display:'none'}:{display:'block'}
+                                        }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
                                             <div className="list_bottom_item"><i
-                                                className="i-praise" onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
+                                                className={this.state.islike?"i-praise-active":"i-praise"} onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -795,7 +864,9 @@ export default class articleList extends React.Component {
                             }}
                         />
                     </div>
-                    <div className="input_box">
+                    <div className="input_box" style={
+                        this.state.shareHidden?{display:'none'}:{display:'block'}
+                    }>
                         <div className="commit_line" onClick={this.setCommit}>
                             <span className="commit_line-left"></span>
                             <span className="commit_line-center"></span>

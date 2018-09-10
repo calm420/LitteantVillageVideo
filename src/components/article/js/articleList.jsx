@@ -406,7 +406,12 @@ export default class articleList extends React.Component {
             defaultPageNo: currentPageNo,
         }, () => {
             if (this.state.index == 2) {
-                this.getAllCircleOfFriendsByUid();
+                this.setState({
+                    defaultPageNoForCircle: this.state.defaultPageNoForCircle+1
+                },()=>{
+                    this.getAllCircleOfFriendsByUid();
+
+                })
             } else {
                 this.getArticleRecommenLittleVideoList();
             }
@@ -440,7 +445,7 @@ export default class articleList extends React.Component {
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            this.getArticleRecommenLittleVideoList(true);
+            this.getArticleRecommenLittleVideoList();
             // Toast.info('重新绑定事件'+this.state.index);
 
         });

@@ -54,6 +54,18 @@
         padding: 0 15px;
     }
     .projectDiv{
+        height: calc(~"100% - 65px");
+        padding: 12px 0;
+        box-sizing: border-box;
+        overflow-y: hidden;
+        .modalCont{
+            height: 100%;
+            overflow-y: auto;
+            padding: 0 15px;
+            &>div:first-child .title{
+                padding-top: 6px;
+            }
+        }
     }
     .leftWrongQuestion{
         height: 100%;
@@ -96,10 +108,11 @@
             font-size: 13px;
             color:#AEAEAE!important;
             padding: 0 5px;
-            line-height: 23px;
-            height: 23px;
+            line-height: 21px;
             box-sizing: border-box;
-            max-width: 98px;
+            word-break: break-word;
+            white-space: inherit;
+            //max-width: 98px;
         }
         .am-radio-inner::after{
             display: none;
@@ -130,8 +143,8 @@
             color:#4285F4!important;
         }
         input{
-            line-height: 27px;
-            height: 27px;
+            line-height: 23px;
+            height: 23px;
         }
 
         .addTag{
@@ -175,11 +188,14 @@
     .imgDiv{
         position: relative;
         margin-bottom: 1px;
+        height: 130px;
         img,video{
             width: 100%;
-            height: 130px;
+            height: 100%;
             border: 1px #bdbdbd solid;
             box-sizing: border-box;
+            object-fit: cover;
+            -o-object-fit: cover;
         }
         .delete{
             position: absolute;
@@ -304,8 +320,8 @@
             margin-left: 15px;
             margin-bottom: 10px;
             border: 1px #fff solid;
-            height:23px;
-            line-height: 23px;
+            line-height: 21px;
+            height: auto;
             cursor: pointer;
             padding: 0;
         }
@@ -317,12 +333,11 @@
         }
         .am-tag-text {
             font-size: 13px;
-            padding: 0 5px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            padding: 1px 5px;
+            word-break: break-word;
             display: block;
-            max-width: 70px;
+            text-align: left;
+            //max-width: 70px;
         }
         .am-tag-active {
             border: 1px #4285F4 solid;
@@ -336,8 +351,7 @@
         font-size: 13px;
         margin-right: 12px;
         margin-top: 12px;
-        height: 23px;
-        line-height:23px;
+        line-height:21px;
         -webkit-border-radius: 1px;
         -moz-border-radius: 1px;
         border-radius: 1px;
@@ -345,7 +359,8 @@
         vertical-align: top;
         box-sizing: border-box;
         position: relative;
-        max-width: 110px;
+        word-break: break-word;
+        //max-width: 110px;
         &.add{
             border: 1px #AEAEAE dashed;
         }

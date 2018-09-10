@@ -61,6 +61,9 @@
 #themeTask .selectedPeople .am-list-view-scrollview {
   height: calc(100% - 180px) !important;
 }
+#themeTask .selectedPeople-cont {
+  height: calc(100% - 65px);
+}
 #themeTask .toSetPeople {
   width: 100%;
   background: white;
@@ -169,7 +172,7 @@
 }
 #themeTask .am-list-item .am-list-line .am-list-content {
   font-size: 16px;
-  color: #666 !important;
+  color: #666666 !important;
 }
 #themeTask .am-list-item .am-list-line .am-list-extra {
   color: #333;

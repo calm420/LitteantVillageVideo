@@ -567,8 +567,8 @@
 @media (max-width: 360px) and (min-width: 340px) {
   #articleList .list_item .list_image img,
   #articleList .list_item .image_detail img {
-    width: 105px;
-    height: 105px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 2px;
     margin-right: 8px;
@@ -577,8 +577,8 @@
   #articleList .list_item .list_image .video_tag,
   #articleList .list_item .image_detail .video_tag {
     position: relative;
-    width: 105px;
-    height: 105px;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
     border-radius: 2px;
     margin-right: 8px;
@@ -633,6 +633,10 @@
 }
 #articleList .list_item .list_bottom_item .i-praise {
   background: url("../images/praise.png") no-repeat;
+  background-size: 100% 100%;
+}
+#articleList .list_item .list_bottom_item .i-praise-active {
+  background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
 }
 #articleList .list_item .list_bottom_item span {
@@ -835,9 +839,9 @@
 #articleList .commit_box > div .send .AddImage {
   width: 20px;
   height: 18px;
-  background: url("../images/AddImage.png") no-repeat;
   background-size: 100% 100%;
   margin-top: 6px;
+  display: inline-block;
 }
 #articleList #appendImage .image_item {
   width: 74px;

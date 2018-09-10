@@ -1219,54 +1219,56 @@ export default class publishWrongQuestion extends React.Component {
 
 
                 <div className="calmTagDivNew projectManage tagCont" style={{ display: 'none' }}>
-                    <div className="cont projectDiv">
-                        <div><div className='title'>已选科目</div>
-                            {
-                                calm.state.alreadySelectData.map((v, i) => {
-                                    return (
-                                        <span className={v.oldFlag ? "active spanTag" : "spanTag"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
-                                    )
-                                })
-                            }
-                            <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
-                        </div>
-                        <div className="allProject">
-                            <div className='title'>所有科目
-                            <span onClick={calm.manageProject}>管理</span>
+                    <div className="projectDiv">
+                        <div className="modalCont">
+                            <div><div className='title'>已选科目</div>
+                                {
+                                    calm.state.alreadySelectData.map((v, i) => {
+                                        return (
+                                            <span className={v.oldFlag ? "active spanTag" : "spanTag"} onClick={calm.clickAlreadyData.bind(this, v, i)}>{v.content}</span>
+                                        )
+                                    })
+                                }
+                                <span className='spanTag add' onClick={calm.addProject}>+添加科目</span>
                             </div>
-                            {/* 需要高亮的 */}
-                            {
-                                calm.state.activeData.map((v, i) => {
-                                    return (
-                                        <span className="fatherSpan">
+                            <div className="allProject">
+                                <div className='title'>所有科目
+                                    <span onClick={calm.manageProject}>管理</span>
+                                </div>
+                                {/* 需要高亮的 */}
+                                {
+                                    calm.state.activeData.map((v, i) => {
+                                        return (
+                                            <span className="fatherSpan">
                                             <span onClick={calm.clickAllProjectActive.bind(this, v, i)} className={v.flag ? "active spanTag" : "spanTag"} >{v.content}</span>
-                                            {v.uid == 0 ? " " : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleteactiveData.bind(this, v, i)}>删除</span>}
+                                                {v.uid == 0 ? " " : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleteactiveData.bind(this, v, i)}>删除</span>}
                                         </span>
-                                    )
-                                })
-                            }
-                            {/* 除了高亮之后剩下的全部 */}
-                            {
-                                calm.state.noActiveData.map((v, i) => {
-                                    return (
-                                        <span className="fatherSpan">
+                                        )
+                                    })
+                                }
+                                {/* 除了高亮之后剩下的全部 */}
+                                {
+                                    calm.state.noActiveData.map((v, i) => {
+                                        return (
+                                            <span className="fatherSpan">
                                             <span onClick={calm.clickNoActive.bind(this, v, i)} className={v.flag ? "active spanTag" : "spanTag"} >{v.content}</span>
-                                            {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.delenoActiveData.bind(this, v, i)}>删除</span>}
+                                                {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.delenoActiveData.bind(this, v, i)}>删除</span>}
                                         </span>
-                                    )
-                                })
-                            }
-                            {/* 新添加的 */}
-                            {
-                                calm.state.allProjectData.map((v, i) => {
-                                    return (
-                                        <span className="fatherSpan">
+                                        )
+                                    })
+                                }
+                                {/* 新添加的 */}
+                                {
+                                    calm.state.allProjectData.map((v, i) => {
+                                        return (
+                                            <span className="fatherSpan">
                                             <span onClick={calm.clickAllProject.bind(this, v, i)} className={v.flag ? "active spanTag" : "spanTag"}>{v.content}</span>
-                                            {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
+                                                {v.uid == 0 ? "" : <span className="delete del_tag" style={{ display: calm.state.showDelete == 0 ? "none" : "block" }} onClick={calm.deleAllProjectData.bind(this, v, i)}>删除</span>}
                                         </span>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="bottomBox" ><span className="close" onClick={calm.cancleProject}>取消</span><span className="bind" onClick={calm.saveProject}>确定</span></div>

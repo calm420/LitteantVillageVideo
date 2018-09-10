@@ -54,6 +54,18 @@
         padding: 0 15px;
     }
     .projectDiv{
+        height: calc(~"100% - 65px");
+        padding: 12px 0;
+        box-sizing: border-box;
+        overflow-y: hidden;
+        .modalCont{
+            height: 100%;
+            overflow-y: auto;
+            padding: 0 15px;
+            &>div:first-child .title{
+                padding-top: 6px;
+            }
+        }
     }
     .leftWrongQuestion{
         height: 100%;

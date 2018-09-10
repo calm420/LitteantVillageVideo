@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #publishWrongQuestion {
   width: 100%;
   height: 100% !important;
@@ -92,12 +93,12 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
   font-size: 13px;
-  color: #AEAEAE !important;
+  color: #AEAEAE!important;
   padding: 0 5px;
-  line-height: 23px;
-  height: 23px;
+  line-height: 21px;
   box-sizing: border-box;
-  max-width: 98px;
+  word-break: break-word;
+  white-space: inherit;
 }
 #publishWrongQuestion .rightTag .am-radio-inner::after {
   display: none;
@@ -125,11 +126,11 @@
 }
 #publishWrongQuestion .rightTag .am-radio-item.checked .am-list-line .am-list-content {
   border: 1px #4285F4 solid !important;
-  color: #4285F4 !important;
+  color: #4285F4!important;
 }
 #publishWrongQuestion .rightTag input {
-  line-height: 27px;
-  height: 27px;
+  line-height: 23px;
+  height: 23px;
 }
 #publishWrongQuestion .rightTag .addTag {
   color: #AEAEAE;
@@ -147,16 +148,16 @@
   color: #E60012 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(2).on .am-list-content {
-  border-color: #F39700 !important;
-  color: #F39700 !important;
+  border-color: #F39700!important;
+  color: #F39700!important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(3).on .am-list-content {
-  border-color: #EECF00 !important;
-  color: #EECF00 !important;
+  border-color: #EECF00!important;
+  color: #EECF00!important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(4).on .am-list-content {
-  border-color: #22AC38 !important;
-  color: #22AC38 !important;
+  border-color: #22AC38!important;
+  color: #22AC38!important;
 }
 #publishWrongQuestion .selectProject .am-list {
   display: inline-block;
@@ -167,13 +168,16 @@
 #publishWrongQuestion .imgDiv {
   position: relative;
   margin-bottom: 1px;
+  height: 130px;
 }
 #publishWrongQuestion .imgDiv img,
 #publishWrongQuestion .imgDiv video {
   width: 100%;
-  height: 130px;
+  height: 100%;
   border: 1px #bdbdbd solid;
   box-sizing: border-box;
+  object-fit: cover;
+  -o-object-fit: cover;
 }
 #publishWrongQuestion .imgDiv .delete {
   position: absolute;
@@ -298,8 +302,8 @@
   margin-left: 15px;
   margin-bottom: 10px;
   border: 1px #fff solid;
-  height: 23px;
-  line-height: 23px;
+  line-height: 21px;
+  height: auto;
   cursor: pointer;
   padding: 0;
 }
@@ -307,16 +311,14 @@
   border-radius: 1px;
   margin-left: 15px;
   border: 1px #AEAEAE solid;
-  color: #AEAEAE;
+  color: #AEAEAE  ;
 }
 #publishWrongQuestion .classTags .am-tag-text {
   font-size: 13px;
-  padding: 0 5px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  padding: 1px 5px;
+  word-break: break-word;
   display: block;
-  max-width: 70px;
+  text-align: left;
 }
 #publishWrongQuestion .classTags .am-tag-active {
   border: 1px #4285F4 solid;
@@ -329,8 +331,7 @@
   font-size: 13px;
   margin-right: 12px;
   margin-top: 12px;
-  height: 23px;
-  line-height: 23px;
+  line-height: 21px;
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
@@ -338,7 +339,7 @@
   vertical-align: top;
   box-sizing: border-box;
   position: relative;
-  max-width: 110px;
+  word-break: break-word;
 }
 #publishWrongQuestion .spanTag.add {
   border: 1px #AEAEAE dashed;

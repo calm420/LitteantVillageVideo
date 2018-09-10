@@ -1,3 +1,10 @@
+(node) util.print is deprecated. Use console.log instead.
+#myThemeTask {
+  /*解决listview高度无法撑开的关键*/
+}
+#myThemeTask .am-pull-to-refresh-content-wrapper {
+  min-height: 100vh;
+}
 #myThemeTask .circleList {
   position: relative;
   width: calc(100% - 40px);
@@ -144,6 +151,50 @@
   background: url("../images/play-btn.png") no-repeat;
   background-size: 100% 100%;
 }
+@media (max-width: 360px) and (min-width: 340px) {
+  #myThemeTask .list_item .list_image img,
+  #myThemeTask .list_item .image_detail img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  #myThemeTask .list_item .list_image .video_tag,
+  #myThemeTask .list_item .image_detail .video_tag {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 2px;
+    margin-right: 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+}
+@media (max-width: 339px) {
+  #myThemeTask .list_item .list_image img,
+  #myThemeTask .list_item .image_detail img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  #myThemeTask .list_item .list_image .video_tag,
+  #myThemeTask .list_item .image_detail .video_tag {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    border-radius: 2px;
+    margin-right: 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+}
 #myThemeTask .list_item .list_bottom_item {
   display: inline-block;
   text-align: center;
@@ -213,4 +264,8 @@
 #myThemeTask .date .mouth {
   font-size: 12px;
   color: #666;
+}
+#myThemeTask .i-praise-active {
+  background: url("../images/praiseActive.png") no-repeat;
+  background-size: 100% 100%;
 }

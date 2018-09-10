@@ -10,7 +10,7 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var that;
-export default class articleList extends React.Component {
+export default class myThemeTask extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,6 +22,8 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
+            exportFlag: false,
+            exportIdArray:[],
 
         }
     }
@@ -309,6 +311,25 @@ export default class articleList extends React.Component {
         console.log('篩選');
     }
 
+    setExport = ()=>{
+        console.log('觸發導出事件');
+        this.setState({
+            exportFlag: true,
+        })
+    }
+
+    exportTopic = ()=>{
+        console.log('導出')
+        console.log('導出成功')
+        this.setState({
+            exportFlag: false,
+        })
+    }
+
+    checkBoxClick(obj){
+        console.log(obj,'checkBoxClick')
+    }
+
 
     render() {
         var _this = this;
@@ -323,6 +344,7 @@ export default class articleList extends React.Component {
             }
             dom =
                 <div className='my_flex'>
+                    <input type="checkbox" onClick={this.checkBoxClick} />
                     <div className="date" style={
                         this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
@@ -420,11 +442,14 @@ export default class articleList extends React.Component {
                     />}
                 />
 
-                <div className="filter-content" style={{
-                    height: this.state.clientHeight
-                }}>
+                {/*<div className="filter-content" style={{*/}
+                    {/*height: this.state.clientHeight*/}
+                {/*}}>*/}
 
-                </div>
+                {/*</div>*/}
+                <button style={
+                    this.state.cid?{display:'inline-block'}:{display:'none'}
+                } className='export-btn' onClick={this.state.exportFlag?this.exportTopic:this.setExport}>{this.state.exportFlag?'確定導出':'導出錯題本'}</button>
 
             </div>
         );

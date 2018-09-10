@@ -60,22 +60,22 @@ export default class articleList extends React.Component {
                             case '生物':
                                 listData[k].css = 'Wrong-topic-biological';
                                     break;
-                            case '化學':
+                            case '化学':
                                 listData[k].css = 'Wrong-topic-chemical';
                                 break;
-                            case '語文':
+                            case '语文':
                                 listData[k].css = 'Wrong-topic-Chinese';
                                 break;
-                            case '英語':
+                            case '英语':
                                 listData[k].css = 'Wrong-topic-English';
                                 break;
                             case '地理':
                                 listData[k].css = 'Wrong-topic-geographic';
                                 break;
-                            case '歷史':
+                            case '历史':
                                 listData[k].css = 'Wrong-topic-history';
                                 break;
-                            case '數學':
+                            case '数学':
                                 listData[k].css = 'Wrong-topic-mathematics';
                                 break;
                             case '其他':

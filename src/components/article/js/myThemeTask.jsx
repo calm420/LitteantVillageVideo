@@ -45,6 +45,7 @@ export default class myThemeTask extends React.Component {
         }, () => {
             if (cid == 0) {
                 this.getCircleOfFriendsByType();
+                $('.am-list-header').css({display: 'none'})
             } else {
                 this.getCircleOfFriendsByUidAndCid();
             }
@@ -320,16 +321,22 @@ export default class myThemeTask extends React.Component {
 
     exportTopic = () => {
         console.log('導出')
-        if(this.state.exportIdArray.length > 0){
+        if (this.state.exportIdArray.length > 0) {
             console.log(this.state.exportIdArray);
             this.setState({
                 exportFlag: false,
             })
             console.log('導出成功')
-        }else{
-            Toast.info('沒有選中的錯題',1);
+        } else {
+            Toast.info('沒有選中的錯題', 1);
         }
 
+    }
+
+    closeExport = ()=>{
+        this.setState({
+            exportFlag: false,
+        })
     }
 
     checkBoxClick(cfId, obj) {
@@ -337,7 +344,7 @@ export default class myThemeTask extends React.Component {
         if (obj.target.checked) {//選中
             exportIdArray.push(cfId);
         } else {//取消選中
-            exportIdArray.splice(exportIdArray.indexOf(cfId),1);
+            exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
         }
         this.setState({
             exportIdArray: exportIdArray
@@ -359,7 +366,7 @@ export default class myThemeTask extends React.Component {
             dom =
                 <div className='my_flex'>
                     <input style={
-                        this.state.exportFlag?{display:'block'}:{display:'none'}
+                        this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                     } type="checkbox" onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
                         this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
@@ -431,11 +438,25 @@ export default class myThemeTask extends React.Component {
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    // renderSectionHeader={sectionData => (
-                    //     <div>
-                    //         {/*<button onClick={this.setFilter}>篩選</button>*/}
-                    //     </div>
-                    // )}
+                    renderHeader={sectionData => (
+                        <div>
+                            <div style={
+                                this.state.exportFlag ? {display: 'none'} : {display: 'block'}
+                            }>
+                                <button className="filter-btn" onClick={this.setFilter}>篩選</button>
+                                <button>數據統計</button>
+                                <button className='export-btn' onClick={this.setExport}>導出錯題本</button>
+                            </div>
+                            <div style={
+                                this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                            }>
+                                <div style={{display:'inline-block'}}><input type="checkbox"/><span>全選</span></div>
+                                <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
+                                <button onClick={this.closeExport}>取消</button>
+                            </div>
+                        </div>
+
+                    )}
                     renderFooter={() => (
                         <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
@@ -463,10 +484,7 @@ export default class myThemeTask extends React.Component {
                 {/*}}>*/}
 
                 {/*</div>*/}
-                <button style={
-                    this.state.cid ? {display: 'inline-block'} : {display: 'none'}
-                } className='export-btn'
-                        onClick={this.state.exportFlag ? this.exportTopic : this.setExport}>{this.state.exportFlag ? '確定導出' : '導出錯題本'}</button>
+
 
             </div>
         );

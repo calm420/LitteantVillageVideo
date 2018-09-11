@@ -452,7 +452,7 @@ export default class myThemeTask extends React.Component {
                             }>
                                 <div style={{display:'inline-block'}}><input type="checkbox"/><span>全選</span></div>
                                 <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
-                                <button onClick={this.closeExport}>取消</button>
+                                {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
                         </div>
 

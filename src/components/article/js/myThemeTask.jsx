@@ -495,9 +495,12 @@ export default class myThemeTask extends React.Component {
                     if (result.success) {
                         Toast.info('导出成功');
                         var url = result.response.fileWebPath;
+                        var arr = url.split("/");
+                        var newArr = (arr[arr.length-1]).split(".");
                         var data = {
                             method:"printDoc",
-                            url: url
+                            url: url,
+                            title:newArr[0]
                         }
                         Bridge.callHandler(data, null, function (error) {
                             // window.location.href = url;

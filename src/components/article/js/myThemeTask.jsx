@@ -763,7 +763,7 @@ export default class myThemeTask extends React.Component {
                 }
             }
             dom =
-                <div className='my_flex'>
+                <div className='my_flex month-select'>
                     <input style={
                         this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                     } className="checkbox" type="checkbox" name="checked"

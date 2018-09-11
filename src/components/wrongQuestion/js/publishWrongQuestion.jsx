@@ -306,10 +306,10 @@ export default class publishWrongQuestion extends React.Component {
      * 搜索关键字结果
      */
     getTagsByTagTitle() {
-        if (calm.state.searchValue == "") {
-            Toast.info("请输入搜索的关键词", 1, "", false)
-            return;
-        }
+        // if (calm.state.searchValue == "") {
+        //     Toast.info("请输入搜索的关键词", 1, "", false)
+        //     return;
+        // }
         calm.setState({ tagData: [] }, () => {
             var param = {
                 "method": 'getTagsByTagTitle',

@@ -10,7 +10,7 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var that;
-export default class articleList extends React.Component {
+export default class myThemeTask extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,6 +22,8 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
+            exportFlag: false,
+            exportIdArray: [],
 
         }
     }
@@ -34,12 +36,70 @@ export default class articleList extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         var targetType = searchArray[1].split('=')[1];
+        var cid = searchArray[2] ? searchArray[2].split('=')[1] : 0;
+        console.log(cid, 'cid')
         this.setState({
             userId: userId,
-            targetType: targetType
+            targetType: targetType,
+            cid: cid
         }, () => {
-            this.getCircleOfFriendsByType();
+            if (cid == 0) {
+                this.getCircleOfFriendsByType();
+                $('.am-list-header').css({display: 'none'})
+            } else {
+                this.getCircleOfFriendsByUidAndCid();
+            }
         })
+    }
+
+
+    /**
+     * 錯題本獲取數據
+     * **/
+    getCircleOfFriendsByUidAndCid(clearFlag, reslove) {
+        var _this = this;
+        var param = {
+            "method": 'getCircleOfFriendsByUidAndCid',
+            "uid": this.state.userId,
+            "cid": this.state.cid,
+            "pageNo": this.state.defaultPageNo,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'getCircleOfFriendsByUidAndCid')
+                if (result.success) {
+                    this.state.rsCount = result.pager.rsCount;
+                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
+                        _this.initDataSource.splice(0);
+                        dataSource = [];
+                        dataSource = new ListView.DataSource({
+                            rowHasChanged: (row1, row2) => row1 !== row2,
+                        });
+                    }
+                    this.initDataSource = this.initDataSource.concat(result.response);
+                    this.setState({
+                        dataSource: dataSource.cloneWithRows(this.initDataSource),
+                        isLoading: true,
+                        refreshing: false,
+                        initLoading: false
+                    }, () => {
+                        if (reslove) {
+                            reslove();
+                        }
+                    })
+                    if ((this.initDataSource.length >= result.pager.rsCount)) {
+                        this.setState({
+                            hasMore: false,
+                            isLoading: false
+                        })
+                    }
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
 
@@ -124,7 +184,12 @@ export default class articleList extends React.Component {
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            this.getCircleOfFriendsByType(true);
+            if (this.state.cid == 0) {
+                this.getCircleOfFriendsByType(true);
+
+            } else {
+                this.getCircleOfFriendsByUidAndCid(true);
+            }
             // Toast.info('重新绑定事件'+this.state.index);
 
         });
@@ -177,8 +242,8 @@ export default class articleList extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid;
+    toThemeTaskDetail(cid, rowData) {
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + '&type=' + rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -243,6 +308,50 @@ export default class articleList extends React.Component {
     }
 
 
+    setFilter = () => {
+        console.log('篩選');
+    }
+
+    setExport = () => {
+        console.log('觸發導出事件');
+        this.setState({
+            exportFlag: true,
+        })
+    }
+
+    exportTopic = () => {
+        console.log('導出')
+        if (this.state.exportIdArray.length > 0) {
+            console.log(this.state.exportIdArray);
+            this.setState({
+                exportFlag: false,
+            })
+            console.log('導出成功')
+        } else {
+            Toast.info('沒有選中的錯題', 1);
+        }
+
+    }
+
+    closeExport = ()=>{
+        this.setState({
+            exportFlag: false,
+        })
+    }
+
+    checkBoxClick(cfId, obj) {
+        var exportIdArray = this.state.exportIdArray;
+        if (obj.target.checked) {//選中
+            exportIdArray.push(cfId);
+        } else {//取消選中
+            exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
+        }
+        this.setState({
+            exportIdArray: exportIdArray
+        })
+    }
+
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
@@ -256,6 +365,9 @@ export default class articleList extends React.Component {
             }
             dom =
                 <div className='my_flex'>
+                    <input style={
+                        this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                    } type="checkbox" onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
                         this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
@@ -266,7 +378,7 @@ export default class articleList extends React.Component {
                     <div className="circleList" style={
                         this.state.targetType == 1 ? {width: '100%'} : {}
                     }
-                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid)}>
+                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
 
                         <div className="list_content">{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         <div className="list_image" style={
@@ -326,6 +438,25 @@ export default class articleList extends React.Component {
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                    renderHeader={sectionData => (
+                        <div>
+                            <div style={
+                                this.state.exportFlag ? {display: 'none'} : {display: 'block'}
+                            }>
+                                <button className="filter-btn" onClick={this.setFilter}>篩選</button>
+                                <button>數據統計</button>
+                                <button className='export-btn' onClick={this.setExport}>導出錯題本</button>
+                            </div>
+                            <div style={
+                                this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                            }>
+                                <div style={{display:'inline-block'}}><input type="checkbox"/><span>全選</span></div>
+                                <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
+                                {/*<button onClick={this.closeExport}>取消</button>*/}
+                            </div>
+                        </div>
+
+                    )}
                     renderFooter={() => (
                         <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
@@ -347,6 +478,13 @@ export default class articleList extends React.Component {
                         distanceToRefresh={80}
                     />}
                 />
+
+                {/*<div className="filter-content" style={{*/}
+                {/*height: this.state.clientHeight*/}
+                {/*}}>*/}
+
+                {/*</div>*/}
+
 
             </div>
         );

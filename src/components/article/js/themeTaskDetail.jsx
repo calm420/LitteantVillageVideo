@@ -3,6 +3,7 @@ import {
     Toast, DatePicker, PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/articleList.less';
+var likeFlag = true;   //點贊節流閥
 
 var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -38,7 +39,6 @@ export default class articleList extends React.Component {
     }
 
     componentDidMount() {
-        document.title = '';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -46,6 +46,7 @@ export default class articleList extends React.Component {
             var searchArray = locationSearch.split("&");
             var userId = searchArray[0].split('=')[1];
             var cid = searchArray[1].split('=')[1];
+            var type = searchArray[2].split('=')[1];
             this.setState({
                 shareHidden: false,
             })
@@ -54,10 +55,12 @@ export default class articleList extends React.Component {
             var searchArray = locationSearch.split("&");
             var userId = searchArray[0].split('=')[1];
             var cid = searchArray[1].split('=')[1];
+            var type = searchArray[2].split('=')[1];
             this.setState({
                 shareHidden: true,
             })
         }
+        document.title = type?'主體任務':'錯題本';
         this.setState({
             userId: userId,
             cid: cid
@@ -93,6 +96,13 @@ export default class articleList extends React.Component {
                 // }
             })
         })
+        // window.addEventListener('resize',function(){
+        //     Toast.info(document.body.clientHeight);
+        // })
+        // $('#commit').on('focus',function(){
+        //     console.log('獲取焦點')
+        //     Toast.info(document.body.clientHeight,1);
+        // })
     }
 
 
@@ -258,11 +268,11 @@ export default class articleList extends React.Component {
                             console.log('題幹已有');
                         }
                     }
-                    if (result.response.type == 0) {
-                        document.title = '错题本';
-                    } else {
-                        document.title = '主题任务';
-                    }
+                    // if (result.response.type == 0) {
+                    //     document.title = '错题本';
+                    // } else {
+                    //     document.title = '主题任务';
+                    // }
                 }
 
             },
@@ -273,7 +283,7 @@ export default class articleList extends React.Component {
     }
 
     /**
-     * 按id查询详情
+     * 點贊
      * **/
     changeFriendLikeCount() {
 
@@ -295,6 +305,8 @@ export default class articleList extends React.Component {
                         this.setState({
                             detail: detail,
                             islike: !this.state.islike
+                        },()=>{
+                            likeFlag = true;
                         })
                     } else {
                         console.log('點贊')
@@ -303,6 +315,8 @@ export default class articleList extends React.Component {
                         this.setState({
                             detail: detail,
                             islike: !this.state.islike
+                        },()=>{
+                            likeFlag = true;
                         })
                     }
 
@@ -320,20 +334,27 @@ export default class articleList extends React.Component {
     }
 
     setCommit = () => {
+        // document.getElementById('commit').focus();
+        // Toast.info('自動聚焦')
+
+
         this.setState({
-            commitFlag: true
+            commitFlag: true,
+        },()=>{
+            $('body').css({height: this.state.clientHeight});
+            document.getElementById('commit').focus();
         })
     }
 
     closeCommitBox = () => {
+        $('body').css({height: this.state.clientHeight})
+        // document.body.clientHeight = this.state.clientHeight;
         this.setState({
-            commitFlag: false
+            commitFlag: false,
         })
     }
 
     sendCommit = () => {
-
-
         console.log(new Date().getTime());
         console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
         if(this.state.detail.type == 1 && new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
@@ -478,8 +499,12 @@ export default class articleList extends React.Component {
 
 
     likeClick() {
-        this.changeFriendLikeCount();
-        console.log('點贊');
+        if(likeFlag){
+            likeFlag = false;
+            this.changeFriendLikeCount();
+        }else{
+            return;
+        }
 
     }
 
@@ -695,7 +720,7 @@ export default class articleList extends React.Component {
                                         <div className="asOfDate">
                                             截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                         <div className="detail_bottom" style={
-                                            this.state.shareHidden?{display:'none'}:{display:'block'}
+                                            this.state.shareHidden?{display:'none'}:{display:'flex'}
                                         }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i
                                                 className="i-share"></i></div>
@@ -834,7 +859,7 @@ export default class articleList extends React.Component {
                                         {/*<div className="asOfDate">*/}
                                         {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom" style={
-                                            this.state.shareHidden?{display:'none'}:{display:'block'}
+                                            this.state.shareHidden?{display:'none'}:{display:'flex'}
                                         }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
                                             <div className="list_bottom_item"><i

@@ -194,7 +194,7 @@ export default class wrongQuestionCount extends React.Component {
                 <div>
                     <span>{rowData.ftagObj.tagTitle}</span>
                     <span>{rowData.errorCount}</span>
-                    <span>{rowData.avgLog}</span>
+                    <span>{rowData.avgLog}%</span>
                     <span>{rowData.otherAvgLog ? rowData.otherAvgLog : "-"}</span>
                 </div>
             )

@@ -169,8 +169,8 @@ export default class wrongQuestionCount extends React.Component {
             <div id="wrongQuestionCount" style={{
                 height: document.body.clientHeight
             }}>
-                <div style={{
-                    height: document.documentElement.clientHeight - 46,
+                <div className='mainCont' style={{
+                    height: document.documentElement.clientHeight,
                 }}>
                     <div className="topDiv">
                         <span className='course'>{calm.state.finalProject}</span>
@@ -200,25 +200,25 @@ export default class wrongQuestionCount extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         onScroll={this.scroll}
                         style={{
-                            height: document.body.clientHeight - 46,
+                            height: document.body.clientHeight - 46 -36,
                         }}
                     />
                 </div>
                 <div className="modalBack" style={{ display: calm.state.showModal ? "block" : "none" }}></div>
                 <div className="modalDiv" style={{ display: calm.state.showModal ? "block" : "none" }}>
                     <p className="selectProject">选择科目</p>
-                    <div>
+                    <div className='tagCont'>
                         <List>
                             {data.map(i => (
-                                <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i)}>
+                                <RadioItem key={i.value} className={value === i.value ? 'checked' : ''} checked={value === i.value} onChange={() => this.onChange(i)}>
                                     {i.label}
                                 </RadioItem>
                             ))}
                         </List>
                     </div>
-                    <div className="bottomButton">
+                    <div className="bottomBox">
                         <span onClick={calm.calmcleModal}>取消</span>
-                        <span onClick={calm.submieProject}>确定</span>
+                        <span onClick={calm.submieProject}>立即添加</span>
                     </div>
                 </div>
             </div>

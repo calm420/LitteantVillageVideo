@@ -88,11 +88,11 @@ export default class myThemeTask extends React.Component {
     /**
      * 根據科目ｉｄ查詢標籤
      * **/
-    gitErrorTagsByCourseId(clearFlag, reslove) {
+    gitErrorTagsByCourseId(courseId) {
         var _this = this;
         var param = {
             "method": 'gitErrorTagsByCourseId',
-            "courseId": this.state.cid,
+            "courseId": courseId?courseId:this.state.cid,
             "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -402,6 +402,7 @@ export default class myThemeTask extends React.Component {
 
         ], phone);
     }
+
     deleteCircle = (data, index, event) => {
         event.stopPropagation();
         console.log(data, '要刪除的id');
@@ -478,7 +479,33 @@ export default class myThemeTask extends React.Component {
         console.log('导出')
         if (this.state.exportIdArray.length > 0) {
             console.log(this.state.exportIdArray);
+            var param = {
+                "method": 'exportPdfFlowHistoricProcessInstanceById',
+                "WrongTopicBookIds": this.state.exportIdArray.join(","),
+                "userId": this.state.userId,
+            };
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: result => {
+                    console.log(result, 'exportPdfFlowHistoricProcessInstanceById')
+                    if (result.success) {
+                        Toast.info('导出成功');
+                        var url = result.response.fileWebPath;
+                        var data = {
+                            method:"printDoc",
+                            url: url
+                        }
+                        Bridge.callHandler(data, null, function (error) {
+                            // window.location.href = url;
+                        });
 
+
+                    }
+    
+                },
+                onError: function (error) {
+                    Toast.fail(error, 1);
+                }
+            });
 
             
             this.setState({
@@ -552,6 +579,10 @@ export default class myThemeTask extends React.Component {
         }
         this.setState({
             courseIdArray:courseIdArray
+        },()=>{
+            if(courseIdArray.length > 0){
+                this.gitErrorTagsByCourseId(courseIdArray.join(','))
+            }
         })
     }
 

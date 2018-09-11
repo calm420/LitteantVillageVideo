@@ -20,11 +20,11 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                {
-                    type: 0, //图片
-                    fatherType: 0,
-                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                }
+                // {
+                //     type: 0, //图片
+                //     fatherType: 0,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
             ],
             theQustionVideo: [
                 // {
@@ -182,9 +182,13 @@ export default class publishWrongQuestion extends React.Component {
      * 提交
      */
     saveWrongTopicBook() {
-
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
+        calm.state.tagText.push({
+            cid:calm.state.cid,
+            uid:calm.state.userId,
+            tagTitle:calm.state.cheData.label
+        })
         var param = {
             "method": "saveWrongTopicBook",
             "circleOfFriendsJson": {
@@ -1086,7 +1090,7 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             challengeValue: value,
             chaChangeValue: "",
-            length:value.length
+            length: value.length
         }, () => {
             calm.getChasByContent()
         })
@@ -1302,7 +1306,7 @@ export default class publishWrongQuestion extends React.Component {
                                 <List>
                                     {calm.state.challengeData.map(i => (
                                         <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                            <span className='topTitle'>{i.label}</span><div className={i.tagId == 0 ? "text":'text none' }>{i.extra}</div>
+                                            <span className='topTitle'>{i.label}</span><div className={i.value == 0 ? "text none" : 'text'}>{i.extra}</div>
                                         </RadioItem>
                                     ))}
                                 </List>

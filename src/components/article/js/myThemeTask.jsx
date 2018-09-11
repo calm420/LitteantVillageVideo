@@ -27,16 +27,19 @@ export default class myThemeTask extends React.Component {
             initCheckIdLength:0,
             initCheckId:[],
             filterFlag:false,
-            masteryId:-1,
-            tagId: -1,
+            masteryId: "-1",
+            tagId: "-1",
             startTime: WebServiceUtil.formatYMD(new Date('2000-01-01').getTime()),
             endTime: WebServiceUtil.formatYMD(new Date().getTime()),
             courseIdArray:[],
-            masteryIdArray:[-1], //默認選擇全部
-            tagIdArray:[-1],　　　//默認選擇全部
+            masteryIdArray:["-1"], //默認選擇全部
+            tagIdArray:["-1"],　　　//默認選擇全部
             courseData:[],
             tagData:[],
             timeText:'全部',
+            startDateForCustom:new Date(),
+            endDateForCustom: new Date(),
+            customFlagFor:false,
         }
     }
 
@@ -446,10 +449,22 @@ export default class myThemeTask extends React.Component {
         }else{
             timeText = '一周內';
         }
+        if(this.state.customFlagFor){
+            timeText = '自定義';
+        }
         this.setState({
-            filterFlag: false,
-            courseIdArray:this.state.cid.split(','),
+            masteryId:String(this.state.masteryId),
+            tagId: String(this.state.tagId)
+        },()=>{
+            this.setState({
+                filterFlag: false,
+                courseIdArray:this.state.cid.split(','),
+                timeText:timeText,
+                masteryIdArray: this.state.masteryId.split(','),
+                tagIdArray: this.state.tagId.split(',')
+            })
         })
+
     }
 
     setExport = () => {
@@ -544,6 +559,16 @@ export default class myThemeTask extends React.Component {
     //時間點擊事件
     timeClick(timeText){
         console.log(timeText);
+        if(timeText == '自定義'){
+            this.setState({
+                customFlag: true,
+                customFlagFor:true,
+            })
+        }else{
+            this.setState({
+                customFlagFor:false,
+            })
+        }
         this.setState({
             timeText: timeText
         })
@@ -552,14 +577,15 @@ export default class myThemeTask extends React.Component {
 
     //掌握程度點擊事件
     masteryClick(masteryId){
-        if(masteryId == -1){
-            masteryIdArray = [-1];
+        masteryId = String(masteryId);
+        if(masteryId == "-1"){
+            masteryIdArray = ["-1"];
         }else{
             var masteryIdArray = this.state.masteryIdArray;
             if(masteryIdArray.indexOf(masteryId) == -1){
                 masteryIdArray.push(masteryId);
-                if(masteryIdArray.indexOf(-1) != -1 && masteryIdArray.length > 1){
-                    masteryIdArray.splice(masteryIdArray.indexOf(-1),1);
+                if(masteryIdArray.indexOf("-1") != -1 && masteryIdArray.length > 1){
+                    masteryIdArray.splice(masteryIdArray.indexOf("-1"),1);
                 }
             }else{
                 masteryIdArray.splice(masteryIdArray.indexOf(masteryId),1);
@@ -574,14 +600,15 @@ export default class myThemeTask extends React.Component {
 
     //標籤點擊事件
     tagClick(tagId){
-        if(tagId == -1){
-            tagIdArray = [-1];
+        tagId = String(tagId);
+        if(tagId == "-1"){
+            tagIdArray = ["-1"];
         }else{
             var tagIdArray = this.state.tagIdArray;
             if(tagIdArray.indexOf(tagId) == -1){
                 tagIdArray.push(tagId);
-                if(tagIdArray.indexOf(-1) != -1 && tagIdArray.length > 1){
-                    tagIdArray.splice(tagIdArray.indexOf(-1),1);
+                if(tagIdArray.indexOf("-1") != -1 && tagIdArray.length > 1){
+                    tagIdArray.splice(tagIdArray.indexOf("-1"),1);
                 }
             }else{
                 tagIdArray.splice(tagIdArray.indexOf(tagId),1);
@@ -626,8 +653,13 @@ export default class myThemeTask extends React.Component {
                 startTime: WebServiceUtil.formatYMD(new Date().getTime() - (86400000 * 7)),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime())
             })
-        }else{
-            console.log('自定義')
+        }else if(this.state.timeText == '自定義'){
+            // console.log(WebServiceUtil.formatYMD(new Date(this.state.startDateForCustom).getTime()));
+            // console.log(WebServiceUtil.formatYMD(new Date(this.state.endDateForCustom).getTime()));
+            this.setState({
+                startTime: WebServiceUtil.formatYMD(new Date(this.state.startDateForCustom).getTime()),
+                endTime: WebServiceUtil.formatYMD(new Date(this.state.endDateForCustom).getTime())
+            })
         }
         this.initDataSource = [];
         this.setState({
@@ -648,6 +680,13 @@ export default class myThemeTask extends React.Component {
 
 
 
+    }
+
+
+    customSubmit = () =>{
+        this.setState({
+            customFlag: false,
+        })
     }
 
 
@@ -746,13 +785,13 @@ export default class myThemeTask extends React.Component {
                                 <button className='export-btn' onClick={this.setExport}><i className="icon-print"></i><span>打印</span></button>
                                 <button><i className="icon-statistical"></i><span>统计</span></button>
                             </div>
-                            <div style={
+                            <div className="export-header" style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                             }>
                                 <div style={{display: 'inline-block'}}><input className="checkboxAll"
                                                                               onClick={this.checkBoxAllClick.bind(this)}
                                                                               type="checkbox"/><span>全选</span></div>
-                                <button className='export-btn' onClick={this.exportTopic}>确定导出</button>
+                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>确定导出</button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
                         </div>
@@ -802,41 +841,42 @@ export default class myThemeTask extends React.Component {
                             <span className={this.state.timeText == '一月內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一月內')}>一月內</span>
                             <span className={this.state.timeText == '自定義'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'自定義')}>自定義</span>
                             <div className="custom" style={
-                                this.state.timeText == '自定義'?{display:'block'}:{display:'none'}
+                                this.state.timeText == '自定義' && this.state.customFlag?{display:'block'}:{display:'none'}
                             }>
                                 <div className="startTime">
                                     <DatePicker
                                         mode="date"
-                                        title="Select Date"
-                                        extra="Optional"
-                                        value={this.state.date}
-                                        onChange={date => this.setState({ date })}
+                                        title=""
+                                        extra="開始時間"
+                                        value={this.state.startDateForCustom}
+                                        onChange={startDateForCustom => this.setState({ startDateForCustom })}
                                     >
-                                        <List.Item arrow="horizontal">Date</List.Item>
+                                        <List.Item arrow="horizontal"></List.Item>
                                     </DatePicker>
                                 </div>
                                 <div className="endTime">
                                     <DatePicker
                                         mode="date"
-                                        title="Select Date"
-                                        extra="Optional"
-                                        value={this.state.date}
-                                        onChange={date => this.setState({ date })}
+                                        title=""
+                                        extra="結束時間"
+                                        value={this.state.endDateForCustom}
+                                        onChange={endDateForCustom => this.setState({ endDateForCustom })}
                                     >
-                                        <List.Item arrow="horizontal">Date</List.Item>
+                                        <List.Item arrow="horizontal"></List.Item>
                                     </DatePicker>
                                 </div>
+                                <button onClick={this.customSubmit}>確定</button>
                             </div>
                         </div>
                     </div>
                     <div>
                         <div className="filter-header">掌握程度</div>
                         <div style={{display:'flex'}}>
-                            <span className={this.state.masteryIdArray.indexOf(-1) == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,-1)}>全部</span>
-                            <span className={this.state.masteryIdArray.indexOf(0) == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,0)}>不懂</span>
-                            <span className={this.state.masteryIdArray.indexOf(1) == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,1)}>略懂</span>
-                            <span className={this.state.masteryIdArray.indexOf(2) == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,2)}>基本懂</span>
-                            <span className={this.state.masteryIdArray.indexOf(3) == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,3)}>完全懂</span>
+                            <span className={this.state.masteryIdArray.indexOf("-1") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,-1)}>全部</span>
+                            <span className={this.state.masteryIdArray.indexOf("0") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,0)}>不懂</span>
+                            <span className={this.state.masteryIdArray.indexOf("1") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,1)}>略懂</span>
+                            <span className={this.state.masteryIdArray.indexOf("2") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,2)}>基本懂</span>
+                            <span className={this.state.masteryIdArray.indexOf("3") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,3)}>完全懂</span>
                         </div>
                     </div>
                     <div>
@@ -844,7 +884,7 @@ export default class myThemeTask extends React.Component {
                         <div style={{display:'flex'}}>
                             {
                                 this.state.tagData.map(function(value,index){
-                                    return <span className={that.state.tagIdArray.indexOf(value.tagId) == -1?'tag-init':'tag-active'} onClick={that.tagClick.bind(that,value.tagId)}>{value.tagTitle}</span>
+                                    return <span className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1?'tag-init':'tag-active'} onClick={that.tagClick.bind(that,value.tagId)}>{value.tagTitle}</span>
                                 })
                             }
                         </div>

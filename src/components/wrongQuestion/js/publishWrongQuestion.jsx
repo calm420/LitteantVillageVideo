@@ -267,7 +267,7 @@ export default class publishWrongQuestion extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    Toast.info("提交成功");
+                    Toast.info("提交成功",1);
                     //关闭当前窗口，不刷新上一个页面
                     var data = {
                         method: 'finishForRefresh',
@@ -1208,7 +1208,6 @@ export default class publishWrongQuestion extends React.Component {
                                     placeholder="请输入标签"
                                     onChange={calm.searchInputChange}
                                     value={calm.state.searchValue}
-
                                 >
                                 </InputItem>
 

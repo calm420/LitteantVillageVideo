@@ -291,7 +291,7 @@ export default class myThemeTask extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            if (this.state.cid == 0) {
+            if (this.state.targetType == 1) {
                 this.getCircleOfFriendsByType();
             } else {
                 this.getCircleOfFriendsByUidAndCid();
@@ -310,7 +310,7 @@ export default class myThemeTask extends React.Component {
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            if (this.state.cid == 0) {
+            if (this.state.targetType == 1) {
                 this.getCircleOfFriendsByType(true);
 
             } else {
@@ -444,35 +444,47 @@ export default class myThemeTask extends React.Component {
 
     closeFilter = ()=>{
         var timeText = '';
-        var nTime = new Date(this.state.endTime).getTime() - new Date(this.state.startTime).getTime();
-        var day =Math.floor(nTime/86400000);
-        console.log(day);
-        if(day > 5000){
-            timeText = '全部';
-        }else if(day > 7){
-            timeText = '一月內';
-        }else{
-            timeText = '一周內';
-        }
-        if(this.state.customFlagFor){
-            timeText = '自定义';
-        }
+        var endTime = this.state.endTime;
+        var startTime = this.state.startTime;
+        endTime = endTime.split('-').join('/');
+        startTime = startTime.split('-').join('/');
         this.setState({
-            masteryId:String(this.state.masteryId),
-            tagId: String(this.state.tagId)
+            startTime:startTime,
+            endTime:endTime
         },()=>{
-            this.setState({
-                currentProject:this.state.currentProject,
-                filterFlag: false,
-                courseIdArray:this.state.cid,
-                timeText:timeText,
-                masteryIdArray: this.state.masteryId.split(','),
-                tagIdArray: this.state.tagId.split(',')
-            },()=>{
-                console.log(this.state.cid,'closeFilter');
+            console.log(this.state.endTime,'this.state.endTime');
 
-            });
+            var nTime = new Date(this.state.endTime).getTime() - new Date(this.state.startTime).getTime();
+            var day =Math.floor(nTime/86400000);
+            console.log(day);
+            if(day > 5000){
+                timeText = '全部';
+            }else if(day > 7){
+                timeText = '一月內';
+            }else{
+                timeText = '一周內';
+            }
+            if(this.state.customFlagFor){
+                timeText = '自定义';
+            }
+            this.setState({
+                masteryId:String(this.state.masteryId),
+                tagId: String(this.state.tagId)
+            },()=>{
+                this.setState({
+                    currentProject:this.state.currentProject,
+                    filterFlag: false,
+                    courseIdArray:this.state.cid,
+                    timeText:timeText,
+                    masteryIdArray: this.state.masteryId.split(','),
+                    tagIdArray: this.state.tagId.split(',')
+                },()=>{
+                    console.log(this.state.cid,'closeFilter');
+
+                });
+            })
         })
+
 
     }
 

@@ -60,7 +60,7 @@ export default class myThemeTask extends React.Component {
             userId: userId,
             targetType: targetType,
             cid: cid,
-            courseIdArray: (cid),
+            courseIdArray: cid,
         }, () => {
             if (targetType == 1) {
                 this.getCircleOfFriendsByType();
@@ -291,7 +291,7 @@ export default class myThemeTask extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            if (cid == 0) {
+            if (this.state.cid == 0) {
                 this.getCircleOfFriendsByType();
             } else {
                 this.getCircleOfFriendsByUidAndCid();
@@ -464,11 +464,14 @@ export default class myThemeTask extends React.Component {
             this.setState({
                 currentProject:this.state.currentProject,
                 filterFlag: false,
-                courseIdArray:this.state.cid.split(','),
+                courseIdArray:this.state.cid,
                 timeText:timeText,
                 masteryIdArray: this.state.masteryId.split(','),
                 tagIdArray: this.state.tagId.split(',')
-            })
+            },()=>{
+                console.log(this.state.cid,'closeFilter');
+
+            });
         })
 
     }
@@ -580,6 +583,7 @@ export default class myThemeTask extends React.Component {
     //科目點擊事件
     courseClick(cid,cName){
         var courseIdArray = this.state.courseIdArray;
+        console.log(cid,'cidcid')
         this.setState({
             courseIdArray:cid,
             project:cName
@@ -667,7 +671,6 @@ export default class myThemeTask extends React.Component {
     }
 
     determine = ()=>{
-
 
         var warn = '';
         if(this.state.courseIdArray.length <= 0){
@@ -946,7 +949,7 @@ export default class myThemeTask extends React.Component {
                         <div style={{display:'flex'}} className="filterCont">
                             {
                                 this.state.tagData.map(function(value,index){
-                                    return <span className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1?'tag-init':'tag-active'} onClick={that.tagClick.bind(that,value.tagId)}>{value.tagTitle}</span>
+                                    return <span className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1?'tag-init':'tag-active'} onClick={that.tagClick.bind(that,String(value.tagId))}>{value.tagTitle}</span>
                                 })
                             }
                         </div>

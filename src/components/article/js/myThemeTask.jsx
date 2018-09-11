@@ -804,8 +804,28 @@ export default class myThemeTask extends React.Component {
                             <div className="custom" style={
                                 this.state.timeText == '自定義'?{display:'block'}:{display:'none'}
                             }>
-                                <div className="startTime">开始时间</div>
-                                <div className="endTime">结束时间</div>
+                                <div className="startTime">
+                                    <DatePicker
+                                        mode="date"
+                                        title="Select Date"
+                                        extra="Optional"
+                                        value={this.state.date}
+                                        onChange={date => this.setState({ date })}
+                                    >
+                                        <List.Item arrow="horizontal">Date</List.Item>
+                                    </DatePicker>
+                                </div>
+                                <div className="endTime">
+                                    <DatePicker
+                                        mode="date"
+                                        title="Select Date"
+                                        extra="Optional"
+                                        value={this.state.date}
+                                        onChange={date => this.setState({ date })}
+                                    >
+                                        <List.Item arrow="horizontal">Date</List.Item>
+                                    </DatePicker>
+                                </div>
                             </div>
                         </div>
                     </div>

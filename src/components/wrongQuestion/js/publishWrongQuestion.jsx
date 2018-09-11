@@ -1085,7 +1085,8 @@ export default class publishWrongQuestion extends React.Component {
     chaInputChange = (value) => {
         calm.setState({
             challengeValue: value,
-            chaChangeValue: ""
+            chaChangeValue: "",
+            length:value.length
         }, () => {
             calm.getChasByContent()
         })
@@ -1288,19 +1289,20 @@ export default class publishWrongQuestion extends React.Component {
                             }}
                         >
                             <div className="tagInput">
-                                <InputItem
+                                <TextareaItem
                                     placeholder="请输入标签"
                                     onChange={calm.chaInputChange}
                                     value={calm.state.challengeValue}
+                                    count={6}
                                 >
-                                </InputItem>
+                                </TextareaItem>
                             </div>
                             <div className='challenge'>
                                 <div className='title_text'>搜索结果</div>
                                 <List>
                                     {calm.state.challengeData.map(i => (
                                         <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                            <span className='topTitle'>{i.label}</span><div className='text none'>{i.extra}</div>
+                                            <span className='topTitle'>{i.label}</span><div className={i.tagId == 0 ? "text":'text none' }>{i.extra}</div>
                                         </RadioItem>
                                     ))}
                                 </List>

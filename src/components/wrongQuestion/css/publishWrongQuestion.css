@@ -224,7 +224,7 @@
   border: 1px #4285F4 solid !important;
   color: #4285F4 !important;
 }
-#publishWrongQuestion .rightTag input {
+#publishWrongQuestion .rightTag textarea {
   line-height: 23px;
   height: 23px;
 }
@@ -361,19 +361,21 @@
 }
 #publishWrongQuestion .tagInput {
   position: relative;
+  padding-top: 10px;
+  padding-bottom: 4px;
 }
 #publishWrongQuestion .tagInput .am-list-item {
   background-color: #fff;
   margin-right: 0 !important ;
   margin-top: 0  !important ;
 }
-#publishWrongQuestion .tagInput .am-list-item .am-input-control {
+#publishWrongQuestion .tagInput .am-list-item .am-textarea-control {
   background: #f4f4f4;
   padding: 9px 0;
   margin: 0 15px;
   border-radius: 2px;
 }
-#publishWrongQuestion .tagInput .am-list-item .am-input-control input {
+#publishWrongQuestion .tagInput .am-list-item .am-textarea-control textarea {
   line-height: 20px !important;
   height: 20px!important;
   font-size: 15px;
@@ -383,6 +385,8 @@
   padding-left: 28px;
   padding-right: 5px;
   padding-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 #publishWrongQuestion .classTags {
   padding-right: 15px;

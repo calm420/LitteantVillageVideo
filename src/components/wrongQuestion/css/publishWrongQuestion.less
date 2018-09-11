@@ -227,7 +227,7 @@
                 }
             }
         }
-        input{
+        textarea{
             line-height: 23px;
             height: 23px;
         }
@@ -368,18 +368,20 @@
     }
     .tagInput {
         position: relative;
-
+        padding-top: 10px;
+        padding-bottom: 4px;
         .am-list-item {
             background-color: #fff;
             margin-right:0 !important ;
             margin-top: 0  !important ;
         }
-        .am-list-item .am-input-control {
+        .am-list-item .am-textarea-control {
             background: #f4f4f4;
             padding: 9px 0;
             margin: 0 15px;
             border-radius: 2px;
-            input {
+            
+            textarea {
                 line-height: 20px !important;
                 height: 20px!important;
                 font-size: 15px;
@@ -389,6 +391,8 @@
                 padding-left: 28px;
                 padding-right: 5px;
                 padding-bottom: 0;
+                width: 100%;
+                box-sizing: border-box;
             }
         }
     }

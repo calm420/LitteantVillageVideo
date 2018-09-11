@@ -306,7 +306,7 @@ export default class addUploadVideo extends React.Component {
      * 添加标签
      */
     addTag(index) {
-        $(`.calmTagDiv`).slideDown();
+        $(`.`).slideDown();
         $(`.tagBack`).show();
         calm.setState({
             tagIndex: index

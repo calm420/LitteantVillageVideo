@@ -191,8 +191,8 @@ export default class wrongQuestionCount extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             console.log(rowData,"rowData")
             return (
-                <div>
-                    <span>{rowData.ftagObj.tagTitle}</span>
+                <div className='listCont'>
+                    <span><span className='tag'>{rowData.ftagObj.tagTitle}</span></span>
                     <span>{rowData.errorCount}</span>
                     <span>{rowData.avgLog}%</span>
                     <span>{rowData.otherAvgLog ? rowData.otherAvgLog : "-"}</span>
@@ -219,7 +219,7 @@ export default class wrongQuestionCount extends React.Component {
                         <span className='course'>{calm.state.finalProject}</span>
                         <span className='icon_change' onClick={calm.toShowModal}>切换科目</span>
                     </div>
-                    <div className="title my_flex">
+                    <div className="title">
                         <span>标签</span>
                         <span>题量</span>
                         <span>个人占比</span>

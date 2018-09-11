@@ -88,11 +88,11 @@ export default class myThemeTask extends React.Component {
     /**
      * 根據科目ｉｄ查詢標籤
      * **/
-    gitErrorTagsByCourseId(clearFlag, reslove) {
+    gitErrorTagsByCourseId(courseId) {
         var _this = this;
         var param = {
             "method": 'gitErrorTagsByCourseId',
-            "courseId": this.state.cid,
+            "courseId": courseId?courseId:this.state.cid,
             "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -402,6 +402,7 @@ export default class myThemeTask extends React.Component {
 
         ], phone);
     }
+
     deleteCircle = (data, index, event) => {
         event.stopPropagation();
         console.log(data, '要刪除的id');
@@ -578,6 +579,10 @@ export default class myThemeTask extends React.Component {
         }
         this.setState({
             courseIdArray:courseIdArray
+        },()=>{
+            if(courseIdArray.length > 0){
+                this.gitErrorTagsByCourseId(courseIdArray.join(','))
+            }
         })
     }
 

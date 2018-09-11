@@ -117,6 +117,10 @@
   margin-right: 15px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 20px;
+}
+#weArrPayment .payContent .paymentMode .payBtn:last-child {
+  margin-bottom: 5px;
 }
 #weArrPayment .payContent .paymentMode .payBtn i {
   border: 1px #999999 solid;
@@ -136,6 +140,16 @@
 }
 #weArrPayment .payContent .paymentMode #wxpayjs {
   background: url("../img/icon_weixin.png") no-repeat;
+  background-size: 24px;
+}
+#weArrPayment .payContent .paymentMode #alipayqr {
+  background: url("../img/icon-AlipayQrCode.png") no-repeat;
+  background-size: 24px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+#weArrPayment .payContent .paymentMode #wxpayqr {
+  background: url("../img/icon-WeChatQrCode.png") no-repeat;
   background-size: 24px;
 }
 #weArrPayment .payContent .paymentMode .payBtnClick i {
@@ -248,9 +262,15 @@
   position: absolute;
   top: 0;
   text-align: center;
-  padding-top: 150px;
+  color: #666;
+  font-size: 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 #weArrPayment .Qr_Code > img {
   display: block;
   margin: 0 auto;
+  width: 180px;
+  height: 180px;
 }

@@ -105,6 +105,7 @@ export default class weArrPayment extends React.Component {
 
             }, onMessage: function (info) {
                 if (info.data.command == "LITTLE_VIDEO_BUY_SUCCESS") {
+                    console.log(info);
                     var orderNo = info.data.order_no;
                     if (orderNo == orderNoNoom) {
                         weArr_Payment.setState({successDisPlay: false})
@@ -146,7 +147,6 @@ export default class weArrPayment extends React.Component {
                             $('#pay_Iframe')[0].src = result.response.payUrl
                         } else if (!WebServiceUtil.isEmpty(result.response.ewm)) {
                             orderNoNoom = result.response.orderNo
-                            console.log(result.response.ewm);
                             //显示二维码
                             weArr_Payment.setState({
                                 QrCode: <img src={result.response.ewm} alt=""/>,
@@ -271,7 +271,7 @@ export default class weArrPayment extends React.Component {
                         width: document.body.clientWidth,
                         backgroundColor: '#fff',
                         zIndex: 999,
-                        display: this.state.QrCodeDisplay ? "none" : 'block'
+                        display: this.state.successDisPlay ? this.state.QrCodeDisplay ? "none" : 'flex' : "none"
                     }}>
                     {this.state.QrCode}
                     请扫码付款
@@ -279,7 +279,7 @@ export default class weArrPayment extends React.Component {
 
                 <Result
                     className={this.state.channel + " paySuccess"}
-                    img={myImg(this.state.channel == "alipayjs" ? require('../img/alipay.png') : require('../img/weixin.png'))}
+                    img={myImg((this.state.channel == "alipayjs" || this.state.channel == 'alipayqr') ? require('../img/alipay.png') : require('../img/weixin.png'))}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

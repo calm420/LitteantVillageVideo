@@ -24,7 +24,17 @@ export default class myThemeTask extends React.Component {
             hasMore: true,
             exportFlag: false,
             exportIdArray: [],
-
+            initCheckIdLength:0,
+            initCheckId:[],
+            filterFlag:false,
+            masteryId:-1,
+            tagId: -1,
+            startTime: WebServiceUtil.formatYMD(new Date('2000-01-01').getTime()),
+            endTime: WebServiceUtil.formatYMD(new Date().getTime()),
+            courseIdArray:[],
+            tagIdArray:[],
+            courseData:[],
+            timeText:'全部',
         }
     }
 
@@ -36,18 +46,20 @@ export default class myThemeTask extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         var targetType = searchArray[1].split('=')[1];
-        var cid = searchArray[2] ? searchArray[2].split('=')[1] : 0;
-        console.log(cid, 'cid')
+        var cid = (searchArray[2] ? searchArray[2].split('=')[1] : 0);
         this.setState({
             userId: userId,
             targetType: targetType,
-            cid: cid
+            cid: cid,
+            courseIdArray: [cid],
         }, () => {
             if (cid == 0) {
                 this.getCircleOfFriendsByType();
                 $('.am-list-header').css({display: 'none'})
             } else {
                 this.getCircleOfFriendsByUidAndCid();
+                this.gitErrorTagsByCourseId();
+                this.getCourseAndCircleOfFriendsCount();
                 setTimeout(function () {
                     $('.checkboxAll,.checkbox').attr('checked', 'true')
                     // var fir = document.getElementsByClassName("checkbox");
@@ -69,14 +81,85 @@ export default class myThemeTask extends React.Component {
 
 
     /**
+     * 根據科目ｉｄ查詢標籤
+     * **/
+    gitErrorTagsByCourseId(clearFlag, reslove) {
+        var _this = this;
+        var param = {
+            "method": 'gitErrorTagsByCourseId',
+            "courseId": this.state.cid,
+            "pageNo": -1,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, '標籤列表')
+                if (result.success) {
+
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    /**
+     * 根據userId 獲取科目
+     * **/
+    getCourseAndCircleOfFriendsCount(clearFlag, reslove) {
+        var _this = this;
+        var param = {
+            "method": 'getCourseAndCircleOfFriendsCount',
+            "uid": this.state.userId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, '科目列表')
+                if (result.success) {
+                    var res = result.response;
+                    var courseData = [];
+                    for(var k in res){
+                        courseData.push({
+                            name: k,
+                            id: res[k].cid
+                        })
+                    }
+                    // var dom = [];
+                    // for(var k in res){
+                    //     dom.push(
+                    //         <span className={this.state.courseIdArray.indexOf(res[k].cid) == -1?"course-init":"course-active"} onClick={this.courseClick.bind(this,res[k].cid)}>{k}</span>
+                    //     )
+                    // }
+                    // console.log(this.state.courseIdArray);
+                    // console.log(this.state.courseIdArray.indexOf(res[k].cid),'``````````````');
+                    // console.log(dom)
+                    this.setState({
+                        courseData: courseData,
+                    })
+                }
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+
+    /**
      * 錯題本獲取數據
      * **/
     getCircleOfFriendsByUidAndCid(clearFlag, reslove) {
         var _this = this;
         var param = {
-            "method": 'getCircleOfFriendsByUidAndCid',
-            "uid": this.state.userId,
-            "cid": this.state.cid,
+            "method": 'searchCircleOfFriends',
+            "userId": this.state.userId,
+            "courseId": this.state.cid,
+            "tagId": this.state.tagId,
+            "mastery":this.state.masteryId,
+            "startTime":this.state.startTime,
+            "endTime":this.state.endTime,
             "pageNo": this.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -101,7 +184,9 @@ export default class myThemeTask extends React.Component {
                         isLoading: true,
                         refreshing: false,
                         initLoading: false,
-                        exportIdArray: exportIdArray
+                        exportIdArray: exportIdArray,
+                        initCheckIdLength:exportIdArray.length,
+                        initCheckId: exportIdArray
                     }, () => {
                         if (reslove) {
                             reslove();
@@ -334,6 +419,27 @@ export default class myThemeTask extends React.Component {
 
     setFilter = () => {
         console.log('篩選');
+        this.setState({
+            filterFlag: true,
+        })
+    }
+
+    closeFilter = ()=>{
+        // var cid = this.state.cid;
+        // cid = cid.split(',');
+        // console.log(cid,'this.state.cid.split(\',\')');
+        var nTime = new Date(this.state.endTime).getTime() - new Date(this.state.startTime).getTime();
+        var day =Math.floor(nTime/86400000);
+        console.log(day);
+        if(day > 5000){
+            // timeText = '全部'
+        }else if(day > 7){
+
+        }
+        this.setState({
+            filterFlag: false,
+            courseIdArray:this.state.cid.split(','),
+        })
     }
 
     setExport = () => {
@@ -372,6 +478,11 @@ export default class myThemeTask extends React.Component {
         } else {//取消選中
             exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
         }
+        if(exportIdArray.length < this.state.initCheckIdLength){
+            document.getElementsByClassName('checkboxAll')[0].checked = false;
+        }else{
+            document.getElementsByClassName('checkboxAll')[0].checked = true;
+        }
         this.setState({
             exportIdArray: exportIdArray
         }, () => {
@@ -387,6 +498,9 @@ export default class myThemeTask extends React.Component {
             [].forEach.call(fir, function (value) {
                 value.checked = true;
             })
+            this.setState({
+                exportIdArray: this.state.initCheckId
+            })
         } else {
             console.log('取消全選')
             // $('.checkbox').removeAttr('checked');
@@ -394,7 +508,31 @@ export default class myThemeTask extends React.Component {
             [].forEach.call(fir,function(value){
                 value.checked = false;
             })
+            this.setState({
+                exportIdArray: []
+            })
         }
+    }
+
+    courseClick(cid){
+        var courseIdArray = this.state.courseIdArray;
+        if(courseIdArray.indexOf(cid) == -1){
+            courseIdArray.push(cid);
+        }else{
+            courseIdArray.splice(courseIdArray.indexOf(cid),1);
+        }
+        this.setState({
+            courseIdArray:courseIdArray
+        })
+        console.log(this.state.courseIdArray,'1111');
+    }
+
+
+    timeClick(timeText){
+        console.log(timeText);
+        this.setState({
+            timeText: timeText
+        })
     }
 
 
@@ -489,17 +627,17 @@ export default class myThemeTask extends React.Component {
                             <div style={
                                 this.state.exportFlag ? {display: 'none'} : {display: 'block'}
                             }>
-                                <button className="filter-btn" onClick={this.setFilter}>篩選</button>
-                                <button>數據統計</button>
-                                <button className='export-btn' onClick={this.setExport}>導出錯題本</button>
+                                <button className="filter-btn" onClick={this.setFilter}><i className="icon-screening"></i><span>筛选</span></button>
+                                <button className='export-btn' onClick={this.setExport}><i className="icon-print"></i><span>打印</span></button>
+                                <button><i className="icon-statistical"></i><span>统计</span></button>
                             </div>
                             <div style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                             }>
                                 <div style={{display: 'inline-block'}}><input className="checkboxAll"
                                                                               onClick={this.checkBoxAllClick.bind(this)}
-                                                                              type="checkbox"/><span>全選</span></div>
-                                <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
+                                                                              type="checkbox"/><span>全选</span></div>
+                                <button className='export-btn' onClick={this.exportTopic}>确定导出</button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
                         </div>
@@ -527,11 +665,67 @@ export default class myThemeTask extends React.Component {
                     />}
                 />
 
-                {/*<div className="filter-content" style={{*/}
-                {/*height: this.state.clientHeight*/}
-                {/*}}>*/}
+                {/*篩選*/}
+                <div className="filter-content" style={
+                    this.state.filterFlag?{height: this.state.clientHeight,transform: 'translateX(0%)'}:{height: this.state.clientHeight,transform: 'translateX(-100%)'}
+                }>
+                    <div>
+                        <div className="filter-header">科目</div>
+                        <div style={{display:'flex'}}>
+                            {
+                                that.state.courseData.map(function(value,index){
+                                    return <span className={that.state.courseIdArray.indexOf(String(value.id)) == -1?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id))}>{value.name}</span>
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        <div className="filter-header">发布时间</div>
+                        <div style={{display:'flex'}}>
+                            <span className={this.state.timeText == '全部'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'全部')}>全部</span>
+                            <span className={this.state.timeText == '一周內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一周內')}>一周內</span>
+                            <span className={this.state.timeText == '一月內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一月內')}>一月內</span>
+                            <span className={this.state.timeText == '自定義'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'自定義')}>自定義</span>
+                            <div style={
+                                this.state.timeText == '自定義'?{display:'block'}:{display:'none'}
+                            }>
+                                <div className="startTime">开始时间</div>
+                                <div className="endTime">结束时间</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="filter-header">掌握程度</div>
+                        <div style={{display:'flex'}}>
+                            <span className={this.state.masteryId == -1?'mastery-active':'mastery-init'}>全部</span>
+                            <span className={this.state.masteryId == 0?'mastery-active':'mastery-init'}>不懂</span>
+                            <span className={this.state.masteryId == 1?'mastery-active':'mastery-init'}>略懂</span>
+                            <span className={this.state.masteryId == 2?'mastery-active':'mastery-init'}>基本懂</span>
+                            <span className={this.state.masteryId == 3?'mastery-active':'mastery-init'}>完全懂</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="filter-header">标签</div>
+                        <div style={{display:'flex'}}>
 
-                {/*</div>*/}
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick={this.closeFilter}>取消</button>
+                        <button>确定</button>
+                    </div>
+                </div>
+                {/*篩選　ｅｎｄ*/}
+
+
+
+
+
+
+
+                <div className="mask" onClick={this.closeFilter} style={
+                    this.state.filterFlag?{height: this.state.clientHeight,display: 'block'}:{height: this.state.clientHeight,display: 'none'}
+                }></div>
 
 
             </div>

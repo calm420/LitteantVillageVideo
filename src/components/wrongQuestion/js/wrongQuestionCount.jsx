@@ -22,7 +22,8 @@ export default class wrongQuestionCount extends React.Component {
             waitLookThroughData: [],
             clientHeight: document.body.clientHeight,
             showModal: false,
-            currentProject: "语文",
+            currentProject: "",
+            finalProject: "语文",
             value: ""
         }
     }
@@ -130,7 +131,7 @@ export default class wrongQuestionCount extends React.Component {
      */
     submieProject = () => {
         calm.setState({
-            currentProject: calm.state.currentProject,
+            finalProject: calm.state.currentProject,
             showModal: false,
         })
     }
@@ -140,7 +141,7 @@ export default class wrongQuestionCount extends React.Component {
     calmcleModal = () => {
         calm.setState({
             showModal: false,
-            currentProject: calm.state.currentProject,
+            finalProject: calm.state.finalProject,
             value: ""
         })
     }
@@ -173,7 +174,7 @@ export default class wrongQuestionCount extends React.Component {
                     backgroundColor: '#f4f4f4'
                 }}>
                     <div>
-                        <span>{calm.state.currentProject}</span>
+                        <span>{calm.state.finalProject}</span>
                         <span onClick={calm.toShowModal}>切换科目</span>
                     </div>
                     <div className="title">

@@ -107,8 +107,8 @@ export default class articleList extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid) {
-        var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+cid;
+    toThemeTaskDetail(item) {
+        var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+item.cid+"&projectName="+item.name;
         var data = {
             method: 'openNewPage',
             url: url
@@ -122,7 +122,7 @@ export default class articleList extends React.Component {
         return (
             <div id="topicWrongList" style={{height: document.body.clientHeight}}>
                 {this.state.listData.map(function(value,index){
-                    return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value.cid)}>
+                    return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
                                 <div className={value.css+" tag-pic"}></div>
                                 <div className="tag-text">{value.name}/{value.count}</div>
                            </div>

@@ -40,6 +40,7 @@ export default class myThemeTask extends React.Component {
             startDateForCustom:new Date(),
             endDateForCustom: new Date(),
             customFlagFor:false,
+            currentProject:""
         }
     }
 
@@ -52,11 +53,14 @@ export default class myThemeTask extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var targetType = searchArray[1].split('=')[1];
         var cid = (searchArray[2] ? searchArray[2].split('=')[1] : 0);
+        var project = searchArray[3] ? decodeURI(searchArray[3].split('=')[1]) : "";
         this.setState({
+            project:project,
+            currentProject:project,
             userId: userId,
             targetType: targetType,
             cid: cid,
-            courseIdArray: cid,
+            courseIdArray: (cid),
         }, () => {
             if (targetType == 1) {
                 this.getCircleOfFriendsByType();
@@ -458,6 +462,7 @@ export default class myThemeTask extends React.Component {
             tagId: String(this.state.tagId)
         },()=>{
             this.setState({
+                currentProject:this.state.currentProject,
                 filterFlag: false,
                 courseIdArray:this.state.cid.split(','),
                 timeText:timeText,
@@ -570,10 +575,11 @@ export default class myThemeTask extends React.Component {
     }
 
     //科目點擊事件
-    courseClick(cid){
+    courseClick(cid,cName){
         var courseIdArray = this.state.courseIdArray;
         this.setState({
             courseIdArray:cid,
+            project:cName
         },()=>{
             this.gitErrorTagsByCourseId(this.state.courseIdArray)
         })
@@ -700,6 +706,7 @@ export default class myThemeTask extends React.Component {
         this.initDataSource = [];
         this.setState({
             cid:this.state.courseIdArray,
+            currentProject:this.state.project,
             masteryId:this.state.masteryIdArray.join(','),
             tagId: this.state.tagIdArray.join(','),
             isLoading: true,
@@ -725,6 +732,19 @@ export default class myThemeTask extends React.Component {
         })
     }
 
+    /**
+     * 跳转统计页面
+     */
+    toCount=()=>{
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid="+this.state.userId+"&cid="+this.state.cid+"&finalProject="+this.state.currentProject;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
 
     render() {
         const row = (rowData, sectionID, rowID) => {
@@ -819,7 +839,7 @@ export default class myThemeTask extends React.Component {
                             }>
                                 <button className="filter-btn" onClick={this.setFilter}><i className="icon-screening"></i><span>筛选</span></button>
                                 <button className='export-btn' onClick={this.setExport}><i className="icon-print"></i><span>打印</span></button>
-                                <button><i className="icon-statistical"></i><span>统计</span></button>
+                                <button><i className="icon-statistical"></i><span onClick={this.toCount} >统计</span></button>
                             </div>
                             <div className="export-header" style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
@@ -864,7 +884,7 @@ export default class myThemeTask extends React.Component {
                         <div style={{display:'flex'}} className="filterCont">
                             {
                                 that.state.courseData.map(function(value,index){
-                                    return <span className={that.state.courseIdArray != (String(value.id))?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id))}>{value.name}</span>
+                                    return <span className={that.state.courseIdArray != (String(value.id))?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id),value.name)}>{value.name}</span>
                                 })
                             }
                         </div>

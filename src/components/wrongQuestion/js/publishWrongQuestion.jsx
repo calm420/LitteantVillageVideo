@@ -184,11 +184,14 @@ export default class publishWrongQuestion extends React.Component {
     saveWrongTopicBook() {
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
-        calm.state.tagText.push({
-            cid:calm.state.cid,
-            uid:calm.state.userId,
-            tagTitle:calm.state.cheData.label
-        })
+        if ($.isEmptyObject(calm.state.cheData) == false && calm.state.cheData != undefined) {
+            calm.state.tagText.push({
+                cid: calm.state.cid,
+                uid: calm.state.userId,
+                tagTitle: calm.state.cheData.label
+            })
+        }
+
         var param = {
             "method": "saveWrongTopicBook",
             "circleOfFriendsJson": {

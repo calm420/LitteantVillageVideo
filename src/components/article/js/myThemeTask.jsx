@@ -555,17 +555,14 @@ export default class myThemeTask extends React.Component {
             var masteryIdArray = this.state.masteryIdArray;
             if(masteryIdArray.indexOf(masteryId) == -1){
                 masteryIdArray.push(masteryId);
-                console.log(0!=-1);
                 if(masteryIdArray.indexOf(-1) != -1 && masteryIdArray.length > 1){
-                    masteryIdArray.splice(-1,1);
-                    console.log('執行')
+                    masteryIdArray.splice(masteryIdArray.indexOf(-1),1);
                 }
             }else{
                 masteryIdArray.splice(masteryIdArray.indexOf(masteryId),1);
             }
 
         }
-
         this.setState({
             masteryIdArray:masteryIdArray
         })
@@ -574,15 +571,24 @@ export default class myThemeTask extends React.Component {
 
     //標籤點擊事件
     tagClick(tagId){
-        var tagIdArray = this.state.tagIdArray;
-        if(tagIdArray.indexOf(tagId) == -1){
-            tagIdArray.push(tagId);
+        if(tagId == -1){
+            tagIdArray = [-1];
         }else{
-            tagIdArray.splice(tagIdArray.indexOf(tagId),1);
+            var tagIdArray = this.state.tagIdArray;
+            if(tagIdArray.indexOf(tagId) == -1){
+                tagIdArray.push(tagId);
+                if(tagIdArray.indexOf(-1) != -1 && tagIdArray.length > 1){
+                    tagIdArray.splice(tagIdArray.indexOf(-1),1);
+                }
+            }else{
+                tagIdArray.splice(tagIdArray.indexOf(tagId),1);
+            }
+
         }
         this.setState({
             tagIdArray:tagIdArray
         })
+
     }
 
     determine = ()=>{

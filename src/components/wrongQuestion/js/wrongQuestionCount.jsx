@@ -171,13 +171,12 @@ export default class wrongQuestionCount extends React.Component {
             }}>
                 <div style={{
                     height: document.documentElement.clientHeight - 46,
-                    backgroundColor: '#f4f4f4'
                 }}>
-                    <div>
-                        <span>{calm.state.finalProject}</span>
-                        <span onClick={calm.toShowModal}>切换科目</span>
+                    <div className="topDiv">
+                        <span className='course'>{calm.state.finalProject}</span>
+                        <span className='icon_change' onClick={calm.toShowModal}>切换科目</span>
                     </div>
-                    <div className="title">
+                    <div className="title my_flex">
                         <span>标签</span>
                         <span>题量</span>
                         <span>个人占比</span>

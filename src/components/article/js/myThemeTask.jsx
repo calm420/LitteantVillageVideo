@@ -24,6 +24,8 @@ export default class myThemeTask extends React.Component {
             hasMore: true,
             exportFlag: false,
             exportIdArray: [],
+            initCheckIdLength:0,
+            initCheckId:[],
 
         }
     }
@@ -101,7 +103,9 @@ export default class myThemeTask extends React.Component {
                         isLoading: true,
                         refreshing: false,
                         initLoading: false,
-                        exportIdArray: exportIdArray
+                        exportIdArray: exportIdArray,
+                        initCheckIdLength:exportIdArray.length,
+                        initCheckId: exportIdArray
                     }, () => {
                         if (reslove) {
                             reslove();
@@ -372,6 +376,11 @@ export default class myThemeTask extends React.Component {
         } else {//取消選中
             exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
         }
+        if(exportIdArray.length < this.state.initCheckIdLength){
+            document.getElementsByClassName('checkboxAll')[0].checked = false;
+        }else{
+            document.getElementsByClassName('checkboxAll')[0].checked = true;
+        }
         this.setState({
             exportIdArray: exportIdArray
         }, () => {
@@ -387,12 +396,18 @@ export default class myThemeTask extends React.Component {
             [].forEach.call(fir, function (value) {
                 value.checked = true;
             })
+            this.setState({
+                exportIdArray: this.state.initCheckId
+            })
         } else {
             console.log('取消全選')
             // $('.checkbox').removeAttr('checked');
             var fir = document.getElementsByClassName("checkbox");
             [].forEach.call(fir,function(value){
                 value.checked = false;
+            })
+            this.setState({
+                exportIdArray: []
             })
         }
     }

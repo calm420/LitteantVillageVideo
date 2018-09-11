@@ -275,7 +275,7 @@ export default class weArrPayment extends React.Component {
                         display: this.state.successDisPlay ? this.state.QrCodeDisplay ? "none" : 'flex' : "none"
                     }}>
                     {this.state.QrCode}
-                    请扫码付款
+                    <div>请扫码付款</div>
                 </div>
 
                 <Result

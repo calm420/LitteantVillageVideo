@@ -105,6 +105,7 @@ export default class weArrPayment extends React.Component {
 
             }, onMessage: function (info) {
                 if (info.data.command == "LITTLE_VIDEO_BUY_SUCCESS") {
+                    console.log(info);
                     var orderNo = info.data.order_no;
                     if (orderNo == orderNoNoom) {
                         weArr_Payment.setState({successDisPlay: false})
@@ -131,7 +132,8 @@ export default class weArrPayment extends React.Component {
             "userId": this.state.userId,
             "channel": this.state.channel,
             "rechargeType": this.state.rechargeType,
-            "payPrice": this.state.payPrice,
+            // "payPrice": this.state.payPrice,
+            "payPrice": 0.01,
             "rechargeEndtime": '',
             "userLocation": '',
             "payType": 0,
@@ -146,7 +148,6 @@ export default class weArrPayment extends React.Component {
                             $('#pay_Iframe')[0].src = result.response.payUrl
                         } else if (!WebServiceUtil.isEmpty(result.response.ewm)) {
                             orderNoNoom = result.response.orderNo
-                            console.log(result.response.ewm);
                             //显示二维码
                             weArr_Payment.setState({
                                 QrCode: <img src={result.response.ewm} alt=""/>,
@@ -246,9 +247,9 @@ export default class weArrPayment extends React.Component {
                             <div className='payBtn payBtnClick'
                                  id='alipayjs'
                                  onClick={this.changeChannel.bind(this, 'alipayjs')}>支付宝支付<i></i></div>
-                            <div id='wxpayjs' className='payBtn payBtn-bottom'
+                            <div id='wxpayjs' className='payBtn'
                                  onClick={this.changeChannel.bind(this, 'wxpayjs')}>微信支付<i></i></div>
-                            <div id='alipayqr' className='payBtn payBtn-bottom'
+                            <div id='alipayqr' className='payBtn'
                                  onClick={this.changeChannel.bind(this, 'alipayqr')}>支付宝扫码支付<i></i></div>
                             <div id='wxpayqr' className='payBtn'
                                  onClick={this.changeChannel.bind(this, 'wxpayqr')}>微信扫码支付<i></i></div>
@@ -271,7 +272,7 @@ export default class weArrPayment extends React.Component {
                         width: document.body.clientWidth,
                         backgroundColor: '#fff',
                         zIndex: 999,
-                        display: this.state.QrCodeDisplay ? "none" : 'block'
+                        display: this.state.successDisPlay ? this.state.QrCodeDisplay ? "none" : 'flex' : "none"
                     }}>
                     {this.state.QrCode}
                     请扫码付款
@@ -279,7 +280,7 @@ export default class weArrPayment extends React.Component {
 
                 <Result
                     className={this.state.channel + " paySuccess"}
-                    img={myImg(this.state.channel == "alipayjs" ? require('../img/alipay.png') : require('../img/weixin.png'))}
+                    img={myImg((this.state.channel == "alipayjs" || this.state.channel == 'alipayqr') ? require('../img/alipay.png') : require('../img/weixin.png'))}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

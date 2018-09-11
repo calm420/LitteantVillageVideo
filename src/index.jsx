@@ -353,6 +353,11 @@ class Index extends React.Component {
                             to="/publishWrongQuestion?"
                             style={{fontSize: '24px'}}>错题本</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
+                            style={{fontSize: '24px'}}>统计</Link>
+                    </li>
                 </ul>
             </div>
         );

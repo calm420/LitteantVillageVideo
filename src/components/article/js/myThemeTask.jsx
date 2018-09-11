@@ -31,7 +31,7 @@ export default class myThemeTask extends React.Component {
             tagId: "-1",
             startTime: WebServiceUtil.formatYMD(new Date('2000-01-01').getTime()),
             endTime: WebServiceUtil.formatYMD(new Date().getTime()),
-            courseIdArray:[],
+            courseIdArray:'',
             masteryIdArray:["-1"], //默認選擇全部
             tagIdArray:["-1"],　　　//默認選擇全部
             courseData:[],
@@ -56,7 +56,7 @@ export default class myThemeTask extends React.Component {
             userId: userId,
             targetType: targetType,
             cid: cid,
-            courseIdArray: [cid],
+            courseIdArray: cid,
         }, () => {
             if (cid == 0) {
                 this.getCircleOfFriendsByType();
@@ -572,18 +572,23 @@ export default class myThemeTask extends React.Component {
     //科目點擊事件
     courseClick(cid){
         var courseIdArray = this.state.courseIdArray;
-        if(courseIdArray.indexOf(cid) == -1){
-            courseIdArray.push(cid);
-        }else{
-            courseIdArray.splice(courseIdArray.indexOf(cid),1);
-        }
         this.setState({
-            courseIdArray:courseIdArray
+            courseIdArray:cid,
         },()=>{
-            if(courseIdArray.length > 0){
-                this.gitErrorTagsByCourseId(courseIdArray.join(','))
-            }
+            this.gitErrorTagsByCourseId(this.state.courseIdArray)
         })
+        // if(courseIdArray.indexOf(cid) == -1){
+        //     courseIdArray.push(cid);
+        // }else{
+        //     courseIdArray.splice(courseIdArray.indexOf(cid),1);
+        // }
+        // this.setState({
+        //     courseIdArray:courseIdArray
+        // },()=>{
+        //     if(courseIdArray.length > 0){
+        //         this.gitErrorTagsByCourseId(courseIdArray.join(','))
+        //     }
+        // })
     }
 
 
@@ -694,7 +699,7 @@ export default class myThemeTask extends React.Component {
         }
         this.initDataSource = [];
         this.setState({
-            cid:this.state.courseIdArray.join(','),
+            cid:this.state.courseIdArray,
             masteryId:this.state.masteryIdArray.join(','),
             tagId: this.state.tagIdArray.join(','),
             isLoading: true,
@@ -859,7 +864,7 @@ export default class myThemeTask extends React.Component {
                         <div style={{display:'flex'}} className="filterCont">
                             {
                                 that.state.courseData.map(function(value,index){
-                                    return <span className={that.state.courseIdArray.indexOf(String(value.id)) == -1?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id))}>{value.name}</span>
+                                    return <span className={that.state.courseIdArray != (String(value.id))?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id))}>{value.name}</span>
                                 })
                             }
                         </div>

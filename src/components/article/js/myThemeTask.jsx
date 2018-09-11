@@ -119,7 +119,7 @@ export default class articleList extends React.Component {
 
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         // divPull[0].style.height = document.body.clientHeight
-        
+
         this.setState({
             defaultPageNo: 1, refreshing: true
         }, () => {

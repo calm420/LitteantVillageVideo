@@ -267,7 +267,7 @@ export default class publishWrongQuestion extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    Toast.info("提交成功",1);
+                    Toast.info("提交成功", 1);
                     //关闭当前窗口，不刷新上一个页面
                     var data = {
                         method: 'finishForRefresh',
@@ -353,7 +353,7 @@ export default class publishWrongQuestion extends React.Component {
      */
     getTagsByTagTitle() {
         if (calm.state.searchValue == "") {
-            Toast.success("请输入搜索的关键词", 1, "", false)
+            Toast.info("请输入搜索的关键词", 1, "", false)
             return;
         }
         calm.setState({ tagData: [] }, () => {
@@ -362,6 +362,7 @@ export default class publishWrongQuestion extends React.Component {
                 "tagTitle": calm.state.searchValue,
                 "pageNo": -1
             }
+            
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
                     console.log(result, "resu")
@@ -369,10 +370,13 @@ export default class publishWrongQuestion extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                arr.push(<Tag
-                                    selected={false}
-                                    onChange={calm.tagChange.bind(this, v)}
-                                >{v.tagTitle}</Tag>)
+                                arr.push(<div>
+                                    <Tag
+                                        selected={false}
+                                        onChange={calm.tagChange.bind(this, v)}
+                                    >{v.tagTitle}</Tag>
+                                    <span>{v.ftagContent}</span>
+                                </div>)
                             })
                             calm.setState({ tagData: arr })
                         }
@@ -784,11 +788,12 @@ export default class publishWrongQuestion extends React.Component {
                 calm.state.noActiveData[j].flag = false;
             }
         })
-        calm.setState({ 
-            alreadySelectData: calm.state.alreadySelectData, 
-            activeData: calm.state.activeData, 
-            noActiveData: calm.state.noActiveData, 
-            allProjectData: calm.state.allProjectData })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            activeData: calm.state.activeData,
+            noActiveData: calm.state.noActiveData,
+            allProjectData: calm.state.allProjectData
+        })
     }
 
     /**
@@ -1000,7 +1005,7 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             showDelete: 1
         })
-        console.log(calm.state.showDelete,"7890-")
+        console.log(calm.state.showDelete, "7890-")
     }
 
     /**

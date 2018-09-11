@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #weArrPayment {
   background-color: #fff;
   height: 100%;
@@ -82,7 +83,7 @@
   color: #666;
   font-size: 15px;
   text-align: center;
-  padding: 10px  5px;
+  padding: 10px 5px;
   margin-right: 15px;
 }
 #weArrPayment .payContent .rechargeAmount .payBall.active {
@@ -242,4 +243,14 @@
 #weArrPayment .paySuccess .am-icon-md {
   width: 100%;
   height: 100%;
+}
+#weArrPayment .Qr_Code {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  padding-top: 150px;
+}
+#weArrPayment .Qr_Code > img {
+  display: block;
+  margin: 0 auto;
 }

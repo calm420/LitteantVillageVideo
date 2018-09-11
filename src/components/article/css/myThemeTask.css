@@ -351,3 +351,12 @@
 #myThemeTask .am-list-header .export-btn {
   margin-right: 20px;
 }
+#myThemeTask .custom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 50px;
+  background: white;
+}

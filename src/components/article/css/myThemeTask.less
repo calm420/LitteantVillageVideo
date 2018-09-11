@@ -273,7 +273,7 @@
     background-size: 100% 100%;
   }
   .filter-content{
-    width: 85%;
+    width: 90%;
     position: absolute;
     top: 0;
     left: 0;
@@ -298,20 +298,65 @@
     //transform: translateX(-50%);
   }
   .filter-header{
-    font-size: 18px;
-    padding-left: 5px;
-    margin: 10px 0px;
+    font-size: 15px;
+    padding: 0 15px;
+    margin: 25px 0px 5px 0
+  }
+  .filterCont{
+    padding: 0 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .filter-info{
+    height: calc(~"100% - 45px");
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .filterFooter{
+    height: 45px;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    button{
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      border-width: 0;
+      box-shadow:0px -2px 2px 0px rgba(0,0,0,0.04);
+      color: #666;
+      background: #fff;
+    }
+    button.blueBtn{
+      background:#558FF5;
+      color: #fff;
+      box-shadow: none;
+    }
   }
   .course-init,.time-init,.mastery-init,.tag-init{
-    border: 1px solid #ccc;
-    padding: 5px 15px;
-    margin-left: 5px;
+    border: 1px solid #AEAEAE;
+    padding: 6px 15px;
+    margin-right: 10px;
+    border-radius: 2px;
+    color: #666;
+    margin-top: 10px;
   }
   .course-active,.time-active,.mastery-active,.tag-active{
-    border: 1px solid #ccc;
-    padding: 5px 15px;
-    margin-left: 5px;
-    background: red;
+    border: 1px solid #558FF5;
+    padding: 6px 15px;
+    margin-right: 10px;
+    margin-top: 10px;
+    background: #558FF5;
+    border-radius: 2px;
+    color: #fff;
   }
   .am-list-header{
     background: #fff;
@@ -392,7 +437,7 @@
       background-size: 100% 100%;
     }
     span{
-      margin-right: 8px;
+      margin-left: 8px;
     }
 
 

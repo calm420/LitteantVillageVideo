@@ -431,7 +431,7 @@ export default class myThemeTask extends React.Component {
 
 
     setFilter = () => {
-        console.log('篩選');
+        console.log('筛选');
         this.setState({
             filterFlag: true,
         })
@@ -450,7 +450,7 @@ export default class myThemeTask extends React.Component {
             timeText = '一周內';
         }
         if(this.state.customFlagFor){
-            timeText = '自定義';
+            timeText = '自定义';
         }
         this.setState({
             masteryId:String(this.state.masteryId),
@@ -468,14 +468,14 @@ export default class myThemeTask extends React.Component {
     }
 
     setExport = () => {
-        console.log('觸發導出事件');
+        console.log('触发导出事件');
         this.setState({
             exportFlag: true,
         })
     }
 
     exportTopic = () => {
-        console.log('導出')
+        console.log('导出')
         if (this.state.exportIdArray.length > 0) {
             console.log(this.state.exportIdArray);
 
@@ -484,9 +484,9 @@ export default class myThemeTask extends React.Component {
             this.setState({
                 exportFlag: false,
             })
-            console.log('導出成功')
+            console.log('导出成功')
         } else {
-            Toast.info('沒有選中的錯題', 1);
+            Toast.info('没有选中的错题', 1);
         }
 
     }
@@ -499,7 +499,7 @@ export default class myThemeTask extends React.Component {
 
     checkBoxClick(cfId, obj) {
         var exportIdArray = this.state.exportIdArray;
-        console.log(exportIdArray, '復選操作前');
+        console.log(exportIdArray, '复选操作前');
         console.log(obj.target.checked);
         if (obj.target.checked) {//選中
             exportIdArray.push(cfId);
@@ -514,13 +514,13 @@ export default class myThemeTask extends React.Component {
         this.setState({
             exportIdArray: exportIdArray
         }, () => {
-            console.log(this.state.exportIdArray, '復選操作後');
+            console.log(this.state.exportIdArray, '复选操作后');
         })
     }
 
     checkBoxAllClick(obj) {
         if (obj.target.checked) {
-            console.log('選中全選');
+            console.log('选中全选');
             // $('.checkbox').attr('checked','true');
             var fir = document.getElementsByClassName("checkbox");
             [].forEach.call(fir, function (value) {
@@ -530,7 +530,7 @@ export default class myThemeTask extends React.Component {
                 exportIdArray: this.state.initCheckId
             })
         } else {
-            console.log('取消全選')
+            console.log('取消全选')
             // $('.checkbox').removeAttr('checked');
             var fir = document.getElementsByClassName("checkbox");
             [].forEach.call(fir,function(value){
@@ -559,7 +559,7 @@ export default class myThemeTask extends React.Component {
     //時間點擊事件
     timeClick(timeText){
         console.log(timeText);
-        if(timeText == '自定義'){
+        if(timeText == '自定义'){
             this.setState({
                 customFlag: true,
                 customFlagFor:true,
@@ -626,11 +626,11 @@ export default class myThemeTask extends React.Component {
 
         var warn = '';
         if(this.state.courseIdArray.length <= 0){
-            warn = '請選擇科目';
+            warn = '请选择科目';
         }else if(this.state.masteryIdArray.length <= 0){
-            warn = '請選擇掌握程度';
+            warn = '请选择掌握程度';
         }else if(this.state.tagIdArray.length <= 0){
-            warn = '請選擇標籤'
+            warn = '请选择标签'
         }
         if(warn != ''){
             Toast.info(warn);
@@ -641,19 +641,19 @@ export default class myThemeTask extends React.Component {
                 startTime: WebServiceUtil.formatYMD(new Date('2000-01-01').getTime()),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime()),
             })
-        }else if(this.state.timeText == '一月內'){
+        }else if(this.state.timeText == '一月内'){
             var mouth = WebServiceUtil.formatYMD(new Date().getTime()).split('-');
             mouth[1] = mouth[1]==1?12:mouth[1] - 1;
             this.setState({
                 startTime: mouth.join('-'),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime())
             })
-        }else if(this.state.timeText == '一周內'){
+        }else if(this.state.timeText == '一周内'){
             this.setState({
                 startTime: WebServiceUtil.formatYMD(new Date().getTime() - (86400000 * 7)),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime())
             })
-        }else if(this.state.timeText == '自定義'){
+        }else if(this.state.timeText == '自定义'){
             // console.log(WebServiceUtil.formatYMD(new Date(this.state.startDateForCustom).getTime()));
             // console.log(WebServiceUtil.formatYMD(new Date(this.state.endDateForCustom).getTime()));
             this.setState({
@@ -671,9 +671,9 @@ export default class myThemeTask extends React.Component {
         },()=>{
             console.log(this.state.cid,'科目id');
             console.log(this.state.masteryId,'掌握程度');
-            console.log(this.state.tagId,'標籤ｉｄ');
-            console.log(this.state.startTime,'開始時間');
-            console.log(this.state.endTime,'結束時間');
+            console.log(this.state.tagId,'标签id');
+            console.log(this.state.startTime,'开始时间');
+            console.log(this.state.endTime,'结束时间');
             this.getCircleOfFriendsByUidAndCid();
             this.closeFilter();
         })
@@ -789,7 +789,7 @@ export default class myThemeTask extends React.Component {
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                             }>
                                 <div style={{display: 'inline-block'}}>
-                                    <span>全选</span><input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)} type="checkbox"/></div>
+                                <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)} type="checkbox"/><span>全选</span></div>
                                 <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>确定导出</button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
@@ -822,9 +822,10 @@ export default class myThemeTask extends React.Component {
                 <div className="filter-content" style={
                     this.state.filterFlag?{height: this.state.clientHeight,transform: 'translateX(0%)'}:{height: this.state.clientHeight,transform: 'translateX(-100%)'}
                 }>
+                  <div className="filter-info">
                     <div>
                         <div className="filter-header">科目</div>
-                        <div style={{display:'flex'}}>
+                        <div style={{display:'flex'}} className="filterCont">
                             {
                                 that.state.courseData.map(function(value,index){
                                     return <span className={that.state.courseIdArray.indexOf(String(value.id)) == -1?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id))}>{value.name}</span>
@@ -834,19 +835,19 @@ export default class myThemeTask extends React.Component {
                     </div>
                     <div>
                         <div className="filter-header">发布时间</div>
-                        <div style={{display:'flex'}}>
+                        <div style={{display:'flex'}} className="filterCont">
                             <span className={this.state.timeText == '全部'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'全部')}>全部</span>
-                            <span className={this.state.timeText == '一周內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一周內')}>一周內</span>
-                            <span className={this.state.timeText == '一月內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一月內')}>一月內</span>
-                            <span className={this.state.timeText == '自定義'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'自定義')}>自定義</span>
+                            <span className={this.state.timeText == '一周内'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一周内')}>一周内</span>
+                            <span className={this.state.timeText == '一月内'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一月内')}>一月内</span>
+                            <span className={this.state.timeText == '自定义'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'自定义')}>自定义</span>
                             <div className="custom" style={
-                                this.state.timeText == '自定義' && this.state.customFlag?{display:'block'}:{display:'none'}
+                                this.state.timeText == '自定义' && this.state.customFlag?{display:'block'}:{display:'none'}
                             }>
                                 <div className="startTime">
                                     <DatePicker
                                         mode="date"
                                         title=""
-                                        extra="開始時間"
+                                        extra="开始时间"
                                         value={this.state.startDateForCustom}
                                         onChange={startDateForCustom => this.setState({ startDateForCustom })}
                                     >
@@ -857,20 +858,20 @@ export default class myThemeTask extends React.Component {
                                     <DatePicker
                                         mode="date"
                                         title=""
-                                        extra="結束時間"
+                                        extra="结束时间"
                                         value={this.state.endDateForCustom}
                                         onChange={endDateForCustom => this.setState({ endDateForCustom })}
                                     >
                                         <List.Item arrow="horizontal"></List.Item>
                                     </DatePicker>
                                 </div>
-                                <button onClick={this.customSubmit}>確定</button>
+                                <button onClick={this.customSubmit}>确定</button>
                             </div>
                         </div>
                     </div>
                     <div>
                         <div className="filter-header">掌握程度</div>
-                        <div style={{display:'flex'}}>
+                        <div style={{display:'flex'}} className="filterCont">
                             <span className={this.state.masteryIdArray.indexOf("-1") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,-1)}>全部</span>
                             <span className={this.state.masteryIdArray.indexOf("0") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,0)}>不懂</span>
                             <span className={this.state.masteryIdArray.indexOf("1") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,1)}>略懂</span>
@@ -880,7 +881,7 @@ export default class myThemeTask extends React.Component {
                     </div>
                     <div>
                         <div className="filter-header">标签</div>
-                        <div style={{display:'flex'}}>
+                        <div style={{display:'flex'}} className="filterCont">
                             {
                                 this.state.tagData.map(function(value,index){
                                     return <span className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1?'tag-init':'tag-active'} onClick={that.tagClick.bind(that,value.tagId)}>{value.tagTitle}</span>
@@ -888,9 +889,10 @@ export default class myThemeTask extends React.Component {
                             }
                         </div>
                     </div>
-                    <div>
+                    </div>
+                    <div className="filterFooter">
                         <button onClick={this.closeFilter}>取消</button>
-                        <button onClick={this.determine}>確定</button>
+                        <button onClick={this.determine} className="blueBtn">确定</button>
                     </div>
                 </div>
                 {/*篩選　ｅｎｄ*/}

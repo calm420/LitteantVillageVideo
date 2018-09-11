@@ -463,7 +463,33 @@ export default class myThemeTask extends React.Component {
         console.log('導出')
         if (this.state.exportIdArray.length > 0) {
             console.log(this.state.exportIdArray);
+            var param = {
+                "method": 'exportPdfFlowHistoricProcessInstanceById',
+                "WrongTopicBookIds": this.state.exportIdArray.join(","),
+                "userId": this.state.userId,
+            };
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: result => {
+                    console.log(result, 'exportPdfFlowHistoricProcessInstanceById')
+                    if (result.success) {
+                        Toast.info('导出成功');
+                        var url = result.response.fileWebPath;
+                        var data = {
+                            method:"printDoc",
+                            url: url
+                        }
+                        Bridge.callHandler(data, null, function (error) {
+                            // window.location.href = url;
+                        });
 
+
+                    }
+    
+                },
+                onError: function (error) {
+                    Toast.fail(error, 1);
+                }
+            });
 
             
             this.setState({

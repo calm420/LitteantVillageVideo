@@ -49,7 +49,7 @@ export default class wrongQuestionCount extends React.Component {
 
     }
     /**
-     * 未审核列表
+     *
      */
     analysisCircleOfFriends(uid,cid) {
         var param = {
@@ -60,7 +60,6 @@ export default class wrongQuestionCount extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result)
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.initDataSource = calm.initDataSource.concat(result.response);
@@ -74,9 +73,9 @@ export default class wrongQuestionCount extends React.Component {
                             isLoading: false
                         })
                     }
-                    calm.setState({
-                        waitLookThroughData: result.response
-                    })
+                    // calm.setState({
+                    //     waitLookThroughData: result.response
+                    // })
                 }
             },
             onError: function (error) {
@@ -129,7 +128,6 @@ export default class wrongQuestionCount extends React.Component {
      * 单选框改变
      */
     onChange = (value) => {
-        console.log('checkbox', value);
         this.setState({
             value: value.value,
             currentProject: value.label,
@@ -189,7 +187,6 @@ export default class wrongQuestionCount extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData,"rowData")
             return (
                 <div className='listCont'>
                     <span><span className='tag'>{rowData.ftagObj.tagTitle}</span></span>

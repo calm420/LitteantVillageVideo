@@ -1208,7 +1208,6 @@ export default class publishWrongQuestion extends React.Component {
                                     placeholder="请输入标签"
                                     onChange={calm.searchInputChange}
                                     value={calm.state.searchValue}
-
                                 >
                                 </InputItem>
 

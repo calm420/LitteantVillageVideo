@@ -147,6 +147,7 @@ export default class wrongQuestionCount extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            // console.log(rowData,"rowData")
             rowData = rowData || {}
             return (
                 <div>
@@ -173,7 +174,7 @@ export default class wrongQuestionCount extends React.Component {
                 }}>
                     <div> 
                         <span>{calm.state.currentProject}</span>
-                        <span onClick={calm.toShowModal}>切换</span>
+                        <span onClick={calm.toShowModal}>切换科目</span>
                     </div>
                     <div className="title"> 
                         <span>标签</span>

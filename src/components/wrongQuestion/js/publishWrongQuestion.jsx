@@ -1153,7 +1153,7 @@ export default class publishWrongQuestion extends React.Component {
                     <div className="leftWrongQuestion">
                         <div className='cont'>
                             <div className='item'>
-                                <div className='title'>上传题干</div>
+                                <div className='title'>上传题干<span className="red-star"></span></div>
                                 {
                                     calm.state.theQuestionArr.map((v, i) => {
                                         return (
@@ -1222,7 +1222,7 @@ export default class publishWrongQuestion extends React.Component {
                     <div className="rightTag" style={{ display: "none" }}>
                         <div className='cont'>
                             <div className="selectProject">
-                                <div className="title">选择科目</div>
+                                <div className="title">选择科目<span className="red-star"></span></div>
                                 <List>
                                     {calm.state.projectData.map(i => (
                                         <RadioItem key={i.value}

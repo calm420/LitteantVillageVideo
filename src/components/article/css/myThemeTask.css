@@ -269,10 +269,40 @@
   background-size: 100% 100%;
 }
 #myThemeTask .filter-content {
-  width: 100%;
+  width: 85%;
   position: absolute;
   top: 0;
   left: 0;
-  background: red;
+  background: white;
   z-index: 99999;
+  transition: 0.5s;
+}
+#myThemeTask .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  z-index: 999;
+  opacity: 0.4;
+}
+#myThemeTask .filter-header {
+  font-size: 18px;
+  padding-left: 5px;
+  margin: 10px 0px;
+}
+#myThemeTask .course-init,
+#myThemeTask .time-init,
+#myThemeTask .mastery-init {
+  border: 1px solid #ccc;
+  padding: 5px 15px;
+  margin-left: 5px;
+}
+#myThemeTask .course-active,
+#myThemeTask .time-active,
+#myThemeTask .mastery-active {
+  border: 1px solid #ccc;
+  padding: 5px 15px;
+  margin-left: 5px;
+  background: red;
 }

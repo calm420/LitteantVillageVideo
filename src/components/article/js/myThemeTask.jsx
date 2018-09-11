@@ -733,17 +733,17 @@ export default class myThemeTask extends React.Component {
                             <div style={
                                 this.state.exportFlag ? {display: 'none'} : {display: 'block'}
                             }>
-                                <button className="filter-btn" onClick={this.setFilter}>篩選</button>
-                                <button>數據統計</button>
-                                <button className='export-btn' onClick={this.setExport}>導出錯題本</button>
+                                <button className="filter-btn" onClick={this.setFilter}><i className="icon-screening"></i><span>筛选</span></button>
+                                <button className='export-btn' onClick={this.setExport}><i className="icon-print"></i><span>打印</span></button>
+                                <button><i className="icon-statistical"></i><span>统计</span></button>
                             </div>
                             <div style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                             }>
                                 <div style={{display: 'inline-block'}}><input className="checkboxAll"
                                                                               onClick={this.checkBoxAllClick.bind(this)}
-                                                                              type="checkbox"/><span>全選</span></div>
-                                <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
+                                                                              type="checkbox"/><span>全选</span></div>
+                                <button className='export-btn' onClick={this.exportTopic}>确定导出</button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
                         </div>
@@ -786,7 +786,7 @@ export default class myThemeTask extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <div className="filter-header">發布時間</div>
+                        <div className="filter-header">发布时间</div>
                         <div style={{display:'flex'}}>
                             <span className={this.state.timeText == '全部'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'全部')}>全部</span>
                             <span className={this.state.timeText == '一周內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一周內')}>一周內</span>
@@ -795,8 +795,8 @@ export default class myThemeTask extends React.Component {
                             <div style={
                                 this.state.timeText == '自定義'?{display:'block'}:{display:'none'}
                             }>
-                                <div className="startTime">開始時間</div>
-                                <div className="endTime">結束時間</div>
+                                <div className="startTime">开始时间</div>
+                                <div className="endTime">结束时间</div>
                             </div>
                         </div>
                     </div>
@@ -811,7 +811,7 @@ export default class myThemeTask extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <div className="filter-header">標籤</div>
+                        <div className="filter-header">标签</div>
                         <div style={{display:'flex'}}>
                             {
                                 this.state.tagData.map(function(value,index){

@@ -106,7 +106,7 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
   font-size: 13px;
-  color: #AEAEAE!important;
+  color: #AEAEAE !important;
   padding: 0 5px;
   line-height: 21px;
   box-sizing: border-box;
@@ -139,7 +139,90 @@
 }
 #publishWrongQuestion .rightTag .am-radio-item.checked .am-list-line .am-list-content {
   border: 1px #4285F4 solid !important;
-  color: #4285F4!important;
+  color: #4285F4 !important;
+}
+#publishWrongQuestion .rightTag .challenge {
+  padding: 0 15px;
+  height: calc(100% - 117px);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+#publishWrongQuestion .rightTag .challenge .title_text {
+  font-size: 15px;
+  color: #333;
+  line-height: 25px;
+  padding-top: 5px;
+}
+#publishWrongQuestion .rightTag .challenge .topTitle {
+  border: 1px #AEAEAE solid !important;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+  font-size: 13px;
+  color: #AEAEAE !important;
+  padding: 3px 5px;
+  box-sizing: border-box;
+  word-break: break-word;
+  white-space: inherit;
+  display: inline;
+}
+#publishWrongQuestion .rightTag .challenge .text {
+  font-size: 13px;
+  margin-top: 5px;
+  line-height: 13px;
+  padding-top: 5px;
+}
+#publishWrongQuestion .rightTag .challenge .text.none {
+  color: #333;
+  float: right;
+  margin-top: 0;
+  line-height: 21px;
+  padding-top: 0;
+}
+#publishWrongQuestion .rightTag .challenge .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio {
+  height: auto;
+}
+#publishWrongQuestion .rightTag .challenge .am-list-item {
+  margin: 0 !important;
+  width: 100%;
+  position: relative;
+}
+#publishWrongQuestion .rightTag .challenge .am-list-item::before {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#publishWrongQuestion .rightTag .challenge .am-list-item:last-child::before {
+  display: none;
+}
+#publishWrongQuestion .rightTag .challenge input {
+  margin-top: 10px;
+}
+#publishWrongQuestion .rightTag .challenge .am-list-item .am-list-line .am-list-content {
+  border: none!important;
+  padding: 10px 0!important;
+}
+#publishWrongQuestion .rightTag .challenge .am-radio-item.checked .am-list-line .am-list-content {
+  border: none;
+  color: #AEAEAE !important;
+}
+#publishWrongQuestion .rightTag .challenge .am-radio-item.checked .am-list-line .am-list-content .topTitle {
+  border: 1px #4285F4 solid !important;
+  color: #4285F4 !important;
 }
 #publishWrongQuestion .rightTag input {
   line-height: 23px;
@@ -161,16 +244,16 @@
   color: #E60012 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(2).on .am-list-content {
-  border-color: #F39700!important;
-  color: #F39700!important;
+  border-color: #F39700 !important;
+  color: #F39700 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(3).on .am-list-content {
-  border-color: #EECF00!important;
-  color: #EECF00!important;
+  border-color: #EECF00 !important;
+  color: #EECF00 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(4).on .am-list-content {
-  border-color: #22AC38!important;
-  color: #22AC38!important;
+  border-color: #22AC38 !important;
+  color: #22AC38 !important;
 }
 #publishWrongQuestion .selectProject .am-list {
   display: inline-block;
@@ -286,19 +369,20 @@
 }
 #publishWrongQuestion .tagInput .am-list-item .am-input-control {
   background: #f4f4f4;
-  padding: 8px 0;
+  padding: 9px 0;
   margin: 0 15px;
   border-radius: 2px;
 }
 #publishWrongQuestion .tagInput .am-list-item .am-input-control input {
-  line-height: 21px;
-  height: 21px;
+  line-height: 20px !important;
+  height: 20px!important;
   font-size: 15px;
   color: #333;
   background: url("../image/icon_search.png") no-repeat 8px center;
   background-size: 15px;
   padding-left: 28px;
   padding-right: 5px;
+  padding-bottom: 0;
 }
 #publishWrongQuestion .classTags {
   padding-right: 15px;
@@ -324,7 +408,7 @@
   border-radius: 1px;
   margin-left: 15px;
   border: 1px #AEAEAE solid;
-  color: #AEAEAE  ;
+  color: #AEAEAE;
 }
 #publishWrongQuestion .classTags .am-tag-text {
   font-size: 13px;

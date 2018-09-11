@@ -55,6 +55,41 @@ export default class articleList extends React.Component {
                             }
                         )
                     }
+                    for(var k in listData){
+                        switch(listData[k].name){
+                            case '生物':
+                                listData[k].css = 'Wrong-topic-biological';
+                                    break;
+                            case '化学':
+                                listData[k].css = 'Wrong-topic-chemical';
+                                break;
+                            case '语文':
+                                listData[k].css = 'Wrong-topic-Chinese';
+                                break;
+                            case '英语':
+                                listData[k].css = 'Wrong-topic-English';
+                                break;
+                            case '地理':
+                                listData[k].css = 'Wrong-topic-geographic';
+                                break;
+                            case '历史':
+                                listData[k].css = 'Wrong-topic-history';
+                                break;
+                            case '数学':
+                                listData[k].css = 'Wrong-topic-mathematics';
+                                break;
+                            case '其他':
+                                listData[k].css = 'Wrong-topic-other';
+                                break;
+                            case '物理':
+                                listData[k].css = 'Wrong-topic-physical';
+                                break;
+                            case '政治':
+                                listData[k].css = 'Wrong-topic-political';
+                                break;
+                        }
+                    }
+                    console.log(listData);
                     this.setState({
                         listData: listData
                     })
@@ -88,8 +123,8 @@ export default class articleList extends React.Component {
             <div id="topicWrongList" style={{height: document.body.clientHeight}}>
                 {this.state.listData.map(function(value,index){
                     return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value.cid)}>
-                                <div className="tag-pic"></div>
-                                <div>{value.name}/{value.count}</div>
+                                <div className={value.css+" tag-pic"}></div>
+                                <div className="tag-text">{value.name}/{value.count}</div>
                            </div>
                 })}
             </div>

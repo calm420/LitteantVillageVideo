@@ -10,7 +10,7 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var that;
-export default class articleList extends React.Component {
+export default class myThemeTask extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,6 +22,8 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
+            exportFlag: false,
+            exportIdArray: [],
 
         }
     }
@@ -34,16 +36,17 @@ export default class articleList extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         var targetType = searchArray[1].split('=')[1];
-        var cid = searchArray[2]?searchArray[2].split('=')[1]:0;
-        console.log(cid,'cid')
+        var cid = searchArray[2] ? searchArray[2].split('=')[1] : 0;
+        console.log(cid, 'cid')
         this.setState({
             userId: userId,
             targetType: targetType,
-            cid:cid
+            cid: cid
         }, () => {
-            if(cid == 0){
+            if (cid == 0) {
                 this.getCircleOfFriendsByType();
-            }else{
+                $('.am-list-header').css({display: 'none'})
+            } else {
                 this.getCircleOfFriendsByUidAndCid();
             }
         })
@@ -176,15 +179,15 @@ export default class articleList extends React.Component {
 
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         // divPull[0].style.height = document.body.clientHeight
-        
+
         this.setState({
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            if(this.state.cid == 0){
+            if (this.state.cid == 0) {
                 this.getCircleOfFriendsByType(true);
 
-            }else{
+            } else {
                 this.getCircleOfFriendsByUidAndCid(true);
             }
             // Toast.info('重新绑定事件'+this.state.index);
@@ -239,8 +242,8 @@ export default class articleList extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid,rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid+'&type='+rowData.type;
+    toThemeTaskDetail(cid, rowData) {
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + '&type=' + rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -305,8 +308,47 @@ export default class articleList extends React.Component {
     }
 
 
-    setFilter = ()=>{
+    setFilter = () => {
         console.log('篩選');
+    }
+
+    setExport = () => {
+        console.log('觸發導出事件');
+        this.setState({
+            exportFlag: true,
+        })
+    }
+
+    exportTopic = () => {
+        console.log('導出')
+        if (this.state.exportIdArray.length > 0) {
+            console.log(this.state.exportIdArray);
+            this.setState({
+                exportFlag: false,
+            })
+            console.log('導出成功')
+        } else {
+            Toast.info('沒有選中的錯題', 1);
+        }
+
+    }
+
+    closeExport = ()=>{
+        this.setState({
+            exportFlag: false,
+        })
+    }
+
+    checkBoxClick(cfId, obj) {
+        var exportIdArray = this.state.exportIdArray;
+        if (obj.target.checked) {//選中
+            exportIdArray.push(cfId);
+        } else {//取消選中
+            exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
+        }
+        this.setState({
+            exportIdArray: exportIdArray
+        })
     }
 
 
@@ -323,6 +365,9 @@ export default class articleList extends React.Component {
             }
             dom =
                 <div className='my_flex'>
+                    <input style={
+                        this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                    } type="checkbox" onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
                         this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
@@ -333,7 +378,7 @@ export default class articleList extends React.Component {
                     <div className="circleList" style={
                         this.state.targetType == 1 ? {width: '100%'} : {}
                     }
-                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid,rowData)}>
+                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
 
                         <div className="list_content">{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         <div className="list_image" style={
@@ -393,11 +438,25 @@ export default class articleList extends React.Component {
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    // renderSectionHeader={sectionData => (
-                    //     <div>
-                    //         {/*<button onClick={this.setFilter}>篩選</button>*/}
-                    //     </div>
-                    // )}
+                    renderHeader={sectionData => (
+                        <div>
+                            <div style={
+                                this.state.exportFlag ? {display: 'none'} : {display: 'block'}
+                            }>
+                                <button className="filter-btn" onClick={this.setFilter}>篩選</button>
+                                <button>數據統計</button>
+                                <button className='export-btn' onClick={this.setExport}>導出錯題本</button>
+                            </div>
+                            <div style={
+                                this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                            }>
+                                <div style={{display:'inline-block'}}><input type="checkbox"/><span>全選</span></div>
+                                <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
+                                {/*<button onClick={this.closeExport}>取消</button>*/}
+                            </div>
+                        </div>
+
+                    )}
                     renderFooter={() => (
                         <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
@@ -420,11 +479,12 @@ export default class articleList extends React.Component {
                     />}
                 />
 
-                <div className="filter-content" style={{
-                    height: this.state.clientHeight
-                }}>
+                {/*<div className="filter-content" style={{*/}
+                {/*height: this.state.clientHeight*/}
+                {/*}}>*/}
 
-                </div>
+                {/*</div>*/}
+
 
             </div>
         );

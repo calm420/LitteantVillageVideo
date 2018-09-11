@@ -720,7 +720,7 @@ export default class articleList extends React.Component {
                                         <div className="asOfDate">
                                             截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                         <div className="detail_bottom" style={
-                                            this.state.shareHidden?{display:'none'}:{display:'block'}
+                                            this.state.shareHidden?{display:'none'}:{display:'flex'}
                                         }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i
                                                 className="i-share"></i></div>
@@ -859,7 +859,7 @@ export default class articleList extends React.Component {
                                         {/*<div className="asOfDate">*/}
                                         {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom" style={
-                                            this.state.shareHidden?{display:'none'}:{display:'block'}
+                                            this.state.shareHidden?{display:'none'}:{display:'flex'}
                                         }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
                                             <div className="list_bottom_item"><i

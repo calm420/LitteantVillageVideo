@@ -39,7 +39,9 @@ export default class weArrPayment extends React.Component {
             rechargeType: 1,    //消费类型
             payPrice: 180,   //消费金额
             successDisPlay: true,
-            userData: {}
+            userData: {},
+            QrCode: '',
+            QrCodeDisplay: true
         };
 
     }
@@ -134,17 +136,29 @@ export default class weArrPayment extends React.Component {
             "userLocation": '',
             "payType": 0,
         };
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        orderNoNoom = result.response.orderNo
-                        $('#pay_Iframe')[0].src = result.response.payUrl
+                        if (!WebServiceUtil.isEmpty(result.response.payUrl)) {
+                            orderNoNoom = result.response.orderNo
+                            $('#pay_Iframe')[0].src = result.response.payUrl
+                        } else if (!WebServiceUtil.isEmpty(result.response.ewm)) {
+                            orderNoNoom = result.response.orderNo
+                            console.log(result.response.ewm);
+                            //显示二维码
+                            weArr_Payment.setState({
+                                QrCode: <img src={result.response.ewm} alt=""/>,
+                                QrCodeDisplay: false
+                            })
+                        }
+
                     } else {
-                        Toast.fail('失败,1')
+                        Toast.fail('失败', 1)
                     }
                 } else {
-                    Toast.fail('失败,1')
+                    Toast.fail(result.msg, 1)
                 }
             },
             onError: function (error) {
@@ -176,7 +190,7 @@ export default class weArrPayment extends React.Component {
     changeRechargeType = (type) => {
         console.log(type)
         if (type == 1) {
-            this.setState({payPrice:180})
+            this.setState({payPrice: 180})
             $(".payBall").removeClass('active')
             $('#theFirst').addClass('active')
         } else if (type == 2) {
@@ -234,6 +248,10 @@ export default class weArrPayment extends React.Component {
                                  onClick={this.changeChannel.bind(this, 'alipayjs')}>支付宝支付<i></i></div>
                             <div id='wxpayjs' className='payBtn'
                                  onClick={this.changeChannel.bind(this, 'wxpayjs')}>微信支付<i></i></div>
+                            <div id='alipayqr' className='payBtn'
+                                 onClick={this.changeChannel.bind(this, 'alipayqr')}>支付宝扫码支付<i></i></div>
+                            <div id='wxpayqr' className='payBtn'
+                                 onClick={this.changeChannel.bind(this, 'wxpayqr')}>微信扫码支付<i></i></div>
                         </div>
 
                         <iframe id="pay_Iframe" src="" frameborder="0" style={{display: 'none'}}></iframe>
@@ -244,6 +262,19 @@ export default class weArrPayment extends React.Component {
                             确定支付
                         </span>
                     </div>
+                </div>
+
+                <div
+                    className='Qr_Code'
+                    style={{
+                        height: document.body.clientHeight,
+                        width: document.body.clientWidth,
+                        backgroundColor: '#fff',
+                        zIndex: 999,
+                        display: this.state.QrCodeDisplay ? "none" : 'block'
+                    }}>
+                    {this.state.QrCode}
+                    请扫码付款
                 </div>
 
                 <Result

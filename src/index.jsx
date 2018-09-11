@@ -205,10 +205,10 @@ const publishWrongQuestion = (location, cb) =>{
     }, 'publishWrongQuestion')
 }
 
-const projectManage = (location, cb) =>{
+const wrongQuestionCount = (location, cb) =>{
     require.ensure([], require => {
-        cb(null, require('./components/wrongQuestion/js/projectManage').default)
-    }, 'projectManage')
+        cb(null, require('./components/wrongQuestion/js/wrongQuestionCount').default)
+    }, 'wrongQuestionCount')
 }
 
 //发布主题页面
@@ -396,7 +396,7 @@ ReactDOM.render(
             <Route path="fileDownload" getComponent={fileDownload}/>
             <Route path="mobileEditor" getComponent={mobileEditor}/>
             <Route path="publishWrongQuestion" getComponent={publishWrongQuestion}/>
-            <Route path="projectManage" getComponent={projectManage}/>
+            <Route path="wrongQuestionCount" getComponent={wrongQuestionCount}/>
             <Route path="themeTask" getComponent={themeTask}/>
             <Route path="themeTaskDetail" getComponent={themeTaskDetail}/>
             <Route path="selectedPeople" getComponent={selectedPeople}/>

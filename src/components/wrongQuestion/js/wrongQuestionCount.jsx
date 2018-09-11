@@ -193,9 +193,11 @@ export default class wrongQuestionCount extends React.Component {
             return (
                 <div className='listCont'>
                     <span><span className='tag'>{rowData.ftagObj.tagTitle}</span></span>
-                    <span>{rowData.errorCount}</span>
-                    <span>{rowData.avgLog}%</span>
-                    <span>{rowData.otherAvgLog ? rowData.otherAvgLog : "-"}</span>
+                     <span>
+                        <span><span>{rowData.errorCount}</span></span>
+                         <span><span>{rowData.avgLog}%</span></span>
+                    </span>
+                    <span><span>{rowData.otherAvgLog ? rowData.otherAvgLog : "-"}</span></span>
                 </div>
             )
         }
@@ -221,8 +223,10 @@ export default class wrongQuestionCount extends React.Component {
                     </div>
                     <div className="title">
                         <span>标签</span>
-                        <span>题量</span>
-                        <span>个人占比</span>
+                           <span>
+                                <span>题量</span>
+                                <span>个人占比</span>
+                           </span>
                         <span>他人平均占比</span>
                     </div>
                     <ListView
@@ -243,7 +247,7 @@ export default class wrongQuestionCount extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         onScroll={this.scroll}
                         style={{
-                            height: document.body.clientHeight - 46 -36,
+                            height: document.body.clientHeight - 46 - 46,
                         }}
                     />
                 </div>
@@ -261,7 +265,7 @@ export default class wrongQuestionCount extends React.Component {
                     </div>
                     <div className="bottomBox">
                         <span onClick={calm.calmcleModal}>取消</span>
-                        <span onClick={calm.submieProject}>立即添加</span>
+                        <span onClick={calm.submieProject}>确定</span>
                     </div>
                 </div>
             </div>

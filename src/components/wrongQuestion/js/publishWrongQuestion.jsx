@@ -56,7 +56,10 @@ export default class publishWrongQuestion extends React.Component {
             activeStr: "",
             newB: [],
             newBStr: "",
-            showDelete: 0
+            showDelete: 0,
+            challengeData: [],
+            challengeValue: "",
+            cheData: {}
         }
     }
 
@@ -175,59 +178,6 @@ export default class publishWrongQuestion extends React.Component {
         $(".tabWrap .tag").removeClass('active');
         $(".tabWrap .wrongQuestion").addClass('active');
     }
-
-    upload_video_pic() {
-        var video;//video标签
-        var scale = 0.8;//第一帧图片与源视频的比例
-        // var videoList = $(".upload_box_video");
-        // console.log(videoList,'videoList');
-        // for(var i=0;i<videoList.length;i++){
-        //
-        // }
-        //ｖｉｄｅｏ标签
-        console.log($('.upload_box_video'), "$('.upload_box_video')")
-        video = $('.upload_box_video')[0];//赋值标签
-        video.setAttribute("crossOrigin", 'Anonymous');
-        video.addEventListener("loadeddata", function () {//加载完成事件，调用函数
-            var canvas = document.createElement('canvas');//canvas画布
-            canvas.width = video.videoWidth * scale;
-            canvas.height = video.videoHeight * scale;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);//画图
-            var image = canvas.toDataURL("image/png");
-            var $Blob = calm.getBlobBydataURI(image, 'image/jpeg');
-            var formData = new FormData();
-            formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
-            calm.state.addVideoList[index].width = video.videoWidth;
-            calm.state.addVideoList[index].height = video.videoHeight;
-            $.ajax({
-                type: "POST",
-                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
-                enctype: 'multipart/form-data',
-                data: formData,
-                // 告诉jQuery不要去处理发送的数据
-                processData: false,
-                // 告诉jQuery不要去设置Content-Type请求头
-                contentType: false,
-                // xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
-                //     var xhr = jQuery.ajaxSettings.xhr();
-                //     xhr.upload.onload = function () {
-                //         console.log('huoqudangqiansuoluetu!');
-                //         console.log(xhr);
-                //     };
-                //     xhr.upload.onprogress = function (ev) {
-                //         console.log('yyyyyyyyy!');
-                //         console.log(xhr);
-                //     };
-                //     return xhr;
-                // },
-                success: function (res) {
-                    console.log(res, 'base64');
-                    calm.state.addVideoList[index].firstUrl = res;
-                }
-            });
-        })
-    }
-
     /**
      * 提交
      */
@@ -267,7 +217,7 @@ export default class publishWrongQuestion extends React.Component {
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
-                    Toast.info("提交成功",1);
+                    Toast.info("提交成功", 1);
                     //关闭当前窗口，不刷新上一个页面
                     var data = {
                         method: 'finishForRefresh',
@@ -332,7 +282,7 @@ export default class publishWrongQuestion extends React.Component {
             Toast.info("请先选择科目", 1, "", false)
             return
         }
-        $(`.calmTagDiv`).slideDown();
+        $(`.calmChaDiv`).slideDown();
         $(`.tagBack`).show();
     }
 
@@ -353,7 +303,7 @@ export default class publishWrongQuestion extends React.Component {
      */
     getTagsByTagTitle() {
         if (calm.state.searchValue == "") {
-            Toast.success("请输入搜索的关键词", 1, "", false)
+            Toast.info("请输入搜索的关键词", 1, "", false)
             return;
         }
         calm.setState({ tagData: [] }, () => {
@@ -369,10 +319,13 @@ export default class publishWrongQuestion extends React.Component {
                         if (!WebServiceUtil.isEmpty(result.response)) {
                             var arr = []
                             result.response.forEach(function (v, i) {
-                                arr.push(<Tag
-                                    selected={false}
-                                    onChange={calm.tagChange.bind(this, v)}
-                                >{v.tagTitle}</Tag>)
+                                arr.push(<div>
+                                    <Tag
+                                        selected={false}
+                                        onChange={calm.tagChange.bind(this, v)}
+                                    >{v.tagTitle}</Tag>
+                                    <span>{}</span>
+                                </div>)
                             })
                             calm.setState({ tagData: arr })
                         }
@@ -458,15 +411,18 @@ export default class publishWrongQuestion extends React.Component {
     /**
      * 删除标签
      */
-    deleteTag(item) {
-        calm.state.tagText.forEach((v, i) => {
-            if (item.tagTitle == v.tagTitle) {
-                calm.state.tagText.splice(i, 1)
-            }
-            calm.setState({
-                tagText: calm.state.tagText
-            })
+    deleteTag() {
+        calm.setState({
+            cheData: {}
         })
+        // calm.state.tagText.forEach((v, i) => {
+        //     if (item.tagTitle == v.tagTitle) {
+        //         calm.state.tagText.splice(i, 1)
+        //     }
+        //     calm.setState({
+        //         tagText: calm.state.tagText
+        //     })
+        // })
     }
 
     /**
@@ -784,11 +740,12 @@ export default class publishWrongQuestion extends React.Component {
                 calm.state.noActiveData[j].flag = false;
             }
         })
-        calm.setState({ 
-            alreadySelectData: calm.state.alreadySelectData, 
-            activeData: calm.state.activeData, 
-            noActiveData: calm.state.noActiveData, 
-            allProjectData: calm.state.allProjectData })
+        calm.setState({
+            alreadySelectData: calm.state.alreadySelectData,
+            activeData: calm.state.activeData,
+            noActiveData: calm.state.noActiveData,
+            allProjectData: calm.state.allProjectData
+        })
     }
 
     /**
@@ -1000,7 +957,7 @@ export default class publishWrongQuestion extends React.Component {
         calm.setState({
             showDelete: 1
         })
-        console.log(calm.state.showDelete,"7890-")
+        console.log(calm.state.showDelete, "7890-")
     }
 
     /**
@@ -1040,6 +997,115 @@ export default class publishWrongQuestion extends React.Component {
             showDelete: 0
         })
     }
+
+
+    /**
+    * 挑战搜索结果
+    */
+    getChasByContent() {
+        if (calm.state.challengeValue == "") {
+            Toast.info("请输入搜索的关键词")
+            return;
+        }
+        calm.setState({ challengeData: [] }, () => {
+            var param = {
+                "method": 'getTagsByTagTitle',
+                "tagTitle": calm.state.challengeValue,
+                "pageNo": -1
+            }
+            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+                onResponse: function (result) {
+                    if (result.msg == '调用成功' || result.success == true) {
+                        if (!WebServiceUtil.isEmpty(result.response)) {
+                            var arr = []
+                            result.response.forEach(function (v, i) {
+                                if (v.tagId == 0) {
+                                    arr.push({
+                                        value: v.tagId,
+                                        label: v.tagTitle,
+                                        extra: <div>{v.ftagContent}</div>
+                                    })
+                                    return;
+                                }
+                                arr.push(
+                                    {
+                                        value: v.tagId,
+                                        label: v.tagTitle,
+                                        extra: v.ftagContent
+                                    })
+                            })
+                            calm.setState({ challengeData: arr })
+                        }
+                    } else {
+                        Toast.fail(result.msg, 5);
+                    }
+                },
+                onError: function (error) {
+                    // message.error(error);
+                }
+            });
+        })
+
+    }
+
+    /**
+    * 挑战点击确定回调
+    */
+    submitChaArr() {
+        $(`.calmChaDiv`).slideUp();
+        $(`.tagBack`).hide();
+        if (calm.state.cheData.value != 0) {
+            calm.state.cheData = calm.state.cheData;
+        }
+        if (calm.state.cheData.value == 0) {
+            calm.state.cheData.label = calm.state.cheData.label;
+            // calm.state.cheData.extra = calm.state.chaContent;
+        }
+        calm.setState({ challengeData: [], challengeValue: "", chaContent: "", chaChangeValue: "" })
+
+
+    }
+
+    /** 
+     * 挑战取消回调
+    */
+    cancelChaSubmit() {
+        $(`.calmChaDiv`).slideUp();
+        $(`.tagBack`).hide();
+        calm.setState({ challengeData: [] })
+        calm.setState({ challengeValue: '' })
+        calm.setState({ chaContent: "" })
+
+    }
+
+
+    /**
+     * 挑战搜索框
+     */
+    chaInputChange = (value) => {
+        calm.setState({
+            challengeValue: value,
+            chaChangeValue: ""
+        }, () => {
+            calm.getChasByContent()
+        })
+    }
+
+    /**
+    * 挑战改变
+    */
+    chaChange(i) {
+        calm.setState({
+            challengeValue: i.label
+        }, () => {
+        })
+        calm.setState({
+            cheData: i,
+            chaChangeValue: i.value,  // 挑战ID
+        });
+
+    };
+
     render() {
 
         if (calm.state.theQuestionArr.length != 0 || calm.state.theQustionVideo != 0) {
@@ -1176,19 +1242,14 @@ export default class publishWrongQuestion extends React.Component {
                             <div className='moreTag'>
                                 <div className='title'>更多标签</div>
                                 {
-                                    calm.state.tagText.map((v, i) => {
-                                        return (
-                                            <div className="spanTag">
-                                                <span className="textOver">{v.tagTitle}</span>
-                                                <span className="del_tag"
-                                                    onClick={calm.deleteTag.bind(this, v)}>删除</span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                                {
-                                    calm.state.tagText.length == 3 ? "" :
+                                    $.isEmptyObject(calm.state.cheData) == true ?
                                         <span className='addTag spanTag' onClick={calm.addTag}>添加标签</span>
+                                        :
+                                        <div className="spanTag">
+                                            <span className="textOver">{calm.state.cheData.label}</span>
+                                            <span className="del_tag"
+                                                onClick={calm.deleteTag.bind(this)}>删除</span>
+                                        </div>
                                 }
 
                             </div>
@@ -1197,12 +1258,11 @@ export default class publishWrongQuestion extends React.Component {
                         <div className="tagBack" style={{
                             display: "none",
                         }}></div>
-                        <div className={`calmTagDiv calmTagDivNew tagCont`}
+                        {/* <div className={`calmTagDiv calmTagDivNew tagCont`}
                             style={{
                                 display: "none",
                             }}
                         >
-                            {/* {useIndex} */}
                             <div className="tagInput">
                                 <InputItem
                                     placeholder="请输入标签"
@@ -1210,8 +1270,6 @@ export default class publishWrongQuestion extends React.Component {
                                     value={calm.state.searchValue}
                                 >
                                 </InputItem>
-
-                                {/* <div className="searchIcon" onClick={calm.searchARBookTag}></div> */}
                             </div>
                             <div className="classTags">
                                 {
@@ -1222,7 +1280,36 @@ export default class publishWrongQuestion extends React.Component {
                                 <span className="close" onClick={calm.cancelSubmit}>取消</span>
                                 <span className="bind" onClick={calm.submitTagArr}>确 定</span>
                             </div>
+                        </div> */}
+
+                        <div className={`calmChaDiv calmTagDivNew tagCont`}
+                            style={{
+                                display: "none",
+                            }}
+                        >
+                            <div className="tagInput">
+                                <InputItem
+                                    placeholder="请输入标签"
+                                    onChange={calm.chaInputChange}
+                                    value={calm.state.challengeValue}
+                                >
+                                </InputItem>
+                            </div>
+                            <div className='challenge'>
+                                <List>
+                                    {calm.state.challengeData.map(i => (
+                                        <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
+                                            <div className='topTitle textOver'>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
+                                        </RadioItem>
+                                    ))}
+                                </List>
+                            </div>
+                            <div className="bottomBox">
+                                <span className="close" onClick={calm.cancelChaSubmit}>取消</span>
+                                <span className="bind" onClick={calm.submitChaArr}>确 定</span>
+                            </div>
                         </div>
+
                         <div className='nextBtn' onClick={calm.saveWrongTopicBook}><span>提交</span></div>
                     </div>
 

@@ -274,7 +274,7 @@
   top: 0;
   left: 0;
   background: white;
-  z-index: 99999;
+  z-index: 999;
   transition: 0.5s;
 }
 #myThemeTask .mask {
@@ -283,7 +283,7 @@
   left: 0;
   width: 100%;
   background: black;
-  z-index: 999;
+  z-index: 998;
   opacity: 0.4;
 }
 #myThemeTask .filter-header {
@@ -351,12 +351,30 @@
 #myThemeTask .am-list-header .export-btn {
   margin-right: 20px;
 }
+#myThemeTask .export-header {
+  height: 25px;
+  color: #333;
+  font-size: 16px;
+  line-height: 25px;
+}
+#myThemeTask .export-header .Btn-bor-blue {
+  background: #fff !important;
+  color: #4285F4;
+  border: 1px #4285F4 solid !important;
+  padding: 6px 10px !important;
+  border-radius: 4px;
+}
+#myThemeTask .export-header .Btn-right {
+  position: absolute;
+  right: 0;
+  top: 6px;
+}
 #myThemeTask .custom {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
-  height: 50px;
   background: white;
+  box-shadow: 0px 0px 20px #ccc;
 }

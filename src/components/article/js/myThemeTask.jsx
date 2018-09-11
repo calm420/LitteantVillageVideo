@@ -453,6 +453,9 @@ export default class myThemeTask extends React.Component {
         console.log('導出')
         if (this.state.exportIdArray.length > 0) {
             console.log(this.state.exportIdArray);
+
+
+            
             this.setState({
                 exportFlag: false,
             })

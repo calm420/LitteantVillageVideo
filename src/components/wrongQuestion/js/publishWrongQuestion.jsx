@@ -1007,10 +1007,10 @@ export default class publishWrongQuestion extends React.Component {
     * 挑战搜索结果
     */
     getChasByContent() {
-        // if (calm.state.challengeValue == "") {
-        //     Toast.info("请输入搜索的关键词")
-        //     return;
-        // }
+        if (calm.state.challengeValue == "") {
+            Toast.info("请输入搜索的关键词")
+            return;
+        }
         calm.setState({ challengeData: [] }, () => {
             var param = {
                 "method": 'getTagsByTagTitle',

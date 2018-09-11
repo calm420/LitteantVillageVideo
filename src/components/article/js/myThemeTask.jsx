@@ -58,7 +58,7 @@ export default class myThemeTask extends React.Component {
             cid: cid,
             courseIdArray: cid,
         }, () => {
-            if (cid == 0) {
+            if (targetType == 1) {
                 this.getCircleOfFriendsByType();
                 $('.am-list-header').css({display: 'none'})
             } else {

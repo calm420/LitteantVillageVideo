@@ -48,16 +48,21 @@ export default class myThemeTask extends React.Component {
                 $('.am-list-header').css({display: 'none'})
             } else {
                 this.getCircleOfFriendsByUidAndCid();
-                setTimeout(function(){
-                    var fir = document.getElementsByClassName("checkbox");
-                    [].forEach.call(fir,function(value){
-                        value.checked = true;
-                    })
+                setTimeout(function () {
+                    $('.checkboxAll,.checkbox').attr('checked', 'true')
+                    // var fir = document.getElementsByClassName("checkbox");
+                    // [].forEach.call(fir,function(value){
+                    //     value.checked = true;
+                    // })
+                    // var fir = document.getElementsByClassName("checkboxAll");
+                    // [].forEach.call(fir,function(value){
+                    //     value.checked = true;
+                    // })
                     // for(var i=fir;i<fir.length;i++){
                     //     fir[i].checked = true;
                     //     console.log('循環')
                     // }
-                },1000)
+                }, 1000)
             }
         })
     }
@@ -88,7 +93,7 @@ export default class myThemeTask extends React.Component {
                         });
                     }
                     this.initDataSource = this.initDataSource.concat(result.response);
-                    for(var k in this.initDataSource){
+                    for (var k in this.initDataSource) {
                         exportIdArray.push(this.initDataSource[k].cfid)
                     }
                     this.setState({
@@ -96,7 +101,7 @@ export default class myThemeTask extends React.Component {
                         isLoading: true,
                         refreshing: false,
                         initLoading: false,
-                        exportIdArray:exportIdArray
+                        exportIdArray: exportIdArray
                     }, () => {
                         if (reslove) {
                             reslove();
@@ -352,7 +357,7 @@ export default class myThemeTask extends React.Component {
 
     }
 
-    closeExport = ()=>{
+    closeExport = () => {
         this.setState({
             exportFlag: false,
         })
@@ -360,7 +365,7 @@ export default class myThemeTask extends React.Component {
 
     checkBoxClick(cfId, obj) {
         var exportIdArray = this.state.exportIdArray;
-        console.log(exportIdArray,'復選操作前');
+        console.log(exportIdArray, '復選操作前');
         console.log(obj.target.checked);
         if (obj.target.checked) {//選中
             exportIdArray.push(cfId);
@@ -369,9 +374,27 @@ export default class myThemeTask extends React.Component {
         }
         this.setState({
             exportIdArray: exportIdArray
-        },()=>{
-            console.log(this.state.exportIdArray,'復選操作後');
+        }, () => {
+            console.log(this.state.exportIdArray, '復選操作後');
         })
+    }
+
+    checkBoxAllClick(obj) {
+        if (obj.target.checked) {
+            console.log('選中全選');
+            // $('.checkbox').attr('checked','true');
+            var fir = document.getElementsByClassName("checkbox");
+            [].forEach.call(fir, function (value) {
+                value.checked = true;
+            })
+        } else {
+            console.log('取消全選')
+            // $('.checkbox').removeAttr('checked');
+            var fir = document.getElementsByClassName("checkbox");
+            [].forEach.call(fir,function(value){
+                value.checked = false;
+            })
+        }
     }
 
 
@@ -389,7 +412,8 @@ export default class myThemeTask extends React.Component {
                 <div className='my_flex'>
                     <input style={
                         this.state.exportFlag ? {display: 'block'} : {display: 'none'}
-                    } className="checkbox" type="checkbox" name="checked" onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
+                    } className="checkbox" type="checkbox" name="checked"
+                           onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
                         this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
@@ -472,7 +496,9 @@ export default class myThemeTask extends React.Component {
                             <div style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                             }>
-                                <div style={{display:'inline-block'}}><input className="checkbox" type="checkbox"/><span>全選</span></div>
+                                <div style={{display: 'inline-block'}}><input className="checkboxAll"
+                                                                              onClick={this.checkBoxAllClick.bind(this)}
+                                                                              type="checkbox"/><span>全選</span></div>
                                 <button className='export-btn' onClick={this.exportTopic}>確定導出</button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>

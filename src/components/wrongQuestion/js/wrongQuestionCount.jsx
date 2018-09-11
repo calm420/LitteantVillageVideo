@@ -23,7 +23,7 @@ export default class wrongQuestionCount extends React.Component {
             clientHeight: document.body.clientHeight,
             showModal: false,
             currentProject: "语文",
-            value:""
+            value: ""
         }
     }
 
@@ -140,8 +140,8 @@ export default class wrongQuestionCount extends React.Component {
     calmcleModal = () => {
         calm.setState({
             showModal: false,
-            currentProject:calm.state.currentProject,
-            value:""
+            currentProject: calm.state.currentProject,
+            value: ""
         })
     }
     render() {
@@ -172,11 +172,11 @@ export default class wrongQuestionCount extends React.Component {
                     height: document.documentElement.clientHeight - 46,
                     backgroundColor: '#f4f4f4'
                 }}>
-                    <div> 
+                    <div>
                         <span>{calm.state.currentProject}</span>
                         <span onClick={calm.toShowModal}>切换科目</span>
                     </div>
-                    <div className="title"> 
+                    <div className="title">
                         <span>标签</span>
                         <span>题量</span>
                         <span>个人占比</span>
@@ -208,11 +208,13 @@ export default class wrongQuestionCount extends React.Component {
                 <div className="modalDiv" style={{ display: calm.state.showModal ? "block" : "none" }}>
                     <p className="selectProject">选择科目</p>
                     <div>
-                        {data.map(i => (
-                            <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i)}>
-                                {i.label}
-                            </RadioItem>
-                        ))}
+                        <List>
+                            {data.map(i => (
+                                <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i)}>
+                                    {i.label}
+                                </RadioItem>
+                            ))}
+                        </List>
                     </div>
                     <div className="bottomButton">
                         <span onClick={calm.calmcleModal}>取消</span>

@@ -1,15 +1,12 @@
 #wrongQuestionCount {
   position: relative;
-  background-color: #fff;
   color: #333;
-}
-#wrongQuestionCount .mainCont {
-  padding: 0 15px;
 }
 #wrongQuestionCount .topDiv {
   line-height: 16px;
   overflow: hidden;
-  padding: 15px 0;
+  padding: 15px;
+  background-color: #fff;
 }
 #wrongQuestionCount .topDiv .course {
   color: #333;
@@ -25,45 +22,60 @@
   float: right;
 }
 #wrongQuestionCount .title {
-  padding-bottom: 15px;
+  background-color: #f4f8fe;
 }
 #wrongQuestionCount .title,
 #wrongQuestionCount .listCont {
   font-size: 14px;
+  padding: 0 15px;
 }
 #wrongQuestionCount .title > span,
 #wrongQuestionCount .listCont > span {
-  text-align: center;
+  width: 25%;
+  vertical-align: top;
+  text-align: left;
   display: inline-block;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 #wrongQuestionCount .title > span:first-child,
 #wrongQuestionCount .listCont > span:first-child {
   text-align: left;
-  width: 100px;
 }
 #wrongQuestionCount .title > span:nth-child(2),
 #wrongQuestionCount .listCont > span:nth-child(2) {
-  width: calc(100% - 130px);
+  width: calc(75% - 85px);
 }
-#wrongQuestionCount .title > span:nth-child(2) span,
-#wrongQuestionCount .listCont > span:nth-child(2) span {
-  display: inline-block;
+#wrongQuestionCount .title > span:nth-child(2) > span,
+#wrongQuestionCount .listCont > span:nth-child(2) > span {
   width: 50%;
+  display: inline-block;
+  text-align: left;
+}
+#wrongQuestionCount .title > span:nth-child(2) > span:first-child span,
+#wrongQuestionCount .listCont > span:nth-child(2) > span:first-child span {
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+}
+#wrongQuestionCount .title > span:nth-child(2) > span:last-child span,
+#wrongQuestionCount .listCont > span:nth-child(2) > span:last-child span {
+  width: 50px;
+  display: inline-block;
   text-align: center;
 }
 #wrongQuestionCount .title > span:last-child,
 #wrongQuestionCount .listCont > span:last-child {
-  width: 84px;
+  width: 85px;
   float: right;
+  text-align: center;
 }
 #wrongQuestionCount .listCont .tag {
-  border: 1px #4285F4 solid !important;
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
-  font-size: 13px;
+  font-size: 12px;
   color: #4285F4 !important;
-  padding: 0 5px;
   line-height: 21px;
   box-sizing: border-box;
   word-break: break-word;
@@ -101,7 +113,7 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
   font-size: 13px;
-  color: #AEAEAE !important;
+  color: #666 !important;
   padding: 3px 16px;
   line-height: 22px;
   box-sizing: border-box;
@@ -116,6 +128,7 @@
   padding: 0 ;
   margin-bottom: 10px;
   margin-right: 10px;
+  overflow: visible;
 }
 #wrongQuestionCount .modalDiv .am-list-line {
   padding-right: 0;

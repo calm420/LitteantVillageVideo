@@ -270,7 +270,7 @@
 }
 #weArrPayment .Qr_Code > img {
   display: block;
-  margin: 0 auto;
+  margin: -25px auto 0 auto;
   width: 180px;
   height: 180px;
 }

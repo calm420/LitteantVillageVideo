@@ -628,7 +628,7 @@ export default class myThemeTask extends React.Component {
                                 this.state.exportFlag ? {display: 'none'} : {display: 'block'}
                             }>
                                 <button className="filter-btn" onClick={this.setFilter}>篩選</button>
-                                <button>數據統計</button>
+                                <button >數據統計</button>
                                 <button className='export-btn' onClick={this.setExport}>導出錯題本</button>
                             </div>
                             <div style={

@@ -132,8 +132,7 @@ export default class weArrPayment extends React.Component {
             "userId": this.state.userId,
             "channel": this.state.channel,
             "rechargeType": this.state.rechargeType,
-            // "payPrice": this.state.payPrice,
-            "payPrice": 0.01,
+            "payPrice": this.state.payPrice,
             "rechargeEndtime": '',
             "userLocation": '',
             "payType": 0,
@@ -275,7 +274,7 @@ export default class weArrPayment extends React.Component {
                         display: this.state.successDisPlay ? this.state.QrCodeDisplay ? "none" : 'flex' : "none"
                     }}>
                     {this.state.QrCode}
-                    请扫码付款
+                    <div>请扫码付款</div>
                 </div>
 
                 <Result

@@ -20,11 +20,11 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                // {
-                //     type: 0, //图片
-                //     fatherType: 0,
-                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                {
+                    type: 0, //图片
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
             ],
             theQustionVideo: [
                 // {
@@ -1296,10 +1296,11 @@ export default class publishWrongQuestion extends React.Component {
                                 </InputItem>
                             </div>
                             <div className='challenge'>
+                                <div className='title_text'>搜索结果</div>
                                 <List>
                                     {calm.state.challengeData.map(i => (
                                         <RadioItem className={calm.state.chaChangeValue === i.value ? 'checked' : ''} key={i.value} checked={calm.state.chaChangeValue === i.value} onChange={() => calm.chaChange(i)}>
-                                            <div className='topTitle textOver'>{i.label}</div><div className='text textOver_line3'>{i.extra}</div>
+                                            <span className='topTitle'>{i.label}</span><div className='text none'>{i.extra}</div>
                                         </RadioItem>
                                     ))}
                                 </List>

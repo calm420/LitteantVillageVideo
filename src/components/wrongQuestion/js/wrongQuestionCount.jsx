@@ -23,8 +23,9 @@ export default class wrongQuestionCount extends React.Component {
             clientHeight: document.body.clientHeight,
             showModal: false,
             currentProject: "",
-            finalProject: "语文",
-            value: ""
+            finalProject: "",
+            value: "",
+            data:[]
         }
     }
 
@@ -34,24 +35,32 @@ export default class wrongQuestionCount extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var auditorId = searchArray[0].split('=')[1];
+        var uid = searchArray[0].split('=')[1];
+        var cid = searchArray[1].split('=')[1];
+        var finalProject = decodeURI(searchArray[2].split('=')[1]);
         calm.setState({
-            auditorId
+            uid,
+            cid,
+            finalProject
+
         })
-        calm.getArticleAndLittleVideoIsNo();
+        calm.analysisCircleOfFriends(uid,cid);
         window.addEventListener('resize', calm.onWindowResize);
 
     }
     /**
      * 未审核列表
      */
-    getArticleAndLittleVideoIsNo() {
+    analysisCircleOfFriends(uid,cid) {
         var param = {
-            "method": 'getArticleAndLittleVideoIsNo',
+            "method": 'analysisCircleOfFriends',
+            "uid":uid,
+            "cid":cid,
             "pageNo": calm.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result)
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.initDataSource = calm.initDataSource.concat(result.response);
@@ -91,7 +100,7 @@ export default class wrongQuestionCount extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            _this.getArticleAndLittleVideoIsNo();
+            _this.analysisCircleOfFriends();
         });
     };
 
@@ -114,6 +123,7 @@ export default class wrongQuestionCount extends React.Component {
         calm.setState({
             showModal: true
         })
+        calm.getCourseByUserIdAndDefianceCourseAll();
     }
     /**
      * 单选框改变
@@ -122,7 +132,8 @@ export default class wrongQuestionCount extends React.Component {
         console.log('checkbox', value);
         this.setState({
             value: value.value,
-            currentProject: value.label
+            currentProject: value.label,
+            item:value
         });
 
     };
@@ -130,6 +141,9 @@ export default class wrongQuestionCount extends React.Component {
      * 点击确定
      */
     submieProject = () => {
+        console.log(calm.state.value)
+        calm.initDataSource = [];
+        calm.analysisCircleOfFriends(calm.state.uid,calm.state.value)
         calm.setState({
             finalProject: calm.state.currentProject,
             showModal: false,
@@ -145,14 +159,43 @@ export default class wrongQuestionCount extends React.Component {
             value: ""
         })
     }
+
+    /**
+     * getCourseByUserIdAndDefianceCourseAll
+     */
+    getCourseByUserIdAndDefianceCourseAll(){
+        var param = {
+            "method": 'getCourseByUserIdAndDefianceCourseAll',
+            "userId":calm.state.uid,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                var arr = []
+                result.response.forEach((v,i)=>{
+                    arr.push({
+                        value:v.cid,
+                        label:v.courseName
+                    })
+                })
+                calm.setState({
+                    data:arr
+                })
+            },
+            onError: function (error) {
+                // Toast.fail(error, 1); 
+            }
+        });
+    }
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            // console.log(rowData,"rowData")
-            rowData = rowData || {}
+            console.log(rowData,"rowData")
             return (
                 <div>
-
+                    <span>{rowData.ftagObj.tagTitle}</span>
+                    <span>{rowData.errorCount}</span>
+                    <span>{rowData.avgLog}%</span>
+                    <span>{rowData.otherAvgLog ? rowData.otherAvgLog : "-"}</span>
                 </div>
             )
         }
@@ -169,15 +212,14 @@ export default class wrongQuestionCount extends React.Component {
             <div id="wrongQuestionCount" style={{
                 height: document.body.clientHeight
             }}>
-                <div style={{
-                    height: document.documentElement.clientHeight - 46,
-                    backgroundColor: '#f4f4f4'
+                <div className='mainCont' style={{
+                    height: document.documentElement.clientHeight,
                 }}>
-                    <div>
-                        <span>{calm.state.finalProject}</span>
-                        <span onClick={calm.toShowModal}>切换科目</span>
+                    <div className="topDiv">
+                        <span className='course'>{calm.state.finalProject}</span>
+                        <span className='icon_change' onClick={calm.toShowModal}>切换科目</span>
                     </div>
-                    <div className="title">
+                    <div className="title my_flex">
                         <span>标签</span>
                         <span>题量</span>
                         <span>个人占比</span>
@@ -201,25 +243,25 @@ export default class wrongQuestionCount extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         onScroll={this.scroll}
                         style={{
-                            height: document.body.clientHeight - 46,
+                            height: document.body.clientHeight - 46 -36,
                         }}
                     />
                 </div>
                 <div className="modalBack" style={{ display: calm.state.showModal ? "block" : "none" }}></div>
                 <div className="modalDiv" style={{ display: calm.state.showModal ? "block" : "none" }}>
                     <p className="selectProject">选择科目</p>
-                    <div>
+                    <div className='tagCont'>
                         <List>
-                            {data.map(i => (
-                                <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i)}>
+                            {calm.state.data.map(i => (
+                                <RadioItem key={i.value} className={value === i.value ? 'checked' : '' } checked={value === i.value} onChange={() => this.onChange(i)}>
                                     {i.label}
                                 </RadioItem>
                             ))}
                         </List>
                     </div>
-                    <div className="bottomButton">
+                    <div className="bottomBox">
                         <span onClick={calm.calmcleModal}>取消</span>
-                        <span onClick={calm.submieProject}>确定</span>
+                        <span onClick={calm.submieProject}>立即添加</span>
                     </div>
                 </div>
             </div>

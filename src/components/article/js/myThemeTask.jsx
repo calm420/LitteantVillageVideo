@@ -851,7 +851,7 @@ export default class myThemeTask extends React.Component {
 
                 {/*篩選*/}
                 <div className="filter-content" style={
-                    this.state.filterFlag?{height: this.state.clientHeight,transform: 'translateX(0%)'}:{height: this.state.clientHeight,transform: 'translateX(-100%)'}
+                    this.state.filterFlag?{height: this.state.clientHeight,transform: 'translateX(0%)'}:{height: this.state.clientHeight,transform: 'translateX(100%)'}
                 }>
                   <div className="filter-info">
                     <div>
@@ -874,7 +874,9 @@ export default class myThemeTask extends React.Component {
                             <div className="custom" style={
                                 this.state.timeText == '自定义' && this.state.customFlag?{display:'block'}:{display:'none'}
                             }>
+                                <div className="custom-header">选择时间</div>
                                 <div className="startTime">
+                                    <span>开始时间</span>
                                     <DatePicker
                                         mode="date"
                                         title=""
@@ -886,6 +888,7 @@ export default class myThemeTask extends React.Component {
                                     </DatePicker>
                                 </div>
                                 <div className="endTime">
+                                    <span>结束时间</span>
                                     <DatePicker
                                         mode="date"
                                         title=""
@@ -896,7 +899,7 @@ export default class myThemeTask extends React.Component {
                                         <List.Item arrow="horizontal"></List.Item>
                                     </DatePicker>
                                 </div>
-                                <button onClick={this.customSubmit}>确定</button>
+                                <button className="blueBtn" onClick={this.customSubmit}>确定</button>
                             </div>
                         </div>
                     </div>

@@ -184,11 +184,14 @@ export default class publishWrongQuestion extends React.Component {
     saveWrongTopicBook() {
         var ImgArr = calm.state.theQuestionArr.concat(calm.state.theAnswerArr)
         var VidoeArr = calm.state.theQustionVideo.concat(calm.state.theAnswerVideo)
-        calm.state.tagText.push({
-            cid:calm.state.cid,
-            uid:calm.state.userId,
-            tagTitle:calm.state.cheData.label
-        })
+        if ($.isEmptyObject(calm.state.cheData) == false && calm.state.cheData != undefined) {
+            calm.state.tagText.push({
+                cid: calm.state.cid,
+                uid: calm.state.userId,
+                tagTitle: calm.state.cheData.label
+            })
+        }
+
         var param = {
             "method": "saveWrongTopicBook",
             "circleOfFriendsJson": {
@@ -1007,10 +1010,10 @@ export default class publishWrongQuestion extends React.Component {
     * 挑战搜索结果
     */
     getChasByContent() {
-        // if (calm.state.challengeValue == "") {
-        //     Toast.info("请输入搜索的关键词")
-        //     return;
-        // }
+        if (calm.state.challengeValue == "") {
+            Toast.info("请输入搜索的关键词")
+            return;
+        }
         calm.setState({ challengeData: [] }, () => {
             var param = {
                 "method": 'getTagsByTagTitle',
@@ -1150,7 +1153,7 @@ export default class publishWrongQuestion extends React.Component {
                     <div className="leftWrongQuestion">
                         <div className='cont'>
                             <div className='item'>
-                                <div className='title'>上传题干</div>
+                                <div className='title'>上传题干<span className="red-star"></span></div>
                                 {
                                     calm.state.theQuestionArr.map((v, i) => {
                                         return (
@@ -1219,7 +1222,7 @@ export default class publishWrongQuestion extends React.Component {
                     <div className="rightTag" style={{ display: "none" }}>
                         <div className='cont'>
                             <div className="selectProject">
-                                <div className="title">选择科目</div>
+                                <div className="title">选择科目<span className="red-star"></span></div>
                                 <List>
                                     {calm.state.projectData.map(i => (
                                         <RadioItem key={i.value}

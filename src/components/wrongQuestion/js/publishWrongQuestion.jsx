@@ -27,12 +27,12 @@ export default class publishWrongQuestion extends React.Component {
                 // }
             ],
             theQustionVideo: [
-                {
-                    type: 1,  //视频
-                    fatherType: 0,
-                    path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
-                    coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                }
+                // {
+                //     type: 1,  //视频
+                //     fatherType: 0,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
+                //     coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
             ],
             theAnswerArr: [
                 // {
@@ -362,6 +362,7 @@ export default class publishWrongQuestion extends React.Component {
                 "tagTitle": calm.state.searchValue,
                 "pageNo": -1
             }
+            
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: function (result) {
                     console.log(result, "resu")
@@ -374,7 +375,7 @@ export default class publishWrongQuestion extends React.Component {
                                         selected={false}
                                         onChange={calm.tagChange.bind(this, v)}
                                     >{v.tagTitle}</Tag>
-                                    <span>{}</span>
+                                    <span>{v.ftagContent}</span>
                                 </div>)
                             })
                             calm.setState({ tagData: arr })

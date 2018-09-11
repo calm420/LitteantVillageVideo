@@ -801,7 +801,7 @@ export default class myThemeTask extends React.Component {
                             <span className={this.state.timeText == '一周內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一周內')}>一周內</span>
                             <span className={this.state.timeText == '一月內'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一月內')}>一月內</span>
                             <span className={this.state.timeText == '自定義'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'自定義')}>自定義</span>
-                            <div style={
+                            <div className="custom" style={
                                 this.state.timeText == '自定義'?{display:'block'}:{display:'none'}
                             }>
                                 <div className="startTime">开始时间</div>
@@ -835,12 +835,6 @@ export default class myThemeTask extends React.Component {
                     </div>
                 </div>
                 {/*篩選　ｅｎｄ*/}
-
-
-
-
-
-
 
                 <div className="mask" onClick={this.closeFilter} style={
                     this.state.filterFlag?{height: this.state.clientHeight,display: 'block'}:{height: this.state.clientHeight,display: 'none'}

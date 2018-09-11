@@ -1,3 +1,4 @@
+(node) util.print is deprecated. Use console.log instead.
 #myThemeTask {
   /*解决listview高度无法撑开的关键*/
 }
@@ -267,4 +268,12 @@
 #myThemeTask .i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
+}
+#myThemeTask .filter-content {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: red;
+  z-index: 99999;
 }

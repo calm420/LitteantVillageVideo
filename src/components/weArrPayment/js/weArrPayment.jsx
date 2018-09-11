@@ -39,7 +39,9 @@ export default class weArrPayment extends React.Component {
             rechargeType: 1,    //消费类型
             payPrice: 180,   //消费金额
             successDisPlay: true,
-            userData: {}
+            userData: {},
+            QrCode: '',
+            QrCodeDisplay: true
         };
 
     }
@@ -103,6 +105,7 @@ export default class weArrPayment extends React.Component {
 
             }, onMessage: function (info) {
                 if (info.data.command == "LITTLE_VIDEO_BUY_SUCCESS") {
+                    console.log(info);
                     var orderNo = info.data.order_no;
                     if (orderNo == orderNoNoom) {
                         weArr_Payment.setState({successDisPlay: false})
@@ -129,22 +132,34 @@ export default class weArrPayment extends React.Component {
             "userId": this.state.userId,
             "channel": this.state.channel,
             "rechargeType": this.state.rechargeType,
-            "payPrice": this.state.payPrice,
+            // "payPrice": this.state.payPrice,
+            "payPrice": 0.01,
             "rechargeEndtime": '',
             "userLocation": '',
             "payType": 0,
         };
+        console.log(param);
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.msg == '调用成功' || result.success) {
                     if (WebServiceUtil.isEmpty(result.response) == false) {
-                        orderNoNoom = result.response.orderNo
-                        $('#pay_Iframe')[0].src = result.response.payUrl
+                        if (!WebServiceUtil.isEmpty(result.response.payUrl)) {
+                            orderNoNoom = result.response.orderNo
+                            $('#pay_Iframe')[0].src = result.response.payUrl
+                        } else if (!WebServiceUtil.isEmpty(result.response.ewm)) {
+                            orderNoNoom = result.response.orderNo
+                            //显示二维码
+                            weArr_Payment.setState({
+                                QrCode: <img src={result.response.ewm} alt=""/>,
+                                QrCodeDisplay: false
+                            })
+                        }
+
                     } else {
-                        Toast.fail('失败,1')
+                        Toast.fail('失败', 1)
                     }
                 } else {
-                    Toast.fail('失败,1')
+                    Toast.fail(result.msg, 1)
                 }
             },
             onError: function (error) {
@@ -176,7 +191,7 @@ export default class weArrPayment extends React.Component {
     changeRechargeType = (type) => {
         console.log(type)
         if (type == 1) {
-            this.setState({payPrice:180})
+            this.setState({payPrice: 180})
             $(".payBall").removeClass('active')
             $('#theFirst').addClass('active')
         } else if (type == 2) {
@@ -234,6 +249,10 @@ export default class weArrPayment extends React.Component {
                                  onClick={this.changeChannel.bind(this, 'alipayjs')}>支付宝支付<i></i></div>
                             <div id='wxpayjs' className='payBtn'
                                  onClick={this.changeChannel.bind(this, 'wxpayjs')}>微信支付<i></i></div>
+                            <div id='alipayqr' className='payBtn'
+                                 onClick={this.changeChannel.bind(this, 'alipayqr')}>支付宝扫码支付<i></i></div>
+                            <div id='wxpayqr' className='payBtn'
+                                 onClick={this.changeChannel.bind(this, 'wxpayqr')}>微信扫码支付<i></i></div>
                         </div>
 
                         <iframe id="pay_Iframe" src="" frameborder="0" style={{display: 'none'}}></iframe>
@@ -246,9 +265,22 @@ export default class weArrPayment extends React.Component {
                     </div>
                 </div>
 
+                <div
+                    className='Qr_Code'
+                    style={{
+                        height: document.body.clientHeight,
+                        width: document.body.clientWidth,
+                        backgroundColor: '#fff',
+                        zIndex: 999,
+                        display: this.state.successDisPlay ? this.state.QrCodeDisplay ? "none" : 'flex' : "none"
+                    }}>
+                    {this.state.QrCode}
+                    请扫码付款
+                </div>
+
                 <Result
                     className={this.state.channel + " paySuccess"}
-                    img={myImg(this.state.channel == "alipayjs" ? require('../img/alipay.png') : require('../img/weixin.png'))}
+                    img={myImg((this.state.channel == "alipayjs" || this.state.channel == 'alipayqr') ? require('../img/alipay.png') : require('../img/weixin.png'))}
                     title="支付成功"
                     style={{display: !this.state.successDisPlay ? 'block' : 'none'}}
                     message={<div>{this.state.payPrice}元</div>}

@@ -3,18 +3,18 @@
   height: 100%;
   position: relative;
   overflow: hidden;
-  .M15{
+  .M15 {
     margin: 0 15px;
   }
   .payContent {
     padding-top: 15px;
     height: calc(~'100% - 70px');
     overflow-y: auto;
-    .title{
+    .title {
       font-size: 17px;
       color: #333;
       padding: 30px 0 15px;
-      span{
+      span {
         color: #999;
         font-size: 12px;
         margin-left: 5px;
@@ -22,11 +22,11 @@
     }
     .personCenter {
       z-index: 999;
-      height:150px;
-      background:url("../img/person_bg.png") no-repeat;
+      height: 150px;
+      background: url("../img/person_bg.png") no-repeat;
       background-size: cover;
       border-radius: 5px;
-      .topCont{
+      .topCont {
         position: relative;
         width: 100%;
         padding-top: 20px;
@@ -45,17 +45,17 @@
         font-size: 18px;
         text-align: center;
       }
-      .photoDiv{
+      .photoDiv {
         position: absolute;
         left: 50%;
-        top:20px;
+        top: 20px;
         margin-left: -33px;
         width: calc(~"50% + 33px");
       }
-      .msg{
+      .msg {
         color: #fff;
         font-size: 10px;
-        background:rgba(255,255,255,0.46) url("../img/icon_start.png") no-repeat;
+        background: rgba(255, 255, 255, 0.46) url("../img/icon_start.png") no-repeat;
         background-size: 20px;
         -webkit-border-radius: 10px 3px 3px 10px;
         -moz-border-radius: 10px 3px 3px 10px;
@@ -67,8 +67,8 @@
         bottom: 2px;
         padding-left: 22px;
         padding-right: 5px;
-        &.vip{
-          background:rgba(255,255,255,0.46) url("../img/icon_startVip.png") no-repeat;
+        &.vip {
+          background: rgba(255, 255, 255, 0.46) url("../img/icon_startVip.png") no-repeat;
           background-size: 20px;
         }
       }
@@ -81,22 +81,22 @@
         color: #666;
         font-size: 15px;
         text-align: center;
-        padding: 10px  5px;
+        padding: 10px 5px;
         margin-right: 15px;
-        &.active{
+        &.active {
           background-color: #4285f4;
           color: #fff;
-          span{
+          span {
             color: #fff;
           }
         }
-        &:last-child{
+        &:last-child {
           margin-right: 0;
         }
-        div{
+        div {
           margin-bottom: 8px;
         }
-        span{
+        span {
           color: #ee6058;
           font-size: 18px;
           letter-spacing: 1px;
@@ -105,7 +105,7 @@
     }
     .paymentMode {
       padding-bottom: 15px;
-      .payBtn{
+      .payBtn {
         font-size: 15px;
         color: #333;
         padding-left: 34px;
@@ -115,29 +115,43 @@
         margin-right: 15px;
         overflow: hidden;
         position: relative;
-        i{
+        margin-bottom: 20px;
+        &:last-child{
+          margin-bottom: 5px;
+        }
+        i {
           border: 1px #999999 solid;
           width: 16px;
           height: 16px;
           position: absolute;
           display: inline-block;
-          right:0;
-          top:50%;
+          right: 0;
+          top: 50%;
           margin-top: -8px;
         }
       }
-      #alipayjs{
+      #alipayjs {
         background: url("../img/icon_alipay.png") no-repeat;
         background-size: 24px;
         margin-bottom: 20px;
         margin-top: 10px
       }
-      #wxpayjs{
+      #wxpayjs {
         background: url("../img/icon_weixin.png") no-repeat;
         background-size: 24px;
       }
-      .payBtnClick{
-        i{
+      #alipayqr {
+        background: url("../img/icon-AlipayQrCode.png") no-repeat;
+        background-size: 24px;
+        margin-bottom: 20px;
+        margin-top: 10px
+      }
+      #wxpayqr {
+        background: url("../img/icon-WeChatQrCode.png") no-repeat;
+        background-size: 24px;
+      }
+      .payBtnClick {
+        i {
           background-color: #4285f4;
           border: 1px #4285f4 solid;
           &::after {
@@ -172,50 +186,50 @@
       float: left;
     }
   }
-  .payConfirm{
-      height: 46px;
-      line-height: 46px;
+  .payConfirm {
+    height: 46px;
+    line-height: 46px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 99;
+    &:before {
+      content: '';
       position: absolute;
+      background-color: #e5e5e5;
+      display: block;
+      z-index: 1;
+      top: -1px;
+      right: 15px;
+      bottom: auto;
       left: 0;
-      bottom: 0;
       width: 100%;
-      background-color: #fff;
-      z-index: 99;
-      &:before {
-        content: '';
-        position: absolute;
-        background-color: #e5e5e5;
-        display: block;
-        z-index: 1;
-        top: -1px;
-        right: 15px;
-        bottom: auto;
-        left: 0;
-        width: 100%;
-        height: 1PX;
-        -webkit-transform-origin: 50% 100%;
-        -ms-transform-origin: 50% 100%;
-        transform-origin: 50% 100%;
-        -webkit-transform: scaleY(0.5);
-        -ms-transform: scaleY(0.5);
-        transform: scaleY(0.5);
-      }
-    .payTitle{
+      height: 1PX;
+      -webkit-transform-origin: 50% 100%;
+      -ms-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(0.5);
+      -ms-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+    .payTitle {
       display: inline-block;
       font-size: 14px;
       color: #666;
       padding-left: 10px;
       box-sizing: border-box;
       width: calc(~"100% - 160px");
-      span{
+      span {
         color: #4285f4;
       }
-      .num{
+      .num {
         font-size: 20px;
         vertical-align: bottom;
       }
     }
-    .payNow{
+    .payNow {
       background-color: #4285f4;
       color: #fff;
       font-size: 16px;
@@ -239,14 +253,29 @@
       font-size: 21px;
       letter-spacing: 1px;
     }
-    &.alipayjs.am-result .am-result-title{
+    &.alipayjs.am-result .am-result-title {
       color: #4285f4;
     }
-    .am-icon-md{
+    .am-icon-md {
       width: 100%;
       height: 100%;
     }
   }
-
+  .Qr_Code {
+    position: absolute;
+    top: 0;
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    > img {
+      display: block;
+      margin: 0 auto;
+      width: 180px;
+      height: 180px;
+    }
+  }
 
 }

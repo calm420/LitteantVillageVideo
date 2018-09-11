@@ -10,6 +10,7 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var that;
+const initCheckId = [];
 export default class myThemeTask extends React.Component {
 
     constructor(props) {
@@ -24,23 +25,22 @@ export default class myThemeTask extends React.Component {
             hasMore: true,
             exportFlag: false,
             exportIdArray: [],
-            initCheckIdLength:0,
-            initCheckId:[],
-            filterFlag:false,
+            initCheckIdLength: 0,
+            filterFlag: false,
             masteryId: "-1",
             tagId: "-1",
             startTime: WebServiceUtil.formatYMD(new Date('2000-01-01').getTime()),
             endTime: WebServiceUtil.formatYMD(new Date().getTime()),
-            courseIdArray:'',
-            masteryIdArray:["-1"], //默認選擇全部
-            tagIdArray:["-1"],　　　//默認選擇全部
-            courseData:[],
-            tagData:[],
-            timeText:'全部',
-            startDateForCustom:new Date(),
+            courseIdArray: '',
+            masteryIdArray: ["-1"], //默認選擇全部
+            tagIdArray: ["-1"],　　　//默認選擇全部
+            courseData: [],
+            tagData: [],
+            timeText: '全部',
+            startDateForCustom: new Date(),
             endDateForCustom: new Date(),
-            customFlagFor:false,
-            currentProject:""
+            customFlagFor: false,
+            currentProject: ""
         }
     }
 
@@ -55,8 +55,8 @@ export default class myThemeTask extends React.Component {
         var cid = (searchArray[2] ? searchArray[2].split('=')[1] : 0);
         var project = searchArray[3] ? decodeURI(searchArray[3].split('=')[1]) : "";
         this.setState({
-            project:project,
-            currentProject:project,
+            project: project,
+            currentProject: project,
             userId: userId,
             targetType: targetType,
             cid: cid,
@@ -96,7 +96,7 @@ export default class myThemeTask extends React.Component {
         var _this = this;
         var param = {
             "method": 'gitErrorTagsByCourseId',
-            "courseId": courseId?courseId:this.state.cid,
+            "courseId": courseId ? courseId : this.state.cid,
             "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -106,7 +106,7 @@ export default class myThemeTask extends React.Component {
                     var res = [];
                     res.push({
                         tagId: -1,
-                        tagTitle:'全部'
+                        tagTitle: '全部'
                     })
                     res = res.concat(result.response)
                     this.setState({
@@ -136,7 +136,7 @@ export default class myThemeTask extends React.Component {
                 if (result.success) {
                     var res = result.response;
                     var courseData = [];
-                    for(var k in res){
+                    for (var k in res) {
                         courseData.push({
                             name: k,
                             id: res[k].cid
@@ -174,14 +174,14 @@ export default class myThemeTask extends React.Component {
             "userId": this.state.userId,
             "courseId": this.state.cid,
             "tagId": this.state.tagId,
-            "mastery":this.state.masteryId,
-            "startTime":this.state.startTime,
-            "endTime":this.state.endTime,
+            "mastery": this.state.masteryId,
+            "startTime": this.state.startTime,
+            "endTime": this.state.endTime,
             "pageNo": this.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'getCircleOfFriendsByUidAndCid')
+                console.log(result, 'searchCircleOfFriends')
                 if (result.success) {
                     var exportIdArray = this.state.exportIdArray;
                     this.state.rsCount = result.pager.rsCount;
@@ -196,14 +196,17 @@ export default class myThemeTask extends React.Component {
                     for (var k in this.initDataSource) {
                         exportIdArray.push(this.initDataSource[k].cfid)
                     }
+                    console.log('45678asbdjgakjgsdkjasgj')
+                    result.response.forEach(function (v, i) {
+                        initCheckId.push(v.cfid)
+                    })
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true,
                         refreshing: false,
                         initLoading: false,
                         exportIdArray: exportIdArray,
-                        initCheckIdLength:exportIdArray.length,
-                        initCheckId: exportIdArray
+                        initCheckIdLength: exportIdArray.length,
                     }, () => {
                         if (reslove) {
                             reslove();
@@ -291,7 +294,7 @@ export default class myThemeTask extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            if (this.state.cid == 0) {
+            if (this.state.targetType == 1) {
                 this.getCircleOfFriendsByType();
             } else {
                 this.getCircleOfFriendsByUidAndCid();
@@ -310,7 +313,7 @@ export default class myThemeTask extends React.Component {
             defaultPageNo: 1, refreshing: true
         }, () => {
             // this.getLittleVideoUserById();
-            if (this.state.cid == 0) {
+            if (this.state.targetType == 1) {
                 this.getCircleOfFriendsByType(true);
 
             } else {
@@ -442,37 +445,49 @@ export default class myThemeTask extends React.Component {
         })
     }
 
-    closeFilter = ()=>{
+    closeFilter = () => {
         var timeText = '';
-        var nTime = new Date(this.state.endTime).getTime() - new Date(this.state.startTime).getTime();
-        var day =Math.floor(nTime/86400000);
-        console.log(day);
-        if(day > 5000){
-            timeText = '全部';
-        }else if(day > 7){
-            timeText = '一月內';
-        }else{
-            timeText = '一周內';
-        }
-        if(this.state.customFlagFor){
-            timeText = '自定义';
-        }
+        var endTime = this.state.endTime;
+        var startTime = this.state.startTime;
+        endTime = endTime.split('-').join('/');
+        startTime = startTime.split('-').join('/');
         this.setState({
-            masteryId:String(this.state.masteryId),
-            tagId: String(this.state.tagId)
-        },()=>{
-            this.setState({
-                currentProject:this.state.currentProject,
-                filterFlag: false,
-                courseIdArray:this.state.cid,
-                timeText:timeText,
-                masteryIdArray: this.state.masteryId.split(','),
-                tagIdArray: this.state.tagId.split(',')
-            },()=>{
-                console.log(this.state.cid,'closeFilter');
+            startTime: startTime,
+            endTime: endTime
+        }, () => {
+            console.log(this.state.endTime, 'this.state.endTime');
 
-            });
+            var nTime = new Date(this.state.endTime).getTime() - new Date(this.state.startTime).getTime();
+            var day = Math.floor(nTime / 86400000);
+            console.log(day);
+            if (day > 5000) {
+                timeText = '全部';
+            } else if (day > 7) {
+                timeText = '一月內';
+            } else {
+                timeText = '一周內';
+            }
+            if (this.state.customFlagFor) {
+                timeText = '自定义';
+            }
+            this.setState({
+                masteryId: String(this.state.masteryId),
+                tagId: String(this.state.tagId)
+            }, () => {
+                this.setState({
+                    currentProject: this.state.currentProject,
+                    filterFlag: false,
+                    courseIdArray: this.state.cid,
+                    timeText: timeText,
+                    masteryIdArray: this.state.masteryId.split(','),
+                    tagIdArray: this.state.tagId.split(',')
+                }, () => {
+                    console.log(this.state.cid, 'closeFilter');
+
+                });
+            })
         })
+
 
     }
 
@@ -499,11 +514,11 @@ export default class myThemeTask extends React.Component {
                         Toast.info('导出成功');
                         var url = result.response.fileWebPath;
                         var arr = url.split("/");
-                        var newArr = (arr[arr.length-1]).split(".");
+                        var newArr = (arr[arr.length - 1]).split(".");
                         var data = {
-                            method:"printDoc",
+                            method: "printDoc",
                             url: url,
-                            title:newArr[0]
+                            title: newArr[0]
                         }
                         Bridge.callHandler(data, null, function (error) {
                             // window.location.href = url;
@@ -511,14 +526,14 @@ export default class myThemeTask extends React.Component {
 
 
                     }
-    
+
                 },
                 onError: function (error) {
                     Toast.fail(error, 1);
                 }
             });
 
-            
+
             this.setState({
                 exportFlag: false,
             })
@@ -537,20 +552,19 @@ export default class myThemeTask extends React.Component {
 
     checkBoxClick(cfId, obj) {
         var exportIdArray = this.state.exportIdArray;
-        console.log(exportIdArray, '复选操作前');
-        console.log(obj.target.checked);
+        console.log(this.state.exportIdArray, '复选操作前');
         if (obj.target.checked) {//選中
             exportIdArray.push(cfId);
         } else {//取消選中
             exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
         }
-        if(exportIdArray.length < this.state.initCheckIdLength){
+        if (exportIdArray.length < this.state.initCheckIdLength) {
             document.getElementsByClassName('checkboxAll')[0].checked = false;
-        }else{
+        } else {
             document.getElementsByClassName('checkboxAll')[0].checked = true;
         }
         this.setState({
-            exportIdArray: exportIdArray
+            exportIdArray
         }, () => {
             console.log(this.state.exportIdArray, '复选操作后');
         })
@@ -564,30 +578,37 @@ export default class myThemeTask extends React.Component {
             [].forEach.call(fir, function (value) {
                 value.checked = true;
             })
-            this.setState({
-                exportIdArray: this.state.initCheckId
+
+            var arr = initCheckId.map((v) => {
+                return v
             })
+
+            console.log(arr, '0');
+
+            that.setState({exportIdArray: arr})
         } else {
             console.log('取消全选')
             // $('.checkbox').removeAttr('checked');
             var fir = document.getElementsByClassName("checkbox");
-            [].forEach.call(fir,function(value){
+            [].forEach.call(fir, function (value) {
                 value.checked = false;
             })
             this.setState({
                 exportIdArray: []
+            }, () => {
+                console.log(this.state.exportIdArray, '取消全選');
             })
         }
     }
 
     //科目點擊事件
-    courseClick(cid,cName){
+    courseClick(cid, cName) {
         var courseIdArray = this.state.courseIdArray;
-        console.log(cid,'cidcid')
+        console.log(cid, 'cidcid')
         this.setState({
-            courseIdArray:cid,
-            project:cName
-        },()=>{
+            courseIdArray: cid,
+            project: cName
+        }, () => {
             this.gitErrorTagsByCourseId(this.state.courseIdArray)
         })
         // if(courseIdArray.indexOf(cid) == -1){
@@ -606,16 +627,16 @@ export default class myThemeTask extends React.Component {
 
 
     //時間點擊事件
-    timeClick(timeText){
+    timeClick(timeText) {
         console.log(timeText);
-        if(timeText == '自定义'){
+        if (timeText == '自定义') {
             this.setState({
                 customFlag: true,
-                customFlagFor:true,
+                customFlagFor: true,
             })
-        }else{
+        } else {
             this.setState({
-                customFlagFor:false,
+                customFlagFor: false,
             })
         }
         this.setState({
@@ -625,83 +646,83 @@ export default class myThemeTask extends React.Component {
 
 
     //掌握程度點擊事件
-    masteryClick(masteryId){
+    masteryClick(masteryId) {
         masteryId = String(masteryId);
-        if(masteryId == "-1"){
+        if (masteryId == "-1") {
             masteryIdArray = ["-1"];
-        }else{
+        } else {
             var masteryIdArray = this.state.masteryIdArray;
-            if(masteryIdArray.indexOf(masteryId) == -1){
+            if (masteryIdArray.indexOf(masteryId) == -1) {
                 masteryIdArray.push(masteryId);
-                if(masteryIdArray.indexOf("-1") != -1 && masteryIdArray.length > 1){
-                    masteryIdArray.splice(masteryIdArray.indexOf("-1"),1);
+                if (masteryIdArray.indexOf("-1") != -1 && masteryIdArray.length > 1) {
+                    masteryIdArray.splice(masteryIdArray.indexOf("-1"), 1);
                 }
-            }else{
-                masteryIdArray.splice(masteryIdArray.indexOf(masteryId),1);
+            } else {
+                masteryIdArray.splice(masteryIdArray.indexOf(masteryId), 1);
             }
 
         }
         this.setState({
-            masteryIdArray:masteryIdArray
+            masteryIdArray: masteryIdArray
         })
     }
 
 
     //標籤點擊事件
-    tagClick(tagId){
+    tagClick(tagId) {
         tagId = String(tagId);
-        if(tagId == "-1"){
+        if (tagId == "-1") {
             tagIdArray = ["-1"];
-        }else{
+        } else {
             var tagIdArray = this.state.tagIdArray;
-            if(tagIdArray.indexOf(tagId) == -1){
+            if (tagIdArray.indexOf(tagId) == -1) {
                 tagIdArray.push(tagId);
-                if(tagIdArray.indexOf("-1") != -1 && tagIdArray.length > 1){
-                    tagIdArray.splice(tagIdArray.indexOf("-1"),1);
+                if (tagIdArray.indexOf("-1") != -1 && tagIdArray.length > 1) {
+                    tagIdArray.splice(tagIdArray.indexOf("-1"), 1);
                 }
-            }else{
-                tagIdArray.splice(tagIdArray.indexOf(tagId),1);
+            } else {
+                tagIdArray.splice(tagIdArray.indexOf(tagId), 1);
             }
 
         }
         this.setState({
-            tagIdArray:tagIdArray
+            tagIdArray: tagIdArray
         })
 
     }
 
-    determine = ()=>{
+    determine = () => {
 
         var warn = '';
-        if(this.state.courseIdArray.length <= 0){
+        if (this.state.courseIdArray.length <= 0) {
             warn = '请选择科目';
-        }else if(this.state.masteryIdArray.length <= 0){
+        } else if (this.state.masteryIdArray.length <= 0) {
             warn = '请选择掌握程度';
-        }else if(this.state.tagIdArray.length <= 0){
+        } else if (this.state.tagIdArray.length <= 0) {
             warn = '请选择标签'
         }
-        if(warn != ''){
+        if (warn != '') {
             Toast.info(warn);
             return;
         }
-        if(this.state.timeText == '全部'){
+        if (this.state.timeText == '全部') {
             this.setState({
                 startTime: WebServiceUtil.formatYMD(new Date('2000-01-01').getTime()),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime()),
             })
-        }else if(this.state.timeText == '一月内'){
+        } else if (this.state.timeText == '一月内') {
             var mouth = WebServiceUtil.formatYMD(new Date().getTime()).split('-');
-            mouth[1] = mouth[1]==1?12:mouth[1] - 1;
+            mouth[1] = mouth[1] == 1 ? 12 : mouth[1] - 1;
             this.setState({
                 startTime: mouth.join('-'),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime())
             })
-        }else if(this.state.timeText == '一周内'){
+        } else if (this.state.timeText == '一周内') {
             this.setState({
                 startTime: WebServiceUtil.formatYMD(new Date().getTime() - (86400000 * 7)),
                 endTime: WebServiceUtil.formatYMD(new Date().getTime())
             })
-        }else if(this.state.timeText == '自定义'){
+        } else if (this.state.timeText == '自定义') {
             // console.log(WebServiceUtil.formatYMD(new Date(this.state.startDateForCustom).getTime()));
             // console.log(WebServiceUtil.formatYMD(new Date(this.state.endDateForCustom).getTime()));
             this.setState({
@@ -711,28 +732,27 @@ export default class myThemeTask extends React.Component {
         }
         this.initDataSource = [];
         this.setState({
-            cid:this.state.courseIdArray,
-            currentProject:this.state.project,
-            masteryId:this.state.masteryIdArray.join(','),
+            cid: this.state.courseIdArray,
+            currentProject: this.state.project,
+            masteryId: this.state.masteryIdArray.join(','),
             tagId: this.state.tagIdArray.join(','),
             isLoading: true,
             defaultPageNo: 1,
-        },()=>{
-            console.log(this.state.cid,'科目id');
-            console.log(this.state.masteryId,'掌握程度');
-            console.log(this.state.tagId,'标签id');
-            console.log(this.state.startTime,'开始时间');
-            console.log(this.state.endTime,'结束时间');
+        }, () => {
+            console.log(this.state.cid, '科目id');
+            console.log(this.state.masteryId, '掌握程度');
+            console.log(this.state.tagId, '标签id');
+            console.log(this.state.startTime, '开始时间');
+            console.log(this.state.endTime, '结束时间');
             this.getCircleOfFriendsByUidAndCid();
             this.closeFilter();
         })
 
 
-
     }
 
 
-    customSubmit = () =>{
+    customSubmit = () => {
         this.setState({
             customFlag: false,
         })
@@ -741,8 +761,8 @@ export default class myThemeTask extends React.Component {
     /**
      * 跳转统计页面
      */
-    toCount=()=>{
-        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid="+this.state.userId+"&cid="+this.state.cid+"&finalProject="+this.state.currentProject;
+    toCount = () => {
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.userId + "&cid=" + this.state.cid + "&finalProject=" + this.state.currentProject;
         var data = {
             method: 'openNewPage',
             url: url
@@ -843,16 +863,21 @@ export default class myThemeTask extends React.Component {
                             <div style={
                                 this.state.exportFlag ? {display: 'none'} : {display: 'block'}
                             }>
-                                <button className="filter-btn" onClick={this.setFilter}><i className="icon-screening"></i><span>筛选</span></button>
-                                <button className='export-btn' onClick={this.setExport}><i className="icon-print"></i><span>打印</span></button>
-                                <button><i className="icon-statistical"></i><span onClick={this.toCount} >统计</span></button>
+                                <button className="filter-btn" onClick={this.setFilter}><i
+                                    className="icon-screening"></i><span>筛选</span></button>
+                                <button className='export-btn' onClick={this.setExport}><i
+                                    className="icon-print"></i><span>打印</span></button>
+                                <button><i className="icon-statistical"></i><span onClick={this.toCount}>统计</span>
+                                </button>
                             </div>
                             <div className="export-header" style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
                             }>
                                 <div style={{display: 'inline-block'}}>
-                                <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)} type="checkbox"/><span>全选</span></div>
-                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>确定导出</button>
+                                    <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
+                                           type="checkbox"/><span>全选</span></div>
+                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>确定导出
+                                </button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
                         </div>
@@ -882,78 +907,99 @@ export default class myThemeTask extends React.Component {
 
                 {/*篩選*/}
                 <div className="filter-content" style={
-                    this.state.filterFlag?{height: this.state.clientHeight,transform: 'translateX(0%)'}:{height: this.state.clientHeight,transform: 'translateX(100%)'}
+                    this.state.filterFlag ? {
+                        height: this.state.clientHeight,
+                        transform: 'translateX(0%)'
+                    } : {height: this.state.clientHeight, transform: 'translateX(100%)'}
                 }>
-                  <div className="filter-info">
-                    <div>
-                        <div className="filter-header">科目</div>
-                        <div style={{display:'flex'}} className="filterCont">
-                            {
-                                that.state.courseData.map(function(value,index){
-                                    return <span className={that.state.courseIdArray != (String(value.id))?"course-init":"course-active"} onClick={that.courseClick.bind(that,String(value.id),value.name)}>{value.name}</span>
-                                })
-                            }
-                        </div>
-                    </div>
-                    <div>
-                        <div className="filter-header">发布时间</div>
-                        <div style={{display:'flex'}} className="filterCont">
-                            <span className={this.state.timeText == '全部'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'全部')}>全部</span>
-                            <span className={this.state.timeText == '一周内'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一周内')}>一周内</span>
-                            <span className={this.state.timeText == '一月内'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'一月内')}>一月内</span>
-                            <span className={this.state.timeText == '自定义'?"time-active":"time-init"} onClick={this.timeClick.bind(this,'自定义')}>自定义</span>
-                            <div className="custom" style={
-                                this.state.timeText == '自定义' && this.state.customFlag?{display:'block'}:{display:'none'}
-                            }>
-                                <div className="custom-header">选择时间</div>
-                                <div className="startTime">
-                                    <span>开始时间</span>
-                                    <DatePicker
-                                        mode="date"
-                                        title=""
-                                        extra="开始时间"
-                                        value={this.state.startDateForCustom}
-                                        onChange={startDateForCustom => this.setState({ startDateForCustom })}
-                                    >
-                                        <List.Item arrow="horizontal"></List.Item>
-                                    </DatePicker>
-                                </div>
-                                <div className="endTime">
-                                    <span>结束时间</span>
-                                    <DatePicker
-                                        mode="date"
-                                        title=""
-                                        extra="结束时间"
-                                        value={this.state.endDateForCustom}
-                                        onChange={endDateForCustom => this.setState({ endDateForCustom })}
-                                    >
-                                        <List.Item arrow="horizontal"></List.Item>
-                                    </DatePicker>
-                                </div>
-                                <button className="blueBtn" onClick={this.customSubmit}>确定</button>
+                    <div className="filter-info">
+                        <div>
+                            <div className="filter-header">科目</div>
+                            <div style={{display: 'flex'}} className="filterCont">
+                                {
+                                    that.state.courseData.map(function (value, index) {
+                                        return <span
+                                            className={that.state.courseIdArray != (String(value.id)) ? "course-init" : "course-active"}
+                                            onClick={that.courseClick.bind(that, String(value.id), value.name)}>{value.name}</span>
+                                    })
+                                }
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div className="filter-header">掌握程度</div>
-                        <div style={{display:'flex'}} className="filterCont">
-                            <span className={this.state.masteryIdArray.indexOf("-1") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,-1)}>全部</span>
-                            <span className={this.state.masteryIdArray.indexOf("0") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,0)}>不懂</span>
-                            <span className={this.state.masteryIdArray.indexOf("1") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,1)}>略懂</span>
-                            <span className={this.state.masteryIdArray.indexOf("2") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,2)}>基本懂</span>
-                            <span className={this.state.masteryIdArray.indexOf("3") == -1?'mastery-init':'mastery-active'} onClick={this.masteryClick.bind(this,3)}>完全懂</span>
+                        <div>
+                            <div className="filter-header">发布时间</div>
+                            <div style={{display: 'flex'}} className="filterCont">
+                                <span className={this.state.timeText == '全部' ? "time-active" : "time-init"}
+                                      onClick={this.timeClick.bind(this, '全部')}>全部</span>
+                                <span className={this.state.timeText == '一周内' ? "time-active" : "time-init"}
+                                      onClick={this.timeClick.bind(this, '一周内')}>一周内</span>
+                                <span className={this.state.timeText == '一月内' ? "time-active" : "time-init"}
+                                      onClick={this.timeClick.bind(this, '一月内')}>一月内</span>
+                                <span className={this.state.timeText == '自定义' ? "time-active" : "time-init"}
+                                      onClick={this.timeClick.bind(this, '自定义')}>自定义</span>
+                                <div className="custom" style={
+                                    this.state.timeText == '自定义' && this.state.customFlag ? {display: 'block'} : {display: 'none'}
+                                }>
+                                    <div className="custom-header">选择时间</div>
+                                    <div className="startTime">
+                                        <span>开始时间</span>
+                                        <DatePicker
+                                            mode="date"
+                                            title=""
+                                            extra="开始时间"
+                                            value={this.state.startDateForCustom}
+                                            onChange={startDateForCustom => this.setState({startDateForCustom})}
+                                        >
+                                            <List.Item arrow="horizontal"></List.Item>
+                                        </DatePicker>
+                                    </div>
+                                    <div className="endTime">
+                                        <span>结束时间</span>
+                                        <DatePicker
+                                            mode="date"
+                                            title=""
+                                            extra="结束时间"
+                                            value={this.state.endDateForCustom}
+                                            onChange={endDateForCustom => this.setState({endDateForCustom})}
+                                        >
+                                            <List.Item arrow="horizontal"></List.Item>
+                                        </DatePicker>
+                                    </div>
+                                    <button className="blueBtn" onClick={this.customSubmit}>确定</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <div className="filter-header">标签</div>
-                        <div style={{display:'flex'}} className="filterCont">
-                            {
-                                this.state.tagData.map(function(value,index){
-                                    return <span className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1?'tag-init':'tag-active'} onClick={that.tagClick.bind(that,String(value.tagId))}>{value.tagTitle}</span>
-                                })
-                            }
+                        <div>
+                            <div className="filter-header">掌握程度</div>
+                            <div style={{display: 'flex'}} className="filterCont">
+                                <span
+                                    className={this.state.masteryIdArray.indexOf("-1") == -1 ? 'mastery-init' : 'mastery-active'}
+                                    onClick={this.masteryClick.bind(this, -1)}>全部</span>
+                                <span
+                                    className={this.state.masteryIdArray.indexOf("0") == -1 ? 'mastery-init' : 'mastery-active'}
+                                    onClick={this.masteryClick.bind(this, 0)}>不懂</span>
+                                <span
+                                    className={this.state.masteryIdArray.indexOf("1") == -1 ? 'mastery-init' : 'mastery-active'}
+                                    onClick={this.masteryClick.bind(this, 1)}>略懂</span>
+                                <span
+                                    className={this.state.masteryIdArray.indexOf("2") == -1 ? 'mastery-init' : 'mastery-active'}
+                                    onClick={this.masteryClick.bind(this, 2)}>基本懂</span>
+                                <span
+                                    className={this.state.masteryIdArray.indexOf("3") == -1 ? 'mastery-init' : 'mastery-active'}
+                                    onClick={this.masteryClick.bind(this, 3)}>完全懂</span>
+                            </div>
                         </div>
-                    </div>
+                        <div>
+                            <div className="filter-header">标签</div>
+                            <div style={{display: 'flex'}} className="filterCont">
+                                {
+                                    this.state.tagData.map(function (value, index) {
+                                        return <span
+                                            className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1 ? 'tag-init' : 'tag-active'}
+                                            onClick={that.tagClick.bind(that, String(value.tagId))}>{value.tagTitle}</span>
+                                    })
+                                }
+                            </div>
+                        </div>
                     </div>
                     <div className="filterFooter">
                         <button onClick={this.closeFilter}>取消</button>
@@ -963,7 +1009,10 @@ export default class myThemeTask extends React.Component {
                 {/*篩選　ｅｎｄ*/}
 
                 <div className="mask" onClick={this.closeFilter} style={
-                    this.state.filterFlag?{height: this.state.clientHeight,display: 'block'}:{height: this.state.clientHeight,display: 'none'}
+                    this.state.filterFlag ? {
+                        height: this.state.clientHeight,
+                        display: 'block'
+                    } : {height: this.state.clientHeight, display: 'none'}
                 }></div>
 
 

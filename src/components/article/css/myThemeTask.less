@@ -43,7 +43,7 @@
       background-size: 100% 100%;
     }
     .list_bottom {
-      padding: 10px 15px;
+      padding: 5px 15px;
       margin-top: 10px;
       position: relative;
       display: flex;
@@ -57,6 +57,7 @@
       -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
       justify-content: space-between;
+      box-sizing: border-box;
       &:after {
         content: '';
         position: absolute;
@@ -201,6 +202,10 @@
       text-align: center;
       font-size: 14px;
       color: #666;
+      padding: 5px 20px;
+      height: 25px;
+      line-height: 1.6;
+      box-sizing: border-box;
       i {
         width: 15px;
         height: 15px;
@@ -398,7 +403,7 @@
       right: 15px;
     }
     .export-btn{
-      margin-right: 20px
+      margin-left: 20px
     }
 
   }
@@ -411,13 +416,13 @@
       background: #fff !important;
       color: #4285F4;
       border: 1px #4285F4 solid !important;
-      padding: 6px 10px !important;
+      padding: 5px 13px !important;
       border-radius: 4px;
     }
     .Btn-right{
       position: absolute;
-      right: 0;
-      top: 6px;
+      right: 15px;
+      top: 7px;
     }
     input[type="checkbox"] {
       -webkit-appearance: none;  /*清除复选框默认样式*/

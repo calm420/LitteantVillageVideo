@@ -51,6 +51,18 @@
       float: left;
       overflow: hidden;
     }
+    @media (max-width: 360px) and (min-width: 340px){
+      .image_box_upload, .upload_box_image,.upload_box_video {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    @media (max-width: 339px){
+      .image_box_upload, .upload_box_image,.upload_box_video{
+        width: 90px;
+        height: 90px;
+      }
+    }
   }
   .selectedPeople{
     position: absolute;
@@ -152,6 +164,26 @@
       position: relative;
       margin-right: 8px;
       margin-bottom: 8px;
+    }
+  }
+  @media (max-width: 360px) and (min-width: 340px){
+    .addPic-wrap{
+      height: 100px;
+      width: 100px;
+      .addPic{
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+  @media (max-width: 339px){
+    .addPic-wrap{
+      height: 90px;
+      width: 90px;
+      .addPic{
+        width: 90px;
+        height: 90px;
+      }
     }
   }
   .upload_box_image, .upload_box_video{

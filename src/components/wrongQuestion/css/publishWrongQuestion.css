@@ -518,3 +518,13 @@
   right: 5px;
   top: 6px;
 }
+#publishWrongQuestion .red-star {
+  background: url("../image/red-star.png") no-repeat;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 5px;
+  background-size: 100% 100%;
+  position: relative;
+  top: -1px;
+}

@@ -84,9 +84,11 @@ export default class publishWrongQuestion extends React.Component {
             if (winHeight - resizeHeight > 50) {
                 // 软键盘弹出
                 $('body').css('height', winHeight + 'px');
+                $(".inner").css('margin-top',"-70px")
             } else {
                 //软键盘收起
                 $('body').css('height', '100%');
+                $(".inner").css('margin-top',"0")
             }
         });
 
@@ -684,7 +686,8 @@ export default class publishWrongQuestion extends React.Component {
                         uid: result.response.uid
                     });
                     calm.setState({
-                        allProjectData: calm.state.allProjectData
+                        allProjectData: calm.state.allProjectData,
+                        inputValue:""
                     })
                     $(".projectNme").hide();
                 } else {

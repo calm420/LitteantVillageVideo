@@ -543,6 +543,7 @@
   margin-right: 8px;
   display: inline-block;
   margin-bottom: 8px;
+  vertical-align: top;
 }
 #articleList .list_item .list_image .video_tag video,
 #articleList .list_item .image_detail .video_tag video {
@@ -584,6 +585,7 @@
     margin-right: 8px;
     display: inline-block;
     margin-bottom: 8px;
+    vertical-align: top;
   }
 }
 @media (max-width: 339px) {
@@ -606,6 +608,7 @@
     margin-right: 8px;
     display: inline-block;
     margin-bottom: 8px;
+    vertical-align: top;
   }
 }
 #articleList .list_item .list_bottom_item {

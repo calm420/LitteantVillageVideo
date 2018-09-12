@@ -3,21 +3,22 @@
   color: #333;
 }
 #wrongQuestionCount .topDiv {
-  line-height: 16px;
+  line-height: 18px;
   overflow: hidden;
-  padding: 15px;
+  padding: 12px 15px;
   background-color: #fff;
 }
 #wrongQuestionCount .topDiv .course {
   color: #333;
   font-size: 16px;
   font-weight: bold;
+  width: calc(100% - 75px);
 }
 #wrongQuestionCount .topDiv .icon_change {
   padding-right: 20px;
   color: #666;
   font-size: 12px;
-  background: url("../image/icon_change.png") no-repeat right top;
+  background: url("../image/icon_change.png") no-repeat right center;
   background-size: 15px;
   float: right;
 }
@@ -54,13 +55,13 @@
 }
 #wrongQuestionCount .title > span:nth-child(2) > span:first-child span,
 #wrongQuestionCount .listCont > span:nth-child(2) > span:first-child span {
-  width: 30px;
+  width: 28px;
   display: inline-block;
   text-align: center;
 }
 #wrongQuestionCount .title > span:nth-child(2) > span:last-child span,
 #wrongQuestionCount .listCont > span:nth-child(2) > span:last-child span {
-  width: 50px;
+  width: 56px;
   display: inline-block;
   text-align: center;
 }
@@ -103,6 +104,7 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  min-height: 179px;
 }
 #wrongQuestionCount .modalDiv .am-list-header {
   padding: 18px 0 0;

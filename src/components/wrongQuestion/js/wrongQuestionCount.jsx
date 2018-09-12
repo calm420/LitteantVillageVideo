@@ -215,7 +215,7 @@ export default class wrongQuestionCount extends React.Component {
                     height: document.documentElement.clientHeight,
                 }}>
                     <div className="topDiv">
-                        <span className='course'>{calm.state.finalProject}</span>
+                        <span className='course text_hidden'>{calm.state.finalProject}</span>
                         <span className='icon_change' onClick={calm.toShowModal}>切换科目</span>
                     </div>
                     <div className="title">

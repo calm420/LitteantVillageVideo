@@ -20,11 +20,11 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                // {
-                //     type: 0, //图片
-                //     fatherType: 0,
-                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                {
+                    type: 0, //图片
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
             ],
             theQustionVideo: [
                 // {
@@ -77,11 +77,11 @@ export default class publishWrongQuestion extends React.Component {
         /**
         * 防止软键盘挡住页面
         */
-        var winHeight = $(window).height(); // 获取当前页面高度  
+        var winHeight = $(window).height(); // 获取当前页面高度
         $(window).resize(function () {
             var resizeHeight = $(this).height();
             if (winHeight - resizeHeight > 50) {
-                // 软键盘弹出  
+                // 软键盘弹出
                 $('body').css('height', winHeight + 'px');
             } else {
                 //软键盘收起
@@ -266,6 +266,7 @@ export default class publishWrongQuestion extends React.Component {
     moreProject() {
         calm.getCourseByUserId(calm.state.userId);
         calm.getCourseByUserIdAndDefianceCourse(calm.state.userId);
+        $(".projectManage").slideDown();
         $(".projectManage").slideDown();
         $(`.tagBack`).show();
         // var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);

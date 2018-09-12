@@ -687,6 +687,25 @@ export default class articleList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            console.log(rowData.mastery);
+            var tagClass = '';
+            switch(rowData.mastery){
+                case 0:
+                    tagClass='不懂';
+                    break;
+                case 1:
+                    tagClass='略懂';
+                    break;
+                case 2:
+                    tagClass='基本懂';
+                    break;
+                case 3:
+                    tagClass='完全懂';
+                    break;
+                default:
+                    tagClass='未匹配到';
+                    break;
+            }
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             if (this.state.index == 2) {
@@ -705,7 +724,7 @@ export default class articleList extends React.Component {
                         <div className="createTime"></div>
 
                     </div>
-                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic tag-WrongTopic-orange"}>{rowData.type?'':''}</span></div>
+                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic "+tagClass}>{rowData.type?'':''}</span></div>
                     <div className="list_content">{rowData.type == 1?rowData.content:rowData.mark}</div>
                     <div className="list_image" style={
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}

@@ -323,6 +323,7 @@ export default class articleList extends React.Component {
                             reslove();
                         }
                     })
+                    console.log(this.initDataSource.length,'asdjioasdkashdisahk');
                     if ((this.initDataSource.length >= result.pager.rsCount)) {
                         this.setState({
                             hasMore: false,
@@ -432,7 +433,7 @@ export default class articleList extends React.Component {
             divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
             this.initDataSource = [];
             this.setState({
-                defaultPageNo: 1, refreshing: true
+                defaultPageNoForCircle: 1, refreshing: true
             }, () => {
                 this.getAllCircleOfFriendsByUid(true);
                 // this.getArticleRecommenLittleVideoList(true);
@@ -687,6 +688,24 @@ export default class articleList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
+            var tagClass = '';
+            switch(rowData.mastery){
+                case 0:
+                    tagClass='tag-WrongTopic-red';
+                    break;
+                case 1:
+                    tagClass='tag-WrongTopic-orange';
+                    break;
+                case 2:
+                    tagClass='tag-WrongTopic-yellow';
+                    break;
+                case 3:
+                    tagClass='tag-WrongTopic-green';
+                    break;
+                default:
+                    tagClass='未匹配到';
+                    break;
+            }
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             if (this.state.index == 2) {
@@ -705,7 +724,7 @@ export default class articleList extends React.Component {
                         <div className="createTime"></div>
 
                     </div>
-                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic tag-WrongTopic-orange"}>{rowData.type?'':''}</span></div>
+                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic "+tagClass}>{rowData.type?'':''}</span></div>
                     <div className="list_content">{rowData.type == 1?rowData.content:rowData.mark}</div>
                     <div className="list_image" style={
                         friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}

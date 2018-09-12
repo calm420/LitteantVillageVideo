@@ -623,7 +623,7 @@ export default class articleList extends React.Component {
     //跳转至朋友圈详情
     toThemeTaskDetail(cid,rowData){
         console.log(rowData.type);
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type"+rowData.type;
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -671,11 +671,11 @@ export default class articleList extends React.Component {
         });
     }
 
-    toShare = (cid,userName,event) => {
+    toShare = (cid,userName,event,type) => {
         event.stopPropagation();
         var data = {
             method: 'shareWechat',
-            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid,
+            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+type,
             shareTitle: $('.list_content').text(),
             shareUserName: userName,
         };
@@ -721,7 +721,7 @@ export default class articleList extends React.Component {
                             <img src={rowData.userInfo.avatar} alt=""/>
                         </div>
                         <div className="userName text_hidden">{rowData.userInfo.userName}</div>
-                        <div className="createTime"></div>
+                        <div className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
 
                     </div>
                     <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic "+tagClass}>{rowData.type?'':''}</span></div>
@@ -750,7 +750,7 @@ export default class articleList extends React.Component {
                         })}
                     </div>
                     <div className="list_bottom">
-                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName)}><i className="i-share"></i></div>
+                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share"></i></div>
                         <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                         <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
                     </div>

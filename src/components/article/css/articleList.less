@@ -519,6 +519,7 @@
       font-size: 0;
       white-space: normal;
       margin-bottom: -8px;
+      width: 354px;
       span{
         font-size: 14px;
         color: #666;
@@ -567,6 +568,7 @@
     }
     @media (max-width: 360px) and (min-width: 340px){
       .list_image, .image_detail{
+        width: 324px;
         img{
           width: 100px;
           height: 100px;
@@ -590,6 +592,7 @@
     }
     @media (max-width: 339px){
       .list_image, .image_detail{
+        width: 294px;
         img{
           width: 90px;
           height: 90px;
@@ -641,6 +644,9 @@
         background:url("../images/praiseActive.png") no-repeat;
         background-size: 100% 100%;
       }
+      .i-praise-active + span{
+        color: #e5352b;
+      }
       span{
         position: relative;
         left:5px;
@@ -670,6 +676,9 @@
     border-bottom: none;
     margin: 0 15px 0 15px;
     padding-right: 0;
+  }
+  .circleList-comment-leftNo{
+    margin-left: 0;
   }
   .commit_title-comment{
     padding-bottom: 0 !important;
@@ -836,7 +845,7 @@
       input{
         background: transparent;
         width: 100%;
-        padding: 10px 0;
+        padding: 6px 0;
         border: none;
       }
       }
@@ -862,11 +871,15 @@
     }
   }
   #appendImage{
+    height: 78px;
+    overflow-y: auto;
+    overflow-x: hidden;
     .image_item{
       width: 74px;
       height: 74px;
       position: relative;
       display: inline-block;
+      margin: 0 4px 4px 0;
       .delete_upload_image{
         position: absolute;
         top: 0;

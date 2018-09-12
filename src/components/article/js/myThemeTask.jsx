@@ -46,7 +46,6 @@ export default class myThemeTask extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -63,9 +62,11 @@ export default class myThemeTask extends React.Component {
             courseIdArray: cid,
         }, () => {
             if (targetType == 1) {
+                document.title = '我的主题任务';
                 this.getCircleOfFriendsByType();
                 $('.am-list-header').css({display: 'none'})
             } else {
+                document.title = '我的错题本';
                 this.getCircleOfFriendsByUidAndCid();
                 this.gitErrorTagsByCourseId();
                 this.getCourseAndCircleOfFriendsCount();
@@ -487,14 +488,27 @@ export default class myThemeTask extends React.Component {
                 });
             })
         })
-
-
     }
 
     setExport = () => {
         console.log('触发导出事件');
         this.setState({
             exportFlag: true,
+        },()=>{
+            var data = {
+                method: 'editorInTopic',
+            };
+            Bridge.callHandler(data, function(val){
+                // console.log(val,'valvalvalvalvalvalvalvalval');
+                // Toast.info(val);
+                if(val == 'editorInTopic'){
+                    that.closeExport();
+                }else{
+                    // Toast.info('error')
+                }
+            }, function (error) {
+
+            });
         })
     }
 
@@ -865,10 +879,10 @@ export default class myThemeTask extends React.Component {
                             }>
                                 <button className="filter-btn" onClick={this.setFilter}><i
                                     className="icon-screening"></i><span>筛选</span></button>
-                                <button className='export-btn' onClick={this.setExport}><i
-                                    className="icon-print"></i><span>打印</span></button>
                                 <button><i className="icon-statistical"></i><span onClick={this.toCount}>统计</span>
                                 </button>
+                                <button className='export-btn' onClick={this.setExport}><i
+                                    className="icon-print"></i><span>打印</span></button>
                             </div>
                             <div className="export-header" style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
@@ -876,7 +890,7 @@ export default class myThemeTask extends React.Component {
                                 <div style={{display: 'inline-block'}}>
                                     <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
                                            type="checkbox"/><span>全选</span></div>
-                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>确定导出
+                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>导出
                                 </button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>

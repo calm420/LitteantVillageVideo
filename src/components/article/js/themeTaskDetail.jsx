@@ -650,7 +650,7 @@ export default class articleList extends React.Component {
                 dom = <div></div>
             } else {
                 dom = <div className="list_item" style={{marginTop: '0'}}>
-                    <div className="circleList circleList-comment line_public">
+                    <div className="circleList circleList-comment circleList-comment-leftNo line_public">
                         <div className="list_head">
                             <div className="headPic">
                                 <img src={rowData.discussUser.avatar} alt=""/>
@@ -702,7 +702,7 @@ export default class articleList extends React.Component {
                                             <div className="courseList">
                                                 <div className="userName">{this.state.detail.userInfo.userName}</div>
                                             </div>
-                                            <div className="time"></div>
+                                            <div className="time">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
                                         </div>
                                         <div className="content_detail">{this.state.detail.content}</div>
                                         <div className="image_detail">
@@ -805,7 +805,7 @@ export default class articleList extends React.Component {
                                                 }
                                                       className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
                                             </div>
-                                            <div className="time"></div>
+                                            <div className="time">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
 
                                         </div>
                                         <div className="content_detail">{this.state.detail.mark}</div>

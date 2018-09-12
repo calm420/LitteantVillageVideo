@@ -51,18 +51,40 @@
       float: left;
       overflow: hidden;
     }
+    @media (max-width: 360px) and (min-width: 340px){
+      .image_box_upload, .upload_box_image,.upload_box_video {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    @media (max-width: 339px){
+      .image_box_upload, .upload_box_image,.upload_box_video{
+        width: 90px;
+        height: 90px;
+      }
+    }
+  }
+  .mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    opacity: 0.5;
+    z-index: 1;
   }
   .selectedPeople{
     position: absolute;
-    top: 0;
-    left: 100%;
+    bottom: 0;
+    left: 0;
     background: white;
     width: 100%;
-    height: 100%;
+    height: 50%;
     transition: 0.5s;
     z-index: 9999999999999999999999999;
     .am-list-view-scrollview{
-      height: calc(~"100% - 180px") !important;
+      height: calc(~"100% - 115px") !important;
     }
   }
   .selectedPeople-cont{
@@ -152,6 +174,26 @@
       position: relative;
       margin-right: 8px;
       margin-bottom: 8px;
+    }
+  }
+  @media (max-width: 360px) and (min-width: 340px){
+    .addPic-wrap{
+      height: 100px;
+      width: 100px;
+      .addPic{
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+  @media (max-width: 339px){
+    .addPic-wrap{
+      height: 90px;
+      width: 90px;
+      .addPic{
+        width: 90px;
+        height: 90px;
+      }
     }
   }
   .upload_box_image, .upload_box_video{

@@ -54,7 +54,7 @@
 }
 #publishWrongQuestion .projectDiv {
   height: calc(100% - 65px);
-  padding: 12px 0;
+  padding: 12px 0 0;
   box-sizing: border-box;
   overflow-y: hidden;
 }
@@ -318,16 +318,8 @@
 #publishWrongQuestion .calmTagDivNew {
   height: 70%;
   width: 100% !important;
-  left: 50%;
+  left: 0;
   bottom: 0;
-  transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  /* IE 9 */
-  -moz-transform: translateX(-50%);
-  /* Firefox */
-  -webkit-transform: translateX(-50%);
-  /* Safari 和 Chrome */
-  -o-transform: translateX(-50%);
 }
 #publishWrongQuestion .calmTagDivNew .bottomBox {
   padding: 10px 0;
@@ -500,6 +492,9 @@
   width: 100%;
   text-align: center;
   margin: 9.5px auto;
+}
+#publishWrongQuestion .allProject {
+  padding-bottom: 12px;
 }
 #publishWrongQuestion .allProject .title {
   overflow: hidden;

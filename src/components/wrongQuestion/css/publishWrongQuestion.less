@@ -55,7 +55,7 @@
     }
     .projectDiv{
         height: calc(~"100% - 65px");
-        padding: 12px 0;
+        padding: 12px 0 0;
         box-sizing: border-box;
         overflow-y: hidden;
         .modalCont{
@@ -282,6 +282,20 @@
             object-fit: cover;
             -o-object-fit: cover;
         }
+        .video_tag_play{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 40px;
+            height: 40px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            background: url("../image/play-btn.png") no-repeat;
+            background-size: 100% 100%;
+
+        }
         .delete{
             position: absolute;
             top: 0;
@@ -327,13 +341,8 @@
     .calmTagDivNew{
         height: 70%;
         width: 100% !important;
-        left: 50%;
+        left: 0;
         bottom: 0;
-        transform: translateX(-50%);
-        -ms-transform: translateX(-50%); /* IE 9 */
-        -moz-transform: translateX(-50%); /* Firefox */
-        -webkit-transform: translateX(-50%); /* Safari 和 Chrome */
-        -o-transform: translateX(-50%);
         .bottomBox{
             padding: 10px 0;
         }
@@ -512,13 +521,16 @@
             margin: 9.5px auto;
         }
     }
-    .allProject .title{
-        overflow: hidden;
-        span{
-           float: right;
-            font-size: 13px;
-            color: #666;
-            line-height: 17px;
+    .allProject{
+        padding-bottom: 12px;
+        .title{
+            overflow: hidden;
+            span{
+                float: right;
+                font-size: 13px;
+                color: #666;
+                line-height: 17px;
+            }
         }
     }
     .fatherSpan{
@@ -539,4 +551,5 @@
         position: relative;
         top: -1px;
     }
+
 }

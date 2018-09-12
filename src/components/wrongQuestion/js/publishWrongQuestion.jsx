@@ -59,7 +59,8 @@ export default class publishWrongQuestion extends React.Component {
             showDelete: 0,
             challengeData: [],
             challengeValue: "",
-            cheData: {}
+            cheData: {},
+            inputValue:""
         }
     }
 
@@ -77,11 +78,11 @@ export default class publishWrongQuestion extends React.Component {
         /**
         * 防止软键盘挡住页面
         */
-        var winHeight = $(window).height(); // 获取当前页面高度  
+        var winHeight = $(window).height(); // 获取当前页面高度
         $(window).resize(function () {
             var resizeHeight = $(this).height();
             if (winHeight - resizeHeight > 50) {
-                // 软键盘弹出  
+                // 软键盘弹出
                 $('body').css('height', winHeight + 'px');
             } else {
                 //软键盘收起
@@ -269,6 +270,7 @@ export default class publishWrongQuestion extends React.Component {
         console.log($("#publishWrongQuestion"),"ghjkl")
         calm.getCourseByUserId(calm.state.userId);
         calm.getCourseByUserIdAndDefianceCourse(calm.state.userId);
+        $(".projectManage").slideDown();
         $(".projectManage").slideDown();
         $(`.tagBack`).show();
         // var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);
@@ -639,34 +641,36 @@ export default class publishWrongQuestion extends React.Component {
      * 添加科目
      */
     addProject() {
-        var phoneType = navigator.userAgent;
-        var phone;
-        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            phone = 'ios'
-        } else {
-            phone = 'android'
-        }
-        prompt('请输入科目名称', '(建议最多四个字)', [
-            { text: '取消' },
-            { text: '立即添加', onPress: value => calm.saveProjectName(value) },
-        ], 'default', "", [], phone)
+        $(".projectNme").show()
+        // var phoneType = navigator.userAgent;
+        // var phone;
+        // if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+        //     phone = 'ios'
+        // } else {
+        //     phone = 'android'
+        // }
+        // prompt('请输入科目名称', '(建议最多四个字)', [
+        //     { text: '取消' },
+        //     { text: '立即添加', onPress: value => calm.saveProjectName(value) },
+        // ], 'default', "", [], phone)
     }
     /**
      * 保存科目
      */
-    saveProjectName(value) {
-        if(value.length > 4){
-            Toast.info('最多输入四个字', 1, "", false);
-            return
-        }
-        if (value == "") {
+    saveProjectName() {
+        if (calm.state.inputValue == "") {
             Toast.info("请输入科目名称")
             return
         }
+        if(calm.state.inputValue.length > 4){
+            Toast.info('最多输入四个字', 1, "", false);
+            return
+        }
+      
         var param = {
             "method": "saveCourse",
             "courseJson": {
-                "courseName": value,
+                "courseName": calm.state.inputValue,
                 "courseType": 1,
                 "uid": calm.state.userId
             }
@@ -1117,7 +1121,17 @@ export default class publishWrongQuestion extends React.Component {
         });
 
     };
-
+    /**
+     * 
+     */
+    inputChange(event){
+        calm.setState({
+            inputValue:event.target.value
+        })
+    }
+    cancleProjectName(){
+        $(".projectNme").hide();
+    }
     render() {
 
         if (calm.state.theQuestionArr.length != 0 || calm.state.theQustionVideo != 0) {
@@ -1149,6 +1163,16 @@ export default class publishWrongQuestion extends React.Component {
         const { understandValue, projectValue } = this.state;
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
+              <div className="projectNme" style={{display:"none"}}>
+                    <span>
+                        请输入科目名称
+                    </span>
+                    <input onChange={calm.inputChange} />
+                    <div>
+                        <span onClick={calm.cancleProjectName}>取消</span>
+                        <span onClick={calm.saveProjectName}>确定</span>
+                    </div>
+                </div>
                 <div className='tabWrap line_public'>
                     <span className="wrongQuestion active" onClick={calm.backWrongQuestion}>错题本</span>
                     <span className="tag" onClick={calm.nextStep}>标签</span>
@@ -1174,6 +1198,7 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className='imgDiv'>
                                                 <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt=""  />
+                                                <div class="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1200,6 +1225,7 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className='imgDiv'>
                                                 <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" />
+                                                <div class="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1328,6 +1354,8 @@ export default class publishWrongQuestion extends React.Component {
                     </div>
 
                 </div>
+
+              
 
                 {/* <span>上传</span>
                 <span>拍照</span>

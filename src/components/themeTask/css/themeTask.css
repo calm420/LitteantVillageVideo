@@ -48,18 +48,44 @@
   float: left;
   overflow: hidden;
 }
-#themeTask .selectedPeople {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  background: white;
+@media (max-width: 360px) and (min-width: 340px) {
+  #themeTask #image_box .image_box_upload,
+  #themeTask #image_box .upload_box_image,
+  #themeTask #image_box .upload_box_video {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (max-width: 339px) {
+  #themeTask #image_box .image_box_upload,
+  #themeTask #image_box .upload_box_image,
+  #themeTask #image_box .upload_box_video {
+    width: 90px;
+    height: 90px;
+  }
+}
+#themeTask .mask {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+#themeTask .selectedPeople {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: white;
+  width: 100%;
+  height: 50%;
   transition: 0.5s;
   z-index: 9999999999999999999999999;
 }
 #themeTask .selectedPeople .am-list-view-scrollview {
-  height: calc(100% - 180px) !important;
+  height: calc(100% - 115px) !important;
 }
 #themeTask .selectedPeople-cont {
   height: calc(100% - 65px);
@@ -151,6 +177,26 @@
   margin-right: 8px;
   margin-bottom: 8px;
 }
+@media (max-width: 360px) and (min-width: 340px) {
+  #themeTask .addPic-wrap {
+    height: 100px;
+    width: 100px;
+  }
+  #themeTask .addPic-wrap .addPic {
+    width: 100px;
+    height: 100px;
+  }
+}
+@media (max-width: 339px) {
+  #themeTask .addPic-wrap {
+    height: 90px;
+    width: 90px;
+  }
+  #themeTask .addPic-wrap .addPic {
+    width: 90px;
+    height: 90px;
+  }
+}
 #themeTask .upload_box_image,
 #themeTask .upload_box_video {
   width: 100%;
@@ -172,7 +218,7 @@
 }
 #themeTask .am-list-item .am-list-line .am-list-content {
   font-size: 16px;
-  color: #666666 !important;
+  color: #666 !important;
 }
 #themeTask .am-list-item .am-list-line .am-list-extra {
   color: #333;

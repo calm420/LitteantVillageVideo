@@ -20,11 +20,11 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                // {
-                //     type: 0, //图片
-                //     fatherType: 0,
-                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                {
+                    type: 0, //图片
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
             ],
             theQustionVideo: [
                 // {
@@ -77,18 +77,19 @@ export default class publishWrongQuestion extends React.Component {
         /**
         * 防止软键盘挡住页面
         */
-        var winHeight = $(window).height(); // 获取当前页面高度  
+        var winHeight = $(window).height(); // 获取当前页面高度
         $(window).resize(function () {
             var resizeHeight = $(this).height();
             if (winHeight - resizeHeight > 50) {
-                // 软键盘弹出  
+                // 软键盘弹出
                 $('body').css('height', winHeight + 'px');
             } else {
                 //软键盘收起
                 $('body').css('height', '100%');
             }
         });
-        window.addEventListener('resize', this.onWindwoResize);
+
+     
     }
 
     //調用全屏視頻播放
@@ -264,8 +265,11 @@ export default class publishWrongQuestion extends React.Component {
      * 更多科目
      */
     moreProject() {
+        console.log($(".am-modal-input"),"1111")
+        console.log($("#publishWrongQuestion"),"ghjkl")
         calm.getCourseByUserId(calm.state.userId);
         calm.getCourseByUserIdAndDefianceCourse(calm.state.userId);
+        $(".projectManage").slideDown();
         $(".projectManage").slideDown();
         $(`.tagBack`).show();
         // var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);
@@ -652,6 +656,10 @@ export default class publishWrongQuestion extends React.Component {
      * 保存科目
      */
     saveProjectName(value) {
+        if(value.length > 4){
+            Toast.info('最多输入四个字', 1, "", false);
+            return
+        }
         if (value == "") {
             Toast.info("请输入科目名称")
             return
@@ -1166,7 +1174,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQustionVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt=""  />
                                                 <div class="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
@@ -1193,7 +1201,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theAnswerVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" />
                                                 <div class="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>

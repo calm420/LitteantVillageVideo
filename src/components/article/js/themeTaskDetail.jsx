@@ -650,7 +650,7 @@ export default class articleList extends React.Component {
                 dom = <div></div>
             } else {
                 dom = <div className="list_item" style={{marginTop: '0'}}>
-                    <div className="circleList circleList-comment line_public">
+                    <div className="circleList circleList-comment circleList-comment-leftNo line_public">
                         <div className="list_head">
                             <div className="headPic">
                                 <img src={rowData.discussUser.avatar} alt=""/>

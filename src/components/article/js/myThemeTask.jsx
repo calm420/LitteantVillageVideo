@@ -879,10 +879,10 @@ export default class myThemeTask extends React.Component {
                             }>
                                 <button className="filter-btn" onClick={this.setFilter}><i
                                     className="icon-screening"></i><span>筛选</span></button>
-                                <button className='export-btn' onClick={this.setExport}><i
-                                    className="icon-print"></i><span>打印</span></button>
                                 <button><i className="icon-statistical"></i><span onClick={this.toCount}>统计</span>
                                 </button>
+                                <button className='export-btn' onClick={this.setExport}><i
+                                    className="icon-print"></i><span>打印</span></button>
                             </div>
                             <div className="export-header" style={
                                 this.state.exportFlag ? {display: 'block'} : {display: 'none'}
@@ -890,7 +890,7 @@ export default class myThemeTask extends React.Component {
                                 <div style={{display: 'inline-block'}}>
                                     <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
                                            type="checkbox"/><span>全选</span></div>
-                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>确定导出
+                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>导出
                                 </button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>

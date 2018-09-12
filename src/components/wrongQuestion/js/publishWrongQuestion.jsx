@@ -271,7 +271,6 @@ export default class publishWrongQuestion extends React.Component {
         calm.getCourseByUserId(calm.state.userId);
         calm.getCourseByUserIdAndDefianceCourse(calm.state.userId);
         $(".projectManage").slideDown();
-        $(".projectManage").slideDown();
         $(`.tagBack`).show();
         // var url = encodeURI(WebServiceUtil.mobileServiceURL + "projectManage?userId=" + calm.state.userId);
         // var data = {
@@ -1166,15 +1165,22 @@ export default class publishWrongQuestion extends React.Component {
         const { understandValue, projectValue } = this.state;
         return (
             <div id="publishWrongQuestion" style={{ height: calm.state.clientHeight }}>
-              <div className="projectNme" style={{display:"none"}}>
-                    <span>
+              <div className="projectNme"  style={{display:"none"}}>
+                  <div className="inner">
+                      <div className='modal_title'>
                         请输入科目名称
-                    </span>
-                    <input onChange={calm.inputChange} />
-                    <div>
-                        <span onClick={calm.cancleProjectName}>取消</span>
-                        <span onClick={calm.saveProjectName}>确定</span>
-                    </div>
+                        </div>
+                      <div className="content">
+                          <div className="inputDiv">
+                              <input onChange={calm.inputChange} />
+                          </div>
+                      </div>
+
+                      <div className="btn my_flex">
+                          <span onClick={calm.cancleProjectName}>取消</span>
+                          <span onClick={calm.saveProjectName}>确定</span>
+                      </div>
+                  </div>
                 </div>
                 <div className='tabWrap line_public'>
                     <span className="wrongQuestion active" onClick={calm.backWrongQuestion}>错题本</span>

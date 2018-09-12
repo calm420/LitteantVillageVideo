@@ -811,8 +811,8 @@
   height: 49px;
 }
 #articleList .appendImage_item {
-  width: 74px;
-  height: 74px;
+  width: 68px;
+  height: 68px;
   object-fit: cover;
 }
 #articleList .commit_box {
@@ -865,8 +865,8 @@
   overflow-x: hidden;
 }
 #articleList #appendImage .image_item {
-  width: 74px;
-  height: 74px;
+  width: 68px;
+  height: 68px;
   position: relative;
   display: inline-block;
   margin: 0 4px 4px 0;

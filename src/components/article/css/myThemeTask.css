@@ -117,6 +117,7 @@
 }
 #myThemeTask .list_item .list_image {
   margin-top: 10px;
+  width: 354px;
 }
 #myThemeTask .list_item .list_image img {
   width: 110px;
@@ -152,6 +153,10 @@
   background-size: 100% 100%;
 }
 @media (max-width: 360px) and (min-width: 340px) {
+  #myThemeTask .list_item .list_image,
+  #myThemeTask .list_item .image_detail {
+    width: 324px;
+  }
   #myThemeTask .list_item .list_image img,
   #myThemeTask .list_item .image_detail img {
     width: 100px;
@@ -174,6 +179,10 @@
   }
 }
 @media (max-width: 339px) {
+  #myThemeTask .list_item .list_image,
+  #myThemeTask .list_item .image_detail {
+    width: 294px;
+  }
   #myThemeTask .list_item .list_image img,
   #myThemeTask .list_item .image_detail img {
     width: 90px;
@@ -199,7 +208,7 @@
   display: inline-block;
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: #888;
   padding: 5px 20px;
   height: 25px;
   line-height: 1.6;

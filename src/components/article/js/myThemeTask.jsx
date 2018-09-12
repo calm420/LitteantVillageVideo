@@ -101,7 +101,7 @@ export default class myThemeTask extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '標籤列表')
+                console.log(result, '标签列表')
                 if (result.success) {
                     var res = [];
                     res.push({
@@ -609,7 +609,7 @@ export default class myThemeTask extends React.Component {
             this.setState({
                 exportIdArray: []
             }, () => {
-                console.log(this.state.exportIdArray, '取消全選');
+                console.log(this.state.exportIdArray, '取消全选');
             })
         }
     }

@@ -1175,7 +1175,7 @@ export default class publishWrongQuestion extends React.Component {
                         </div>
                       <div className="content">
                           <div className="inputDiv">
-                              <input onChange={calm.inputChange} />
+                              <input placeholder="最多输入四个字" value={calm.state.inputValue} onChange={calm.inputChange} />
                           </div>
                       </div>
 

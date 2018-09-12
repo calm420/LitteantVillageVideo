@@ -323,6 +323,7 @@ export default class articleList extends React.Component {
                             reslove();
                         }
                     })
+                    console.log(this.initDataSource.length,'asdjioasdkashdisahk');
                     if ((this.initDataSource.length >= result.pager.rsCount)) {
                         this.setState({
                             hasMore: false,
@@ -432,7 +433,7 @@ export default class articleList extends React.Component {
             divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
             this.initDataSource = [];
             this.setState({
-                defaultPageNo: 1, refreshing: true
+                defaultPageNoForCircle: 1, refreshing: true
             }, () => {
                 this.getAllCircleOfFriendsByUid(true);
                 // this.getArticleRecommenLittleVideoList(true);
@@ -687,20 +688,19 @@ export default class articleList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData.mastery);
             var tagClass = '';
             switch(rowData.mastery){
                 case 0:
-                    tagClass='不懂';
+                    tagClass='tag-WrongTopic-red';
                     break;
                 case 1:
-                    tagClass='略懂';
+                    tagClass='tag-WrongTopic-orange';
                     break;
                 case 2:
-                    tagClass='基本懂';
+                    tagClass='tag-WrongTopic-yellow';
                     break;
                 case 3:
-                    tagClass='完全懂';
+                    tagClass='tag-WrongTopic-green';
                     break;
                 default:
                     tagClass='未匹配到';

@@ -12,7 +12,8 @@ export default class articleList extends React.Component {
         that = this;
         this.state = {
             clientHeight: document.body.clientHeight,
-            listData:[]
+            listData:[],
+            refreshing:false,
         }
     }
 
@@ -90,8 +91,10 @@ export default class articleList extends React.Component {
                         }
                     }
                     console.log(listData);
+
                     this.setState({
-                        listData: listData
+                        listData: listData,
+                        refreshing:false,
                     })
                 }
 
@@ -121,12 +124,35 @@ export default class articleList extends React.Component {
     render() {
         return (
             <div id="topicWrongList" style={{height: document.body.clientHeight}}>
-                {this.state.listData.map(function(value,index){
-                    return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
+                <PullToRefresh
+                    damping={60}
+                    style={{
+                        height: this.state.clientHeight,
+                        overflow: 'auto',
+                    }}
+                    indicator={{}}
+                    direction={'down'}
+                    refreshing={this.state.refreshing}
+                    onRefresh={() => {
+                        this.setState({ refreshing: true });
+                        setTimeout(() => {
+                            this.getCourseAndCircleOfFriendsCount();
+                        }, 1000);
+                    }}
+                >
+                    <div style={
+                        {height:this.state.clientHeight}
+                    }>
+                        {this.state.listData.map(function(value,index){
+                            return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
                                 <div className={value.css+" tag-pic"}></div>
                                 <div className="tag-text">{value.name}/{value.count}</div>
-                           </div>
-                })}
+                            </div>
+                        })}
+                    </div>
+
+                </PullToRefresh>
+
             </div>
         );
     }

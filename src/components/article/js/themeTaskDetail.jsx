@@ -419,7 +419,11 @@ export default class articleList extends React.Component {
 
     selectedImage = () => {
 
-
+        console.log(that.state.friendsAttachments,'that.state.friendsAttachments');
+        if(that.state.friendsAttachments.length >= 9){
+            Toast.info('最多添加九張圖片或視頻!',1);
+            return;
+        }
         var noom = ''
 
         /*var url = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg';
@@ -797,7 +801,7 @@ export default class articleList extends React.Component {
                                                 }
                                                       className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
                                                 <span style={
-                                                    this.state.detail.fTags ? {display: 'block'} : {display: 'none'}
+                                                    this.state.detail.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
                                                 }
                                                       className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
                                             </div>

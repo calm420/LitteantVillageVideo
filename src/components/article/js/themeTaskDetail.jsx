@@ -805,7 +805,7 @@ export default class articleList extends React.Component {
                                                 }
                                                       className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
                                             </div>
-                                            <div className="time">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
+                                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
 
                                         </div>
                                         <div className="content_detail">{this.state.detail.mark}</div>

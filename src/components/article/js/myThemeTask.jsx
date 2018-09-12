@@ -487,14 +487,27 @@ export default class myThemeTask extends React.Component {
                 });
             })
         })
-
-
     }
 
     setExport = () => {
         console.log('触发导出事件');
         this.setState({
             exportFlag: true,
+        },()=>{
+            var data = {
+                method: 'editorInTopic',
+            };
+            Bridge.callHandler(data, function(val){
+                // console.log(val,'valvalvalvalvalvalvalvalval');
+                // Toast.info(val);
+                if(val == 'editorInTopic'){
+                    that.closeExport();
+                }else{
+                    // Toast.info('error')
+                }
+            }, function (error) {
+
+            });
         })
     }
 

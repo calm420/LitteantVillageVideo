@@ -88,7 +88,8 @@ export default class publishWrongQuestion extends React.Component {
                 $('body').css('height', '100%');
             }
         });
-        window.addEventListener('resize', this.onWindwoResize);
+
+     
     }
 
     //調用全屏視頻播放
@@ -264,6 +265,8 @@ export default class publishWrongQuestion extends React.Component {
      * 更多科目
      */
     moreProject() {
+        console.log($(".am-modal-input"),"1111")
+        console.log($("#publishWrongQuestion"),"ghjkl")
         calm.getCourseByUserId(calm.state.userId);
         calm.getCourseByUserIdAndDefianceCourse(calm.state.userId);
         $(".projectManage").slideDown();
@@ -653,6 +656,10 @@ export default class publishWrongQuestion extends React.Component {
      * 保存科目
      */
     saveProjectName(value) {
+        if(value.length > 4){
+            Toast.info('最多输入四个字', 1, "", false);
+            return
+        }
         if (value == "") {
             Toast.info("请输入科目名称")
             return
@@ -1167,7 +1174,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theQustionVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt=""  />
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1193,7 +1200,7 @@ export default class publishWrongQuestion extends React.Component {
                                     calm.state.theAnswerVideo.map((v, i) => {
                                         return (
                                             <div className='imgDiv'>
-                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" controls />
+                                                <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" />
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
                                             </div>

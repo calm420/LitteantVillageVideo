@@ -27,12 +27,12 @@ export default class publishWrongQuestion extends React.Component {
                 // }
             ],
             theQustionVideo: [
-                // {
-                //     type: 1,  //视频
-                //     fatherType: 0,
-                //     path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
-                //     coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                {
+                    type: 1,  //视频
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
+                    coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
             ],
             theAnswerArr: [
                 // {
@@ -1198,7 +1198,7 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className='imgDiv'>
                                                 <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt=""  />
-                                                <div class="video_tag_play"></div>
+                                                <div className="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1225,7 +1225,7 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className='imgDiv'>
                                                 <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" />
-                                                <div class="video_tag_play"></div>
+                                                <div className="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
                                             </div>

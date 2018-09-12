@@ -480,7 +480,7 @@
 }
 #articleList .list_item .list_head {
   height: 40px;
-  margin-bottom: 13px;
+  margin-bottom: 10px;
 }
 #articleList .list_item .list_head .headPic {
   display: inline-block;
@@ -503,10 +503,8 @@
   max-width: calc(100% - 100px);
 }
 #articleList .list_item .list_head .createTime {
-  display: inline-block;
   color: #999;
   font-size: 13px;
-  line-height: 1.6;
 }
 #articleList .list_item .list_image,
 #articleList .list_item .image_detail {
@@ -515,6 +513,7 @@
   font-size: 0;
   white-space: normal;
   margin-bottom: -8px;
+  width: 354px;
 }
 #articleList .list_item .list_image span,
 #articleList .list_item .image_detail span {
@@ -566,6 +565,10 @@
   background-size: 100% 100%;
 }
 @media (max-width: 360px) and (min-width: 340px) {
+  #articleList .list_item .list_image,
+  #articleList .list_item .image_detail {
+    width: 324px;
+  }
   #articleList .list_item .list_image img,
   #articleList .list_item .image_detail img {
     width: 100px;
@@ -589,6 +592,10 @@
   }
 }
 @media (max-width: 339px) {
+  #articleList .list_item .list_image,
+  #articleList .list_item .image_detail {
+    width: 294px;
+  }
   #articleList .list_item .list_image img,
   #articleList .list_item .image_detail img {
     width: 90px;
@@ -615,7 +622,7 @@
   display: inline-block;
   text-align: center;
   font-size: 14px;
-  color: #666;
+  color: #888;
   padding: 5px 20px;
   height: 25px;
 }
@@ -641,6 +648,9 @@
 #articleList .list_item .list_bottom_item .i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
+}
+#articleList .list_item .list_bottom_item .i-praise-active + span {
+  color: #e5352b;
 }
 #articleList .list_item .list_bottom_item span {
   position: relative;
@@ -670,6 +680,9 @@
   border-bottom: none;
   margin: 0 15px 0 15px;
   padding-right: 0;
+}
+#articleList .circleList-comment-leftNo {
+  margin-left: 0;
 }
 #articleList .commit_title-comment {
   padding-bottom: 0 !important;
@@ -824,7 +837,7 @@
 #articleList .commit_box > div .import input {
   background: transparent;
   width: 100%;
-  padding: 10px 0;
+  padding: 6px 0;
   border: none;
 }
 #articleList .commit_box > div .send {
@@ -846,11 +859,17 @@
   margin-top: 6px;
   display: inline-block;
 }
+#articleList #appendImage {
+  height: 78px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 #articleList #appendImage .image_item {
   width: 74px;
   height: 74px;
   position: relative;
   display: inline-block;
+  margin: 0 4px 4px 0;
 }
 #articleList #appendImage .image_item .delete_upload_image {
   position: absolute;

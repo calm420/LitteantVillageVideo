@@ -18,7 +18,7 @@ export default class articleList extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '錯題本';
+        document.title = '错题本';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

@@ -305,7 +305,7 @@ export default class articleList extends React.Component {
 
             }, function (error) {
                 console.log(error);
-                Toast.info('客戶端方法報錯');
+                Toast.info('客户端方法报错');
                 that.upload_file();
                 that.upload_file();
             });

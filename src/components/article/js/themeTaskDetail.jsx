@@ -60,7 +60,7 @@ export default class articleList extends React.Component {
                 shareHidden: true,
             })
         }
-        document.title = type?'主體任務':'錯題本';
+        document.title = type?'主题任务':'错题本';
         this.setState({
             userId: userId,
             cid: cid
@@ -263,7 +263,7 @@ export default class articleList extends React.Component {
                     var detailArray = result.response.friendsAttachments;
                     for(var k in detailArray){
                         if(detailArray[k].faterType == 0){
-                            console.log('題幹已有');
+                            console.log('题干已有');
                         }else if(detailArray[k].faterType == 0){
                             console.log('題幹已有');
                         }
@@ -299,7 +299,7 @@ export default class articleList extends React.Component {
                 if (result.success) {
                     // Toast.info(this.state.islike ? '取消點贊' : '點贊成功');
                     if (this.state.islike) {
-                        console.log('取消點贊')
+                        console.log('取消点赞')
                         var detail = this.state.detail;
                         detail.likeCount = detail.likeCount - 1
                         this.setState({
@@ -309,7 +309,7 @@ export default class articleList extends React.Component {
                             likeFlag = true;
                         })
                     } else {
-                        console.log('點贊')
+                        console.log('点赞')
                         var detail = this.state.detail;
                         detail.likeCount = detail.likeCount + 1
                         this.setState({
@@ -358,7 +358,7 @@ export default class articleList extends React.Component {
         console.log(new Date().getTime());
         console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
         if(this.state.detail.type == 1 && new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
-            Toast.info('截止時間已到，無法參與評論',1);
+            Toast.info('截止时间已到，无法参与评论',1);
             this.setState({
                 inputValue: '',
                 friendsAttachments: [],
@@ -413,7 +413,7 @@ export default class articleList extends React.Component {
         };
         window.parent.Bridge.callHandler(data, function () {
         }, function (error) {
-            Toast.info('開啓視頻失敗!');
+            Toast.info('开启视频失败!');
         });
     }
 

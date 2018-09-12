@@ -721,7 +721,7 @@ export default class articleList extends React.Component {
                             <img src={rowData.userInfo.avatar} alt=""/>
                         </div>
                         <div className="userName text_hidden">{rowData.userInfo.userName}</div>
-                        <div className="createTime"></div>
+                        <div className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
 
                     </div>
                     <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic "+tagClass}>{rowData.type?'':''}</span></div>

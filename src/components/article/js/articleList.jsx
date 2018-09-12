@@ -623,7 +623,7 @@ export default class articleList extends React.Component {
     //跳转至朋友圈详情
     toThemeTaskDetail(cid,rowData){
         console.log(rowData.type);
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type"+rowData.type;
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+rowData.type;
         var data = {
             method: 'openNewPage',
             url: url

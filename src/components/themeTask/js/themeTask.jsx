@@ -251,7 +251,7 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, '发布结果')
                 if (result.success) {
-                    Toast.success('發布成功');
+                    Toast.success('发布成功');
                     this.closeWindow();
                 }
 
@@ -305,7 +305,7 @@ export default class articleList extends React.Component {
 
             }, function (error) {
                 console.log(error);
-                Toast.info('客戶端方法報錯');
+                Toast.info('客户端方法报错');
                 that.upload_file();
                 that.upload_file();
             });
@@ -513,8 +513,11 @@ export default class articleList extends React.Component {
                 </div>
 
 
+                <div className="mask" style={
+                    this.state.selectedFlag?{display:'block'}:{display:'none'}
+                } onClick={this.selectedComplete}></div>
                 <div className='selectedPeople' style={
-                    this.state.selectedFlag ? {left: '0%'} : {left: '100%'}
+                    this.state.selectedFlag ? {bottom: '0%'} : {bottom: '-100%'}
                 }>
                     <div className="selectedPeople-cont">
                         <List className="selectedPeople_border">

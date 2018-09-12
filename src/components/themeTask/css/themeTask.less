@@ -64,13 +64,22 @@
       }
     }
   }
-  .selectedPeople{
-    position: absolute;
-    top: 0;
-    left: 100%;
-    background: white;
+  .mask{
     width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    opacity: 0.5;
+  }
+  .selectedPeople{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: white;
+    width: 100%;
+    height: 50%;
     transition: 0.5s;
     z-index: 9999999999999999999999999;
     .am-list-view-scrollview{

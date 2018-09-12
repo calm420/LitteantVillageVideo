@@ -12,13 +12,14 @@ export default class articleList extends React.Component {
         that = this;
         this.state = {
             clientHeight: document.body.clientHeight,
-            listData:[]
+            listData:[],
+            refreshing:false,
         }
     }
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '錯題本';
+        document.title = '错题本';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -78,20 +79,22 @@ export default class articleList extends React.Component {
                             case '数学':
                                 listData[k].css = 'Wrong-topic-mathematics';
                                 break;
-                            case '其他':
-                                listData[k].css = 'Wrong-topic-other';
-                                break;
                             case '物理':
                                 listData[k].css = 'Wrong-topic-physical';
                                 break;
                             case '政治':
                                 listData[k].css = 'Wrong-topic-political';
                                 break;
+                            default :
+                                listData[k].css = 'Wrong-topic-other';
+                                break;
                         }
                     }
                     console.log(listData);
+
                     this.setState({
-                        listData: listData
+                        listData: listData,
+                        refreshing:false,
                     })
                 }
 
@@ -121,12 +124,35 @@ export default class articleList extends React.Component {
     render() {
         return (
             <div id="topicWrongList" style={{height: document.body.clientHeight}}>
-                {this.state.listData.map(function(value,index){
-                    return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
+                <PullToRefresh
+                    damping={60}
+                    style={{
+                        height: this.state.clientHeight,
+                        overflow: 'auto',
+                    }}
+                    indicator={{}}
+                    direction={'down'}
+                    refreshing={this.state.refreshing}
+                    onRefresh={() => {
+                        this.setState({ refreshing: true });
+                        setTimeout(() => {
+                            this.getCourseAndCircleOfFriendsCount();
+                        }, 1000);
+                    }}
+                >
+                    <div style={
+                        {height:this.state.clientHeight}
+                    }>
+                        {this.state.listData.map(function(value,index){
+                            return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
                                 <div className={value.css+" tag-pic"}></div>
                                 <div className="tag-text">{value.name}/{value.count}</div>
-                           </div>
-                })}
+                            </div>
+                        })}
+                    </div>
+
+                </PullToRefresh>
+
             </div>
         );
     }

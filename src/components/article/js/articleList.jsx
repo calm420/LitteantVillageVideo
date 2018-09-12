@@ -323,6 +323,7 @@ export default class articleList extends React.Component {
                             reslove();
                         }
                     })
+                    console.log(this.initDataSource.length,'asdjioasdkashdisahk');
                     if ((this.initDataSource.length >= result.pager.rsCount)) {
                         this.setState({
                             hasMore: false,
@@ -432,7 +433,7 @@ export default class articleList extends React.Component {
             divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
             this.initDataSource = [];
             this.setState({
-                defaultPageNo: 1, refreshing: true
+                defaultPageNoForCircle: 1, refreshing: true
             }, () => {
                 this.getAllCircleOfFriendsByUid(true);
                 // this.getArticleRecommenLittleVideoList(true);
@@ -622,7 +623,7 @@ export default class articleList extends React.Component {
     //跳转至朋友圈详情
     toThemeTaskDetail(cid,rowData){
         console.log(rowData.type);
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type"+rowData.type;
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -670,11 +671,11 @@ export default class articleList extends React.Component {
         });
     }
 
-    toShare = (cid,userName,event) => {
+    toShare = (cid,userName,event,type) => {
         event.stopPropagation();
         var data = {
             method: 'shareWechat',
-            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid,
+            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+type,
             shareTitle: $('.list_content').text(),
             shareUserName: userName,
         };
@@ -687,7 +688,6 @@ export default class articleList extends React.Component {
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
-            console.log(rowData.mastery);
             var tagClass = '';
             switch(rowData.mastery){
                 case 0:
@@ -750,7 +750,7 @@ export default class articleList extends React.Component {
                         })}
                     </div>
                     <div className="list_bottom">
-                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName)}><i className="i-share"></i></div>
+                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share"></i></div>
                         <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                         <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
                     </div>

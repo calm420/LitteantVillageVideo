@@ -46,7 +46,6 @@ export default class myThemeTask extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -63,9 +62,11 @@ export default class myThemeTask extends React.Component {
             courseIdArray: cid,
         }, () => {
             if (targetType == 1) {
+                document.title = '我的主题任务';
                 this.getCircleOfFriendsByType();
                 $('.am-list-header').css({display: 'none'})
             } else {
+                document.title = '我的错题本';
                 this.getCircleOfFriendsByUidAndCid();
                 this.gitErrorTagsByCourseId();
                 this.getCourseAndCircleOfFriendsCount();
@@ -101,7 +102,7 @@ export default class myThemeTask extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '標籤列表')
+                console.log(result, '标签列表')
                 if (result.success) {
                     var res = [];
                     res.push({
@@ -487,14 +488,27 @@ export default class myThemeTask extends React.Component {
                 });
             })
         })
-
-
     }
 
     setExport = () => {
         console.log('触发导出事件');
         this.setState({
             exportFlag: true,
+        },()=>{
+            var data = {
+                method: 'editorInTopic',
+            };
+            Bridge.callHandler(data, function(val){
+                // console.log(val,'valvalvalvalvalvalvalvalval');
+                // Toast.info(val);
+                if(val == 'editorInTopic'){
+                    that.closeExport();
+                }else{
+                    // Toast.info('error')
+                }
+            }, function (error) {
+
+            });
         })
     }
 
@@ -596,7 +610,7 @@ export default class myThemeTask extends React.Component {
             this.setState({
                 exportIdArray: []
             }, () => {
-                console.log(this.state.exportIdArray, '取消全選');
+                console.log(this.state.exportIdArray, '取消全选');
             })
         }
     }

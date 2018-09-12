@@ -1167,6 +1167,7 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className='imgDiv'>
                                                 <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" controls />
+                                                <div class="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteQuestionVideo.bind(this, i)}>删除</span></div>
                                             </div>
@@ -1193,6 +1194,7 @@ export default class publishWrongQuestion extends React.Component {
                                         return (
                                             <div className='imgDiv'>
                                                 <video onClick={calm.playVideo.bind(this, v.path)} poster={v.coverPath} src={v.path} alt="" controls />
+                                                <div class="video_tag_play"></div>
                                                 <div className='delete'><span
                                                     onClick={calm.deleteAnswerVideo.bind(this, i)}>删除</span></div>
                                             </div>

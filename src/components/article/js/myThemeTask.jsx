@@ -46,7 +46,6 @@ export default class myThemeTask extends React.Component {
 
     componentDidMount() {
         Bridge.setShareAble("false");
-        document.title = '';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -63,9 +62,11 @@ export default class myThemeTask extends React.Component {
             courseIdArray: cid,
         }, () => {
             if (targetType == 1) {
+                document.title = '我的主题任务';
                 this.getCircleOfFriendsByType();
                 $('.am-list-header').css({display: 'none'})
             } else {
+                document.title = '我的错题本';
                 this.getCircleOfFriendsByUidAndCid();
                 this.gitErrorTagsByCourseId();
                 this.getCourseAndCircleOfFriendsCount();

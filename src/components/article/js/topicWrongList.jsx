@@ -79,14 +79,14 @@ export default class articleList extends React.Component {
                             case '数学':
                                 listData[k].css = 'Wrong-topic-mathematics';
                                 break;
-                            case '其他':
-                                listData[k].css = 'Wrong-topic-other';
-                                break;
                             case '物理':
                                 listData[k].css = 'Wrong-topic-physical';
                                 break;
                             case '政治':
                                 listData[k].css = 'Wrong-topic-political';
+                                break;
+                            default :
+                                listData[k].css = 'Wrong-topic-other';
                                 break;
                         }
                     }

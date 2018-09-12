@@ -513,8 +513,11 @@ export default class articleList extends React.Component {
                 </div>
 
 
+                <div className="mask" style={
+                    this.state.selectedFlag?{display:'block'}:{display:'none'}
+                } onClick={this.selectedComplete}></div>
                 <div className='selectedPeople' style={
-                    this.state.selectedFlag ? {left: '0%'} : {left: '100%'}
+                    this.state.selectedFlag ? {bottom: '0%'} : {bottom: '-100%'}
                 }>
                     <div className="selectedPeople-cont">
                         <List className="selectedPeople_border">

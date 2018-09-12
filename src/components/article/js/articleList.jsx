@@ -671,11 +671,11 @@ export default class articleList extends React.Component {
         });
     }
 
-    toShare = (cid,userName,event) => {
+    toShare = (cid,userName,event,type) => {
         event.stopPropagation();
         var data = {
             method: 'shareWechat',
-            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid,
+            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+type,
             shareTitle: $('.list_content').text(),
             shareUserName: userName,
         };
@@ -750,7 +750,7 @@ export default class articleList extends React.Component {
                         })}
                     </div>
                     <div className="list_bottom">
-                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName)}><i className="i-share"></i></div>
+                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share"></i></div>
                         <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                         <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
                     </div>

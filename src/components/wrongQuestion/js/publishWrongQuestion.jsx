@@ -20,11 +20,11 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                // {
-                //     type: 0, //图片
-                //     fatherType: 0,
-                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                {
+                    type: 0, //图片
+                    fatherType: 0,
+                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                }
             ],
             theQustionVideo: [
                 // {
@@ -666,7 +666,6 @@ export default class publishWrongQuestion extends React.Component {
             Toast.info('最多输入四个字', 1, "", false);
             return
         }
-      
         var param = {
             "method": "saveCourse",
             "courseJson": {
@@ -688,6 +687,7 @@ export default class publishWrongQuestion extends React.Component {
                     calm.setState({
                         allProjectData: calm.state.allProjectData
                     })
+                    $(".projectNme").hide();
                 } else {
                     Toast.info(result.msg);
                 }

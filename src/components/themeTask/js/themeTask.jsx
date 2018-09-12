@@ -251,7 +251,7 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, '发布结果')
                 if (result.success) {
-                    Toast.success('發布成功');
+                    Toast.success('发布成功');
                     this.closeWindow();
                 }
 

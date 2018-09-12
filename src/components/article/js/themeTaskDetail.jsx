@@ -265,7 +265,7 @@ export default class articleList extends React.Component {
                         if(detailArray[k].faterType == 0){
                             console.log('题干已有');
                         }else if(detailArray[k].faterType == 0){
-                            console.log('題幹已有');
+                            console.log('题干已有');
                         }
                     }
                     // if (result.response.type == 0) {
@@ -421,7 +421,7 @@ export default class articleList extends React.Component {
 
         console.log(that.state.friendsAttachments,'that.state.friendsAttachments');
         if(that.state.friendsAttachments.length >= 9){
-            Toast.info('最多添加九張圖片或視頻!',1);
+            Toast.info('最多添加九图片或视频!',1);
             return;
         }
         var noom = ''

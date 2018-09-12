@@ -552,14 +552,15 @@
         top: -1px;
     }
     .projectNme{
-        position: fixed;
-        overflow: auto;
+        position: absolute;
+        overflow:hidden;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
         height: 100%;
-        z-index: 999;
+        width: 100%;
+        z-index: 9999;
         background-color: rgba(0,0,0,0.4);
         .inner{
             position: absolute;
@@ -612,12 +613,11 @@
                 position: relative;
                 border: 0;
                 width: 98%;
-                height: 34px;
                 top: 1PX;
                 box-sizing: border-box;
-                line-height: 34px;
-                padding-left: 6px;
-                margin-bottom: 5px;
+                line-height: 22px;
+                padding: 6px;
+                margin:0 auto 5px;
             }
             .btn{
                 position: relative;

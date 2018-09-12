@@ -1130,6 +1130,9 @@ export default class publishWrongQuestion extends React.Component {
         })
     }
     cancleProjectName(){
+        calm.setState({
+            inputValue:""
+        })
         $(".projectNme").hide();
     }
     render() {

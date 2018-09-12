@@ -702,7 +702,7 @@ export default class articleList extends React.Component {
                                             <div className="courseList">
                                                 <div className="userName">{this.state.detail.userInfo.userName}</div>
                                             </div>
-                                            <div className="time">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
+                                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
                                         </div>
                                         <div className="content_detail">{this.state.detail.content}</div>
                                         <div className="image_detail">

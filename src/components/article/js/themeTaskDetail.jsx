@@ -60,7 +60,7 @@ export default class articleList extends React.Component {
                 shareHidden: true,
             })
         }
-        document.title = type?'主题任务':'错题本';
+        document.title = type == 1?'主题任务':'错题本';
         this.setState({
             userId: userId,
             cid: cid

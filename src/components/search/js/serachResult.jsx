@@ -380,7 +380,6 @@ export default class serachResult extends React.Component {
             method: 'toUserpage',
             user: data
         };
-        console.log(data)
         Bridge.callHandler(data, null, function (error) {
         });
     }

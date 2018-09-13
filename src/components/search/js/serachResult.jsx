@@ -403,7 +403,8 @@ export default class serachResult extends React.Component {
                                     newTagArr.length == 0 ?
                                         ""
                                         :
-                                        <div>
+                                        <div className="i-label">
+                                            <i></i>
                                             {
                                                 newTagArr.map((v, i) => {
                                                     return (

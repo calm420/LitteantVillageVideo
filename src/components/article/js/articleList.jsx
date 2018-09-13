@@ -736,7 +736,7 @@ export default class articleList extends React.Component {
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
-                                } src={value.path} alt="" onClick={this.showImage.bind(this,friendsAttachments,value)}/>
+                                } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {maxWidth: '100%'} : {

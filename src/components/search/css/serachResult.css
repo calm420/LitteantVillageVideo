@@ -1,10 +1,6 @@
 #serachResult video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
-#serachResult b {
-  font-weight: normal;
-  color: #facb28;
-}
 #serachResult .am-search-cancel {
   font-size: 15px;
   color: #4285F4;

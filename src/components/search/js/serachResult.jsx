@@ -394,7 +394,7 @@ export default class serachResult extends React.Component {
                         <div className="videoInfo" onClick={this.toPlayVideo.bind(this, rowID, calm.state.videoData, calm.state.pageCount, calm.state.pageNo)}>
                             <img src={rowData.coverPath} alt="" />
                             <div className="gradient_bgT topText">
-                                <div className="video_content">{rowData.videoContent}</div>
+                                <div dangerouslySetInnerHTML={{ __html:rowData.videoContent }} className="video_content"></div>
                             </div>
                             <div className='gradient_bgB bottomText'>
                                 <div className="like">{rowData.likeCount}赞</div>
@@ -407,7 +407,7 @@ export default class serachResult extends React.Component {
                                             {
                                                 newTagArr.map((v, i) => {
                                                     return (
-                                                        <span className="tag">{v.tagTitle}</span>
+                                                        <span dangerouslySetInnerHTML={{ __html:v.tagTitle }} className="tag"></span>
                                                     )
                                                 })
 
@@ -423,7 +423,7 @@ export default class serachResult extends React.Component {
                                             {
                                                 newChanArr.map((v, i) => {
                                                     return (
-                                                        <span className="tag">{v.tagTitle}</span>
+                                                        <span dangerouslySetInnerHTML={{ __html:v.tagTitle }} className="tag"></span>
                                                     )
                                                 })
 

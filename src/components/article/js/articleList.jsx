@@ -692,16 +692,16 @@ export default class articleList extends React.Component {
             var tagClass = '';
             switch(rowData.mastery){
                 case 0:
-                    tagClass='tag-WrongTopic-red';
+                    tagClass='tag-course-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass='tag-course-orange';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass='tag-course-blue';
                     break;
                 case 3:
-                    tagClass='tag-WrongTopic-green';
+                    tagClass='tag-course-green';
                     break;
                 default:
                     tagClass='未匹配到';

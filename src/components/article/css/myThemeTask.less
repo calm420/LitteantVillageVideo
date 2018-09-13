@@ -125,6 +125,8 @@
         object-fit: cover;
         border-radius: 2px;
         margin-right: 8px;
+        margin-bottom: 8px;
+        vertical-align: middle;
       }
       .video_tag {
         position: relative;
@@ -133,6 +135,8 @@
         overflow: hidden;
         border-radius: 2px;
         margin-right: 8px;
+        margin-bottom: 8px;
+        vertical-align: middle;
         video {
           width: 100%;
           height: 100%;
@@ -154,6 +158,37 @@
         }
       }
     }
+    .date + .circleList .list_image{
+      width: 236px;
+    }
+    @media screen and (min-width: 700px) {
+      .list_image, .image_detail {
+        width: 354px;
+        img {
+          width: 110px;
+          height: 110px;
+          object-fit: cover;
+          border-radius: 2px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+          vertical-align: middle;
+        }
+        .video_tag {
+          position: relative;
+          width: 110px;
+          height: 110px;
+          overflow: hidden;
+          border-radius: 2px;
+          margin-right: 8px;
+          display: inline-block;
+          margin-bottom: 8px;
+          vertical-align: middle;
+        }
+      }
+      .date + .circleList .list_image{
+        width: 354px;
+      }
+    }
     @media (max-width: 360px) and (min-width: 340px) {
       .list_image, .image_detail {
         width: 324px;
@@ -164,6 +199,7 @@
           border-radius: 2px;
           margin-right: 8px;
           margin-bottom: 8px;
+          vertical-align: middle;
         }
         .video_tag {
           position: relative;
@@ -174,7 +210,11 @@
           margin-right: 8px;
           display: inline-block;
           margin-bottom: 8px;
+          vertical-align: middle;
         }
+      }
+      .date + .circleList .list_image{
+        width: 216px;
       }
     }
     @media (max-width: 339px) {
@@ -187,6 +227,7 @@
           border-radius: 2px;
           margin-right: 8px;
           margin-bottom: 8px;
+          vertical-align: middle;
         }
         .video_tag {
           position: relative;
@@ -197,7 +238,11 @@
           margin-right: 8px;
           display: inline-block;
           margin-bottom: 8px;
+          vertical-align: middle;
         }
+      }
+      .date + .circleList .list_image{
+        width: 196px;
       }
     }
     .list_bottom_item {
@@ -531,9 +576,6 @@
       width: 18px;
       background-size: 100% 100%;
     }
-  }
-  .date + .circleList .list_image{
-    width: 236px;
   }
 }
 

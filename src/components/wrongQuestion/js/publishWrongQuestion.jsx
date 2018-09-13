@@ -642,7 +642,8 @@ export default class publishWrongQuestion extends React.Component {
      * 添加科目
      */
     addProject() {
-        $(".projectNme").show()
+        $(".projectNme").show();
+        $(".modalCont").css("overflow-y","hidden");
         // var phoneType = navigator.userAgent;
         // var phone;
         // if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -690,6 +691,7 @@ export default class publishWrongQuestion extends React.Component {
                         inputValue:""
                     })
                     $(".projectNme").hide();
+                    $(".modalCont").css("overflow-y","auto");
                 } else {
                     Toast.info(result.msg);
                 }
@@ -1136,6 +1138,7 @@ export default class publishWrongQuestion extends React.Component {
             inputValue:""
         })
         $(".projectNme").hide();
+        $(".modalCont").css("overflow-y","auto");
     }
     render() {
 

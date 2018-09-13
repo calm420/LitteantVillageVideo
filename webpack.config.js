@@ -110,23 +110,23 @@ module.exports = {
             filename: 'shared.js'
         }),
 
-        new webpack.optimize.UglifyJsPlugin({
-            //压缩插件,使用npm 安装, cnpm会报错
-            mangle: {
-                except: ['$super', '$', 'exports', 'require', 'module', '_']
-            },
-            output: {
-                // 是否输出可读性较强的代码，即会保留空格和制表符，默认为是，为了达到更好的压缩效果，可以设置为 false。
-                beautify: false,
-                // 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为 false。
-                comments: false,
-            },
-            compress: {
-                warnings: false,
-                // 是否剔除代码中所有的  console  语句，默认为不剔除。开启后不仅可以提升代码压缩效果，也可以兼容不支持 console 语句 IE 浏览器。
-                drop_console: true,
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     //压缩插件,使用npm 安装, cnpm会报错
+        //     mangle: {
+        //         except: ['$super', '$', 'exports', 'require', 'module', '_']
+        //     },
+        //     output: {
+        //         // 是否输出可读性较强的代码，即会保留空格和制表符，默认为是，为了达到更好的压缩效果，可以设置为 false。
+        //         beautify: false,
+        //         // 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为 false。
+        //         comments: false,
+        //     },
+        //     compress: {
+        //         warnings: false,
+        //         // 是否剔除代码中所有的  console  语句，默认为不剔除。开启后不仅可以提升代码压缩效果，也可以兼容不支持 console 语句 IE 浏览器。
+        //         drop_console: true,
+        //     }
+        // }),
 
         //将开发模式变为生产模式
         new webpack.DefinePlugin({

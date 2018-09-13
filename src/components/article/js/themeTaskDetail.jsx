@@ -27,6 +27,7 @@ export default class articleList extends React.Component {
                 userInfo: {},
                 friendsAttachments: [],
                 partakeUserList: [],
+                fTags:[],
             },
             commitFlag: false,
             domImage: [],
@@ -643,6 +644,21 @@ export default class articleList extends React.Component {
     }
 
     render() {
+        var tagClass = '';
+        switch(this.state.detail.mastery){
+            case 0:
+                tagClass = 'tag-course-red';
+                break;
+            case 1:
+                tagClass = 'tag-course-orange';
+                break;
+            case 2:
+                tagClass = 'tag-course-blue';
+                break;
+            case 3:
+                tagClass = 'tag-course-green';
+                break;
+        }
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
             // console.log(rowData.type, 'rowData.type')
@@ -795,7 +811,7 @@ export default class articleList extends React.Component {
                                                 <span style={
                                                     this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
                                                 }
-                                                      className="tag-course tag-course-blue">{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
+                                                      className={"tag-course "+tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
                                                 <span style={
                                                     this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
                                                 }

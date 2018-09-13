@@ -692,16 +692,16 @@ export default class articleList extends React.Component {
             var tagClass = '';
             switch(rowData.mastery){
                 case 0:
-                    tagClass='tag-WrongTopic-red';
+                    tagClass='tag-course-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass='tag-course-orange';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass='tag-course-blue';
                     break;
                 case 3:
-                    tagClass='tag-WrongTopic-green';
+                    tagClass='tag-course-green';
                     break;
                 default:
                     tagClass='未匹配到';
@@ -736,7 +736,7 @@ export default class articleList extends React.Component {
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
-                                } src={value.path} alt="" onClick={this.showImage.bind(this,friendsAttachments,value)}/>
+                                } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {maxWidth: '100%'} : {

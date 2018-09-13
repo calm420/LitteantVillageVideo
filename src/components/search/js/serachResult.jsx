@@ -352,7 +352,18 @@ export default class serachResult extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
+                    calm.initDataSource.forEach((v,i)=>{
+                        if(v.uid == id){
+                            console.log(v)
+                            v.isFollow = true;
+                        }
+                    })
+                    calm.setState({
+                        dataSource:dataSource.cloneWithRows(this.initDataSource)
+                    })
+
                     Toast.info("关注成功", 1)
+                    
                 }
             },
             onError: function (error) {

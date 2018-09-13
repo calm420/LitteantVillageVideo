@@ -16,7 +16,14 @@ export default class searchHistory extends React.Component {
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
-        document.title = "搜索页面"
+        document.title = "搜索页面";
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var userId = searchArray[0].split('=')[1];
+        calm.setState({
+            userId
+        })
         /**
          * 取session数据
          */
@@ -64,7 +71,7 @@ export default class searchHistory extends React.Component {
      * 点击搜索跳转搜索结果页面
      */
     toSearchResult = () => {
-        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + calm.state.value;
+        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + calm.state.value+"&userId="+calm.state.userId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -77,7 +84,7 @@ export default class searchHistory extends React.Component {
      * 跳转搜索结果页面
      */
     toSearchResultNo = (v) => {
-        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + v;
+        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + v+"&userId="+calm.state.userId;
         var data = {
             method: 'openNewPage',
             url: url

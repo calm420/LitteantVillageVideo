@@ -130,7 +130,7 @@ export default class publishWrongQuestion extends React.Component {
             Toast.info('打开图片失败!', 1);
         });
     }
-    /**
+    /** 
      * 获取科目
      */
     getProject(userId) {

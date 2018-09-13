@@ -406,16 +406,19 @@ export default class serachResult extends React.Component {
                                     :
                                     <div className="i-label">
                                         <i></i>
-                                        {
-                                            newTagArr.map((v, i) => {
-                                                return (
-                                                    <span>
+                                        <span>
+                                            {
+                                                newTagArr.map((v, i) => {
+                                                    return (
+                                                        <span>
                                                             <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>{newTagArr.length-1 == i ? "":","}
                                                         </span>
-                                                )
-                                            })
+                                                    )
+                                                })
 
-                                        }
+                                            }
+                                        </span>
+
 
                                     </div>
                             }

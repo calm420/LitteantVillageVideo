@@ -342,9 +342,9 @@ export default class serachResult extends React.Component {
         var param = {
             "method": 'changeUserFollowInfo',
             "userFollowInfoJson": {
-                "userId":calm.state.userId,
-                "targetId":id,
-                "targetType":0
+                "userId": calm.state.userId,
+                "targetId": id,
+                "targetType": 0
             },
             "changeType": 0,
         };
@@ -352,7 +352,7 @@ export default class serachResult extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
-                    Toast.info("关注成功",1)
+                    Toast.info("关注成功", 1)
                 }
             },
             onError: function (error) {
@@ -364,12 +364,12 @@ export default class serachResult extends React.Component {
     /**
      * 跳转
      */
-    toCenterInfo=(id)=>{
-         var data = {
+    toCenterInfo = (data) => {
+        var data = {
             method: 'toUserpage',
-            id: id
+            user: data
         };
-        
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
         });
     }
@@ -388,43 +388,50 @@ export default class serachResult extends React.Component {
                     newChanArr.push(v)
                 }
             })
+          
             return (
                 <div className='videoItem' >
                     {
                         <div className="videoInfo" onClick={this.toPlayVideo.bind(this, rowID, calm.state.videoData, calm.state.pageCount, calm.state.pageNo)}>
                             <img src={rowData.coverPath} alt="" />
                             <div className="gradient_bgT topText">
-                                <div className="video_content">{rowData.videoContent}</div>
+                                <div dangerouslySetInnerHTML={{ __html: rowData.videoContent }} className="video_content"></div>
                             </div>
+                            <div className="search-bottom">
+
+                            {
+
+                                newTagArr.length == 0 ?
+                                    ""
+                                    :
+                                    <div className="i-label">
+                                        <i></i>
+                                        {
+                                            newTagArr.map((v, i) => {
+                                                return (
+                                                    <span>
+                                                            <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>{newTagArr.length-1 == i ? "":","}
+                                                        </span>
+                                                )
+                                            })
+
+                                        }
+
+                                    </div>
+                            }
                             <div className='gradient_bgB bottomText'>
-                                <div className="like">{rowData.likeCount}赞</div>
+                                <div className="like"><i></i>{rowData.likeCount}</div>
                                 {/* tagType==1标签  2挑战 */}
                                 {
-                                    newTagArr.length == 0 ?
+                                    newChanArr.length == 0 ?
                                         ""
                                         :
-                                        <div className="i-label">
+                                        <div className="i-challenge">
                                             <i></i>
-                                            {
-                                                newTagArr.map((v, i) => {
-                                                    return (
-                                                        <span className="tag">{v.tagTitle}，</span>
-                                                    )
-                                                })
-
-                                            }
-
-                                        </div>
-                                }
-                                {
-                                    newTagArr.length == 0 ?
-                                        ""
-                                        :
-                                        <div>
                                             {
                                                 newChanArr.map((v, i) => {
                                                     return (
-                                                        <span className="tag">{v.tagTitle}</span>
+                                                        <span  dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag text_hidden"></span>
                                                     )
                                                 })
 
@@ -434,6 +441,7 @@ export default class serachResult extends React.Component {
                                 }
                                 {/* <div className="read">{rowData.readCount}</div> */}
                             </div>
+                        </div>
                         </div>
                     }
                 </div>
@@ -447,6 +455,7 @@ export default class serachResult extends React.Component {
                         <div className="name">{rowData.userName}</div>
                         <div className="fans">粉丝：{rowData.fansCount}</div>
                     </div>
+
                     {
                         rowData.isFollow ?
                             <button className="attentionBtn">已关注</button>
@@ -489,7 +498,7 @@ export default class serachResult extends React.Component {
                                     {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row1}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list uploadVideo"
+                            className="am-list uploadVideo video-body"
                             pageSize={30}    //每次事件循环（每帧）渲染的行数
                             //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
                             scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行

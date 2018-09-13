@@ -20,11 +20,11 @@ export default class publishWrongQuestion extends React.Component {
             tagChangeData: [],
             searchValue: "",
             theQuestionArr: [
-                {
-                    type: 0, //图片
-                    fatherType: 0,
-                    path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                }
+                // {
+                //     type: 0, //图片
+                //     fatherType: 0,
+                //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
+                // }
             ],
             theQustionVideo: [
                 // {
@@ -248,16 +248,13 @@ export default class publishWrongQuestion extends React.Component {
      * 掌握程度
      */
     underChange = (item) => {
-        console.log('value', item);
         this.setState({
             understandValue: item.value,
             mastery: item.label
         });
+        $(".knowDegree .am-radio-item").addClass('gray');
 
     };
-    underClick = (value,item) =>{
-        $(".knowDegree .am-radio-item").addClass('gray');
-    }
     /**
      * 选择科目
      */
@@ -1288,9 +1285,10 @@ export default class publishWrongQuestion extends React.Component {
                                 <div className='title'>掌握程度<span className="red-star"></span></div>
                                 <List>
                                     {understandData.map(i => (
-                                        <RadioItem key={i.value} className={understandValue === i.value ? "on" : ''}
+                                        <RadioItem key={i.value} 
+                                            // className={understandValue === i.value ? "on" : ''}
                                             checked={understandValue === i.value}
-                                            onChange={() => this.underChange(i)} onClick={() => this.underClick(understandValue,i)}>
+                                            onChange={() => this.underChange(i)} >
                                             {i.value}
                                         </RadioItem>
                                     ))}

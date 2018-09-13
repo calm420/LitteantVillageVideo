@@ -303,7 +303,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/searchHistory" style={{fontSize: '24px'}}>搜索</Link>
+                            to="/searchHistory?uid=5" style={{fontSize: '24px'}}>搜索</Link>
                     </li>
                     <li>
                         <Link

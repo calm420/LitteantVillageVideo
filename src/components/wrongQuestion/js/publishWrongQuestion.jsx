@@ -255,10 +255,8 @@ export default class publishWrongQuestion extends React.Component {
         });
 
     };
-    underClick = (item) =>{
+    underClick = (value,item) =>{
         $(".knowDegree .am-radio-item").addClass('gray');
-        $(".knowDegree .am-radio-item").eq(item.label).removeClass('gray');
-        console.log($(".knowDegree .am-radio-item.on").length)
     }
     /**
      * 选择科目
@@ -1292,7 +1290,7 @@ export default class publishWrongQuestion extends React.Component {
                                     {understandData.map(i => (
                                         <RadioItem key={i.value} className={understandValue === i.value ? "on" : ''}
                                             checked={understandValue === i.value}
-                                            onChange={() => this.underChange(i)} onClick={() => this.underClick(i)}>
+                                            onChange={() => this.underChange(i)} onClick={() => this.underClick(understandValue,i)}>
                                             {i.value}
                                         </RadioItem>
                                     ))}

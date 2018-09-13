@@ -461,7 +461,7 @@ export default class serachResult extends React.Component {
 
                     {
                         rowData.isFollow ?
-                            <button className="attentionBtn">已关注</button>
+                            <button className="attentionBtn attentionBtn-old">已关注</button>
                             :
                             <button className="attentionBtn" onClick={calm.toLook.bind(this,rowData.uid)}><i></i>关注</button>
 

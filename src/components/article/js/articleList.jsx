@@ -579,8 +579,9 @@ export default class articleList extends React.Component {
     publishArt = (type) => {
         console.log(type);
         if (type == 'article') {
-            var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-            // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
+            // var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
+            var url = 'http://jiaoxue.maaee.com:8094/richTextMobileEditor/index.html?id='+ this.state.userId
+            console.log(url);
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -691,16 +692,16 @@ export default class articleList extends React.Component {
             var tagClass = '';
             switch(rowData.mastery){
                 case 0:
-                    tagClass='tag-WrongTopic-red';
+                    tagClass='tag-course-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass='tag-course-orange';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass='tag-course-blue';
                     break;
                 case 3:
-                    tagClass='tag-WrongTopic-green';
+                    tagClass='tag-course-green';
                     break;
                 default:
                     tagClass='未匹配到';
@@ -735,7 +736,7 @@ export default class articleList extends React.Component {
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
-                                } src={value.path} alt="" onClick={this.showImage.bind(this,friendsAttachments,value)}/>
+                                } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {maxWidth: '100%'} : {

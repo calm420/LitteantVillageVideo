@@ -245,21 +245,31 @@
         height: calc(~"100% - 46px");
     }
     .knowDegree{
-        .am-radio-item:first-child.on .am-list-content{
+
+        .am-radio-item:first-child .am-list-content{
             border-color: #E60012 !important;
-            color: #E60012 !important;
+            color: #fff !important;
+            background-color: #E60012 !important;
         }
-        .am-radio-item:nth-child(2).on .am-list-content{
+        .am-radio-item:nth-child(2) .am-list-content{
             border-color: #F39700!important;
-            color: #F39700!important;
+            color: #fff!important;
+            background-color: #F39700;
         }
-        .am-radio-item:nth-child(3).on .am-list-content{
-            border-color: #EECF00!important;
-            color: #EECF00!important;
+        .am-radio-item:nth-child(3) .am-list-content{
+            border-color: #42A7F4!important;
+            color: #fff!important;
+            background-color: #42A7F4;
         }
-        .am-radio-item:nth-child(4).on .am-list-content{
+        .am-radio-item:nth-child(4) .am-list-content{
             border-color: #22AC38!important;
-            color: #22AC38!important;
+            color: #fff!important;
+            background-color: #22AC38;
+        }
+        .am-radio-item.gray .am-list-content{
+            border-color: #AEAEAE !important;
+            color: #AEAEAE !important;
+            background-color: #fff !important;
         }
     }
     .selectProject{
@@ -580,16 +590,17 @@
             -o-transform: translate(-50%,-50%);
             transform: translate(-50%,-50%);
             .modal_title{
-                padding: 6px 15px 21px !important;
-                color: #333 !important;
+                padding: 6px 15px 14px;
+                color: #333;
                 line-height: 22px;
-                font-size: 17px!important;
+                font-size: 17px;
             }
             .content{
                 padding: 0 15px 12px;
             }
             .inputDiv{
                 position: relative;
+                height: 36px;
                 &::before {
                     content: '';
                     position: absolute;
@@ -617,7 +628,7 @@
                 box-sizing: border-box;
                 line-height: 22px;
                 padding: 6px;
-                margin:0 auto 5px;
+                margin:0 auto;
             }
             .btn{
                 position: relative;

@@ -498,7 +498,7 @@ export default class articleList extends React.Component {
                             value={this.state.date}
                             onChange={date => this.setState({date})}
                         >
-                            <List.Item arrow="horizontal"><i className="i-icon i_AsDate"></i>截止日期</List.Item>
+                            <List.Item arrow="horizontal"><i className="i-icon i_AsDate"></i>截止时间</List.Item>
                         </DatePicker>
                     </div>
                     <div className='toSetPeople am-list-item' onClick={this.toSetPeople}>

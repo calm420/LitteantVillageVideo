@@ -67,8 +67,6 @@ export default class mobileEditor extends React.Component {
                 path: attacheMents[k].path,
                 coverPath: attacheMents[k].cover,
                 isCover: attacheMents[k].isMainCover,
-                // articleId: _this.state.artId,
-                // attachmentId: attacheMents[k].attachmentId || -1,
             })
 
             if (attacheMents[k].isMainCover) {

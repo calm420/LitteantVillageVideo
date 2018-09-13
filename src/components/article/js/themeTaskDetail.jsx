@@ -27,6 +27,7 @@ export default class articleList extends React.Component {
                 userInfo: {},
                 friendsAttachments: [],
                 partakeUserList: [],
+                fTags:[],
             },
             commitFlag: false,
             domImage: [],
@@ -257,17 +258,23 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
+                    var detailList = [];
                     this.setState({
                         detail: result.response,
                     })
                     var detailArray = result.response.friendsAttachments;
+                    console.log(detailArray);
                     for(var k in detailArray){
-                        if(detailArray[k].faterType == 0){
-                            console.log('题干已有');
-                        }else if(detailArray[k].faterType == 0){
-                            console.log('题干已有');
+                        if(detailArray[k].fatherType == 0){
+                            // console.log('题干已有');
+                            detailList.push(detailArray[k])
+                        }else if(detailArray[k].fatherType == 1){
+                            // console.log('正解已有');
                         }
                     }
+                    this.setState({
+                        detailList:detailList
+                    })
                     // if (result.response.type == 0) {
                     //     document.title = '错题本';
                     // } else {
@@ -643,6 +650,21 @@ export default class articleList extends React.Component {
     }
 
     render() {
+        var tagClass = '';
+        switch(this.state.detail.mastery){
+            case 0:
+                tagClass = 'tag-course-red';
+                break;
+            case 1:
+                tagClass = 'tag-course-orange';
+                break;
+            case 2:
+                tagClass = 'tag-course-blue';
+                break;
+            case 3:
+                tagClass = 'tag-course-green';
+                break;
+        }
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
             // console.log(rowData.type, 'rowData.type')
@@ -795,7 +817,7 @@ export default class articleList extends React.Component {
                                                 <span style={
                                                     this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
                                                 }
-                                                      className="tag-course tag-course-blue">{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
+                                                      className={"tag-course "+tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
                                                 <span style={
                                                     this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
                                                 }
@@ -819,7 +841,7 @@ export default class articleList extends React.Component {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
                                                                     src={value.path} alt=""
-                                                                    style={{width: '200px', height: '113px'}}/>
+                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
                                                             } else {
                                                                 return <div
                                                                     onClick={this.playVideo.bind(this, value.path)}

@@ -342,9 +342,9 @@ export default class serachResult extends React.Component {
         var param = {
             "method": 'changeUserFollowInfo',
             "userFollowInfoJson": {
-                "userId":calm.state.userId,
-                "targetId":id,
-                "targetType":0
+                "userId": calm.state.userId,
+                "targetId": id,
+                "targetType": 0
             },
             "changeType": 0,
         };
@@ -352,7 +352,7 @@ export default class serachResult extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
-                    Toast.info("关注成功",1)
+                    Toast.info("关注成功", 1)
                 }
             },
             onError: function (error) {
@@ -364,10 +364,10 @@ export default class serachResult extends React.Component {
     /**
      * 跳转
      */
-    toCenterInfo=(data)=>{
-         var data = {
+    toCenterInfo = (data) => {
+        var data = {
             method: 'toUserpage',
-            user:data
+            user: data
         };
         console.log(data)
         Bridge.callHandler(data, null, function (error) {
@@ -388,18 +388,20 @@ export default class serachResult extends React.Component {
                     newChanArr.push(v)
                 }
             })
+          
             return (
                 <div className='videoItem' >
                     {
                         <div className="videoInfo" onClick={this.toPlayVideo.bind(this, rowID, calm.state.videoData, calm.state.pageCount, calm.state.pageNo)}>
                             <img src={rowData.coverPath} alt="" />
                             <div className="gradient_bgT topText">
-                                <div dangerouslySetInnerHTML={{ __html:rowData.videoContent }} className="video_content"></div>
+                                <div dangerouslySetInnerHTML={{ __html: rowData.videoContent }} className="video_content"></div>
                             </div>
                             <div className='gradient_bgB bottomText'>
                                 <div className="like">{rowData.likeCount}赞</div>
                                 {/* tagType==1标签  2挑战 */}
                                 {
+
                                     newTagArr.length == 0 ?
                                         ""
                                         :
@@ -408,7 +410,9 @@ export default class serachResult extends React.Component {
                                             {
                                                 newTagArr.map((v, i) => {
                                                     return (
-                                                        <span dangerouslySetInnerHTML={{ __html:v.tagTitle }} className="tag"></span>
+                                                        <span>
+                                                            <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>{newTagArr.length-1 == i ? "":","}
+                                                        </span>
                                                     )
                                                 })
 
@@ -417,14 +421,14 @@ export default class serachResult extends React.Component {
                                         </div>
                                 }
                                 {
-                                    newTagArr.length == 0 ?
+                                    newChanArr.length == 0 ?
                                         ""
                                         :
                                         <div>
                                             {
                                                 newChanArr.map((v, i) => {
                                                     return (
-                                                        <span dangerouslySetInnerHTML={{ __html:v.tagTitle }} className="tag"></span>
+                                                        <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
                                                     )
                                                 })
 
@@ -442,14 +446,14 @@ export default class serachResult extends React.Component {
         const row2 = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <img onClick={calm.toCenterInfo.bind(this,rowData)} src={rowData.avatar} />
+                    <img onClick={calm.toCenterInfo.bind(this, rowData)} src={rowData.avatar} />
                     <span>{rowData.userName}</span>
                     <span>{rowData.fansCount}</span>
                     {
                         rowData.isFollow ?
                             <button>已关注</button>
                             :
-                            <button onClick={calm.toLook.bind(this,rowData.uid)}>关注</button>
+                            <button onClick={calm.toLook.bind(this, rowData.uid)}>关注</button>
 
                     }
 

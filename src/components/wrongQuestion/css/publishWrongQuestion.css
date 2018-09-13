@@ -106,7 +106,7 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
   font-size: 13px;
-  color: #AEAEAE!important;
+  color: #AEAEAE !important;
   padding: 0 5px;
   line-height: 21px;
   box-sizing: border-box;
@@ -139,7 +139,7 @@
 }
 #publishWrongQuestion .rightTag .am-radio-item.checked .am-list-line .am-list-content {
   border: 1px #4285F4 solid !important;
-  color: #4285F4!important;
+  color: #4285F4 !important;
 }
 #publishWrongQuestion .rightTag .challenge {
   padding: 0 15px;
@@ -159,7 +159,7 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
   font-size: 13px;
-  color: #AEAEAE!important;
+  color: #AEAEAE !important;
   padding: 3px 5px;
   box-sizing: border-box;
   word-break: break-word;
@@ -218,11 +218,11 @@
 }
 #publishWrongQuestion .rightTag .challenge .am-radio-item.checked .am-list-line .am-list-content {
   border: none;
-  color: #AEAEAE!important;
+  color: #AEAEAE !important;
 }
 #publishWrongQuestion .rightTag .challenge .am-radio-item.checked .am-list-line .am-list-content .topTitle {
   border: 1px #4285F4 solid !important;
-  color: #4285F4!important;
+  color: #4285F4 !important;
 }
 #publishWrongQuestion .rightTag textarea {
   line-height: 23px;
@@ -244,16 +244,16 @@
   color: #E60012 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(2).on .am-list-content {
-  border-color: #F39700!important;
-  color: #F39700!important;
+  border-color: #F39700 !important;
+  color: #F39700 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(3).on .am-list-content {
-  border-color: #EECF00!important;
-  color: #EECF00!important;
+  border-color: #EECF00 !important;
+  color: #EECF00 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(4).on .am-list-content {
-  border-color: #22AC38!important;
-  color: #22AC38!important;
+  border-color: #22AC38 !important;
+  color: #22AC38 !important;
 }
 #publishWrongQuestion .selectProject .am-list {
   display: inline-block;
@@ -417,7 +417,7 @@
   border-radius: 1px;
   margin-left: 15px;
   border: 1px #AEAEAE solid;
-  color: #AEAEAE  ;
+  color: #AEAEAE;
 }
 #publishWrongQuestion .classTags .am-tag-text {
   font-size: 13px;
@@ -567,16 +567,17 @@
   transform: translate(-50%, -50%);
 }
 #publishWrongQuestion .projectNme .inner .modal_title {
-  padding: 6px 15px 21px !important;
-  color: #333 !important;
+  padding: 6px 15px 14px;
+  color: #333;
   line-height: 22px;
-  font-size: 17px!important;
+  font-size: 17px;
 }
 #publishWrongQuestion .projectNme .inner .content {
   padding: 0 15px 12px;
 }
 #publishWrongQuestion .projectNme .inner .inputDiv {
   position: relative;
+  height: 36px;
 }
 #publishWrongQuestion .projectNme .inner .inputDiv::before {
   content: '';
@@ -604,7 +605,7 @@
   box-sizing: border-box;
   line-height: 22px;
   padding: 6px;
-  margin: 0 auto 5px;
+  margin: 0 auto;
 }
 #publishWrongQuestion .projectNme .inner .btn {
   position: relative;

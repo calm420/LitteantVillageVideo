@@ -579,8 +579,9 @@ export default class articleList extends React.Component {
     publishArt = (type) => {
         console.log(type);
         if (type == 'article') {
-            var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-            // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
+            // var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
+            var url = 'http://jiaoxue.maaee.com:8094/richTextMobileEditor/index.html?id='+ this.state.userId
+            console.log(url);
             var data = {
                 method: 'openNewPage',
                 url: url

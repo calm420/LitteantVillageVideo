@@ -258,17 +258,23 @@ export default class articleList extends React.Component {
             onResponse: result => {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
+                    var detailList = [];
                     this.setState({
                         detail: result.response,
                     })
                     var detailArray = result.response.friendsAttachments;
+                    console.log(detailArray);
                     for(var k in detailArray){
-                        if(detailArray[k].faterType == 0){
-                            console.log('题干已有');
-                        }else if(detailArray[k].faterType == 0){
-                            console.log('题干已有');
+                        if(detailArray[k].fatherType == 0){
+                            // console.log('题干已有');
+                            detailList.push(detailArray[k])
+                        }else if(detailArray[k].fatherType == 1){
+                            // console.log('正解已有');
                         }
                     }
+                    this.setState({
+                        detailList:detailList
+                    })
                     // if (result.response.type == 0) {
                     //     document.title = '错题本';
                     // } else {
@@ -835,7 +841,7 @@ export default class articleList extends React.Component {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
                                                                     src={value.path} alt=""
-                                                                    style={{width: '200px', height: '113px'}}/>
+                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
                                                             } else {
                                                                 return <div
                                                                     onClick={this.playVideo.bind(this, value.path)}

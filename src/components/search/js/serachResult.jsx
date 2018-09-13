@@ -364,12 +364,12 @@ export default class serachResult extends React.Component {
     /**
      * 跳转
      */
-    toCenterInfo=(id)=>{
+    toCenterInfo=(data)=>{
          var data = {
             method: 'toUserpage',
-            id: id
+            user:data
         };
-        
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
         });
     }
@@ -441,7 +441,7 @@ export default class serachResult extends React.Component {
         const row2 = (rowData, sectionID, rowID) => {
             return (
                 <div>
-                    <img onClick={calm.toCenterInfo.bind(this,rowData.uid)} src={rowData.avatar} />
+                    <img onClick={calm.toCenterInfo.bind(this,rowData)} src={rowData.avatar} />
                     <span>{rowData.userName}</span>
                     <span>{rowData.fansCount}</span>
                     {

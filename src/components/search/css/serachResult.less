@@ -45,7 +45,7 @@
     .listCont {
       width: 100%;
       .list-view-section-body{
-        padding: 0 10px 0 15px;
+        padding: 0;
         -webkit-flex-wrap: wrap; /* Safari 6.1+ */
         flex-wrap: wrap;
         display: -webkit-box;
@@ -173,10 +173,47 @@
 
     }
     .User-Search{
+        width: 100%;
+        padding: 15px 0;
+        background: #fff;
         .user{
             width: 42px;
             height:42px;
             border-radius: 50%;
+            float: left;
+            margin-right: 9px;
+        }
+        .user-name{
+            display: inline-block;
+            position: relative;
+            top: 3px;
+            .name{
+                font-size: 15px;
+                color: #333;
+                line-height: 24px;
+            }
+            .fans{
+                font-size: 13px;
+                color: #888;
+            }
+        }
+        .attentionBtn{
+            border: 1px solid #4285F4;
+            color: #4285F4;
+            padding: 2px 4px;
+            border-radius: 1px;
+            font-size: 13px;
+            background: #fff;
+            margin-top: 11px;
+            float: right;
+            i{
+                background: url("../images/attention-add.png") no-repeat;
+                width: 11px;
+                height: 11px;
+                background-size: 100% 100%;
+                display: inline-block;
+                margin-right: 2px;
+            }
         }
     }
 }

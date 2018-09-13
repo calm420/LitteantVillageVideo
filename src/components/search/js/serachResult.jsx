@@ -441,15 +441,17 @@ export default class serachResult extends React.Component {
         }
         const row2 = (rowData, sectionID, rowID) => {
             return (
-                <div>
-                    <img onClick={calm.toCenterInfo.bind(this,rowData.uid)} src={rowData.avatar} />
-                    <span>{rowData.userName}</span>
-                    <span>{rowData.fansCount}</span>
+                <div className="User-Search line_public">
+                    <img className="user" onClick={calm.toCenterInfo.bind(this,rowData.uid)} src={rowData.avatar} />
+                    <div className="user-name">
+                        <div className="name">{rowData.userName}</div>
+                        <div className="fans">粉丝：{rowData.fansCount}</div>
+                    </div>
                     {
                         rowData.isFollow ?
-                            <button>已关注</button>
+                            <button className="attentionBtn">已关注</button>
                             :
-                            <button onClick={calm.toLook.bind(this,rowData.uid)}>关注</button>
+                            <button className="attentionBtn" onClick={calm.toLook.bind(this,rowData.uid)}><i></i>关注</button>
 
                     }
 

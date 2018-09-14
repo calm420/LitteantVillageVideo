@@ -33,23 +33,12 @@
   height: 36px !important;
   line-height: 36px !important;
   padding: 0;
+  font-size: 16px;
+  color: #676C6F;
 }
 #serachResult .am-tabs-default-bar-tab-active {
-  color: #333 !important;
-  font-size: 15px;
-}
-#serachResult .am-tabs-default-bar-tab-active::before {
-  content: '';
-  position: absolute;
-  background-color: #e5e5e5;
-  display: block;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  right: 0 !important;
-  width: 100%;
-  height: 1px;
-  margin-left: 0 !important;
+  font-size: 16px;
+  color: #4285F4;
 }
 #serachResult .uploadVideo .am-list-body {
   background-color: #f4f4f4;
@@ -58,7 +47,7 @@
   width: 100%;
 }
 #serachResult .listCont .list-view-section-body {
-  padding: 0 10px 0 15px;
+  padding: 0;
   -webkit-flex-wrap: wrap;
   /* Safari 6.1+ */
   flex-wrap: wrap;
@@ -88,14 +77,12 @@
   height: 100%;
 }
 #serachResult .listCont .videoInfo .gradient_bgT {
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
-  /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
-  /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
-  /* Firefox 3.6 - 15 */
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
-  /* 标准的语法 */
+  background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -webkit-gradient(linear, left bottom, left bottom, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, rgba(0, 0, 0, 0.4)));
+  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
   position: absolute;
   top: 0;
   left: 0;
@@ -124,7 +111,7 @@
 }
 #serachResult .listCont .videoInfo .video_content {
   color: white;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   word-break: break-all;
   white-space: normal;
@@ -140,6 +127,16 @@
   right: 8px;
   color: white;
   letter-spacing: 1px;
+}
+#serachResult .listCont .videoInfo .like i {
+  background: url("../images/like-white.png") no-repeat;
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  background-size: 100% 100%;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
 }
 #serachResult .listCont .videoInfo .read {
   position: absolute;
@@ -169,4 +166,114 @@
 #serachResult .listCont .videoInfo .video_row .video_firstImage {
   width: 100%;
   height: 100%;
+}
+#serachResult .i-label {
+  position: absolute;
+  bottom: 25px;
+  padding: 9px 9px 4px 9px;
+}
+#serachResult .i-label .i-cont {
+  margin-left: 14px;
+  display: block;
+  width: calc(100% - 15px);
+  position: relative;
+  top: -16px;
+}
+#serachResult .i-label i {
+  background: url("../images/icon-label-y.png") no-repeat;
+  width: 10px;
+  height: 13px;
+  background-size: 100% 100%;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+}
+#serachResult .i-label span {
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.4;
+}
+#serachResult .i-challenge {
+  width: 60%;
+  position: absolute;
+  bottom: 9px;
+  left: 8px;
+  line-height: 1;
+}
+#serachResult .i-challenge i {
+  background: url("../images/icon-challenge-y.png") no-repeat;
+  width: 10px;
+  height: 13px;
+  background-size: 100% 100%;
+  display: inline-block;
+  position: relative;
+  top: 0;
+  margin-right: 4px;
+  float: left;
+}
+#serachResult .i-challenge span {
+  color: #fff;
+  font-size: 11px;
+  width: calc(100% - 14px);
+}
+#serachResult .User-Search {
+  width: 100%;
+  padding: 15px;
+  background: #fff;
+}
+#serachResult .User-Search .user {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 9px;
+}
+#serachResult .User-Search .user-name {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+}
+#serachResult .User-Search .user-name .name {
+  font-size: 15px;
+  color: #333;
+  line-height: 24px;
+}
+#serachResult .User-Search .user-name .fans {
+  font-size: 13px;
+  color: #888;
+}
+#serachResult .User-Search .attentionBtn {
+  border: 1px solid #4285F4;
+  color: #4285F4;
+  padding: 2px 4px;
+  border-radius: 1px;
+  font-size: 13px;
+  background: #fff;
+  margin-top: 11px;
+  float: right;
+}
+#serachResult .User-Search .attentionBtn i {
+  background: url("../images/attention-add.png") no-repeat;
+  width: 11px;
+  height: 11px;
+  background-size: 100% 100%;
+  display: inline-block;
+  margin-right: 2px;
+}
+#serachResult .search-bottom {
+  height: 100px;
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, rgba(0, 0, 0, 0.4)));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#serachResult .video-body .am-list-body {
+  padding: 0 8px 0 13px;
 }

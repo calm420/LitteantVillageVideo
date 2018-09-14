@@ -125,6 +125,8 @@
   object-fit: cover;
   border-radius: 2px;
   margin-right: 8px;
+  margin-bottom: 8px;
+  vertical-align: middle;
 }
 #myThemeTask .list_item .list_image .video_tag {
   position: relative;
@@ -133,6 +135,8 @@
   overflow: hidden;
   border-radius: 2px;
   margin-right: 8px;
+  margin-bottom: 8px;
+  vertical-align: middle;
 }
 #myThemeTask .list_item .list_image .video_tag video {
   width: 100%;
@@ -152,6 +156,40 @@
   background: url("../images/play-btn.png") no-repeat;
   background-size: 100% 100%;
 }
+#myThemeTask .list_item .date + .circleList .list_image {
+  width: 236px;
+}
+@media screen and (min-width: 700px) {
+  #myThemeTask .list_item .list_image,
+  #myThemeTask .list_item .image_detail {
+    width: 354px;
+  }
+  #myThemeTask .list_item .list_image img,
+  #myThemeTask .list_item .image_detail img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    vertical-align: middle;
+  }
+  #myThemeTask .list_item .list_image .video_tag,
+  #myThemeTask .list_item .image_detail .video_tag {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    border-radius: 2px;
+    margin-right: 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+    vertical-align: middle;
+  }
+  #myThemeTask .list_item .date + .circleList .list_image {
+    width: 354px;
+  }
+}
 @media (max-width: 360px) and (min-width: 340px) {
   #myThemeTask .list_item .list_image,
   #myThemeTask .list_item .image_detail {
@@ -165,6 +203,7 @@
     border-radius: 2px;
     margin-right: 8px;
     margin-bottom: 8px;
+    vertical-align: middle;
   }
   #myThemeTask .list_item .list_image .video_tag,
   #myThemeTask .list_item .image_detail .video_tag {
@@ -176,6 +215,10 @@
     margin-right: 8px;
     display: inline-block;
     margin-bottom: 8px;
+    vertical-align: middle;
+  }
+  #myThemeTask .list_item .date + .circleList .list_image {
+    width: 216px;
   }
 }
 @media (max-width: 339px) {
@@ -191,6 +234,7 @@
     border-radius: 2px;
     margin-right: 8px;
     margin-bottom: 8px;
+    vertical-align: middle;
   }
   #myThemeTask .list_item .list_image .video_tag,
   #myThemeTask .list_item .image_detail .video_tag {
@@ -202,6 +246,10 @@
     margin-right: 8px;
     display: inline-block;
     margin-bottom: 8px;
+    vertical-align: middle;
+  }
+  #myThemeTask .list_item .date + .circleList .list_image {
+    width: 196px;
   }
 }
 #myThemeTask .list_item .list_bottom_item {

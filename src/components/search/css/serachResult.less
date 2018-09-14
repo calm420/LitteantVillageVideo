@@ -3,9 +3,10 @@
         display: none;
     }
     b{
-        font-weight: normal;
         color: #facb28;
-      }
+        font-weight: normal;
+        
+    }
     .am-search-cancel{
         font-size: 15px;
         color: #4285F4;
@@ -34,12 +35,26 @@
         height: 36px !important;
         line-height: 36px !important;
         padding: 0;
-        font-size: 16px;
         color: #676C6F;
+        font-size: 16px;
     }
     .am-tabs-default-bar-tab-active{
+        color: #4285F4 !important;
         font-size: 16px;
-        color: #4285F4;
+    }
+    .am-tabs-default-bar-tab-active::before{
+        content: '';
+        position: absolute;
+        background-color: #4285F4;
+        display: block;
+        z-index: 1;
+        bottom: 0;
+        left: 50%;
+        right: 0 !important;
+        width: 15px;
+        height: 2px;
+        margin-left: 0 !important;
+        transform: translateX(-50%);
     }
     .uploadVideo{
         .am-list-body{
@@ -109,7 +124,7 @@
 
             .video_content {
                 color: white;
-                font-size: 14px;
+                font-size: 15px;
                 line-height: 20px;
                 word-break: break-all;
                 white-space: normal;
@@ -129,12 +144,11 @@
                     background: url("../images/like-white.png") no-repeat;
                     width: 13px;
                     height: 13px;
-                    display: inline-block;
                     background-size: 100% 100%;
+                    display: inline-block;
                     position: relative;
                     top: 2px;
                     margin-right: 4px;
-
                 }
             }
             .read {
@@ -264,6 +278,10 @@
                 display: inline-block;
                 margin-right: 2px;
             }
+        }
+        .attentionBtn-old{
+            border-color: #c8c8c8;
+            color: #999;
         }
     }
     .search-bottom{

@@ -352,7 +352,18 @@ export default class serachResult extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
+                    calm.initDataSource.forEach((v,i)=>{
+                        if(v.uid == id){
+                            console.log(v)
+                            v.isFollow = true;
+                        }
+                    })
+                    calm.setState({
+                        dataSource:dataSource.cloneWithRows(this.initDataSource)
+                    })
+
                     Toast.info("关注成功", 1)
+                    
                 }
             },
             onError: function (error) {
@@ -369,7 +380,6 @@ export default class serachResult extends React.Component {
             method: 'toUserpage',
             user: data
         };
-        console.log(data)
         Bridge.callHandler(data, null, function (error) {
         });
     }
@@ -461,7 +471,7 @@ export default class serachResult extends React.Component {
 
                     {
                         rowData.isFollow ?
-                            <button className="attentionBtn">已关注</button>
+                            <button className="attentionBtn attentionBtn-old">已关注</button>
                             :
                             <button className="attentionBtn" onClick={calm.toLook.bind(this,rowData.uid)}><i></i>关注</button>
 

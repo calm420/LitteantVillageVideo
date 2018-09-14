@@ -196,7 +196,7 @@ export default class articleList extends React.Component {
         // WebServiceUtil.isEmpty($('.input_title').val())
         if (false) {
             warn = '标题不能为空';
-        } else if (WebServiceUtil.isEmpty($('.textarea_content').val())) {
+        } else if (WebServiceUtil.isEmpty($('.textarea_content').val().trim())) {
             warn = '主题内容不能为空';
         } else if (WebServiceUtil.isEmpty(this.state.date)) {
             warn = '截止日期不能为空';

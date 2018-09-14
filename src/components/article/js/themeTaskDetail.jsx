@@ -37,6 +37,7 @@ export default class articleList extends React.Component {
             topicAnswer:false,
             topicFlag: false,
             detailList:[],
+            detailListFor:[]
         }
     }
 
@@ -260,6 +261,7 @@ export default class articleList extends React.Component {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
                     var detailList = [];
+                    var detailListFor = [];//主题计划专属变量
                     this.setState({
                         detail: result.response,
                     })
@@ -272,9 +274,11 @@ export default class articleList extends React.Component {
                         }else if(detailArray[k].fatherType == 1){
                             // console.log('正解已有');
                         }
+                        detailListFor.push(detailArray[k]);
                     }
                     this.setState({
-                        detailList:detailList
+                        detailList:detailList,
+                        detailListFor:detailListFor,
                     })
                     // if (result.response.type == 0) {
                     //     document.title = '错题本';
@@ -733,10 +737,10 @@ export default class articleList extends React.Component {
                                                 if (value.type == 0) {
                                                     return <img
                                                         onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                        src={value.path} alt="" style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
+                                                        src={value.path} alt="" style={this.state.detailListFor.length<=1?{width: '200px', height: '113px'}:{}}/>
                                                 } else {
                                                     return <div onClick={this.playVideo.bind(this, value.path)}
-                                                                className="video_tag" style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}>
+                                                                className="video_tag" style={this.state.detailListFor.length<=1?{width: '200px', height: '113px'}:{}}>
                                                         <video poster={value.coverPath} style={{width: '100%', height: '100%'}} src={value.path}
                                                                alt=""/>
                                                         <div className="video_tag_play"></div>

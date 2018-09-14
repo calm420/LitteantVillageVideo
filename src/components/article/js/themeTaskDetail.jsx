@@ -469,7 +469,7 @@ export default class articleList extends React.Component {
                     dom.push(<div key={url} className="image_item"><img onClick={that.showImage.bind(that, [url], url)}
                                                                         className="appendImage_item" src={url} alt=""/>
                         <div className='delete_upload_image' id={url}><img
-                            src={require('../images/close_r.png')} alt=""/></div>
+                            src={require('../images/del-comment.png')} alt=""/></div>
                     </div>)
 
                     that.state.friendsAttachments.push({
@@ -487,7 +487,7 @@ export default class articleList extends React.Component {
                     dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
                         className="appendImage_item" src={cover} alt=""/>
                         <div className='delete_upload_image' id={url}><img
-                            src={require('../images/close_r.png')} alt=""/></div>
+                            src={require('../images/del-comment.png')} alt=""/></div>
                     </div>);
 
                     that.state.friendsAttachments.push({
@@ -583,7 +583,7 @@ export default class articleList extends React.Component {
                                 onClick={that.showImage.bind(that, [url], url)} className="appendImage_item" src={url}
                                 alt=""/>
                                 <div className='delete_upload_image' id={url}><img
-                                    src={require('../images/close_r.png')} alt=""/></div>
+                                    src={require('../images/del-comment.png')} alt=""/></div>
                             </div>)
 
                             that.state.friendsAttachments.push({
@@ -599,7 +599,7 @@ export default class articleList extends React.Component {
                             dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
                                 className="appendImage_item" src={cover} alt=""/>
                                 <div className='delete_upload_image' id={url}><img
-                                    src={require('../images/close_r.png')} alt=""/></div>
+                                    src={require('../images/del-comment.png')} alt=""/></div>
                             </div>);
 
                             that.state.friendsAttachments.push({

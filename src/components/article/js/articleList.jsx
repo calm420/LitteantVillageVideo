@@ -684,6 +684,21 @@ export default class articleList extends React.Component {
             Toast.info('分享文章失败')
         });
     }
+    /**
+     * 挑战搜索页面
+     */
+    toSearch=()=>{
+        var url = WebServiceUtil.mobileServiceURL + "searchHistory?userId=" + this.state.userId;
+        // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+
+    }
 
 
     render() {
@@ -859,6 +874,7 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
+                <span onClick={this.toSearch}>搜索</span>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}
                 }>

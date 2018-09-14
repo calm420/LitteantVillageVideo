@@ -9,7 +9,7 @@ export default class searchHistory extends React.Component {
         this.state = {
             showCancelButton: false,
             searchHistory: [],
-            value:""
+            value:"",
         }
     }
     componentWillReceiveProps(){

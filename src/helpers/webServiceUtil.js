@@ -1,7 +1,8 @@
-var isDebug = false;
+var isDebug = true;
 var localDomain = "192.168.50.71";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.39";    //跳转地址http:
+
 
 
 
@@ -193,6 +194,21 @@ WebServiceUtil.formatHM = function (nS) {
         minutes = "0" + minutes;
     }
     var hmStr = hour + minutes;
+    return hmStr;
+};
+/**
+ * 时间戳转分
+ * @param nS
+ * @returns {string}
+ */
+WebServiceUtil.formatM = function (nS) {
+    var da = new Date(parseInt(nS));
+    var hour = da.getHours() + ":";
+    var minutes = da.getMinutes();
+    // if (minutes < 10) {
+    //     minutes = "0" + minutes;
+    // }
+    var hmStr = minutes;
     return hmStr;
 };
 

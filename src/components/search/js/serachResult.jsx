@@ -375,12 +375,13 @@ export default class serachResult extends React.Component {
     /**
      * 跳转
      */
-    toCenterInfo = (data) => {
+    toCenterInfo = (item) => {
         var data = {
             method: 'toUserpage',
-            user: data
+            user: item
         };
         Bridge.callHandler(data, null, function (error) {
+            console.log(error)
         });
     }
     // dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}
@@ -463,7 +464,7 @@ export default class serachResult extends React.Component {
         const row2 = (rowData, sectionID, rowID) => {
             return (
                 <div className="User-Search line_public">
-                    <img className="user" onClick={calm.toCenterInfo.bind(this,rowData.uid)} src={rowData.avatar} />
+                    <img className="user" onClick={calm.toCenterInfo.bind(this,rowData)} src={rowData.avatar} />
                     <div className="user-name">
                         <div className="name">{rowData.userName}</div>
                         <div className="fans">粉丝：{rowData.fansCount}</div>

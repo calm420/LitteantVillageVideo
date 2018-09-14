@@ -633,112 +633,129 @@ export default class serachResult extends React.Component {
             window.location.href = url;
         });
     }
+    /**
+     * 文章详情
+     */
+    toDetail(id,articleTitle) {
+        console.log(id);
+        if (id) {
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3&machineType=&version=&articleTitle=" + ((articleTitle)));
+            var data = {
+                method: 'openNewPage',
+                url: url
+            };
+            Bridge.callHandler(data, null, function (error) {
+                window.location.href = url;
+            });
+        } else {
+            Toast.fail('id参数有误', 2);
+        }
+    }
+    /**
+     * 删除
+     */
+    deleteItem(rowData,event){
+        event.stopPropagation();
+        console.log(rowData);
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定删除此文章吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteArticleInfoByType(rowData.articleId,rowData.status) },
+        ], phone);
+
+    }
     // dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}
     render() {
          // 文章
          const row0 = (rowData, sectionID, rowID) => {
-            var dom =  "";
-            var time = calm.timeDifference(rowData.createTime);
-            console.log(rowData)
-            var image = rowData.articleImgArray ? rowData.articleImgArray : [];
-            // console.log(rowData,'整体循环中的rowData')
-            if (rowData.response instanceof Array) {  //为自媒体推荐视频
-                var videoDom = [];
-                // console.log(rowData,'自媒体视频循环中listVideoInfo')
-                for (var i = 0; i < rowData.response.length; i++) {
-                    videoDom.push(
-                        <div className="video_row"
-                             onClick={this.toPlayVideo.bind(this, i, rowData.response, rowData.pager.pageCount, rowData.pager.pageNo)}>
-                            <img className="video_firstImage"
-                                 src={rowData.response[i].coverPath == '' ? rowData.response[i].firstUrl : rowData.response[i].coverPath}
-                                 alt=""/>
-                            <div className="gradient_bgT topText">
-                                <div className="video_content">{rowData.response[i].videoContent}</div>
-                            </div>
-                            <div className='gradient_bgB bottomText'>
-                                <div className="like">{rowData.response[i].likeCount}赞</div>
-                                <div className="read">{rowData.response[i].readCount}</div>
-                            </div>
-
-                        </div>
-                    )
-                }
-                dom = <div className="video_box line_public">{videoDom}</div>;
-            } else {
-                if (image.length == 1) {  //图片一张
-                    dom = <div className="item line_public">
-                        <div className="leftBox">
-                            <div className="title minHeight">{rowData.articleTitle}</div>
-                            <div className="bottom">
-                                <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.likeCount}点赞</div>
-                                <div className="time">{time}</div>
-                            </div>
-                        </div>
-                        <div className="rightBox" style={{backgroundImage: 'url(' + image[0] + ')'}}>
-                            {/*<img src={image[0]} alt=""/>*/}
-                        </div>
-                    </div>
-                } else if (image.length > 1) {    //图片大于一张
-                    var imageDom = [];
-                    for (var i = 0; i < image.length; i++) {
-                        imageDom.push(<div className='imageDiv'><span
-                            style={{backgroundImage: 'url(' + image[i] + ')'}}
-                            className="image3"
-                        ></span></div>)
-                    }
-                    dom = <div className="item line_public">
+            var image = rowData.articleImgArray || [];
+            var dom = "";
+            var time = this.timeDifference(rowData.createTime);
+            console.log(image.length,'imagelength')
+            if (image.length == 1) {  //图片一张
+                dom = <div className="item line_public">
+                    <div className="leftBox">
                         <div className="title">{rowData.articleTitle}</div>
-                        <div className="images">{imageDom}</div>
                         <div className="bottom">
                             <div className="read">{rowData.readCount}阅读</div>
-                            <div className="like">{rowData.likeCount}点赞</div>
+                            <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
                     </div>
-                } else {                //图片没有
-                    var videoFlag = false;
-                    if (videoFlag) { //有视频
-                        dom = <div className="item line_public">
-                            <div className="title">{rowData.articleTitle}</div>
-                            <div className="images">
-                                <div className="videoBox">
-                                    <div onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
-                                         className="videoMask"></div>
-                                    <img onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
-                                         className="playImg"
-                                        //  src={require('../images/videoClick.png')} 
-                                         alt=""/>
-                                    <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
-                                </div>
-                            </div>
-                            <div className="bottom">
-                                <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.likeCount}点赞</div>
-                                <div className="time">{time}</div>
-                            </div>
-                        </div>
-                    } else {  //图片没有 视频也没有
-                        dom = <div className="item line_public">
-                            <div className="title">{rowData.articleTitle}</div>
-                            <div className="bottom">
-                                <div className="read">{rowData.readCount}阅读</div>
-                                <div className="like">{rowData.likeCount}点赞</div>
-                                <div className="time">{time}</div>
-                            </div>
-                        </div>
-                    }
-
+                    <div className="rightBox">
+                        <img src={image[0]} alt=""/>
+                    </div>
+                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        <div className="icon-delete"></div>
+                    </div>
+                </div>
+            } else if (image.length > 1) {    //图片大于一张
+                var imageDom = [];
+                for (var i = 0; i < image.length; i++) {
+                    imageDom.push(<img className="image3"
+                                       src={image[i]}
+                                       alt=""/>)
                 }
+                dom = <div className="item line_public">
+                    <div className="title">{rowData.articleTitle}</div>
+                    <div className="images">{imageDom}</div>
+                    <div className="bottom">
+                        <div className="read">{rowData.readCount}阅读</div>
+                        <div className="like">{rowData.readCount}点赞</div>
+                        <div className="time">{time}</div>
+                    </div>
+                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        <div className="icon-delete"></div>
+                    </div>
+                </div>
+            } else {                //图片没有
+                var videoFlag = false;
+                if (videoFlag) { //有视频
+                    dom = <div className="item line_public">
+                        <div className="title">{rowData.articleTitle}</div>
+                        <div className="images">
+                            <div className="videoBox">
+                                <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="videoMask"></div>
+                                <img onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="playImg"
+                                    //  src={require('../images/videoClick.png')} 
+                                     alt=""/>
+                                <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
+                            </div>
+                        </div>
+                        <div className="bottom">
+                            <div className="read">{rowData.readCount}阅读</div>
+                            <div className="like">{rowData.readCount}点赞</div>
+                            <div className="time">{time}</div>
+                        </div>
+                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                            <div className="icon-delete"></div>
+                        </div>
+                    </div>
+                } else {  //图片没有 视频也没有
+                    dom = <div className="item line_public">
+                        <div className="title">{rowData.articleTitle}</div>
+                        <div className="bottom">
+                            <div className="read">{rowData.readCount}阅读</div>
+                            <div className="like">{rowData.readCount}点赞</div>
+                            <div className="time">{time}</div>
+                        </div>
+                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                            <div className="icon-delete"></div>
+                        </div>
+                    </div>
+                }
+
             }
             return (
-                <div className="User-Search line_public">
-                <span>{rowData.articleTitle}</span>
-                <span>{rowData.isTop == 1 ? <span>置顶</span>:""}</span>
-                <span>点赞{rowData.likeCount}</span>
-                <span>阅读{rowData.readCount}</span>
-                <div className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
-                {/* <span>{WebServiceUtil.formatM(new Date().getTime() - rowData.createTime)}分钟前</span> */}
+                <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}>
+                    {dom}
                 </div>
             )
         }

@@ -557,7 +557,7 @@ export default class serachResult extends React.Component {
         };
         window.parent.Bridge.callHandler(data, function () {
         }, function (error) {
-            Toast.info('開啓視頻失敗!');
+            Toast.info('开启视频失败!');
         });
         // console.log(e,'eeeeeeeeeeee');
         // e.nativeEvent.stopImmediatePropagation();

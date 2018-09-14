@@ -408,21 +408,21 @@ export default class serachResult extends React.Component {
                                 <div dangerouslySetInnerHTML={{ __html: rowData.videoContent }} className="video_content"></div>
                             </div>
                             <div className="search-bottom">
+                                <div className='bottomText my_flex'>
+                                    {/* tagType==1标签  2挑战 */}
 
-                            {
+                                    {
 
-                                newTagArr.length == 0 ?
-                                    ""
-                                    :
-                                    <div className="i-label">
-                                        <i></i>
-                                        <span>
+                                        newTagArr.length == 0 ?
+                                            ""
+                                            :
+                                            <div className="i-label my_flex">
+                                                <i></i>
+                                                <span className='tagCont'>
                                             {
                                                 newTagArr.map((v, i) => {
                                                     return (
-                                                        <span>
-                                                            <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>{newTagArr.length-1 == i ? "":","}
-                                                        </span>
+                                                        <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
                                                     )
                                                 })
 
@@ -430,30 +430,28 @@ export default class serachResult extends React.Component {
                                         </span>
 
 
-                                    </div>
-                            }
-                            <div className='gradient_bgB bottomText'>
-                                <div className="like"><i></i>{rowData.likeCount}</div>
-                                {/* tagType==1标签  2挑战 */}
-                                {
-                                    newChanArr.length == 0 ?
-                                        ""
-                                        :
-                                        <div className="i-challenge">
-                                            <i></i>
-                                            {
-                                                newChanArr.map((v, i) => {
-                                                    return (
-                                                        <span  dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag text_hidden"></span>
-                                                    )
-                                                })
+                                            </div>
+                                    }
+                                    {
+                                        newChanArr.length == 0 ?
+                                            ""
+                                            :
+                                            <div className="i-challenge text_hidden">
+                                                {
+                                                    newChanArr.map((v, i) => {
+                                                        return (
+                                                            <span  dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
+                                                        )
+                                                    })
 
-                                            }
+                                                }
 
-                                        </div>
-                                }
-                                {/* <div className="read">{rowData.readCount}</div> */}
+                                            </div>
+                                    }
+
                             </div>
+                            <div className="like"><i></i>{rowData.likeCount}</div>
+                                {/* <div className="read">{rowData.readCount}</div> */}
                         </div>
                         </div>
                     }

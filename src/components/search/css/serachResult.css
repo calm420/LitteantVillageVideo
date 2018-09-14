@@ -91,12 +91,12 @@
   height: 100%;
 }
 #serachResult .listCont .videoInfo .gradient_bgT {
-  background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: -webkit-gradient(linear, left bottom, left bottom, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, rgba(0, 0, 0, 0.4)));
-  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: -webkit-gradient(linear, left bottom, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.6)));
+  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
   position: absolute;
   top: 0;
   left: 0;
@@ -104,24 +104,6 @@
   width: 100%;
   box-sizing: border-box;
   min-height: 50px;
-}
-#serachResult .listCont .videoInfo .gradient_bgB {
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-  /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-  /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-  /* Firefox 3.6 - 15 */
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-  /* 标准的语法 */
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 9px;
-  width: 100%;
-  height: 50px;
-  box-sizing: border-box;
-  font-size: 12px;
 }
 #serachResult .listCont .videoInfo .video_content {
   color: white;
@@ -137,9 +119,10 @@
 }
 #serachResult .listCont .videoInfo .like {
   position: absolute;
-  bottom: 9px;
+  bottom: 8px;
   right: 8px;
   color: white;
+  font-size: 11px;
   letter-spacing: 1px;
 }
 #serachResult .listCont .videoInfo .like i {
@@ -182,9 +165,7 @@
   height: 100%;
 }
 #serachResult .i-label {
-  position: absolute;
-  bottom: 25px;
-  padding: 9px 9px 4px 9px;
+  padding: 2px 9px 0 9px;
 }
 #serachResult .i-label .i-cont {
   margin-left: 14px;
@@ -203,33 +184,29 @@
   top: 2px;
   margin-right: 4px;
 }
-#serachResult .i-label span {
+#serachResult .i-label .tagCont {
+  padding-top: 3px;
+}
+#serachResult .i-label .tag {
+  display: block;
   color: #fff;
   font-size: 11px;
-  line-height: 1.4;
+  padding-bottom: 4px;
+}
+#serachResult .i-label .tag:last-child {
+  padding-bottom: 0;
 }
 #serachResult .i-challenge {
-  width: 60%;
-  position: absolute;
-  bottom: 9px;
-  left: 8px;
+  padding-left: 14px;
+  margin-top: 4px;
+  background: url("../images/icon-challenge-y.png") no-repeat left center;
+  background-size: 9px;
+  margin-left: 9px;
   line-height: 1;
-}
-#serachResult .i-challenge i {
-  background: url("../images/icon-challenge-y.png") no-repeat;
-  width: 10px;
-  height: 13px;
-  background-size: 100% 100%;
-  display: inline-block;
-  position: relative;
-  top: 0;
-  margin-right: 4px;
-  float: left;
 }
 #serachResult .i-challenge span {
   color: #fff;
   font-size: 11px;
-  width: calc(100% - 14px);
 }
 #serachResult .User-Search {
   width: 100%;
@@ -281,16 +258,25 @@
 }
 #serachResult .search-bottom {
   height: 100px;
-  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(100%, rgba(0, 0, 0, 0.4)));
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.6)));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+}
+#serachResult .search-bottom .bottomText {
+  width: calc(100% - 40px);
+  height: 100%;
+  -webkit-flex-direction: column-reverse;
+  /* Safari 6.1+ */
+  flex-direction: column-reverse;
+  padding-bottom: 9px;
+  box-sizing: border-box;
 }
 #serachResult .video-body .am-list-body {
   padding: 0 8px 0 13px;

@@ -692,9 +692,9 @@ export default class serachResult extends React.Component {
                     <div className="rightBox">
                         <img src={image[0]} alt=""/>
                     </div>
-                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                    {/* <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                         <div className="icon-delete"></div>
-                    </div>
+                    </div> */}
                 </div>
             } else if (image.length > 1) {    //图片大于一张
                 var imageDom = [];
@@ -711,9 +711,9 @@ export default class serachResult extends React.Component {
                         <div className="like">{rowData.readCount}点赞</div>
                         <div className="time">{time}</div>
                     </div>
-                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                    {/* <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                         <div className="icon-delete"></div>
-                    </div>
+                    </div> */}
                 </div>
             } else {                //图片没有
                 var videoFlag = false;
@@ -734,9 +734,9 @@ export default class serachResult extends React.Component {
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
-                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        {/* <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                             <div className="icon-delete"></div>
-                        </div>
+                        </div> */}
                     </div>
                 } else {  //图片没有 视频也没有
                     dom = <div className="item line_public">
@@ -746,9 +746,9 @@ export default class serachResult extends React.Component {
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
-                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        {/* <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                             <div className="icon-delete"></div>
-                        </div>
+                        </div> */}
                     </div>
                 }
 

@@ -695,10 +695,10 @@ export default class articleList extends React.Component {
                     tagClass='tag-WrongTopic-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass='tag-WrongTopic-yellow';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass='tag-WrongTopic-blue';
                     break;
                 case 3:
                     tagClass='tag-WrongTopic-green';
@@ -739,7 +739,7 @@ export default class articleList extends React.Component {
                                 } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
-                                    friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
                                 } >

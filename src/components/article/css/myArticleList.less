@@ -23,6 +23,8 @@
   }
   .item {
     padding: 15px;
+    position: relative;
+    overflow: hidden;
   }
   .title {
     font-size: 15px;
@@ -63,6 +65,16 @@
       max-width: 100%;
       vertical-align: middle;
     }
+  }
+  .delete-item{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: black;
+    width: 36px;
+    height: 35px;
+    background: url("../images/myArticleList-del.png") no-repeat;
+    background-size: 100% 100%;
   }
   //图片3张
   .images {

@@ -295,4 +295,368 @@
     .video-body .am-list-body{
       padding:0 8px 0 13px
     }
+
+
+
+    /*  搜索圈子 start */
+
+    .circleList{
+        padding: 15px 15px 0 15px;
+        border-bottom: 15px solid #f6f6f6;
+        position: relative;
+        .tags{
+            display: inline-block;
+            position: absolute;
+            right: 14px;
+            top: -6px;
+        }
+        .tag-ThemeTask{
+            background: url("../images/tag-ThemeTask.png") no-repeat;
+            background-size: 100% 100%;
+            width: 75px;
+            height: 21px;
+            display: inline-block;
+        }
+        .tag-WrongTopic{
+            width: 75px;
+            height: 21px;
+            display: inline-block;
+        }
+        .tag-WrongTopic-red{
+            background: url("../images/tag-WrongTopic-red.png") no-repeat;
+            background-size: 100% 100%;
+        }
+        .tag-WrongTopic-orange {
+            background: url("../images/tag-WrongTopic-orange.png") no-repeat;
+            background-size: 100% 100%;
+        }
+        .tag-WrongTopic-green{
+            background: url("../images/tag-WrongTopic-green.png") no-repeat;
+            background-size: 100% 100%;
+        }
+        .tag-WrongTopic-yellow{
+            background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
+            background-size: 100% 100%;
+        }
+        .tag-WrongTopic-blue{
+            background: url("../images/tag-WrongTopic-blue.png") no-repeat;
+            background-size: 100% 100%;
+        }
+        .list_bottom, .detail_bottom{
+            padding: 5px 15px;
+            margin-top: 10px;
+            position: relative;
+            display: flex;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            height: 35px;
+            justify-content: space-between;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            &:after {
+                content: '';
+                position: absolute;
+                background-color: #e5e5e5;
+                display: block;
+                z-index: 1;
+                top: auto;
+                right: 15px;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 1PX;
+                -webkit-transform-origin: 0 0;
+                -ms-transform-origin: 0 0;
+                transform-origin: 0 0;
+                -webkit-transform: scaleY(0.5);
+                -ms-transform: scaleY(0.5);
+                transform: scaleY(0.5);
+            }
+        }
+        .detail_bottom{
+            height: 25px;
+            .list_bottom_item{
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                -ms-flex: 1;
+                flex: 1;
+                height: 15px;
+            }
+        }
+    }
+    .list_item{
+        width: 100%;
+        margin-top: 0;
+        background: #fff;
+        .list_head{
+            height: 40px;
+            margin-bottom: 10px;
+            .headPic{
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                float: left;
+                margin-right: 10px;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+            .userName{
+                display: inline-block;
+                color: #333;
+                font-size: 15px;
+                line-height: 1.6;
+                max-width: calc(~"100% - 100px");
+            }
+            .createTime{
+                color: #999;
+                font-size: 13px;
+            }
+        }
+        .list_image, .image_detail{
+            margin-top: 10px;
+            margin-right: -15px;
+            font-size: 0;
+            white-space: normal;
+            margin-bottom: -8px;
+            width: 354px;
+            span{
+                font-size: 14px;
+                color: #666;
+                padding: 10px 0;
+                display: inline-block;
+                line-height: 1;
+            }
+            img{
+                width: 110px;
+                height: 110px;
+                object-fit: cover;
+                border-radius: 2px;
+                margin-right: 8px;
+                margin-bottom: 8px;
+            }
+            .video_tag{
+                position: relative;
+                width: 110px;
+                height: 110px;
+                overflow: hidden;
+                border-radius: 2px;
+                margin-right: 8px;
+                display: inline-block;
+                margin-bottom: 8px;
+                vertical-align: top;
+                video{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .video_tag_play{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    width: 40px;
+                    height: 40px;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+                    background: url("../images/play-btn.png") no-repeat;
+                    background-size: 100% 100%;
+
+                }
+            }
+        }
+        @media (max-width: 360px) and (min-width: 340px){
+            .list_image, .image_detail{
+                width: 324px;
+                img{
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: 2px;
+                    margin-right: 8px;
+                    margin-bottom: 8px;
+                }
+                .video_tag{
+                    position: relative;
+                    width: 100px;
+                    height: 100px;
+                    overflow: hidden;
+                    border-radius: 2px;
+                    margin-right: 8px;
+                    display: inline-block;
+                    margin-bottom: 8px;
+                    vertical-align: top;
+                }
+            }
+        }
+        @media (max-width: 339px){
+            .list_image, .image_detail{
+                width: 294px;
+                img{
+                    width: 90px;
+                    height: 90px;
+                    object-fit: cover;
+                    border-radius: 2px;
+                    margin-right: 8px;
+                    margin-bottom: 8px;
+                }
+                .video_tag{
+                    position: relative;
+                    width: 90px;
+                    height: 90px;
+                    overflow: hidden;
+                    border-radius: 2px;
+                    margin-right: 8px;
+                    display: inline-block;
+                    margin-bottom: 8px;
+                    vertical-align: top;
+                }
+            }
+        }
+        .list_bottom_item{
+            display: inline-block;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            padding: 5px 20px;
+            height: 25px;
+            i{
+                width: 15px;
+                height: 15px;
+                display: inline-block;
+            }
+            .i-share{
+                background:url("../images/share.png") no-repeat;
+                background-size: 100% 100%;
+            }
+            .i-comments{
+                background:url("../images/comments.png") no-repeat;
+                background-size: 100% 100%;
+                width: 16px;
+                height: 14px;
+            }
+            .i-praise{
+                background:url("../images/praise.png") no-repeat;
+                background-size: 100% 100%;
+            }
+            .i-praise-active{
+                background:url("../images/praiseActive.png") no-repeat;
+                background-size: 100% 100%;
+            }
+            .i-praise-active + span{
+                color: #e5352b;
+            }
+            span{
+                position: relative;
+                left:5px;
+                top:-2px;
+            }
+        }
+        &:first-child{
+            margin-top: 15px;
+        }
+        &:last-child .circleList{
+            border-bottom: none;
+        }
+    }
+    /* 搜索圈子 end */
+
+    /* 搜索文章start */
+    .search-article{
+        .am-list-body{
+            padding: 0;
+        }
+        .article-List{
+            width: 100%;
+        }
+        .item {
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+        }
+        .title {
+            font-size: 15px;
+            color: #333;
+            line-height: 20px;
+            margin-bottom: 10px;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .bottom {
+            font-size: 12px;
+            color: #999;
+            & > div {
+                margin-right: 10px;
+            }
+            .read {
+                display: inline-block;
+            }
+            .like {
+                display: inline-block;
+            }
+            .time {
+                display: inline-block;
+            }
+        }
+        .rightBox {
+            width: 30%;
+            height: 70px;
+            display: inline-block;
+            vertical-align: top;
+            text-align: right;
+            img {
+                height: 100%;
+                max-width: 100%;
+                vertical-align: middle;
+            }
+        }
+
+        .images {
+            img {
+                display: inline-block;
+                width: 70px;
+                height: 70px;
+                margin-bottom: 10px;
+                margin-right: 10px;
+            }
+        }
+
+        .videoBox {
+            position: relative;
+            video {
+                //width: 100%;
+                //height: 100%;
+                padding-left: 25px;
+            }
+            .videoMask {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 180px;
+                //background: red;
+            }
+            .playImg {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+    /* 搜索文章end */
 }

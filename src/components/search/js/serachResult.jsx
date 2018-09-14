@@ -754,7 +754,7 @@ export default class serachResult extends React.Component {
 
             }
             return (
-                <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}>
+                <div className="article-List" onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}>
                     {dom}
                 </div>
             )
@@ -881,6 +881,7 @@ export default class serachResult extends React.Component {
                 }
             }
             return (
+                <div className="list_item">
                 <div  className="circleList" onClick={this.toThemeTaskDetail.bind(this,rowData.cfid,rowData)}>
                     <div className="list_head">
                         <div className="headPic">
@@ -916,10 +917,11 @@ export default class serachResult extends React.Component {
                         })}
                     </div>
                     <div className="list_bottom">
-                        <div className="list_bottom_item" onClick={calm.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share">分享</i></div>
+                        <div className="list_bottom_item" onClick={calm.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share"></i></div>
                         <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
                         <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
                     </div>
+                </div>
                 </div>
             )
         }
@@ -946,7 +948,7 @@ export default class serachResult extends React.Component {
                     <div style={{
                         height: calm.state.clientHeight - 36 - 44,
                         backgroundColor: '#f4f4f4'
-                    }} className="listCont">
+                    }} className="listCont search-article">
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
@@ -1023,7 +1025,7 @@ export default class serachResult extends React.Component {
                       {/* 圈子 */}
                       <div style={{
                         height: calm.state.clientHeight - 36 - 44,
-                        backgroundColor: '#f4f4f4'
+                        backgroundColor: '#f6f6f6'
                     }} className="listCont">
                         <ListView
                             ref={el => this.lv = el}

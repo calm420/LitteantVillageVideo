@@ -787,6 +787,7 @@ export default class myThemeTask extends React.Component {
     }
 
     render() {
+        var createTime = null;
         const row = (rowData, sectionID, rowID) => {
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
@@ -796,6 +797,19 @@ export default class myThemeTask extends React.Component {
                     friendsAttachments.splice(i, 1);
                 }
             }
+
+            var borderTop = null;
+            if(new Date(rowData.createTime).getDay() == createTime){
+                borderTop = true;
+            }else{
+                borderTop = false;
+            }
+            console.log(borderTop);
+            // console.log(new Date(rowData.createTime).getDay(),'new Date(rowData.createTime).getDay()');
+            // console.log(createTime,'createTime');
+
+            createTime = new Date(rowData.createTime).getDay();
+
             dom =
                 <div className='my_flex month-select'>
                     <input style={
@@ -803,11 +817,15 @@ export default class myThemeTask extends React.Component {
                     } className="checkbox" type="checkbox" name="checked"
                            onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
-                        this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
+                        this.state.targetType == 1? {display: 'none'} : {display: 'block'}
                     }>
-                        <div
+                        <div style={
+                            borderTop?{display: 'none'} : {display: 'block'}
+                        }
                             className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
-                        <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
+                        <div style={
+                            borderTop?{display: 'none'} : {display: 'block'}
+                        } className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
                     </div>
                     <div className="circleList" style={
                         this.state.targetType == 1 ? {width: '100%'} : {}
@@ -861,7 +879,7 @@ export default class myThemeTask extends React.Component {
 
 
             return (
-                <div className='list_item'>
+                <div className={borderTop?'list_item clearBorderTop':'list_item'}>
                     {dom}
                 </div>
             )

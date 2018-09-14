@@ -36,6 +36,7 @@ export default class articleList extends React.Component {
             friendsAttachments: [],   //附件
             topicAnswer:false,
             topicFlag: false,
+            detailList:[],
         }
     }
 

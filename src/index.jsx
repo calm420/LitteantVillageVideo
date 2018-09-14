@@ -259,20 +259,20 @@ class Index extends React.Component {
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     <li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
-                    <li><Link to="/articleList?userId=31&machineType=ios&version=100"
+                    <li><Link to="/articleList?userId=53&machineType=ios&version=100"
                               style={{fontSize: '24px'}}>ios文章列表</Link></li>
-                    <li><Link to="/articleList?userId=31"
+                    <li><Link to="/articleList?userId=53"
                               style={{fontSize: '24px'}}>文章列表</Link></li>
-                    <li><Link to="/themeTask?userId=17"
+                    <li><Link to="/themeTask?userId=53"
                               style={{fontSize: '24px'}}>发布主题</Link></li>
-                    <li><Link to="/myThemeTask?userId=17&targetId=1"
+                    <li><Link to="/myThemeTask?userId=53&targetId=1"
                               style={{fontSize: '24px'}}>我的主题列表</Link></li>
                     {/*<li><Link to="/myThemeTask?userId=17&targetId=0"*/}
                               {/*style={{fontSize: '24px'}}>我的错题本</Link></li>*/}
-                    <li><Link to="/topicWrongList?userId=17"
+                    <li><Link to="/topicWrongList?userId=53"
                               style={{fontSize: '24px'}}>我的错题本</Link></li>
-                    {/*<li><Link to="/myArticleList?userId=3"*/}
-                              {/*style={{fontSize: '24px'}}>我的文章列表</Link></li>*/}
+                    <li><Link to="/myArticleList?userId=53"
+                              style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
                               style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
                     {/*<li><Link to="/Login"*/}

@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-    Toast, DatePicker, ListView, Button, List, Picker, Tag, PullToRefresh
+    Toast, DatePicker, ListView, Modal, Picker, Tag, PullToRefresh
 } from 'antd-mobile';
 import '../css/myArticleList.less';
-
+const alert = Modal.alert;
 const dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
@@ -85,7 +85,7 @@ export default class myArticleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByStatus(clearFlag) {
+    getArticleInfoListByStatus(clearFlag,callback) {
         var _this = this;
         var param = {
             "method": 'getArticleInfoListByStatus',
@@ -127,6 +127,32 @@ export default class myArticleList extends React.Component {
                             isLoading: false
                         })
                     }
+                    if(callback){
+                        callback();
+                    }
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    /**
+     * id删除文章
+     * **/
+    deleteArticleInfoByType(articleIds,status) {
+        var param = {
+            "method": 'deleteArticleInfoByType',
+            "articleIds": articleIds,
+            "status": status,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    this.getArticleInfoListByStatus(true,()=>{
+                        Toast.info('删除成功!',1);
+                    });
                 }
             },
             onError: function (error) {
@@ -221,12 +247,31 @@ export default class myArticleList extends React.Component {
         }
     }
 
+    deleteItem(rowData,event){
+        event.stopPropagation();
+        console.log(rowData);
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定删除此文章吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteArticleInfoByType(rowData.articleId,rowData.status) },
+        ], phone);
+
+    }
+
     render() {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
+            console.log(image.length,'imagelength')
             if (image.length == 1) {  //图片一张
                 dom = <div className="item line_public">
                     <div className="leftBox">
@@ -239,6 +284,9 @@ export default class myArticleList extends React.Component {
                     </div>
                     <div className="rightBox">
                         <img src={image[0]} alt=""/>
+                    </div>
+                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        <div className="icon-delete"></div>
                     </div>
                 </div>
             } else if (image.length > 1) {    //图片大于一张
@@ -255,6 +303,9 @@ export default class myArticleList extends React.Component {
                         <div className="read">{rowData.readCount}阅读</div>
                         <div className="like">{rowData.readCount}点赞</div>
                         <div className="time">{time}</div>
+                    </div>
+                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        <div className="icon-delete"></div>
                     </div>
                 </div>
             } else {                //图片没有
@@ -275,6 +326,9 @@ export default class myArticleList extends React.Component {
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
+                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                            <div className="icon-delete"></div>
+                        </div>
                     </div>
                 } else {  //图片没有 视频也没有
                     dom = <div className="item line_public">
@@ -283,6 +337,9 @@ export default class myArticleList extends React.Component {
                             <div className="read">{rowData.readCount}阅读</div>
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
+                        </div>
+                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                            <div className="icon-delete"></div>
                         </div>
                     </div>
                 }

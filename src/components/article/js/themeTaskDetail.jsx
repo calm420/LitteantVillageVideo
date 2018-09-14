@@ -733,10 +733,10 @@ export default class articleList extends React.Component {
                                                 if (value.type == 0) {
                                                     return <img
                                                         onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                        src={value.path} alt=""/>
+                                                        src={value.path} alt="" style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
                                                 } else {
                                                     return <div onClick={this.playVideo.bind(this, value.path)}
-                                                                className="video_tag" style={{verticalAlign: 'middle'}}>
+                                                                className="video_tag" style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}>
                                                         <video poster={value.coverPath} style={{width: '100%', height: '100%'}} src={value.path}
                                                                alt=""/>
                                                         <div className="video_tag_play"></div>
@@ -847,7 +847,7 @@ export default class articleList extends React.Component {
                                                                 return <div
                                                                     onClick={this.playVideo.bind(this, value.path)}
                                                                     className="video_tag"
-                                                                    style={{verticalAlign: 'middle'}}>
+                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}>
                                                                     <video poster={value.coverPath} src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
@@ -866,12 +866,12 @@ export default class articleList extends React.Component {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
                                                                     src={value.path} alt=""
-                                                                    style={{width: '200', height: '113'}}/>
+                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
                                                             } else {
                                                                 return <div
                                                                     onClick={this.playVideo.bind(this, value.path)}
                                                                     className="video_tag"
-                                                                    style={{verticalAlign: 'middle'}}>
+                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}>
                                                                     <video poster={value.coverPath} style={{width: '200', height: '113'}}
                                                                            src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>

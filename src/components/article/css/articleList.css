@@ -15,6 +15,9 @@
 #articleList .am-tabs-default-bar-top .am-tabs-default-bar-tab::after {
   background-color: transparent;
 }
+#articleList .am-tabs-default-bar-top .am-tabs-default-bar-tab {
+  border-bottom: 0;
+}
 #articleList .am-tabs-default-bar {
   padding: 0 14%;
   position: relative;
@@ -325,15 +328,25 @@
     box-sizing: border-box;
   }
 }
+#articleList .icon_search_top {
+  background: url(../images/icon_search_top.png) no-repeat left center;
+  background-size: 17px;
+  width: 26px;
+  height: 40px;
+  position: absolute;
+  top: 2px;
+  left: 19px;
+  z-index: 10;
+}
 #articleList .icon-release {
-  background: url(../images/icon-release.png) no-repeat;
-  background-size: 100% 100%;
-  width: 18px;
-  height: 28px;
+  background: url(../images/icon-release.png) no-repeat right center;
+  background-size: 18px;
+  width: 22px;
+  height: 40px;
   display: inline-block;
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 2px;
+  right: 19px;
   z-index: 10;
 }
 #articleList .icon-release .showPubli_box {
@@ -418,16 +431,16 @@
   background: url("../images/tag-WrongTopic-red.png") no-repeat;
   background-size: 100% 100%;
 }
-#articleList .circleList .tag-WrongTopic-orange {
-  background: url("../images/tag-WrongTopic-orange.png") no-repeat;
-  background-size: 100% 100%;
-}
 #articleList .circleList .tag-WrongTopic-green {
   background: url("../images/tag-WrongTopic-green.png") no-repeat;
   background-size: 100% 100%;
 }
 #articleList .circleList .tag-WrongTopic-yellow {
   background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
+  background-size: 100% 100%;
+}
+#articleList .circleList .tag-WrongTopic-blue {
+  background: url("../images/tag-WrongTopic-blue.png") no-repeat;
   background-size: 100% 100%;
 }
 #articleList .circleList .list_bottom,
@@ -508,7 +521,7 @@
 }
 #articleList .list_item .list_image,
 #articleList .list_item .image_detail {
-  margin-top: 10px;
+  margin-top: 8px;
   margin-right: -15px;
   font-size: 0;
   white-space: normal;
@@ -519,7 +532,7 @@
 #articleList .list_item .image_detail span {
   font-size: 14px;
   color: #666;
-  padding: 10px 0;
+  padding: 5px 0 8px;
   display: inline-block;
   line-height: 1;
 }
@@ -674,6 +687,7 @@
 }
 #articleList .content_detail-comment {
   font-size: 15px;
+  padding-left: 50px;
 }
 #articleList .circleList-comment {
   padding-bottom: 15px;
@@ -720,17 +734,21 @@
   border-color: #4285F4;
   color: #4285F4;
 }
+#articleList .tag-course-blue-text {
+  border-color: #58ACF4;
+  color: #58ACF4;
+}
 #articleList .tag-course-green {
-  border-color: #22AC38;
-  color: #22AC38;
+  border-color: #47CB5E;
+  color: #47CB5E;
 }
 #articleList .tag-course-orange {
-  border-color: #F39700;
-  color: #F39700;
+  border-color: #F4BD00;
+  color: #F4BD00;
 }
 #articleList .tag-course-red {
-  border-color: #E60012;
-  color: #E60012;
+  border-color: #FF3B30;
+  color: #FF3B30;
 }
 #articleList .courseList {
   padding-left: 50px;

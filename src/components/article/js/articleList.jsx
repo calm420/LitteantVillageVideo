@@ -684,6 +684,21 @@ export default class articleList extends React.Component {
             Toast.info('分享文章失败')
         });
     }
+    /**
+     * 挑战搜索页面
+     */
+    toSearch=()=>{
+        var url = WebServiceUtil.mobileServiceURL + "searchHistory?userId=" + this.state.userId;
+        // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+
+    }
 
 
     render() {
@@ -695,10 +710,10 @@ export default class articleList extends React.Component {
                     tagClass='tag-WrongTopic-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass='tag-WrongTopic-yellow';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass='tag-WrongTopic-blue';
                     break;
                 case 3:
                     tagClass='tag-WrongTopic-green';
@@ -739,7 +754,7 @@ export default class articleList extends React.Component {
                                 } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
-                                    friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
                                 } >
@@ -859,6 +874,7 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
+                <div className='icon_search_top' onClick={this.toSearch}></div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}
                 }>

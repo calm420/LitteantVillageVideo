@@ -16,6 +16,9 @@
   .am-tabs-default-bar-top .am-tabs-default-bar-tab::after{
     background-color: transparent;
   }
+  .am-tabs-default-bar-top .am-tabs-default-bar-tab{
+    border-bottom: 0;
+  }
   .am-tabs-default-bar{
     padding: 0 14%;
     position: relative;
@@ -333,25 +336,24 @@
 
   }
   .icon_search_top{
-    background: url(../images/icon_search_top.png) no-repeat;
-    background-size: 100% 100%;
-    width: 18px;
-    height: 28px;
-    display: inline-block;
+    background: url(../images/icon_search_top.png) no-repeat left center;
+    background-size: 17px;
+    width: 26px;
+    height: 40px;
     position: absolute;
-    top: 8px;
-    left: 12px;
+    top: 2px;
+    left: 19px;
     z-index: 10;
   }
   .icon-release{
-    background: url(../images/icon-release.png) no-repeat;
-    background-size: 100% 100%;
-    width: 18px;
-    height: 28px;
+    background: url(../images/icon-release.png) no-repeat right center;
+    background-size: 18px;
+    width: 22px;
+    height: 40px;
     display: inline-block;
     position: absolute;
-    top: 8px;
-    right: 12px;
+    top: 2px;
+    right: 19px;
     z-index: 10;
     .showPubli_box{
       position: absolute;
@@ -523,7 +525,7 @@
       }
     }
     .list_image, .image_detail{
-      margin-top: 10px;
+      margin-top: 8px;
       margin-right: -15px;
       font-size: 0;
       white-space: normal;
@@ -532,7 +534,7 @@
       span{
         font-size: 14px;
         color: #666;
-        padding: 10px 0;
+        padding: 5px 0 8px;
         display: inline-block;
         line-height: 1;
       }
@@ -679,6 +681,7 @@
   }
   .content_detail-comment{
     font-size: 15px;
+    padding-left: 50px;
   }
   .circleList-comment{
     padding-bottom: 15px;

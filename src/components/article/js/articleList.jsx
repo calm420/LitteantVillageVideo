@@ -874,7 +874,7 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
-                <span onClick={this.toSearch}>搜索</span>
+                <div className='icon_search_top' onClick={this.toSearch}></div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}
                 }>

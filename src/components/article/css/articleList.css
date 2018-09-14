@@ -687,7 +687,6 @@
 }
 #articleList .content_detail-comment {
   font-size: 15px;
-  padding-left: 50px;
 }
 #articleList .circleList-comment {
   padding-bottom: 15px;
@@ -905,7 +904,6 @@
   position: absolute;
   top: 0;
   right: 0;
-  background: black;
   width: 20px;
   height: 20px;
 }

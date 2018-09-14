@@ -905,7 +905,7 @@ export default class serachResult extends React.Component {
                                 } src={value.path} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
-                                    friendsAttachments.length == 1 ? {maxWidth: '100%'} : {
+                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
                                 } >

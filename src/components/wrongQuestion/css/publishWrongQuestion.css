@@ -240,24 +240,24 @@
   height: calc(100% - 46px);
 }
 #publishWrongQuestion .knowDegree .am-radio-item:first-child .am-list-content {
-  border-color: #E60012 !important;
+  border-color: #FF3B30 !important;
   color: #fff !important;
-  background-color: #E60012 !important;
+  background-color: #FF3B30 !important;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(2) .am-list-content {
-  border-color: #F39700 !important;
+  border-color: #F4BD00 !important;
   color: #fff !important;
-  background-color: #F39700;
+  background-color: #F4BD00;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(3) .am-list-content {
-  border-color: #42A7F4 !important;
+  border-color: #58ACF4 !important;
   color: #fff !important;
-  background-color: #42A7F4;
+  background-color: #58ACF4;
 }
 #publishWrongQuestion .knowDegree .am-radio-item:nth-child(4) .am-list-content {
-  border-color: #22AC38 !important;
+  border-color: #47CB5E !important;
   color: #fff !important;
-  background-color: #22AC38;
+  background-color: #47CB5E;
 }
 #publishWrongQuestion .knowDegree .am-radio-item.gray .am-list-content {
   border-color: #AEAEAE !important;

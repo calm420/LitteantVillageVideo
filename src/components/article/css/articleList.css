@@ -418,16 +418,16 @@
   background: url("../images/tag-WrongTopic-red.png") no-repeat;
   background-size: 100% 100%;
 }
-#articleList .circleList .tag-WrongTopic-orange {
-  background: url("../images/tag-WrongTopic-orange.png") no-repeat;
-  background-size: 100% 100%;
-}
 #articleList .circleList .tag-WrongTopic-green {
   background: url("../images/tag-WrongTopic-green.png") no-repeat;
   background-size: 100% 100%;
 }
 #articleList .circleList .tag-WrongTopic-yellow {
   background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
+  background-size: 100% 100%;
+}
+#articleList .circleList .tag-WrongTopic-blue {
+  background: url("../images/tag-WrongTopic-blue.png") no-repeat;
   background-size: 100% 100%;
 }
 #articleList .circleList .list_bottom,
@@ -720,17 +720,21 @@
   border-color: #4285F4;
   color: #4285F4;
 }
+#articleList .tag-course-blue-text {
+  border-color: #58ACF4;
+  color: #58ACF4;
+}
 #articleList .tag-course-green {
-  border-color: #22AC38;
-  color: #22AC38;
+  border-color: #47CB5E;
+  color: #47CB5E;
 }
 #articleList .tag-course-orange {
-  border-color: #F39700;
-  color: #F39700;
+  border-color: #F4BD00;
+  color: #F4BD00;
 }
 #articleList .tag-course-red {
-  border-color: #E60012;
-  color: #E60012;
+  border-color: #FF3B30;
+  color: #FF3B30;
 }
 #articleList .courseList {
   padding-left: 50px;

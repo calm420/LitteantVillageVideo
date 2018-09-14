@@ -695,10 +695,10 @@ export default class articleList extends React.Component {
                     tagClass='tag-WrongTopic-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass='tag-WrongTopic-yellow';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass='tag-WrongTopic-blue';
                     break;
                 case 3:
                     tagClass='tag-WrongTopic-green';

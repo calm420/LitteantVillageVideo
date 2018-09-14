@@ -590,3 +590,6 @@
   width: 18px;
   background-size: 100% 100%;
 }
+#myThemeTask .clearBorderTop {
+  border: 0!important;
+}

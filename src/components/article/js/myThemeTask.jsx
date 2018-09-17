@@ -40,7 +40,8 @@ export default class myThemeTask extends React.Component {
             startDateForCustom: new Date(),
             endDateForCustom: new Date(),
             customFlagFor: false,
-            currentProject: ""
+            currentProject: "",
+            isHidden: false,
         }
     }
 
@@ -53,6 +54,26 @@ export default class myThemeTask extends React.Component {
         var targetType = searchArray[1].split('=')[1];
         var cid = (searchArray[2] ? searchArray[2].split('=')[1] : 0);
         var project = searchArray[3] ? decodeURI(searchArray[3].split('=')[1]) : "";
+        var fromTopic = false;
+        if (targetType == 0) {
+            var isHidden = searchArray[4] ? (searchArray[4].split('=')[1]) : null;
+            fromTopic = true;
+        } else {
+            var isHidden = searchArray[2] ? (searchArray[2].split('=')[1]) : null;
+
+        }
+        if (isHidden) {
+            if (userId != isHidden) {
+                if(fromTopic){
+
+                }else{
+                    userId = isHidden;
+                }
+                this.setState({
+                    isHidden: true,
+                })
+            }
+        }
         this.setState({
             project: project,
             currentProject: project,
@@ -494,16 +515,16 @@ export default class myThemeTask extends React.Component {
         console.log('触发导出事件');
         this.setState({
             exportFlag: true,
-        },()=>{
+        }, () => {
             var data = {
                 method: 'editorInTopic',
             };
-            Bridge.callHandler(data, function(val){
+            Bridge.callHandler(data, function (val) {
                 // console.log(val,'valvalvalvalvalvalvalvalval');
                 // Toast.info(val);
-                if(val == 'editorInTopic'){
+                if (val == 'editorInTopic') {
                     that.closeExport();
-                }else{
+                } else {
                     // Toast.info('error')
                 }
             }, function (error) {
@@ -790,7 +811,7 @@ export default class myThemeTask extends React.Component {
         var createTime = null;
         const row = (rowData, sectionID, rowID) => {
             var tagClass = '';
-            switch(rowData.mastery){
+            switch (rowData.mastery) {
                 case 0:
                     tagClass = 'tag-course-red';
                     break;
@@ -814,9 +835,9 @@ export default class myThemeTask extends React.Component {
             }
 
             var borderTop = null;
-            if(new Date(rowData.createTime).getDay() == createTime){
+            if (new Date(rowData.createTime).getDay() == createTime) {
                 borderTop = true;
-            }else{
+            } else {
                 borderTop = false;
             }
             console.log(borderTop);
@@ -832,15 +853,16 @@ export default class myThemeTask extends React.Component {
                     } className="checkbox" type="checkbox" name="checked"
                            onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
                     <div className="date" style={
-                        this.state.targetType == 1? {display: 'none'} : {display: 'block'}
+                        this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
                     }>
                         <div style={
-                            borderTop?{display: 'none'} : {display: 'block'}
+                            borderTop ? {display: 'none'} : {display: 'block'}
                         }
-                            className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
+                             className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div style={
-                            borderTop?{display: 'none'} : {display: 'block'}
-                        } className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月</div>
+                            borderTop ? {display: 'none'} : {display: 'block'}
+                        } className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月
+                        </div>
                     </div>
                     <div className="circleList" style={
                         this.state.targetType == 1 ? {width: '100%'} : {}
@@ -849,12 +871,12 @@ export default class myThemeTask extends React.Component {
 
                         <div>
                             <div style={
-                                this.state.targetType  == 0? {display:'block'}:{display:'none'}
+                                this.state.targetType == 0 ? {display: 'block'} : {display: 'none'}
                             } className="list-tags">
                                 <span style={
                                     rowData.mastery || rowData.mastery == 0 ? {display: 'block'} : {display: 'none'}
                                 }
-                                      className={"tag-course "+tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1?'略懂':rowData.mastery == 2?'基本懂':'完全懂'}</span>
+                                      className={"tag-course " + tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1 ? '略懂' : rowData.mastery == 2 ? '基本懂' : '完全懂'}</span>
                                 <span style={
                                     rowData.courseInfo ? {display: 'block'} : {display: 'none'}
                                 }
@@ -862,9 +884,10 @@ export default class myThemeTask extends React.Component {
                                 <span style={
                                     rowData.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
                                 }
-                                      className="tag-course tag-course-blue">{rowData.fTags && rowData.fTags[0] ? rowData.fTags[0].tagTitle: ''}</span>
+                                      className="tag-course tag-course-blue">{rowData.fTags && rowData.fTags[0] ? rowData.fTags[0].tagTitle : ''}</span>
                             </div>
-                            <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>{rowData.type == 0 ? rowData.mark : rowData.content}</div>
+                            <div
+                                className={this.state.targetType == 0 ? "list_content 错题本" : "list_content 主题计划"}>{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         </div>
                         <div className="list_image" style={
                             friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
@@ -905,14 +928,16 @@ export default class myThemeTask extends React.Component {
                                 className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
                             </div>
                             <div className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>
-                                <i className="i-delete"></i></div>
+                                <i style={
+                                    this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                                } className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>
 
 
             return (
-                <div className={borderTop && this.state.targetType == 0?'list_item clearBorderTop':'list_item'}>
+                <div className={borderTop && this.state.targetType == 0 ? 'list_item clearBorderTop' : 'list_item'}>
                     {dom}
                 </div>
             )

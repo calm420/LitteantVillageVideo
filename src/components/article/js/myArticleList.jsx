@@ -21,6 +21,7 @@ export default class myArticleList extends React.Component {
             index: 0,
             refreshing: false,
             noomPullFlag: true,   //list是否滚动到最顶端
+            isHidden: false,
         }
     }
 
@@ -30,9 +31,18 @@ export default class myArticleList extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var schoolId = searchArray[0].split('=')[1];
+        var userId = searchArray[0].split('=')[1];
+        var toUserId = searchArray[1]?searchArray[1].split('=')[1]:null;
+        if(toUserId){
+            if(userId != toUserId){
+                userId = toUserId;
+                this.setState({
+                    isHidden: true,
+                })
+            }
+        }
         this.setState({
-            userId: schoolId
+            userId: userId
         }, () => {
             this.getArticleInfoListByStatus();
         })
@@ -285,7 +295,9 @@ export default class myArticleList extends React.Component {
                     <div className="rightBox">
                         <img src={image[0]} alt=""/>
                     </div>
-                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                    <div style={
+                        this.state.isHidden?{display:'none'}:{display:'block'}
+                    } className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                         <div className="icon-delete"></div>
                     </div>
                 </div>
@@ -304,7 +316,9 @@ export default class myArticleList extends React.Component {
                         <div className="like">{rowData.readCount}点赞</div>
                         <div className="time">{time}</div>
                     </div>
-                    <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                    <div style={
+                        this.state.isHidden?{display:'none'}:{display:'block'}
+                    } className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                         <div className="icon-delete"></div>
                     </div>
                 </div>
@@ -326,7 +340,9 @@ export default class myArticleList extends React.Component {
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
-                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        <div style={
+                            this.state.isHidden?{display:'none'}:{display:'block'}
+                        } className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                             <div className="icon-delete"></div>
                         </div>
                     </div>
@@ -338,7 +354,9 @@ export default class myArticleList extends React.Component {
                             <div className="like">{rowData.readCount}点赞</div>
                             <div className="time">{time}</div>
                         </div>
-                        <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
+                        <div style={
+                            this.state.isHidden?{display:'none'}:{display:'block'}
+                        } className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                             <div className="icon-delete"></div>
                         </div>
                     </div>

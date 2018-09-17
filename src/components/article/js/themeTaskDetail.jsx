@@ -462,6 +462,12 @@ export default class articleList extends React.Component {
             var newArr = res.split("?");
             var url = newArr[0];
             var type = newArr[1].split("=")[1];
+            var path = '';
+            if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
+                console.log('ssssssss')
+            }else{
+
+            }
             if (noom == '') {
                 if (type == 1) {
                     //图片
@@ -508,8 +514,13 @@ export default class articleList extends React.Component {
 
         }, function (error) {
             console.log('增加电脑的上传');
+            if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
+                console.log('ssssssss')
+            }else{
+
+            }
             that.upload_file();
-            that.upload_file();
+            // that.upload_file();
         });
     }
 

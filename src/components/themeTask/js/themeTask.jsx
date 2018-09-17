@@ -263,6 +263,11 @@ export default class articleList extends React.Component {
     }
 
     selectFile = () => {
+        if(this.state.imageList.length + this.state.videoList.length >= 9){
+            Toast.info('最多添加九个图片或视频!');
+            return;
+        }
+
         var noom = '';
         // var phoneType = navigator.userAgent;
         // if (phoneType.indexOf('Android') > -1) {
@@ -305,56 +310,9 @@ export default class articleList extends React.Component {
 
             }, function (error) {
                 console.log(error);
-                Toast.info('客户端方法报错');
-                that.upload_file();
+                Toast.info('客户端方法报错',1);
                 that.upload_file();
             });
-        // } else {
-        //     var data = {
-        //         method: 'selectedImage',
-        //     };
-        //     window.parent.Bridge.callHandler(data, function (res) {
-        //         var newArr = res.split("?");
-        //         var url=newArr[0];
-        //         var type = newArr[1].split("=")[1];
-        //         // Toast.info(url);
-        //         if(noom=='') {
-        //             if (type == 1) {
-        //                 var imageDiv = $("<img class='upload_box_image showImage' />").attr('src', url);
-        //                 var imageBox = $("<span class='image_box_upload upload_box_image'><i class='deleteImage_upload'></i></span>");
-        //                 $(imageBox).append(imageDiv);
-        //                 $('#image_box').append(imageBox);
-        //                 var imageList = that.state.imageList;
-        //                 imageList.push(url);
-        //                 that.setState({
-        //                     imageList: imageList
-        //                 })
-        //             } else {
-        //                 var firstImage = newArr[2].split("=")[1];
-        //                 var videoDiv = $("<img class='upload_box_video' />").attr({'src':firstImage,'videoPath':url});
-        //                 //image ---> uploadBox
-        //                 var imageBox = $("<span class='image_box_upload'><i class='deleteImage_upload'></i></span>");
-        //                 $(imageBox).append(videoDiv);
-        //                 $('#image_box').append(imageBox);
-        //                 var videoList = that.state.videoList;
-        //                 videoList.push({url:url,coverPath:firstImage});
-        //                 that.setState({
-        //                     videoList: videoList
-        //                 })
-        //             }
-        //             noom = res;
-        //         } else if(noom==res) {
-        //             return;
-        //         }
-        //
-        //     }, function (error) {
-        //         console.log(error);
-        //         that.upload_file();
-        //         that.upload_file();
-        //
-        //     });
-        // }
-
     }
 
     //原生ｊｓ上传

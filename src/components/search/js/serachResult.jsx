@@ -45,6 +45,7 @@ export default class serachResult extends React.Component {
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
+
         document.title = "搜索结果"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -205,13 +206,10 @@ export default class serachResult extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "自媒体文章");
-                // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.state.pageCount = result.pager.pageCount;
                     calm.state.pageNo = result.pager.pageNo;
-                    // calm.state.videoData = result.response.littleVideoInfo
                     if (calm.state.defaultPageNo == 1) {
                         calm.state.videoData.splice(0);
                     }
@@ -251,13 +249,10 @@ export default class serachResult extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, "圈子");
-                // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.state.pageCount = result.pager.pageCount;
                     calm.state.pageNo = result.pager.pageNo;
-                    // calm.state.videoData = result.response.littleVideoInfo
                     if (calm.state.defaultPageNo == 1) {
                         calm.state.videoData.splice(0);
                     }
@@ -431,7 +426,6 @@ export default class serachResult extends React.Component {
             pageNo: recommended_pageNo,
             pageCount: recommended_pageCount
         };
-        console.log(data)
         Bridge.callHandler(data, null, function (error) {
             console.log('开启小视频失败', error)
         });
@@ -471,8 +465,6 @@ export default class serachResult extends React.Component {
             })
         }
         if (val.value == 2) {
-            console.log(val.value)
-
             calm.initDataSource = [];
             calm.setState({
                 dataSource: dataSource.cloneWithRows(calm.initDataSource),
@@ -502,7 +494,8 @@ export default class serachResult extends React.Component {
     /**
      * 关注
      */
-    toLook = (id) => {
+    toLook = (id, event) => {
+        event.stopPropagation();
         var param = {
             "method": 'changeUserFollowInfo',
             "userFollowInfoJson": {
@@ -514,11 +507,9 @@ export default class serachResult extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
                     calm.initDataSource.forEach((v, i) => {
                         if (v.uid == id) {
-                            console.log(v)
                             v.isFollow = true;
                         }
                     })
@@ -553,7 +544,6 @@ export default class serachResult extends React.Component {
      */
     playVideo(url, event) {
         event.stopPropagation();
-        console.log(url);
         var data = {
             method: 'playChatVideo',
             playUrl: url
@@ -562,8 +552,6 @@ export default class serachResult extends React.Component {
         }, function (error) {
             Toast.info('开启视频失败!');
         });
-        // console.log(e,'eeeeeeeeeeee');
-        // e.nativeEvent.stopImmediatePropagation();
     }
     /**
      * 分享
@@ -620,13 +608,11 @@ export default class serachResult extends React.Component {
         } else {
             return days + "天前"
         }
-        // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
     }
 
 
     //跳转至朋友圈详情
     toThemeTaskDetail(cid, rowData) {
-        console.log(rowData.type);
         var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + calm.state.userId + "&cfid=" + cid + "&type=" + rowData.type;
         var data = {
             method: 'openNewPage',
@@ -640,7 +626,6 @@ export default class serachResult extends React.Component {
      * 文章详情
      */
     toDetail(id, articleTitle) {
-        console.log(id);
         if (id) {
             let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3&machineType=&version=&articleTitle=" + ((articleTitle)));
             var data = {
@@ -659,7 +644,6 @@ export default class serachResult extends React.Component {
      */
     deleteItem(rowData, event) {
         event.stopPropagation();
-        console.log(rowData);
         var phoneType = navigator.userAgent;
         var phone;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
@@ -676,16 +660,29 @@ export default class serachResult extends React.Component {
     }
     // dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}
     render() {
+        var tempStr = calm.state.value
+        // var contentP = $(".am-list-body")[0] || <div></div>
+        // var strfind = calm.state.value;
+        // var contentStr = $(".am-list-body").html() || "";
+        // contentP.innerHTML  =  contentStr.split(strfind).join('<font color=red>'+strfind+'</font>');
         // 文章
         const row0 = (rowData, sectionID, rowID) => {
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
-            console.log(image.length, 'imagelength')
             if (image.length == 1) {  //图片一张
                 dom = <div className="item line_public">
                     <div className="leftBox">
-                        <div className="title">{rowData.articleTitle}</div>
+                        <div className="title"
+                            dangerouslySetInnerHTML={{
+                                __html: rowData.articleTitle ?
+                                    (rowData.articleTitle.indexOf(calm.state.value) == -1 ?
+                                        rowData.articleTitle
+                                        :
+                                        rowData.articleTitle.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                    : ""
+                            }}
+                        ></div>
                         <div className="bottom">
                             <div className="read">{rowData.readCount}阅读</div>
                             <div className="like">{rowData.readCount}点赞</div>
@@ -707,7 +704,17 @@ export default class serachResult extends React.Component {
                         alt="" />)
                 }
                 dom = <div className="item line_public">
-                    <div className="title">{rowData.articleTitle}</div>
+                    <div className="title"
+                        dangerouslySetInnerHTML={{
+                            __html: rowData.articleTitle ?
+                                (rowData.articleTitle.indexOf(calm.state.value) == -1 ?
+                                    rowData.articleTitle
+                                    :
+                                    rowData.articleTitle.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                : ""
+                        }}
+
+                    ></div>
                     <div className="images">{imageDom}</div>
                     <div className="bottom">
                         <div className="read">{rowData.readCount}阅读</div>
@@ -722,7 +729,15 @@ export default class serachResult extends React.Component {
                 var videoFlag = false;
                 if (videoFlag) { //有视频
                     dom = <div className="item line_public">
-                        <div className="title">{rowData.articleTitle}</div>
+                        <div className="title"
+                            dangerouslySetInnerHTML={{
+                                __html: rowData.articleTitle ?
+                                    (rowData.articleTitle.indexOf(calm.state.value) == -1 ?
+                                        rowData.articleTitle
+                                        :
+                                        rowData.articleTitle.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                    : ""
+                            }}></div>
                         <div className="images">
                             <div className="videoBox">
                                 <div onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)} className="videoMask"></div>
@@ -743,7 +758,15 @@ export default class serachResult extends React.Component {
                     </div>
                 } else {  //图片没有 视频也没有
                     dom = <div className="item line_public">
-                        <div className="title">{rowData.articleTitle}</div>
+                        <div className="title"
+                            dangerouslySetInnerHTML={{
+                                __html: rowData.articleTitle ?
+                                    (rowData.articleTitle.indexOf(calm.state.value) == -1 ?
+                                        rowData.articleTitle
+                                        :
+                                        rowData.articleTitle.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                    : ""
+                            }}></div>
                         <div className="bottom">
                             <div className="read">{rowData.readCount}阅读</div>
                             <div className="like">{rowData.readCount}点赞</div>
@@ -764,7 +787,6 @@ export default class serachResult extends React.Component {
         }
         // 视频
         const row1 = (rowData, sectionID, rowID) => {
-            // console.log(rowData.tags, "rowdata")
             rowData.tags = rowData.tags || [];
             var newTagArr = [];
             var newChanArr = [];
@@ -776,6 +798,7 @@ export default class serachResult extends React.Component {
                     newChanArr.push(v)
                 }
             })
+            var tempStr = calm.state.value
 
             return (
                 <div className='videoItem' >
@@ -784,7 +807,17 @@ export default class serachResult extends React.Component {
                         <div className="videoInfo" onClick={this.toPlayVideo.bind(this, rowID, calm.state.videoData, calm.state.pageCount, calm.state.pageNo)}>
                             <img src={rowData.coverPath} alt="" />
                             <div className="gradient_bgT topText">
-                                <div dangerouslySetInnerHTML={{ __html: rowData.videoContent }} className="video_content"></div>
+                                <div
+
+                                    dangerouslySetInnerHTML={{
+                                        __html: rowData.videoContent ?
+                                            (rowData.videoContent.indexOf(calm.state.value) == -1 ?
+                                                rowData.videoContent
+                                                :
+                                                rowData.videoContent.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                            : ""
+                                    }}
+                                    className="video_content"></div>
                             </div>
                             <div className="search-bottom">
                                 <div className='bottomText my_flex'>
@@ -801,7 +834,13 @@ export default class serachResult extends React.Component {
                                                     {
                                                         newTagArr.map((v, i) => {
                                                             return (
-                                                                <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
+                                                                <span dangerouslySetInnerHTML={{
+                                                                    __html: v.tagTitle ?
+                                                                        v.tagTitle.indexOf(calm.state.value) == -1 ?
+                                                                            v.tagTitle :
+                                                                            v.tagTitle.replace(tempStr, '<b>' + calm.state.value + '</b>')
+                                                                        : ""
+                                                                }} className="tag"></span>
                                                             )
                                                         })
 
@@ -819,7 +858,12 @@ export default class serachResult extends React.Component {
                                                 {
                                                     newChanArr.map((v, i) => {
                                                         return (
-                                                            <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
+                                                            <span dangerouslySetInnerHTML={{
+                                                                __html: v.tagTitle ? v.tagTitle.indexOf(calm.state.value) == -1 ?
+                                                                    v.tagTitle :
+                                                                    v.tagTitle.replace(tempStr, '<b>' + calm.state.value + '</b>')
+                                                                    : v.tagTitle
+                                                            }} className="tag"></span>
                                                         )
                                                     })
 
@@ -840,10 +884,18 @@ export default class serachResult extends React.Component {
         //   用户
         const row2 = (rowData, sectionID, rowID) => {
             return (
-                <div className="User-Search line_public">
-                    <img className="user" onClick={calm.toCenterInfo.bind(this, rowData)} src={rowData.avatar} />
+                <div onClick={calm.toCenterInfo.bind(this, rowData)} className="User-Search line_public">
+                    <img className="user" src={rowData.avatar} />
                     <div className="user-name">
-                        <div className="name">{rowData.userName}</div>
+                        <div className="name"
+                            dangerouslySetInnerHTML={{
+                                __html: rowData.userName ?
+                                    (rowData.userName.indexOf(calm.state.value) == -1 ?
+                                        rowData.userName
+                                        :
+                                        rowData.userName.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                    : ""
+                            }}></div>
                         <div className="fans">粉丝：{rowData.fansCount}</div>
                     </div>
                     {
@@ -896,7 +948,26 @@ export default class serachResult extends React.Component {
 
                         </div>
                         <div className="tags"><span className={rowData.type == 1 ? "tag-ThemeTask" : "tag-WrongTopic " + tagClass}>{rowData.type ? '' : ''}</span></div>
-                        <div className="list_content">{rowData.type == 1 ? rowData.content : rowData.mark}</div>
+                        <div className="list_content" 
+                        
+                         dangerouslySetInnerHTML={{
+                            __html:rowData.type == 1 ? ( rowData.content ?
+                                (rowData.content.indexOf(calm.state.value) == -1 ?
+                                    rowData.content
+                                    :
+                                    rowData.content.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                : "")
+                                :
+                                (
+                                    rowData.mark ?
+                                (rowData.mark.indexOf(calm.state.value) == -1 ?
+                                    rowData.mark
+                                    :
+                                    rowData.mark.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                : ""
+                                )
+                        }} 
+                      ></div>
                         <div className="list_image" style={
                             friendsAttachments.length == 0 ? { display: 'none' } : { display: 'block' }
                         }>
@@ -934,10 +1005,6 @@ export default class serachResult extends React.Component {
             <div id="serachResult">
                 <SearchBar id="searchResult"
                     value={calm.state.value}
-                    // onSubmit={value => console.log(value, 'onSubmit')}
-                    // onClear={value => console.log(value, 'onClear')}
-                    // onFocus={() => console.log('onFocus')}
-                    // onBlur={() => console.log('onBlur')}
                     onCancel={calm.toSearchHistory}
                     onChange={this.onChange}
                     placeholder="请输入搜索内容"

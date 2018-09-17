@@ -862,7 +862,7 @@ export default class myThemeTask extends React.Component {
                             rowData.type == 0 ? {display: 'none'} : {display: 'block'}
                         }>
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
-                            <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
+                            <div className="deadline-line">截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>

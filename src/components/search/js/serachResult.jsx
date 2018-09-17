@@ -45,6 +45,7 @@ export default class serachResult extends React.Component {
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
+
         document.title = "搜索结果"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -676,6 +677,10 @@ export default class serachResult extends React.Component {
     }
     // dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}
     render() {
+        // var contentP = $(".am-list-body")[0] || <div></div>
+        // var strfind = calm.state.value;
+        // var contentStr = $(".am-list-body").html() || "";
+        // contentP.innerHTML  =  contentStr.split(strfind).join('<font color=red>'+strfind+'</font>');
         // 文章
         const row0 = (rowData, sectionID, rowID) => {
             var image = rowData.articleImgArray || [];

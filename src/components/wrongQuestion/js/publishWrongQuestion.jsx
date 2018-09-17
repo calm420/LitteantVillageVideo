@@ -184,7 +184,8 @@ export default class publishWrongQuestion extends React.Component {
      */
     nextStep() {
         if (calm.state.theQuestionArr.length == 0 && calm.state.theQustionVideo.length == 0) {
-            Toast.info("请上传题干");
+            Toast.info("请上传题干", 1, "", false)
+            // Toast.info("请上传题干");    
             return
         }
 

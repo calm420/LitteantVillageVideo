@@ -728,7 +728,7 @@
   float: right;
   margin-left: 2px;
   margin-top: 4px;
-  line-height: 1.1;
+  line-height: 15px;
 }
 #articleList .tag-course-blue {
   border-color: #4285F4;
@@ -934,4 +934,5 @@
 #articleList .myTag {
   color: #666;
   font-size: 16px;
+  margin-left: -6.5px;
 }

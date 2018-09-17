@@ -794,7 +794,7 @@ export default class articleList extends React.Component {
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             // useBodyScroll={true}
                             style={{
-                                height: document.body.clientHeight,
+                                height: document.body.clientHeight - 49,
                             }}
                         />
                     </div>
@@ -916,7 +916,7 @@ export default class articleList extends React.Component {
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             // useBodyScroll={true}
                             style={{
-                                height: document.body.clientHeight,
+                                height: document.body.clientHeight - 49,
                             }}
                         />
                     </div>
@@ -935,7 +935,7 @@ export default class articleList extends React.Component {
                     }>
                         <div>
                             <div className="import">
-                                <input
+                                <textarea
                                     type="text"
                                     id="commit"
                                     placeholder="请输入评论内容"

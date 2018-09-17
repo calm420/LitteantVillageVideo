@@ -518,6 +518,7 @@
 #articleList .list_item .list_head .createTime {
   color: #999;
   font-size: 13px;
+  line-height: 1;
 }
 #articleList .list_item .list_image,
 #articleList .list_item .image_detail {
@@ -751,6 +752,7 @@
 }
 #articleList .courseList {
   padding-left: 50px;
+  line-height: 1;
 }
 #articleList .people_image_list {
   margin-top: 10px;

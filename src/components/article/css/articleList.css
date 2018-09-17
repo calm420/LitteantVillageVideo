@@ -518,6 +518,7 @@
 #articleList .list_item .list_head .createTime {
   color: #999;
   font-size: 13px;
+  line-height: 1;
 }
 #articleList .list_item .list_image,
 #articleList .list_item .image_detail {
@@ -721,13 +722,13 @@
 }
 #articleList .tag-course {
   padding: 0px 4px;
-  font-size: 12px;
+  font-size: 11px;
   border-width: 1px;
   border-style: solid;
   float: right;
   margin-left: 2px;
   margin-top: 4px;
-  line-height: 1.5;
+  line-height: 1.1;
 }
 #articleList .tag-course-blue {
   border-color: #4285F4;
@@ -751,6 +752,7 @@
 }
 #articleList .courseList {
   padding-left: 50px;
+  line-height: 1;
 }
 #articleList .people_image_list {
   margin-top: 10px;
@@ -928,4 +930,8 @@
 }
 #articleList textarea#commit > div {
   background: red;
+}
+#articleList .myTag {
+  color: #666;
+  font-size: 16px;
 }

@@ -923,7 +923,7 @@ export default class serachResult extends React.Component {
                         <div className="list_bottom">
                             <div className="list_bottom_item" onClick={calm.toShare.bind(this, rowData.cfid, rowData.userInfo.userName, rowData.type)}><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                            <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
+                            <div className="list_bottom_item"><i className={rowData.currentUserIsLike?"i-praise-active":"i-praise"}></i><span>{rowData.likeCount}</span></div>
                         </div>
                     </div>
                 </div>

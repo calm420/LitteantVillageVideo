@@ -320,6 +320,7 @@
 #myThemeTask .date .mouth {
   font-size: 12px;
   color: #666;
+  text-align: center;
 }
 #myThemeTask .i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
@@ -646,17 +647,19 @@
   border-top-width: 10px;
 }
 #myThemeTask .list-tags {
-  height: 28px;
+  height: 17px;
+  margin-top: -4px;
+  margin-bottom: 6px;
 }
 #myThemeTask .tag-course {
   padding: 0px 4px;
-  font-size: 12px;
+  font-size: 11px;
   border-width: 1px;
   border-style: solid;
   float: left;
   margin-left: 2px;
   margin-top: 4px;
-  line-height: 1.5;
+  line-height: 1.1;
 }
 #myThemeTask .tag-course-blue {
   border-color: #4285F4;

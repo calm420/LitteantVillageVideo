@@ -206,6 +206,7 @@ export default class serachResult extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.state.pageCount = result.pager.pageCount;
@@ -249,6 +250,8 @@ export default class serachResult extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
+                console.log(result)
+
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;
                     calm.state.pageCount = result.pager.pageCount;
@@ -948,26 +951,26 @@ export default class serachResult extends React.Component {
 
                         </div>
                         <div className="tags"><span className={rowData.type == 1 ? "tag-ThemeTask" : "tag-WrongTopic " + tagClass}>{rowData.type ? '' : ''}</span></div>
-                        <div className="list_content" 
-                        
-                         dangerouslySetInnerHTML={{
-                            __html:rowData.type == 1 ? ( rowData.content ?
-                                (rowData.content.indexOf(calm.state.value) == -1 ?
-                                    rowData.content
+                        <div className="list_content"
+
+                            dangerouslySetInnerHTML={{
+                                __html: rowData.type == 1 ? (rowData.content ?
+                                    (rowData.content.indexOf(calm.state.value) == -1 ?
+                                        rowData.content
+                                        :
+                                        rowData.content.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                    : "")
                                     :
-                                    rowData.content.replace(tempStr, '<b>' + calm.state.value + '</b>'))
-                                : "")
-                                :
-                                (
-                                    rowData.mark ?
-                                (rowData.mark.indexOf(calm.state.value) == -1 ?
-                                    rowData.mark
-                                    :
-                                    rowData.mark.replace(tempStr, '<b>' + calm.state.value + '</b>'))
-                                : ""
-                                )
-                        }} 
-                      ></div>
+                                    (
+                                        rowData.mark ?
+                                            (rowData.mark.indexOf(calm.state.value) == -1 ?
+                                                rowData.mark
+                                                :
+                                                rowData.mark.replace(tempStr, '<b>' + calm.state.value + '</b>'))
+                                            : ""
+                                    )
+                            }}
+                        ></div>
                         <div className="list_image" style={
                             friendsAttachments.length == 0 ? { display: 'none' } : { display: 'block' }
                         }>
@@ -994,7 +997,7 @@ export default class serachResult extends React.Component {
                         <div className="list_bottom">
                             <div className="list_bottom_item" onClick={calm.toShare.bind(this, rowData.cfid, rowData.userInfo.userName, rowData.type)}><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                            <div className="list_bottom_item"><i className={rowData.currentUserIsLike?"i-praise-active":"i-praise"}></i><span>{rowData.likeCount}</span></div>
+                            <div className="list_bottom_item"><i className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span></div>
                         </div>
                     </div>
                 </div>

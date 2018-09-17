@@ -125,7 +125,7 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result);
+                console.log(result,'判断用户是否点赞');
                 if (result.success) {
                     var response = JSON.parse(result.response);
                     this.setState({

@@ -433,7 +433,7 @@ export default class articleList extends React.Component {
 
         console.log(that.state.friendsAttachments,'that.state.friendsAttachments');
         if(that.state.friendsAttachments.length >= 9){
-            Toast.info('最多添加九图片或视频!',1);
+            Toast.info('最多添加九个图片或视频!',1);
             return;
         }
         var noom = ''
@@ -935,7 +935,7 @@ export default class articleList extends React.Component {
                     }>
                         <div>
                             <div className="import">
-                                <input
+                                <textarea
                                     type="text"
                                     id="commit"
                                     placeholder="请输入评论内容"

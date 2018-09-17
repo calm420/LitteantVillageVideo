@@ -879,7 +879,7 @@ export default class myThemeTask extends React.Component {
 
 
             return (
-                <div className={borderTop?'list_item clearBorderTop':'list_item'}>
+                <div className={borderTop && this.state.targetType == 0?'list_item clearBorderTop':'list_item'}>
                     {dom}
                 </div>
             )

@@ -454,6 +454,10 @@ export default class publishWrongQuestion extends React.Component {
      * 添加题干
      */
     addTheQusetion() {
+        if(this.state.theQuestionArr.length + this.state.theQustionVideo.length >= 9){
+            Toast.info('最多添加九个图片或视频!',1);
+            return;
+        }
         var noom = "";
         var data = {
             method: 'toTakePhoto',
@@ -501,6 +505,10 @@ export default class publishWrongQuestion extends React.Component {
      * 上传答案
      */
     addTheAnswer() {
+        if(this.state.theAnswerArr.length + this.state.theAnswerVideo.length >= 9){
+            Toast.info('最多添加九个图片或视频!',1);
+            return;
+        }
         var tempClam = "";
         var data = {
             method: 'toTakePhoto',

@@ -63,6 +63,16 @@ export default class articleList extends React.Component {
                 shareHidden: true,
             })
         }
+        // if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
+        //     console.log('ssssssss')
+        // }else{
+        //
+        // }
+        // var res = 'http://60.205.86.217/upload8/2018-09-17/19/8a2515a3-719e-443c-9c9d-24b1cf135890.jpg?type=1,http://60.205.86.217/upload8/2018-09-17/19/cc39666d-9379-40e1-8ec5-c9032718ca54.jpg?type=1,http://60.205.86.217/upload8/2018-09-17/19/f2ff536a-6b40-457b-8ef4-2a5598ab4bc0.jpg?type=1';
+        // var imageArray = res.split(',');
+        // for(var k in imageArray){
+        //     console.log(imageArray[k],'imageArray');
+        // }
         document.title = type == 1?'主题任务':'错题本';
         this.setState({
             userId: userId,
@@ -430,86 +440,83 @@ export default class articleList extends React.Component {
     }
 
     selectedImage = () => {
-
-        console.log(that.state.friendsAttachments,'that.state.friendsAttachments');
         if(that.state.friendsAttachments.length >= 9){
             Toast.info('最多添加九图片或视频!',1);
             return;
         }
         var noom = ''
 
-        /*var url = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg';
-
-        // return;
-        var dom = this.state.domImage;
-        dom.push(<div key={url} className="image_item"><img className="appendImage_item" src={url} alt=""/>
-            <div className='delete_upload_image'><img
-                src={require('../images/close_r.png')} alt=""/></div>
-        </div>);
-        // dom.key = url;
-
-        this.setState({
-            domImage: dom
-        })*/
-
         var data = {
-            method: 'selectedImage',
+            method: 'moreSelectedImage',
+            count: 9 - that.state.friendsAttachments.length,
         };
         Bridge.callHandler(data, function (res) {
             // Toast.info(res);
             // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
             // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
-            var newArr = res.split("?");
-            var url = newArr[0];
-            var type = newArr[1].split("=")[1];
-            if (noom == '') {
-                if (type == 1) {
-                    //图片
-                    var dom = that.state.domImage;
-                    dom.push(<div key={url} className="image_item"><img onClick={that.showImage.bind(that, [url], url)}
-                                                                        className="appendImage_item" src={url} alt=""/>
-                        <div className='delete_upload_image' id={url}><img
-                            src={require('../images/del-comment.png')} alt=""/></div>
-                    </div>)
+            var imageArray = res.split(',');
+            for(var k in imageArray){
+                res = imageArray[k];
+                var newArr = res.split("?");
+                var url = newArr[0];
+                var type = newArr[1].split("=")[1];
+                // if (noom == '') {
+                    if (type == 1) {
+                        var dom = that.state.domImage;
 
-                    that.state.friendsAttachments.push({
-                        cfid: that.state.detail.cid,
-                        type: 0,
-                        fatherType: 4,
-                        coverPath: url,
-                        path: url,
-                    })
-                } else {
-                    //视频
-                    var cover = newArr[2].split("=")[1];
-                    // Toast.info(cover)
-                    var dom = that.state.domImage;
-                    dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
-                        className="appendImage_item" src={cover} alt=""/>
-                        <div className='delete_upload_image' id={url}><img
-                            src={require('../images/del-comment.png')} alt=""/></div>
-                    </div>);
+                        //图片
+                        dom.push(<div key={url} className="image_item"><img onClick={that.showImage.bind(that, [url], url)}
+                                                                            className="appendImage_item" src={url} alt=""/>
+                            <div className='delete_upload_image' id={url}><img
+                                src={require('../images/del-comment.png')} alt=""/></div>
+                        </div>)
 
-                    that.state.friendsAttachments.push({
-                        cfid: that.state.cid,
-                        type: 1,
-                        fatherType: 4,
-                        coverPath: cover,
-                        path: url,
-                    })
-                }
-                noom = res;
-            } else if (noom == res) {
-                return;
+                        that.state.friendsAttachments.push({
+                            cfid: that.state.detail.cid,
+                            type: 0,
+                            fatherType: 4,
+                            coverPath: url,
+                            path: url,
+                        })
+                    } else {
+                        //视频
+                        var cover = newArr[2].split("=")[1];
+                        // Toast.info(cover)
+                        var dom = that.state.domImage;
+                        dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
+                            className="appendImage_item" src={cover} alt=""/>
+                            <div className='delete_upload_image' id={url}><img
+                                src={require('../images/del-comment.png')} alt=""/></div>
+                        </div>);
+
+                        that.state.friendsAttachments.push({
+                            cfid: that.state.cid,
+                            type: 1,
+                            fatherType: 4,
+                            coverPath: cover,
+                            path: url,
+                        })
+                    }
+                that.setState({
+                    domImage: dom
+                })
+                    // noom = res;
+                // } else if (noom == res) {
+                //     return;
+                // }
             }
-            that.setState({
-                domImage: dom
-            })
+
+
 
         }, function (error) {
             console.log('增加电脑的上传');
+            if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
+                console.log('ssssssss')
+            }else{
+
+            }
             that.upload_file();
-            that.upload_file();
+            // that.upload_file();
         });
     }
 

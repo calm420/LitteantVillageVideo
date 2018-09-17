@@ -245,6 +245,13 @@ const topicWrongList = (location, cb) => {
     }, 'topicWrongList')
 };
 
+// 微信登录
+const wxLogin = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/wxLogin/wxLogin').default)
+    }, 'wxLogin')
+};
+
 
 
 import './index.less';
@@ -281,6 +288,8 @@ class Index extends React.Component {
                               {/*style={{fontSize: '24px'}}>editorDemo</Link></li>*/}
                     <li><Link to="/lookThrough?auditorId=3"
                               style={{fontSize: '24px'}}>审核列表</Link></li>
+                    <li><Link to="/wxLogin?lookThrough"
+                              style={{fontSize: '24px'}}>审核列表(微信)</Link></li>
                     {/*<li><Link to="/uploadMusicList?ident=23836"*/}
                               {/*style={{fontSize: '24px'}}>uploadMusicList</Link></li>*/}
                     <li>
@@ -407,6 +416,7 @@ ReactDOM.render(
             <Route path="selectedPeople" getComponent={selectedPeople}/>
             <Route path="myThemeTask" getComponent={myThemeTask}/>
             <Route path="topicWrongList" getComponent={topicWrongList}/>
+            <Route path="wxLogin" getComponent={wxLogin}/>
         </Route>
     </Router>
     ,

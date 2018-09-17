@@ -14,6 +14,7 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             listData:[],
             refreshing:false,
+            isHidden:false,
         }
     }
 
@@ -24,6 +25,18 @@ export default class articleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
+        var toUserId = searchArray[1]?searchArray[1].split('=')[1]:null;
+        if(toUserId){
+            if(userId == toUserId){
+
+            }else{
+                userId = toUserId;
+                this.setState({
+                    isHidden: true
+                })
+            }
+
+        }
         this.setState({
             userId: userId,
         }, () => {
@@ -111,7 +124,11 @@ export default class articleList extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail(item) {
-        var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+item.cid+"&projectName="+item.name;
+        if(this.state.isHidden){
+            var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+item.cid+"&projectName="+item.name+"&isHidden="+this.state.isHidden;
+        }else{
+            var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+item.cid+"&projectName="+item.name;
+        }
         var data = {
             method: 'openNewPage',
             url: url

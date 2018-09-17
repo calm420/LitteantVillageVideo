@@ -55,6 +55,8 @@
 #wrongQuestionCount .title > span:first-child,
 #wrongQuestionCount .listCont > span:first-child {
   text-align: left;
+  padding-right: 5px;
+  box-sizing: border-box;
 }
 #wrongQuestionCount .title > span:nth-child(2),
 #wrongQuestionCount .listCont > span:nth-child(2) {
@@ -165,7 +167,7 @@
   flex-wrap: wrap;
 }
 #wrongQuestionCount .modalDiv .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio {
-  height: 22px;
+  height: 30px;
 }
 #wrongQuestionCount .modalDiv .am-radio-item.checked .am-list-line .am-list-content {
   border: 1px #4285F4 solid !important;

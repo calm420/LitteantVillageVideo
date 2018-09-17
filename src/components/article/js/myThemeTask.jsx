@@ -789,6 +789,21 @@ export default class myThemeTask extends React.Component {
     render() {
         var createTime = null;
         const row = (rowData, sectionID, rowID) => {
+            var tagClass = '';
+            switch(rowData.mastery){
+                case 0:
+                    tagClass = 'tag-course-red';
+                    break;
+                case 1:
+                    tagClass = 'tag-course-orange';
+                    break;
+                case 2:
+                    tagClass = 'tag-course-blue-text';
+                    break;
+                case 3:
+                    tagClass = 'tag-course-green';
+                    break;
+            }
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             var friendsAttachments = rowData.friendsAttachments;
@@ -832,7 +847,25 @@ export default class myThemeTask extends React.Component {
                     }
                          onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
 
-                        <div className="list_content">{rowData.type == 0 ? rowData.mark : rowData.content}</div>
+                        <div>
+                            <div style={
+                                this.state.targetType  == 0? {display:'block'}:{display:'none'}
+                            } className="list-tags">
+                                <span style={
+                                    rowData.courseInfo ? {display: 'block'} : {display: 'none'}
+                                }
+                                      className="tag-course tag-course-blue">{rowData.courseInfo ? rowData.courseInfo.courseName : ''}</span>
+                                <span style={
+                                    rowData.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
+                                }
+                                      className="tag-course tag-course-blue">{rowData.fTags && rowData.fTags[0] ? rowData.fTags[0].tagTitle: ''}</span>
+                                <span style={
+                                    rowData.mastery || rowData.mastery == 0 ? {display: 'block'} : {display: 'none'}
+                                }
+                                      className={"tag-course "+tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1?'略懂':rowData.mastery == 2?'基本懂':'完全懂'}</span>
+                            </div>
+                            <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>{rowData.type == 0 ? rowData.mark : rowData.content}</div>
+                        </div>
                         <div className="list_image" style={
                             friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
                         }>
@@ -862,7 +895,7 @@ export default class myThemeTask extends React.Component {
                             rowData.type == 0 ? {display: 'none'} : {display: 'block'}
                         }>
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
-                            <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
+                            <div className="deadline-line">截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>
@@ -879,7 +912,7 @@ export default class myThemeTask extends React.Component {
 
 
             return (
-                <div className={borderTop?'list_item clearBorderTop':'list_item'}>
+                <div className={borderTop && this.state.targetType == 0?'list_item clearBorderTop':'list_item'}>
                     {dom}
                 </div>
             )

@@ -157,9 +157,6 @@
   background: url("../images/play-btn.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .list_item .date + .circleList .list_image {
-  width: 236px;
-}
 @media screen and (min-width: 700px) {
   #myThemeTask .list_item .list_image,
   #myThemeTask .list_item .image_detail {
@@ -194,7 +191,8 @@
 @media (max-width: 360px) and (min-width: 340px) {
   #myThemeTask .list_item .list_image,
   #myThemeTask .list_item .image_detail {
-    width: 324px;
+    width: auto;
+    margin-right: -15px;
   }
   #myThemeTask .list_item .list_image img,
   #myThemeTask .list_item .image_detail img {
@@ -217,15 +215,13 @@
     display: inline-block;
     margin-bottom: 8px;
     vertical-align: middle;
-  }
-  #myThemeTask .list_item .date + .circleList .list_image {
-    width: 216px;
   }
 }
 @media (max-width: 339px) {
   #myThemeTask .list_item .list_image,
   #myThemeTask .list_item .image_detail {
-    width: 294px;
+    width: auto;
+    margin-right: -15px;
   }
   #myThemeTask .list_item .list_image img,
   #myThemeTask .list_item .image_detail img {
@@ -248,9 +244,6 @@
     display: inline-block;
     margin-bottom: 8px;
     vertical-align: middle;
-  }
-  #myThemeTask .list_item .date + .circleList .list_image {
-    width: 196px;
   }
 }
 #myThemeTask .list_item .list_bottom_item {
@@ -317,6 +310,7 @@
 #myThemeTask .date {
   padding-left: 15px;
   width: 40px;
+  min-width: 40px;
   box-sizing: border-box;
 }
 #myThemeTask .date .day {
@@ -330,6 +324,9 @@
 #myThemeTask .i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
+}
+#myThemeTask .i-praise-active + span {
+  color: #e5352b;
 }
 #myThemeTask .filter-content {
   width: 90%;
@@ -616,8 +613,68 @@
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 98;
+}
+#myThemeTask .deadline-line {
+  padding-bottom: 10px;
+  position: relative;
+  margin-bottom: 5px;
+}
+#myThemeTask .deadline-line:after {
+  content: '';
+  position: absolute;
+  background-color: #e5e5e5;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: 15px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+#myThemeTask .deadline-line + .clearBorderTop {
+  border-top-width: 10px;
+}
+#myThemeTask .list-tags {
+  height: 28px;
+}
+#myThemeTask .tag-course {
+  padding: 0px 4px;
+  font-size: 12px;
+  border-width: 1px;
+  border-style: solid;
+  float: left;
+  margin-left: 2px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+#myThemeTask .tag-course-blue {
+  border-color: #4285F4;
+  color: #4285F4;
+}
+#myThemeTask .tag-course-blue-text {
+  border-color: #58ACF4;
+  color: #58ACF4;
+}
+#myThemeTask .tag-course-green {
+  border-color: #47CB5E;
+  color: #47CB5E;
+}
+#myThemeTask .tag-course-orange {
+  border-color: #F4BD00;
+  color: #F4BD00;
+}
+#myThemeTask .tag-course-red {
+  border-color: #FF3B30;
+  color: #FF3B30;
 }

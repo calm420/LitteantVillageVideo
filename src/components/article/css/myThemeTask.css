@@ -647,7 +647,7 @@
   border-top-width: 10px;
 }
 #myThemeTask .list-tags {
-  height: 17px;
+  height: 19px;
   margin-top: -4px;
   margin-bottom: 6px;
 }
@@ -659,7 +659,7 @@
   float: left;
   margin-left: 2px;
   margin-top: 4px;
-  line-height: 1.1;
+  line-height: 15px;
 }
 #myThemeTask .tag-course-blue {
   border-color: #4285F4;
@@ -684,12 +684,5 @@
 #myThemeTask .myTag {
   color: #666;
   font-size: 16px;
-  padding-right: 2px;
-}
-#myThemeTask .myTag span {
-  vertical-align: top;
-}
-#myThemeTask .myTag img {
-  height: 16px;
-  vertical-align: text-bottom;
+  margin-left: -6.5px;
 }

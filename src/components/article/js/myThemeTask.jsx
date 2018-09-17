@@ -864,10 +864,7 @@ export default class myThemeTask extends React.Component {
                             <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>
 
                                 {rowData.fTags.map((value,index)=>{
-                                    return <span className="myTag">
-                                        <img src={require('../images/icon_tag_left.png')}/>
-                                        <span>{value.tagTitle}</span>
-                                        <img src={require('../images/icon_tag_right.png')}/></span>
+                                    return <span className="myTag">【{value.tagTitle}】</span>
                                 })}
 
                                 {rowData.type == 0 ? rowData.mark : rowData.content}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { WhiteSpace, SearchBar, Button, WingBlank, Result,Toast } from 'antd-mobile';
+import { WhiteSpace, SearchBar, Button, WingBlank, Result, Toast } from 'antd-mobile';
 import '../css/searchHistory.less';
 var calm;
 export default class searchHistory extends React.Component {
@@ -9,10 +9,10 @@ export default class searchHistory extends React.Component {
         this.state = {
             showCancelButton: false,
             searchHistory: [],
-            value:"",
+            value: "",
         }
     }
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         window.addEventListener('resize', this.onWindwoResize);
     }
     componentDidMount() {
@@ -71,7 +71,7 @@ export default class searchHistory extends React.Component {
      * 点击搜索跳转搜索结果页面
      */
     toSearchResult = () => {
-        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + calm.state.value+"&userId="+calm.state.userId;
+        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + calm.state.value + "&userId=" + calm.state.userId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -84,7 +84,7 @@ export default class searchHistory extends React.Component {
      * 跳转搜索结果页面
      */
     toSearchResultNo = (v) => {
-        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + v+"&userId="+calm.state.userId;
+        var url = WebServiceUtil.mobileServiceURL + "serachResult?serachValue=" + v + "&userId=" + calm.state.userId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -108,6 +108,12 @@ export default class searchHistory extends React.Component {
      * 点击搜索
      */
     serach = () => {
+
+        calm.state.searchHistory.forEach((v, i) => {
+            if (v == calm.state.value) {
+                calm.state.searchHistory.splice(i,1)
+            }
+        })
         calm.state.searchHistory.push(calm.state.value)
         calm.setState({
             searchHistory: calm.removeEmptyArrayEle(calm.state.searchHistory)
@@ -127,16 +133,16 @@ export default class searchHistory extends React.Component {
     /**
      * 数组去空
      */
-    removeEmptyArrayEle(arr){    
-        for(var i = 0; i < arr.length; i++) {
-         if(arr[i] == "") {
-            arr.splice(i,1);
-            i = i - 1; // i - 1 ,因为空元素在数组下标 2 位置，删除空之后，后面的元素要向前补位，
-                             // 这样才能真正去掉空元素,觉得这句可以删掉的连续为空试试，然后思考其中逻辑
-          }
-         }
-         return arr;
-      };
+    removeEmptyArrayEle(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == "") {
+                arr.splice(i, 1);
+                i = i - 1; // i - 1 ,因为空元素在数组下标 2 位置，删除空之后，后面的元素要向前补位，
+                // 这样才能真正去掉空元素,觉得这句可以删掉的连续为空试试，然后思考其中逻辑
+            }
+        }
+        return arr;
+    };
 
     /**
      * 返回搜索结果页面

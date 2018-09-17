@@ -54,7 +54,6 @@ export default class serachResult extends React.Component {
 
         if (calm.state.pageChange == 0) {
             calm.searchArtical(searghValue, userId)
-           
         }
         if (calm.state.pageChange == 1) {
             calm.searchVideo(searghValue, userId)
@@ -371,7 +370,7 @@ export default class serachResult extends React.Component {
      * 点击搜索事件
      */
     serach = () => {
-      
+
         /**
          * 取session数据
          */
@@ -386,7 +385,11 @@ export default class serachResult extends React.Component {
         calm.setState({
             searchHistory: newSearchArray
         })
-       
+        calm.state.searchHistory.forEach((v, i) => {
+            if (v == calm.state.value) {
+                calm.state.searchHistory.splice(i, 1)
+            }
+        })
         calm.state.searchHistory.push(calm.state.value)
         calm.setState({
             searchHistory: calm.state.searchHistory
@@ -397,7 +400,7 @@ export default class serachResult extends React.Component {
      * 返回搜索结果页面
      */
     toSearchHistory = () => {
-     
+
         var data = {
             method: 'finishForRefresh',
         };
@@ -405,7 +408,7 @@ export default class serachResult extends React.Component {
         Bridge.callHandler(data, null, function (error) {
             console.log(error);
         });
-       
+
     }
 
     //监听窗口改变时间
@@ -428,6 +431,7 @@ export default class serachResult extends React.Component {
             pageNo: recommended_pageNo,
             pageCount: recommended_pageCount
         };
+        console.log(data)
         Bridge.callHandler(data, null, function (error) {
             console.log('开启小视频失败', error)
         });
@@ -467,7 +471,7 @@ export default class serachResult extends React.Component {
             })
         }
         if (val.value == 2) {
-        console.log(val.value)
+            console.log(val.value)
 
             calm.initDataSource = [];
             calm.setState({
@@ -493,7 +497,7 @@ export default class serachResult extends React.Component {
                 calm.searchCircle(calm.state.value, calm.state.userId);
             })
         }
-     
+
     }
     /**
      * 关注
@@ -512,18 +516,18 @@ export default class serachResult extends React.Component {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
-                    calm.initDataSource.forEach((v,i)=>{
-                        if(v.uid == id){
+                    calm.initDataSource.forEach((v, i) => {
+                        if (v.uid == id) {
                             console.log(v)
                             v.isFollow = true;
                         }
                     })
                     calm.setState({
-                        dataSource:dataSource.cloneWithRows(this.initDataSource)
+                        dataSource: dataSource.cloneWithRows(this.initDataSource)
                     })
 
                     Toast.info("关注成功", 1)
-                    
+
                 }
             },
             onError: function (error) {
@@ -547,8 +551,7 @@ export default class serachResult extends React.Component {
     /**
      * 播放视频
      */
-    playVideo(url,event){
-
+    playVideo(url, event) {
         event.stopPropagation();
         console.log(url);
         var data = {
@@ -565,11 +568,11 @@ export default class serachResult extends React.Component {
     /**
      * 分享
      */
-    toShare = (cid,userName,type,event) => {
+    toShare = (cid, userName, type, event) => {
         event.stopPropagation();
         var data = {
             method: 'shareWechat',
-            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+type,
+            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + "&type=" + type,
             shareTitle: $('.list_content').text(),
             shareUserName: userName,
         };
@@ -622,9 +625,9 @@ export default class serachResult extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid,rowData){
+    toThemeTaskDetail(cid, rowData) {
         console.log(rowData.type);
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + calm.state.userId+"&cfid="+cid+"&type="+rowData.type;
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + calm.state.userId + "&cfid=" + cid + "&type=" + rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -636,7 +639,7 @@ export default class serachResult extends React.Component {
     /**
      * 文章详情
      */
-    toDetail(id,articleTitle) {
+    toDetail(id, articleTitle) {
         console.log(id);
         if (id) {
             let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3&machineType=&version=&articleTitle=" + ((articleTitle)));
@@ -654,7 +657,7 @@ export default class serachResult extends React.Component {
     /**
      * 删除
      */
-    deleteItem(rowData,event){
+    deleteItem(rowData, event) {
         event.stopPropagation();
         console.log(rowData);
         var phoneType = navigator.userAgent;
@@ -667,18 +670,18 @@ export default class serachResult extends React.Component {
         var _this = this;
         const alertInstance = alert('您确定删除此文章吗?', '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-            { text: '确定', onPress: () => _this.deleteArticleInfoByType(rowData.articleId,rowData.status) },
+            { text: '确定', onPress: () => _this.deleteArticleInfoByType(rowData.articleId, rowData.status) },
         ], phone);
 
     }
     // dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}
     render() {
-         // 文章
-         const row0 = (rowData, sectionID, rowID) => {
+        // 文章
+        const row0 = (rowData, sectionID, rowID) => {
             var image = rowData.articleImgArray || [];
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
-            console.log(image.length,'imagelength')
+            console.log(image.length, 'imagelength')
             if (image.length == 1) {  //图片一张
                 dom = <div className="item line_public">
                     <div className="leftBox">
@@ -690,7 +693,7 @@ export default class serachResult extends React.Component {
                         </div>
                     </div>
                     <div className="rightBox">
-                        <img src={image[0]} alt=""/>
+                        <img src={image[0]} alt="" />
                     </div>
                     {/* <div className="delete-item" onClick={this.deleteItem.bind(this,rowData)}>
                         <div className="icon-delete"></div>
@@ -700,8 +703,8 @@ export default class serachResult extends React.Component {
                 var imageDom = [];
                 for (var i = 0; i < image.length; i++) {
                     imageDom.push(<img className="image3"
-                                       src={image[i]}
-                                       alt=""/>)
+                        src={image[i]}
+                        alt="" />)
                 }
                 dom = <div className="item line_public">
                     <div className="title">{rowData.articleTitle}</div>
@@ -722,10 +725,10 @@ export default class serachResult extends React.Component {
                         <div className="title">{rowData.articleTitle}</div>
                         <div className="images">
                             <div className="videoBox">
-                                <div onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="videoMask"></div>
-                                <img onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)} className="playImg"
+                                <div onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)} className="videoMask"></div>
+                                <img onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)} className="playImg"
                                     //  src={require('../images/videoClick.png')} 
-                                     alt=""/>
+                                    alt="" />
                                 <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                             </div>
                         </div>
@@ -754,7 +757,7 @@ export default class serachResult extends React.Component {
 
             }
             return (
-                <div className="article-List" onClick={this.toDetail.bind(this, rowData.articleId,rowData.articleTitle)}>
+                <div className="article-List" onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}>
                     {dom}
                 </div>
             )
@@ -773,9 +776,10 @@ export default class serachResult extends React.Component {
                     newChanArr.push(v)
                 }
             })
-          
+
             return (
                 <div className='videoItem' >
+
                     {
                         <div className="videoInfo" onClick={this.toPlayVideo.bind(this, rowID, calm.state.videoData, calm.state.pageCount, calm.state.pageNo)}>
                             <img src={rowData.coverPath} alt="" />
@@ -794,15 +798,15 @@ export default class serachResult extends React.Component {
                                             <div className="i-label my_flex">
                                                 <i></i>
                                                 <span className='tagCont'>
-                                            {
-                                                newTagArr.map((v, i) => {
-                                                    return (
-                                                        <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
-                                                    )
-                                                })
+                                                    {
+                                                        newTagArr.map((v, i) => {
+                                                            return (
+                                                                <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
+                                                            )
+                                                        })
 
-                                            }
-                                        </span>
+                                                    }
+                                                </span>
 
 
                                             </div>
@@ -815,7 +819,7 @@ export default class serachResult extends React.Component {
                                                 {
                                                     newChanArr.map((v, i) => {
                                                         return (
-                                                            <span  dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
+                                                            <span dangerouslySetInnerHTML={{ __html: v.tagTitle }} className="tag"></span>
                                                         )
                                                     })
 
@@ -824,10 +828,10 @@ export default class serachResult extends React.Component {
                                             </div>
                                     }
 
-                            </div>
-                            <div className="like"><i></i>{rowData.likeCount}</div>
+                                </div>
+                                <div className="like"><i></i>{rowData.likeCount}</div>
                                 {/* <div className="read">{rowData.readCount}</div> */}
-                        </div>
+                            </div>
                         </div>
                     }
                 </div>
@@ -837,7 +841,7 @@ export default class serachResult extends React.Component {
         const row2 = (rowData, sectionID, rowID) => {
             return (
                 <div className="User-Search line_public">
-                    <img className="user" onClick={calm.toCenterInfo.bind(this,rowData)} src={rowData.avatar} />
+                    <img className="user" onClick={calm.toCenterInfo.bind(this, rowData)} src={rowData.avatar} />
                     <div className="user-name">
                         <div className="name">{rowData.userName}</div>
                         <div className="fans">粉丝：{rowData.fansCount}</div>
@@ -846,7 +850,7 @@ export default class serachResult extends React.Component {
                         rowData.isFollow ?
                             <button className="attentionBtn attentionBtn-old">已关注</button>
                             :
-                            <button className="attentionBtn" onClick={calm.toLook.bind(this,rowData.uid)}><i></i>关注</button>
+                            <button className="attentionBtn" onClick={calm.toLook.bind(this, rowData.uid)}><i></i>关注</button>
 
                     }
 
@@ -854,24 +858,24 @@ export default class serachResult extends React.Component {
             )
         }
         // 圈子
-        const row3= (rowData, sectionID, rowID) => {
-            rowData.userInfo  = rowData.userInfo || {}
+        const row3 = (rowData, sectionID, rowID) => {
+            rowData.userInfo = rowData.userInfo || {}
             var tagClass = '';
-            switch(rowData.mastery){
+            switch (rowData.mastery) {
                 case 0:
-                    tagClass='tag-WrongTopic-red';
+                    tagClass = 'tag-WrongTopic-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-orange';
+                    tagClass = 'tag-WrongTopic-orange';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass = 'tag-WrongTopic-yellow';
                     break;
                 case 3:
-                    tagClass='tag-WrongTopic-green';
+                    tagClass = 'tag-WrongTopic-green';
                     break;
                 default:
-                    tagClass='未匹配到';
+                    tagClass = '未匹配到';
                     break;
             }
             var friendsAttachments = rowData.friendsAttachments || [];
@@ -882,46 +886,46 @@ export default class serachResult extends React.Component {
             }
             return (
                 <div className="list_item">
-                <div  className="circleList" onClick={this.toThemeTaskDetail.bind(this,rowData.cfid,rowData)}>
-                    <div className="list_head">
-                        <div className="headPic">
-                            <img src={rowData.userInfo.avatar} alt=""/>
+                    <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
+                        <div className="list_head">
+                            <div className="headPic">
+                                <img src={rowData.userInfo.avatar} alt="" />
+                            </div>
+                            <div className="userName text_hidden">{rowData.userInfo.userName}</div>
+                            <div className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
+
                         </div>
-                        <div className="userName text_hidden">{rowData.userInfo.userName}</div>
-                        <div className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
+                        <div className="tags"><span className={rowData.type == 1 ? "tag-ThemeTask" : "tag-WrongTopic " + tagClass}>{rowData.type ? '' : ''}</span></div>
+                        <div className="list_content">{rowData.type == 1 ? rowData.content : rowData.mark}</div>
+                        <div className="list_image" style={
+                            friendsAttachments.length == 0 ? { display: 'none' } : { display: 'block' }
+                        }>
+                            {friendsAttachments.map((value, index) => {
+                                if (value.type == 0) {
+                                    return <img style={
+                                        friendsAttachments.length == 1 ? { width: '200', height: '113' } : {
+                                            display: 'inline-block'
+                                        }
+                                    } src={value.path} alt="" />
+                                } else {
+                                    return <div className="video_tag" style={
+                                        friendsAttachments.length == 1 ? { width: '200', height: '113' } : {
+                                            display: 'inline-block'
+                                        }
+                                    } >
+                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this, value.path)} style={{ width: '100%', height: '100%' }} src={value.path} alt="" />
+                                        <div onClick={this.playVideo.bind(this, value.path)} className="video_tag_play"></div>
+                                    </div>
+                                }
 
+                            })}
+                        </div>
+                        <div className="list_bottom">
+                            <div className="list_bottom_item" onClick={calm.toShare.bind(this, rowData.cfid, rowData.userInfo.userName, rowData.type)}><i className="i-share"></i></div>
+                            <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
+                            <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
+                        </div>
                     </div>
-                    <div className="tags"><span className={rowData.type== 1 ?"tag-ThemeTask":"tag-WrongTopic "+tagClass}>{rowData.type?'':''}</span></div>
-                    <div className="list_content">{rowData.type == 1?rowData.content:rowData.mark}</div>
-                    <div className="list_image" style={
-                        friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
-                    }>
-                        {friendsAttachments.map((value, index) => {
-                            if(value.type == 0){
-                                return <img style={
-                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
-                                        display: 'inline-block'
-                                    }
-                                } src={value.path} alt=""/>
-                            }else{
-                                return <div className="video_tag" style={
-                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
-                                        display: 'inline-block'
-                                    }
-                                } >
-                                    <video poster={value.coverPath} onClick={this.playVideo.bind(this,value.path)} style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
-                                    <div onClick={this.playVideo.bind(this,value.path)} className="video_tag_play"></div>
-                                </div>
-                            }
-
-                        })}
-                    </div>
-                    <div className="list_bottom">
-                        <div className="list_bottom_item" onClick={calm.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share"></i></div>
-                        <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                        <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
-                    </div>
-                </div>
                 </div>
             )
         }
@@ -938,116 +942,141 @@ export default class serachResult extends React.Component {
                     onChange={this.onChange}
                     placeholder="请输入搜索内容"
                     maxLength={8} />
+
                 <Tabs
                     tabs={tabs}
                     useOnPan={false}
                     onChange={calm.tagOnChange}
                     initialPage={calm.state.pageChange}
                 >
-                {/* 文章 */}
-                    <div style={{
-                        height: calm.state.clientHeight - 36 - 44,
-                        backgroundColor: '#f4f4f4'
-                    }} className="listCont search-article">
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={row0}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list uploadVideo video-body"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached1}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            style={{
+                    {/* 文章 */}
+                    {
+                        calm.state.videoData.length == 0 ?
+                            <div>空的</div>
+                            :
+                            <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
-                            }}
-                        />
-                    </div>
+                                backgroundColor: '#f4f4f4'
+                            }} className="listCont search-article">
+                                <ListView
+                                    ref={el => this.lv = el}
+                                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                    renderFooter={() => (
+                                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                                            {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                        </div>)}
+                                    renderRow={row0}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                    className="am-list uploadVideo video-body"
+                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                    //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                    onEndReached={this.onEndReached1}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                    style={{
+                                        height: calm.state.clientHeight - 36 - 44,
+                                    }}
+                                />
+                            </div>
+                    }
                     {/* 视频 */}
-                    <div style={{
-                        height: calm.state.clientHeight - 36 - 44,
-                        backgroundColor: '#f4f4f4'
-                    }} className="listCont">
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={row1}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list uploadVideo"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached2}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            style={{
+                    {
+                        calm.state.videoData.length == 0 ?
+                            <div>空的</div>
+                            :
+                            <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
-                            }}
-                        />
-                    </div>
-                      {/* 用户 */}
-                      <div style={{
-                        height: calm.state.clientHeight - 36 - 44,
-                        backgroundColor: '#f4f4f4'
-                    }} className="listCont">
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={row2}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list uploadVideo"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached3}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            style={{
+                                backgroundColor: '#f4f4f4'
+                            }} className="listCont">
+                                <ListView
+                                    ref={el => this.lv = el}
+                                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                    renderFooter={() => (
+                                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                                            {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                        </div>)}
+                                    renderRow={row1}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                    className="am-list uploadVideo"
+                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                    //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                    onEndReached={this.onEndReached2}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                    style={{
+                                        height: calm.state.clientHeight - 36 - 44,
+                                    }}
+                                />
+                            </div>
+                    }
+
+                    {/* 用户 */}
+                    {
+                        calm.state.videoData.length == 0 ?
+                            <div>空的</div>
+                            :
+                            <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
-                            }}
-                        />
-                    </div>
-                      {/* 圈子 */}
-                      <div style={{
-                        height: calm.state.clientHeight - 36 - 44,
-                        backgroundColor: '#f6f6f6'
-                    }} className="listCont">
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderFooter={() => (
-                                <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
-                                    {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={row3}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list uploadVideo"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached4}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            style={{
+                                backgroundColor: '#f4f4f4'
+                            }} className="listCont">
+                                <ListView
+                                    ref={el => this.lv = el}
+                                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                    renderFooter={() => (
+                                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                                            {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                        </div>)}
+                                    renderRow={row2}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                    className="am-list uploadVideo"
+                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                    //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                    onEndReached={this.onEndReached3}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                    style={{
+                                        height: calm.state.clientHeight - 36 - 44,
+                                    }}
+                                />
+                            </div>
+                    }
+
+                    {/* 圈子 */}
+                    {
+                        calm.state.videoData.length == 0 ?
+                            <div>空的</div>
+                            :
+                            <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
-                            }}
-                        />
-                    </div>
+                                backgroundColor: '#f6f6f6'
+                            }} className="listCont">
+                                <ListView
+                                    ref={el => this.lv = el}
+                                    dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
+                                    renderFooter={() => (
+                                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                                            {this.state.isLoadingLeft ? '正在加载' : '已经全部加载完毕'}
+                                        </div>)}
+                                    renderRow={row3}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
+                                    className="am-list uploadVideo"
+                                    pageSize={30}    //每次事件循环（每帧）渲染的行数
+                                    //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
+                                    scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
+                                    onEndReached={this.onEndReached4}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
+                                    onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
+                                    initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
+                                    scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
+                                    style={{
+                                        height: calm.state.clientHeight - 36 - 44,
+                                    }}
+                                />
+                            </div>
+
+                    }
+
                 </Tabs>
             </div>
         )

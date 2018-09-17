@@ -24,7 +24,8 @@ export default class publishWrongQuestion extends React.Component {
                 //     type: 0, //图片
                 //     fatherType: 0,
                 //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                // },
+              
             ],
             theQustionVideo: [
                 // {
@@ -32,7 +33,7 @@ export default class publishWrongQuestion extends React.Component {
                 //     fatherType: 0,
                 //     path: "http://60.205.86.217/upload8/2018-08-30/14/0e6f6e14-1a14-4f52-8096-431cd59ff6c3.mp4",
                 //     coverPath: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
-                // }
+                // },
             ],
             theAnswerArr: [
                 // {
@@ -476,7 +477,7 @@ export default class publishWrongQuestion extends React.Component {
      * 添加题干
      */
     addTheQusetion() {
-        if (this.state.theQuestionArr.length + this.state.theQustionVideo.length >= 9) {
+        if (calm.state.theQuestionArr.length + calm.state.theQustionVideo.length >= 9) {
             Toast.info('最多添加九个图片或视频!', 1);
             return;
         }

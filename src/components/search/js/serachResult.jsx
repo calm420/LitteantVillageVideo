@@ -994,7 +994,7 @@ export default class serachResult extends React.Component {
                         <div className="list_bottom">
                             <div className="list_bottom_item" onClick={calm.toShare.bind(this, rowData.cfid, rowData.userInfo.userName, rowData.type)}><i className="i-share"></i></div>
                             <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                            <div className="list_bottom_item"><i className="i-praise"></i><span>{rowData.likeCount}</span></div>
+                            <div className="list_bottom_item"><i className={rowData.currentUserIsLike?"i-praise-active":"i-praise"}></i><span>{rowData.likeCount}</span></div>
                         </div>
                     </div>
                 </div>
@@ -1019,7 +1019,12 @@ export default class serachResult extends React.Component {
                     {/* 文章 */}
                     {
                         calm.state.videoData.length == 0 ?
-                            <div>空的</div>
+                            <div className="empty-wrap">
+                                <div className="emptyDiv">
+                                    <div className='emptyIcon'></div>
+                                    <div className="emptyText">暂无相关搜索结果～</div>
+                                </div>
+                            </div>
                             :
                             <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
@@ -1050,7 +1055,12 @@ export default class serachResult extends React.Component {
                     {/* 视频 */}
                     {
                         calm.state.videoData.length == 0 ?
-                            <div>空的</div>
+                            <div className="empty-wrap">
+                                <div className="emptyDiv">
+                                    <div className='emptyIcon'></div>
+                                    <div className="emptyText">暂无相关搜索结果～</div>
+                                </div>
+                            </div>
                             :
                             <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
@@ -1082,7 +1092,12 @@ export default class serachResult extends React.Component {
                     {/* 用户 */}
                     {
                         calm.state.videoData.length == 0 ?
-                            <div>空的</div>
+                            <div className="empty-wrap">
+                                <div className="emptyDiv">
+                                    <div className='emptyIcon'></div>
+                                    <div className="emptyText">暂无相关搜索结果～</div>
+                                </div>
+                            </div>
                             :
                             <div style={{
                                 height: calm.state.clientHeight - 36 - 44,
@@ -1114,7 +1129,12 @@ export default class serachResult extends React.Component {
                     {/* 圈子 */}
                     {
                         calm.state.videoData.length == 0 ?
-                            <div>空的</div>
+                            <div className="empty-wrap">
+                                <div className="emptyDiv">
+                                    <div className='emptyIcon'></div>
+                                    <div className="emptyText">暂无相关搜索结果～</div>
+                                </div>
+                            </div>
                             :
                             <div style={{
                                 height: calm.state.clientHeight - 36 - 44,

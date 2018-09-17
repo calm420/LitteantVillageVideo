@@ -518,6 +518,7 @@
 #articleList .list_item .list_head .createTime {
   color: #999;
   font-size: 13px;
+  line-height: 1;
 }
 #articleList .list_item .list_image,
 #articleList .list_item .image_detail {
@@ -721,13 +722,13 @@
 }
 #articleList .tag-course {
   padding: 0px 4px;
-  font-size: 12px;
+  font-size: 11px;
   border-width: 1px;
   border-style: solid;
   float: right;
   margin-left: 2px;
   margin-top: 4px;
-  line-height: 1.5;
+  line-height: 15px;
 }
 #articleList .tag-course-blue {
   border-color: #4285F4;
@@ -751,6 +752,7 @@
 }
 #articleList .courseList {
   padding-left: 50px;
+  line-height: 1;
 }
 #articleList .people_image_list {
   margin-top: 10px;
@@ -849,7 +851,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 136px;
+  height: 142px;
   background: white;
   z-index: 12;
 }
@@ -858,7 +860,7 @@
 }
 #articleList .commit_box > div .import {
   width: calc(100% - 70px);
-  height: 111px;
+  height: 116px;
   background: #f3f3f3;
   padding: 4px 13px 8px 13px;
   float: left;
@@ -892,6 +894,8 @@
   height: 78px;
   overflow-y: auto;
   overflow-x: hidden;
+  width: 224px;
+  margin-top: 5px;
 }
 #articleList #appendImage .image_item {
   width: 68px;
@@ -913,4 +917,22 @@
 }
 #articleList .list-view-section-body .list_item:first-child .circleList-comment {
   padding-top: 0;
+}
+#articleList textarea#commit {
+  width: 100%;
+  max-height: 100px;
+  resize: none;
+  background: #f3f3f3;
+  border: none;
+  /* font-size: 100%; */
+  /* line-height: 1.15; */
+  /* margin: 0; */
+}
+#articleList textarea#commit > div {
+  background: red;
+}
+#articleList .myTag {
+  color: #666;
+  font-size: 16px;
+  margin-left: -6.5px;
 }

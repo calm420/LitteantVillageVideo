@@ -433,7 +433,7 @@ export default class articleList extends React.Component {
 
         console.log(that.state.friendsAttachments,'that.state.friendsAttachments');
         if(that.state.friendsAttachments.length >= 9){
-            Toast.info('最多添加九个图片或视频!',1);
+            Toast.info('最多添加九图片或视频!',1);
             return;
         }
         var noom = ''
@@ -805,7 +805,7 @@ export default class articleList extends React.Component {
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             // useBodyScroll={true}
                             style={{
-                                height: document.body.clientHeight,
+                                height: document.body.clientHeight - 49,
                             }}
                         />
                     </div>
@@ -830,23 +830,23 @@ export default class articleList extends React.Component {
 
                                                 <div
                                                     className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
-                                                <span style={
-                                                    this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
-                                                }
-                                                      className={"tag-course "+tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
-                                                <span style={
-                                                    this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
-                                                }
-                                                      className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
-                                                <span style={
-                                                    this.state.detail.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
-                                                }
-                                                      className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
+                                                    <span style={
+                                                        this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
+                                                    }
+                                                          className={"tag-course "+tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
+                                                    <span style={
+                                                        this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
+                                                    }
+                                                          className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
                                             </div>
                                             <div className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
 
                                         </div>
-                                        <div className="content_detail">{this.state.detail.mark}</div>
+                                        <div className="content_detail">
+                                            {this.state.detail.fTags.map((value,index)=>{
+                                                return <span className="myTag">【{value.tagTitle}】</span>
+                                            })}
+                                            {this.state.detail.mark}</div>
                                         <div className="image_detail">
                                             <div>
                                                 <span>题干</span>
@@ -927,7 +927,7 @@ export default class articleList extends React.Component {
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             // useBodyScroll={true}
                             style={{
-                                height: document.body.clientHeight,
+                                height: document.body.clientHeight - 49,
                             }}
                         />
                     </div>

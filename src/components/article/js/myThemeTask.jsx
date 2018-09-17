@@ -881,13 +881,17 @@ export default class myThemeTask extends React.Component {
                                     rowData.courseInfo ? {display: 'block'} : {display: 'none'}
                                 }
                                       className="tag-course tag-course-blue">{rowData.courseInfo ? rowData.courseInfo.courseName : ''}</span>
-                                <span style={
-                                    rowData.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
-                                }
-                                      className="tag-course tag-course-blue">{rowData.fTags && rowData.fTags[0] ? rowData.fTags[0].tagTitle : ''}</span>
+
                             </div>
-                            <div
-                                className={this.state.targetType == 0 ? "list_content 错题本" : "list_content 主题计划"}>{rowData.type == 0 ? rowData.mark : rowData.content}</div>
+
+                            <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>
+
+                                {rowData.fTags.map((value,index)=>{
+                                    return <span className="myTag">【{value.tagTitle}】</span>
+                                })}
+
+                                {rowData.type == 0 ? rowData.mark : rowData.content}
+                            </div>
                         </div>
                         <div className="list_image" style={
                             friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
@@ -918,7 +922,7 @@ export default class myThemeTask extends React.Component {
                             rowData.type == 0 ? {display: 'none'} : {display: 'block'}
                         }>
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
-                            <div>截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
+                            <div className="deadline-line">截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
                             <div className="list_bottom_item"><i className="i-share"></i></div>
@@ -1026,36 +1030,7 @@ export default class myThemeTask extends React.Component {
                                       onClick={this.timeClick.bind(this, '一月内')}>一月内</span>
                                 <span className={this.state.timeText == '自定义' ? "time-active" : "time-init"}
                                       onClick={this.timeClick.bind(this, '自定义')}>自定义</span>
-                                <div className="custom" style={
-                                    this.state.timeText == '自定义' && this.state.customFlag ? {display: 'block'} : {display: 'none'}
-                                }>
-                                    <div className="custom-header">选择时间</div>
-                                    <div className="startTime">
-                                        <span>开始时间</span>
-                                        <DatePicker
-                                            mode="date"
-                                            title=""
-                                            extra="开始时间"
-                                            value={this.state.startDateForCustom}
-                                            onChange={startDateForCustom => this.setState({startDateForCustom})}
-                                        >
-                                            <List.Item arrow="horizontal"></List.Item>
-                                        </DatePicker>
-                                    </div>
-                                    <div className="endTime">
-                                        <span>结束时间</span>
-                                        <DatePicker
-                                            mode="date"
-                                            title=""
-                                            extra="结束时间"
-                                            value={this.state.endDateForCustom}
-                                            onChange={endDateForCustom => this.setState({endDateForCustom})}
-                                        >
-                                            <List.Item arrow="horizontal"></List.Item>
-                                        </DatePicker>
-                                    </div>
-                                    <button className="blueBtn" onClick={this.customSubmit}>确定</button>
-                                </div>
+
                             </div>
                         </div>
                         <div>
@@ -1096,6 +1071,39 @@ export default class myThemeTask extends React.Component {
                         <button onClick={this.determine} className="blueBtn">确定</button>
                     </div>
                 </div>
+                {/*发布时间*/}
+                <div className="customMask" style={
+                    this.state.timeText == '自定义' && this.state.customFlag ? {display: 'block'} : {display: 'none'}
+                }>
+                    <div className='custom'>
+                        <div className="custom-header">选择时间</div>
+                        <div className="startTime">
+                            <span>开始时间</span>
+                            <DatePicker
+                                mode="date"
+                                title=""
+                                extra="开始时间"
+                                value={this.state.startDateForCustom}
+                                onChange={startDateForCustom => this.setState({startDateForCustom})}
+                            >
+                                <List.Item arrow="horizontal"></List.Item>
+                            </DatePicker>
+                        </div>
+                        <div className="endTime">
+                            <span>结束时间</span>
+                            <DatePicker
+                                mode="date"
+                                title=""
+                                extra="结束时间"
+                                value={this.state.endDateForCustom}
+                                onChange={endDateForCustom => this.setState({endDateForCustom})}
+                            >
+                                <List.Item arrow="horizontal"></List.Item>
+                            </DatePicker>
+                        </div>
+                        <button className="blueBtn" onClick={this.customSubmit}>确定</button>
+                    </div>
+                </div>
                 {/*篩選　ｅｎｄ*/}
 
                 <div className="mask" onClick={this.closeFilter} style={
@@ -1104,8 +1112,6 @@ export default class myThemeTask extends React.Component {
                         display: 'block'
                     } : {height: this.state.clientHeight, display: 'none'}
                 }></div>
-
-
             </div>
         );
     }

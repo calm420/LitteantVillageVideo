@@ -80,3 +80,6 @@
   width: 20px;
   height: 20px;
 }
+#themeTaskDetail #commit {
+  width: 100%;
+}

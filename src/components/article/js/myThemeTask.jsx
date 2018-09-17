@@ -852,10 +852,6 @@ export default class myThemeTask extends React.Component {
                                 this.state.targetType  == 0? {display:'block'}:{display:'none'}
                             } className="list-tags">
                                 <span style={
-                                    rowData.mastery || rowData.mastery == 0 ? {display: 'block'} : {display: 'none'}
-                                }
-                                      className={"tag-course "+tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1?'略懂':rowData.mastery == 2?'基本懂':'完全懂'}</span>
-                                <span style={
                                     rowData.courseInfo ? {display: 'block'} : {display: 'none'}
                                 }
                                       className="tag-course tag-course-blue">{rowData.courseInfo ? rowData.courseInfo.courseName : ''}</span>
@@ -863,6 +859,10 @@ export default class myThemeTask extends React.Component {
                                     rowData.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
                                 }
                                       className="tag-course tag-course-blue">{rowData.fTags && rowData.fTags[0] ? rowData.fTags[0].tagTitle: ''}</span>
+                                <span style={
+                                    rowData.mastery || rowData.mastery == 0 ? {display: 'block'} : {display: 'none'}
+                                }
+                                      className={"tag-course "+tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1?'略懂':rowData.mastery == 2?'基本懂':'完全懂'}</span>
                             </div>
                             <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>{rowData.type == 0 ? rowData.mark : rowData.content}</div>
                         </div>

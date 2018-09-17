@@ -881,7 +881,7 @@ export default class articleList extends React.Component {
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
                                                             }
-                                                        }
+                                                            themeTaskDetail                                              }
 
                                                     })}
                                                 </div>

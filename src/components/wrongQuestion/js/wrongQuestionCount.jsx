@@ -188,7 +188,7 @@ export default class wrongQuestionCount extends React.Component {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             return (
-                <div className='listCont'>
+                <div className='listCont my_flex'>
                     <span><span className='tag'>{rowData.ftagObj.tagTitle}</span></span>
                      <span>
                         <span><span>{rowData.errorCount}</span></span>
@@ -218,7 +218,7 @@ export default class wrongQuestionCount extends React.Component {
                         <span className='course text_hidden'>{calm.state.finalProject}</span>
                         <span className='icon_change' onClick={calm.toShowModal}>切换科目</span>
                     </div>
-                    <div className="title">
+                    <div className="title my_flex">
                         <span>标签</span>
                            <span>
                                 <span>题量</span>

@@ -931,10 +931,10 @@ export default class myThemeTask extends React.Component {
                             <div className="list_bottom_item"><i
                                 className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
                             </div>
-                            <div className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>
-                                <i style={
-                                    this.state.isHidden ? {display: 'none'} : {display: 'block'}
-                                } className="i-delete"></i></div>
+                            <div style={
+                                this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                            } className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>
+                                <i  className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>

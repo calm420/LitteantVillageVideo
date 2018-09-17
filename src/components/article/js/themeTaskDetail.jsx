@@ -827,15 +827,16 @@ export default class articleList extends React.Component {
                                                         this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
                                                     }
                                                           className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
-                                                    <span style={
-                                                        this.state.detail.fTags.length > 0 ? {display: 'block'} : {display: 'none'}
-                                                    }
-                                                          className="tag-course tag-course-blue">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
                                             </div>
                                             <div className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
 
                                         </div>
-                                        <div className="content_detail">{this.state.detail.mark}</div>
+                                        <div className="content_detail">
+                                             <span style={
+                                                 this.state.detail.fTags.length > 0 ? {display: 'inline-block'} : {display: 'none'}
+                                             }
+                                                   className="myTag">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
+                                            {this.state.detail.mark}</div>
                                         <div className="image_detail">
                                             <div>
                                                 <span>题干</span>

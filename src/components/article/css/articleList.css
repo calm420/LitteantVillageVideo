@@ -931,3 +931,7 @@
 #articleList textarea#commit > div {
   background: red;
 }
+#articleList .myTag {
+  color: #666;
+  font-size: 16px;
+}

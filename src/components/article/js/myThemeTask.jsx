@@ -862,11 +862,16 @@ export default class myThemeTask extends React.Component {
                                       className={"tag-course "+tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1?'略懂':rowData.mastery == 2?'基本懂':'完全懂'}</span>
                             </div>
                             <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>
-                                     <span style={
-                                         rowData.fTags.length > 0 ? {display: 'inline-block'} : {display: 'none'}
-                                     }
-                                           className="myTag">{rowData.fTags && rowData.fTags[0] ? rowData.fTags[0].tagTitle: ''}</span>
-                                {rowData.type == 0 ? rowData.mark : rowData.content}</div>
+
+                                {rowData.fTags.map((value,index)=>{
+                                    return <span className="myTag">
+                                        <img src={require('../images/icon_tag_left.png')}/>
+                                        <span>{value.tagTitle}</span>
+                                        <img src={require('../images/icon_tag_right.png')}/></span>
+                                })}
+
+                                {rowData.type == 0 ? rowData.mark : rowData.content}
+                                </div>
                         </div>
                         <div className="list_image" style={
                             friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}

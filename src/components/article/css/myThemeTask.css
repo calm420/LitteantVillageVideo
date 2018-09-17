@@ -681,3 +681,15 @@
   border-color: #FF3B30;
   color: #FF3B30;
 }
+#myThemeTask .myTag {
+  color: #666;
+  font-size: 16px;
+  padding-right: 2px;
+}
+#myThemeTask .myTag span {
+  vertical-align: top;
+}
+#myThemeTask .myTag img {
+  height: 16px;
+  vertical-align: text-bottom;
+}

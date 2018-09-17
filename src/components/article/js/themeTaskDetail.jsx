@@ -832,10 +832,9 @@ export default class articleList extends React.Component {
 
                                         </div>
                                         <div className="content_detail">
-                                             <span style={
-                                                 this.state.detail.fTags.length > 0 ? {display: 'inline-block'} : {display: 'none'}
-                                             }
-                                                   className="myTag">{this.state.detail.fTags && this.state.detail.fTags[0] ? this.state.detail.fTags[0].tagTitle: ''}</span>
+                                            {this.state.detail.fTags.map((value,index)=>{
+                                                return <span className="myTag">【{value.tagTitle}】</span>
+                                            })}
                                             {this.state.detail.mark}</div>
                                         <div className="image_detail">
                                             <div>

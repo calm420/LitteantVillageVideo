@@ -63,6 +63,11 @@ export default class articleList extends React.Component {
                 shareHidden: true,
             })
         }
+        if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
+            console.log('ssssssss')
+        }else{
+
+        }
         document.title = type == 1?'主题任务':'错题本';
         this.setState({
             userId: userId,
@@ -453,7 +458,8 @@ export default class articleList extends React.Component {
         })*/
 
         var data = {
-            method: 'selectedImage',
+            method: 'moreSelectedImage',
+            count: 9,
         };
         Bridge.callHandler(data, function (res) {
             // Toast.info(res);

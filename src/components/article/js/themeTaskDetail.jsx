@@ -68,7 +68,7 @@ export default class articleList extends React.Component {
         // }else{
         //
         // }
-        // var res = 'http://60.205.86.217/upload8/2018-09-17/19/8a2515a3-719e-443c-9c9d-24b1cf135890.jpg?type=1,http://60.205.86.217/upload8/2018-09-17/19/cc39666d-9379-40e1-8ec5-c9032718ca54.jpg?type=1,http://60.205.86.217/upload8/2018-09-17/19/f2ff536a-6b40-457b-8ef4-2a5598ab4bc0.jpg?type=1';
+        // var res = 'http://60.205.86.217/upload8/2018-09-17/19/8a2515a3-719e-443c-9c9d-24b1cf135890.jpg?type=1';
         // var imageArray = res.split(',');
         // for(var k in imageArray){
         //     console.log(imageArray[k],'imageArray');
@@ -81,6 +81,9 @@ export default class articleList extends React.Component {
             this.gitCircleOfFriendsById();
             this.getDiscussInfoList();
             this.getUserLikeLog();
+            // $('#appendImage').bind('resize',function(){
+            //     console.log('触发高度改变时间')
+            // })
             $(document).on('click', '.delete_upload_image', function (event) {
                 event.stopPropagation();
                 console.log(that.state.domImage);
@@ -204,10 +207,13 @@ export default class articleList extends React.Component {
         var date2 = new Date();    //结束时间
         var date3 = date2.getTime() - new Date(date1).getTime();   //时间差的毫秒数
 
+
+        //后台创建时间有几率慢，但这个问题只会出现在新创建的评论对象即时渲染中，so可以用这个方法规避
+        date3 = date3 < 0? 0 : date3;
         //------------------------------
 
         //计算出相差天数
-        var days = Math.floor(date3 / (24 * 3600 * 1000))
+        var days = Math.floor(date3 / (24 * 3600 * 1000));
 
         //计算出小时数
 
@@ -444,29 +450,33 @@ export default class articleList extends React.Component {
             Toast.info('最多添加九图片或视频!',1);
             return;
         }
-        var noom = ''
+        var noom = 0;
 
         var data = {
             method: 'moreSelectedImage',
             count: 9 - that.state.friendsAttachments.length,
         };
         Bridge.callHandler(data, function (res) {
-            // Toast.info(res);
+            noom++;
+            Toast.info(noom,3)
+            // Toast.info(res,200);
             // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
             // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
-            var imageArray = res.split(',');
-            for(var k in imageArray){
-                res = imageArray[k];
-                var newArr = res.split("?");
-                var url = newArr[0];
-                var type = newArr[1].split("=")[1];
-                // if (noom == '') {
+            // if (noom == '') {
+
+                var imageArray = res.split(',');
+                for (var k in imageArray) {
+                    res = imageArray[k];
+                    var newArr = res.split("?");
+                    var url = newArr[0];
+                    var type = newArr[1].split("=")[1];
                     if (type == 1) {
                         var dom = that.state.domImage;
 
                         //图片
-                        dom.push(<div key={url} className="image_item"><img onClick={that.showImage.bind(that, [url], url)}
-                                                                            className="appendImage_item" src={url} alt=""/>
+                        dom.push(<div key={url} className="image_item"><img
+                            onClick={that.showImage.bind(that, [url], url)}
+                            className="appendImage_item" src={url} alt=""/>
                             <div className='delete_upload_image' id={url}><img
                                 src={require('../images/del-comment.png')} alt=""/></div>
                         </div>)
@@ -497,24 +507,32 @@ export default class articleList extends React.Component {
                             path: url,
                         })
                     }
-                that.setState({
-                    domImage: dom
-                })
-                    // noom = res;
-                // } else if (noom == res) {
-                //     return;
-                // }
-            }
+                    that.setState({
+                        domImage: dom
+                    },()=>{
+                        if($('#appendImage').children().length > 6){
+                            $('#appendImage').animate({scrollTop: 200}, 1000)
+                        }else if($('#appendImage').children().length > 3){
+                            $('#appendImage').animate({scrollTop: 100}, 1000)
+
+                        }
+                    })
 
 
-
+                }
+            //     noom = res;
+            // } else if (noom == res) {
+            //     return;
+            // }
+            // Toast.info(that.state.friendsAttachments.length,3);
+            // $('#appendImage')
         }, function (error) {
             console.log('增加电脑的上传');
-            if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
-                console.log('ssssssss')
-            }else{
-
-            }
+            // if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test('gif')){
+            //     console.log('ssssssss')
+            // }else{
+            //
+            // }
             that.upload_file();
             // that.upload_file();
         });
@@ -621,6 +639,13 @@ export default class articleList extends React.Component {
                         }
                         that.setState({
                             domImage: dom
+                        },()=>{
+                            if($('#appendImage').children().length > 6){
+                                $('#appendImage').animate({scrollTop: 200}, 1000)
+                            }else if($('#appendImage').children().length > 3){
+                                $('#appendImage').animate({scrollTop: 100}, 1000)
+
+                            }
                         })
                     }
                 });

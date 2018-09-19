@@ -451,75 +451,78 @@ export default class articleList extends React.Component {
             Toast.info('最多添加九图片或视频!', 1);
             return;
         }
-        var noom = 0;
-
+        var noom = true;
         var data = {
             method: 'moreSelectedImage',
             count: 9 - that.state.friendsAttachments.length,
         };
         Bridge.callHandler(data, function (res) {
-            noom++;
-            Toast.info(noom, 3)
+            if(noom){
+                var imageArray = res.split(',');
+                for (var k in imageArray) {
+                    res = imageArray[k];
+                    var newArr = res.split("?");
+                    var url = newArr[0];
+                    var type = newArr[1].split("=")[1];
+                    if (type == 1) {
+                        var dom = that.state.domImage;
+
+                        //图片
+                        dom.push(<div key={url} className="image_item"><img
+                            onClick={that.showImage.bind(that, [url], url)}
+                            className="appendImage_item" src={url} alt=""/>
+                            <div className='delete_upload_image' id={url}><img
+                                src={require('../images/del-comment.png')} alt=""/></div>
+                        </div>)
+
+                        that.state.friendsAttachments.push({
+                            cfid: that.state.detail.cid,
+                            type: 0,
+                            fatherType: 4,
+                            coverPath: url,
+                            path: url,
+                        })
+                    } else {
+                        //视频
+                        var cover = newArr[2].split("=")[1];
+                        // Toast.info(cover)
+                        var dom = that.state.domImage;
+                        dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
+                            className="appendImage_item" src={cover} alt=""/>
+                            <div className='delete_upload_image' id={url}><img
+                                src={require('../images/del-comment.png')} alt=""/></div>
+                        </div>);
+
+                        that.state.friendsAttachments.push({
+                            cfid: that.state.cid,
+                            type: 1,
+                            fatherType: 4,
+                            coverPath: cover,
+                            path: url,
+                        })
+                    }
+                }
+                that.setState({
+                    domImage: dom,
+                    friendsAttachments: that.state.friendsAttachments
+                }, () => {
+                    if ($('#appendImage').children().length > 6) {
+                        $('#appendImage').animate({scrollTop: 200}, 1000)
+                    } else if ($('#appendImage').children().length > 3) {
+                        $('#appendImage').animate({scrollTop: 100}, 1000)
+
+                    }
+                })
+                noom = false;
+            }else{
+                return;
+            }
             // Toast.info(res,200);
             // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
             // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
             // if (noom == '') {
 
-            var imageArray = res.split(',');
-            for (var k in imageArray) {
-                res = imageArray[k];
-                var newArr = res.split("?");
-                var url = newArr[0];
-                var type = newArr[1].split("=")[1];
-                if (type == 1) {
-                    var dom = that.state.domImage;
 
-                    //图片
-                    dom.push(<div key={url} className="image_item"><img
-                        onClick={that.showImage.bind(that, [url], url)}
-                        className="appendImage_item" src={url} alt=""/>
-                        <div className='delete_upload_image' id={url}><img
-                            src={require('../images/del-comment.png')} alt=""/></div>
-                    </div>)
-
-                    that.state.friendsAttachments.push({
-                        cfid: that.state.detail.cid,
-                        type: 0,
-                        fatherType: 4,
-                        coverPath: url,
-                        path: url,
-                    })
-                } else {
-                    //视频
-                    var cover = newArr[2].split("=")[1];
-                    // Toast.info(cover)
-                    var dom = that.state.domImage;
-                    dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
-                        className="appendImage_item" src={cover} alt=""/>
-                        <div className='delete_upload_image' id={url}><img
-                            src={require('../images/del-comment.png')} alt=""/></div>
-                    </div>);
-
-                    that.state.friendsAttachments.push({
-                        cfid: that.state.cid,
-                        type: 1,
-                        fatherType: 4,
-                        coverPath: cover,
-                        path: url,
-                    })
-                }
-            }
-            that.setState({
-                domImage: dom,
-                friendsAttachments: that.state.friendsAttachments
-            }, () => {
-                if ($('#appendImage').children().length > 6) {
-                    $('#appendImage').animate({scrollTop: 200}, 1000)
-                } else if ($('#appendImage').children().length > 3) {
-                    $('#appendImage').animate({scrollTop: 100}, 1000)
-
-                }
-            })
             //     noom = res;
             // } else if (noom == res) {
             //     return;

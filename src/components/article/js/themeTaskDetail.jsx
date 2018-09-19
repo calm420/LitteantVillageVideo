@@ -1005,7 +1005,7 @@ export default class articleList extends React.Component {
                                     value={this.state.inputValue}
                                     onChange={this.inputOnChange}
                                 />
-                                <div id="appendImage">
+                                    <div id="appendImage">
                                     {this.state.domImage}
                                 </div>
                             </div>

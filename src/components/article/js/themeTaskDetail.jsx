@@ -3,6 +3,7 @@ import {
     Toast, DatePicker, PullToRefresh, ListView, Button, List, Picker, Tag, Tabs
 } from 'antd-mobile';
 import '../css/articleList.less';
+
 var likeFlag = true;   //點贊節流閥
 
 var dataSource = new ListView.DataSource({
@@ -27,17 +28,17 @@ export default class articleList extends React.Component {
                 userInfo: {},
                 friendsAttachments: [],
                 partakeUserList: [],
-                fTags:[],
+                fTags: [],
             },
             commitFlag: false,
             domImage: [],
             islike: false,
             inputValue: '',  //评论内容
             friendsAttachments: [],   //附件
-            topicAnswer:false,
+            topicAnswer: false,
             topicFlag: false,
-            detailList:[],
-            detailListFor:[]
+            detailList: [],
+            detailListFor: []
         }
     }
 
@@ -73,7 +74,7 @@ export default class articleList extends React.Component {
         // for(var k in imageArray){
         //     console.log(imageArray[k],'imageArray');
         // }
-        document.title = type == 1?'主题任务':'错题本';
+        document.title = type == 1 ? '主题任务' : '错题本';
         this.setState({
             userId: userId,
             cid: cid
@@ -127,18 +128,18 @@ export default class articleList extends React.Component {
      * **/
     getUserLikeLog() {
         var _this = this;
-        var JsonParameter={
+        var JsonParameter = {
             "userId": this.state.userId,
             "targetId": this.state.cid,
             "targetType": 2,
         }
         var param = {
             "method": 'getUserLikeLog',
-            "JsonParameter":JSON.stringify(JsonParameter)
+            "JsonParameter": JSON.stringify(JsonParameter)
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'判断用户是否点赞');
+                console.log(result, '判断用户是否点赞');
                 if (result.success) {
                     var response = JSON.parse(result.response);
                     this.setState({
@@ -209,7 +210,7 @@ export default class articleList extends React.Component {
 
 
         //后台创建时间有几率慢，但这个问题只会出现在新创建的评论对象即时渲染中，so可以用这个方法规避
-        date3 = date3 < 0? 0 : date3;
+        date3 = date3 < 0 ? 0 : date3;
         //------------------------------
 
         //计算出相差天数
@@ -283,18 +284,18 @@ export default class articleList extends React.Component {
                     })
                     var detailArray = result.response.friendsAttachments;
                     console.log(detailArray);
-                    for(var k in detailArray){
-                        if(detailArray[k].fatherType == 0){
+                    for (var k in detailArray) {
+                        if (detailArray[k].fatherType == 0) {
                             // console.log('题干已有');
                             detailList.push(detailArray[k])
-                        }else if(detailArray[k].fatherType == 1){
+                        } else if (detailArray[k].fatherType == 1) {
                             // console.log('正解已有');
                         }
                         detailListFor.push(detailArray[k]);
                     }
                     this.setState({
-                        detailList:detailList,
-                        detailListFor:detailListFor,
+                        detailList: detailList,
+                        detailListFor: detailListFor,
                     })
                     // if (result.response.type == 0) {
                     //     document.title = '错题本';
@@ -333,7 +334,7 @@ export default class articleList extends React.Component {
                         this.setState({
                             detail: detail,
                             islike: !this.state.islike
-                        },()=>{
+                        }, () => {
                             likeFlag = true;
                         })
                     } else {
@@ -343,7 +344,7 @@ export default class articleList extends React.Component {
                         this.setState({
                             detail: detail,
                             islike: !this.state.islike
-                        },()=>{
+                        }, () => {
                             likeFlag = true;
                         })
                     }
@@ -368,7 +369,7 @@ export default class articleList extends React.Component {
 
         this.setState({
             commitFlag: true,
-        },()=>{
+        }, () => {
             $('body').css({height: this.state.clientHeight});
             document.getElementById('commit').focus();
         })
@@ -384,9 +385,9 @@ export default class articleList extends React.Component {
 
     sendCommit = () => {
         console.log(new Date().getTime());
-        console.log(new Date(this.state.detail.endTime).getTime(),'endTime');
-        if(this.state.detail.type == 1 && new Date().getTime() >= new Date(this.state.detail.endTime).getTime()){
-            Toast.info('截止时间已到，无法参与评论',1);
+        console.log(new Date(this.state.detail.endTime).getTime(), 'endTime');
+        if (this.state.detail.type == 1 && new Date().getTime() >= new Date(this.state.detail.endTime).getTime()) {
+            Toast.info('截止时间已到，无法参与评论', 1);
             this.setState({
                 inputValue: '',
                 friendsAttachments: [],
@@ -446,8 +447,8 @@ export default class articleList extends React.Component {
     }
 
     selectedImage = () => {
-        if(that.state.friendsAttachments.length >= 9){
-            Toast.info('最多添加九图片或视频!',1);
+        if (that.state.friendsAttachments.length >= 9) {
+            Toast.info('最多添加九图片或视频!', 1);
             return;
         }
         var noom = 0;
@@ -458,68 +459,67 @@ export default class articleList extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             noom++;
-            Toast.info(noom,3)
+            Toast.info(noom, 3)
             // Toast.info(res,200);
             // var res = 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg?type=1';
             // var res = '"http://60.205.86.217/upload8/2018-09-05/21/5b86de42-ac9e-4ec3-b838-5739a1e537d0.mp4?type=2?http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg'
             // if (noom == '') {
 
-                var imageArray = res.split(',');
-                for (var k in imageArray) {
-                    res = imageArray[k];
-                    var newArr = res.split("?");
-                    var url = newArr[0];
-                    var type = newArr[1].split("=")[1];
-                    if (type == 1) {
-                        var dom = that.state.domImage;
+            var imageArray = res.split(',');
+            for (var k in imageArray) {
+                res = imageArray[k];
+                var newArr = res.split("?");
+                var url = newArr[0];
+                var type = newArr[1].split("=")[1];
+                if (type == 1) {
+                    var dom = that.state.domImage;
 
-                        //图片
-                        dom.push(<div key={url} className="image_item"><img
-                            onClick={that.showImage.bind(that, [url], url)}
-                            className="appendImage_item" src={url} alt=""/>
-                            <div className='delete_upload_image' id={url}><img
-                                src={require('../images/del-comment.png')} alt=""/></div>
-                        </div>)
+                    //图片
+                    dom.push(<div key={url} className="image_item"><img
+                        onClick={that.showImage.bind(that, [url], url)}
+                        className="appendImage_item" src={url} alt=""/>
+                        <div className='delete_upload_image' id={url}><img
+                            src={require('../images/del-comment.png')} alt=""/></div>
+                    </div>)
 
-                        that.state.friendsAttachments.push({
-                            cfid: that.state.detail.cid,
-                            type: 0,
-                            fatherType: 4,
-                            coverPath: url,
-                            path: url,
-                        })
-                    } else {
-                        //视频
-                        var cover = newArr[2].split("=")[1];
-                        // Toast.info(cover)
-                        var dom = that.state.domImage;
-                        dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
-                            className="appendImage_item" src={cover} alt=""/>
-                            <div className='delete_upload_image' id={url}><img
-                                src={require('../images/del-comment.png')} alt=""/></div>
-                        </div>);
-
-                        that.state.friendsAttachments.push({
-                            cfid: that.state.cid,
-                            type: 1,
-                            fatherType: 4,
-                            coverPath: cover,
-                            path: url,
-                        })
-                    }
-                    that.setState({
-                        domImage: dom
-                    },()=>{
-                        if($('#appendImage').children().length > 6){
-                            $('#appendImage').animate({scrollTop: 200}, 1000)
-                        }else if($('#appendImage').children().length > 3){
-                            $('#appendImage').animate({scrollTop: 100}, 1000)
-
-                        }
+                    that.state.friendsAttachments.push({
+                        cfid: that.state.detail.cid,
+                        type: 0,
+                        fatherType: 4,
+                        coverPath: url,
+                        path: url,
                     })
+                } else {
+                    //视频
+                    var cover = newArr[2].split("=")[1];
+                    // Toast.info(cover)
+                    var dom = that.state.domImage;
+                    dom.push(<div key={url} className="image_item" onClick={that.playVideo.bind(this, url)}><img
+                        className="appendImage_item" src={cover} alt=""/>
+                        <div className='delete_upload_image' id={url}><img
+                            src={require('../images/del-comment.png')} alt=""/></div>
+                    </div>);
 
+                    that.state.friendsAttachments.push({
+                        cfid: that.state.cid,
+                        type: 1,
+                        fatherType: 4,
+                        coverPath: cover,
+                        path: url,
+                    })
+                }
+            }
+            that.setState({
+                domImage: dom,
+                friendsAttachments: that.state.friendsAttachments
+            }, () => {
+                if ($('#appendImage').children().length > 6) {
+                    $('#appendImage').animate({scrollTop: 200}, 1000)
+                } else if ($('#appendImage').children().length > 3) {
+                    $('#appendImage').animate({scrollTop: 100}, 1000)
 
                 }
+            })
             //     noom = res;
             // } else if (noom == res) {
             //     return;
@@ -533,6 +533,7 @@ export default class articleList extends React.Component {
             // }else{
             //
             // }
+            console.log(that.state.friendsAttachments.length, '1234567');
             that.upload_file();
             // that.upload_file();
         });
@@ -540,10 +541,10 @@ export default class articleList extends React.Component {
 
 
     likeClick() {
-        if(likeFlag){
+        if (likeFlag) {
             likeFlag = false;
             this.changeFriendLikeCount();
-        }else{
+        } else {
             return;
         }
 
@@ -638,11 +639,12 @@ export default class articleList extends React.Component {
 
                         }
                         that.setState({
-                            domImage: dom
-                        },()=>{
-                            if($('#appendImage').children().length > 6){
+                            domImage: dom,
+                            friendsAttachments: that.state.friendsAttachments
+                        }, () => {
+                            if ($('#appendImage').children().length > 6) {
                                 $('#appendImage').animate({scrollTop: 200}, 1000)
-                            }else if($('#appendImage').children().length > 3){
+                            } else if ($('#appendImage').children().length > 3) {
                                 $('#appendImage').animate({scrollTop: 100}, 1000)
 
                             }
@@ -688,7 +690,7 @@ export default class articleList extends React.Component {
 
     render() {
         var tagClass = '';
-        switch(this.state.detail.mastery){
+        switch (this.state.detail.mastery) {
             case 0:
                 tagClass = 'tag-course-red';
                 break;
@@ -729,7 +731,8 @@ export default class articleList extends React.Component {
                                         src={value.path} alt=""/>
                                 } else if (value.type == 1) {
                                     return <div className="video_tag">
-                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this, value.path)} src={value.path}/>
+                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this, value.path)}
+                                               src={value.path}/>
                                         {/*<img src="" alt=""/>*/}
                                         <div onClick={this.playVideo.bind(this, value.path)}
                                              className="video_tag_play"></div>
@@ -761,7 +764,8 @@ export default class articleList extends React.Component {
                                             <div className="courseList">
                                                 <div className="userName">{this.state.detail.userInfo.userName}</div>
                                             </div>
-                                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
+                                            <div
+                                                className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
                                         </div>
                                         <div className="content_detail">{this.state.detail.content}</div>
                                         <div className="image_detail">
@@ -769,11 +773,20 @@ export default class articleList extends React.Component {
                                                 if (value.type == 0) {
                                                     return <img
                                                         onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                        src={value.path} alt="" style={this.state.detailListFor.length<=1?{width: '200px', height: '113px'}:{}}/>
+                                                        src={value.path} alt=""
+                                                        style={this.state.detailListFor.length <= 1 ? {
+                                                            width: '200px',
+                                                            height: '113px'
+                                                        } : {}}/>
                                                 } else {
                                                     return <div onClick={this.playVideo.bind(this, value.path)}
-                                                                className="video_tag" style={this.state.detailListFor.length<=1?{width: '200px', height: '113px'}:{}}>
-                                                        <video poster={value.coverPath} style={{width: '100%', height: '100%'}} src={value.path}
+                                                                className="video_tag"
+                                                                style={this.state.detailListFor.length <= 1 ? {
+                                                                    width: '200px',
+                                                                    height: '113px'
+                                                                } : {}}>
+                                                        <video poster={value.coverPath}
+                                                               style={{width: '100%', height: '100%'}} src={value.path}
                                                                alt=""/>
                                                         <div className="video_tag_play"></div>
                                                     </div>
@@ -783,13 +796,13 @@ export default class articleList extends React.Component {
                                         <div className="asOfDate">
                                             截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>
                                         <div className="detail_bottom" style={
-                                            this.state.shareHidden?{display:'none'}:{display:'flex'}
+                                            this.state.shareHidden ? {display: 'none'} : {display: 'flex'}
                                         }>
                                             <div className="list_bottom_item" onClick={this.toShare}><i
                                                 className="i-share"></i></div>
                                             <div className="list_bottom_item"
                                                  onClick={this.likeClick.bind(this, this.state.detail.cfid)}><i
-                                                className={this.state.islike?"i-praise-active":"i-praise"}></i><span>{this.state.detail.likeCount}</span>
+                                                className={this.state.islike ? "i-praise-active" : "i-praise"}></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -851,20 +864,21 @@ export default class articleList extends React.Component {
 
                                                 <div
                                                     className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
-                                                    <span style={
-                                                        this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
-                                                    }
-                                                          className={"tag-course "+tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1?'略懂':this.state.detail.mastery == 2?'基本懂':'完全懂'}</span>
-                                                    <span style={
-                                                        this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
-                                                    }
-                                                          className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
+                                                <span style={
+                                                    this.state.detail.mastery || this.state.detail.mastery == 0 ? {display: 'block'} : {display: 'none'}
+                                                }
+                                                      className={"tag-course " + tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1 ? '略懂' : this.state.detail.mastery == 2 ? '基本懂' : '完全懂'}</span>
+                                                <span style={
+                                                    this.state.detail.courseInfo ? {display: 'block'} : {display: 'none'}
+                                                }
+                                                      className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
                                             </div>
-                                            <div className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
+                                            <div
+                                                className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
 
                                         </div>
                                         <div className="content_detail">
-                                            {this.state.detail.fTags.map((value,index)=>{
+                                            {this.state.detail.fTags.map((value, index) => {
                                                 return <span className="myTag">【{value.tagTitle}】</span>
                                             })}
                                             {this.state.detail.mark}</div>
@@ -878,13 +892,20 @@ export default class articleList extends React.Component {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
                                                                     src={value.path} alt=""
-                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
+                                                                    style={this.state.detailList.length <= 1 ? {
+                                                                        width: '200px',
+                                                                        height: '113px'
+                                                                    } : {}}/>
                                                             } else {
                                                                 return <div
                                                                     onClick={this.playVideo.bind(this, value.path)}
                                                                     className="video_tag"
-                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}>
-                                                                    <video poster={value.coverPath} src={value.path} alt=""/>
+                                                                    style={this.state.detailList.length <= 1 ? {
+                                                                        width: '200px',
+                                                                        height: '113px'
+                                                                    } : {}}>
+                                                                    <video poster={value.coverPath} src={value.path}
+                                                                           alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
                                                             }
@@ -902,18 +923,26 @@ export default class articleList extends React.Component {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
                                                                     src={value.path} alt=""
-                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}/>
+                                                                    style={this.state.detailList.length <= 1 ? {
+                                                                        width: '200px',
+                                                                        height: '113px'
+                                                                    } : {}}/>
                                                             } else {
                                                                 return <div
                                                                     onClick={this.playVideo.bind(this, value.path)}
                                                                     className="video_tag"
-                                                                    style={this.state.detailList.length<=1?{width: '200px', height: '113px'}:{}}>
-                                                                    <video poster={value.coverPath} style={{width: '200', height: '113'}}
+                                                                    style={this.state.detailList.length <= 1 ? {
+                                                                        width: '200px',
+                                                                        height: '113px'
+                                                                    } : {}}>
+                                                                    <video poster={value.coverPath}
+                                                                           style={{width: '200', height: '113'}}
                                                                            src={value.path} alt=""/>
                                                                     <div className="video_tag_play"></div>
                                                                 </div>
                                                             }
-                                                            themeTaskDetail                                              }
+                                                            themeTaskDetail
+                                                        }
 
                                                     })}
                                                 </div>
@@ -922,11 +951,13 @@ export default class articleList extends React.Component {
                                         {/*<div className="asOfDate">*/}
                                         {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         <div className="detail_bottom" style={
-                                            this.state.shareHidden?{display:'none'}:{display:'flex'}
+                                            this.state.shareHidden ? {display: 'none'} : {display: 'flex'}
                                         }>
-                                            <div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>
+                                            <div className="list_bottom_item" onClick={this.toShare}><i
+                                                className="i-share"></i></div>
                                             <div className="list_bottom_item"><i
-                                                className={this.state.islike?"i-praise-active":"i-praise"} onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
+                                                className={this.state.islike ? "i-praise-active" : "i-praise"}
+                                                onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -953,7 +984,7 @@ export default class articleList extends React.Component {
                         />
                     </div>
                     <div className="input_box" style={
-                        this.state.shareHidden?{display:'none'}:{display:'block'}
+                        this.state.shareHidden ? {display: 'none'} : {display: 'block'}
                     }>
                         <div className="commit_line" onClick={this.setCommit}>
                             <span className="commit_line-left"></span>
@@ -992,7 +1023,7 @@ export default class articleList extends React.Component {
                 </div>
 
                 <input style={
-                    {display:'none'}
+                    {display: 'none'}
                 } id="upload" type="file"/>
             </div>
         );

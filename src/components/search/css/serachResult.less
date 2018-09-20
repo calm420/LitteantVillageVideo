@@ -77,12 +77,15 @@
         .videoItem{
             width: 50%;
             height: 215px;
-            margin-top: 5px;
+            margin-top:1px;
+            &:nth-child(2n-1){
+                .videoInfo{
+                     margin-right: 1px;
+                }
+            }
         }
         .videoInfo {
             position: relative;
-            margin-right: 5px;
-
             height: 100%;
             -webkit-border-radius: 4px;
             -moz-border-radius: 4px;

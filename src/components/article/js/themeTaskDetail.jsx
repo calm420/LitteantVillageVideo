@@ -457,6 +457,7 @@ export default class articleList extends React.Component {
             count: 9 - that.state.friendsAttachments.length,
         };
         Bridge.callHandler(data, function (res) {
+            // Toast.info(noom,1)
             if(noom){
                 var imageArray = res.split(',');
                 for (var k in imageArray) {

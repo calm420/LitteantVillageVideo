@@ -7,6 +7,9 @@
 #serachResult video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
+#serachResult ::-webkit-scrollbar {
+  display: none;
+}
 #serachResult b {
   color: #facb28;
   font-weight: normal;
@@ -89,9 +92,6 @@
 #serachResult .listCont .videoInfo {
   position: relative;
   height: 100%;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
   overflow: hidden;
 }
 #serachResult .listCont .videoInfo img {

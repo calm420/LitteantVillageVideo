@@ -158,7 +158,7 @@ export default class articleList extends React.Component {
                     }}
                 >
                     <div style={
-                        {height:this.state.clientHeight}
+                        this.state.listData.length >= 1 ?{display:'block',height:this.state.clientHeight}:{display:'none',height:this.state.clientHeight}
                     }>
                         {this.state.listData.map(function(value,index){
                             return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
@@ -166,6 +166,12 @@ export default class articleList extends React.Component {
                                 <div className="tag-text">{value.name}/{value.count}</div>
                             </div>
                         })}
+                    </div>
+                    <div style={
+                        this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
+                    }>
+                        <img src={require('../images/noDataPic.jpg')} alt=""/>
+                        <div>错题本暂无数据</div>
                     </div>
 
                 </PullToRefresh>

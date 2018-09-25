@@ -15,6 +15,7 @@ export default class articleList extends React.Component {
             listData:[],
             refreshing:false,
             isHidden:false,
+            loading:false,
         }
     }
 
@@ -108,6 +109,7 @@ export default class articleList extends React.Component {
                     this.setState({
                         listData: listData,
                         refreshing:false,
+                        loading:true,
                     })
                 }
 
@@ -170,7 +172,7 @@ export default class articleList extends React.Component {
 
                 </PullToRefresh>
                 <div className="emptyDiv" style={
-                    this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
+                    this.state.loading && this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
                 }>
                     <img src={require('../images/noDataPic.jpg')} alt=""/>
                     <div>错题本暂无数据</div>

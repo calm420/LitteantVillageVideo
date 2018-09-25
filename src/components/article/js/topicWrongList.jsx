@@ -144,7 +144,7 @@ export default class articleList extends React.Component {
                 <PullToRefresh
                     damping={60}
                     style={{
-                        height: this.state.clientHeight,
+                        height:this.state.listData.length < 1 ?0: this.state.clientHeight,
                         overflow: 'auto',
                     }}
                     indicator={{}}
@@ -167,14 +167,14 @@ export default class articleList extends React.Component {
                             </div>
                         })}
                     </div>
-                    <div style={
-                        this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
-                    }>
-                        <img src={require('../images/noDataPic.jpg')} alt=""/>
-                        <div>错题本暂无数据</div>
-                    </div>
 
                 </PullToRefresh>
+                <div className="emptyDiv" style={
+                    this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
+                }>
+                    <img src={require('../images/noDataPic.jpg')} alt=""/>
+                    <div>错题本暂无数据</div>
+                </div>
 
             </div>
         );

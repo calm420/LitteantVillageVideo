@@ -458,7 +458,7 @@ export default class articleList extends React.Component {
         };
         Bridge.callHandler(data, function (res) {
             // Toast.info(noom,1)
-            if(noom){
+            if (noom) {
                 var imageArray = res.split(',');
                 for (var k in imageArray) {
                     res = imageArray[k];
@@ -515,7 +515,7 @@ export default class articleList extends React.Component {
                     }
                 })
                 noom = false;
-            }else{
+            } else {
                 return;
             }
             // Toast.info(res,200);
@@ -732,7 +732,8 @@ export default class articleList extends React.Component {
                                 if (value.type == 0) {
                                     return <img
                                         onClick={this.showImage.bind(this, rowData.friendsAttachments, value.path)}
-                                        src={value.path} alt=""/>
+                                        src={rowData.friendsAttachments.length > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'}
+                                        alt=""/>
                                 } else if (value.type == 1) {
                                     return <div className="video_tag">
                                         <video poster={value.coverPath} onClick={this.playVideo.bind(this, value.path)}
@@ -777,7 +778,8 @@ export default class articleList extends React.Component {
                                                 if (value.type == 0) {
                                                     return <img
                                                         onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                        src={value.path} alt=""
+                                                        src={this.state.detail.friendsAttachments.length > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'}
+                                                        alt=""
                                                         style={this.state.detailListFor.length <= 1 ? {
                                                             width: '200px',
                                                             height: '113px'
@@ -895,7 +897,7 @@ export default class articleList extends React.Component {
                                                             if (value.type == 0) {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                                    src={value.path} alt=""
+                                                                    src={this.state.detail.friendsAttachments.length > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'} alt=""
                                                                     style={this.state.detailList.length <= 1 ? {
                                                                         width: '200px',
                                                                         height: '113px'
@@ -926,7 +928,7 @@ export default class articleList extends React.Component {
                                                             if (value.type == 0) {
                                                                 return <img
                                                                     onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                                    src={value.path} alt=""
+                                                                    src={this.state.detail.friendsAttachments > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'} alt=""
                                                                     style={this.state.detailList.length <= 1 ? {
                                                                         width: '200px',
                                                                         height: '113px'
@@ -1009,7 +1011,7 @@ export default class articleList extends React.Component {
                                     value={this.state.inputValue}
                                     onChange={this.inputOnChange}
                                 />
-                                    <div id="appendImage">
+                                <div id="appendImage">
                                     {this.state.domImage}
                                 </div>
                             </div>

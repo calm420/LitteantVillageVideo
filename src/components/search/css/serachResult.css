@@ -671,3 +671,8 @@
   height: calc(100vh - 100px);
   position: relative;
 }
+@media screen and (max-width: 320px) {
+  #serachResult .listCont .videoItem {
+    height: 240px;
+  }
+}

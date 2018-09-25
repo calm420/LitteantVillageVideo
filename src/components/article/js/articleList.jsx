@@ -751,7 +751,7 @@ export default class articleList extends React.Component {
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
-                                } src={value.path} alt=""/>
+                                } src={friendsAttachments.length > 1?value.path+'?size=300x300':value.path+'?size=500x500'} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {

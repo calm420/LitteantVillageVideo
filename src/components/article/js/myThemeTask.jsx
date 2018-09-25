@@ -117,8 +117,9 @@ export default class myThemeTask extends React.Component {
     gitErrorTagsByCourseId(courseId) {
         var _this = this;
         var param = {
-            "method": 'gitErrorTagsByCourseId',
+            "method": 'gitErrorTagsByCourseIdAndUserId',
             "courseId": courseId ? courseId : this.state.cid,
+            "userId": this.state.userId,
             "pageNo": -1,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {

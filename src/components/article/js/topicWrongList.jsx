@@ -174,7 +174,7 @@ export default class articleList extends React.Component {
                 <div className="emptyDiv" style={
                     this.state.loading && this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
                 }>
-                    <img src={require('../images/noDataPic.jpg')} alt=""/>
+                    <img src={require('../images/noDataPic.png')} alt=""/>
                     <div>错题本暂无数据</div>
                 </div>
 

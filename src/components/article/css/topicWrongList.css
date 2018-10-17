@@ -1,5 +1,6 @@
 #topicWrongList {
   background: #fff;
+  position: relative;
 }
 #topicWrongList .list-item {
   display: inline-block;
@@ -90,4 +91,16 @@
 }
 #topicWrongList .list-item .tag-text {
   color: #393939;
+}
+#topicWrongList .emptyDiv {
+  position: absolute;
+  text-align: center;
+}
+#topicWrongList .emptyDiv img {
+  width: 155px;
+  margin-bottom: 30px;
+}
+#topicWrongList .emptyDiv div {
+  font-size: 14px;
+  color: #7A809B;
 }

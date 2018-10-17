@@ -8,8 +8,8 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const tabs = [
-    {title: '本校', value: '0'},
     {title: '热点', value: '1'},
+    {title: '本校', value: '0'},
     {title: '圈子', value: '2'}
 ];
 var AscrollView;
@@ -27,7 +27,7 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
-            index: 0,
+            index: 1,
             userRoot: true,
             recommended_video: {
                 response: []
@@ -751,7 +751,7 @@ export default class articleList extends React.Component {
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
                                         display: 'inline-block'
                                     }
-                                } src={value.path} alt=""/>
+                                } src={friendsAttachments.length > 1?value.path+'?size=300x300':value.path+'?size=500x500'} alt=""/>
                             }else{
                                 return <div className="video_tag" style={
                                     friendsAttachments.length == 1 ? {width: '200',height:'113'} : {

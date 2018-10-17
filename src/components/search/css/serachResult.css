@@ -7,6 +7,9 @@
 #serachResult video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
+#serachResult ::-webkit-scrollbar {
+  display: none;
+}
 #serachResult b {
   color: #facb28;
   font-weight: normal;
@@ -80,16 +83,15 @@
 }
 #serachResult .listCont .videoItem {
   width: 50%;
-  height: 215px;
-  margin-top: 5px;
+  height: 300px;
+  margin-top: 1px;
+}
+#serachResult .listCont .videoItem:nth-child(2n-1) .videoInfo {
+  margin-right: 1px;
 }
 #serachResult .listCont .videoInfo {
   position: relative;
-  margin-right: 5px;
   height: 100%;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
   overflow: hidden;
 }
 #serachResult .listCont .videoInfo img {
@@ -259,19 +261,19 @@
   color: #888;
 }
 #serachResult .User-Search .attentionBtn {
-  border: 1px solid #4285F4;
+  border: none;
   color: #4285F4;
-  padding: 2px 4px;
+  padding: 5px 6px;
   border-radius: 1px;
   font-size: 13px;
-  background: #fff;
+  background: #ECF3FF;
   margin-top: 11px;
   float: right;
 }
 #serachResult .User-Search .attentionBtn i {
   background: url("../images/attention-add.png") no-repeat;
-  width: 11px;
-  height: 11px;
+  width: 9px;
+  height: 9px;
   background-size: 100% 100%;
   display: inline-block;
   margin-right: 2px;
@@ -279,6 +281,8 @@
 #serachResult .User-Search .attentionBtn-old {
   border-color: #c8c8c8;
   color: #999;
+  background: #F6F6F6;
+  padding: 5px;
 }
 #serachResult .search-bottom {
   height: 100px;
@@ -666,4 +670,9 @@
 #serachResult .empty-wrap {
   height: calc(100vh - 100px);
   position: relative;
+}
+@media screen and (max-width: 320px) {
+  #serachResult .listCont .videoItem {
+    height: 240px;
+  }
 }

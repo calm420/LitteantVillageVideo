@@ -15,6 +15,7 @@ export default class articleList extends React.Component {
             listData:[],
             refreshing:false,
             isHidden:false,
+            loading:false,
         }
     }
 
@@ -108,6 +109,7 @@ export default class articleList extends React.Component {
                     this.setState({
                         listData: listData,
                         refreshing:false,
+                        loading:true,
                     })
                 }
 
@@ -144,7 +146,7 @@ export default class articleList extends React.Component {
                 <PullToRefresh
                     damping={60}
                     style={{
-                        height: this.state.clientHeight,
+                        height:this.state.listData.length < 1 ?0: this.state.clientHeight,
                         overflow: 'auto',
                     }}
                     indicator={{}}
@@ -158,7 +160,7 @@ export default class articleList extends React.Component {
                     }}
                 >
                     <div style={
-                        {height:this.state.clientHeight}
+                        this.state.listData.length >= 1 ?{display:'block',height:this.state.clientHeight}:{display:'none',height:this.state.clientHeight}
                     }>
                         {this.state.listData.map(function(value,index){
                             return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
@@ -169,6 +171,12 @@ export default class articleList extends React.Component {
                     </div>
 
                 </PullToRefresh>
+                <div className="emptyDiv" style={
+                    this.state.loading && this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
+                }>
+                    <img src={require('../images/noDataPic.png')} alt=""/>
+                    <div>错题本暂无数据</div>
+                </div>
 
             </div>
         );

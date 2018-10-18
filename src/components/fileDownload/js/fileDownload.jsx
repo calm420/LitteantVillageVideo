@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'antd-mobile';
+import { } from 'antd-mobile';
 import '../css/fileDownload.less'
 
 var imgName = 'youyang';
@@ -18,16 +18,29 @@ export default class Demo extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fileType = searchArray[0].split('=')[1]
-        this.setState({fileType})
+        this.setState({ fileType })
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({phone: 'IOS'}, function () {
+            this.setState({ phone: 'IOS' }, function () {
                 _this.buildTitle(fileType)
             })
         } else {
-            this.setState({phone: 'Android'}, function () {
+            this.setState({ phone: 'Android' }, function () {
                 _this.buildTitle(fileType)
             })
+        }
+        if (
+            window.location.href.indexOf("/youyang") > -1 ||
+            window.location.href.indexOf("/littleAntTe") > -1 ||
+            window.location.href.indexOf("/littleAntSt") > -1 ||
+            window.location.href.indexOf("/littleAntFa") > -1 ||
+            window.location.href.indexOf("/elearning") > -1
+        ) {
+            //防止页面后退
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, document.URL);
+            });
         }
 
         if (fileType == 'youyang') {
@@ -104,7 +117,7 @@ export default class Demo extends React.Component {
                 <span>科技改变未来，教育成就未来</span>
             </div>
         }
-        this.setState({titleDiv})
+        this.setState({ titleDiv })
     }
 
     downLoadFile = () => {
@@ -147,23 +160,23 @@ export default class Demo extends React.Component {
         if (imgNameTe == 'abc') {
             return (
                 <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
                     {this.state.titleDiv}
                     <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                         <span>免费下载{this.state.phone}版</span></div>
                     <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
+                        src={require('../img/bottomImg_' + imgName + '.png')} alt="" /></div>
                 </div>
             );
         } else {
             return (
                 <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
                     {this.state.titleDiv}
                     <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                         <span>免费下载{this.state.phone}版</span></div>
                     <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
+                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt="" /></div>
                 </div>
             );
         }

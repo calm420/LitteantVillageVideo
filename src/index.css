@@ -4,8 +4,6 @@ body {
   font-size: 14px;
   font-family: "Hiragino Sans GB", "Helvetica Neue", Helvetica, "Microsoft YaHei", Arial;
   -webkit-font-smoothing: antialiased;
-  background-image: url(components/authorityManagement/img/loseBg.png);
-  background-size: cover;
 }
 body {
   overflow: auto !important;

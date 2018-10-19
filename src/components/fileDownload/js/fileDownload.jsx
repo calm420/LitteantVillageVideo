@@ -29,20 +29,13 @@ export default class Demo extends React.Component {
                 _this.buildTitle(fileType)
             })
         }
-        if (
-            window.location.href.indexOf("/youyang") > -1 ||
-            window.location.href.indexOf("/littleAntTe") > -1 ||
-            window.location.href.indexOf("/littleAntSt") > -1 ||
-            window.location.href.indexOf("/littleAntFa") > -1 ||
-            window.location.href.indexOf("/elearning") > -1
-        ) {
+        if (window.location.href.indexOf("/fileDownload") > -1) {
             //防止页面后退
             history.pushState(null, null, document.URL);
             window.addEventListener('popstate', function () {
                 history.pushState(null, null, document.URL);
             });
         }
-
         if (fileType == 'youyang') {
             document.title = '有样'
         } else if (fileType == 'littleAntTe') {

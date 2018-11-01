@@ -33,7 +33,8 @@ module.exports = {
     ],
     devtool: 'false', // or 'inline-source-map'    生产模式,不再打包.map文件
     devServer: {
-        disableHostCheck: true
+        disableHostCheck: true,
+        inline: false,  // 关闭热更新
     },
 
     entry: {

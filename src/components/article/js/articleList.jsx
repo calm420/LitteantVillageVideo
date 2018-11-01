@@ -54,10 +54,13 @@ export default class articleList extends React.Component {
         var userId = searchArray[0].split('=')[1];
         var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
         var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
+        var isDisPlay = searchArray[3] ? searchArray[3].split('=')[1] : '';
+        console.log(isDisPlay,"isDisPlay")
         this.setState({
             userId: userId,
             machineType: machineType,
-            version: version
+            version: version,
+            isDisPlay:isDisPlay
         }, () => {
             var p1 = new Promise((reslove, reject) => {
                 this.getLittleVideoUserById(() => {
@@ -873,6 +876,7 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
+                <div style={{display:this.state.isDisPlay == 1 ? "block" : "none"}} ><img src={require('../images/videoClick.png')}></img></div>
                 <div className='icon_search_top' onClick={this.toSearch}></div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}

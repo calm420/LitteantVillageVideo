@@ -16,7 +16,6 @@ var AscrollView;
 var BscrollView;
 var that;
 export default class articleList extends React.Component {
-
     constructor(props) {
         super(props);
         that = this;

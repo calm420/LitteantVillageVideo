@@ -907,14 +907,30 @@ video::-webkit-media-controls-fullscreen-button {
   text-align: center;
 }
 .UserGuide{
-  background:rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.85);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: 20;
+  overflow: hidden;
+}
+.UserGuide img{
+  position: absolute;
 }
 .UserGuide img.userguide1{
-  background: url("components/article/images/UserGuide1.png") no-repeat;
+  right:10px;
+  top:26px;
+}
+.UserGuide img.userguide2{
+  left:50%;
+  top:45%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.UserGuide img.userguide3{
+  right:48px;
+  top:56px;
 }

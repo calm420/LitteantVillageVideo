@@ -876,7 +876,7 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
-                <div style={{display:this.state.isDisPlay == 1 ? "block" : "none"}}  className="UserGuide"><img src={require('../images/videoClick.png')}></img></div>
+                <div style={{display:this.state.isDisPlay == 1 ? "block" : "none"}}  className="UserGuide"><img className="userguide1" src={require('../images/UserGuide1.png')} width='54'></img><img className="userguide2" width="110" src={require('../images/UserGuide2.png')}></img><img className="userguide3" src={require('../images/UserGuide3.png')} width="280"></img></div>
                 <div className='icon_search_top' onClick={this.toSearch}></div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}

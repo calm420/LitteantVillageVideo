@@ -48,14 +48,25 @@ export default class articleList extends React.Component {
         var _this = this;
         Bridge.setShareAble("false");
         document.title = '文章列表';
-        var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var userId = searchArray[0].split('=')[1];
-        var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
-        var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
-        var isDisPlay = searchArray[3] ? searchArray[3].split('=')[1] : '';
-        console.log(isDisPlay,"isDisPlay")
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            var phone = 'ios';
+            var locationHref = window.location.href;
+            var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+            var searchArray = locationSearch.split("&");
+            var userId = searchArray[0].split('=')[1];
+            var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
+            var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
+            var isDisPlay = searchArray[3] ? searchArray[3].split('=')[1] : '';
+        } else {
+            var phone = 'android';
+            var locationHref = window.location.href;
+            var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+            var searchArray = locationSearch.split("&");
+            var userId = searchArray[0].split('=')[1];
+            var isDisPlay = searchArray[1] ? searchArray[1].split('=')[1] : '';
+        }
         this.setState({
             userId: userId,
             machineType: machineType,

@@ -264,7 +264,7 @@ class Index extends React.Component {
                 {/* <h1>Stages list</h1> */}
                 <ul role="nav">
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
-                    <li><Link to="/AppSystem"
+                    {/*<li><Link to="/AppSystem"
                               style={{fontSize: '24px'}}>AppSystem</Link></li>
                     <li><Link to="/articleList?userId=53&machineType=ios&version=100"
                               style={{fontSize: '24px'}}>ios文章列表</Link></li>
@@ -273,7 +273,7 @@ class Index extends React.Component {
                     <li><Link to="/themeTask?userId=53"
                               style={{fontSize: '24px'}}>发布主题</Link></li>
                     <li><Link to="/myThemeTask?userId=53&targetId=1"
-                              style={{fontSize: '24px'}}>我的主题列表</Link></li> 
+                              style={{fontSize: '24px'}}>我的主题列表</Link></li> */}
                     {/*<li><Link to="/myThemeTask?userId=17&targetId=0"*/}
                               {/*style={{fontSize: '24px'}}>我的错题本</Link></li>*/}
                     {/* <li><Link to="/topicWrongList?userId=53"
@@ -366,7 +366,7 @@ class Index extends React.Component {
                         <Link
                             to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
                             style={{fontSize: '24px'}}>统计</Link>
-                    </li> */}
+                    </li>*/}
                 </ul>
             </div>
         );

@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const Visualizer = require('webpack-visualizer-plugin'); // remove it in production environment.
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // remove it in production environment.
@@ -137,6 +138,17 @@ module.exports = {
         }),
         //抽取CSS文件插件
         new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+        new HtmlWebpackPlugin({
+            title: "HtmlPlugin",
+            // filename :"index.html",
+            template: path.join(__dirname, "./index_deploy.html"),
+            // template:(useDefinedHtml ? useDefinedHtml : defaultHtml),
+            //we must use html-loader here instead of file-loader
+            inject: "body",
+            cache: false,
+            xhtml: false
+        }),
         ...otherPlugins
+
     ]
 }

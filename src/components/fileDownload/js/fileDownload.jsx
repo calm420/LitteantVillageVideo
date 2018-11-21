@@ -1,5 +1,5 @@
 import React from 'react';
-import { } from 'antd-mobile';
+import {} from 'antd-mobile';
 import '../css/fileDownload.less'
 
 var imgName = 'youyang';
@@ -8,7 +8,8 @@ export default class Demo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            phone: 'IOS'
+            phone: 'IOS',
+            androidUrl: '',
         };
     }
 
@@ -18,15 +19,16 @@ export default class Demo extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fileType = searchArray[0].split('=')[1]
-        this.setState({ fileType })
+        this.setState({fileType})
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({ phone: 'IOS' }, function () {
+            this.setState({phone: 'IOS'}, function () {
                 _this.buildTitle(fileType)
             })
         } else {
-            this.setState({ phone: 'Android' }, function () {
+            this.setState({phone: 'Android'}, function () {
                 _this.buildTitle(fileType)
+                _this.getAppEwmPath(fileType)
             })
         }
         if (window.location.href.indexOf("/fileDownload") > -1) {
@@ -58,6 +60,37 @@ export default class Demo extends React.Component {
         }
     }
 
+    /**
+     * 获取最新地址
+     * @param fileType
+     */
+    getAppEwmPath = (fileType) => {
+        var _this = this
+        var type;
+        if (fileType === 'youyang') {
+            type = 15
+        } else if (fileType === 'littleAntFa') {
+            type = 9
+        } else if (fileType === 'littleAntSt') {
+            type = 2
+        } else if (fileType === 'littleAntTe') {
+            type = 3
+        } else if (fileType === 'elearning') {
+            type = 12
+        }
+
+        var url = "https://www.maaee.com/Excoord_For_Education/webservice";
+        $.post(url, {
+            params: JSON.stringify({"type": type, "method": "checkForUpdates2"})
+        }, function (result, status) {
+            if (status == "success") {
+                var appPath = result.response.webPath;
+                _this.setState({androidUrl: appPath})
+            }
+        }, "json");
+
+    }
+
     buildTitle(fileType) {
         if (fileType == 'youyang') {
             imgName = 'youyang';
@@ -66,7 +99,6 @@ export default class Demo extends React.Component {
                 <span>AR微分享学习平台</span>
             </div>
         } else if (fileType == 'littleAntTe') {
-            console.log(this.state.phone);
             if (this.state.phone == 'IOS') {
                 imgName = 'littleAntSt';
                 imgNameTe = 'littleAntTe'
@@ -110,7 +142,7 @@ export default class Demo extends React.Component {
                 <span>科技改变未来，教育成就未来</span>
             </div>
         }
-        this.setState({ titleDiv })
+        this.setState({titleDiv})
     }
 
     downLoadFile = () => {
@@ -120,31 +152,31 @@ export default class Demo extends React.Component {
             if (phone == 'IOS') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1423189213?mt=8')
             } else {
-                window.open('http://60.205.86.217/upload7_app/2018-08-23/20/5e2c5613-5a3d-48ce-8152-8fc64cef03b0.apk')
+                window.open(this.state.androidUrl)
             }
         } else if (fileType == 'littleAntTe') {
             if (phone == 'IOS') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1049156218?mt=8')
             } else {
-                window.open('http://60.205.86.217/upload7_app/2018-07-16/19/4e303b59-f115-49e9-9705-d38b5f649c52.apk')
+                window.open(this.state.androidUrl)
             }
         } else if (fileType == 'littleAntSt') {
             if (phone == 'IOS') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1049156218?mt=8')
             } else {
-                window.open('http://60.205.86.217/upload7_app/2018-07-19/9/93d48c33-cda5-4784-97f9-9f132bbc63e8.apk')
+                window.open(this.state.androidUrl)
             }
         } else if (fileType == 'littleAntFa') {
             if (phone == 'IOS') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1395849263?mt=8')
             } else {
-                window.open('http://60.205.86.217/upload7_app/2018-06-28/21/f500639a-e8e5-43e2-b813-be6ffbf2f10a.apk')
+                window.open(this.state.androidUrl)
             }
         } else if (fileType == 'elearning') {
             if (phone == 'IOS') {
                 window.open('https://itunes.apple.com/cn/app/apple-store/id1268534857?mt=8')
             } else {
-                window.open('http://60.205.86.217/upload7_app/2018-08-02/19/3c09e2df-fd58-4f81-8b5f-7deb38748000.apk')
+                window.open(this.state.androidUrl)
             }
         }
     }
@@ -153,23 +185,23 @@ export default class Demo extends React.Component {
         if (imgNameTe == 'abc') {
             return (
                 <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
                     {this.state.titleDiv}
                     <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                         <span>免费下载{this.state.phone}版</span></div>
                     <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt="" /></div>
+                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
                 </div>
             );
         } else {
             return (
                 <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
                     {this.state.titleDiv}
                     <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                         <span>免费下载{this.state.phone}版</span></div>
                     <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt="" /></div>
+                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
                 </div>
             );
         }

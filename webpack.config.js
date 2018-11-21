@@ -148,7 +148,7 @@ module.exports = {
             cache: false,
             xhtml: false
         }),
-        ...otherPlugins
+        // ...otherPlugins
 
     ]
 }

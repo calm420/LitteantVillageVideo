@@ -149,7 +149,7 @@ export default class Demo extends React.Component {
             imgName = 'ClassCard';
             var titleDiv = <div className='textCont'>
                 <div>小蚂蚁智慧云班牌</div>
-                <span>助理学校打造自己特色的校园文化传播平台</span>
+                <span>助力学校打造自己特色的校园文化传播平台</span>
             </div>
         }
         this.setState({titleDiv})

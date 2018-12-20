@@ -7,7 +7,7 @@
 #fileDownload .topImg {
   width: 110px;
   height: 110px;
-  margin: 30px auto 0;
+  margin: 30px auto 10px;
 }
 #fileDownload .topImg img {
   width: 100%;
@@ -21,7 +21,7 @@
   padding-top: 10px;
 }
 #fileDownload .downBtn {
-  margin: 75px auto 10px;
+  margin: 65px auto 10px;
   text-align: center;
   width: 100%;
   height: 46px;
@@ -37,11 +37,11 @@
   border-radius: 2px;
 }
 #fileDownload .downBtn.IOS span {
-  background: #f56a55 url("../img/btn_ios.png") no-repeat 18px 11px;
+  background: #F56A55 url("../img/btn_ios.png") no-repeat 18px 11px;
   background-size: 19px;
 }
 #fileDownload .downBtn.Android span {
-  background: #f56a55 url("../img/btn_android.png") no-repeat 14px center;
+  background: #F56A55 url("../img/btn_android.png") no-repeat 14px center;
   background-size: 26px;
 }
 #fileDownload .bottomImg {
@@ -54,10 +54,21 @@
   color: #4E8BFD;
 }
 #fileDownload.youyang .downBtn.IOS span {
-  background: #4e8bfd url("../img/btn_ios.png") no-repeat 18px 11px;
+  background: #4E8BFD url("../img/btn_ios.png") no-repeat 18px 11px;
   background-size: 19px;
 }
 #fileDownload.youyang .downBtn.Android span {
-  background: #4e8bfd url("../img/btn_android.png") no-repeat 14px center;
+  background: #4E8BFD url("../img/btn_android.png") no-repeat 14px center;
+  background-size: 26px;
+}
+#fileDownload.classCard .textCont {
+  color: #34A3FD;
+}
+#fileDownload.classCard .downBtn.IOS span {
+  background: #34A3FD url("../img/btn_ios.png") no-repeat 18px 11px;
+  background-size: 19px;
+}
+#fileDownload.classCard .downBtn.Android span {
+  background: #34A3FD url("../img/btn_android.png") no-repeat 14px center;
   background-size: 26px;
 }

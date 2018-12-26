@@ -261,7 +261,7 @@ class Index extends React.Component {
     render() {
         return (
             <div className="body">
-                <h1>Stages list</h1>
+                {/* <h1>Stages list</h1> */}
                 <ul role="nav">
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     <li><Link to="/AppSystem"
@@ -276,33 +276,33 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>我的主题列表</Link></li>
                     {/*<li><Link to="/myThemeTask?userId=17&targetId=0"*/}
                               {/*style={{fontSize: '24px'}}>我的错题本</Link></li>*/}
-                    <li><Link to="/topicWrongList?userId=53"
+                    {/* <li><Link to="/topicWrongList?userId=53"
                               style={{fontSize: '24px'}}>我的错题本</Link></li>
                     <li><Link to="/myArticleList?userId=53"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
-                              style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
+                              style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li> */}
                     {/*<li><Link to="/Login"*/}
                               {/*style={{fontSize: '24px'}}>二维码登录页</Link></li>*/}
                     {/*<li><Link to="/EditorDemo"*/}
                               {/*style={{fontSize: '24px'}}>editorDemo</Link></li>*/}
-                    <li><Link to="/lookThrough?auditorId=3"
+                    {/* <li><Link to="/lookThrough?auditorId=3"
                               style={{fontSize: '24px'}}>审核列表</Link></li>
                     <li><Link to="/wxLogin?lookThrough"
-                              style={{fontSize: '24px'}}>审核列表(微信)</Link></li>
+                              style={{fontSize: '24px'}}>审核列表(微信)</Link></li> */}
                     {/*<li><Link to="/uploadMusicList?ident=23836"*/}
                               {/*style={{fontSize: '24px'}}>uploadMusicList</Link></li>*/}
-                    <li>
+                    {/* <li>
                         <Link
                             to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
                     </li>
                     <li>
                         <Link
                             to="/uploadvideoList?ident=8&accsess_user=23836" style={{fontSize: '24px'}}>上传视频</Link>
-                    </li>
+                    </li> */}
 
 
-                    <li>
+                    {/* <li>
                         <Link
                             to="/myCollection?userId=6" style={{fontSize: '24px'}}>我的收藏</Link>
                     </li>
@@ -366,7 +366,7 @@ class Index extends React.Component {
                         <Link
                             to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
                             style={{fontSize: '24px'}}>统计</Link>
-                    </li>
+                    </li>*/}
                 </ul>
             </div>
         );

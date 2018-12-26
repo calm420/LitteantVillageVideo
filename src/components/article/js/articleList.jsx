@@ -16,7 +16,6 @@ var AscrollView;
 var BscrollView;
 var that;
 export default class articleList extends React.Component {
-
     constructor(props) {
         super(props);
         that = this;
@@ -49,16 +48,30 @@ export default class articleList extends React.Component {
         var _this = this;
         Bridge.setShareAble("false");
         document.title = '文章列表';
-        var locationHref = window.location.href;
-        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
-        var searchArray = locationSearch.split("&");
-        var userId = searchArray[0].split('=')[1];
-        var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
-        var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            var phone = 'ios';
+            var locationHref = window.location.href;
+            var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+            var searchArray = locationSearch.split("&");
+            var userId = searchArray[0].split('=')[1];
+            var machineType = searchArray[1] ? searchArray[1].split('=')[1] : '';
+            var version = searchArray[2] ? searchArray[2].split('=')[1] : '';
+            var isDisPlay = searchArray[3] ? searchArray[3].split('=')[1] : '';
+        } else {
+            var phone = 'android';
+            var locationHref = window.location.href;
+            var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+            var searchArray = locationSearch.split("&");
+            var userId = searchArray[0].split('=')[1];
+            var isDisPlay = searchArray[1] ? searchArray[1].split('=')[1] : '';
+        }
         this.setState({
             userId: userId,
             machineType: machineType,
-            version: version
+            version: version,
+            isDisPlay:isDisPlay
         }, () => {
             var p1 = new Promise((reslove, reject) => {
                 this.getLittleVideoUserById(() => {
@@ -700,6 +713,13 @@ export default class articleList extends React.Component {
 
     }
 
+    closeUserGuide=()=>{
+        console.log("dianjile")
+        this.setState({
+            isDisPlay:0
+        })
+    }
+
 
     render() {
         var _this = this;
@@ -874,6 +894,11 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{height: document.body.clientHeight}}>
+                <div  style={{display:this.state.isDisPlay == 1 ? "block" : "none"}}  className="UserGuide">
+                    <img className="userguide1" src={require('../images/UserGuide1.png')} width='54'></img>
+                    <img onClick={this.closeUserGuide} className="userguide2" width="110" src={require('../images/UserGuide2.png')}></img>
+                    <img className="userguide3"  src={require('../images/UserGuide3.png')} width="270"></img>
+                </div>
                 <div className='icon_search_top' onClick={this.toSearch}></div>
                 <div className='artEmptyDiv' style={
                     this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}

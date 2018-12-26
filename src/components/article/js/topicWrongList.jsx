@@ -190,7 +190,7 @@ export default class articleList extends React.Component {
                     <div>错题本暂无数据</div>
                 </div>
 
-                <div　className="addTopic" onClick={this.toAddTopic}>+++++</div>
+                <div　className="addTopic" onClick={this.toAddTopic}></div>
 
             </div>
         );

@@ -274,11 +274,11 @@ class Index extends React.Component {
                               style={{fontSize: '24px'}}>发布主题</Link></li>
                     <li><Link to="/myThemeTask?userId=53&targetId=1"
                               style={{fontSize: '24px'}}>我的主题列表</Link></li>
-                    {/*<li><Link to="/myThemeTask?userId=17&targetId=0"*/}
-                              {/*style={{fontSize: '24px'}}>我的错题本</Link></li>*/}
-                    {/* <li><Link to="/topicWrongList?userId=53"
+                    <li><Link to="/myThemeTask?userId=17&targetId=0"
                               style={{fontSize: '24px'}}>我的错题本</Link></li>
-                    <li><Link to="/myArticleList?userId=53"
+                     <li><Link to="/topicWrongList?userId=53"
+                              style={{fontSize: '24px'}}>我的错题本</Link></li>
+                    {/*<li><Link to="/myArticleList?userId=53"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
                               style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li> */}
@@ -302,7 +302,7 @@ class Index extends React.Component {
                     </li> */}
 
 
-                    {/* <li>
+                     <li>
                         <Link
                             to="/myCollection?userId=6" style={{fontSize: '24px'}}>我的收藏</Link>
                     </li>
@@ -366,7 +366,7 @@ class Index extends React.Component {
                         <Link
                             to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
                             style={{fontSize: '24px'}}>统计</Link>
-                    </li>*/}
+                    </li>
                 </ul>
             </div>
         );

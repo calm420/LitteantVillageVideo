@@ -50,6 +50,7 @@ export default class articleList extends React.Component {
      * 按查询条件获取列表
      * **/
     getCourseAndCircleOfFriendsCount() {
+        debugger
         var _this = this;
         var param = {
             "method": 'getCourseAndCircleOfFriendsCount',
@@ -63,6 +64,7 @@ export default class articleList extends React.Component {
                     var res = result.response;
                     for (var k in res) {
                         if (k != null) {
+                            console.log(k);
                             listData.push(
                                 {
                                     name: k,
@@ -140,7 +142,6 @@ export default class articleList extends React.Component {
     }
 
     toAddTopic = () => {
-        console.log(123);
         var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId=" + this.state.userId;
         var data = {
             method: 'openNewPage',
@@ -192,8 +193,7 @@ export default class articleList extends React.Component {
                     <div>错题本暂无数据</div>
                 </div>
 
-                <div className="addTopic" onClick={this.toAddTopic}>+++++</div>
-
+                <div className="addTopic" onClick={this.toAddTopic}></div>
             </div>
         );
     }

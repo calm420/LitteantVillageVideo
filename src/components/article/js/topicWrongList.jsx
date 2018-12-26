@@ -140,6 +140,18 @@ export default class articleList extends React.Component {
         });
     }
 
+    toAddTopic =()=>{
+        console.log(123);
+        var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId="+this.state.userId;
+        var data = {
+            method: 'openNewPage',
+            url: url
+        };
+        Bridge.callHandler(data, null, function (error) {
+            window.location.href = url;
+        });
+    }
+
     render() {
         return (
             <div id="topicWrongList" style={{height: document.body.clientHeight}}>
@@ -177,6 +189,8 @@ export default class articleList extends React.Component {
                     <img src={require('../images/noDataPic.png')} alt=""/>
                     <div>错题本暂无数据</div>
                 </div>
+
+                <div　className="addTopic" onClick={this.toAddTopic}></div>
 
             </div>
         );

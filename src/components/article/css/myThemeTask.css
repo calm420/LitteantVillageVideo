@@ -47,10 +47,10 @@
   padding: 0px 24px 0 0;
   margin-top: 0;
   position: relative;
-  display: flex;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
+  display: flex;
   height: 35px;
   line-height: 35px;
   -webkit-box-pack: justify;
@@ -395,23 +395,43 @@
 #myThemeTask .mastery-init,
 #myThemeTask .tag-init {
   border: 1px solid #AEAEAE;
-  padding: 6px 15px;
+  padding: 0 15px;
   margin-right: 10px;
   border-radius: 2px;
   color: #666;
   margin-top: 10px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+#myThemeTask .course-init span,
+#myThemeTask .time-init span,
+#myThemeTask .mastery-init span,
+#myThemeTask .tag-init span {
+  line-height: normal;
+  background: #F56A55;
 }
 #myThemeTask .course-active,
 #myThemeTask .time-active,
 #myThemeTask .mastery-active,
 #myThemeTask .tag-active {
   border: 1px solid #558FF5;
-  padding: 6px 15px;
+  padding: 0 15px;
   margin-right: 10px;
   margin-top: 10px;
   background: #558FF5;
   border-radius: 2px;
   color: #fff;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+#myThemeTask .course-active span,
+#myThemeTask .time-active span,
+#myThemeTask .mastery-active span,
+#myThemeTask .tag-active span {
+  line-height: normal;
+  background: #F56A55;
 }
 #myThemeTask .am-list-header {
   background: #fff;
@@ -466,13 +486,13 @@
   background: #fff !important;
   color: #4285F4;
   border: 1px #4285F4 solid !important;
-  padding: 5px 13px !important;
+  padding: 4px 13px !important;
   border-radius: 4px;
 }
 #myThemeTask .export-header .Btn-right {
   position: absolute;
   right: 15px;
-  top: 7px;
+  top: 8px;
 }
 #myThemeTask .export-header input[type="checkbox"] {
   -webkit-appearance: none;
@@ -576,7 +596,7 @@
   width: 18px;
   background-size: 100% 100%;
   position: absolute;
-  top: 50px;
+  top: 66px;
   left: 15px;
 }
 #myThemeTask .month-select input[type="checkbox"]:checked {
@@ -657,7 +677,7 @@
   border-width: 1px;
   border-style: solid;
   float: left;
-  margin-left: 2px;
+  margin-right: 4px;
   margin-top: 4px;
   line-height: 15px;
 }

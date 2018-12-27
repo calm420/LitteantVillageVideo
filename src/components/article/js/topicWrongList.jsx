@@ -12,10 +12,10 @@ export default class articleList extends React.Component {
         that = this;
         this.state = {
             clientHeight: document.body.clientHeight,
-            listData:[],
-            refreshing:false,
-            isHidden:false,
-            loading:false,
+            listData: [],
+            refreshing: false,
+            isHidden: false,
+            loading: false,
         }
     }
 
@@ -26,11 +26,11 @@ export default class articleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        var toUserId = searchArray[1]?searchArray[1].split('=')[1]:null;
-        if(toUserId){
-            if(userId == toUserId){
+        var toUserId = searchArray[1] ? searchArray[1].split('=')[1] : null;
+        if (toUserId) {
+            if (userId == toUserId) {
 
-            }else{
+            } else {
                 userId = toUserId;
                 this.setState({
                     isHidden: true
@@ -50,6 +50,7 @@ export default class articleList extends React.Component {
      * 按查询条件获取列表
      * **/
     getCourseAndCircleOfFriendsCount() {
+        debugger
         var _this = this;
         var param = {
             "method": 'getCourseAndCircleOfFriendsCount',
@@ -57,24 +58,27 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'getCourseAndCircleOfFriendsCount')
+                console.log(result, 'getCourseAndCircleOfFriendsCount');
                 if (result.success) {
                     var listData = [];
                     var res = result.response;
-                    for(var k in res){
-                        listData.push(
-                            {
-                                name: k,
-                                count: res[k].count,
-                                cid: res[k].cid,
-                            }
-                        )
+                    for (var k in res) {
+                        if (k != null) {
+                            console.log(k);
+                            listData.push(
+                                {
+                                    name: k,
+                                    count: res[k].count,
+                                    cid: res[k].cid,
+                                }
+                            )
+                        }
                     }
-                    for(var k in listData){
-                        switch(listData[k].name){
+                    for (var k in listData) {
+                        switch (listData[k].name) {
                             case '生物':
                                 listData[k].css = 'Wrong-topic-biological';
-                                    break;
+                                break;
                             case '化学':
                                 listData[k].css = 'Wrong-topic-chemical';
                                 break;
@@ -108,8 +112,8 @@ export default class articleList extends React.Component {
 
                     this.setState({
                         listData: listData,
-                        refreshing:false,
-                        loading:true,
+                        refreshing: false,
+                        loading: true,
                     })
                 }
 
@@ -121,15 +125,12 @@ export default class articleList extends React.Component {
     }
 
 
-
-
-
     //跳转至朋友圈详情
     toThemeTaskDetail(item) {
-        if(this.state.isHidden){
-            var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+item.cid+"&projectName="+item.name+"&isHidden="+this.state.isHidden;
-        }else{
-            var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId="+this.state.userId+"&targetId=0&cid="+item.cid+"&projectName="+item.name;
+        if (this.state.isHidden) {
+            var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId=" + this.state.userId + "&targetId=0&cid=" + item.cid + "&projectName=" + item.name + "&isHidden=" + this.state.isHidden;
+        } else {
+            var url = WebServiceUtil.mobileServiceURL + "myThemeTask?userId=" + this.state.userId + "&targetId=0&cid=" + item.cid + "&projectName=" + item.name;
         }
         var data = {
             method: 'openNewPage',
@@ -140,9 +141,8 @@ export default class articleList extends React.Component {
         });
     }
 
-    toAddTopic =()=>{
-        console.log(123);
-        var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId="+this.state.userId;
+    toAddTopic = () => {
+        var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId=" + this.state.userId;
         var data = {
             method: 'openNewPage',
             url: url
@@ -158,25 +158,28 @@ export default class articleList extends React.Component {
                 <PullToRefresh
                     damping={60}
                     style={{
-                        height:this.state.listData.length < 1 ?0: this.state.clientHeight,
+                        height: this.state.listData.length < 1 ? 0 : this.state.clientHeight,
                         overflow: 'auto',
                     }}
                     indicator={{}}
                     direction={'down'}
                     refreshing={this.state.refreshing}
                     onRefresh={() => {
-                        this.setState({ refreshing: true });
+                        this.setState({refreshing: true});
                         setTimeout(() => {
                             this.getCourseAndCircleOfFriendsCount();
                         }, 1000);
                     }}
                 >
                     <div style={
-                        this.state.listData.length >= 1 ?{display:'block',height:this.state.clientHeight}:{display:'none',height:this.state.clientHeight}
+                        this.state.listData.length >= 1 ? {
+                            display: 'block',
+                            height: this.state.clientHeight
+                        } : {display: 'none', height: this.state.clientHeight}
                     }>
-                        {this.state.listData.map(function(value,index){
-                            return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that,value)}>
-                                <div className={value.css+" tag-pic"}></div>
+                        {this.state.listData.map(function (value, index) {
+                            return <div className="list-item" onClick={that.toThemeTaskDetail.bind(that, value)}>
+                                <div className={value.css + " tag-pic"}></div>
                                 <div className="tag-text">{value.name}/{value.count}</div>
                             </div>
                         })}
@@ -184,14 +187,13 @@ export default class articleList extends React.Component {
 
                 </PullToRefresh>
                 <div className="emptyDiv" style={
-                    this.state.loading && this.state.listData.length < 1 ?{display:'block'}:{display:'none'}
+                    this.state.loading && this.state.listData.length < 1 ? {display: 'block'} : {display: 'none'}
                 }>
                     <img src={require('../images/noDataPic.png')} alt=""/>
                     <div>错题本暂无数据</div>
                 </div>
 
-                <div　className="addTopic" onClick={this.toAddTopic}></div>
-
+                <div className="addTopic" onClick={this.toAddTopic}></div>
             </div>
         );
     }

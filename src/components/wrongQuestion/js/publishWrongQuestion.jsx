@@ -76,9 +76,9 @@ export default class publishWrongQuestion extends React.Component {
         var userId = searchArray[0].split('=')[1];
         calm.setState({
             userId
-        })
+        });
         calm.getProject(userId);
-        calm.getCourseByUserIdAndDefianceCourseAll(userId)
+        calm.getCourseByUserIdAndDefianceCourseAll(userId);
         /**
         * 防止软键盘挡住页面
         */

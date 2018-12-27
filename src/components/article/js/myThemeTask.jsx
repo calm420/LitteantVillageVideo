@@ -808,6 +808,10 @@ export default class myThemeTask extends React.Component {
         });
     }
 
+    toShare = ()=>{
+        console.log('分享')
+    }
+
     render() {
         var createTime = null;
         const row = (rowData, sectionID, rowID) => {
@@ -926,7 +930,7 @@ export default class myThemeTask extends React.Component {
                             <div className="deadline-line">截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
                         <div className="list_bottom">
-                            <div className="list_bottom_item"><i className="i-share"></i></div>
+                            {/*<div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>*/}
                             <div className="list_bottom_item"><i
                                 className="i-comments"></i><span>{rowData.disContent}</span></div>
                             <div className="list_bottom_item"><i

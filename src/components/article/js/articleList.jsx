@@ -649,7 +649,6 @@ export default class articleList extends React.Component {
 
 
     playVideo(url,event){
-
         event.stopPropagation();
         console.log(url);
         var data = {

@@ -400,16 +400,8 @@
   border-radius: 2px;
   color: #666;
   margin-top: 10px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-}
-#myThemeTask .course-init span,
-#myThemeTask .time-init span,
-#myThemeTask .mastery-init span,
-#myThemeTask .tag-init span {
-  line-height: normal;
-  background: #F56A55;
+  line-height: 28px;
+  box-sizing: border-box;
 }
 #myThemeTask .course-active,
 #myThemeTask .time-active,
@@ -422,16 +414,8 @@
   background: #558FF5;
   border-radius: 2px;
   color: #fff;
-  height: 28px;
-  display: flex;
-  align-items: center;
-}
-#myThemeTask .course-active span,
-#myThemeTask .time-active span,
-#myThemeTask .mastery-active span,
-#myThemeTask .tag-active span {
-  line-height: normal;
-  background: #F56A55;
+  line-height: 28px;
+  box-sizing: border-box;
 }
 #myThemeTask .am-list-header {
   background: #fff;

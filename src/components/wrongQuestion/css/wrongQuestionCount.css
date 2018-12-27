@@ -164,6 +164,7 @@
   display: flex;
   text-align: left;
   -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 #wrongQuestionCount .modalDiv .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio {

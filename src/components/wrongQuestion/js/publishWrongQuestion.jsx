@@ -69,8 +69,9 @@ export default class publishWrongQuestion extends React.Component {
     }
 
     componentDidMount() {
+        alert(2);
         Bridge.setShareAble("false");
-        document.title = '错题本';
+        document.title = '错题本1';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

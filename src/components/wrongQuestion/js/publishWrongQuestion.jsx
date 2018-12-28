@@ -69,9 +69,8 @@ export default class publishWrongQuestion extends React.Component {
     }
 
     componentDidMount() {
-        alert(2);
         Bridge.setShareAble("false");
-        document.title = '错题本1';
+        document.title = '错题本';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -250,14 +249,13 @@ export default class publishWrongQuestion extends React.Component {
             return
         }
         if (param.circleOfFriendsJson.mastery == undefined) {
-            Toast.info("请选择掌握程度")
+            Toast.info("请选择掌握程度",1)
             return
         }
         if (param.circleOfFriendsJson.fTags.length == 0) {
-            Toast.info("请选择标签")
+            Toast.info("请选择标签",1)
             return
         }
-
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
@@ -462,7 +460,8 @@ export default class publishWrongQuestion extends React.Component {
                 calm.state.cheArr.splice(i, 1)
             }
             calm.setState({
-                cheArr: calm.state.cheArr
+                cheArr: calm.state.cheArr,
+                cheData: {}
             })
         })
 
@@ -1132,8 +1131,11 @@ export default class publishWrongQuestion extends React.Component {
     */
     submitChaArr() {
         console.log(calm.state.cheData)
-        // calm.state.cheArr.push(calm.state.cheData)
         console.log(calm.state.cheArr)
+        if (JSON.stringify(calm.state.cheData) == "{}") {
+            Toast.info("请选择标签",1,"", false);
+            return
+        }
         $(`.calmChaDiv`).slideUp();
         $(`.tagBack`).hide();
         if (calm.state.cheData.value != 0) {

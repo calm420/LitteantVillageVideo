@@ -17,6 +17,7 @@ export default class WaitlookThroughDetail extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "待审核详情页";
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

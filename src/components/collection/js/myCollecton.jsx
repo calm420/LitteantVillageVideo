@@ -24,7 +24,7 @@ export default class myCollection extends React.Component {
     }
 
     componentDidMount() {
-        console.log("scscsc")
+        Bridge.setShareAble("false");
         document.title = "收藏列表"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

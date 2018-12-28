@@ -18,6 +18,7 @@ export default class AlreadylookThroughDetail extends React.Component {
         }
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "已审核详情页"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

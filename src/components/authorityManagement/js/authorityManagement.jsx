@@ -26,6 +26,7 @@ export default class authorityManagement extends React.Component {
     }
 
     componentWillMount() {
+        Bridge.setShareAble("false");
         document.title = "权限管理";   //设置title
     }
 

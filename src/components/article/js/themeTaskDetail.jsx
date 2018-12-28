@@ -43,6 +43,7 @@ export default class articleList extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");

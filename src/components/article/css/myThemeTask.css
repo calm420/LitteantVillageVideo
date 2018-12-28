@@ -400,16 +400,8 @@
   border-radius: 2px;
   color: #666;
   margin-top: 10px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-}
-#myThemeTask .course-init span,
-#myThemeTask .time-init span,
-#myThemeTask .mastery-init span,
-#myThemeTask .tag-init span {
-  line-height: normal;
-  background: #F56A55;
+  line-height: 28px;
+  box-sizing: border-box;
 }
 #myThemeTask .course-active,
 #myThemeTask .time-active,
@@ -422,16 +414,8 @@
   background: #558FF5;
   border-radius: 2px;
   color: #fff;
-  height: 28px;
-  display: flex;
-  align-items: center;
-}
-#myThemeTask .course-active span,
-#myThemeTask .time-active span,
-#myThemeTask .mastery-active span,
-#myThemeTask .tag-active span {
-  line-height: normal;
-  background: #F56A55;
+  line-height: 28px;
+  box-sizing: border-box;
 }
 #myThemeTask .am-list-header {
   background: #fff;
@@ -672,14 +656,14 @@
   margin-bottom: 6px;
 }
 #myThemeTask .tag-course {
-  padding: 0px 4px;
+  padding: 3px 4px 2px;
   font-size: 11px;
   border-width: 1px;
   border-style: solid;
   float: left;
   margin-right: 4px;
   margin-top: 4px;
-  line-height: 15px;
+  line-height: 1;
 }
 #myThemeTask .tag-course-blue {
   border-color: #4285F4;

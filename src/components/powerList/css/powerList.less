@@ -1,9 +1,13 @@
 #powerList {
   height: 100%;
   .listCont{
-    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
-    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
     background-color: #fff;
     padding-bottom: 20px;
     li{

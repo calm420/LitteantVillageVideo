@@ -68,8 +68,9 @@
       width: 100%;
       .list-view-section-body{
         padding: 0;
-        -webkit-flex-wrap: wrap; /* Safari 6.1+ */
-        flex-wrap: wrap;
+          -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
@@ -372,12 +373,11 @@
             padding: 5px 15px;
             margin-top: 10px;
             position: relative;
-            display: flex;
             display: -webkit-box;
             display: -webkit-flex;
             display: -ms-flexbox;
+            display: flex;
             height: 35px;
-            justify-content: space-between;
             -webkit-box-pack: justify;
             -webkit-justify-content: space-between;
             -ms-flex-pack: justify;

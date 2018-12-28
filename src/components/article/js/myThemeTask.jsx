@@ -1015,7 +1015,7 @@ export default class myThemeTask extends React.Component {
                                     that.state.courseData.map(function (value, index) {
                                         return <span
                                             className={that.state.courseIdArray != (String(value.id)) ? "course-init" : "course-active"}
-                                            onClick={that.courseClick.bind(that, String(value.id), value.name)}>{value.name}</span>
+                                            onClick={that.courseClick.bind(that, String(value.id), value.name)}><span>{value.name}</span></span>
                                     })
                                 }
                             </div>
@@ -1024,13 +1024,13 @@ export default class myThemeTask extends React.Component {
                             <div className="filter-header">发布时间</div>
                             <div style={{display: 'flex'}} className="filterCont">
                                 <span className={this.state.timeText == '全部' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '全部')}>全部</span>
+                                      onClick={this.timeClick.bind(this, '全部')}><span>全部</span></span>
                                 <span className={this.state.timeText == '一周内' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '一周内')}>一周内</span>
+                                      onClick={this.timeClick.bind(this, '一周内')}><span>一周内</span></span>
                                 <span className={this.state.timeText == '一月内' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '一月内')}>一月内</span>
+                                      onClick={this.timeClick.bind(this, '一月内')}><span>一月内</span></span>
                                 <span className={this.state.timeText == '自定义' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '自定义')}>自定义</span>
+                                      onClick={this.timeClick.bind(this, '自定义')}><span>自定义</span></span>
 
                             </div>
                         </div>

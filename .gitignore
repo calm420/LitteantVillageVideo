@@ -20,8 +20,7 @@ bower_components/
 npm-debug.log
 .module-cache
 .*.sw*
-dist
-=======
+#dist
 # Logs
 logs
 *.log

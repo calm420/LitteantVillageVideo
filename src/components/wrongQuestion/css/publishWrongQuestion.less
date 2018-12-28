@@ -105,10 +105,11 @@
             -webkit-border-radius: 1px;
             -moz-border-radius: 1px;
             border-radius: 1px;
-            font-size: 13px;
+            font-size: 12px;
             color:#AEAEAE!important;
-            padding: 0 5px;
-            line-height: 21px;
+            padding: 3px 5px;
+            line-height: 1;
+            display: inline-block;
             box-sizing: border-box;
             word-break: break-word;
             white-space: inherit;
@@ -118,7 +119,7 @@
             display: none;
         }
         .am-list-item{
-            min-height: 22px !important;
+            min-height: 20px !important;
             padding: 0 ;
             margin-top: 12px;
             margin-right: 12px;
@@ -133,6 +134,7 @@
             display: flex;
             text-align: left;
             -webkit-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
             flex-wrap: wrap;
         }
         .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio{
@@ -238,7 +240,6 @@
             -webkit-border-radius: 1px;
             -moz-border-radius: 1px;
             border-radius: 1px;
-            font-size: 13px;
         }
     }
     .tabCont{
@@ -456,11 +457,11 @@
     .spanTag {
         color: #AEAEAE;
         border: 1px #AEAEAE solid;
-        padding: 0 5px;
-        font-size: 13px;
+        padding: 3px 5px;
+        font-size: 12px;
         margin-right: 12px;
         margin-top: 12px;
-        line-height:21px;
+        line-height:1;
         -webkit-border-radius: 1px;
         -moz-border-radius: 1px;
         border-radius: 1px;
@@ -483,8 +484,11 @@
         font-size: 0;
     }
     .tagDiv {
-        -webkit-flex-wrap: wrap;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-flex-wrap: wrap;
         flex-wrap: wrap;
         width: calc(~"100% - 50px");
     }
@@ -493,6 +497,9 @@
         color: #4285F4;
     }
     .nextBtn{
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
         display: flex;
         height: 64px;
         position: relative;

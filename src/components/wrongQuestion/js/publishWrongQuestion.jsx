@@ -69,6 +69,7 @@ export default class publishWrongQuestion extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '错题本';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -188,7 +189,7 @@ export default class publishWrongQuestion extends React.Component {
     nextStep() {
         if (calm.state.theQuestionArr.length == 0 && calm.state.theQustionVideo.length == 0) {
             Toast.info("请上传题干", 1, "", false)
-            // Toast.info("请上传题干");    
+            // Toast.info("请上传题干");
             return
         }
 
@@ -255,6 +256,7 @@ export default class publishWrongQuestion extends React.Component {
             Toast.info("请选择标签")
             return
         }
+
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {

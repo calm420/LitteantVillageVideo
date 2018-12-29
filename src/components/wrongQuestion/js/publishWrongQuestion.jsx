@@ -25,7 +25,7 @@ export default class publishWrongQuestion extends React.Component {
                 //     fatherType: 0,
                 //     path: "http://60.205.86.217/upload8/2018-08-30/14/b02a7828-e89b-493e-a0ee-65a05b8f0da2.jpg"
                 // },
-              
+
             ],
             theQustionVideo: [
                 // {
@@ -69,6 +69,7 @@ export default class publishWrongQuestion extends React.Component {
     }
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = '错题本';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -188,7 +189,7 @@ export default class publishWrongQuestion extends React.Component {
     nextStep() {
         if (calm.state.theQuestionArr.length == 0 && calm.state.theQustionVideo.length == 0) {
             Toast.info("请上传题干", 1, "", false)
-            // Toast.info("请上传题干");    
+            // Toast.info("请上传题干");
             return
         }
 
@@ -221,7 +222,7 @@ export default class publishWrongQuestion extends React.Component {
         //         tagTitle: calm.state.cheData.label
         //     })
         // }
-        calm.state.cheArr.forEach((v,i)=>{
+        calm.state.cheArr.forEach((v, i) => {
             var newObj = {}
             newObj = {
                 cid: calm.state.cid,
@@ -248,11 +249,11 @@ export default class publishWrongQuestion extends React.Component {
             return
         }
         if (param.circleOfFriendsJson.mastery == undefined) {
-            Toast.info("请选择掌握程度")
+            Toast.info("请选择掌握程度",1)
             return
         }
         if (param.circleOfFriendsJson.fTags.length == 0) {
-            Toast.info("请选择标签")
+            Toast.info("请选择标签",1)
             return
         }
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -454,12 +455,13 @@ export default class publishWrongQuestion extends React.Component {
         // calm.setState({
         //     cheData: {}
         // })
-          calm.state.cheArr.forEach((v, i) => {
+        calm.state.cheArr.forEach((v, i) => {
             if (item.label == v.label) {
                 calm.state.cheArr.splice(i, 1)
             }
             calm.setState({
-                cheArr: calm.state.cheArr
+                cheArr: calm.state.cheArr,
+                cheData: {}
             })
         })
 
@@ -1129,8 +1131,11 @@ export default class publishWrongQuestion extends React.Component {
     */
     submitChaArr() {
         console.log(calm.state.cheData)
-        // calm.state.cheArr.push(calm.state.cheData)
         console.log(calm.state.cheArr)
+        if (JSON.stringify(calm.state.cheData) == "{}") {
+            Toast.info("请选择标签",1,"", false);
+            return
+        }
         $(`.calmChaDiv`).slideUp();
         $(`.tagBack`).hide();
         if (calm.state.cheData.value != 0) {
@@ -1370,7 +1375,7 @@ export default class publishWrongQuestion extends React.Component {
                                                 <div className="spanTag">
                                                     <span className="textOver">{v.label}</span>
                                                     <span className="del_tag"
-                                                        onClick={calm.deleteTag.bind(this,v)}>删除</span>
+                                                        onClick={calm.deleteTag.bind(this, v)}>删除</span>
                                                 </div>
                                             </span>
                                         )
@@ -1378,7 +1383,7 @@ export default class publishWrongQuestion extends React.Component {
                                 }
                                 {
                                     calm.state.cheArr.length == 6 ?
-                                       ""
+                                        ""
                                         :
                                         <span className='addTag spanTag' onClick={calm.addTag}>添加标签</span>
 

@@ -32,6 +32,7 @@ export default class alreadyLookThough extends React.Component {
         }
     }
     componentWillMount() {
+        Bridge.setShareAble("false");
         document.title = "审核列表";
     }
 

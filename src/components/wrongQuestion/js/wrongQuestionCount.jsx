@@ -31,6 +31,7 @@ export default class wrongQuestionCount extends React.Component {
 
 
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "科目错题统计"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

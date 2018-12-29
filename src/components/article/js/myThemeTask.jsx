@@ -12,7 +12,6 @@ var dataSource = new ListView.DataSource({
 var that;
 const initCheckId = [];
 export default class myThemeTask extends React.Component {
-
     constructor(props) {
         super(props);
         that = this;
@@ -44,7 +43,6 @@ export default class myThemeTask extends React.Component {
             isHidden: false,
         }
     }
-
     componentDidMount() {
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
@@ -64,9 +62,9 @@ export default class myThemeTask extends React.Component {
         }
         if (isHidden) {
             if (userId != isHidden) {
-                if(fromTopic){
+                if (fromTopic) {
 
-                }else{
+                } else {
                     userId = isHidden;
                 }
                 this.setState({
@@ -85,7 +83,7 @@ export default class myThemeTask extends React.Component {
             if (targetType == 1) {
                 document.title = '我的主题任务';
                 this.getCircleOfFriendsByType();
-                $('.am-list-header').css({display: 'none'})
+                $('.am-list-header').css({ display: 'none' })
             } else {
                 document.title = '我的错题本';
                 this.getCircleOfFriendsByUidAndCid();
@@ -427,8 +425,8 @@ export default class myThemeTask extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定删除吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.deleteCircle(data, index, event)},
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteCircle(data, index, event) },
 
         ], phone);
     }
@@ -622,7 +620,7 @@ export default class myThemeTask extends React.Component {
 
             console.log(arr, '0');
 
-            that.setState({exportIdArray: arr})
+            that.setState({ exportIdArray: arr })
         } else {
             console.log('取消全选')
             // $('.checkbox').removeAttr('checked');
@@ -855,44 +853,44 @@ export default class myThemeTask extends React.Component {
             dom =
                 <div className='my_flex month-select'>
                     <input style={
-                        this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                        this.state.exportFlag ? { display: 'block' } : { display: 'none' }
                     } className="checkbox" type="checkbox" name="checked"
-                           onClick={this.checkBoxClick.bind(this, rowData.cfid)}/>
+                        onClick={this.checkBoxClick.bind(this, rowData.cfid)} />
                     <div className="date" style={
-                        this.state.targetType == 1 ? {display: 'none'} : {display: 'block'}
+                        this.state.targetType == 1 ? { display: 'none' } : { display: 'block' }
                     }>
                         <div style={
-                            borderTop ? {display: 'none'} : {display: 'block'}
+                            borderTop ? { display: 'none' } : { display: 'block' }
                         }
-                             className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
+                            className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div style={
-                            borderTop ? {display: 'none'} : {display: 'block'}
+                            borderTop ? { display: 'none' } : { display: 'block' }
                         } className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月
                         </div>
                     </div>
                     <div className="circleList" style={
-                        this.state.targetType == 1 ? {width: '100%'} : {}
+                        this.state.targetType == 1 ? { width: '100%' } : {}
                     }
-                         onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
+                        onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
 
                         <div>
                             <div style={
-                                this.state.targetType == 0 ? {display: 'block'} : {display: 'none'}
+                                this.state.targetType == 0 ? { display: 'block' } : { display: 'none' }
                             } className="list-tags">
                                 <span style={
-                                    rowData.mastery || rowData.mastery == 0 ? {display: 'block'} : {display: 'none'}
+                                    rowData.mastery || rowData.mastery == 0 ? { display: 'block' } : { display: 'none' }
                                 }
-                                      className={"tag-course " + tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1 ? '略懂' : rowData.mastery == 2 ? '基本懂' : '完全懂'}</span>
+                                    className={"tag-course " + tagClass}>{rowData.mastery == 0 ? '不懂' : rowData.mastery == 1 ? '略懂' : rowData.mastery == 2 ? '基本懂' : '完全懂'}</span>
                                 <span style={
-                                    rowData.courseInfo ? {display: 'block'} : {display: 'none'}
+                                    rowData.courseInfo ? { display: 'block' } : { display: 'none' }
                                 }
-                                      className="tag-course tag-course-blue">{rowData.courseInfo ? rowData.courseInfo.courseName : ''}</span>
+                                    className="tag-course tag-course-blue">{rowData.courseInfo ? rowData.courseInfo.courseName : ''}</span>
 
                             </div>
 
-                            <div className={this.state.targetType  == 0? "list_content 错题本":"list_content 主题计划"}>
+                            <div className={this.state.targetType == 0 ? "list_content 错题本" : "list_content 主题计划"}>
 
-                                {rowData.fTags.map((value,index)=>{
+                                {rowData.fTags.map((value, index) => {
                                     return <span className="myTag">【{value.tagTitle}】</span>
                                 })}
 
@@ -900,24 +898,24 @@ export default class myThemeTask extends React.Component {
                             </div>
                         </div>
                         <div className="list_image" style={
-                            friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
+                            friendsAttachments.length == 0 ? { display: 'none' } : { display: 'block' }
                         }>
                             {friendsAttachments.map((value, index) => {
                                 if (value.type == 0) {
                                     return <img style={
-                                        friendsAttachments.length == 1 ? {width: '200px', height: '113px'} : {
+                                        friendsAttachments.length == 1 ? { width: '200px', height: '113px' } : {
                                             display: 'inline-block'
                                         }
-                                    } src={value.path} alt=""/>
+                                    } src={value.path} alt="" />
                                 } else {
                                     return <div className="video_tag" style={
-                                        friendsAttachments.length == 1 ? {width: '200px', height: '113px'} : {
+                                        friendsAttachments.length == 1 ? { width: '200px', height: '113px' } : {
                                             display: 'inline-block'
                                         }
                                     }>
                                         <video poster={value.coverPath} onClick={this.playVideo.bind(this)}
-                                               style={{width: '100%', height: '100%'}}
-                                               src={value.path} alt=""/>
+                                            style={{ width: '100%', height: '100%' }}
+                                            src={value.path} alt="" />
                                         <div className="video_tag_play" onClick={this.playVideo.bind(this)}></div>
                                     </div>
                                 }
@@ -925,7 +923,7 @@ export default class myThemeTask extends React.Component {
                             })}
                         </div>
                         <div className='time' style={
-                            rowData.type == 0 ? {display: 'none'} : {display: 'block'}
+                            rowData.type == 0 ? { display: 'none' } : { display: 'block' }
                         }>
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
                             <div className="deadline-line">截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
@@ -938,9 +936,9 @@ export default class myThemeTask extends React.Component {
                                 className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
                             </div>
                             <div style={
-                                this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                                this.state.isHidden ? { display: 'none' } : { display: 'block' }
                             } className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>
-                                <i  className="i-delete"></i></div>
+                                <i className="i-delete"></i></div>
                         </div>
                     </div>
                 </div>
@@ -953,7 +951,7 @@ export default class myThemeTask extends React.Component {
             )
         };
         return (
-            <div id="myThemeTask" style={{height: document.body.clientHeight}}>
+            <div id="myThemeTask" style={{ height: document.body.clientHeight }}>
 
                 <ListView
                     ref={el => this.lv = el}
@@ -961,7 +959,7 @@ export default class myThemeTask extends React.Component {
                     renderHeader={sectionData => (
                         <div>
                             <div style={
-                                this.state.exportFlag ? {display: 'none'} : {display: 'block'}
+                                this.state.exportFlag ? { display: 'none' } : { display: 'block' }
                             }>
                                 <button className="filter-btn" onClick={this.setFilter}><i
                                     className="icon-screening"></i><span>筛选</span></button>
@@ -971,11 +969,11 @@ export default class myThemeTask extends React.Component {
                                     className="icon-print"></i><span>打印</span></button>
                             </div>
                             <div className="export-header" style={
-                                this.state.exportFlag ? {display: 'block'} : {display: 'none'}
+                                this.state.exportFlag ? { display: 'block' } : { display: 'none' }
                             }>
-                                <div style={{display: 'inline-block'}}>
+                                <div style={{ display: 'inline-block' }}>
                                     <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
-                                           type="checkbox"/><span>全选</span></div>
+                                        type="checkbox" /><span>全选</span></div>
                                 <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>导出
                                 </button>
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
@@ -984,7 +982,7 @@ export default class myThemeTask extends React.Component {
 
                     )}
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -1010,12 +1008,12 @@ export default class myThemeTask extends React.Component {
                     this.state.filterFlag ? {
                         height: this.state.clientHeight,
                         transform: 'translateX(0%)'
-                    } : {height: this.state.clientHeight, transform: 'translateX(100%)'}
+                    } : { height: this.state.clientHeight, transform: 'translateX(100%)' }
                 }>
                     <div className="filter-info">
                         <div>
                             <div className="filter-header">科目</div>
-                            <div style={{display: 'flex'}} className="filterCont">
+                            <div style={{ display: 'flex' }} className="filterCont">
                                 {
                                     that.state.courseData.map(function (value, index) {
                                         return <span
@@ -1027,21 +1025,21 @@ export default class myThemeTask extends React.Component {
                         </div>
                         <div>
                             <div className="filter-header">发布时间</div>
-                            <div style={{display: 'flex'}} className="filterCont">
+                            <div style={{ display: 'flex' }} className="filterCont">
                                 <span className={this.state.timeText == '全部' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '全部')}>全部</span>
+                                    onClick={this.timeClick.bind(this, '全部')}>全部</span>
                                 <span className={this.state.timeText == '一周内' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '一周内')}>一周内</span>
+                                    onClick={this.timeClick.bind(this, '一周内')}>一周内</span>
                                 <span className={this.state.timeText == '一月内' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '一月内')}>一月内</span>
+                                    onClick={this.timeClick.bind(this, '一月内')}>一月内</span>
                                 <span className={this.state.timeText == '自定义' ? "time-active" : "time-init"}
-                                      onClick={this.timeClick.bind(this, '自定义')}>自定义</span>
+                                    onClick={this.timeClick.bind(this, '自定义')}>自定义</span>
 
                             </div>
                         </div>
                         <div>
                             <div className="filter-header">掌握程度</div>
-                            <div style={{display: 'flex'}} className="filterCont">
+                            <div style={{ display: 'flex' }} className="filterCont">
                                 <span
                                     className={this.state.masteryIdArray.indexOf("-1") == -1 ? 'mastery-init' : 'mastery-active'}
                                     onClick={this.masteryClick.bind(this, -1)}>全部</span>
@@ -1061,7 +1059,7 @@ export default class myThemeTask extends React.Component {
                         </div>
                         <div>
                             <div className="filter-header">标签</div>
-                            <div style={{display: 'flex'}} className="filterCont">
+                            <div style={{ display: 'flex' }} className="filterCont">
                                 {
                                     this.state.tagData.map(function (value, index) {
                                         return <span
@@ -1079,7 +1077,7 @@ export default class myThemeTask extends React.Component {
                 </div>
                 {/*发布时间*/}
                 <div className="customMask" style={
-                    this.state.timeText == '自定义' && this.state.customFlag ? {display: 'block'} : {display: 'none'}
+                    this.state.timeText == '自定义' && this.state.customFlag ? { display: 'block' } : { display: 'none' }
                 }>
                     <div className='custom'>
                         <div className="custom-header">选择时间</div>
@@ -1090,7 +1088,7 @@ export default class myThemeTask extends React.Component {
                                 title=""
                                 extra="开始时间"
                                 value={this.state.startDateForCustom}
-                                onChange={startDateForCustom => this.setState({startDateForCustom})}
+                                onChange={startDateForCustom => this.setState({ startDateForCustom })}
                             >
                                 <List.Item arrow="horizontal"></List.Item>
                             </DatePicker>
@@ -1102,7 +1100,7 @@ export default class myThemeTask extends React.Component {
                                 title=""
                                 extra="结束时间"
                                 value={this.state.endDateForCustom}
-                                onChange={endDateForCustom => this.setState({endDateForCustom})}
+                                onChange={endDateForCustom => this.setState({ endDateForCustom })}
                             >
                                 <List.Item arrow="horizontal"></List.Item>
                             </DatePicker>
@@ -1116,7 +1114,7 @@ export default class myThemeTask extends React.Component {
                     this.state.filterFlag ? {
                         height: this.state.clientHeight,
                         display: 'block'
-                    } : {height: this.state.clientHeight, display: 'none'}
+                    } : { height: this.state.clientHeight, display: 'none' }
                 }></div>
             </div>
         );

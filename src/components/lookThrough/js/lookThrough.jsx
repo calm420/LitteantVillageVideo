@@ -33,9 +33,11 @@ export default class lookThrough extends React.Component {
     }
 
     componentWillMount() {
+        Bridge.setShareAble("false");
         document.title = "审核列表";
     }
     componentDidMount() {
+        Bridge.setShareAble("false");
         document.title = "审核列表"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);

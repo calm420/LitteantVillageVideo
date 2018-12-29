@@ -24,6 +24,9 @@
   overflow-x: hidden;
 }
 #addUploadVideo .submitBtn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
 }
 #addUploadVideo .submitBtn .warning {
@@ -225,8 +228,12 @@
 }
 #addUploadVideo .tagDiv {
   -webkit-flex-wrap: wrap;
-  display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   width: calc(100% - 50px);
 }
 #addUploadVideo .sameBack {

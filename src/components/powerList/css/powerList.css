@@ -3,9 +3,12 @@
 }
 #powerList .listCont {
   -webkit-flex-wrap: wrap;
-  /* Safari 6.1+ */
-  display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   background-color: #fff;
   padding-bottom: 20px;
 }

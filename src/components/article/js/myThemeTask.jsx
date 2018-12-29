@@ -517,20 +517,21 @@ export default class myThemeTask extends React.Component {
         this.setState({
             exportFlag: true,
         }, () => {
-            var data = {
-                method: 'editorInTopic',
-            };
-            Bridge.callHandler(data, function (val) {
-                // console.log(val,'valvalvalvalvalvalvalvalval');
-                // Toast.info(val);
-                if (val == 'editorInTopic') {
-                    that.closeExport();
-                } else {
-                    // Toast.info('error')
-                }
-            }, function (error) {
 
-            });
+            // var data = {
+            //     method: 'editorInTopic',
+            // };
+            // Bridge.callHandler(data, function (val) {
+            //     // console.log(val,'valvalvalvalvalvalvalvalval');
+            //     // Toast.info(val);
+            //     if (val == 'editorInTopic') {
+            //         that.closeExport();
+            //     } else {
+            //         // Toast.info('error')
+            //     }
+            // }, function (error) {
+            //
+            // });
         })
     }
 

@@ -974,8 +974,9 @@ export default class myThemeTask extends React.Component {
                                 <div style={{ display: 'inline-block' }}>
                                     <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
                                         type="checkbox" /><span>全选</span></div>
-                                <button className='close-btn Btn-bor-blue' onClick={this.closeExport}>取消</button>
-                                <button className='export-btn Btn-bor-blue Btn-right' onClick={this.exportTopic}>导出</button>
+                                <button className='export-btn Btn-bor-blue close-btn ' onClick={this.exportTopic}>导出</button>
+                                <button className='Btn-bor-blue  Btn-right' onClick={this.closeExport}>取消</button>
+
                                 {/*<button onClick={this.closeExport}>取消</button>*/}
                             </div>
                         </div>

@@ -325,15 +325,12 @@ export default class myThemeTask extends React.Component {
 
     onRefresh = (str) => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-
-
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
         // divPull[0].style.height = document.body.clientHeight
-
         this.setState({
-            defaultPageNo: 1, refreshing: true
+            defaultPageNo: 1, refreshing: true,
+            exportIdArray: [],
         }, () => {
-            // this.getLittleVideoUserById();
             if (this.state.targetType == 1) {
                 this.getCircleOfFriendsByType(true);
 
@@ -542,6 +539,7 @@ export default class myThemeTask extends React.Component {
                 "WrongTopicBookIds": this.state.exportIdArray.join(","),
                 "userId": this.state.userId,
             };
+            console.log(param, "param")
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
                 onResponse: result => {
                     console.log(result, 'exportPdfFlowHistoricProcessInstanceById')
@@ -807,7 +805,7 @@ export default class myThemeTask extends React.Component {
         });
     }
 
-    toShare = ()=>{
+    toShare = () => {
         console.log('分享')
     }
 

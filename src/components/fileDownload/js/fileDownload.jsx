@@ -87,6 +87,7 @@ export default class Demo extends React.Component {
         }
 
         var url = "https://www.maaee.com/Excoord_For_Education/webservice";
+        // var url = "http://192.168.50.172:9006/Excoord_ApiServer/webservice";
         $.post(url, {
             params: JSON.stringify({"type": type, "method": "checkForUpdates2"})
         }, function (result, status) {

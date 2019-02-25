@@ -271,28 +271,6 @@ export default class articleList extends React.Component {
                     // this.getArticleRecommenLittleVideoList();
                     console.log('重新绑定')
                     // 监听滚动事件
-                    $('.am-list-view-scrollview').on('scroll', (e) => {
-                        if (e.target.scrollTop >= 200) {
-                            if (this.state.scrollFlag) {
-
-                            } else {
-                                this.setState({
-                                    scrollFlag: true,
-                                }, () => {
-                                    // Toast.info('开启了显示'+this.state.scrollFlag,1)
-                                })
-                            }
-
-                        } else {
-                            if (this.state.scrollFlag) {
-                                // Toast.info('关闭了显示',1)
-                                this.setState({
-                                    scrollFlag: false,
-                                })
-                            }
-
-                        }
-                    })
                 }
 
             },

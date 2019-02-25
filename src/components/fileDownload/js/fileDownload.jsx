@@ -52,13 +52,14 @@ export default class Demo extends React.Component {
             } else {
                 document.title = '小蚂蚁.学生端'
             }
-            小蚂蚁云校
         } else if (fileType == 'littleAntFa') {
             document.title = '小蚂蚁.家长端'
         } else if (fileType == 'elearning') {
             document.title = '小蚂蚁云校'
         } else if (fileType == 'classCard') {
             document.title = '小蚂蚁.云班牌'
+        } else if (fileType == 'classroom') {
+            document.title = '同步课堂'
         }
     }
 
@@ -81,6 +82,8 @@ export default class Demo extends React.Component {
             type = 12
         } else if (fileType === 'classCard') {
             type = 16
+        }else if (fileType === 'classroom') {
+            type = 17
         }
 
         var url = "https://www.maaee.com/Excoord_For_Education/webservice";
@@ -151,6 +154,12 @@ export default class Demo extends React.Component {
                 <div>小蚂蚁智慧云班牌</div>
                 <span>助力学校打造自己特色的校园文化传播平台</span>
             </div>
+        } else if (fileType == 'classroom') {
+            imgName = 'classroom';
+            var titleDiv = <div className='textCont'>
+                <div>同步课堂</div>
+                <span>助力学校打造自己特色的校园文化传播平台</span>
+            </div>
         }
         this.setState({titleDiv})
     }
@@ -191,6 +200,12 @@ export default class Demo extends React.Component {
         } else if (fileType == 'classCard') {
             if (phone == 'IOS') {
                 Toast.info('智慧班牌暂不支持IOS', 3)
+            } else {
+                window.open(this.state.androidUrl)
+            }
+        }else if (fileType == 'classroom') {
+            if (phone == 'IOS') {
+                window.open('https://itunes.apple.com/cn/app/apple-store/id1268534857?mt=8')
             } else {
                 window.open(this.state.androidUrl)
             }

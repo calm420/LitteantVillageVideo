@@ -158,7 +158,7 @@ export default class Demo extends React.Component {
             imgName = 'classroom';
             var titleDiv = <div className='textCont'>
                 <div>同步课堂</div>
-                <span>助力学校打造自己特色的校园文化传播平台</span>
+                <span>让每个中小学生都能享受到优质的学习资源</span>
             </div>
         }
         this.setState({titleDiv})

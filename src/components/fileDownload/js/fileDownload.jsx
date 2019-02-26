@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toast} from 'antd-mobile';
+import { Toast } from 'antd-mobile';
 import '../css/fileDownload.less'
 
 var imgName = 'youyang';
@@ -12,21 +12,50 @@ export default class Demo extends React.Component {
             androidUrl: '',
         };
     }
+    componentWillMount() {
+        var locationHref = window.location.href;
+        var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+        var searchArray = locationSearch.split("&");
+        var fileType = searchArray[0].split('=')[1];
+        var pType = searchArray[1].split('=')[1];
+        var phoneType = navigator.userAgent;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            this.setState({ phone: 'IOS' }, () => {
+                if (this.state.phone == "IOS" && pType == 0) {
+                    _this.buildTitle(fileType)
+                }else {
+                    Toast.info("请扫描IOS二维码下载",1000);
+                    return; 
+                }
+            })
+        } else {
+            this.setState({ phone: 'Android' },  ()=> {
+                if (this.state.phone == "Android" && pType == 1) {
+                    _this.buildTitle(fileType)
+                    _this.getAppEwmPath(fileType)
+                }else {
+                    Toast.info("请扫描安卓二维码下载",1000);
+                    return;
+                }
+               
+            })
+        }
+    }
 
     componentDidMount() {
         var _this = this
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var fileType = searchArray[0].split('=')[1]
-        this.setState({fileType})
+        var fileType = searchArray[0].split('=')[1];
+        this.setState({ fileType })
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
-            this.setState({phone: 'IOS'}, function () {
+            this.setState({ phone: 'IOS' }, function () {
                 _this.buildTitle(fileType)
             })
         } else {
-            this.setState({phone: 'Android'}, function () {
+            this.setState({ phone: 'Android' }, function () {
                 _this.buildTitle(fileType)
                 _this.getAppEwmPath(fileType)
             })
@@ -82,18 +111,18 @@ export default class Demo extends React.Component {
             type = 12
         } else if (fileType === 'classCard') {
             type = 16
-        }else if (fileType === 'classroom') {
+        } else if (fileType === 'classroom') {
             type = 17
         }
 
         var url = "https://www.maaee.com/Excoord_For_Education/webservice";
         // var url = "http://192.168.50.172:9006/Excoord_ApiServer/webservice";
         $.post(url, {
-            params: JSON.stringify({"type": type, "method": "checkForUpdates2"})
+            params: JSON.stringify({ "type": type, "method": "checkForUpdates2" })
         }, function (result, status) {
             if (status == "success") {
                 var appPath = result.response.webPath;
-                _this.setState({androidUrl: appPath})
+                _this.setState({ androidUrl: appPath })
             }
         }, "json");
 
@@ -162,7 +191,7 @@ export default class Demo extends React.Component {
                 <span>让每个中小学生都能享受到优质的学习资源</span>
             </div>
         }
-        this.setState({titleDiv})
+        this.setState({ titleDiv })
     }
 
     downLoadFile = () => {
@@ -204,7 +233,7 @@ export default class Demo extends React.Component {
             } else {
                 window.open(this.state.androidUrl)
             }
-        }else if (fileType == 'classroom') {
+        } else if (fileType == 'classroom') {
             if (phone == 'IOS') {
                 window.open('https://itunes.apple.com/us/app//id1450595849?l=zh&ls=1&mt=8')
             } else {
@@ -214,26 +243,26 @@ export default class Demo extends React.Component {
     }
 
     render() {
-        if (imgNameTe == 'abc') {
+        if (imgNameTe == 'abc' ) {
             return (
                 <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
                     {this.state.titleDiv}
                     <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                         <span>免费下载{this.state.phone}版</span></div>
                     <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
+                        src={require('../img/bottomImg_' + imgName + '.png')} alt="" /></div>
                 </div>
             );
         } else {
             return (
                 <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
                     {this.state.titleDiv}
                     <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                         <span>免费下载{this.state.phone}版</span></div>
                     <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
+                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt="" /></div>
                 </div>
             );
         }

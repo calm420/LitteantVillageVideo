@@ -87,18 +87,18 @@
   position: absolute;
   width: 100%;
   left: 0;
-  top: 50%;
+  top: 40%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
-  font-size: 17px;
-  color: #666;
+  font-size: 15px;
+  color: #888;
   text-align: center;
 }
 .emptyDiv_fileDown img {
   display: block;
-  margin: 0 auto;
-  padding-bottom: 30px;
+  margin: 0 auto 30px;
+  width: 120px;
 }

@@ -242,7 +242,7 @@ export default class Demo extends React.Component {
     render() {
         if (imgNameTe == 'abc' ) {
             return (
-                <div>
+                <div style={{backgroundColor:'#fff',width:'100%',height:'100%'}}>
                     <div className='emptyDiv_fileDown'  style={{display:this.state.flag ? "none":""}}>
                         <img src={require("../img/empty_div.png")}/>
                         请扫描{
@@ -262,7 +262,7 @@ export default class Demo extends React.Component {
             );
         } else {
             return (
-                <div>
+                <div style={{backgroundColor:'#fff',width:'100%',height:'100%'}}>
                     <div className='emptyDiv_fileDown' style={{display:this.state.flag ? "none":""}}>
                         <img src={require("../img/empty_div.png")}/>
                         请扫描{

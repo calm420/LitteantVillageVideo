@@ -206,7 +206,7 @@ export default class Demo extends React.Component {
             }
         }else if (fileType == 'classroom') {
             if (phone == 'IOS') {
-                window.open('https://itunes.apple.com/cn/app/apple-store/id1268534857?mt=8')
+                window.open('https://itunes.apple.com/us/app//id1450595849?l=zh&ls=1&mt=8')
             } else {
                 window.open(this.state.androidUrl)
             }

@@ -216,25 +216,43 @@ export default class Demo extends React.Component {
     render() {
         if (imgNameTe == 'abc') {
             return (
-                <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
-                    {this.state.titleDiv}
-                    <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
-                        <span>免费下载{this.state.phone}版</span></div>
-                    <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
+                <div>
+                    <div className='emptyDiv'>
+                        <img src="" alt=""/>
+                        请扫描{
+                            this.state.phone == "IOS" ? "IOS" : "Android"
+                    }二维码下载
+                    </div>
+                    <div id='fileDownload' className={this.state.fileType}>
+                        <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                        {this.state.titleDiv}
+                        <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
+                            <span>免费下载{this.state.phone}版</span></div>
+                        <div className='bottomImg'><img
+                            src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
+                    </div>
                 </div>
+
             );
         } else {
             return (
-                <div id='fileDownload' className={this.state.fileType}>
-                    <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
-                    {this.state.titleDiv}
-                    <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
-                        <span>免费下载{this.state.phone}版</span></div>
-                    <div className='bottomImg'><img
-                        src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
+                <div>
+                    <div className='emptyDiv'>
+                        <img src="" alt=""/>
+                        请扫描{
+                        this.state.phone == "IOS" ? "IOS" : "Android"
+                        }二维码下载
+                    </div>
+                    <div id='fileDownload' className={this.state.fileType}>
+                        <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                        {this.state.titleDiv}
+                        <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
+                            <span>免费下载{this.state.phone}版</span></div>
+                        <div className='bottomImg'><img
+                            src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
+                    </div>
                 </div>
+
             );
         }
 

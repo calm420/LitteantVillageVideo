@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, IndexRoute, Link} from 'react-router';
+import { Router, Route, hashHistory, IndexRoute, Link } from 'react-router';
 import App from './components/App';
 import Stage1 from './components/Stage1';
 
@@ -199,13 +199,13 @@ const mobileEditor = (location, cb) => {
 /**
  * 错题本
  */
-const publishWrongQuestion = (location, cb) =>{
+const publishWrongQuestion = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/wrongQuestion/js/publishWrongQuestion').default)
     }, 'publishWrongQuestion')
 }
 
-const wrongQuestionCount = (location, cb) =>{
+const wrongQuestionCount = (location, cb) => {
     require.ensure([], require => {
         cb(null, require('./components/wrongQuestion/js/wrongQuestionCount').default)
     }, 'wrongQuestionCount')
@@ -252,7 +252,11 @@ const wxLogin = (location, cb) => {
     }, 'wxLogin')
 };
 
-
+const welcome = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/welcome/welcome').default)
+    })
+};
 
 import './index.less';
 
@@ -265,33 +269,33 @@ class Index extends React.Component {
                 <ul role="nav">
                     {/*<li><Link to="/s1">ListView + Carousel</Link></li>*/}
                     <li><Link to="/AppSystem"
-                              style={{fontSize: '24px'}}>AppSystem</Link></li>
+                        style={{ fontSize: '24px' }}>AppSystem</Link></li>
                     <li><Link to="/articleList?userId=53&machineType=ios&version=100"
-                              style={{fontSize: '24px'}}>ios文章列表</Link></li>
+                        style={{ fontSize: '24px' }}>ios文章列表</Link></li>
                     <li><Link to="/articleList?userId=53"
-                              style={{fontSize: '24px'}}>文章列表</Link></li>
+                        style={{ fontSize: '24px' }}>文章列表</Link></li>
                     <li><Link to="/themeTask?userId=53"
-                              style={{fontSize: '24px'}}>发布主题</Link></li>
+                        style={{ fontSize: '24px' }}>发布主题</Link></li>
                     <li><Link to="/myThemeTask?userId=53&targetId=1"
-                              style={{fontSize: '24px'}}>我的主题列表</Link></li>
+                        style={{ fontSize: '24px' }}>我的主题列表</Link></li>
                     <li><Link to="/myThemeTask?userId=17&targetId=0"
-                              style={{fontSize: '24px'}}>我的错题本</Link></li>
-                     <li><Link to="/topicWrongList?userId=53"
-                              style={{fontSize: '24px'}}>我的错题本</Link></li>
+                        style={{ fontSize: '24px' }}>我的错题本</Link></li>
+                    <li><Link to="/topicWrongList?userId=53"
+                        style={{ fontSize: '24px' }}>我的错题本</Link></li>
                     {/*<li><Link to="/myArticleList?userId=53"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
                               style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li> */}
                     {/*<li><Link to="/Login"*/}
-                              {/*style={{fontSize: '24px'}}>二维码登录页</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>二维码登录页</Link></li>*/}
                     {/*<li><Link to="/EditorDemo"*/}
-                              {/*style={{fontSize: '24px'}}>editorDemo</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>editorDemo</Link></li>*/}
                     {/* <li><Link to="/lookThrough?auditorId=3"
                               style={{fontSize: '24px'}}>审核列表</Link></li>
                     <li><Link to="/wxLogin?lookThrough"
                               style={{fontSize: '24px'}}>审核列表(微信)</Link></li> */}
                     {/*<li><Link to="/uploadMusicList?ident=23836"*/}
-                              {/*style={{fontSize: '24px'}}>uploadMusicList</Link></li>*/}
+                    {/*style={{fontSize: '24px'}}>uploadMusicList</Link></li>*/}
                     {/* <li>
                         <Link
                             to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
@@ -302,75 +306,75 @@ class Index extends React.Component {
                     </li> */}
 
 
-                     <li>
+                    <li>
                         <Link
-                            to="/myCollection?userId=6" style={{fontSize: '24px'}}>我的收藏</Link>
+                            to="/myCollection?userId=6" style={{ fontSize: '24px' }}>我的收藏</Link>
                     </li>
                     <li>
                         <Link
-                            to="/powerList?ident=6" style={{fontSize: '24px'}}>系统权限</Link>
+                            to="/powerList?ident=6" style={{ fontSize: '24px' }}>系统权限</Link>
                     </li>
                     <li>
                         <Link
-                            to="/searchHistory?uid=5" style={{fontSize: '24px'}}>搜索</Link>
+                            to="/searchHistory?uid=5" style={{ fontSize: '24px' }}>搜索</Link>
                     </li>
                     <li>
                         <Link
-                            to="/powerAdministrate" style={{fontSize: '24px'}}>角色管理</Link>
+                            to="/powerAdministrate" style={{ fontSize: '24px' }}>角色管理</Link>
                     </li>
                     <li>
                         <Link
-                            to="/authorityManagement" style={{fontSize: '24px'}}>权限管理</Link>
+                            to="/authorityManagement" style={{ fontSize: '24px' }}>权限管理</Link>
                     </li>
                     <li>
                         <Link
                             to="/playVideo?videoId=126"
-                            style={{fontSize: '24px'}}>播放视频</Link>
+                            style={{ fontSize: '24px' }}>播放视频</Link>
                     </li>
                     <li>
                         <Link
                             to="/fileDownload?fileType=youyang"
-                            style={{fontSize: '24px'}}>文件下载youyang</Link>
+                            style={{ fontSize: '24px' }}>文件下载youyang</Link>
                     </li>
                     <li>
                         <Link
                             to="/fileDownload?fileType=littleAntTe"
-                            style={{fontSize: '24px'}}>文件下载littleAntTe</Link>
+                            style={{ fontSize: '24px' }}>文件下载littleAntTe</Link>
                     </li>
                     <li>
                         <Link
                             to="/fileDownload?fileType=littleAntSt"
-                            style={{fontSize: '24px'}}>文件下载littleAntSt</Link>
+                            style={{ fontSize: '24px' }}>文件下载littleAntSt</Link>
                     </li>
                     <li>
                         <Link
                             to="/fileDownload?fileType=littleAntFa"
-                            style={{fontSize: '24px'}}>文件下载littleAntFa</Link>
+                            style={{ fontSize: '24px' }}>文件下载littleAntFa</Link>
                     </li>
                     <li>
                         <Link
                             to="/fileDownload?fileType=elearning"
-                            style={{fontSize: '24px'}}>文件下载elearning</Link>
+                            style={{ fontSize: '24px' }}>文件下载elearning</Link>
                     </li>
                     <li>
                         <Link
                             to="/fileDownload?fileType=classroom"
-                            style={{fontSize: '24px'}}>文件下载classroom</Link>
+                            style={{ fontSize: '24px' }}>文件下载classroom</Link>
                     </li>
                     <li>
                         <Link
                             to="/mobileEditor?userId=31"
-                            style={{fontSize: '24px'}}>手机编辑器</Link>
+                            style={{ fontSize: '24px' }}>手机编辑器</Link>
                     </li>
                     <li>
                         <Link
                             to="/publishWrongQuestion?"
-                            style={{fontSize: '24px'}}>错题本</Link>
+                            style={{ fontSize: '24px' }}>错题本</Link>
                     </li>
                     <li>
                         <Link
                             to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
-                            style={{fontSize: '24px'}}>统计</Link>
+                            style={{ fontSize: '24px' }}>统计</Link>
                     </li>
                 </ul>
             </div>
@@ -381,47 +385,48 @@ class Index extends React.Component {
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
-            <IndexRoute component={Index}/>
-            <Route path="s1" component={Stage1}/>
-            <Route path="AppSystem" getComponent={AppSystem}/>
-            <Route path="articleList" getComponent={articleList}/>
-            <Route path="articleDetail" getComponent={articleDetail}/>
-            <Route path="LoginScanner" getComponent={LoginScanner}/>
-            <Route path="Login" getComponent={Login}/>
-            <Route path="EditorDemo" getComponent={EditorDemo}/>
-            <Route path="lookThrough" getComponent={lookThrough}/>
-            <Route path="WaitlookThroughDetail" getComponent={WaitlookThroughDetail}/>
-            <Route path="alreadyLookThough" getComponent={alreadyLookThough}/>
-            <Route path="AlreadylookThroughDetail" getComponent={AlreadylookThroughDetail}/>
-            <Route path="uploadMusicList" getComponent={uploadMusicList}/>
-            <Route path="addUploadMusic" getComponent={addUploadMusic}/>
-            <Route path="weArrPayment" getComponent={weArrPayment}/>
-            <Route path="addUploadVideo" getComponent={addUploadVideo}/>
-            <Route path="updateVideo" getComponent={updateVideo}/>
-            <Route path="uploadvideoList" getComponent={uploadvideoList}/>
-            <Route path="myArticleList" getComponent={myArticleList}/>
-            <Route path="myCollection" getComponent={myCollection}/>
-            <Route path="powerList" getComponent={powerList}/>
-            <Route path="searchHistory" getComponent={searchHistory}/>
-            <Route path="serachResult" getComponent={serachResult}/>
-            <Route path="myArticleList" getComponent={myArticleList}/>
-            <Route path="myCollection" getComponent={myCollection}/>
-            <Route path="powerList" getComponent={powerList}/>
-            <Route path="powerAdministrate" getComponent={powerAdministrate}/>
-            <Route path="authorityManagement" getComponent={authorityManagement}/>
-            <Route path="userAdministration" getComponent={userAdministration}/>
-            <Route path="accessManagement" getComponent={accessManagement}/>
-            <Route path="playVideo" getComponent={playVideo}/>
-            <Route path="fileDownload" getComponent={fileDownload}/>
-            <Route path="mobileEditor" getComponent={mobileEditor}/>
-            <Route path="publishWrongQuestion" getComponent={publishWrongQuestion}/>
-            <Route path="wrongQuestionCount" getComponent={wrongQuestionCount}/>
-            <Route path="themeTask" getComponent={themeTask}/>
-            <Route path="themeTaskDetail" getComponent={themeTaskDetail}/>
-            <Route path="selectedPeople" getComponent={selectedPeople}/>
-            <Route path="myThemeTask" getComponent={myThemeTask}/>
-            <Route path="topicWrongList" getComponent={topicWrongList}/>
-            <Route path="wxLogin" getComponent={wxLogin}/>
+            <IndexRoute getComponent={welcome} />
+            <Route path="s1" component={Stage1} />
+            <Route path="AppSystem" getComponent={AppSystem} />
+            <Route path="articleList" getComponent={articleList} />
+            <Route path="articleDetail" getComponent={articleDetail} />
+            <Route path="LoginScanner" getComponent={LoginScanner} />
+            <Route path="Login" getComponent={Login} />
+            <Route path="EditorDemo" getComponent={EditorDemo} />
+            <Route path="lookThrough" getComponent={lookThrough} />
+            <Route path="WaitlookThroughDetail" getComponent={WaitlookThroughDetail} />
+            <Route path="alreadyLookThough" getComponent={alreadyLookThough} />
+            <Route path="AlreadylookThroughDetail" getComponent={AlreadylookThroughDetail} />
+            <Route path="uploadMusicList" getComponent={uploadMusicList} />
+            <Route path="addUploadMusic" getComponent={addUploadMusic} />
+            <Route path="weArrPayment" getComponent={weArrPayment} />
+            <Route path="addUploadVideo" getComponent={addUploadVideo} />
+            <Route path="updateVideo" getComponent={updateVideo} />
+            <Route path="uploadvideoList" getComponent={uploadvideoList} />
+            <Route path="myArticleList" getComponent={myArticleList} />
+            <Route path="myCollection" getComponent={myCollection} />
+            <Route path="powerList" getComponent={powerList} />
+            <Route path="searchHistory" getComponent={searchHistory} />
+            <Route path="serachResult" getComponent={serachResult} />
+            <Route path="myArticleList" getComponent={myArticleList} />
+            <Route path="myCollection" getComponent={myCollection} />
+            <Route path="powerList" getComponent={powerList} />
+            <Route path="powerAdministrate" getComponent={powerAdministrate} />
+            <Route path="authorityManagement" getComponent={authorityManagement} />
+            <Route path="userAdministration" getComponent={userAdministration} />
+            <Route path="accessManagement" getComponent={accessManagement} />
+            <Route path="playVideo" getComponent={playVideo} />
+            <Route path="fileDownload" getComponent={fileDownload} />
+            <Route path="mobileEditor" getComponent={mobileEditor} />
+            <Route path="publishWrongQuestion" getComponent={publishWrongQuestion} />
+            <Route path="wrongQuestionCount" getComponent={wrongQuestionCount} />
+            <Route path="themeTask" getComponent={themeTask} />
+            <Route path="themeTaskDetail" getComponent={themeTaskDetail} />
+            <Route path="selectedPeople" getComponent={selectedPeople} />
+            <Route path="myThemeTask" getComponent={myThemeTask} />
+            <Route path="topicWrongList" getComponent={topicWrongList} />
+            <Route path="wxLogin" getComponent={wxLogin} />
+            <Route path="welcome" getComponent={welcome} />
         </Route>
     </Router>
     ,

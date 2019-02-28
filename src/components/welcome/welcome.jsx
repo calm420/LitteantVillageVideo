@@ -1,4 +1,5 @@
 import React from "react";
+import './welcome.less';
 export default class welcome extends React.Component {
     constructor(props) {
         super(props);
@@ -13,7 +14,7 @@ export default class welcome extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id='welcome'>
                 欢迎进入小蚂蚁
             </div>
         )

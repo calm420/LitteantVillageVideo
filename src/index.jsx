@@ -385,6 +385,7 @@ class Index extends React.Component {
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
+            {/* <IndexRoute component={Index} /> */}
             <IndexRoute getComponent={welcome} />
             <Route path="s1" component={Stage1} />
             <Route path="AppSystem" getComponent={AppSystem} />

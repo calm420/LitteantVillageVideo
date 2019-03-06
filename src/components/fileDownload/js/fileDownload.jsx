@@ -10,28 +10,29 @@ export default class Demo extends React.Component {
         this.state = {
             phone: 'IOS',
             androidUrl: '',
-            flag:false
+            flag: false
         };
     }
     componentWillMount() {
-        var  _this = this;
+        var _this = this;
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var fileType = searchArray[0].split('=')[1];
-        var pType = searchArray[1].split('=')[1];
+        var pType = searchArray[1] ? searchArray[1].split('=')[1] : "";
         var phoneType = navigator.userAgent;
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             this.setState({ phone: 'IOS' }, () => {
+                console.log(pType)
                 if (this.state.phone == "IOS" && pType == 0) {
-                    _this.setState({flag:true})
+                    _this.setState({ flag: true })
                     _this.buildTitle(fileType)
                 }
             })
         } else {
-            this.setState({ phone: 'Android' },  ()=> {
+            this.setState({ phone: 'Android' }, () => {
                 if (this.state.phone == "Android" && pType == 1) {
-                    _this.setState({flag:true})
+                    _this.setState({ flag: true })
                     _this.buildTitle(fileType)
                     _this.getAppEwmPath(fileType)
                 }
@@ -240,42 +241,42 @@ export default class Demo extends React.Component {
     }
 
     render() {
-        if (imgNameTe == 'abc' ) {
+        if (imgNameTe == 'abc') {
             return (
-                <div style={{backgroundColor:'#fff',width:'100%',height:'100%'}}>
-                    <div className='emptyDiv_fileDown'  style={{display:this.state.flag ? "none":""}}>
-                        <img src={require("../img/empty_div.png")}/>
+                <div style={{ backgroundColor: '#fff', width: '100%', height: '100%' }}>
+                    <div className='emptyDiv_fileDown' style={{ display: this.state.fileType == "classroom" ? (this.state.flag ? "none" : "") : "none" }}>
+                        <img src={require("../img/empty_div.png")} />
                         请扫描{
                             this.state.phone == "IOS" ? "IOS" : "Android"
-                    }二维码下载
+                        }二维码下载
                     </div>
-                    <div id='fileDownload' style={{display:this.state.flag ? "":"none"}} className={this.state.fileType}>
-                        <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    <div id='fileDownload' style={{ display: this.state.fileType == "classroom" ? (this.state.flag ? "" : "none") : "" }} className={this.state.fileType}>
+                        <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
                         {this.state.titleDiv}
                         <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                             <span>免费下载{this.state.phone}版</span></div>
                         <div className='bottomImg'><img
-                            src={require('../img/bottomImg_' + imgName + '.png')} alt=""/></div>
+                            src={require('../img/bottomImg_' + imgName + '.png')} alt="" /></div>
                     </div>
                 </div>
 
             );
         } else {
             return (
-                <div style={{backgroundColor:'#fff',width:'100%',height:'100%'}}>
-                    <div className='emptyDiv_fileDown' style={{display:this.state.flag ? "none":""}}>
-                        <img src={require("../img/empty_div.png")}/>
+                <div style={{ backgroundColor: '#fff', width: '100%', height: '100%' }}>
+                    <div className='emptyDiv_fileDown' style={{ display: this.state.fileType == "classroom" ? (this.state.flag ? "none" : "") : "none" }}>
+                        <img src={require("../img/empty_div.png")} />
                         请扫描{
-                        this.state.phone == "IOS" ? "IOS" : "Android"
+                            this.state.phone == "IOS" ? "IOS" : "Android"
                         }二维码下载
                     </div>
-                    <div id='fileDownload' style={{display:this.state.flag ? "":"none"}} className={this.state.fileType}>
-                        <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt=""/></div>
+                    <div id='fileDownload' style={{ display: this.state.fileType == "classroom" ? (this.state.flag ? "" : "none") : "" }} className={this.state.fileType}>
+                        <div className='topImg'><img src={require('../img/topImg_' + imgName + '.png')} alt="" /></div>
                         {this.state.titleDiv}
                         <div className={this.state.phone + ' downBtn'} onClick={this.downLoadFile}>
                             <span>免费下载{this.state.phone}版</span></div>
                         <div className='bottomImg'><img
-                            src={require('../img/bottomImg_' + imgNameTe + '.png')} alt=""/></div>
+                            src={require('../img/bottomImg_' + imgNameTe + '.png')} alt="" /></div>
                     </div>
                 </div>
 

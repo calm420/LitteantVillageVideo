@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory, IndexRoute, Link } from 'react-router';
 import App from './components/App';
 import Stage1 from './components/Stage1';
+import "./helpers/webServiceUtil";
 
 const AppSystem = (location, cb) => {
     require.ensure([], require => {
@@ -262,7 +263,7 @@ import './index.less';
 
 class Index extends React.Component {
 
-    render() {
+    render () {
         return (
             <div className="body">
                 {/* <h1>Stages list</h1> */}
@@ -385,8 +386,13 @@ class Index extends React.Component {
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
-            {/* <IndexRoute component={Index} /> */}
-            <IndexRoute getComponent={welcome} />
+            {
+                isSafeDebug ?
+                    <IndexRoute component={Index} />
+                    :
+                    <IndexRoute getComponent={welcome} />
+            }
+           
             <Route path="s1" component={Stage1} />
             <Route path="AppSystem" getComponent={AppSystem} />
             <Route path="articleList" getComponent={articleList} />

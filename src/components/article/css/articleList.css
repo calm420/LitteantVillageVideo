@@ -95,8 +95,8 @@
   display: inline-block;
   vertical-align: top;
   text-align: right;
-  background-size: 100%;
-  background-position-y: center;
+  background-size: cover;
+  background-position-y: center center;
 }
 #articleList .rightBox img {
   height: 100%;

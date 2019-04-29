@@ -8,6 +8,7 @@
       position: relative;
       width: calc(~"100% - 40px");
       padding-left: 15px;
+      box-sizing: border-box;
       .tags {
         display: inline-block;
         position: absolute;
@@ -44,6 +45,7 @@
       }
       .list_bottom {
         padding: 0px 24px 0 0;
+        align-items: center;
         margin-top: 0;
         position: relative;
         display: -webkit-box;
@@ -362,6 +364,8 @@
       height: calc(~"100% - 45px");
       overflow-y: auto;
       overflow-x: hidden;
+      padding-bottom: 15px;
+      box-sizing: border-box;
     }
     .filterFooter{
       height: 45px;
@@ -416,6 +420,8 @@
     }
   .grayBg .course-init{
     background-color: #f5f5f5;
+    border: 0;
+    line-height: 30px;
   }
     .am-list-header{
       background: #fff;
@@ -687,6 +693,24 @@
       font-size: 16px;
       margin-left: -6.5px;
     }
+  .bottomIcon{
+    height: 35px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+  }
+  .myPhoto{
+    align-items: center;
+    img{
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    span{
+      padding-left: 10px;
+      color: #666;
+      font-size: 13px;
+    }
+  }
   }
   .close-btn{
     position: absolute;

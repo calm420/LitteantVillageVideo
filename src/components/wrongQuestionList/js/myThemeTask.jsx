@@ -846,10 +846,6 @@ export default class myThemeTask extends React.Component {
                             className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
                         <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月
                         </div>
-                        <div>
-                            <img src={rowData.userInfo.avatar} alt=""/>
-                            <span>{rowData.userInfo.userName}</span>
-                        </div>
                     </div>
                     <div className="circleList" style={
                         this.state.targetType == 1 ? { width: '100%' } : {}
@@ -911,17 +907,23 @@ export default class myThemeTask extends React.Component {
                             <div>发布时间:{this.timeDifference(rowData.createTime)}</div>
                             <div className="deadline-line">截止时间:{WebServiceUtil.formatAllTime(rowData.endTime)}</div>
                         </div>
-                        <div className="list_bottom">
-                            {/*<div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>*/}
-                            <div className="list_bottom_item"><i
-                                className="i-comments"></i><span>{rowData.disContent}</span></div>
-                            <div className="list_bottom_item"><i
-                                className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
+                        <div className="my_flex bottomIcon">
+                            <div className='myPhoto my_flex'>
+                                <img src={rowData.userInfo.avatar} alt=""/>
+                                <span className='text_hidden'>{rowData.userInfo.userName}</span>
                             </div>
-                            {/*<div style={*/}
-                            {/*    this.state.isHidden ? { display: 'none' } : { display: 'block' }*/}
-                            {/*} className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>*/}
-                            {/*    <i className="i-delete"></i></div>*/}
+                            <div className="list_bottom">
+                                {/*<div className="list_bottom_item" onClick={this.toShare}><i className="i-share"></i></div>*/}
+                                <div className="list_bottom_item"><i
+                                    className="i-comments"></i><span>{rowData.disContent}</span></div>
+                                <div className="list_bottom_item"><i
+                                    className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
+                                </div>
+                                {/*<div style={*/}
+                                {/*    this.state.isHidden ? { display: 'none' } : { display: 'block' }*/}
+                                {/*} className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>*/}
+                                {/*    <i className="i-delete"></i></div>*/}
+                            </div>
                         </div>
                     </div>
                 </div>

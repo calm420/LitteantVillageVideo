@@ -96,14 +96,42 @@ export default class ReadPanel extends React.Component {
                 this.updateArticleInfo(article.title, article.content, article.author, article.type, imageList, newAttachMents);
             } else if (iframeData.method == 'openPrieview') {
                 this.props.setPanel('openPrieview', iframeData.response);
-            }else if(iframeData.method == 'exit_editor'){
+            } else if (iframeData.method == 'exit_editor') {
                 console.log('取消编辑');
                 this.setState({
                     writeFlag: false
-                },()=>{
+                }, () => {
                     this.props.submit('exit_editor', '000')
                 })
 
+            } else if (iframeData.method == 'sublit_watch') {
+                var article = iframeData.article;
+                var imageList = [];
+                var attacheMents = article.attacheMents;
+                var newAttachMents = [];
+                for (var k in attacheMents) {
+                    newAttachMents.push({
+                        userId: _this.state.userId,
+                        type: attacheMents[k].type == 'image' ? 0 : 1,
+                        path: attacheMents[k].path,
+                        coverPath: attacheMents[k].cover,
+                        isCover: attacheMents[k].isMainCover,
+                        articleId: _this.state.artId,
+                        attachmentId: attacheMents[k].attachmentId || -1,
+                    })
+
+                    if (attacheMents[k].isMainCover) {
+                        imageList.push(attacheMents[k].cover);
+
+                    }
+                }
+
+                if (iframeData.topSrc) {
+                    this.updateWatchArticleInfoIsTop(iframeData.topSrc)
+                }
+
+                // refresh
+                this.updateWatchArticleInfo(article.title, article.content, article.author, article.isDiscuss, article.type, imageList, newAttachMents);
             }
             // else if(labelData.method == 'closePrieview'){
             //     console.log('关闭遮罩层');
@@ -262,6 +290,55 @@ export default class ReadPanel extends React.Component {
     //     });
     // }
 
+    updateWatchArticleInfoIsTop(src) {
+
+        var param = {
+            "method": 'updateWatchArticleInfoIsTop',
+            "articleId": this.state.artId,
+            "isTop": -1,
+            "cover": src,
+        };
+        console.log(param);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'result');
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+
+    }
+
+    updateWatchArticleInfo(title, html, author, isDiscuss, type, imgArray, articleAttachments) {
+        var param = {
+            "method": 'updateArticleInfo',
+            "articleId": this.state.artId,
+            "articleTitle": title,
+            "articleContent": html,
+            "status": type,
+            "isDiscuss": isDiscuss,
+            "author": author,
+            "articleAttachments": JSON.stringify(articleAttachments)
+        };
+        console.log(param);
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'result');
+                if (result.success) {
+                    Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
+                    this.initEditor();
+                    this.props.submit(0)
+                } else {
+                    Toast.fail("保存/发布失败");
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
     updateArticleInfo(title, html, author, type, imgArray, articleAttachments) {
         var param = {
             "method": 'updateArticleInfo',
@@ -274,7 +351,6 @@ export default class ReadPanel extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,'result');
                 if (result.success) {
                     Toast.info(type == 0 ? '保存成功' : '发布成功', 0.5)
                     this.initEditor();
@@ -545,8 +621,8 @@ export default class ReadPanel extends React.Component {
                             {/*bounds={'.app'}*/}
                             {/*/>*/}
 
-                            {/*<iframe id="iframe_box" src="https://192.168.50.186:6443/richText/" frameborder="0">*/}
-                            <iframe id="iframe_box" src="https://www.maaee.com:6443/richText/" frameborder="0">
+                            <iframe id="iframe_box" src="http://47.93.156.90:6443/richText/" frameborder="0">
+                                {/*<iframe id="iframe_box" src="https://www.maaee.com:6443/richText/" frameborder="0">*/}
                             </iframe>
 
                             {/*<iframe id="iframe_box" src="https://www.maaee.com:6443/richText/"

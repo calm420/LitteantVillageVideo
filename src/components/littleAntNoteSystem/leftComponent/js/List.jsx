@@ -77,7 +77,7 @@ export default class List extends React.Component {
             case 'exit_editor':
                 this.setState({
                     editorId: null,
-                },()=>{
+                }, () => {
                     this.refresh(this.state.tabsIndex);
                 });
                 break;
@@ -88,7 +88,7 @@ export default class List extends React.Component {
     }
 
 
-    getListData(type) {  //0  1
+    getListData(type) {  //0  1   3
         var param = {
             "method": 'getArticleInfoListByStatus',
             "userId": JSON.parse(sessionStorage.getItem("loginUser")).uid,
@@ -104,7 +104,7 @@ export default class List extends React.Component {
                             dataSourceForDraft: dataSource.cloneWithRows(this.initDataSourceForDraft),
                             isLoadingLeftForDraft: false,
                             hasMoreForDraft: false,
-                        })
+                        });
                         if (result.response.length == 0) {
                             this.setState({
                                 hasMoreForDraft: true
@@ -202,7 +202,7 @@ export default class List extends React.Component {
         var param = {
             "method": 'deleteArticleInfoByType',
             "articleIds": id,
-            "status": Math.abs(this.state.tabsIndex - 1),
+            "status": status,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -241,20 +241,25 @@ export default class List extends React.Component {
 
     render() {
         const row = (rowData) => {
-            // console.log(rowData);
+            console.log(rowData.isTop, 'XXX');
             return (
                 <div style={
                     this.state.editorId == rowData.articleId ? {background: "#E8F1FF"} : {}
-                } className="row">
+                } className={rowData.isTop == -1 ? 'row Roof-placement' : 'row'}>
                     <div className="title">
                         <span className="title_text text_hidden">{rowData.articleTitle}</span>
-                        <span className={rowData.auditInfo?rowData.auditInfo.isPass == 1?'title_state state_through':rowData.auditInfo.auditId==0?'title_state state_noAudit':'title_state state_noThrough':'title_state state_noAudit'}>
+                        <span className="title_state state_watch"
+                              style={{display: rowData.status == 3 ? '' : 'none'}}>手表文章</span>
+                        <span
+                            style={{display: rowData.status == 3 ? 'none' : ''}}
+                            className={rowData.auditInfo ? rowData.auditInfo.isPass == 1 ? 'title_state state_through' : rowData.auditInfo.auditId == 0 ? 'title_state state_noAudit' : 'title_state state_noThrough' : 'title_state state_noAudit'}>
                         <i className='i_title_state'></i>
-                            {rowData.auditInfo?rowData.auditInfo.isPass == 1?'审核通过':rowData.auditInfo.auditId==0?'待审核':'未通过':'待审核'}
+                            {rowData.auditInfo ? rowData.auditInfo.isPass == 1 ? '审核通过' : rowData.auditInfo.auditId == 0 ? '待审核' : '未通过' : '待审核'}
                             <span className="state-tips">
                                 <i className='state-tipArrow'></i>
                                 <div>未通过原因：</div>
-                                <div  className="tips-text">{rowData.auditInfo && rowData.auditInfo.isPass == 0?rowData.auditInfo.auditMark:'无'}</div>
+                                <div
+                                    className="tips-text">{rowData.auditInfo && rowData.auditInfo.isPass == 0 ? rowData.auditInfo.auditMark : '无'}</div>
                             </span>
                         </span>
                     </div>
@@ -264,10 +269,15 @@ export default class List extends React.Component {
                             <div className="operBox" style={
                                 this.state.showOperId == rowData.articleId ? {display: 'inline-block'} : {display: 'none'}
                             }>
-                                <div className="operBox_row" onClick={this.openEditor.bind(this, rowData.articleId)}><i
-                                    className="menu_edit"></i><span>编辑</span></div>
-                                <div className="operBox_row" onClick={this.deleteArticle.bind(this, rowData.articleId)}>
-                                    <i className="menu_del"></i><span>删除</span></div>
+                                <div className="operBox_row" onClick={this.openEditor.bind(this, rowData.articleId)}>
+                                    {/*<i className="menu_edit"></i>*/}<span>编辑</span></div>
+                                <div className="operBox_row"
+                                     onClick={this.deleteArticle.bind(this, rowData.articleId, rowData.status)}>
+                                    {/*<i className="menu_del"></i>*/}<span>删除</span></div>
+                                <div style={{display: (rowData.status == 3 && rowData.isTop == -1) ? '' : 'none'}}
+                                     className="operBox_row"
+                                     onClick={this.updateWatchArticleInfoIsTop.bind(this, rowData.articleId)}>
+                                    {/*<i className="menu_Roof-placement"></i>*/}<span>取消置顶</span></div>
                             </div>
                         </button>
                     </div>
@@ -288,11 +298,12 @@ export default class List extends React.Component {
                             }>
                                 <div className="operBox_row" onClick={this.openEditor.bind(this, rowData.articleId)}><i
                                     className="menu_edit"></i><span>编辑</span></div>
-                                <div className="operBox_row" onClick={this.deleteArticle.bind(this, rowData.articleId)}>
+                                <div className="operBox_row"
+                                     onClick={this.deleteArticle.bind(this, rowData.articleId, rowData.status)}>
                                     <i className="menu_del"></i><span>删除</span></div>
                             </div>
                         </button>
-                    </div>
+                    </div>cle
                 </div>
             )
         };

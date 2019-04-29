@@ -125,7 +125,7 @@ export default class AppSystem extends React.Component {
         this.setState({
             tabsIndex: index
         })
-      
+
 
     }
 
@@ -147,7 +147,7 @@ export default class AppSystem extends React.Component {
                 >
                     <div className="changeTabs" style={
                         this.state.tabsIndex == 0 ? {background: '#2E68CD'} : {paddingBottom:'5px'}
-                    } data-index={0} onClick={this.changeTabsIndex.bind(this, 0)}><span className="icon-menu icon-Media"></span>校园自媒体
+                    } data-index={0} onClick={this.changeTabsIndex.bind(this, 0)}><span className="icon-menu icon-Media"></span>自媒体
                         {_this.state.flag == 1 ? <i></i> :"" }
                     </div>
                     <div className="changeTabs" style={

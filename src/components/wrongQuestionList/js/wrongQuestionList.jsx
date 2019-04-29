@@ -25,7 +25,8 @@ export default class wrongQuestionList extends React.Component {
             dataList: [
 
             ],
-            classId: []
+            classId: [],
+            showEmpty: false
         }
     }
 
@@ -73,7 +74,7 @@ export default class wrongQuestionList extends React.Component {
     }
 
     /**
-     * 获取评论列表
+     * 
      * **/
     getClazzesByAccount (userId) {
         var param = {
@@ -82,19 +83,27 @@ export default class wrongQuestionList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi9006(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, '评论列表');
-                var arr = [];
-                result.response.forEach((v, i) => {
-                    console.log(v, "v")
-                    arr.push({
-                        value: v.id,
-                        label: v.grade.name + v.name
-                    })
-                })
-                this.setState({
-                    dataList: arr
-                })
-                console.log(arr, "arr")
+                if (result.success) {
+                    if (result.response.length == 0) {
+                        this.setState({
+                            showEmpty: true
+                        })
+                    } else {
+                        var arr = [];
+                        result.response.forEach((v, i) => {
+                            console.log(v, "v")
+                            arr.push({
+                                value: v.id,
+                                label: v.grade.name + v.name
+                            })
+                        })
+                        this.setState({
+                            dataList: arr
+                        })
+                    }
+                }
+
+
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -130,6 +139,9 @@ export default class wrongQuestionList extends React.Component {
     render () {
         return (
             <div id="wrongQuestionList" style={{ height: document.body.clientHeight }}>
+                <div style={{ display: this.state.showEmpty ? "block" : "none" }}>
+                    空页面
+                </div>
                 <List>
                     {this.state.dataList.map((v, i) => (
                         <CheckboxItem key={v.value} onChange={(checked) => this.onSelectChange(checked, v, i)}>

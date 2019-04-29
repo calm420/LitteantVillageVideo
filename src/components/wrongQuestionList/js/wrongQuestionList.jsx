@@ -89,6 +89,9 @@ export default class wrongQuestionList extends React.Component {
                             showEmpty: true
                         })
                     } else {
+                            this.setState({
+                                showEmpty:false
+                            })
                         var arr = [];
                         result.response.forEach((v, i) => {
                             console.log(v, "v")

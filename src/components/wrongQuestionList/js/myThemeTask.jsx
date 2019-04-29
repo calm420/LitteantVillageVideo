@@ -199,6 +199,10 @@ export default class myThemeTask extends React.Component {
                         this.setState({
                             showEmpty:true
                         })
+                    }else {
+                        this.setState({
+                            showEmpty:false
+                        })
                     }
                     var exportIdArray = this.state.exportIdArray;
                     this.state.rsCount = result.pager.rsCount;
@@ -806,6 +810,7 @@ export default class myThemeTask extends React.Component {
     }
 
     render () {
+        console.log(this.state.showEmpty,"")
         var createTime = null;
         const row = (rowData, sectionID, rowID) => {
             var tagClass = '';
@@ -948,37 +953,34 @@ export default class myThemeTask extends React.Component {
                     <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt=""/>
                     <div>暂无数据</div>
                 </div>
+                <div className='am-list-header'>
+                    <div style={
+                        this.state.exportFlag ? { display: 'none' } : { display: 'block' }
+                    }>
+                        <button className="filter-btn" onClick={this.setFilter}><i
+                            className="icon-screening"></i><span>筛选</span></button>
+                        <button><i className="icon-statistical"></i><span onClick={this.toCount}>统计</span>
+                        </button>
+                        <button className='export-btn' onClick={this.setExport}><i
+                            className="icon-print"></i><span>打印</span></button>
+                    </div>
+                    <div className="export-header" style={
+                        this.state.exportFlag ? { display: 'block' } : { display: 'none' }
+                    }>
+                        <div style={{ display: 'inline-block' }}>
+                            <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
+                                   type="checkbox" /><span>全选</span></div>
+                        <button className='export-btn Btn-bor-blue close-btn ' onClick={this.exportTopic}>导出</button>
+                        <button className='Btn-bor-blue  Btn-right' onClick={this.closeExport}>取消</button>
+
+                        {/*<button onClick={this.closeExport}>取消</button>*/}
+                    </div>
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                    renderHeader={sectionData => (
-                        <div>
-                            <div style={
-                                this.state.exportFlag ? { display: 'none' } : { display: 'block' }
-                            }>
-                                <button className="filter-btn" onClick={this.setFilter}><i
-                                    className="icon-screening"></i><span>筛选</span></button>
-                                <button><i className="icon-statistical"></i><span onClick={this.toCount}>统计</span>
-                                </button>
-                                <button className='export-btn' onClick={this.setExport}><i
-                                    className="icon-print"></i><span>打印</span></button>
-                            </div>
-                            <div className="export-header" style={
-                                this.state.exportFlag ? { display: 'block' } : { display: 'none' }
-                            }>
-                                <div style={{ display: 'inline-block' }}>
-                                    <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
-                                        type="checkbox" /><span>全选</span></div>
-                                <button className='export-btn Btn-bor-blue close-btn ' onClick={this.exportTopic}>导出</button>
-                                <button className='Btn-bor-blue  Btn-right' onClick={this.closeExport}>取消</button>
-
-                                {/*<button onClick={this.closeExport}>取消</button>*/}
-                            </div>
-                        </div>
-
-                    )}
                     renderFooter={() => (
-                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
+                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center', }}>
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}
                     renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -991,7 +993,8 @@ export default class myThemeTask extends React.Component {
                     initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
-                        height: document.body.clientHeight
+                        height: document.body.clientHeight - 45,
+                        display:this.state.showEmpty ? "none":"block"
                     }}
                     pullToRefresh={<PullToRefresh
                         onRefresh={this.onRefresh.bind(this, 'rightright')}
@@ -1056,7 +1059,7 @@ export default class myThemeTask extends React.Component {
                         <div>
                             <div className="filter-header">标签</div>
                             <div style={{ display: 'flex' }} className="filterCont grayBg">
-                                <span className='course-init' onClick={this.showTagModal}>{this.state.tagValue}</span>
+                                <span className={this.state.tagValue == '请输入标签' ? 'course-init textGray' : 'course-init'} onClick={this.showTagModal}>{this.state.tagValue}</span>
                                 {/* {
                                     this.state.tagData.map(function (value, index) {
                                         return <span
@@ -1069,7 +1072,7 @@ export default class myThemeTask extends React.Component {
                         <div>
                             <div className="filter-header">学生姓名</div>
                             <div  style={{ display: 'flex' }} className="filterCont grayBg">
-                                <span className='course-init' onClick={this.showStuNameModal}>{this.state.stuName}</span>
+                                <span className={this.state.stuName == '请输入学生姓名' ? 'course-init textGray' : 'course-init'} onClick={this.showStuNameModal}>{this.state.stuName}</span>
                             </div>
                         </div>
                     </div>

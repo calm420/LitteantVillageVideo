@@ -565,6 +565,7 @@
 }
 #wrongQuestionListDetail .month-select {
   position: relative;
+  min-height: 100px;
 }
 #wrongQuestionListDetail .month-select input[type="checkbox"] {
   -webkit-appearance: none;

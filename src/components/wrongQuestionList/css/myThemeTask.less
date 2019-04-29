@@ -1,0 +1,694 @@
+#myThemeTask {
+    /*解决listview高度无法撑开的关键*/
+    .am-pull-to-refresh-content-wrapper {
+      min-height: 100vh;
+    }
+  
+    .circleList {
+      position: relative;
+      width: calc(~"100% - 40px");
+      padding-left: 15px;
+      .tags {
+        display: inline-block;
+        position: absolute;
+        right: 14px;
+        top: -6px;
+      }
+      .tag-ThemeTask {
+        background: url("../images/tag-ThemeTask.png") no-repeat;
+        background-size: 100% 100%;
+        width: 75px;
+        height: 21px;
+        display: inline-block;
+      }
+      .tag-WrongTopic {
+        width: 75px;
+        height: 21px;
+        display: inline-block;
+      }
+      .tag-WrongTopic-red {
+        background: url("../images/tag-WrongTopic-red.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .tag-WrongTopic-orange {
+        background: url("../images/tag-WrongTopic-orange.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .tag-WrongTopic-green {
+        background: url("../images/tag-WrongTopic-green.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .tag-WrongTopic-yellow {
+        background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .list_bottom {
+        padding: 0px 24px 0 0;
+        margin-top: 0;
+        position: relative;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        height: 35px;
+        line-height: 35px;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        box-sizing: border-box;
+        &:after {
+          content: '';
+          position: absolute;
+          background-color: #fff;
+          display: block;
+          z-index: 1;
+          top: auto;
+          right: 15px;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 1PX;
+          -webkit-transform-origin: 0 0;
+          -ms-transform-origin: 0 0;
+          transform-origin: 0 0;
+          -webkit-transform: scaleY(0.5);
+          -ms-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+        }
+      }
+    }
+    .list_item {
+      margin-top: 0;
+      border-top: 10px solid #f4f4f4;
+      padding: 15px 15px 0 0;
+      &:first-child {
+        border-top: 0;
+      }
+      .list_head {
+        height: 40px;
+        margin-bottom: 13px;
+        .headPic {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          float: left;
+          margin-right: 10px;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+        .userName {
+          display: inline-block;
+          color: #333;
+          font-size: 15px;
+          line-height: 1.6;
+        }
+        .createTime {
+          display: inline-block;
+          color: #999;
+          font-size: 13px;
+          line-height: 1.6;
+        }
+      }
+      .list_image {
+        margin-top: 10px;
+        width: 354px;
+  
+        img {
+          width: 110px;
+          height: 110px;
+          object-fit: cover;
+          border-radius: 2px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+          vertical-align: middle;
+        }
+        .video_tag {
+          position: relative;
+          width: 110px;
+          height: 110px;
+          overflow: hidden;
+          border-radius: 2px;
+          margin-right: 8px;
+          margin-bottom: 8px;
+          vertical-align: middle;
+          display: inline-block;
+          video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+          .video_tag_play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            background: url("../images/play-btn.png") no-repeat;
+            background-size: 100% 100%;
+  
+          }
+        }
+      }
+      @media screen and (min-width: 700px) {
+        .list_image, .image_detail {
+          width: 354px;
+          img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 2px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            vertical-align: middle;
+          }
+          .video_tag {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            overflow: hidden;
+            border-radius: 2px;
+            margin-right: 8px;
+            display: inline-block;
+            margin-bottom: 8px;
+            vertical-align: middle;
+          }
+        }
+        .date + .circleList .list_image{
+          width: 354px;
+        }
+      }
+      @media (max-width: 360px) and (min-width: 340px) {
+        .list_image, .image_detail {
+          width:auto;
+          margin-right: -15px;
+          img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 2px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            vertical-align: middle;
+          }
+          .video_tag {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 2px;
+            margin-right: 8px;
+            display: inline-block;
+            margin-bottom: 8px;
+            vertical-align: middle;
+          }
+        }
+      }
+      @media (max-width: 339px) {
+        .list_image, .image_detail {
+          width:auto;
+          margin-right: -15px;
+          img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 2px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            vertical-align: middle;
+          }
+          .video_tag {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            overflow: hidden;
+            border-radius: 2px;
+            margin-right: 8px;
+            display: inline-block;
+            margin-bottom: 8px;
+            vertical-align: middle;
+          }
+        }
+      }
+      .list_bottom_item {
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        color: #888;
+        padding: 5px 0px;
+        height: 25px;
+        line-height: 1.6;
+        box-sizing: border-box;
+        i {
+          width: 15px;
+          height: 15px;
+          display: inline-block;
+        }
+        .i-share {
+          background: url("../images/share.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .i-comments {
+          background: url("../images/comments.png") no-repeat;
+          background-size: 100% 100%;
+          width: 16px;
+          height: 14px;
+        }
+        .i-praise {
+          background: url("../images/praise.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .i-praise.i-praise-active {
+          background: url("../images/praiseActive.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .i-delete {
+          background: url("../images/icon_delete_power.png") no-repeat;
+          background-size: 100% 100%;
+        }
+  
+        span {
+          position: relative;
+          left: 5px;
+          top: -2px;
+        }
+      }
+      &:first-child {
+        margin-top: 15px;
+      }
+      &:last-child .circleList {
+        border-bottom: none;
+      }
+    }
+    .list_content {
+      color: #333;
+      font-size: 16px;
+      line-height: 20px;
+      word-wrap: break-word;
+    }
+    .time {
+      font-size: 13px;
+      color: #666;
+      & > div {
+        padding-top: 8px;
+      }
+    }
+    .date {
+      padding-left: 15px;
+      width: 40px;
+      min-width: 40px;
+      box-sizing: border-box;
+      .day {
+        color: #333;
+        font-size: 20px;
+      }
+      .mouth {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+      }
+    }
+    .i-praise-active {
+      background: url("../images/praiseActive.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .i-praise-active + span {
+      color: #e5352b;
+    }
+    .filter-content{
+      width: 90%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: white;
+      z-index: 11;
+      transition: 0.5s;
+      color: #333;
+    }
+    .mask{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: black;
+      z-index: 10;
+      opacity: 0.4;
+    }
+    .export-btn{
+      //position: absolute;
+      //bottom: 0;
+      //left: 50%;
+      //transform: translateX(-50%);
+    }
+    .filter-header{
+      font-size: 15px;
+      padding: 0 15px;
+      margin: 25px 0px 5px 0
+    }
+    .filterCont{
+      padding: 0 15px;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .filter-info{
+      height: calc(~"100% - 45px");
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .filterFooter{
+      height: 45px;
+      //position: absolute;
+      //bottom: 0px;
+      //left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 17px;
+      z-index: 0;
+      button{
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        border-width: 0;
+        box-shadow:0px -2px 2px 0px rgba(0,0,0,0.04);
+        color: #666;
+        background: #fff;
+      }
+      button.blueBtn{
+        background:#558FF5;
+        color: #fff;
+        box-shadow: none;
+      }
+    }
+    .course-init,.time-init,.mastery-init,.tag-init{
+      border: 1px solid #AEAEAE;
+      padding:0 15px;
+      margin-right: 10px;
+      border-radius: 2px;
+      color: #666;
+      margin-top: 10px;
+      line-height: 28px;
+      box-sizing: border-box;
+    }
+    .course-active,.time-active,.mastery-active,.tag-active{
+      border: 1px solid #558FF5;
+      padding:0 15px;
+      margin-right: 10px;
+      margin-top: 10px;
+      background: #558FF5;
+      border-radius: 2px;
+      color: #fff;
+      line-height: 28px;
+      box-sizing: border-box;
+    }
+    .am-list-header{
+      background: #fff;
+      color: #666;
+      font-size: 15px;
+      padding: 10px 15px 10px 15px;
+      position: relative;
+      button{
+        padding: 0;
+        border: none;
+        background: transparent;
+        i{
+          width: 22px;
+          height: 22px;
+          display: inline-block;
+          position: relative;
+          top: 3px;
+        }
+        span{
+          position: relative;
+          top: -3px;
+          margin-left: 2px;
+        }
+        .icon-print{
+          background: url("../images/icon-print.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .icon-screening{
+          background: url("../images/icon-screening.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .icon-statistical{
+          background: url("../images/icon-statistical.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .filter-btn{
+        position: absolute;
+        right: 15px;
+      }
+      .export-btn{
+        margin-left: 20px
+      }
+  
+    }
+    .export-header{
+      height: 25px;
+      color: #333;
+      font-size: 16px;
+      line-height: 25px;
+      .Btn-bor-blue{
+        background: #fff !important;
+        color: #4285F4;
+        border: 1px #4285F4 solid !important;
+        padding: 5px 13px !important;
+        border-radius: 4px;
+        font-size: 15px;
+        line-height: 14px;
+        box-sizing: border-box;
+      }
+      .Btn-right{
+        position: absolute;
+        right: 15px;
+        top: 10px;
+      }
+      input[type="checkbox"] {
+        -webkit-appearance: none;  /*清除复选框默认样式*/
+        background: #fff url(../images/input-blue1.png);   /*复选框的背景图，就是上图*/
+        height: 18px;   /*高度*/
+        vertical-align: middle;
+        width: 18px;
+        background-size: 100% 100%;
+        position: relative;
+        top:-2px;
+      }
+      input[type="checkbox"]:checked {
+        background: #fff url(../images/input-blue.png);
+        height: 18px;   /*高度*/
+        vertical-align: middle;
+        width: 18px;
+        background-size: 100% 100%;
+      }
+      span{
+        margin-left: 8px;
+      }
+  
+  
+    }
+  
+    .custom{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 260px;
+      //height: 100px;
+      background: white;
+      //box-shadow: 0px 0px 20px #ccc;
+      border-radius: 4px;
+      z-index: 99;
+      .custom-header{
+        color: #333;
+        font-size: 17px;
+        margin: 16px 0 16px 0;
+        text-align: center;
+  
+    }
+      .startTime, .endTime{
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        span{
+          color: #333;
+        }
+        span + div{
+          display: inline-block;
+        }
+        .am-list-item{
+          min-height: 34px !important;
+        }
+        .am-list-item .am-list-line{
+          padding-right: 0;
+        }
+        .am-list-item .am-list-line .am-list-extra{
+          -webkit-flex-basis: 85%;
+          -ms-flex-preferred-size: 85%;
+          flex-basis: 85%;
+          color: #666;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+        .am-list-item .am-list-line .am-list-arrow{
+          transform: rotate(90deg);
+        }
+      }
+      .blueBtn {
+        background: #558FF5;
+        color: #fff;
+        box-shadow: none;
+        padding: 14px 0;
+        width: 100%;
+        height: 100%;
+        border-width: 0;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        margin-top: 20px;
+        font-size: 17px;
+      }
+  
+    }
+    .month-select{
+      position: relative;
+      input[type="checkbox"] {
+        -webkit-appearance: none;  /*清除复选框默认样式*/
+        background: #fff url(../images/input-blue1.png);   /*复选框的背景图，就是上图*/
+        height: 18px;   /*高度*/
+        vertical-align: middle;
+        width: 18px;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 66px;
+        left: 15px;
+      }
+      input[type="checkbox"]:checked {
+        background: #fff url(../images/input-blue.png);
+        height: 18px;   /*高度*/
+        vertical-align: middle;
+        width: 18px;
+        background-size: 100% 100%;
+      }
+    }
+    .clearBorderTop{
+      border: 0!important;
+      position: relative;
+      &:after{
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: 15px;
+        top: 0;
+        left: 55px;
+        width: calc(~"100% - 55px");
+        height: 1PX;
+        -webkit-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }
+    }
+    .customMask {
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 98;
+  }
+    .deadline-line{
+      padding-bottom: 10px;
+      position: relative;
+      margin-bottom: 5px;
+      &:after{
+        content: '';
+        position: absolute;
+        background-color: #e5e5e5;
+        display: block;
+        z-index: 1;
+        top: auto;
+        right: 15px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1PX;
+        -webkit-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+      }
+  
+     & + .clearBorderTop{
+        border-top-width: 10px;
+      }
+    }
+    .list-tags{
+      height: 19px;
+      margin-top: -4px;
+      margin-bottom: 6px;
+    }
+    .tag-course{
+      padding: 3px 4px 2px;
+      font-size: 11px;
+      border-width: 1px;
+      border-style: solid;
+      float: left;
+      margin-right: 4px;
+      margin-top: 4px;
+      line-height: 1;
+    }
+    .tag-course-blue{
+      border-color: #4285F4;
+      color: #4285F4;
+    }
+    .tag-course-blue-text{
+      border-color:#58ACF4;
+      color: #58ACF4;
+    }
+    .tag-course-green{
+      border-color: #47CB5E;
+      color: #47CB5E;
+    }
+    .tag-course-orange{
+      border-color: #F4BD00;
+      color: #F4BD00;
+    }
+    .tag-course-red{
+      border-color: #FF3B30;
+      color: #FF3B30;
+    }
+    .myTag{
+      color: #666;
+      font-size: 16px;
+      margin-left: -6.5px;
+    }
+  }
+  .close-btn{
+    position: absolute;
+    right: 85px;
+    top:10px;
+  }
+  
+  

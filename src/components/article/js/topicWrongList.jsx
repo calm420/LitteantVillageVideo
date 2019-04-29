@@ -50,7 +50,6 @@ export default class articleList extends React.Component {
      * 按查询条件获取列表
      * **/
     getCourseAndCircleOfFriendsCount() {
-        debugger
         var _this = this;
         var param = {
             "method": 'getCourseAndCircleOfFriendsCount',

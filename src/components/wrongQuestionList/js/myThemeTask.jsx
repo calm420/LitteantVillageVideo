@@ -41,14 +41,28 @@ export default class myThemeTask extends React.Component {
             customFlagFor: false,
             currentProject: "",
             isHidden: false,
+            tagValue: "请输入标签",
+            stuName: "请输入学生姓名",
+            stuIdArr: []
         }
     }
-    componentDidMount() {
+    componentDidMount () {
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
-        var userId = searchArray[0].split('=')[1];
+        var cids = searchArray[0].split('=')[1];
+        var userId = searchArray[1].split('=')[1];
+        var pwd = searchArray[2].split('=')[1];
+        this.LittleAntLogin(userId, pwd)
+        this.setState({
+            cids, userId, pwd
+        }, () => {
+            this.getUserContactsUserIdsByClaZZIdsAndStudentName("")
+            setTimeout(() => {
+                this.searchCircleOfFriendsByTeacher();
+            }, 600)
+        })
         var targetType = searchArray[1].split('=')[1];
         var cid = (searchArray[2] ? searchArray[2].split('=')[1] : 0);
         var project = searchArray[3] ? decodeURI(searchArray[3].split('=')[1]) : "";
@@ -60,59 +74,38 @@ export default class myThemeTask extends React.Component {
             var isHidden = searchArray[2] ? (searchArray[2].split('=')[1]) : null;
 
         }
-        if (isHidden) {
-            if (userId != isHidden) {
-                if (fromTopic) {
+    }
 
-                } else {
-                    userId = isHidden;
+    LittleAntLogin = (userId, pwd) => {
+        console.log(userId, "uuu")
+        var _this = this;
+        var param = {
+            "method": 'LittleAntLogin',
+            "colAccount": "te" + userId,
+            "colPasswd": pwd,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, '标签列表')
+                if (result.success) {
+                    this.setState({
+                        youYUid: result.response.uid
+                    }, () => {
+                        this.getCourseAndCircleOfFriendsCount(this.state.youYUid)
+                    })
                 }
-                this.setState({
-                    isHidden: true,
-                })
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
             }
-        }
-        this.setState({
-            project: project,
-            currentProject: project,
-            userId: userId,
-            targetType: targetType,
-            cid: cid,
-            courseIdArray: cid,
-        }, () => {
-            if (targetType == 1) {
-                document.title = '我的主题任务';
-                this.getCircleOfFriendsByType();
-                $('.am-list-header').css({ display: 'none' })
-            } else {
-                document.title = '我的错题本';
-                this.getCircleOfFriendsByUidAndCid();
-                this.gitErrorTagsByCourseId();
-                this.getCourseAndCircleOfFriendsCount();
-                setTimeout(function () {
-                    $('.checkboxAll,.checkbox').attr('checked', 'true')
-                    // var fir = document.getElementsByClassName("checkbox");
-                    // [].forEach.call(fir,function(value){
-                    //     value.checked = true;
-                    // })
-                    // var fir = document.getElementsByClassName("checkboxAll");
-                    // [].forEach.call(fir,function(value){
-                    //     value.checked = true;
-                    // })
-                    // for(var i=fir;i<fir.length;i++){
-                    //     fir[i].checked = true;
-                    //     console.log('循環')
-                    // }
-                }, 1000)
-            }
-        })
+        });
     }
 
 
     /**
      * 根據科目ｉｄ查詢標籤
      * **/
-    gitErrorTagsByCourseId(courseId) {
+    gitErrorTagsByCourseId (courseId) {
         var _this = this;
         var param = {
             "method": 'gitErrorTagsByCourseIdAndUserId',
@@ -145,11 +138,11 @@ export default class myThemeTask extends React.Component {
     /**
      * 根據userId 獲取科目
      * **/
-    getCourseAndCircleOfFriendsCount(clearFlag, reslove) {
+    getCourseAndCircleOfFriendsCount (youYUid) {
         var _this = this;
         var param = {
             "method": 'getCourseAndCircleOfFriendsCount',
-            "uid": this.state.userId,
+            "uid": youYUid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -172,8 +165,16 @@ export default class myThemeTask extends React.Component {
                     // console.log(this.state.courseIdArray);
                     // console.log(this.state.courseIdArray.indexOf(res[k].cid),'``````````````');
                     // console.log(dom)
+                    console.log(courseData, "courseData")
+                    this.setState({
+                        courseIdArray: courseData[0].id,
+                        project: courseData[0].name
+                    }, () => {
+                        // this.gitErrorTagsByCourseId(this.state.courseIdArray)
+                    })
                     this.setState({
                         courseData: courseData,
+
                     })
                 }
 
@@ -188,17 +189,17 @@ export default class myThemeTask extends React.Component {
     /**
      * 錯題本獲取數據
      * **/
-    getCircleOfFriendsByUidAndCid(clearFlag, reslove) {
+    searchCircleOfFriendsByTeacher (clearFlag) {
         var _this = this;
         var param = {
-            "method": 'searchCircleOfFriends',
-            "userId": this.state.userId,
-            "courseId": this.state.cid,
-            "tagId": this.state.tagId,
-            "mastery": this.state.masteryId,
-            "startTime": this.state.startTime,
-            "endTime": this.state.endTime,
-            "pageNo": this.state.defaultPageNo,
+            "method": 'searchCircleOfFriendsByTeacher',
+            "AntIds": this.state.stuIdArr.join(","),    //学生id
+            "courseId": this.state.courseIdArray,   //科目id
+            "tag": this.state.tagValue == "请输入标签" ? "" : this.state.tagValue,   //tag
+            "mastery": this.state.masteryId,  //mastery
+            "startTime": this.state.startTime,  //startTime
+            "endTime": this.state.endTime,  //endTime
+            "pageNo": this.state.defaultPageNo, //pageNo
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -229,9 +230,6 @@ export default class myThemeTask extends React.Component {
                         exportIdArray: exportIdArray,
                         initCheckIdLength: exportIdArray.length,
                     }, () => {
-                        if (reslove) {
-                            reslove();
-                        }
                     })
                     if ((this.initDataSource.length >= result.pager.rsCount)) {
                         this.setState({
@@ -248,57 +246,6 @@ export default class myThemeTask extends React.Component {
         });
     }
 
-
-    /**
-     * 按查询条件获取列表
-     * **/
-    getCircleOfFriendsByType(clearFlag, reslove) {
-        var _this = this;
-        var param = {
-            "method": 'getCircleOfFriendsByType',
-            "userId": this.state.userId,
-            "targetType": this.state.targetType,
-            "pageNo": this.state.defaultPageNo,
-        };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
-            onResponse: result => {
-                console.log(result, 'getAllCircleOfFriendsByUid')
-                if (result.success) {
-                    this.state.rsCount = result.pager.rsCount;
-                    if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
-                        _this.initDataSource.splice(0);
-                        dataSource = [];
-                        dataSource = new ListView.DataSource({
-                            rowHasChanged: (row1, row2) => row1 !== row2,
-                        });
-                    }
-                    this.initDataSource = this.initDataSource.concat(result.response);
-                    this.setState({
-                        dataSource: dataSource.cloneWithRows(this.initDataSource),
-                        isLoading: true,
-                        refreshing: false,
-                        initLoading: false
-                    }, () => {
-                        if (reslove) {
-                            reslove();
-                        }
-                    })
-                    if ((this.initDataSource.length >= result.pager.rsCount)) {
-                        this.setState({
-                            hasMore: false,
-                            isLoading: false
-                        })
-                    }
-                    console.log(this.initDataSource, "ddd")
-
-                }
-
-            },
-            onError: function (error) {
-                Toast.fail(error, 1);
-            }
-        });
-    }
 
 
     /**
@@ -315,30 +262,18 @@ export default class myThemeTask extends React.Component {
             isLoading: true,
             defaultPageNo: currentPageNo,
         }, () => {
-            if (this.state.targetType == 1) {
-                this.getCircleOfFriendsByType();
-            } else {
-                this.getCircleOfFriendsByUidAndCid();
-            }
+            this.searchCircleOfFriendsByTeacher();
         });
     };
 
     onRefresh = (str) => {
         var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
         divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-        // divPull[0].style.height = document.body.clientHeight
         this.setState({
             defaultPageNo: 1, refreshing: true,
             exportIdArray: [],
         }, () => {
-            if (this.state.targetType == 1) {
-                this.getCircleOfFriendsByType(true);
-
-            } else {
-                this.getCircleOfFriendsByUidAndCid(true);
-            }
-            // Toast.info('重新绑定事件'+this.state.index);
-
+            this.searchCircleOfFriendsByTeacher(true);
         });
 
 
@@ -346,7 +281,7 @@ export default class myThemeTask extends React.Component {
 
 
     //计算时间差
-    timeDifference(date) {
+    timeDifference (date) {
         var date1 = date;  //开始时间
         var date2 = new Date();    //结束时间
         var date3 = date2.getTime() - new Date(date1).getTime();   //时间差的毫秒数
@@ -389,8 +324,8 @@ export default class myThemeTask extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid, rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + '&type=' + rowData.type;
+    toThemeTaskDetail (cid, rowData) {
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.youYUid + "&cfid=" + cid + '&type=' + rowData.type;
         var data = {
             method: 'openNewPage',
             url: url
@@ -401,15 +336,14 @@ export default class myThemeTask extends React.Component {
     }
 
 
-    playVideo(event) {
-
+    playVideo (event) {
         event.stopPropagation();
         // console.log(e,'eeeeeeeeeeee');
         // e.nativeEvent.stopImmediatePropagation();
     }
 
     /**
-     * 重新审核弹出框
+     * 删除弹出框
      */
     showAlert = (data, index, event) => {
         event.stopPropagation()
@@ -427,7 +361,7 @@ export default class myThemeTask extends React.Component {
 
         ], phone);
     }
-
+    //删除某一条
     deleteCircle = (data, index, event) => {
         event.stopPropagation();
         console.log(data, '要刪除的id');
@@ -455,7 +389,7 @@ export default class myThemeTask extends React.Component {
 
     }
 
-
+    //打开过滤器
     setFilter = () => {
         console.log('筛选');
         this.setState({
@@ -463,6 +397,7 @@ export default class myThemeTask extends React.Component {
         })
     }
 
+    //关闭过滤器
     closeFilter = () => {
         var timeText = '';
         var endTime = this.state.endTime;
@@ -474,7 +409,6 @@ export default class myThemeTask extends React.Component {
             endTime: endTime
         }, () => {
             console.log(this.state.endTime, 'this.state.endTime');
-
             var nTime = new Date(this.state.endTime).getTime() - new Date(this.state.startTime).getTime();
             var day = Math.floor(nTime / 86400000);
             console.log(day);
@@ -495,12 +429,12 @@ export default class myThemeTask extends React.Component {
                 this.setState({
                     currentProject: this.state.currentProject,
                     filterFlag: false,
-                    courseIdArray: this.state.cid,
+                    courseIdArray: this.state.courseIdArray,
                     timeText: timeText,
                     masteryIdArray: this.state.masteryId.split(','),
                     tagIdArray: this.state.tagId.split(',')
                 }, () => {
-                    console.log(this.state.cid, 'closeFilter');
+                    console.log(this.state.courseIdArray, 'closeFilter');
 
                 });
             })
@@ -583,7 +517,7 @@ export default class myThemeTask extends React.Component {
         })
     }
 
-    checkBoxClick(cfId, obj) {
+    checkBoxClick (cfId, obj) {
         var exportIdArray = this.state.exportIdArray;
         console.log(this.state.exportIdArray, '复选操作前');
         if (obj.target.checked) {//選中
@@ -603,7 +537,8 @@ export default class myThemeTask extends React.Component {
         })
     }
 
-    checkBoxAllClick(obj) {
+    //全选
+    checkBoxAllClick (obj) {
         if (obj.target.checked) {
             console.log('选中全选');
             // $('.checkbox').attr('checked','true');
@@ -615,7 +550,6 @@ export default class myThemeTask extends React.Component {
             var arr = initCheckId.map((v) => {
                 return v
             })
-
             console.log(arr, '0');
 
             that.setState({ exportIdArray: arr })
@@ -635,32 +569,20 @@ export default class myThemeTask extends React.Component {
     }
 
     //科目點擊事件
-    courseClick(cid, cName) {
+    courseClick (cid, cName) {
         var courseIdArray = this.state.courseIdArray;
         console.log(cid, 'cidcid')
         this.setState({
             courseIdArray: cid,
             project: cName
         }, () => {
-            this.gitErrorTagsByCourseId(this.state.courseIdArray)
+            // this.gitErrorTagsByCourseId(this.state.courseIdArray)
         })
-        // if(courseIdArray.indexOf(cid) == -1){
-        //     courseIdArray.push(cid);
-        // }else{
-        //     courseIdArray.splice(courseIdArray.indexOf(cid),1);
-        // }
-        // this.setState({
-        //     courseIdArray:courseIdArray
-        // },()=>{
-        //     if(courseIdArray.length > 0){
-        //         this.gitErrorTagsByCourseId(courseIdArray.join(','))
-        //     }
-        // })
     }
 
 
     //時間點擊事件
-    timeClick(timeText) {
+    timeClick (timeText) {
         console.log(timeText);
         if (timeText == '自定义') {
             this.setState({
@@ -679,7 +601,7 @@ export default class myThemeTask extends React.Component {
 
 
     //掌握程度點擊事件
-    masteryClick(masteryId) {
+    masteryClick (masteryId) {
         masteryId = String(masteryId);
         if (masteryId == "-1") {
             masteryIdArray = ["-1"];
@@ -702,7 +624,7 @@ export default class myThemeTask extends React.Component {
 
 
     //標籤點擊事件
-    tagClick(tagId) {
+    tagClick (tagId) {
         tagId = String(tagId);
         if (tagId == "-1") {
             tagIdArray = ["-1"];
@@ -724,8 +646,8 @@ export default class myThemeTask extends React.Component {
 
     }
 
+    // 点击确定
     determine = () => {
-
         var warn = '';
         if (this.state.courseIdArray.length <= 0) {
             warn = '请选择科目';
@@ -756,8 +678,6 @@ export default class myThemeTask extends React.Component {
                 endTime: WebServiceUtil.formatYMD(new Date().getTime())
             })
         } else if (this.state.timeText == '自定义') {
-            // console.log(WebServiceUtil.formatYMD(new Date(this.state.startDateForCustom).getTime()));
-            // console.log(WebServiceUtil.formatYMD(new Date(this.state.endDateForCustom).getTime()));
             this.setState({
                 startTime: WebServiceUtil.formatYMD(new Date(this.state.startDateForCustom).getTime()),
                 endTime: WebServiceUtil.formatYMD(new Date(this.state.endDateForCustom).getTime())
@@ -769,6 +689,9 @@ export default class myThemeTask extends React.Component {
             currentProject: this.state.project,
             masteryId: this.state.masteryIdArray.join(','),
             tagId: this.state.tagIdArray.join(','),
+            classIdArr: this.state.cids,
+            tagValue: this.state.tagValue,
+            stuIdArrString: this.state.stuIdArr.join(","),
             isLoading: true,
             defaultPageNo: 1,
         }, () => {
@@ -777,7 +700,9 @@ export default class myThemeTask extends React.Component {
             console.log(this.state.tagId, '标签id');
             console.log(this.state.startTime, '开始时间');
             console.log(this.state.endTime, '结束时间');
-            this.getCircleOfFriendsByUidAndCid();
+            console.log(this.state.stuIdArrString, 'stuIdArrString');
+            console.log(this.state.classIdArr, 'classIdArr');
+            this.searchCircleOfFriendsByTeacher()
             this.closeFilter();
         })
 
@@ -809,7 +734,82 @@ export default class myThemeTask extends React.Component {
         console.log('分享')
     }
 
-    render() {
+    //输入标签
+    showTagModal = () => {
+        prompt('请输入标签', '', [
+            {
+                text: '取消', onPress: value => {
+                    this.setState({
+                        tagValue: this.state.tagValue,
+                    }, () => {
+                    });
+                },
+            },
+            {
+                text: '确定', onPress: value => {
+                    this.setState({
+                        tagValue: value,
+                    }, () => {
+                    });
+                }
+            },
+        ], 'default', "")
+        var phoneType = navigator.userAgent;
+        if (navigator.userAgent.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+    //输入学生姓名
+    showStuNameModal = () => {
+        prompt('请输入学生姓名', '', [
+            {
+                text: '取消', onPress: value => {
+                    this.setState({
+                        stuName: this.state.stuName,
+                    }, () => {
+                        console.log(this.state.stuName, "stuName")
+                    });
+                },
+            },
+            {
+                text: '确定', onPress: value => {
+                    this.setState({
+                        stuName: value,
+                    }, () => {
+                        this.getUserContactsUserIdsByClaZZIdsAndStudentName(this.state.stuName)
+                        console.log(this.state.stuName, "stuName")
+                    });
+                }
+            },
+        ], 'default', "")
+        var phoneType = navigator.userAgent;
+        if (navigator.userAgent.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            document.getElementsByClassName('am-modal-input')[0].getElementsByTagName('input')[0].focus();
+        }
+    }
+    //根据班级id学生姓名获取
+    getUserContactsUserIdsByClaZZIdsAndStudentName = (name) => {
+        var param = {
+            "method": 'getUserContactsUserIdsByClaZZIdsAndStudentName',
+            "userId": this.state.userId,
+            "claZZIds": this.state.cids,
+            "name": name
+        };
+        WebServiceUtil.requestLittleAntApi9006(JSON.stringify(param), {
+            onResponse: result => {
+                console.log(result, 'name');
+                this.setState({
+                    stuIdArr: result.response
+                })
+
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    render () {
         var createTime = null;
         const row = (rowData, sectionID, rowID) => {
             var tagClass = '';
@@ -843,11 +843,7 @@ export default class myThemeTask extends React.Component {
                 borderTop = false;
             }
             console.log(borderTop);
-            // console.log(new Date(rowData.createTime).getDay(),'new Date(rowData.createTime).getDay()');
-            // console.log(createTime,'createTime');
-
             createTime = new Date(rowData.createTime).getDay();
-
             dom =
                 <div className='my_flex month-select'>
                     <input style={
@@ -857,13 +853,13 @@ export default class myThemeTask extends React.Component {
                     <div className="date" style={
                         this.state.targetType == 1 ? { display: 'none' } : { display: 'block' }
                     }>
-                        <div style={
-                            borderTop ? { display: 'none' } : { display: 'block' }
-                        }
+                        <div
                             className="day">{WebServiceUtil.formatMD(rowData.createTime).split('-')[1] < 10 ? '0' + WebServiceUtil.formatMD(rowData.createTime).split('-')[1] : WebServiceUtil.formatMD(rowData.createTime).split('-')[1]}</div>
-                        <div style={
-                            borderTop ? { display: 'none' } : { display: 'block' }
-                        } className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月
+                        <div className="mouth">{WebServiceUtil.formatMD(rowData.createTime).split('-')[0]}月
+                        </div>
+                        <div>
+                            <img src={rowData.userInfo.avatar} alt=""/>
+                            <span>{rowData.userInfo.userName}</span>
                         </div>
                     </div>
                     <div className="circleList" style={
@@ -943,7 +939,7 @@ export default class myThemeTask extends React.Component {
 
 
             return (
-                <div className={borderTop && this.state.targetType == 0 ? 'list_item clearBorderTop' : 'list_item'}>
+                <div className='list_item clearBorderTop'>
                     {dom}
                 </div>
             )
@@ -1058,14 +1054,19 @@ export default class myThemeTask extends React.Component {
                         <div>
                             <div className="filter-header">标签</div>
                             <div style={{ display: 'flex' }} className="filterCont">
-                                {
+                                <div onClick={this.showTagModal}>{this.state.tagValue}</div>
+                                {/* {
                                     this.state.tagData.map(function (value, index) {
                                         return <span
                                             className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1 ? 'tag-init' : 'tag-active'}
                                             onClick={that.tagClick.bind(that, String(value.tagId))}>{value.tagTitle}</span>
                                     })
-                                }
+                                } */}
                             </div>
+                        </div>
+                        <div>
+                            <div className="filter-header">学生姓名</div>
+                            <div onClick={this.showStuNameModal}>{this.state.stuName}</div>
                         </div>
                     </div>
                     <div className="filterFooter">

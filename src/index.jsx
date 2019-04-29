@@ -258,6 +258,16 @@ const welcome = (location, cb) => {
         cb(null, require('./components/welcome/welcome').default)
     })
 };
+const wrongQuestionList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/wrongQuestionList/js/wrongQuestionList').default)
+    })
+};
+const wrongQuestionListDetail = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/wrongQuestionList/js/myThemeTask').default)
+    })
+};
 
 import './index.less';
 
@@ -283,28 +293,28 @@ class Index extends React.Component {
                         style={{ fontSize: '24px' }}>我的错题本</Link></li>
                     <li><Link to="/topicWrongList?userId=53"
                         style={{ fontSize: '24px' }}>我的错题本</Link></li>
-                    {/*<li><Link to="/myArticleList?userId=53"
+                    <li><Link to="/myArticleList?userId=53"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
-                              style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li> */}
-                    {/*<li><Link to="/Login"*/}
-                    {/*style={{fontSize: '24px'}}>二维码登录页</Link></li>*/}
-                    {/*<li><Link to="/EditorDemo"*/}
-                    {/*style={{fontSize: '24px'}}>editorDemo</Link></li>*/}
-                    {/* <li><Link to="/lookThrough?auditorId=3"
+                              style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
+                    <li><Link to="/Login"
+                    style={{fontSize: '24px'}}>二维码登录页</Link></li>
+                    <li><Link to="/EditorDemo"
+                    style={{fontSize: '24px'}}>editorDemo</Link></li>
+                    <li><Link to="/lookThrough?auditorId=3"
                               style={{fontSize: '24px'}}>审核列表</Link></li>
                     <li><Link to="/wxLogin?lookThrough"
-                              style={{fontSize: '24px'}}>审核列表(微信)</Link></li> */}
-                    {/*<li><Link to="/uploadMusicList?ident=23836"*/}
-                    {/*style={{fontSize: '24px'}}>uploadMusicList</Link></li>*/}
-                    {/* <li>
+                              style={{fontSize: '24px'}}>审核列表(微信)</Link></li>
+                    <li><Link to="/uploadMusicList?ident=23836"
+                    style={{fontSize: '24px'}}>uploadMusicList</Link></li>
+                    <li>
                         <Link
                             to="/weArrPayment?ident=3" style={{fontSize: '24px'}}>充值</Link>
                     </li>
                     <li>
                         <Link
                             to="/uploadvideoList?ident=8&accsess_user=23836" style={{fontSize: '24px'}}>上传视频</Link>
-                    </li> */}
+                    </li>
 
 
                     <li>
@@ -377,6 +387,11 @@ class Index extends React.Component {
                             to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
                             style={{ fontSize: '24px' }}>统计</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/wrongQuestionList?uid=23836&pwd=xmy00000000"
+                            style={{ fontSize: '24px' }}>教师端错题本列表</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -434,6 +449,8 @@ ReactDOM.render(
             <Route path="topicWrongList" getComponent={topicWrongList} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />
+            <Route path="wrongQuestionList" getComponent={wrongQuestionList} />
+            <Route path="wrongQuestionListDetail" getComponent={wrongQuestionListDetail} />
         </Route>
     </Router>
     ,

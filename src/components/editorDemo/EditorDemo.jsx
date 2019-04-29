@@ -11,11 +11,11 @@ export default class EditorDemo extends React.Component {
             theme: 'snow',
             modules: {
                 toolbar: [
-                    [{'header': '1'}, {'header': '2'}, {'font': []}],
-                    [{size: []}],
+                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                    [{ size: [] }],
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{'list': 'ordered'}, {'list': 'bullet'},
-                        {'indent': '-1'}, {'indent': '+1'}],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                    { 'indent': '-1' }, { 'indent': '+1' }],
                     ['link', 'image', 'video'],
                     ['clean']
                 ],
@@ -35,9 +35,9 @@ export default class EditorDemo extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
-    handleChange(content, delta, source, editor) {
+    handleChange (content, delta, source, editor) {
         // console.log(editor.getContents(),'editor');
-        this.setState({editorHtml: content, editor: editor});
+        this.setState({ editorHtml: content, editor: editor });
     }
 
 
@@ -48,10 +48,10 @@ export default class EditorDemo extends React.Component {
         for (var i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
         }
-        return new Blob([new Uint8Array(array)], {type: type});
+        return new Blob([new Uint8Array(array)], { type: type });
     }
 
-    getHTML() {
+    getHTML () {
         if (this.state.editor) {
             console.log(this.state.editor.getContents());
             var array = this.state.editor.getContents().ops;
@@ -62,7 +62,7 @@ export default class EditorDemo extends React.Component {
                     var formData = new FormData();
                     formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
                     requestArray.push(
-                        new Promise(function(resolve, reject) {
+                        new Promise(function (resolve, reject) {
                             $.ajax({
                                 type: "POST",
                                 url: "http://60.205.86.217:8890/Excoord_Upload_Server/file/upload",
@@ -105,7 +105,9 @@ export default class EditorDemo extends React.Component {
         }
     }
 
-    render() {
+   
+
+    render () {
         return (
             <div>
                 <ReactQuill

@@ -43,7 +43,8 @@ export default class myThemeTask extends React.Component {
             isHidden: false,
             tagValue: "请输入标签",
             stuName: "请输入学生姓名",
-            stuIdArr: []
+            stuIdArr: [],
+            showEmpty:false
         }
     }
     componentDidMount () {
@@ -137,6 +138,7 @@ export default class myThemeTask extends React.Component {
                 console.log(result, '科目列表')
                 if (result.success) {
                     var res = result.response;
+                    
                     var courseData = [];
                     for (var k in res) {
                         courseData.push({
@@ -193,6 +195,11 @@ export default class myThemeTask extends React.Component {
             onResponse: result => {
                 console.log(result, 'searchCircleOfFriends')
                 if (result.success) {
+                    if(result.response.length == 0){
+                        this.setState({
+                            showEmpty:true
+                        })
+                    }
                     var exportIdArray = this.state.exportIdArray;
                     this.state.rsCount = result.pager.rsCount;
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -937,6 +944,9 @@ export default class myThemeTask extends React.Component {
         };
         return (
             <div id="wrongQuestionListDetail" style={{ height: document.body.clientHeight }}>
+                <div style={{display:this.state.showEmpty ? "block":"none"}}>
+                    空页面
+                </div>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

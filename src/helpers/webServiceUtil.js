@@ -6,7 +6,6 @@ var isSafeDebug = true;     //false则为隐藏主页列表，本地调试改为
 
 
 
-
 // //小蚂蚁webService地址
 const apiWebServiceURLOfLocalsApi = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
 const apiWebServiceURLOfRemoteApi = "https://www.maaee.com/Excoord_For_Education/webservice";

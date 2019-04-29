@@ -39,11 +39,12 @@ export default class wrongQuestionCount extends React.Component {
         var uid = searchArray[0].split('=')[1];
         var cid = searchArray[1].split('=')[1];
         var finalProject = decodeURI(searchArray[2].split('=')[1]);
+        var type = searchArray[3].split('=')[1]
         calm.setState({
             uid,
             cid,
-            finalProject
-
+            finalProject,
+            type
         })
         calm.analysisCircleOfFriends(uid,cid);
         window.addEventListener('resize', calm.onWindowResize);

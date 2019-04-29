@@ -108,7 +108,7 @@ export default class wrongQuestionList extends React.Component {
         this.state.classId.forEach((v, i) => {
             idArr.push(v.value)
         })
-        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionListDetail?classIds=" + idArr.join(",") + "&uid=" + this.state.userId + "&pwd=" + this.state.pwd + "&cid=2&finalProject=语文";
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionListDetail?classIds=" + idArr.join(",") + "&uid=" + this.state.userId + "&pwd=" + this.state.pwd;
         var data = {
             method: 'openNewPage',
             url: url

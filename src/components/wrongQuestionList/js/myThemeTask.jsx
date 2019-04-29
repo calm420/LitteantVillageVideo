@@ -63,21 +63,9 @@ export default class myThemeTask extends React.Component {
                 this.searchCircleOfFriendsByTeacher();
             }, 600)
         })
-        var targetType = searchArray[1].split('=')[1];
-        var cid = (searchArray[2] ? searchArray[2].split('=')[1] : 0);
-        var project = searchArray[3] ? decodeURI(searchArray[3].split('=')[1]) : "";
-        var fromTopic = false;
-        if (targetType == 0) {
-            var isHidden = searchArray[4] ? (searchArray[4].split('=')[1]) : null;
-            fromTopic = true;
-        } else {
-            var isHidden = searchArray[2] ? (searchArray[2].split('=')[1]) : null;
-
-        }
     }
 
     LittleAntLogin = (userId, pwd) => {
-        console.log(userId, "uuu")
         var _this = this;
         var param = {
             "method": 'LittleAntLogin',
@@ -325,7 +313,7 @@ export default class myThemeTask extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail (cid, rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.youYUid + "&cfid=" + cid + '&type=' + rowData.type;
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.youYUid + "&cfid=" + cid + '&type=' + rowData.type+"&hideType=xmy";
         var data = {
             method: 'openNewPage',
             url: url
@@ -572,6 +560,7 @@ export default class myThemeTask extends React.Component {
     courseClick (cid, cName) {
         var courseIdArray = this.state.courseIdArray;
         console.log(cid, 'cidcid')
+        console.log(cName, 'cName')
         this.setState({
             courseIdArray: cid,
             project: cName
@@ -720,7 +709,7 @@ export default class myThemeTask extends React.Component {
      * 跳转统计页面
      */
     toCount = () => {
-        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.userId + "&cid=" + this.state.cid + "&finalProject=" + this.state.currentProject;
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.youYUid + "&cid=" + this.state.courseIdArray + "&finalProject=" + this.state.project+"&type=xmy"
         var data = {
             method: 'openNewPage',
             url: url

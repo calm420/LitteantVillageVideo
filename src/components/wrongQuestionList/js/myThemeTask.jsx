@@ -1054,7 +1054,7 @@ export default class myThemeTask extends React.Component {
                         <div>
                             <div className="filter-header">标签</div>
                             <div style={{ display: 'flex' }} className="filterCont">
-                                <div onClick={this.showTagModal}>{this.state.tagValue}</div>
+                                <span className='course-init' onClick={this.showTagModal}>{this.state.tagValue}</span>
                                 {/* {
                                     this.state.tagData.map(function (value, index) {
                                         return <span

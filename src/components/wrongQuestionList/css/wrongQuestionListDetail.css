@@ -386,7 +386,7 @@
   background: #fff;
 }
 #wrongQuestionListDetail .filterFooter button.blueBtn {
-  background: #558FF5;
+  background: #F46A55;
   color: #fff;
   box-shadow: none;
 }
@@ -407,11 +407,11 @@
 #wrongQuestionListDetail .time-active,
 #wrongQuestionListDetail .mastery-active,
 #wrongQuestionListDetail .tag-active {
-  border: 1px solid #558FF5;
+  border: 1px solid #F46A55;
   padding: 0 15px;
   margin-right: 10px;
   margin-top: 10px;
-  background: #558FF5;
+  background: #F46A55;
   border-radius: 2px;
   color: #fff;
   line-height: 28px;
@@ -557,7 +557,7 @@
   transform: rotate(90deg);
 }
 #wrongQuestionListDetail .custom .blueBtn {
-  background: #558FF5;
+  background: #F46A55;
   color: #fff;
   box-shadow: none;
   padding: 14px 0;

@@ -226,3 +226,7 @@
   -ms-transform: scaleX(0.5);
   transform: scaleX(0.5);
 }
+#wrongQuestionCount.redColor .modalDiv .am-radio-item.checked .am-list-line .am-list-content {
+  border: 1px #F46A55 solid !important;
+  background-color: #F46A55;
+}

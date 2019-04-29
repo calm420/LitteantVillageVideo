@@ -96,7 +96,7 @@
   vertical-align: top;
   text-align: right;
   background-size: cover;
-  background-position-y: center center;
+  background-position-y: center;
 }
 #articleList .rightBox img {
   height: 100%;
@@ -443,6 +443,10 @@
 #articleList .circleList .tag-WrongTopic-blue {
   background: url("../images/tag-WrongTopic-blue.png") no-repeat;
   background-size: 100% 100%;
+}
+#articleList .circleList .wrongQuestion_bottom.detail_bottom .list_bottom_item {
+  padding: 5px 0;
+  text-align: right;
 }
 #articleList .circleList .list_bottom,
 #articleList .circleList .detail_bottom {

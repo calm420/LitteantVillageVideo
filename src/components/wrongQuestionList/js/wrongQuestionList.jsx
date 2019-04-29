@@ -89,6 +89,9 @@ export default class wrongQuestionList extends React.Component {
                             showEmpty: true
                         })
                     } else {
+                            this.setState({
+                                showEmpty:false
+                            })
                         var arr = [];
                         result.response.forEach((v, i) => {
                             console.log(v, "v")
@@ -139,8 +142,9 @@ export default class wrongQuestionList extends React.Component {
     render () {
         return (
             <div id="wrongQuestionList" style={{ height: document.body.clientHeight }}>
-                <div style={{ display: this.state.showEmpty ? "block" : "none" }}>
-                    空页面
+                <div className='emptyCont' style={{display:this.state.showEmpty ? "block":"none"}}>
+                    <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt=""/>
+                    <div>暂无数据</div>
                 </div>
                 <List>
                     {this.state.dataList.map((v, i) => (

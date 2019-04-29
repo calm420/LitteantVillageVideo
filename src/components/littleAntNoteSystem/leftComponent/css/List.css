@@ -3,7 +3,7 @@
 }
 #List .row {
   background: transparent;
-  border-bottom: 1px solid #E5E5E5 ;
+  border-bottom: 1px solid #E5E5E5;
   padding: 15px;
   color: #333;
   text-align: left;
@@ -79,13 +79,17 @@
   background: url("../img/menu_del.png") no-repeat;
   background-size: 100% 100%;
 }
+#List .row .row_bottom .oper .operBox .operBox_row .menu_Roof-placement {
+  background: url("../img/menu-Roof-placement2.png") no-repeat;
+  background-size: 100% 100%;
+}
 #List .row .row_bottom .oper .operBox .operBox_row .menu_edit {
   background: url("../img/menu_edit.png") no-repeat;
   background-size: 100% 100%;
 }
 #List .row .row_bottom .oper .operBox .operBox_row span {
   position: relative;
-  top: -2px;
+  top: 0;
 }
 #List .row .row_bottom .oper .operBox_row:last-child {
   border-bottom: none;
@@ -94,10 +98,10 @@
   background: #E8F1FF;
 }
 #List .state_through {
-  color: #25A968 ;
+  color: #25A968;
 }
 #List .state_noThrough {
-  color: #DE4F43 ;
+  color: #DE4F43;
   position: relative;
   cursor: pointer;
 }
@@ -135,7 +139,7 @@
   margin-top: 8px;
 }
 #List .state-tipArrow {
-  border-color: transparent transparent #424a58 transparent ;
+  border-color: transparent transparent #424a58 transparent;
   border-width: 7px;
   width: 0;
   height: 0;
@@ -145,5 +149,11 @@
   right: 31px;
 }
 #List .state_noAudit {
-  color: #4A90E2 ;
+  color: #4A90E2;
+}
+#List .state_watch {
+  color: #666;
+}
+#List .Roof-placement {
+  background: #d9e0ff;
 }

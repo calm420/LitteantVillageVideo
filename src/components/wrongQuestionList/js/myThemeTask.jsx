@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Toast, DatePicker, PullToRefresh, ListView, Modal, List, Picker, Tag, Tabs
 } from 'antd-mobile';
-import '../css/myThemeTask.less';
+import '../css/wrongQuestionListDetail.less';
 
 const alert = Modal.alert;
 const prompt = Modal.prompt;
@@ -929,10 +929,10 @@ export default class myThemeTask extends React.Component {
                             <div className="list_bottom_item"><i
                                 className={rowData.currentUserIsLike ? "i-praise-active" : "i-praise"}></i><span>{rowData.likeCount}</span>
                             </div>
-                            <div style={
-                                this.state.isHidden ? { display: 'none' } : { display: 'block' }
-                            } className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>
-                                <i className="i-delete"></i></div>
+                            {/*<div style={*/}
+                            {/*    this.state.isHidden ? { display: 'none' } : { display: 'block' }*/}
+                            {/*} className="list_bottom_item" onClick={this.showAlert.bind(this, rowData.cfid, rowID)}>*/}
+                            {/*    <i className="i-delete"></i></div>*/}
                         </div>
                     </div>
                 </div>
@@ -945,7 +945,7 @@ export default class myThemeTask extends React.Component {
             )
         };
         return (
-            <div id="myThemeTask" style={{ height: document.body.clientHeight }}>
+            <div id="wrongQuestionListDetail" style={{ height: document.body.clientHeight }}>
                 <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource

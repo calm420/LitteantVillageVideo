@@ -1,49 +1,49 @@
-#myThemeTask {
+#wrongQuestionListDetail {
   /*解决listview高度无法撑开的关键*/
 }
-#myThemeTask .am-pull-to-refresh-content-wrapper {
+#wrongQuestionListDetail .am-pull-to-refresh-content-wrapper {
   min-height: 100vh;
 }
-#myThemeTask .circleList {
+#wrongQuestionListDetail .circleList {
   position: relative;
   width: calc(100% - 40px);
   padding-left: 15px;
 }
-#myThemeTask .circleList .tags {
+#wrongQuestionListDetail .circleList .tags {
   display: inline-block;
   position: absolute;
   right: 14px;
   top: -6px;
 }
-#myThemeTask .circleList .tag-ThemeTask {
+#wrongQuestionListDetail .circleList .tag-ThemeTask {
   background: url("../images/tag-ThemeTask.png") no-repeat;
   background-size: 100% 100%;
   width: 75px;
   height: 21px;
   display: inline-block;
 }
-#myThemeTask .circleList .tag-WrongTopic {
+#wrongQuestionListDetail .circleList .tag-WrongTopic {
   width: 75px;
   height: 21px;
   display: inline-block;
 }
-#myThemeTask .circleList .tag-WrongTopic-red {
+#wrongQuestionListDetail .circleList .tag-WrongTopic-red {
   background: url("../images/tag-WrongTopic-red.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .circleList .tag-WrongTopic-orange {
+#wrongQuestionListDetail .circleList .tag-WrongTopic-orange {
   background: url("../images/tag-WrongTopic-orange.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .circleList .tag-WrongTopic-green {
+#wrongQuestionListDetail .circleList .tag-WrongTopic-green {
   background: url("../images/tag-WrongTopic-green.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .circleList .tag-WrongTopic-yellow {
+#wrongQuestionListDetail .circleList .tag-WrongTopic-yellow {
   background: url("../images/tag-WrongTopic-yellow.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .circleList .list_bottom {
+#wrongQuestionListDetail .circleList .list_bottom {
   padding: 0px 24px 0 0;
   margin-top: 0;
   position: relative;
@@ -59,7 +59,7 @@
   justify-content: space-between;
   box-sizing: border-box;
 }
-#myThemeTask .circleList .list_bottom:after {
+#wrongQuestionListDetail .circleList .list_bottom:after {
   content: '';
   position: absolute;
   background-color: #fff;
@@ -78,48 +78,48 @@
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
-#myThemeTask .list_item {
+#wrongQuestionListDetail .list_item {
   margin-top: 0;
   border-top: 10px solid #f4f4f4;
   padding: 15px 15px 0 0;
 }
-#myThemeTask .list_item:first-child {
+#wrongQuestionListDetail .list_item:first-child {
   border-top: 0;
 }
-#myThemeTask .list_item .list_head {
+#wrongQuestionListDetail .list_item .list_head {
   height: 40px;
   margin-bottom: 13px;
 }
-#myThemeTask .list_item .list_head .headPic {
+#wrongQuestionListDetail .list_item .list_head .headPic {
   display: inline-block;
   width: 40px;
   height: 40px;
   float: left;
   margin-right: 10px;
 }
-#myThemeTask .list_item .list_head .headPic img {
+#wrongQuestionListDetail .list_item .list_head .headPic img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
-#myThemeTask .list_item .list_head .userName {
+#wrongQuestionListDetail .list_item .list_head .userName {
   display: inline-block;
   color: #333;
   font-size: 15px;
   line-height: 1.6;
 }
-#myThemeTask .list_item .list_head .createTime {
+#wrongQuestionListDetail .list_item .list_head .createTime {
   display: inline-block;
   color: #999;
   font-size: 13px;
   line-height: 1.6;
 }
-#myThemeTask .list_item .list_image {
+#wrongQuestionListDetail .list_item .list_image {
   margin-top: 10px;
   width: 354px;
 }
-#myThemeTask .list_item .list_image img {
+#wrongQuestionListDetail .list_item .list_image img {
   width: 110px;
   height: 110px;
   object-fit: cover;
@@ -128,7 +128,7 @@
   margin-bottom: 8px;
   vertical-align: middle;
 }
-#myThemeTask .list_item .list_image .video_tag {
+#wrongQuestionListDetail .list_item .list_image .video_tag {
   position: relative;
   width: 110px;
   height: 110px;
@@ -139,12 +139,12 @@
   vertical-align: middle;
   display: inline-block;
 }
-#myThemeTask .list_item .list_image .video_tag video {
+#wrongQuestionListDetail .list_item .list_image .video_tag video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-#myThemeTask .list_item .list_image .video_tag .video_tag_play {
+#wrongQuestionListDetail .list_item .list_image .video_tag .video_tag_play {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -158,12 +158,12 @@
   background-size: 100% 100%;
 }
 @media screen and (min-width: 700px) {
-  #myThemeTask .list_item .list_image,
-  #myThemeTask .list_item .image_detail {
+  #wrongQuestionListDetail .list_item .list_image,
+  #wrongQuestionListDetail .list_item .image_detail {
     width: 354px;
   }
-  #myThemeTask .list_item .list_image img,
-  #myThemeTask .list_item .image_detail img {
+  #wrongQuestionListDetail .list_item .list_image img,
+  #wrongQuestionListDetail .list_item .image_detail img {
     width: 110px;
     height: 110px;
     object-fit: cover;
@@ -172,8 +172,8 @@
     margin-bottom: 8px;
     vertical-align: middle;
   }
-  #myThemeTask .list_item .list_image .video_tag,
-  #myThemeTask .list_item .image_detail .video_tag {
+  #wrongQuestionListDetail .list_item .list_image .video_tag,
+  #wrongQuestionListDetail .list_item .image_detail .video_tag {
     position: relative;
     width: 110px;
     height: 110px;
@@ -184,18 +184,18 @@
     margin-bottom: 8px;
     vertical-align: middle;
   }
-  #myThemeTask .list_item .date + .circleList .list_image {
+  #wrongQuestionListDetail .list_item .date + .circleList .list_image {
     width: 354px;
   }
 }
 @media (max-width: 360px) and (min-width: 340px) {
-  #myThemeTask .list_item .list_image,
-  #myThemeTask .list_item .image_detail {
+  #wrongQuestionListDetail .list_item .list_image,
+  #wrongQuestionListDetail .list_item .image_detail {
     width: auto;
     margin-right: -15px;
   }
-  #myThemeTask .list_item .list_image img,
-  #myThemeTask .list_item .image_detail img {
+  #wrongQuestionListDetail .list_item .list_image img,
+  #wrongQuestionListDetail .list_item .image_detail img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -204,8 +204,8 @@
     margin-bottom: 8px;
     vertical-align: middle;
   }
-  #myThemeTask .list_item .list_image .video_tag,
-  #myThemeTask .list_item .image_detail .video_tag {
+  #wrongQuestionListDetail .list_item .list_image .video_tag,
+  #wrongQuestionListDetail .list_item .image_detail .video_tag {
     position: relative;
     width: 100px;
     height: 100px;
@@ -218,13 +218,13 @@
   }
 }
 @media (max-width: 339px) {
-  #myThemeTask .list_item .list_image,
-  #myThemeTask .list_item .image_detail {
+  #wrongQuestionListDetail .list_item .list_image,
+  #wrongQuestionListDetail .list_item .image_detail {
     width: auto;
     margin-right: -15px;
   }
-  #myThemeTask .list_item .list_image img,
-  #myThemeTask .list_item .image_detail img {
+  #wrongQuestionListDetail .list_item .list_image img,
+  #wrongQuestionListDetail .list_item .image_detail img {
     width: 90px;
     height: 90px;
     object-fit: cover;
@@ -233,8 +233,8 @@
     margin-bottom: 8px;
     vertical-align: middle;
   }
-  #myThemeTask .list_item .list_image .video_tag,
-  #myThemeTask .list_item .image_detail .video_tag {
+  #wrongQuestionListDetail .list_item .list_image .video_tag,
+  #wrongQuestionListDetail .list_item .image_detail .video_tag {
     position: relative;
     width: 90px;
     height: 90px;
@@ -246,7 +246,7 @@
     vertical-align: middle;
   }
 }
-#myThemeTask .list_item .list_bottom_item {
+#wrongQuestionListDetail .list_item .list_bottom_item {
   display: inline-block;
   text-align: center;
   font-size: 14px;
@@ -256,80 +256,80 @@
   line-height: 1.6;
   box-sizing: border-box;
 }
-#myThemeTask .list_item .list_bottom_item i {
+#wrongQuestionListDetail .list_item .list_bottom_item i {
   width: 15px;
   height: 15px;
   display: inline-block;
 }
-#myThemeTask .list_item .list_bottom_item .i-share {
+#wrongQuestionListDetail .list_item .list_bottom_item .i-share {
   background: url("../images/share.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .list_item .list_bottom_item .i-comments {
+#wrongQuestionListDetail .list_item .list_bottom_item .i-comments {
   background: url("../images/comments.png") no-repeat;
   background-size: 100% 100%;
   width: 16px;
   height: 14px;
 }
-#myThemeTask .list_item .list_bottom_item .i-praise {
+#wrongQuestionListDetail .list_item .list_bottom_item .i-praise {
   background: url("../images/praise.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .list_item .list_bottom_item .i-praise.i-praise-active {
+#wrongQuestionListDetail .list_item .list_bottom_item .i-praise.i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .list_item .list_bottom_item .i-delete {
+#wrongQuestionListDetail .list_item .list_bottom_item .i-delete {
   background: url("../images/icon_delete_power.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .list_item .list_bottom_item span {
+#wrongQuestionListDetail .list_item .list_bottom_item span {
   position: relative;
   left: 5px;
   top: -2px;
 }
-#myThemeTask .list_item:first-child {
+#wrongQuestionListDetail .list_item:first-child {
   margin-top: 15px;
 }
-#myThemeTask .list_item:last-child .circleList {
+#wrongQuestionListDetail .list_item:last-child .circleList {
   border-bottom: none;
 }
-#myThemeTask .list_content {
+#wrongQuestionListDetail .list_content {
   color: #333;
   font-size: 16px;
   line-height: 20px;
   word-wrap: break-word;
 }
-#myThemeTask .time {
+#wrongQuestionListDetail .time {
   font-size: 13px;
   color: #666;
 }
-#myThemeTask .time > div {
+#wrongQuestionListDetail .time > div {
   padding-top: 8px;
 }
-#myThemeTask .date {
+#wrongQuestionListDetail .date {
   padding-left: 15px;
   width: 40px;
   min-width: 40px;
   box-sizing: border-box;
 }
-#myThemeTask .date .day {
+#wrongQuestionListDetail .date .day {
   color: #333;
   font-size: 20px;
 }
-#myThemeTask .date .mouth {
+#wrongQuestionListDetail .date .mouth {
   font-size: 12px;
   color: #666;
   text-align: center;
 }
-#myThemeTask .i-praise-active {
+#wrongQuestionListDetail .i-praise-active {
   background: url("../images/praiseActive.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .i-praise-active + span {
+#wrongQuestionListDetail .i-praise-active + span {
   color: #e5352b;
 }
-#myThemeTask .filter-content {
+#wrongQuestionListDetail .filter-content {
   width: 90%;
   position: absolute;
   top: 0;
@@ -339,7 +339,7 @@
   transition: 0.5s;
   color: #333;
 }
-#myThemeTask .mask {
+#wrongQuestionListDetail .mask {
   position: absolute;
   top: 0;
   left: 0;
@@ -348,22 +348,22 @@
   z-index: 10;
   opacity: 0.4;
 }
-#myThemeTask .filter-header {
+#wrongQuestionListDetail .filter-header {
   font-size: 15px;
   padding: 0 15px;
   margin: 25px 0px 5px 0;
 }
-#myThemeTask .filterCont {
+#wrongQuestionListDetail .filterCont {
   padding: 0 15px;
   flex-direction: row;
   flex-wrap: wrap;
 }
-#myThemeTask .filter-info {
+#wrongQuestionListDetail .filter-info {
   height: calc(100% - 45px);
   overflow-y: auto;
   overflow-x: hidden;
 }
-#myThemeTask .filterFooter {
+#wrongQuestionListDetail .filterFooter {
   height: 45px;
   width: 100%;
   display: flex;
@@ -372,7 +372,7 @@
   font-size: 17px;
   z-index: 0;
 }
-#myThemeTask .filterFooter button {
+#wrongQuestionListDetail .filterFooter button {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -385,15 +385,15 @@
   color: #666;
   background: #fff;
 }
-#myThemeTask .filterFooter button.blueBtn {
+#wrongQuestionListDetail .filterFooter button.blueBtn {
   background: #558FF5;
   color: #fff;
   box-shadow: none;
 }
-#myThemeTask .course-init,
-#myThemeTask .time-init,
-#myThemeTask .mastery-init,
-#myThemeTask .tag-init {
+#wrongQuestionListDetail .course-init,
+#wrongQuestionListDetail .time-init,
+#wrongQuestionListDetail .mastery-init,
+#wrongQuestionListDetail .tag-init {
   border: 1px solid #AEAEAE;
   padding: 0 15px;
   margin-right: 10px;
@@ -403,10 +403,10 @@
   line-height: 28px;
   box-sizing: border-box;
 }
-#myThemeTask .course-active,
-#myThemeTask .time-active,
-#myThemeTask .mastery-active,
-#myThemeTask .tag-active {
+#wrongQuestionListDetail .course-active,
+#wrongQuestionListDetail .time-active,
+#wrongQuestionListDetail .mastery-active,
+#wrongQuestionListDetail .tag-active {
   border: 1px solid #558FF5;
   padding: 0 15px;
   margin-right: 10px;
@@ -417,56 +417,56 @@
   line-height: 28px;
   box-sizing: border-box;
 }
-#myThemeTask .am-list-header {
+#wrongQuestionListDetail .am-list-header {
   background: #fff;
   color: #666;
   font-size: 15px;
   padding: 10px 15px 10px 15px;
   position: relative;
 }
-#myThemeTask .am-list-header button {
+#wrongQuestionListDetail .am-list-header button {
   padding: 0;
   border: none;
   background: transparent;
 }
-#myThemeTask .am-list-header button i {
+#wrongQuestionListDetail .am-list-header button i {
   width: 22px;
   height: 22px;
   display: inline-block;
   position: relative;
   top: 3px;
 }
-#myThemeTask .am-list-header button span {
+#wrongQuestionListDetail .am-list-header button span {
   position: relative;
   top: -3px;
   margin-left: 2px;
 }
-#myThemeTask .am-list-header button .icon-print {
+#wrongQuestionListDetail .am-list-header button .icon-print {
   background: url("../images/icon-print.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .am-list-header button .icon-screening {
+#wrongQuestionListDetail .am-list-header button .icon-screening {
   background: url("../images/icon-screening.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .am-list-header button .icon-statistical {
+#wrongQuestionListDetail .am-list-header button .icon-statistical {
   background: url("../images/icon-statistical.png") no-repeat;
   background-size: 100% 100%;
 }
-#myThemeTask .am-list-header .filter-btn {
+#wrongQuestionListDetail .am-list-header .filter-btn {
   position: absolute;
   right: 15px;
 }
-#myThemeTask .am-list-header .export-btn {
+#wrongQuestionListDetail .am-list-header .export-btn {
   margin-left: 20px;
 }
-#myThemeTask .export-header {
+#wrongQuestionListDetail .export-header {
   height: 25px;
   color: #333;
   font-size: 16px;
   line-height: 25px;
 }
-#myThemeTask .export-header .Btn-bor-blue {
+#wrongQuestionListDetail .export-header .Btn-bor-blue {
   background: #fff !important;
   color: #4285F4;
   border: 1px #4285F4 solid !important;
@@ -476,12 +476,12 @@
   line-height: 14px;
   box-sizing: border-box;
 }
-#myThemeTask .export-header .Btn-right {
+#wrongQuestionListDetail .export-header .Btn-right {
   position: absolute;
   right: 15px;
   top: 10px;
 }
-#myThemeTask .export-header input[type="checkbox"] {
+#wrongQuestionListDetail .export-header input[type="checkbox"] {
   -webkit-appearance: none;
   /*清除复选框默认样式*/
   background: #fff url(../images/input-blue1.png);
@@ -494,7 +494,7 @@
   position: relative;
   top: -2px;
 }
-#myThemeTask .export-header input[type="checkbox"]:checked {
+#wrongQuestionListDetail .export-header input[type="checkbox"]:checked {
   background: #fff url(../images/input-blue.png);
   height: 18px;
   /*高度*/
@@ -502,10 +502,10 @@
   width: 18px;
   background-size: 100% 100%;
 }
-#myThemeTask .export-header span {
+#wrongQuestionListDetail .export-header span {
   margin-left: 8px;
 }
-#myThemeTask .custom {
+#wrongQuestionListDetail .custom {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -515,36 +515,36 @@
   border-radius: 4px;
   z-index: 99;
 }
-#myThemeTask .custom .custom-header {
+#wrongQuestionListDetail .custom .custom-header {
   color: #333;
   font-size: 17px;
   margin: 16px 0 16px 0;
   text-align: center;
 }
-#myThemeTask .custom .startTime,
-#myThemeTask .custom .endTime {
+#wrongQuestionListDetail .custom .startTime,
+#wrongQuestionListDetail .custom .endTime {
   text-align: center;
   font-size: 14px;
   color: #666;
 }
-#myThemeTask .custom .startTime span,
-#myThemeTask .custom .endTime span {
+#wrongQuestionListDetail .custom .startTime span,
+#wrongQuestionListDetail .custom .endTime span {
   color: #333;
 }
-#myThemeTask .custom .startTime span + div,
-#myThemeTask .custom .endTime span + div {
+#wrongQuestionListDetail .custom .startTime span + div,
+#wrongQuestionListDetail .custom .endTime span + div {
   display: inline-block;
 }
-#myThemeTask .custom .startTime .am-list-item,
-#myThemeTask .custom .endTime .am-list-item {
+#wrongQuestionListDetail .custom .startTime .am-list-item,
+#wrongQuestionListDetail .custom .endTime .am-list-item {
   min-height: 34px !important;
 }
-#myThemeTask .custom .startTime .am-list-item .am-list-line,
-#myThemeTask .custom .endTime .am-list-item .am-list-line {
+#wrongQuestionListDetail .custom .startTime .am-list-item .am-list-line,
+#wrongQuestionListDetail .custom .endTime .am-list-item .am-list-line {
   padding-right: 0;
 }
-#myThemeTask .custom .startTime .am-list-item .am-list-line .am-list-extra,
-#myThemeTask .custom .endTime .am-list-item .am-list-line .am-list-extra {
+#wrongQuestionListDetail .custom .startTime .am-list-item .am-list-line .am-list-extra,
+#wrongQuestionListDetail .custom .endTime .am-list-item .am-list-line .am-list-extra {
   -webkit-flex-basis: 85%;
   -ms-flex-preferred-size: 85%;
   flex-basis: 85%;
@@ -552,11 +552,11 @@
   padding-top: 0;
   padding-bottom: 0;
 }
-#myThemeTask .custom .startTime .am-list-item .am-list-line .am-list-arrow,
-#myThemeTask .custom .endTime .am-list-item .am-list-line .am-list-arrow {
+#wrongQuestionListDetail .custom .startTime .am-list-item .am-list-line .am-list-arrow,
+#wrongQuestionListDetail .custom .endTime .am-list-item .am-list-line .am-list-arrow {
   transform: rotate(90deg);
 }
-#myThemeTask .custom .blueBtn {
+#wrongQuestionListDetail .custom .blueBtn {
   background: #558FF5;
   color: #fff;
   box-shadow: none;
@@ -569,10 +569,10 @@
   margin-top: 20px;
   font-size: 17px;
 }
-#myThemeTask .month-select {
+#wrongQuestionListDetail .month-select {
   position: relative;
 }
-#myThemeTask .month-select input[type="checkbox"] {
+#wrongQuestionListDetail .month-select input[type="checkbox"] {
   -webkit-appearance: none;
   /*清除复选框默认样式*/
   background: #fff url(../images/input-blue1.png);
@@ -586,7 +586,7 @@
   top: 66px;
   left: 15px;
 }
-#myThemeTask .month-select input[type="checkbox"]:checked {
+#wrongQuestionListDetail .month-select input[type="checkbox"]:checked {
   background: #fff url(../images/input-blue.png);
   height: 18px;
   /*高度*/
@@ -594,11 +594,11 @@
   width: 18px;
   background-size: 100% 100%;
 }
-#myThemeTask .clearBorderTop {
+#wrongQuestionListDetail .clearBorderTop {
   border: 0!important;
   position: relative;
 }
-#myThemeTask .clearBorderTop:after {
+#wrongQuestionListDetail .clearBorderTop:after {
   content: '';
   position: absolute;
   background-color: #e5e5e5;
@@ -617,7 +617,7 @@
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
-#myThemeTask .customMask {
+#wrongQuestionListDetail .customMask {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
@@ -626,12 +626,12 @@
   left: 0;
   z-index: 98;
 }
-#myThemeTask .deadline-line {
+#wrongQuestionListDetail .deadline-line {
   padding-bottom: 10px;
   position: relative;
   margin-bottom: 5px;
 }
-#myThemeTask .deadline-line:after {
+#wrongQuestionListDetail .deadline-line:after {
   content: '';
   position: absolute;
   background-color: #e5e5e5;
@@ -650,15 +650,15 @@
   -ms-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
-#myThemeTask .deadline-line + .clearBorderTop {
+#wrongQuestionListDetail .deadline-line + .clearBorderTop {
   border-top-width: 10px;
 }
-#myThemeTask .list-tags {
+#wrongQuestionListDetail .list-tags {
   height: 19px;
   margin-top: -4px;
   margin-bottom: 6px;
 }
-#myThemeTask .tag-course {
+#wrongQuestionListDetail .tag-course {
   padding: 3px 4px 2px;
   font-size: 11px;
   border-width: 1px;
@@ -668,27 +668,27 @@
   margin-top: 4px;
   line-height: 1;
 }
-#myThemeTask .tag-course-blue {
+#wrongQuestionListDetail .tag-course-blue {
   border-color: #4285F4;
   color: #4285F4;
 }
-#myThemeTask .tag-course-blue-text {
+#wrongQuestionListDetail .tag-course-blue-text {
   border-color: #58ACF4;
   color: #58ACF4;
 }
-#myThemeTask .tag-course-green {
+#wrongQuestionListDetail .tag-course-green {
   border-color: #47CB5E;
   color: #47CB5E;
 }
-#myThemeTask .tag-course-orange {
+#wrongQuestionListDetail .tag-course-orange {
   border-color: #F4BD00;
   color: #F4BD00;
 }
-#myThemeTask .tag-course-red {
+#wrongQuestionListDetail .tag-course-red {
   border-color: #FF3B30;
   color: #FF3B30;
 }
-#myThemeTask .myTag {
+#wrongQuestionListDetail .myTag {
   color: #666;
   font-size: 16px;
   margin-left: -6.5px;

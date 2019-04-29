@@ -390,7 +390,7 @@ export default class myThemeTask extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail(cid, rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + '&type=' + rowData.type;
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + '&type=' + rowData.type+"&hideType=youyang";
         var data = {
             method: 'openNewPage',
             url: url
@@ -795,7 +795,7 @@ export default class myThemeTask extends React.Component {
      * 跳转统计页面
      */
     toCount = () => {
-        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.userId + "&cid=" + this.state.cid + "&finalProject=" + this.state.currentProject;
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.userId + "&cid=" + this.state.cid + "&finalProject=" + this.state.currentProject+"&type=youyang";
         var data = {
             method: 'openNewPage',
             url: url

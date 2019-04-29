@@ -2,6 +2,7 @@ import React from 'react';
 import {
     Toast, DatePicker, ListView, TextareaItem, Button, List, Picker, Tag, Radio, Checkbox, Flex
 } from 'antd-mobile';
+import '../css/wrongQuestionList.less'
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 
@@ -22,9 +23,7 @@ export default class wrongQuestionList extends React.Component {
         theLike = this;
         this.state = {
             dataList: [
-                { value: 0, label: 'Ph.D.' },
-                { value: 1, label: 'Bachelor' },
-                { value: 2, label: 'College diploma' },
+
             ],
             classId: []
         }
@@ -138,8 +137,8 @@ export default class wrongQuestionList extends React.Component {
                         </CheckboxItem>
                     ))}
                 </List>
-                <div onClick={this.sureSelect}>确定</div>
-                <div className="addTopic" onClick={this.toAddTopic}></div>
+                <div className='submitBtn' onClick={this.sureSelect}><span>确定</span></div>
+                {/*<div className="addTopic" onClick={this.toAddTopic}></div>*/}
             </div>
         );
     }

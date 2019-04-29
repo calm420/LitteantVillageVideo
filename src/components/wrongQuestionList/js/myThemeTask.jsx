@@ -1053,7 +1053,7 @@ export default class myThemeTask extends React.Component {
                         </div>
                         <div>
                             <div className="filter-header">标签</div>
-                            <div style={{ display: 'flex' }} className="filterCont">
+                            <div style={{ display: 'flex' }} className="filterCont grayBg">
                                 <span className='course-init' onClick={this.showTagModal}>{this.state.tagValue}</span>
                                 {/* {
                                     this.state.tagData.map(function (value, index) {
@@ -1066,7 +1066,9 @@ export default class myThemeTask extends React.Component {
                         </div>
                         <div>
                             <div className="filter-header">学生姓名</div>
-                            <div onClick={this.showStuNameModal}>{this.state.stuName}</div>
+                            <div  style={{ display: 'flex' }} className="filterCont grayBg">
+                                <span className='course-init' onClick={this.showStuNameModal}>{this.state.stuName}</span>
+                            </div>
                         </div>
                     </div>
                     <div className="filterFooter">

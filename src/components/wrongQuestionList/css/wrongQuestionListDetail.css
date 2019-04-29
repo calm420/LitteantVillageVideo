@@ -417,6 +417,9 @@
   line-height: 28px;
   box-sizing: border-box;
 }
+#wrongQuestionListDetail .grayBg .course-init {
+  background-color: #f5f5f5;
+}
 #wrongQuestionListDetail .am-list-header {
   background: #fff;
   color: #666;

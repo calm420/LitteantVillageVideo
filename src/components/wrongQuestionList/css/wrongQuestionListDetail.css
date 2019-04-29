@@ -457,8 +457,8 @@
 }
 #wrongQuestionListDetail .export-header .Btn-bor-blue {
   background: #fff !important;
-  color: #4285F4;
-  border: 1px #4285F4 solid !important;
+  color: #F46A55;
+  border: 1px #F46A55 solid !important;
   padding: 5px 13px !important;
   border-radius: 4px;
   font-size: 15px;
@@ -484,7 +484,7 @@
   top: -2px;
 }
 #wrongQuestionListDetail .export-header input[type="checkbox"]:checked {
-  background: #fff url(../images/input-blue.png);
+  background: #fff url('../images/checkActiveRed.png') no-repeat;
   height: 18px;
   /*高度*/
   vertical-align: middle;
@@ -698,6 +698,19 @@
   padding-left: 10px;
   color: #666;
   font-size: 13px;
+}
+#wrongQuestionListDetail .emptyCont {
+  width: 100%;
+  position: absolute;
+  top: 35%;
+  height: calc(100% - 45px);
+  left: 0;
+  text-align: center;
+}
+#wrongQuestionListDetail .emptyCont div {
+  color: #999;
+  font-size: 12px;
+  padding-top: 20px;
 }
 .close-btn {
   position: absolute;

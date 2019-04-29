@@ -944,8 +944,9 @@ export default class myThemeTask extends React.Component {
         };
         return (
             <div id="wrongQuestionListDetail" style={{ height: document.body.clientHeight }}>
-                <div style={{display:this.state.showEmpty ? "block":"none"}}>
-                    空页面
+                <div className='emptyCont' style={{display:this.state.showEmpty ? "block":"none"}}>
+                    <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt=""/>
+                    <div>暂无数据</div>
                 </div>
                 <ListView
                     ref={el => this.lv = el}

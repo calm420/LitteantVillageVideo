@@ -963,7 +963,7 @@ export default class articleList extends React.Component {
                                         {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
                                         {
                                             this.state.hideType == "xmy" ?
-                                                <div className="detail_bottom" style={
+                                                <div className="detail_bottom wrongQuestion_bottom" style={
                                                     this.state.shareHidden ? { display: 'none' } : { display: 'flex' }
                                                 }>
                                                     <div className="list_bottom_item"><i

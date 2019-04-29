@@ -212,7 +212,7 @@ export default class wrongQuestionCount extends React.Component {
         return (
             <div id="wrongQuestionCount" style={{
                 height: document.body.clientHeight
-            }}>
+            }} className={calm.state.type == 'xmy' ? 'redColor' : ''}>
                 <div className='mainCont' style={{
                     height: document.documentElement.clientHeight,
                 }}>

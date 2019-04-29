@@ -44,7 +44,7 @@ export default class myThemeTask extends React.Component {
             tagValue: "请输入标签",
             stuName: "请输入学生姓名",
             stuIdArr: [],
-            showEmpty:false
+            showEmpty: false
         }
     }
     componentDidMount () {
@@ -138,7 +138,7 @@ export default class myThemeTask extends React.Component {
                 console.log(result, '科目列表')
                 if (result.success) {
                     var res = result.response;
-                    
+
                     var courseData = [];
                     for (var k in res) {
                         courseData.push({
@@ -195,13 +195,13 @@ export default class myThemeTask extends React.Component {
             onResponse: result => {
                 console.log(result, 'searchCircleOfFriends')
                 if (result.success) {
-                    if(result.response.length == 0){
+                    if (result.response.length == 0) {
                         this.setState({
-                            showEmpty:true
+                            showEmpty: true
                         })
-                    }else {
+                    } else {
                         this.setState({
-                            showEmpty:false
+                            showEmpty: false
                         })
                     }
                     var exportIdArray = this.state.exportIdArray;
@@ -229,6 +229,7 @@ export default class myThemeTask extends React.Component {
                         exportIdArray: exportIdArray,
                         initCheckIdLength: exportIdArray.length,
                     }, () => {
+
                     })
                     if ((this.initDataSource.length >= result.pager.rsCount)) {
                         this.setState({
@@ -262,6 +263,34 @@ export default class myThemeTask extends React.Component {
             defaultPageNo: currentPageNo,
         }, () => {
             this.searchCircleOfFriendsByTeacher();
+            setTimeout(() => {
+                if ($(".checkboxAll").attr("checked")) {
+                    console.log('选中全选');
+                    // $('.checkbox').attr('checked','true');
+                    var fir = document.getElementsByClassName("checkbox");
+                    [].forEach.call(fir, function (value) {
+                        value.checked = true;
+                    })
+                    var arr = initCheckId.map((v) => {
+                        return v
+                    })
+                    console.log(arr, '0');
+                    that.setState({ exportIdArray: arr })
+                } else {
+                    console.log('取消全选')
+                    // $('.checkbox').removeAttr('checked');
+                    var fir = document.getElementsByClassName("checkbox");
+                    [].forEach.call(fir, function (value) {
+                        value.checked = false;
+                    })
+                    this.setState({
+                        exportIdArray: []
+                    }, () => {
+                        console.log(this.state.exportIdArray, '取消全选');
+                    })
+                }
+
+            }, 800);
         });
     };
 
@@ -324,7 +353,7 @@ export default class myThemeTask extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail (cid, rowData) {
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.youYUid + "&cfid=" + cid + '&type=' + rowData.type+"&hideType=xmy";
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.youYUid + "&cfid=" + cid + '&type=' + rowData.type + "&hideType=xmy";
         var data = {
             method: 'openNewPage',
             url: url
@@ -441,6 +470,7 @@ export default class myThemeTask extends React.Component {
     }
 
     setExport = () => {
+        $(".checkbox").show();
         console.log('触发导出事件');
         this.setState({
             exportFlag: true,
@@ -511,6 +541,7 @@ export default class myThemeTask extends React.Component {
     }
 
     closeExport = () => {
+        $(".checkbox").hide();
         this.setState({
             exportFlag: false,
         })
@@ -545,12 +576,10 @@ export default class myThemeTask extends React.Component {
             [].forEach.call(fir, function (value) {
                 value.checked = true;
             })
-
             var arr = initCheckId.map((v) => {
                 return v
             })
             console.log(arr, '0');
-
             that.setState({ exportIdArray: arr })
         } else {
             console.log('取消全选')
@@ -720,7 +749,7 @@ export default class myThemeTask extends React.Component {
      * 跳转统计页面
      */
     toCount = () => {
-        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.youYUid + "&cid=" + this.state.courseIdArray + "&finalProject=" + this.state.project+"&type=xmy"
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionCount?uid=" + this.state.youYUid + "&cid=" + this.state.courseIdArray + "&finalProject=" + this.state.project + "&type=xmy"
         var data = {
             method: 'openNewPage',
             url: url
@@ -810,7 +839,8 @@ export default class myThemeTask extends React.Component {
     }
 
     render () {
-        console.log(this.state.showEmpty,"")
+        console.log(this.state.exportFlag, "this.state.exportFlag")
+        console.log(this.state.exportIdArray, "this.state.exportIdArray")
         var createTime = null;
         const row = (rowData, sectionID, rowID) => {
             var tagClass = '';
@@ -847,8 +877,7 @@ export default class myThemeTask extends React.Component {
             createTime = new Date(rowData.createTime).getDay();
             dom =
                 <div className='my_flex month-select'>
-                    <input style={
-                        this.state.exportFlag ? { display: 'block' } : { display: 'none' }
+                    <input style={{ display: this.state.exportFlag ? 'block' : 'none' }
                     } className="checkbox" type="checkbox" name="checked"
                         onClick={this.checkBoxClick.bind(this, rowData.cfid)} />
                     <div className="date" style={
@@ -921,7 +950,7 @@ export default class myThemeTask extends React.Component {
                         </div>
                         <div className="my_flex bottomIcon">
                             <div className='myPhoto my_flex'>
-                                <img src={rowData.userInfo.avatar} alt=""/>
+                                <img src={rowData.userInfo.avatar} alt="" />
                                 <span className='text_hidden'>{rowData.userInfo.userName}</span>
                             </div>
                             <div className="list_bottom">
@@ -949,8 +978,8 @@ export default class myThemeTask extends React.Component {
         };
         return (
             <div id="wrongQuestionListDetail" style={{ height: document.body.clientHeight }}>
-                <div className='emptyCont' style={{display:this.state.showEmpty ? "block":"none"}}>
-                    <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt=""/>
+                <div className='emptyCont' style={{ display: this.state.showEmpty ? "block" : "none" }}>
+                    <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt="" />
                     <div>暂无数据</div>
                 </div>
                 <div className='am-list-header'>
@@ -969,7 +998,7 @@ export default class myThemeTask extends React.Component {
                     }>
                         <div style={{ display: 'inline-block' }}>
                             <input id="2" className="checkboxAll" onClick={this.checkBoxAllClick.bind(this)}
-                                   type="checkbox" /><span>全选</span></div>
+                                type="checkbox" /><span>全选</span></div>
                         <button className='export-btn Btn-bor-blue close-btn ' onClick={this.exportTopic}>导出</button>
                         <button className='Btn-bor-blue  Btn-right' onClick={this.closeExport}>取消</button>
 
@@ -994,7 +1023,7 @@ export default class myThemeTask extends React.Component {
                     scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                     style={{
                         height: document.body.clientHeight - 45,
-                        display:this.state.showEmpty ? "none":"block"
+                        display: this.state.showEmpty ? "none" : "block"
                     }}
                     pullToRefresh={<PullToRefresh
                         onRefresh={this.onRefresh.bind(this, 'rightright')}
@@ -1071,7 +1100,7 @@ export default class myThemeTask extends React.Component {
                         </div>
                         <div>
                             <div className="filter-header">学生姓名</div>
-                            <div  style={{ display: 'flex' }} className="filterCont grayBg">
+                            <div style={{ display: 'flex' }} className="filterCont grayBg">
                                 <span className={this.state.stuName == '请输入学生姓名' ? 'course-init textGray' : 'course-init'} onClick={this.showStuNameModal}>{this.state.stuName}</span>
                             </div>
                         </div>

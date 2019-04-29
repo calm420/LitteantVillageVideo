@@ -611,13 +611,10 @@ export default class myThemeTask extends React.Component {
             [].forEach.call(fir, function (value) {
                 value.checked = true;
             })
-
             var arr = initCheckId.map((v) => {
                 return v
             })
-
             console.log(arr, '0');
-
             that.setState({ exportIdArray: arr })
         } else {
             console.log('取消全选')

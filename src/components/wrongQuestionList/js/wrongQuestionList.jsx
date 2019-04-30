@@ -32,7 +32,7 @@ export default class wrongQuestionList extends React.Component {
 
     componentDidMount () {
         Bridge.setShareAble("false");
-        // document.title = '校园自媒体';
+        document.title = '班级列表';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
@@ -50,6 +50,7 @@ export default class wrongQuestionList extends React.Component {
 
     }
 
+    //选择班级改变
     onSelectChange = (e, data, index) => {
         if (e.target.checked) {
             var allArr = [];
@@ -89,9 +90,9 @@ export default class wrongQuestionList extends React.Component {
                             showEmpty: true
                         })
                     } else {
-                            this.setState({
-                                showEmpty:false
-                            })
+                        this.setState({
+                            showEmpty: false
+                        })
                         var arr = [];
                         result.response.forEach((v, i) => {
                             console.log(v, "v")
@@ -128,7 +129,7 @@ export default class wrongQuestionList extends React.Component {
             window.location.href = url;
         });
     }
-
+    //跳转添加错题本
     toAddTopic = () => {
         var url = WebServiceUtil.mobileServiceURL + "publishWrongQuestion?userId=" + this.state.userId;
         var data = {
@@ -142,8 +143,8 @@ export default class wrongQuestionList extends React.Component {
     render () {
         return (
             <div id="wrongQuestionList" style={{ height: document.body.clientHeight }}>
-                <div className='emptyCont' style={{display:this.state.showEmpty ? "block":"none"}}>
-                    <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt=""/>
+                <div className='emptyCont' style={{ display: this.state.showEmpty ? "block" : "none" }}>
+                    <img src="http://www.maaee.com/Excoord_PhoneService/img/empty_maaee.png" alt="" />
                     <div>暂无数据</div>
                 </div>
                 <List>

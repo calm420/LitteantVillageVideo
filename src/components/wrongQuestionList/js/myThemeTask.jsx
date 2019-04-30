@@ -65,7 +65,7 @@ export default class myThemeTask extends React.Component {
             }, 600)
         })
     }
-
+    //将小蚂蚁账号转为有样账号
     LittleAntLogin = (userId, pwd) => {
         var _this = this;
         var param = {
@@ -138,7 +138,6 @@ export default class myThemeTask extends React.Component {
                 console.log(result, '科目列表')
                 if (result.success) {
                     var res = result.response;
-
                     var courseData = [];
                     for (var k in res) {
                         courseData.push({
@@ -252,7 +251,7 @@ export default class myThemeTask extends React.Component {
      *  ListView数据全部渲染完毕的回调
      */
     onEndReached = (event) => {
-        console.log($(".checkboxAll").attr("checked"),"check")
+        console.log($(".checkboxAll").attr("checked"), "check")
         var _this = this;
         var currentPageNo = this.state.defaultPageNo;
         if (!this.state.isLoading && !this.state.hasMore) {
@@ -548,7 +547,7 @@ export default class myThemeTask extends React.Component {
         })
     }
 
-    checkBoxClick= (cfId, obj)=> {
+    checkBoxClick = (cfId, obj) => {
         var exportIdArray = this.state.exportIdArray;
         console.log(this.state.exportIdArray, '复选操作前');
         if (obj.target.checked) {//選中
@@ -556,8 +555,8 @@ export default class myThemeTask extends React.Component {
         } else {//取消選中
             exportIdArray.splice(exportIdArray.indexOf(cfId), 1);
         }
-        console.log(exportIdArray.length,"exportIdArray.length")
-        console.log(this.state.dataSource,"this.state.")
+        console.log(exportIdArray.length, "exportIdArray.length")
+        console.log(this.state.dataSource, "this.state.")
         if (this.state.exportIdArray.length != this.initDataSource.length) {
             document.getElementsByClassName('checkboxAll')[0].checked = false;
         } else {
@@ -567,8 +566,8 @@ export default class myThemeTask extends React.Component {
             exportIdArray
         }, () => {
             console.log(this.state.exportIdArray, '复选操作后');
-            console.log(this.state.exportIdArray.length,"exportIdArray.length")
-            console.log(this.state.dataSource,"this.state.dataSource")
+            console.log(this.state.exportIdArray.length, "exportIdArray.length")
+            console.log(this.state.dataSource, "this.state.dataSource")
             if (this.state.exportIdArray.length != this.initDataSource.length) {
                 console.log("false")
                 document.getElementsByClassName('checkboxAll')[0].checked = false;
@@ -732,7 +731,7 @@ export default class myThemeTask extends React.Component {
             tagId: this.state.tagIdArray.join(','),
             classIdArr: this.state.cids,
             tagValue: this.state.tagValue,
-            stuIdArr:this.state.stuIdArr,
+            stuIdArr: this.state.stuIdArr,
             isLoading: true,
             defaultPageNo: 1,
         }, () => {
@@ -789,9 +788,9 @@ export default class myThemeTask extends React.Component {
             {
                 text: '确定', onPress: value => {
                     this.setState({
-                        tagValue: value == "" ? "请输入标签":value,
+                        tagValue: value == "" ? "请输入标签" : value,
                     }, () => {
-                        
+
                     });
                 }
             },
@@ -816,7 +815,7 @@ export default class myThemeTask extends React.Component {
             {
                 text: '确定', onPress: value => {
                     this.setState({
-                        stuName: value == "" ? "请输入学生姓名":value,
+                        stuName: value == "" ? "请输入学生姓名" : value,
                     }, () => {
                         this.getUserContactsUserIdsByClaZZIdsAndStudentName(this.state.stuName)
                         console.log(this.state.stuName, "stuName")
@@ -835,7 +834,7 @@ export default class myThemeTask extends React.Component {
             "method": 'getUserContactsUserIdsByClaZZIdsAndStudentName',
             "userId": this.state.userId,
             "claZZIds": this.state.cids,
-            "name": name == "请输入学生姓名" ? "":name
+            "name": name == "请输入学生姓名" ? "" : name
         };
         WebServiceUtil.requestLittleAntApi9006(JSON.stringify(param), {
             onResponse: result => {
@@ -1157,7 +1156,6 @@ export default class myThemeTask extends React.Component {
                     </div>
                 </div>
                 {/*篩選　ｅｎｄ*/}
-
                 <div className="mask" onClick={this.closeFilter} style={
                     this.state.filterFlag ? {
                         height: this.state.clientHeight,

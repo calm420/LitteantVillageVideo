@@ -11,6 +11,18 @@ var dataSource = new ListView.DataSource({
 });
 var that;
 const initCheckId = [];
+
+//数组去重
+function uniq (array) {
+    var temp = []; //一个新的临时数组
+    for (var i = 0; i < array.length; i++) {
+        if (temp.indexOf(array[i]) == -1) {
+            temp.push(array[i]);
+        }
+    }
+    return temp;
+}
+
 export default class myThemeTask extends React.Component {
     constructor(props) {
         super(props);
@@ -48,6 +60,7 @@ export default class myThemeTask extends React.Component {
         }
     }
     componentDidMount () {
+        document.title = "错题本列表"
         Bridge.setShareAble("false");
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -203,7 +216,7 @@ export default class myThemeTask extends React.Component {
                             showEmpty: false
                         })
                     }
-                    var exportIdArray = this.state.exportIdArray;
+                    // var exportIdArray = this.state.exportIdArray;
                     this.state.rsCount = result.pager.rsCount;
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
                         _this.initDataSource.splice(0);
@@ -216,7 +229,7 @@ export default class myThemeTask extends React.Component {
                     // for (var k in this.initDataSource) {
                     //     exportIdArray.push(this.initDataSource[k].cfid)
                     // }
-                    console.log('45678asbdjgakjgsdkjasgj')
+                    initCheckId.splice(0);
                     result.response.forEach(function (v, i) {
                         initCheckId.push(v.cfid)
                     })
@@ -225,8 +238,8 @@ export default class myThemeTask extends React.Component {
                         isLoading: true,
                         refreshing: false,
                         initLoading: false,
-                        exportIdArray: exportIdArray,
-                        initCheckIdLength: exportIdArray.length,
+                        // exportIdArray: exportIdArray,
+                        // initCheckIdLength: exportIdArray.length,
                     }, () => {
 
                     })
@@ -275,7 +288,7 @@ export default class myThemeTask extends React.Component {
                         return v
                     })
                     console.log(arr, '0');
-                    that.setState({ exportIdArray: arr })
+                    that.setState({ exportIdArray: uniq(arr) })
                 } else {
                     console.log('取消全选')
                     // $('.checkbox').removeAttr('checked');
@@ -469,6 +482,7 @@ export default class myThemeTask extends React.Component {
         })
     }
 
+    //触发导出事件
     setExport = () => {
         $(".checkbox").show();
         console.log('触发导出事件');
@@ -493,14 +507,17 @@ export default class myThemeTask extends React.Component {
         })
     }
 
+
+
+    //点击导出
     exportTopic = () => {
         console.log('导出')
         if (this.state.exportIdArray.length > 0) {
             console.log(this.state.exportIdArray);
             var param = {
                 "method": 'exportPdfFlowHistoricProcessInstanceById',
-                "WrongTopicBookIds": this.state.exportIdArray.join(","),
-                "userId": this.state.userId,
+                "WrongTopicBookIds": uniq(this.state.exportIdArray).join(","),
+                "userId": this.state.youYUid,
             };
             console.log(param, "param")
             WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
@@ -540,15 +557,27 @@ export default class myThemeTask extends React.Component {
 
     }
 
+    //取消导出
     closeExport = () => {
         $(".checkbox").hide();
+        document.getElementsByClassName('checkboxAll')[0].checked = false;
+        var fir = document.getElementsByClassName("checkbox");
+        [].forEach.call(fir, function (value) {
+            value.checked = false;
+        })
+        this.setState({
+            exportIdArray: []
+        }, () => {
+            console.log(this.state.exportIdArray, '取消全选');
+        })
         this.setState({
             exportFlag: false,
         })
     }
 
+    //点击子选择
     checkBoxClick = (cfId, obj) => {
-        var exportIdArray = this.state.exportIdArray;
+        var exportIdArray = uniq(this.state.exportIdArray);
         console.log(this.state.exportIdArray, '复选操作前');
         if (obj.target.checked) {//選中
             exportIdArray.push(cfId);
@@ -567,7 +596,7 @@ export default class myThemeTask extends React.Component {
         }, () => {
             console.log(this.state.exportIdArray, '复选操作后');
             console.log(this.state.exportIdArray.length, "exportIdArray.length")
-            console.log(this.state.dataSource, "this.state.dataSource")
+            console.log(this.initDataSource.length, "this.initDataSource.length")
             if (this.state.exportIdArray.length != this.initDataSource.length) {
                 console.log("false")
                 document.getElementsByClassName('checkboxAll')[0].checked = false;
@@ -580,18 +609,24 @@ export default class myThemeTask extends React.Component {
 
     //全选
     checkBoxAllClick (obj) {
+
         if (obj.target.checked) {
             console.log('选中全选');
             // $('.checkbox').attr('checked','true');
             var fir = document.getElementsByClassName("checkbox");
+            console.log(fir, "fir");
             [].forEach.call(fir, function (value) {
                 value.checked = true;
             })
-            var arr = initCheckId.map((v) => {
+            var arr = [];
+            arr = initCheckId.map((v) => {
                 return v
             })
             console.log(arr, '0');
-            that.setState({ exportIdArray: arr })
+            console.log(initCheckId, 'initCheckId');
+            that.setState({ exportIdArray: uniq(arr) }, () => {
+                console.log(this.state.exportIdArray, "exportIdArray")
+            })
         } else {
             console.log('取消全选')
             // $('.checkbox').removeAttr('checked');
@@ -744,6 +779,18 @@ export default class myThemeTask extends React.Component {
             console.log(this.state.classIdArr, 'classIdArr');
             this.searchCircleOfFriendsByTeacher()
             this.closeFilter();
+            setTimeout(() => {
+                document.getElementsByClassName('checkboxAll')[0].checked = false;
+                var fir = document.getElementsByClassName("checkbox");
+                [].forEach.call(fir, function (value) {
+                    value.checked = false;
+                })
+                this.setState({
+                    exportIdArray: []
+                }, () => {
+                    console.log(this.state.exportIdArray, '取消全选');
+                })
+            }, 300)
         })
 
 
@@ -839,9 +886,17 @@ export default class myThemeTask extends React.Component {
         WebServiceUtil.requestLittleAntApi9006(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, 'name');
-                this.setState({
-                    stuIdArr: result.response
-                })
+                if (result.response.length == 0) {
+                    Toast.info("该学生不存在", 1)
+                    this.setState({
+                        stuIdArr: this.state.stuIdArr
+                    })
+                } else {
+                    this.setState({
+                        stuIdArr: result.response
+                    })
+
+                }
 
             },
             onError: function (error) {
@@ -1097,25 +1152,18 @@ export default class myThemeTask extends React.Component {
                                     onClick={this.masteryClick.bind(this, 3)}>完全懂</span>
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <div className="filter-header">标签</div>
                             <div style={{ display: 'flex' }} className="filterCont grayBg">
                                 <span className={this.state.tagValue == '请输入标签' ? 'course-init textGray' : 'course-init'} onClick={this.showTagModal}>{this.state.tagValue}</span>
-                                {/* {
-                                    this.state.tagData.map(function (value, index) {
-                                        return <span
-                                            className={that.state.tagIdArray.indexOf(String(value.tagId)) == -1 ? 'tag-init' : 'tag-active'}
-                                            onClick={that.tagClick.bind(that, String(value.tagId))}>{value.tagTitle}</span>
-                                    })
-                                } */}
                             </div>
-                        </div>
-                        <div>
+                        </div> */}
+                        {/* <div>
                             <div className="filter-header">学生姓名</div>
                             <div style={{ display: 'flex' }} className="filterCont grayBg">
                                 <span className={this.state.stuName == '请输入学生姓名' ? 'course-init textGray' : 'course-init'} onClick={this.showStuNameModal}>{this.state.stuName}</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="filterFooter">
                         <button onClick={this.closeFilter}>取消</button>

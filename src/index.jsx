@@ -389,7 +389,7 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/wrongQuestionList?uid=23836&pwd=xmy00000000"
+                            to="/wrongQuestionList?uid=23836&pwd=wd123456"
                             style={{ fontSize: '24px' }}>教师端错题本列表</Link>
                     </li>
                 </ul>

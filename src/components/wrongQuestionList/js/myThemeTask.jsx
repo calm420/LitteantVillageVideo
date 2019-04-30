@@ -67,10 +67,11 @@ export default class myThemeTask extends React.Component {
         var searchArray = locationSearch.split("&");
         var cids = searchArray[0].split('=')[1];
         var userId = searchArray[1].split('=')[1];
-        var pwd = searchArray[2].split('=')[1];
-        this.LittleAntLogin(userId, pwd)
+        // var pwd = searchArray[2].split('=')[1];
+        this.LittleAntLoginByAntId(userId)
         this.setState({
-            cids, userId, pwd
+            cids, userId,
+            // pwd
         }, () => {
             this.getUserContactsUserIdsByClaZZIdsAndStudentName("")
             setTimeout(() => {
@@ -79,12 +80,12 @@ export default class myThemeTask extends React.Component {
         })
     }
     //将小蚂蚁账号转为有样账号
-    LittleAntLogin = (userId, pwd) => {
+    LittleAntLoginByAntId = (userId) => {
         var _this = this;
         var param = {
-            "method": 'LittleAntLogin',
-            "colAccount": "te" + userId,
-            "colPasswd": pwd,
+            "method": 'LittleAntLoginByAntId',
+            "antId": userId,
+            // "colPasswd": pwd,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
@@ -143,41 +144,51 @@ export default class myThemeTask extends React.Component {
     getCourseAndCircleOfFriendsCount (youYUid) {
         var _this = this;
         var param = {
-            "method": 'getCourseAndCircleOfFriendsCount',
-            "uid": youYUid,
+            "method": 'getCourseByUserIdAndDefianceCourseAll',
+            "userId": youYUid,
         };
         WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, '科目列表')
                 if (result.success) {
-                    var res = result.response;
-                    var courseData = [];
-                    for (var k in res) {
-                        courseData.push({
-                            name: k,
-                            id: res[k].cid
+                    if ($.isEmptyObject(result.response)) {
+                        this.setState({
+                            courseIdArray: -1,
+                            project: ""
+                        }, () => {
+                            
+                        })
+                    } else {
+                        var res = result.response;
+                        var courseData = [];
+                        for (var k in res) {
+                            courseData.push({
+                                name: res[k].courseName,
+                                id: res[k].cid
+                            })
+                        }
+                        // var dom = [];
+                        // for(var k in res){
+                        //     dom.push(
+                        //         <span className={this.state.courseIdArray.indexOf(res[k].cid) == -1?"course-init":"course-active"} onClick={this.courseClick.bind(this,res[k].cid)}>{k}</span>
+                        //     )
+                        // }
+                        // console.log(this.state.courseIdArray);
+                        // console.log(this.state.courseIdArray.indexOf(res[k].cid),'``````````````');
+                        // console.log(dom)
+                        console.log(courseData, "courseData")
+                        this.setState({
+                            courseIdArray: courseData[0].id,
+                            project: courseData[0].name
+                        }, () => {
+                            // this.gitErrorTagsByCourseId(this.state.courseIdArray)
+                        })
+                        this.setState({
+                            courseData: courseData,
+
                         })
                     }
-                    // var dom = [];
-                    // for(var k in res){
-                    //     dom.push(
-                    //         <span className={this.state.courseIdArray.indexOf(res[k].cid) == -1?"course-init":"course-active"} onClick={this.courseClick.bind(this,res[k].cid)}>{k}</span>
-                    //     )
-                    // }
-                    // console.log(this.state.courseIdArray);
-                    // console.log(this.state.courseIdArray.indexOf(res[k].cid),'``````````````');
-                    // console.log(dom)
-                    console.log(courseData, "courseData")
-                    this.setState({
-                        courseIdArray: courseData[0].id,
-                        project: courseData[0].name
-                    }, () => {
-                        // this.gitErrorTagsByCourseId(this.state.courseIdArray)
-                    })
-                    this.setState({
-                        courseData: courseData,
 
-                    })
                 }
 
             },

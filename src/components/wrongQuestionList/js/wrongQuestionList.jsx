@@ -37,9 +37,10 @@ export default class wrongQuestionList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        var pwd = searchArray[1].split('=')[1];
+        // var pwd = searchArray[1].split('=')[1];
         this.setState({
-            userId, pwd
+            userId, 
+            // pwd
         })
         window.addEventListener('resize', this.onWindwoResize);
         this.getClazzesByAccount(userId);
@@ -120,7 +121,7 @@ export default class wrongQuestionList extends React.Component {
         this.state.classId.forEach((v, i) => {
             idArr.push(v.value)
         })
-        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionListDetail?classIds=" + idArr.join(",") + "&uid=" + this.state.userId + "&pwd=" + this.state.pwd;
+        var url = WebServiceUtil.mobileServiceURL + "wrongQuestionListDetail?classIds=" + idArr.join(",") + "&uid=" + this.state.userId;
         var data = {
             method: 'openNewPage',
             url: url

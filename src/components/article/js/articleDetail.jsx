@@ -630,12 +630,14 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = () => {
+        console.log($('.content').text(),"89")
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,
-            shareTitle: $('.content').text(),
+            shareTitle:this.state.data.articleTitle,
             shareUserName: this.state.data.articleTitle,
         };
+        console.log(data,"data")
         Bridge.callHandler(data, null, function (error) {
             Toast.info('分享文章失败')
         });

@@ -236,6 +236,18 @@ const welcome = (location, cb) => {
     })
 };
 
+//后台管理系统
+const villageCardSystemLogin =  (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/VillageCardSystem/js/villageCardSystemLogin.jsx').default)
+    })
+};
+const VillageCardSystemHome =  (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/VillageCardSystem/js/VillageCardSystemHome.jsx').default)
+    })
+};
+
 
 import './index.less';
 
@@ -362,6 +374,8 @@ ReactDOM.render(
             <Route path="themeTaskDetail" getComponent={themeTaskDetail} />
             <Route path="selectedPeople" getComponent={selectedPeople} />
             <Route path="myThemeTask" getComponent={myThemeTask} />
+            <Route path="VillageCardSystemHome" getComponent={VillageCardSystemHome} />
+            <Route path="villageCardSystemLogin" getComponent={villageCardSystemLogin} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />
         </Route>

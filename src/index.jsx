@@ -323,6 +323,11 @@ class Index extends React.Component {
                             to="/mobileEditor?userId=31"
                             style={{ fontSize: '24px' }}>手机编辑器</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/villageCardSystemLogin?userId=31"
+                            style={{ fontSize: '24px' }}>登录</Link>
+                    </li>
                 </ul>
             </div>
         );

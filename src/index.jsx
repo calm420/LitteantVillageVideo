@@ -183,11 +183,6 @@ const playVideo = (location, cb) => {
     }, 'playVideo')
 };
 
-const fileDownload = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/fileDownload/js/fileDownload').default)
-    }, 'fileDownload')
-};
 
 //手机编辑器
 const mobileEditor = (location, cb) => {
@@ -197,20 +192,7 @@ const mobileEditor = (location, cb) => {
 };
 
 
-/**
- * 错题本
- */
-const publishWrongQuestion = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/wrongQuestion/js/publishWrongQuestion').default)
-    }, 'publishWrongQuestion')
-}
 
-const wrongQuestionCount = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/wrongQuestion/js/wrongQuestionCount').default)
-    }, 'wrongQuestionCount')
-}
 
 //发布主题页面
 const themeTask = (location, cb) => {
@@ -239,12 +221,7 @@ const myThemeTask = (location, cb) => {
     }, 'myThemeTask')
 };
 
-// 個人中心錯題本科目列表
-const topicWrongList = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/article/js/topicWrongList').default)
-    }, 'topicWrongList')
-};
+
 
 // 微信登录
 const wxLogin = (location, cb) => {
@@ -258,16 +235,7 @@ const welcome = (location, cb) => {
         cb(null, require('./components/welcome/welcome').default)
     })
 };
-const wrongQuestionList = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/wrongQuestionList/js/wrongQuestionList').default)
-    })
-};
-const wrongQuestionListDetail = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/wrongQuestionList/js/myThemeTask').default)
-    })
-};
+
 
 import './index.less';
 
@@ -289,10 +257,6 @@ class Index extends React.Component {
                         style={{ fontSize: '24px' }}>发布主题</Link></li>
                     <li><Link to="/myThemeTask?userId=53&targetId=1"
                         style={{ fontSize: '24px' }}>我的主题列表</Link></li>
-                    <li><Link to="/myThemeTask?userId=17&targetId=0"
-                        style={{ fontSize: '24px' }}>我的错题本</Link></li>
-                    <li><Link to="/topicWrongList?userId=53"
-                        style={{ fontSize: '24px' }}>我的错题本</Link></li>
                     <li><Link to="/myArticleList?userId=53"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
@@ -344,53 +308,8 @@ class Index extends React.Component {
                     </li>
                     <li>
                         <Link
-                            to="/fileDownload?fileType=youyang"
-                            style={{ fontSize: '24px' }}>文件下载youyang</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/fileDownload?fileType=littleAntTe"
-                            style={{ fontSize: '24px' }}>文件下载littleAntTe</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/fileDownload?fileType=littleAntSt"
-                            style={{ fontSize: '24px' }}>文件下载littleAntSt</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/fileDownload?fileType=littleAntFa"
-                            style={{ fontSize: '24px' }}>文件下载littleAntFa</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/fileDownload?fileType=elearning"
-                            style={{ fontSize: '24px' }}>文件下载elearning</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/fileDownload?fileType=classroom"
-                            style={{ fontSize: '24px' }}>文件下载classroom</Link>
-                    </li>
-                    <li>
-                        <Link
                             to="/mobileEditor?userId=31"
                             style={{ fontSize: '24px' }}>手机编辑器</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/publishWrongQuestion?"
-                            style={{ fontSize: '24px' }}>错题本</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/wrongQuestionCount?uid=53&cid=2&finalProject=语文"
-                            style={{ fontSize: '24px' }}>统计</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/wrongQuestionList?uid=23836&pwd=wd123456"
-                            style={{ fontSize: '24px' }}>教师端错题本列表</Link>
                     </li>
                 </ul>
             </div>
@@ -438,19 +357,13 @@ ReactDOM.render(
             <Route path="userAdministration" getComponent={userAdministration} />
             <Route path="accessManagement" getComponent={accessManagement} />
             <Route path="playVideo" getComponent={playVideo} />
-            <Route path="fileDownload" getComponent={fileDownload} />
             <Route path="mobileEditor" getComponent={mobileEditor} />
-            <Route path="publishWrongQuestion" getComponent={publishWrongQuestion} />
-            <Route path="wrongQuestionCount" getComponent={wrongQuestionCount} />
             <Route path="themeTask" getComponent={themeTask} />
             <Route path="themeTaskDetail" getComponent={themeTaskDetail} />
             <Route path="selectedPeople" getComponent={selectedPeople} />
             <Route path="myThemeTask" getComponent={myThemeTask} />
-            <Route path="topicWrongList" getComponent={topicWrongList} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />
-            <Route path="wrongQuestionList" getComponent={wrongQuestionList} />
-            <Route path="wrongQuestionListDetail" getComponent={wrongQuestionListDetail} />
         </Route>
     </Router>
     ,

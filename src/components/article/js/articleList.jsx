@@ -10,7 +10,6 @@ var dataSource = new ListView.DataSource({
 const tabs = [
     {title: '热点', value: '1'},
     {title: '本校', value: '0'},
-    {title: '圈子', value: '2'}
 ];
 var AscrollView;
 var BscrollView;
@@ -892,7 +891,6 @@ export default class articleList extends React.Component {
                     }>
                         <i className="showPubli_box-arrow"></i>
                         <div className="line_public" onClick={this.publishArt.bind(this, 'article')}><i className="i-WeMedia"></i>发布自媒体</div>
-                        <div className="line_public" onClick={this.publishArt.bind(this, '')}><i className="i-WrongTopic"></i>发布错题本</div>
                         <div onClick={this.publishArt.bind(this, 'theme')}><i className="i-PublishThematicTasks"></i>发布主题任务</div>
                     </div>
                 </div>

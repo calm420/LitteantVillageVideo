@@ -1,5 +1,5 @@
 var isDebug = true;
-var localDomain = "192.168.50.119";   //请求地址
+var localDomain = "192.168.50.15";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.73";    //跳转地址http:
 var isSafeDebug = true;     //false则为隐藏主页列表，本地调试改为true
@@ -7,7 +7,7 @@ var isSafeDebug = true;     //false则为隐藏主页列表，本地调试改为
 
 
 // //小蚂蚁webService地址
-const apiWebServiceURLOfLocalsApi = "http://" + localDomain + ":9006/Excoord_ApiServer/webservice";
+const apiWebServiceURLOfLocalsApi = "http://" + localDomain + ":6013/Excoord_VillageVideoApiServer/webservice";
 const apiWebServiceURLOfRemoteApi = "https://www.maaee.com/Excoord_For_Education/webservice";
 var apiWebServiceURLApi = isDebug ? apiWebServiceURLOfLocalsApi : apiWebServiceURLOfRemoteApi;
 // //云校本地测试webService地址
@@ -38,6 +38,24 @@ function WebServiceUtil() {
 
 WebServiceUtil.mobileServiceURL = isDebugLocal ? mobileURLOfLocal : mobileURLOfRemote;
 
+/**
+ * 不带请求头的ajax---云校
+ * @param data
+ * @param listener
+ */
+WebServiceUtil.requestLittleAntApi6013 = function (data, listener) {
+    $.ajax({
+        type: "post",
+        url: apiWebServiceURLApi,
+        data: {params: data},
+        dataType: "json",
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
 /**
  * 不带请求头的ajax---云校
  * @param data

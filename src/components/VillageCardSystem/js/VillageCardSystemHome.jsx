@@ -1,5 +1,5 @@
 import React from "react";
-import { ListView, PullToRefresh, Toast, Accordion, List,InputItem } from 'antd-mobile';
+import { ListView, PullToRefresh, Toast, Accordion, List, InputItem } from 'antd-mobile';
 import Input from "antd-mobile/lib/input-item/Input";
 import '../css/VillageCardSystemHome.less'
 var calm;
@@ -36,11 +36,15 @@ export default class VillageCardSystemHome extends React.Component {
                 },
             ],
             inputDivs: [],
-            addInputList: [],
+            addInputList: [{
+                inputValue: "",
+            }],
+            inputFirstValue: ""
         }
     }
 
     componentDidMount () {
+        this.buildAddList()
         Bridge.setShareAble("false");
         document.title = "后台管理系统"
         var locationHref = window.location.href;
@@ -89,23 +93,89 @@ export default class VillageCardSystemHome extends React.Component {
                 <div>
                     <InputItem
                         placeholder="请输入组名称"
-                        onChange={this.inputOnChange.bind(this, i)} 
+                        onChange={this.inputOnChange.bind(this, i)}
                         value={this.state.addInputList[i].inputValue}
                     >
                     </InputItem>
-                    <span>删除</span>
+                    <span style={{ display: i == 0 ? "none" : "block" }}>删除</span>
                 </div>
             </div>)
         })
         this.setState({ inputDivs: arr })
     }
 
-    submitInput = ()=>{
+    submitInput = () => {
         var inputArr = []
-        this.state.addInputList.forEach((v,i)=>{
+        inputArr.push(this.state.inputFirstValue)
+        this.state.addInputList.forEach((v, i) => {
             inputArr.push(v.inputValue)
         })
-        console.log("",inputArr)
+        var param = {
+            "method": 'createVillageGroup',
+            "groupNames": inputArr.join(","),
+        };
+        console.log("param", param)
+        $(".villageMask").hide();
+        $(".villageMaskInner").hide();
+        // WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+        //     onResponse: result => {
+        //     },
+        //     onError: function (error) {
+        //         Toast.fail(error, 1);
+        //     }
+        // });
+    }
+
+    inputTheirstFOnChange = (value) => {
+        this.setState({
+            inputFirstValue: value
+        })
+        console.log(value, "vvv")
+    }
+
+
+
+
+    execClick = () => {
+        document.execCommand("copy");
+    }
+
+
+    execCopy = (event) => {
+        var thisDiv = document.getElementById("textDiv2");
+        if (this.isIE()) {
+            if (window.clipboardData) {
+                window.clipboardData.setData("Text", thisDiv.textContent);
+                alert(window.clipboardData.getData("Text"));
+            }
+        } else {
+            event.preventDefault();
+            if (event.clipboardData) {
+                event.clipboardData.setData("text/plain", thisDiv.textContent);
+                alert(event.clipboardData.getData("text"));
+            }
+        }
+    }
+
+    isIE = () => {
+        var input = window.document.createElement("input");
+        //"!window.ActiveXObject" is evaluated to true in IE11
+        if (window.ActiveXObject === undefined) return null;
+        if (!window.XMLHttpRequest) return 6;
+        if (!window.document.querySelector) return 7;
+        if (!window.document.addEventListener) return 8;
+        if (!window.atob) return 9;
+        //"!window.document.body.dataset" is faster but the body is null when the DOM is not
+        //ready. Anyway, an input tag needs to be created to check if IE is being
+        //emulated
+        if (!input.dataset) return 10;
+        return 11;
+    }
+
+    inputOnvillageNameChange=(value)=>{
+        this.setState({
+            villageName:value
+        })
     }
 
     render () {
@@ -149,7 +219,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <span>李家村</span>
                             <div className='btn'>
                                 <span>编辑名称</span>
-                                <span>编辑介绍</span>
+                                <span>编辑分组</span>
                                 <span>邀请码</span>
                             </div>
                         </div>
@@ -170,25 +240,49 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="villageMask" style={{display:"none"}}></div>
-                <div className='popBox villageMaskInner' style={{display:"none"}}>
+
+
+                <div className="villageMask" ></div>
+                <div className='popBox villageMaskInner' >
                     <div>
+
                         <div className="editHeader">
                             编辑分组
                         </div>
                         <div className="editCont">
-                            <input type="text" placeholder="请输入分组名称" />
-                            <span className="editBtn" onClick={this.addInput}>
-                            添加
-                        </span>
                         </div>
-
                         <div>
                             {this.state.inputDivs}
+                            <span className="editBtn" onClick={this.addInput}>
+                                添加
+                            </span>
                             <div className='submitBtn'>
                                 <span onClick={this.submitInput}>确定</span>
                             </div>
                         </div>
+                    </div>
+
+
+                </div>
+
+                {/* 编辑名称 */}
+                <div>
+                    <InputItem
+                        placeholder="请输入村名称"
+                        onChange={this.inputOnvillageNameChange}
+                        value={this.state.villageName}
+                    >
+                    </InputItem>
+                </div>
+
+                {/* 邀请码 */}
+                <div className="">
+                    <div className="editHeader">
+                        邀请码
+                                </div>
+                    <div className="editCont">
+                        <div id="textDiv2">这里是要复制的文字2eee</div>
+                        <a onClick={this.execClick} onCopy={this.execCopy}>复制</a>
                     </div>
                 </div>
             </div>

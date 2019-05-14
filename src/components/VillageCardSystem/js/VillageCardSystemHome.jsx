@@ -178,6 +178,16 @@ export default class VillageCardSystemHome extends React.Component {
         })
     }
 
+    editorVillageName=()=>{
+        $(".editorPop").show();
+        $(".villageMask").show();
+    }
+
+    editorCodeName=()=>{
+        $(".codePop").show();
+        $(".villageMask").show();
+    }
+
     render () {
         return (
             <div id="VillageCardSystemHome" style={{
@@ -218,9 +228,9 @@ export default class VillageCardSystemHome extends React.Component {
                         <div className="rightHeader my_flex">
                             <span>李家村</span>
                             <div className='btn'>
-                                <span>编辑名称</span>
+                                <span onClick={this.editorVillageName}>编辑名称</span>
                                 <span>编辑分组</span>
-                                <span>邀请码</span>
+                                <span  onClick={this.editorCodeName}>邀请码</span>
                             </div>
                         </div>
                         <div className="rightContent">
@@ -266,23 +276,35 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
 
                 {/* 编辑名称 */}
-                <div>
+                <div className="editorPop villageMaskInner" style={{display:"none"}}>
                     <InputItem
                         placeholder="请输入村名称"
                         onChange={this.inputOnvillageNameChange}
                         value={this.state.villageName}
                     >
                     </InputItem>
+                    <div className='submitBtn'>
+                        <div className='my_flex'>
+                            <span>确定</span>
+                            <span>取消</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 邀请码 */}
-                <div className="">
+                <div className="codePop villageMaskInner" style={{display:"none"}}>
                     <div className="editHeader">
                         邀请码
                                 </div>
                     <div className="editCont">
                         <div id="textDiv2">这里是要复制的文字2eee</div>
                         <a onClick={this.execClick} onCopy={this.execCopy}>复制</a>
+                        <div className='submitBtn'>
+                            <div className='my_flex'>
+                                <span>确定</span>
+                                <span>取消</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

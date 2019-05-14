@@ -1,5 +1,6 @@
 import React from "react";
-import { ListView, PullToRefresh, Toast, Accordion, List } from 'antd-mobile';
+import { ListView, PullToRefresh, Toast, Accordion, List,InputItem } from 'antd-mobile';
+import Input from "antd-mobile/lib/input-item/Input";
 
 var calm;
 export default class VillageCardSystemHome extends React.Component {
@@ -33,7 +34,9 @@ export default class VillageCardSystemHome extends React.Component {
                 {
                     title: "学习榜", active: "false"
                 },
-            ]
+            ],
+            inputDivs: [],
+            addInputList: [],
         }
     }
 
@@ -46,23 +49,66 @@ export default class VillageCardSystemHome extends React.Component {
         var auditorId = searchArray[0].split('=')[1];
 
     }
-    
+
     onChangeLeft = (key) => {
-        console.log(key,"onChangeLeft");
+        console.log(key, "onChangeLeft");
     }
     onChangeRightContent = (key) => {
         console.log(key);
     }
 
-    clickArticalItem=(index)=>{
-
+    clickArticalItem = (index) => {
+        console.log(index, "index")
     }
-    clickCardItem=(index)=>{
-        console.log(index,"index")
+    clickCardItem = (index) => {
+        console.log(index, "index")
+    }
+
+
+    addInput = () => {
+        this.state.addInputList.push({
+            inputValue: "",
+        })
+        this.buildAddList()
+    }
+
+    inputOnChange = (index, value) => {
+        this.state.addInputList[index].inputValue = value;
+        this.buildAddList()
+    }
+
+    /**
+    * 根据数据数组构建批量上传列表
+    */
+    buildAddList () {
+        var listArr = this.state.addInputList;
+        var arr = [];
+        listArr.forEach((v, i) => {
+            console.log(v, "v")
+            arr.push(<div className="listCont">
+                <div>
+                    <InputItem
+                        placeholder="请输入组名称"
+                        onChange={this.inputOnChange.bind(this, i)} 
+                        value={this.state.addInputList[i].inputValue}
+                    >
+                    </InputItem>
+                    <span>删除</span>
+                </div>
+            </div>)
+        })
+        this.setState({ inputDivs: arr })
+    }
+
+    submitInput = ()=>{
+        var inputArr = []
+        this.state.addInputList.forEach((v,i)=>{
+            inputArr.push(v.inputValue)
+        })
+        console.log("",inputArr)
     }
 
     render () {
-
         return (
             <div id="myCollection" style={{
                 height: document.body.clientHeight
@@ -79,14 +125,14 @@ export default class VillageCardSystemHome extends React.Component {
                             <Accordion.Panel header="文章审核" className="pad">
                                 {
                                     this.state.articalType.map((v, i) => {
-                                        return <div onClick={this.clickArticalItem.bind(this,i)}>{v.title}</div>
+                                        return <div onClick={this.clickArticalItem.bind(this, i)}>{v.title}</div>
                                     })
                                 }
                             </Accordion.Panel>
                             <Accordion.Panel header="班牌编辑" className="pad">
                                 {
                                     this.state.editCard.map((v, i) => {
-                                        return <div onClick={this.clickCardItem.bind(this,i)}>{v.title}</div>
+                                        return <div onClick={this.clickCardItem.bind(this, i)}>{v.title}</div>
                                     })
                                 }
                             </Accordion.Panel>
@@ -100,6 +146,11 @@ export default class VillageCardSystemHome extends React.Component {
                 <div>
                     <div className="rightHeader">
                         <span>李家村</span>
+                        <div>
+                            <button>编辑名称</button>
+                            <button>编辑介绍</button>
+                            <button>邀请码</button>
+                        </div>
                     </div>
                     <div className="rightContent">
                         <Accordion accordion openAnimation={{}} className="my-accordion" onChange={this.onChangeRightContent}>
@@ -115,6 +166,22 @@ export default class VillageCardSystemHome extends React.Component {
                                 text text text text text text text text text text text text text text text
                             </Accordion.Panel>
                         </Accordion>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="editHeader">
+                            编辑分组
+                        </div>
+                        <input type="text" placeholder="请输入分组名称" />
+                        <span className="editBtn" onClick={this.addInput}>
+                            添加
+                        </span>
+                        <div>
+                            {this.state.inputDivs}
+                            <span onClick={this.submitInput}>确定</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { WhiteSpace, SearchBar, Button, WingBlank, Result, Toast, InputItem } from 'antd-mobile';
+import '../css/villageReg.less'
 var calm;
 export default class villageReg extends React.Component {
     constructor(props) {
@@ -114,14 +115,15 @@ export default class villageReg extends React.Component {
 
     //邀请码来源
     showCode = () => {
+        $(".villageMask").show();
         $(".codeSource").show();
     }
 
     render () {
         return (
             <div id='villageReg'>
-                <div onClick={this.schoolOnClick}>请选择自己村子所在名称</div>
-                <div onClick={this.schoolOnClick}>请选择自己小组所在名称</div>
+                <div className='inputWrap' onClick={this.schoolOnClick}>请选择自己村子所在名称</div>
+                <div className='inputWrap' onClick={this.schoolOnClick}>请选择自己小组所在名称</div>
                 <InputItem
                     className="add_element"
                     placeholder="请输入邀请码"
@@ -136,8 +138,9 @@ export default class villageReg extends React.Component {
                     onChange={this.inputOnNameChange}
                 >
                 </InputItem>
-                <div onClick={this.showCode}>邀请码来源</div>
-                <div className="codeSource" style={{ display: "none" }}>邀请码来源于布拉布拉布拉布拉</div>
+                <div className='codeBtn' onClick={this.showCode}>邀请码来源</div>
+                <div className="villageMask"  style={{ display: "none" }}></div>
+                <div className="codeSource villageMaskInner" style={{ display: "none" }}>邀请码来源于布拉布拉布拉布拉</div>
                 <div className="stuAccountRegist">
                     <div className="mask" onClick={this.exitSchoolInput} style={{ display: 'none' }}></div>
                     <div className='updateModel' style={{ display: 'none' }}>
@@ -151,7 +154,7 @@ export default class villageReg extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div>确定</div>
+                <div className='submitBtn'><span>确定</span></div>
             </div>
         )
     }

@@ -9,7 +9,7 @@ export default class villageCardSystemLogin extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount () {
         document.title = "登录页面";
         Bridge.setRefreshAble(false);
         var locationHref = decodeURI(window.location.href);
@@ -98,7 +98,7 @@ export default class villageCardSystemLogin extends React.Component {
             "colAccount": $('#act').val().trim(),
             "colPasswd": $('#pwd').val().trim()
         };
-        console.log(param,"param")
+        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
@@ -126,7 +126,7 @@ export default class villageCardSystemLogin extends React.Component {
                         })
                         var url = WebServiceUtil.mobileServiceURL + 'VillageCardSystemHome?';
                         window.location.href = url;
-                    }else {
+                    } else {
                         // Toast.info("仅支持老师登录！")
                     }
                 } else {
@@ -184,7 +184,7 @@ export default class villageCardSystemLogin extends React.Component {
         })
 
     }
-    render() {
+    render () {
         return (
             <div id="villageCardSystemLogin">
                 <div className="account empty_center">

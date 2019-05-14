@@ -650,8 +650,10 @@ export default class VillageCardSystemHome extends React.Component {
                                 <span onClick={this.submitInput}>确定</span>
                             </div>
                             <div className='submitBtn btnGroup' style={{ display: "none" }}>
-                                <span onClick={this.submitInput}>确定</span>
-                                <span onClick={this.cancelGroupInput}>取消</span>
+                                <div className="my_flex">
+                                    <span onClick={this.submitInput}>确定</span>
+                                    <span onClick={this.cancelGroupInput}>取消</span>
+                                </div>
                             </div>
                         </div>
                     </div>

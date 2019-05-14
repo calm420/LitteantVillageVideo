@@ -1,4 +1,5 @@
 import React from "react";
+import '../css/villageCardSystemLogin.less'
 import { SimpleWebsocketConnection } from '../../../helpers/simple_websocket_connection'
 export default class villageCardSystemLogin extends React.Component {
     constructor(props) {
@@ -184,8 +185,9 @@ export default class villageCardSystemLogin extends React.Component {
     }
     render() {
         return (
-            <div>
-                <div className="account">
+            <div id="villageCardSystemLogin">
+                <div className="account empty_center">
+                    <div className="title">村村向上</div>
                     <div className="inputWrap">
                         <input id='act' onBlur={this.accountOnBlur} onFocus={this.accountFocus} type="text" placeholder="请输入小蚂蚁账号" />
                         <div style={{ display: "none" }} id="actData">
@@ -206,7 +208,7 @@ export default class villageCardSystemLogin extends React.Component {
                     <div className="inputWrap">
                         <input id="pwd" type="password" placeholder="请输入密码" />
                     </div>
-                    <button id="login" onClick={this.login}>登录</button>
+                    <button id="login" className="loginBtn" onClick={this.login}>登录</button>
                 </div>
             </div>
         )

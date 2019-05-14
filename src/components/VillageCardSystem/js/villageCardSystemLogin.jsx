@@ -94,11 +94,12 @@ export default class villageCardSystemLogin extends React.Component {
         }
         var _this = this;
         var param = {
-            "method": "login",
-            "username": $('#act').val().trim(),
-            "password": $('#pwd').val().trim()
+            "method": "LittleAntLogin",
+            "colAccount": $('#act').val().trim(),
+            "colPasswd": $('#pwd').val().trim()
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        console.log(param,"param")
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
                     if (res.response.colUtype == "TEAC") {

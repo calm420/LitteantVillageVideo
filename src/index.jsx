@@ -249,6 +249,13 @@ const VillageCardSystemHome =  (location, cb) => {
 };
 
 
+//村民注册页面跳转
+const villageReg = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/villageReg/js/villageReg').default)
+    })
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -328,6 +335,11 @@ class Index extends React.Component {
                             to="/villageCardSystemLogin?userId=31"
                             style={{ fontSize: '24px' }}>登录</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/villageReg?userId=31"
+                            style={{ fontSize: '24px' }}>村民注册跳转</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -381,6 +393,7 @@ ReactDOM.render(
             <Route path="myThemeTask" getComponent={myThemeTask} />
             <Route path="VillageCardSystemHome" getComponent={VillageCardSystemHome} />
             <Route path="villageCardSystemLogin" getComponent={villageCardSystemLogin} />
+            <Route path="villageReg" getComponent={villageReg} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />
         </Route>

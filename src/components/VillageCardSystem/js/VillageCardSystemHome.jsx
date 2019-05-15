@@ -1831,6 +1831,9 @@ export default class VillageCardSystemHome extends React.Component {
 
                 {/* 添加课程 */}
                 <div className="coursePop villageMaskInner" style={{ display: "none" }}>
+                    <div className="editHeader">
+                        添加课程
+                    </div>
                     <InputItem
                         placeholder="请输入组课程名称"
                         onChange={this.inputOnCourseNameChange}

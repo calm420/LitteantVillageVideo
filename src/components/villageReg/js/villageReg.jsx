@@ -119,6 +119,11 @@ export default class villageReg extends React.Component {
         $(".codeSource").show();
     }
 
+    schoolNameOnChange = (e) => {
+        this.setState({ inputValue: e.target.value })
+    };
+
+
     render () {
         return (
             <div id='villageReg'>

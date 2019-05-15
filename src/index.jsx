@@ -256,19 +256,6 @@ const villageReg = (location, cb) => {
     })
 };
 
-//完善资料
-const personMsg = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/personMsg/js/personMsg').default)
-    })
-};
-
-//个人设置
-const setting = (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/personMsg/js/setting').default)
-    })
-};
 
 //荣誉村民
 const honorVillager = (location, cb) => {
@@ -368,11 +355,6 @@ class Index extends React.Component {
                             to="/villageReg?userId=31"
                             style={{ fontSize: '24px' }}>村民注册跳转</Link>
                     </li>
-                    <li>
-                        <Link
-                            to="/setting?userId=31"
-                            style={{ fontSize: '24px' }}>设置</Link>
-                    </li>
                 </ul>
             </div>
         );
@@ -427,8 +409,6 @@ ReactDOM.render(
             <Route path="VillageCardSystemHome" getComponent={VillageCardSystemHome} />
             <Route path="villageCardSystemLogin" getComponent={villageCardSystemLogin} />
             <Route path="villageReg" getComponent={villageReg} />
-            <Route path="personMsg" getComponent={personMsg} />
-            <Route path="setting" getComponent={setting} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />
             <Route path="HonorVillager" getComponent={honorVillager} />

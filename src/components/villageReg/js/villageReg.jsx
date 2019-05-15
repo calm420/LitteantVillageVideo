@@ -122,23 +122,33 @@ export default class villageReg extends React.Component {
     render () {
         return (
             <div id='villageReg'>
-                <div className='inputWrap' onClick={this.schoolOnClick}>请选择自己村子所在名称</div>
-                <div className='inputWrap' onClick={this.schoolOnClick}>请选择自己小组所在名称</div>
-                <InputItem
-                    className="add_element"
-                    placeholder="请输入邀请码"
-                    value={this.state.codeValue}
-                    onChange={this.inputOnChange}
-                >
-                </InputItem>
-                <InputItem
-                    className="add_element"
-                    placeholder="请输入自己的真实姓名"
-                    value={this.state.nameValue}
-                    onChange={this.inputOnNameChange}
-                >
-                </InputItem>
-                <div className='codeBtn' onClick={this.showCode}>邀请码来源</div>
+                <div className="p20"></div>
+                <div className="topNav">
+                    <i className='icon_back'></i>
+                    完善信息
+                </div>
+                <div className="regContent">
+                    <div className='inputWrap line_public' onClick={this.schoolOnClick}>请选择自己所在村子<i></i></div>
+                    <div className='inputWrap line_public' onClick={this.schoolOnClick}>请选择自己所在小组<i></i></div>
+                    <InputItem
+                        className="add_element"
+                        placeholder="请输入自己真实姓名"
+                        value={this.state.nameValue}
+                        onChange={this.inputOnNameChange}
+                    >
+                    </InputItem>
+
+                    <InputItem
+                        className="add_element"
+                        placeholder="请输入邀请码"
+                        value={this.state.codeValue}
+                        onChange={this.inputOnChange}
+                    >
+                    </InputItem>
+
+                    <div className='codeBtn' onClick={this.showCode}>邀请码请联系村管理员</div>
+                </div>
+
                 <div className="villageMask"  style={{ display: "none" }}></div>
                 <div className="codeSource villageMaskInner" style={{ display: "none" }}>邀请码来源于布拉布拉布拉布拉</div>
                 <div className="stuAccountRegist">
@@ -154,7 +164,7 @@ export default class villageReg extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className='submitBtn'><span>确定</span></div>
+                <div className='submitBtn noPosition'><span>完成</span></div>
             </div>
         )
     }

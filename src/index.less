@@ -388,7 +388,7 @@ hr {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-.line_public{
+.line_public,.line_public15{
   position: relative;
   &:after {
     content: '';
@@ -959,4 +959,70 @@ video::-webkit-media-controls-fullscreen-button {
   z-index: 101;
   background-color: white;
   transform: translate(-50%,-50%);
+}
+
+
+/*村村App*/
+
+.topNav{
+  height: 44px;
+  line-height: 44px;
+  font-size: 17px;
+  color: #333;
+  text-align: center;
+  position: relative;
+  .icon_back{
+    background: url("components/villageReg/image/icon_back.png") no-repeat 15px center;
+    display: block;
+    background-size: 13px;
+    width: 43px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+}
+.line_public15{
+  &::after {
+    content: '';
+    left: 15px;
+    width: calc(~"100% - 15px");
+  }
+}
+.grayBorder, .WhiteSpace {
+  height: 11px;
+  background: #ededed;
+  width: 100%;
+}
+.bg_white{
+  background-color: white;
+}
+
+.submitBtn_gradient{
+  padding: 0 38px;
+  position: absolute;
+  bottom: 75px;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  &.noPosition{
+    position: static;
+  }
+  span{
+    cursor: pointer;
+    background: -webkit-linear-gradient(left, #46A7EB , #4675EB); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #46A7EB, #4675EB); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #46A7EB, #4675EB); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #46A7EB , #4675EB); /* 标准的语法 */
+    color: #fff;
+    font-size: 16px;
+    margin: 0 auto;
+    line-height: 49px;
+    height: 49px;
+    border-radius: 25px;
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
 }

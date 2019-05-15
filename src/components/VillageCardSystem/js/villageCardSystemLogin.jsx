@@ -9,7 +9,7 @@ export default class villageCardSystemLogin extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount () {
         document.title = "登录页面";
         Bridge.setRefreshAble(false);
         var locationHref = decodeURI(window.location.href);
@@ -94,11 +94,12 @@ export default class villageCardSystemLogin extends React.Component {
         }
         var _this = this;
         var param = {
-            "method": "login",
-            "username": $('#act').val().trim(),
-            "password": $('#pwd').val().trim()
+            "method": "LittleAntLogin",
+            "colAccount": $('#act').val().trim(),
+            "colPasswd": $('#pwd').val().trim()
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        console.log(param, "param")
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
                     if (res.response.colUtype == "TEAC") {
@@ -125,7 +126,7 @@ export default class villageCardSystemLogin extends React.Component {
                         })
                         var url = WebServiceUtil.mobileServiceURL + 'VillageCardSystemHome?';
                         window.location.href = url;
-                    }else {
+                    } else {
                         // Toast.info("仅支持老师登录！")
                     }
                 } else {
@@ -183,7 +184,7 @@ export default class villageCardSystemLogin extends React.Component {
         })
 
     }
-    render() {
+    render () {
         return (
             <div id="villageCardSystemLogin">
                 <div className="account empty_center">

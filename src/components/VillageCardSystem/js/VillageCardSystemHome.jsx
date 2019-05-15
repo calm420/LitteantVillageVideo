@@ -1,45 +1,48 @@
 import React from "react";
-import { ListView, PullToRefresh, Toast, Accordion, List, InputItem } from 'antd-mobile';
+import { ListView, PullToRefresh, Toast, Accordion, List, InputItem, DatePicker } from 'antd-mobile';
 import Input from "antd-mobile/lib/input-item/Input";
 import '../css/VillageCardSystemHome.less'
 var calm;
+var lookUrl;
+var alreadylookUrl;
 export default class VillageCardSystemHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             articalType: [
                 {
-                    title: "待审核", active: "false"
+                    title: "待审核", active: false
                 },
                 {
-                    title: "已审核", active: "false"
+                    title: "已审核", active: true
                 },
             ],
-            editCard: [
+            editCardType: [
                 {
-                    title: "乡村振兴", active: "false"
+                    title: "乡村振兴", active: false
                 },
                 {
-                    title: "党课预告", active: "false"
+                    title: "党课预告", active: false
                 },
                 {
-                    title: "党课考勤", active: "false"
+                    title: "党课考勤", active: false
                 },
                 {
-                    title: "发布通知", active: "false"
+                    title: "发布通知", active: false
                 },
                 {
-                    title: "荣誉村民", active: "false"
+                    title: "荣誉村民", active: false
                 },
                 {
-                    title: "学习榜", active: "false"
+                    title: "学习榜", active: false
                 },
             ],
             inputDivs: [],
             addInputList: [{
                 inputValue: "",
             }],
-            inputFirstValue: ""
+            inputFirstValue: "",
+            villageName: "李家村"
         }
     }
 
@@ -51,21 +54,252 @@ export default class VillageCardSystemHome extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var auditorId = searchArray[0].split('=')[1];
-
+        lookUrl = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=3";
     }
 
     onChangeLeft = (key) => {
         console.log(key, "onChangeLeft");
+        if (key == 0) {
+            $(".rightBox").hide();
+            $(".rightBoxFirst").show();
+            $(".lookThrough").hide();
+            $(".cardEdit").hide();
+
+        } else if (key == 1) {
+            $(".rightBox").hide();
+            $(".rightBoxSecond").show();
+            $(".lookThrough").show();
+            var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=3";
+            $(".iframeDiv").attr("src", url)
+        } else if (key == 2) {
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: true
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+            $(".rightBox").hide();
+            $(".lookThrough").hide();
+            $(".rightBoxThird").show();
+            $(".cardEdit").show();
+        }
     }
     onChangeRightContent = (key) => {
         console.log(key);
     }
+    clickArticalItem = (value) => {
+        if (value.title == "待审核") {
+            var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=3";
+            $(".iframeDiv").attr("src", url)
 
-    clickArticalItem = (index) => {
-        console.log(index, "index")
+
+        } else if (value.title == "已审核") {
+            var url = WebServiceUtil.mobileServiceURL + "alreadyLookThough?auditorId=3";
+            $(".iframeDiv").attr("src", url)
+
+
+        }
     }
-    clickCardItem = (index) => {
-        console.log(index, "index")
+    clickCardItem = (v) => {
+        console.log(v, "index")
+        if (v.title == "乡村振兴") {
+            $(".villageImg").show();
+            $(".dangke").hide();
+            $(".dangkeAtt").hide();
+            $(".pushNotify").hide();
+            $(".hornorVillages").hide();
+            $(".learnList").hide();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: true
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+        } else if (v.title == "党课预告") {
+            $(".villageImg").hide();
+            $(".dangke").show();
+            $(".dangkeAtt").hide();
+            $(".pushNotify").hide();
+            $(".hornorVillages").hide();
+            $(".learnList").hide();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: false
+                        },
+                        {
+                            title: "党课预告", active: true
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+        } else if (v.title == "党课考勤") {
+            $(".villageImg").hide();
+            $(".dangke").hide();
+            $(".dangkeAtt").show();
+            $(".pushNotify").hide();
+            $(".hornorVillages").hide();
+            $(".learnList").hide();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: false
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: true
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+        } else if (v.title == "发布通知") {
+            $(".villageImg").hide();
+            $(".dangke").hide();
+            $(".dangkeAtt").hide();
+            $(".pushNotify").show();
+            $(".hornorVillages").hide();
+            $(".learnList").hide();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: false
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: true
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+        } else if (v.title == "荣誉村民") {
+            $(".villageImg").hide();
+            $(".dangke").hide();
+            $(".dangkeAtt").hide();
+            $(".pushNotify").hide();
+            $(".hornorVillages").show();
+            $(".learnList").hide();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: false
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: true
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+        } else if (v.title == "学习榜") {
+            $(".villageImg").hide();
+            $(".dangke").hide();
+            $(".dangkeAtt").hide();
+            $(".pushNotify").hide();
+            $(".hornorVillages").hide();
+            $(".learnList").show();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "乡村振兴", active: false
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: true
+                        },
+                    ],
+            })
+        }
     }
 
 
@@ -134,8 +368,6 @@ export default class VillageCardSystemHome extends React.Component {
     }
 
 
-
-
     execClick = () => {
         document.execCommand("copy");
     }
@@ -172,22 +404,102 @@ export default class VillageCardSystemHome extends React.Component {
         return 11;
     }
 
-    inputOnvillageNameChange=(value)=>{
+    inputOnvillageNameChange = (value) => {
         this.setState({
-            villageName:value
+            villageName: value
         })
     }
 
-    editorVillageName=()=>{
+    editorVillageName = () => {
         $(".editorPop").show();
         $(".villageMask").show();
     }
 
-    editorCodeName=()=>{
+    editorCodeName = () => {
         $(".codePop").show();
         $(".villageMask").show();
     }
 
+    editorGroupName = () => {
+        $(".villageMask").show();
+        $(".popBox").show();
+        $(".btnGroup").show();
+        $(".btnSure").hide();
+    }
+
+    cancelGroupInput = () => {
+        $(".villageMask").hide();
+        $(".popBox").hide();
+    }
+
+    sureVillageName = () => {
+        $(".villageMask").hide();
+        $(".editorPop").hide();
+        console.log(this.state.villageName)
+    }
+    cancelVillageName = () => {
+        $(".villageMask").hide();
+        $(".editorPop").hide();
+        console.log("cancel", this.state.villageName)
+    }
+    sureCodeName = () => {
+        $(".villageMask").hide();
+        $(".codePop").hide();
+        console.log(this.state.villageName)
+    }
+    cancelCodeName = () => {
+        $(".villageMask").hide();
+        $(".codePop").hide();
+        console.log("cancel", this.state.villageName)
+    }
+
+
+    addCourse = () => {
+        $(".coursePop").show();
+        $(".villageMask").show();
+    }
+
+    sureCourseData = () => {
+        $(".coursePop").hide();
+        $(".villageMask").hide();
+    }
+
+    canceCourseData = () => {
+        $(".coursePop").hide();
+        $(".villageMask").hide();
+    }
+
+
+    inputOnCourseNameChange = (value) => {
+        this.setState({
+            courseNameChangeValue: value
+        })
+    }
+    inputOnTeacherChange = (value) => {
+        this.setState({
+            teacherChangeValue: value
+        })
+    }
+    inputOnCoursePlaceChange = (value) => {
+        this.setState({
+            coursePlaceChangeValue: value
+        })
+    }
+
+
+    sumPeople=()=>{
+        $(".attPop").show();
+        $(".villageMask").show();
+    }
+
+    sumPeopleName=()=>{
+        $(".attPop").hide();
+        $(".villageMask").hide();
+    }
+    cancelPeopleName=()=>{
+        $(".attPop").hide();
+        $(".villageMask").hide();
+    }
     render () {
         return (
             <div id="VillageCardSystemHome" style={{
@@ -200,37 +512,38 @@ export default class VillageCardSystemHome extends React.Component {
                             <span>村村向上</span>
                         </div>
                         <div className='leftAccordion'>
-                            <Accordion accordion openAnimation={{}} className="my-accordion" onChange={this.onChangeLeft}>
-                                <Accordion.Panel header="成员列表">
-                                </Accordion.Panel>
-                                <Accordion.Panel header="文章审核" className="pad">
+                            <div>
+                                <div onClick={this.onChangeLeft.bind(this, 0)}>成员列表</div>
+                                <div onClick={this.onChangeLeft.bind(this, 1)}>文章审核</div>
+                                <div className="lookThrough" style={{ display: "none" }}>
                                     {
                                         this.state.articalType.map((v, i) => {
-                                            return <div onClick={this.clickArticalItem.bind(this, i)}>{v.title}</div>
+                                            return <div onClick={this.clickArticalItem.bind(this, v)}>{v.title}</div>
                                         })
                                     }
-                                </Accordion.Panel>
-                                <Accordion.Panel header="班牌编辑" className="pad">
+                                </div>
+                                <div onClick={this.onChangeLeft.bind(this, 2)}>班牌编辑</div>
+                                <div className="cardEdit" style={{ display: "none" }}>
                                     {
-                                        this.state.editCard.map((v, i) => {
-                                            return <div onClick={this.clickCardItem.bind(this, i)}>{v.title}</div>
+                                        this.state.editCardType.map((v, i) => {
+                                            return <div className={v.active ? "haha" : "hehe"} onClick={this.clickCardItem.bind(this, v)}>{v.title}</div>
                                         })
                                     }
-                                </Accordion.Panel>
-                            </Accordion>
+                                </div>
+                            </div>
                         </div>
                         <div className='quiteBtn'>
                             管理员
                             <span>退出登录</span>
                         </div>
                     </div>
-                    <div className='rightBox'>
+                    <div className='rightBox rightBoxFirst'>
                         <div className="rightHeader my_flex">
                             <span>李家村</span>
                             <div className='btn'>
                                 <span onClick={this.editorVillageName}>编辑名称</span>
-                                <span>编辑分组</span>
-                                <span  onClick={this.editorCodeName}>邀请码</span>
+                                <span onClick={this.editorGroupName}>编辑分组</span>
+                                <span onClick={this.editorCodeName}>邀请码</span>
                             </div>
                         </div>
                         <div className="rightContent">
@@ -249,13 +562,80 @@ export default class VillageCardSystemHome extends React.Component {
                             </Accordion>
                         </div>
                     </div>
+                    <div className="rightBox rightBoxSecond" style={{ display: "none" }}>
+                        <iframe src="" className="iframeDiv" frameborder="0"></iframe>
+                    </div>
+                    <div className="rightBox rightBoxThird" style={{ display: "none" }}>
+                        <div className="villageImg">
+                            <div>
+                                <div>
+                                    {this.state.villageName}
+                                </div>
+                                <span>
+                                    上传
+                                </span>
+                            </div>
+                        </div>
+                        <div className="dangke" style={{ display: "none" }}>
+
+                            <div>
+                                <div>
+                                    {this.state.villageName}
+                                </div>
+                                <span onClick={this.addCourse}>
+                                    添加课程
+                                </span>
+                            </div>
+                        </div>
+                        <div className="dangkeAtt" style={{ display: "none" }}>
+
+                            <div>
+                                <div>
+                                    {this.state.villageName}
+                                </div>
+                                <span onClick={this.sumPeople}>
+                                    打卡
+                                </span>
+                            </div>
+                        </div>
+                        <div className="pushNotify" style={{ display: "none" }}>
+                            <div>
+                                <div>
+                                    {this.state.villageName}
+                                </div>
+                                <span>
+                                    发布通知
+                                </span>
+                            </div>
+                        </div>
+                        <div className="hornorVillages" style={{ display: "none" }}>
+                            <div>
+                                <div>
+                                    {this.state.villageName}
+                                </div>
+                                <div>
+                                    content
+                                </div>
+                            </div>
+                        </div>
+                        <div className="learnList" style={{ display: "none" }}>
+
+                            <div>
+                                <div>
+                                    {this.state.villageName}
+                                </div>
+                                <div>
+                                    content
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
                 <div className="villageMask" ></div>
                 <div className='popBox villageMaskInner' >
                     <div>
-
                         <div className="editHeader">
                             编辑分组
                         </div>
@@ -266,8 +646,14 @@ export default class VillageCardSystemHome extends React.Component {
                             <span className="editBtn" onClick={this.addInput}>
                                 添加
                             </span>
-                            <div className='submitBtn'>
+                            <div className='submitBtn btnSure'>
                                 <span onClick={this.submitInput}>确定</span>
+                            </div>
+                            <div className='submitBtn btnGroup' style={{ display: "none" }}>
+                                <div className="my_flex">
+                                    <span onClick={this.submitInput}>确定</span>
+                                    <span onClick={this.cancelGroupInput}>取消</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -276,7 +662,7 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
 
                 {/* 编辑名称 */}
-                <div className="editorPop villageMaskInner" style={{display:"none"}}>
+                <div className="editorPop villageMaskInner" style={{ display: "none" }}>
                     <InputItem
                         placeholder="请输入村名称"
                         onChange={this.inputOnvillageNameChange}
@@ -285,14 +671,14 @@ export default class VillageCardSystemHome extends React.Component {
                     </InputItem>
                     <div className='submitBtn'>
                         <div className='my_flex'>
-                            <span>确定</span>
-                            <span>取消</span>
+                            <span onClick={this.sureVillageName}>确定</span>
+                            <span onClick={this.cancelVillageName}>取消</span>
                         </div>
                     </div>
                 </div>
 
                 {/* 邀请码 */}
-                <div className="codePop villageMaskInner" style={{display:"none"}}>
+                <div className="codePop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">
                         邀请码
                                 </div>
@@ -301,11 +687,70 @@ export default class VillageCardSystemHome extends React.Component {
                         <a onClick={this.execClick} onCopy={this.execCopy}>复制</a>
                         <div className='submitBtn'>
                             <div className='my_flex'>
-                                <span>确定</span>
-                                <span>取消</span>
+                                <span onClick={this.sureCodeName}>确定</span>
+                                <span onClick={this.cancelCodeName}>取消</span>
                             </div>
                         </div>
                     </div>
+                </div>
+
+
+                {/* 添加课程 */}
+                <div className="coursePop villageMaskInner" style={{ display: "none" }}>
+                    <InputItem
+                        placeholder="请输入组课程名称"
+                        onChange={this.inputOnCourseNameChange}
+                        value={this.state.courseNameChangeValue}
+                    >
+                        <div>课程名称</div>
+                    </InputItem>
+                    <InputItem
+                        placeholder="请输入授课教师"
+                        onChange={this.inputOnTeacherChange}
+                        value={this.state.teacherChangeValue}
+                    >
+                        <div>授课教师</div>
+                    </InputItem>
+                    <InputItem
+                        placeholder="请输入上课地点"
+                        onChange={this.inputOnCoursePlaceChange}
+                        value={this.state.coursePlaceChangeValue}
+                    >
+                        <div>上课地点</div>
+                    </InputItem>
+                    <DatePicker
+                        value={this.state.date}
+                        onChange={date => this.setState({ date })}
+                    >
+                        <List.Item arrow="horizontal">Datetime</List.Item>
+                    </DatePicker>
+                    <div>
+                        添加课程封面
+                    </div>
+                    <div className='submitBtn'>
+                        <div className='my_flex'>
+                            <span onClick={this.sureCourseData}>确定</span>
+                            <span onClick={this.canceCourseData}>取消</span>
+                        </div>
+                    </div>
+                </div>
+                {/* 打卡*/}
+                <div className="attPop villageMaskInner" style={{ display: "none" }}>
+                    <div>
+                        <InputItem
+                            placeholder="请输入签到人数"
+                            onChange={this.inputSumPeopleNameChange}
+                            value={this.state.sumPeopleNameValue}
+                        >
+                        <div>实到人数</div>
+                        </InputItem>
+                    </div>
+                    <div className='submitBtn'>
+                            <div className='my_flex'>
+                                <span onClick={this.sumPeopleName}>确定</span>
+                                <span onClick={this.cancelPeopleName}>取消</span>
+                            </div>
+                        </div>
                 </div>
             </div>
         )

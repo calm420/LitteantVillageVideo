@@ -4,7 +4,7 @@
     height: 100%;
   }
   .leftBox{
-    width: 30%;
+    width: 20%;
     min-height: 100%;
     .myMsg{
       height: 60px;
@@ -18,6 +18,11 @@
     }
     .leftAccordion{
       padding-top: 20px;
+      &>div{
+        height: 50px;
+        line-height: 50px;
+        cursor: pointer;
+      }
     }
     .quiteBtn{
       position: absolute;
@@ -26,7 +31,7 @@
     }
   }
   .rightBox{
-    width: 70%;
+    width: 80%;
     .rightHeader{
       align-items: center;
       justify-content: space-between;
@@ -92,8 +97,13 @@
       }
     }
   }
-  .editorPop,.codePop{
+  .villageMaskInner{
     width: 500px;
-    height: 200px;
+    height: 300px;
+  }
+  iframe{
+    border: 0;
+    width: 100%;
+    height: 100%;
   }
 }

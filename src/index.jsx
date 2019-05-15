@@ -256,6 +256,20 @@ const villageReg = (location, cb) => {
     })
 };
 
+//荣誉村民
+const honorVillager = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/VillageCardSystem/js/honorVillager/HonorVillager').default)
+    })
+};
+
+//学习榜
+const learningList = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/VillageCardSystem/js/learningList/LearningList').default)
+    })
+};
+
 import './index.less';
 
 class Index extends React.Component {
@@ -396,6 +410,8 @@ ReactDOM.render(
             <Route path="villageReg" getComponent={villageReg} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />
+            <Route path="HonorVillager" getComponent={honorVillager} />
+            <Route path="LearningList" getComponent={learningList} />
         </Route>
     </Router>
     ,

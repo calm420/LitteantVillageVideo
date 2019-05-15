@@ -1717,8 +1717,8 @@ export default class VillageCardSystemHome extends React.Component {
                         邀请码
                                 </div>
                     <div className="editCont">
-                        <div id="textDiv2">{this.state.accountData.villageId}</div>
-                        <a onClick={this.execClick} onCopy={this.execCopy}>复制</a>
+                        <div id="textDiv2" className="InviteCode">{this.state.accountData.villageId}</div>
+                        <a className="copyBtn" onClick={this.execClick} onCopy={this.execCopy}>复制</a>
                         <div className='submitBtn'>
                             <div className='my_flex'>
                                 <span onClick={this.sureCodeName}>确定</span>

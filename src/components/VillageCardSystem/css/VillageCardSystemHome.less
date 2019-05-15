@@ -18,9 +18,8 @@
       font-size: 20px;
       padding: 10px 0 0 20px;
       img{
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
+        width: 46px;
+        height: 41px;
         margin-right: 10px;
       }
     }
@@ -60,6 +59,7 @@
     width: calc(~"100% - 240px");
     font-size: 16px;
     color: #333;
+    position: relative;
     .rightHeader{
       align-items: center;
       justify-content: space-between;
@@ -75,7 +75,7 @@
         color: #4380EB;
         font-size: 16px;
         border-radius: 4px;
-        padding: 12px 18px;
+        padding: 11px 17px;
         margin-left: 15px;
         border: 1px solid #4380EB;
         line-height: 1;
@@ -120,12 +120,28 @@
     line-height: 66px;
     border-bottom: 1PX solid rgba(36,36,36,0.1);
   }
-  .popBox{
-    width: 500px;
-    height: 200px;
+  .popBox, .editorPop, .groupNamePop{
+    width: 700px;
+    height: 592px;
+    .listCont{
+      margin-bottom: 40px;
+       .am-list-item + span{
+         background: url("../img/village-delete.png") no-repeat;
+         width: 30px;
+         height:30px;
+         background-size: cover;
+       }
+    }
 
     .editBtn{
       display: block;
+      width: 46px;
+      height: 46px;
+      border: 1px solid #BFBFBF;
+      border-radius: 4px;
+      text-align: center;
+      background: url("../img/village-add.png") no-repeat center;
+      background-size: 21px 21px;
     }
     .editCont{
       padding: 0 30px;
@@ -140,49 +156,44 @@
     font-size: 20px;
     line-height: 1;
   }
-  .submitBtn{
-    text-align: center;
-    bottom: 30px;
-    span{
-      cursor: pointer;
-      background-color: #4380EB;
-      color: #fff;
-      font-size: 20px;
-      margin: 0 auto;
-      padding: 18px 96px;
-      border-radius: 5px;
-      display: inline-block;
-      text-align: center;
-      line-height: 1;
-    }
-    .my_flex{
-      justify-content: center;
-      span{
-        margin:0 15px;
-      }
-    }
-  }
-  .villageMaskInner{
+
+  .codePop{
     width: 470px;
     height: 310px;
-    border-radius: 4px;
-    padding: 0 30px;
-    box-sizing: border-box;
   }
   iframe{
     border: 0;
     width: 100%;
     height: 100%;
   }
-  .am-list-item.am-input-item{
-    min-height: 56px;
-    height: 56px !important;
+  .lookThrough, .cardEdit{
+    background: #0044BA;
+    .haha{
+      color: #FFC80B;
+      position: relative;
+      &::before{
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: #ffc80b;
+        border-radius: 50%;
+        position: absolute;
+        left: 70px;
+        top: 24px;
+      }
+    }
+    div{
+      line-height: 52px;
+    }
   }
-  .am-list-item .am-input-control input{
+  .bindCard{
+    width: 700px;
+    height: 592px;
     border: 1px solid #BFBFBF;
-    border-radius: 4px;
-    font-size: 18px !important;
-    padding: 14px 18px;
+    padding-top: 60px;
+    .am-list-item .am-input-label{
+      color: #333 !important;
+      font-size: 18px !important;
+    }
   }
-
 }

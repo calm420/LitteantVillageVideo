@@ -229,9 +229,12 @@ export default class villageReg extends React.Component {
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
-                   Toast.info("注册成功",1)
-                   var url = WebServiceUtil.mobileServiceURL + "articleList?userId=" + this.state.userId + "&machineType=ios&version=100";
-                       window.location.href = url;
+                    Toast.info('注册完成',1);
+                    var data = {
+                        method: 'backHome',
+                    };
+                    Bridge.callHandler(data, null, function (error) {
+                    });
                 } else {
                     Toast.fail(result.msg, 1, null, false);
                 }

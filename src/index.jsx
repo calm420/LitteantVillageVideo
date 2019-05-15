@@ -256,6 +256,7 @@ const villageReg = (location, cb) => {
     })
 };
 
+
 //荣誉村民
 const honorVillager = (location, cb) => {
     require.ensure([], require => {

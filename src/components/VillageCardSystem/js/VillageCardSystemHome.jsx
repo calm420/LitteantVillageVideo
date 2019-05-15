@@ -1530,68 +1530,75 @@ export default class VillageCardSystemHome extends React.Component {
                             {
                                 this.state.villageGroupList.map((v, i) => {
                                     return (
-                                        <div>
+                                        <div className="right-item">
                                             {v.groupName}
-                                            <span onClick={this.updateGroupName.bind(this, v)}>修改</span>
-                                            <span onClick={this.deleteGroupName.bind(this, v)}>删除</span>
+                                            <span className="village-edit" onClick={this.updateGroupName.bind(this, v)}></span>
+                                            <span className="village-delete" onClick={this.deleteGroupName.bind(this, v)}></span>
                                         </div>
                                     )
                                 })
                             }
                         </div>
                     </div>
-                    <div className="rightBoxVillageHistory" style={{ display: "none" }}>
-                        hahhah
+                    <div className="rightBox rightBoxVillageHistory" style={{ display: "none" }}>
+                        <div className="rightHeader my_flex">hahhah</div>
                     </div>
                     <div className="rightBox rightBoxSecond" style={{ display: "none" }}>
                         <iframe src="" className="iframeDiv" frameborder="0"></iframe>
                     </div>
                     <div className="rightBox rightBoxThird" style={{ display: "none" }}>
                         <div className="bindCard" >
-                            <InputItem
-                                placeholder="请输入名称"
-                                onChange={this.cardNameChange}
-                                value={this.state.cardNameValue}
-                            >
-                                <div>名称</div>
-                            </InputItem>
-                            <div className="parentDiv">
-                                <button className="uploadBtn">上传</button>
-                                <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">县级名称</div>
+                                <InputItem
+                                    placeholder="请输入名称"
+                                    onChange={this.cardNameChange}
+                                    value={this.state.cardNameValue}
+                                />
                             </div>
-
-                            <div>
-
-                                <img src={this.state.villageCradImg} />
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">上传照片</div>
+                                <div className="parentDiv">
+                                    <button className="editBtn"></button>
+                                    <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                    <span className="photo-add">
+                                        <img src={this.state.villageCradImg} />
+                                    </span>
+                                </div>
                             </div>
-                            <InputItem
-                                placeholder="村标题"
-                                onChange={this.cardTitleChange}
-                                value={this.state.cardTitleValue}
-                            >
-                                <div>村标题</div>
-                            </InputItem>
-                            <TextareaItem
-                                rows={1}
-                                className="add_element"
-                                style={{ 'margin-left': '-8px' }}
-                                placeholder="输入内容"
-                                labelNumber={2}
-                                value={this.state.cardContentValue}
-                                onChange={calm.textareaOnChange}
-                            />
-                            <InputItem
-                                placeholder="班牌序号"
-                                onChange={this.cardOrderChange}
-                                value={this.state.cardOrderValue}
-                            >
-                                <div>村标题</div>
-                            </InputItem>
-                            <div onClick={this.updateCardInfo}>修改</div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">乡村标题</div>
+                                <InputItem
+                                    placeholder="村标题"
+                                    onChange={this.cardTitleChange}
+                                    value={this.state.cardTitleValue}
+                                />
+                            </div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">简介内容</div>
+                                <TextareaItem
+                                    rows={2}
+                                    placeholder="输入内容"
+                                    labelNumber={2}
+                                    value={this.state.cardContentValue}
+                                    onChange={calm.textareaOnChange}
+                                />
+                            </div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">村牌序号</div>
+                                <InputItem
+                                    placeholder="村牌序号"
+                                    onChange={this.cardOrderChange}
+                                    value={this.state.cardOrderValue}
+                                />
+                            </div>
+                            <div className="submitBtn">
+                                <span onClick={this.updateCardInfo}>修改</span>
+                            </div>
                         </div>
                         <div className="villageImg" style={{ display: "none" }}>
-                            <div>
-                                <div>
+                            <div className="rightContent">
+                                <div className="right-item">
                                     {this.state.villageName}
                                 </div>
                                 <input type="file" id="upload" style={{ display: "none" }} />
@@ -1632,15 +1639,15 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className="dangke" style={{ display: "none" }}>
 
-                            <div>
-                                <div>
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <span onClick={this.addCourse}>
-                                    添加课程
                                 </span>
-
-
+                                <div className="btn">
+                                    <span onClick={this.addCourse}>
+                                        添加课程
+                                    </span>
+                                </div>
                             </div>
                             <div>
                                 {this.state.villageCourseList.map((v, i) => {
@@ -1662,13 +1669,15 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className="dangkeAtt" style={{ display: "none" }}>
 
-                            <div>
-                                <div>
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <span onClick={this.sumPeople}>
-                                    打卡
                                 </span>
+                                <div className="btn">
+                                    <span onClick={this.sumPeople}>
+                                        打卡
+                                    </span>
+                                </div>
                             </div>
                             <div>
                                 {this.state.villageAttendList.map((v, i) => {
@@ -1686,13 +1695,15 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="pushNotify" style={{ display: "none" }}>
-                            <div>
-                                <div>
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <span onClick={this.pushNotifyData}>
-                                    发布通知
                                 </span>
+                                <div className="btn">
+                                    <span onClick={this.pushNotifyData}>
+                                        发布通知
+                                    </span>
+                                </div>
                             </div>
                             <div>
                                 {
@@ -1708,8 +1719,8 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="hornorVillages" style={{ display: "none" }}>
-                            <div>
-                                <div>
+                            <div className="rightContent">
+                                <div className="right-item">
                                     {this.state.villageName}
                                 </div>
                                 <div>
@@ -1731,8 +1742,8 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className="learnList" style={{ display: "none" }}>
 
-                            <div>
-                                <div>
+                            <div className="rightContent">
+                                <div className="right-item">
                                     {this.state.villageName}
                                 </div>
                                 <div>
@@ -1936,6 +1947,9 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
                 {/* 修改组名 */}
                 <div className="groupNamePop villageMaskInner" style={{ display: "none" }}>
+                    <div className="editHeader">
+                        编辑组名
+                    </div>
                     <InputItem
                         placeholder="请输入组名"
                         onChange={this.inputGroupNameChange}

@@ -187,9 +187,14 @@ export default class villageCardSystemLogin extends React.Component {
     render () {
         return (
             <div id="villageCardSystemLogin">
+                <div className="villageLogin-bgLeft"></div>
                 <div className="account empty_center">
+                    <div className="villageLogo"></div>
                     <div className="title">村村向上</div>
                     <div className="inputWrap">
+                        <span className="login-icon">
+                            <i className="icon-user"></i>
+                        </span>
                         <input id='act' onBlur={this.accountOnBlur} onFocus={this.accountFocus} type="text" placeholder="请输入小蚂蚁账号" />
                         <div style={{ display: "none" }} id="actData">
                             <div className='cont'>
@@ -207,6 +212,9 @@ export default class villageCardSystemLogin extends React.Component {
                         </div>
                     </div>
                     <div className="inputWrap">
+                        <span className="login-icon">
+                            <i className="icon-lock"></i>
+                        </span>
                         <input id="pwd" type="password" placeholder="请输入密码" />
                     </div>
                     <button id="login" className="loginBtn" onClick={this.login}>登录</button>

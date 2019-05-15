@@ -1,40 +1,91 @@
 #villageCardSystemLogin{
   font-size: 14px;
+  background: url("../img/villageLogin-bg.png") no-repeat center;
+  background-size: cover;
+  width: 100%;
+  height:100%;
+  .villageLogin-bgLeft{
+    background: url("../img/villageLogin-bg2.png") no-repeat;
+    position: absolute;
+    left:0;
+    bottom: 0;
+    width:243px;
+    height:246px;
+    background-size: contain;
+  }
  .account{
-   height: 450px;
-   width: 432px;
-   padding: 30px;
+   height: 440px;
+   width: 380px;
+   padding: 40px 40px 0 40px;
    box-sizing: border-box;
    background: #fff;
+   box-shadow: 0px 6px 13px 3px rgba(80,145,254,0.34);
  }
   .inputWrap{
     width: 100%;
-    height: 42px;
-    border: 1px solid #D2D2D2;
-    margin-top: 25px;
+    height: 38px;
+    border: 1px solid #DCDCDC;
+    margin-top: 20px;
+    position: relative;
+    .login-icon{
+      width: 36px;
+      height: 30px;
+      border-right: 1px solid #DCDCDC;
+      position: absolute;
+      left: 0;
+      top:4px;
+      i{
+        display: block;
+        margin: 5px auto;
+      }
+      .icon-user{
+        background: url("../img/login-user.png") no-repeat;
+        background-size: cover;
+        width: 18px;
+        height: 20px;
+      }
+      .icon-lock{
+        background: url("../img/login-lock.png") no-repeat;
+        background-size: cover;
+        width: 16px;
+        height: 19px;
+      }
+    }
     input{
       width: 100%;
       height: 100%;
-      padding: 0 0 0 8px;
+      padding: 0 8px 0 44px;
       margin: 0;
       border: none;
       box-sizing: border-box;
     }
   }
   .loginBtn{
-    background: #4285F4;
+    background: linear-gradient(-90deg,rgba(70,117,235,1),rgba(70,167,235,1));
     color: #fff;
-    height: 44px;
-    display: block;
     width: 100%;
     border: none;
-    margin-top: 35px;
-    font-size: 16px;
+    margin-top: 45px;
+    font-size: 18px;
+    border-radius: 4px;
+    line-height: 1;
+    padding: 10px 0;
+    cursor: pointer;
+  }
+  .villageLogo{
+    background: url("../img/village-logo.png") no-repeat;
+    background-size: contain;
+    width: 68px;
+    height:68px;
+    margin: 0 auto;
   }
   .title{
-    font-size: 20px;
-    color: #333;
+    font-size: 22px;
+    font-family: MicrosoftYaHei;
+    font-weight: 400;
+    color: rgba(23,172,247,1);
     text-align: center;
-    padding: 15px 0;
+    margin-top: 18px;
+    margin-bottom: 68px;
   }
 }

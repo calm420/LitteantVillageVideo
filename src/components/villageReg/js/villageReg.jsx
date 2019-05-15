@@ -112,7 +112,7 @@ export default class villageReg extends React.Component {
         var arr = [];
         data.forEach(function (v, i) {
             arr.push(<li
-                className='line_publicD noomPowerList textOver'
+                className='line_public noomPowerList textOver'
                 onClick={() => {
                     _this.schoolItemOnClick2(v);
                 }}>{v.groupName}</li>)
@@ -137,7 +137,7 @@ export default class villageReg extends React.Component {
         var arr = [];
         data.forEach(function (v, i) {
             arr.push(<li
-                className='line_publicD noomPowerList textOver'
+                className='line_public noomPowerList textOver'
                 onClick={() => {
                     _this.schoolItemOnClick(v);
                 }}>{v.villageName}</li>)
@@ -258,8 +258,8 @@ export default class villageReg extends React.Component {
                     完善信息
                 </div>
                 <div className="regContent">
-                    <div className='inputWrap activeDiv line_public' onClick={this.schoolOnClick}>{this.state.schoolName}<i></i></div>
-                    <div className='inputWrap activeDiv line_public' onClick={this.schoolOnClick2}>{this.state.groupName}<i></i></div>
+                    <div className={this.state.schoolName == '请选择自己所在村子' ? 'inputWrap activeDiv line_public' : 'inputWrap activeDiv line_public color_3'} onClick={this.schoolOnClick}>{this.state.schoolName}<i></i></div>
+                    <div className={this.state.groupName == '请选择自己所在小组' ? 'inputWrap activeDiv line_public' : 'inputWrap activeDiv line_public color_3'} onClick={this.schoolOnClick2}>{this.state.groupName}<i></i></div>
                     <div onclick={this.inputRefClick}>
                     <InputItem
                         className="add_element"
@@ -291,7 +291,7 @@ export default class villageReg extends React.Component {
                 {/*<div className="codeSource villageMaskInner" style={{ display: "none" }}>邀请码来源于布拉布拉布拉布拉</div>*/}
                 <div className="stuAccountRegist">
                     <div className="mask" onClick={this.exitSchoolInput} style={{ display: 'none' }}></div>
-                    <div className='updateModel' style={{ display: 'none' }}>
+                    <div className='updateModel villageModal' style={{ display: 'none' }}>
                         <div className='searchDiv'>
                             <input type="text" value={this.state.inputValue} onClick={this.searchInputFcous} onChange={this.schoolNameOnChange}
                                 placeholder='请输入搜索内容' />
@@ -304,11 +304,11 @@ export default class villageReg extends React.Component {
                 </div>
                 <div className="stuAccountRegist">
                     <div className="mask2" onClick={this.exitSchoolInput2} style={{ display: 'none' }}></div>
-                    <div className='updateModel2' style={{ display: 'none' }}>
+                    <div className='updateModel2 villageModal' style={{ display: 'none' }}>
                         <div className='searchDiv2'>
                             <input type="text" value={this.state.inputValue2} onClick={this.searchInputFcous2} onChange={this.schoolNameOnChange2}
                                 placeholder='请输入搜索内容' />
-                            <span onClick={this.getVillageInfoByVillageName2}>搜索2</span>
+                            <span onClick={this.getVillageInfoByVillageName2}>搜索</span>
                         </div>
                         <div className='cont'>
                             {this.state.responseList2}

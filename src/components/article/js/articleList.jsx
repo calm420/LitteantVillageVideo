@@ -891,7 +891,7 @@ export default class articleList extends React.Component {
                     }>
                         <i className="showPubli_box-arrow"></i>
                         <div className="line_public" onClick={this.publishArt.bind(this, 'article')}><i className="i-WeMedia"></i>发布事迹</div>
-                        <div onClick={this.publishArt.bind(this, 'theme')}><i className="i-PublishThematicTasks"></i>发布任务</div>
+                        {/* <div onClick={this.publishArt.bind(this, 'theme')}><i className="i-PublishThematicTasks"></i>发布任务</div> */}
                     </div>
                 </div>
                 {/*mask*/}

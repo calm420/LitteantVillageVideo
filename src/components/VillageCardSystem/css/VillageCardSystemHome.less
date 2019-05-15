@@ -152,11 +152,18 @@
     height: 592px;
     .listCont{
       margin-bottom: 40px;
-       .am-list-item + span{
+       .am-list-item{
+         width: 600px;
+         display: inline-block;
+         margin-right: 10px;
+       }
+       .village-delete{
          background: url("../img/village-delete.png") no-repeat;
          width: 30px;
          height:30px;
          background-size: cover;
+         position: relative;
+         top: 10px;
        }
     }
 
@@ -169,6 +176,9 @@
       text-align: center;
       background: url("../img/village-add.png") no-repeat center;
       background-size: 21px 21px;
+    }
+    .editBtn, .village-delete{
+      cursor: pointer;
     }
     .editCont{
       padding: 0 30px;

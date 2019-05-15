@@ -821,7 +821,7 @@ export default class VillageCardSystemHome extends React.Component {
                         value={this.state.addInputList[i].inputValue}
                     >
                     </InputItem>
-                    <span style={{ display: i == 0 ? "none" : "block" }}>删除</span>
+                    <span className="village-delete" style={{ display: i == 0 ? "none" : "inline-block" }}></span>
                 </div>
             </div>)
         })
@@ -1768,7 +1768,6 @@ export default class VillageCardSystemHome extends React.Component {
                         <div>
                             {this.state.inputDivs}
                             <span className="editBtn" onClick={this.addInput}>
-                                添加
                             </span>
                             <div className='submitBtn btnGroup' style={{ display: "none" }}>
                                 <div className="my_flex">

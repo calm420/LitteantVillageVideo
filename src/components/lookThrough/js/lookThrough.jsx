@@ -59,7 +59,7 @@ export default class lookThrough extends React.Component {
             "method": 'getArticleAndLittleVideoIsNo',
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "带审核");
                 if (result.success) {

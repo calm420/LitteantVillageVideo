@@ -25,14 +25,41 @@
     }
     .leftAccordion{
       padding-top: 40px;
-      text-align: center;
       font-size: 18px;
+      text-indent: 46px;
       &>div{
         height: 56px;
         line-height: 56px;
         cursor: pointer;
-        > div.select{
-          background: rgba(255,255,255,0.1) ;
+        > div{
+         cursor: pointer;
+          &.select{
+            background: rgba(255,255,255,0.1) ;
+          }
+        }
+        i{
+          width: 18px;
+          height:18px;
+          display: inline-block;
+          margin-right: 12px;
+          position: relative;
+          top: 2px;
+        }
+        .home-Members{
+          background: url("../img/home-Members.png") no-repeat;
+          background-size: cover;
+        }
+        .home-history{
+          background: url("../img/home-history.png") no-repeat;
+          background-size: cover;
+        }
+        .home-editor{
+          background: url("../img/home-editor.png") no-repeat;
+          background-size: cover;
+        }
+        .home-audit{
+          background: url("../img/home-audit.png") no-repeat;
+          background-size: cover;
         }
       }
     }
@@ -168,6 +195,8 @@
   }
   .lookThrough, .cardEdit{
     background: #0044BA;
+    text-align: center;
+    text-indent: 0;
     .haha{
       color: #FFC80B;
       position: relative;

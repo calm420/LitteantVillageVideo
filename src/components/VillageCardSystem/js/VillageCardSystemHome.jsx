@@ -1492,9 +1492,9 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='leftAccordion'>
                             <div>
-                                <div onClick={this.onChangeLeft.bind(this, 0)}>成员列表</div>
-                                <div onClick={this.onChangeLeft.bind(this, 3)}>村史村情</div>
-                                <div onClick={this.onChangeLeft.bind(this, 1)}>文章审核</div>
+                                <div className="select" onClick={this.onChangeLeft.bind(this, 0)}><i className="home-Members"></i>成员列表</div>
+                                <div onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>村史村情</div>
+                                <div onClick={this.onChangeLeft.bind(this, 1)}><i className="home-audit"></i>文章审核</div>
                                 <div className="lookThrough" style={{ display: "none" }}>
                                     {
                                         this.state.articalType.map((v, i) => {
@@ -1502,7 +1502,7 @@ export default class VillageCardSystemHome extends React.Component {
                                         })
                                     }
                                 </div>
-                                <div onClick={this.onChangeLeft.bind(this, 2)}>班牌编辑</div>
+                                <div onClick={this.onChangeLeft.bind(this, 2)}><i className="home-editor"></i>班牌编辑</div>
                                 <div className="cardEdit" style={{ display: "none" }}>
                                     {
                                         this.state.editCardType.map((v, i) => {
@@ -1514,7 +1514,7 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='quiteBtn'>
                             管理员
-                            <span onClick={this.exitLogin}>退出登录</span>
+                            <span onClick={this.exitLogin}></span>
                         </div>
                     </div>
                     <div className='rightBox rightBoxFirst'>
@@ -1784,6 +1784,9 @@ export default class VillageCardSystemHome extends React.Component {
 
                 {/* 编辑名称 */}
                 <div className="editorPop villageMaskInner" style={{ display: "none" }}>
+                    <div className="editHeader">
+                        编辑名称
+                    </div>
                     <InputItem
                         placeholder="请输入村名称"
                         onChange={this.inputOnvillageNameChange}

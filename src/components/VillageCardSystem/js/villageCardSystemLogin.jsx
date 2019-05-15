@@ -85,13 +85,13 @@ export default class villageCardSystemLogin extends React.Component {
      * 登录
      */
     login = () => {
-        if ($('#act').val().trim() == '') {
-            // Toast.info('请输入账号');
-            return;
-        } else if ($('#pwd').val().trim() == '') {
-            // Toast.info('请输入密码');
-            return;
-        }
+        // if ($('#act').val().trim() == '') {
+        //     // Toast.info('请输入账号');
+        //     return;
+        // } else if ($('#pwd').val().trim() == '') {
+        //     // Toast.info('请输入密码');
+        //     return;
+        // }
         var _this = this;
         var param = {
             "method": "LittleAntLogin",
@@ -102,33 +102,24 @@ export default class villageCardSystemLogin extends React.Component {
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
-                    if (res.response.colUtype == "TEAC") {
-                        var data = {
-                            method: 'loginSuccess',
-                            ident: res.response.colUid,
-                        };
-                        Bridge.callHandler(data, null, function (error) {
-                        });
-                        if ($("#act").val() !== "" && $("#pwd").val() !== "") {
-                            var accountArr = [];
-                            accountArr.push({
-                                account: $("#act").val(),
-                                password: $("#pwd").val()
-                            });
-                        }
-                        var tempArr = JSON.parse(localStorage.getItem("accountData")) == null ? this.state.accountArr : JSON.parse(localStorage.getItem("accountData"));
-                        accountArr = accountArr.concat(tempArr);
-                        accountArr = _this.makeArr(accountArr, "account");
-                        localStorage.setItem('accountData', JSON.stringify(accountArr));
-                        this.setState({
-                            accountArr: this.state.accountArr.concat(accountArr)
-                        }, () => {
-                        })
-                        var url = WebServiceUtil.mobileServiceURL + 'VillageCardSystemHome?';
-                        window.location.href = url;
-                    } else {
-                        // Toast.info("仅支持老师登录！")
-                    }
+                    localStorage.setItem('account', JSON.stringify(res.response));
+                    // if ($("#act").val() !== "" && $("#pwd").val() !== "") {
+                    //     var accountArr = [];
+                    //     accountArr.push({
+                    //         account: $("#act").val(),
+                    //         password: $("#pwd").val()
+                    //     });
+                    // }
+                    // var tempArr = JSON.parse(localStorage.getItem("accountData")) == null ? this.state.accountArr : JSON.parse(localStorage.getItem("accountData"));
+                    // accountArr = accountArr.concat(tempArr);
+                    // accountArr = _this.makeArr(accountArr, "account");
+                    // localStorage.setItem('accountData', JSON.stringify(accountArr));
+                    // this.setState({
+                    //     accountArr: this.state.accountArr.concat(accountArr)
+                    // }, () => {
+                    // })
+                    var url = WebServiceUtil.mobileServiceURL + 'VillageCardSystemHome?';
+                    window.location.href = url;
                 } else {
                     // Toast.fail(res.msg);
                 }

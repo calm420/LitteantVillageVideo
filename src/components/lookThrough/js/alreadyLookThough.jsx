@@ -57,7 +57,7 @@ export default class alreadyLookThough extends React.Component {
             "method": 'getArticleAndLittleVideo',
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     calm.state.rsCount = result.pager.rsCount;

@@ -22,7 +22,7 @@ export default class learningList extends React.Component {
             "method": 'getLearningList',
             "villageId": this.state.villageId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result)
                 if (result.success) {

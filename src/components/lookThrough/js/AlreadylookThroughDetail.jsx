@@ -175,7 +175,7 @@ export default class AlreadylookThroughDetail extends React.Component {
 
         };
         console.log(param, "huhuhu")
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('成功');
@@ -206,7 +206,7 @@ export default class AlreadylookThroughDetail extends React.Component {
             "auditId": auditId,
             "type": type
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "re")
                 if (result.success) {

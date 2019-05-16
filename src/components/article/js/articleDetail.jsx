@@ -164,7 +164,7 @@ export default class articleDetail extends React.Component {
             "villagerId": villagerId,
             "groupId": groupId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
 
@@ -243,7 +243,7 @@ export default class articleDetail extends React.Component {
             "type": 0,
             "pageNo": this.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, '评论列表');
                 if (result.pager.rsCount <= 0) {
@@ -358,7 +358,7 @@ export default class articleDetail extends React.Component {
             "method": 'getUserLikeLog',
             'JsonParameter': JsonParameter
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     var data = JSON.parse(result.response);
@@ -392,7 +392,7 @@ export default class articleDetail extends React.Component {
             "method": 'getArticleInfoById',
             "articleId": this.state.artId,
         };
-        WebServiceUtil.requestLittleAntApiWithHead(JSON.stringify(param), JSON.stringify(headers), {
+        WebServiceUtil.requestLittleAntApiWithHead6013(JSON.stringify(param), JSON.stringify(headers), {
             onResponse: result => {
                 console.log(result, "detail");
                 if (result.success) {
@@ -432,7 +432,7 @@ export default class articleDetail extends React.Component {
             "method": 'addArticleReadCount',
             "articleId": this.state.artId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     //文章阅读量+1
@@ -459,7 +459,7 @@ export default class articleDetail extends React.Component {
                 "articleId": this.state.artId,
                 "changeType": this.state.likeFlag ? 0 : 1,//  0点赞 1 取消
             };
-            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
                 onResponse: result => {
                     if (result.success) {
                         // this.state.data.likeCount = result.response;
@@ -488,7 +488,7 @@ export default class articleDetail extends React.Component {
             "targetId": this.state.artId,
             "targetType": 0
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.setState({
@@ -520,7 +520,7 @@ export default class articleDetail extends React.Component {
             "userFavoriteInfoJson": userFavoriteInfoJson,
             "changeType": this.state.collection ? 1 : 0,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.setState({
@@ -545,7 +545,7 @@ export default class articleDetail extends React.Component {
             "method": 'getLittleVideoUserById',
             "uid": this.state.userId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "re")
                 if (result.msg == '调用成功' || result.success) {
@@ -577,7 +577,7 @@ export default class articleDetail extends React.Component {
             "discussContent": theLike.state.commitText,
             "userId": theLike.state.userId
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "pinglun");
                 if (result.success) {

@@ -211,7 +211,7 @@ export default class lookThrough extends React.Component {
             "method": 'getArticleInfoById',
             "articleId": id,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result)
                 if (result.success) {
@@ -253,7 +253,7 @@ export default class lookThrough extends React.Component {
             "method": 'getLittleVideoById',
             "videoId": id,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 // alert(JSON.stringify(result));
                 if (result.success) {
@@ -297,7 +297,7 @@ export default class lookThrough extends React.Component {
             "method": 'getDiscussInfoById',
             "discussId": id,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
 
                 if (result.success) {
@@ -416,7 +416,7 @@ export default class lookThrough extends React.Component {
                 },
             };
         }
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 // alert(JSON.stringify(result))
                 if (result.success) {

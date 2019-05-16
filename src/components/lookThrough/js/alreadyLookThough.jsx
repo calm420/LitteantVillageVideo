@@ -299,7 +299,7 @@ export default class alreadyLookThough extends React.Component {
             }
 
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success("成功", 1, "", false)
@@ -339,7 +339,7 @@ export default class alreadyLookThough extends React.Component {
             "auditId": auditId,
             "type": type
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     calm.setState({

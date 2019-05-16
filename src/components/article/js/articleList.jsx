@@ -8,12 +8,14 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const tabs = [
-    {title: '点滴事迹', value: '1'},
-    {title: '村史村情', value: '0'},
+    { title: '点滴事迹', value: '1' },
+    { title: '村史村情', value: '2' },
 ];
 var AscrollView;
 var BscrollView;
 var that;
+
+
 export default class articleList extends React.Component {
     constructor(props) {
         super(props);
@@ -41,7 +43,8 @@ export default class articleList extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount () {
+
         AscrollView = $('.am-list-view-scrollview').eq(0);
         BscrollView = $('.am-list-view-scrollview').eq(1);
         var _this = this;
@@ -72,8 +75,9 @@ export default class articleList extends React.Component {
             groupId: 2,
             machineType: machineType,
             version: version,
-            isDisPlay:isDisPlay
+            isDisPlay: isDisPlay
         }, () => {
+
             var p1 = new Promise((reslove, reject) => {
                 this.getLittleVideoUserById(() => {
                     reslove('getLittleVideoUserById');
@@ -132,7 +136,28 @@ export default class articleList extends React.Component {
         // });
     }
 
-    refurbishNoom() {
+    // getVillageVillageNewsByVillageId = () => {
+    //     var param = {
+    //         "method": 'getVillageVillageNewsByVillageId',
+    //         "villageId": this.state.villageId,
+    //         "pageNo": -1,
+    //     };
+    //     WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+    //         onResponse: result => {
+    //             console.log(result)
+    //             if (result.success) {
+    //                 this.setState({
+    //                     villageNewsHistory: result.response
+    //                 })
+    //             }
+    //         },
+    //         onError: function (error) {
+    //             Toast.fail(error, 1);
+    //         }
+    //     });
+    // }
+
+    refurbishNoom () {
         var _this = this;
         var touchstartNum;
         var touchFlag;
@@ -175,13 +200,13 @@ export default class articleList extends React.Component {
     /**
      * 按页码获取短视频列表
      * **/
-    getArticleRecommenLittleVideoList(clearFlag, reslove) {
+    getArticleRecommenLittleVideoList (clearFlag, reslove) {
         var param = {
             "method": 'getArticleRecommenLittleVideoList',
             "userId": this.state.userId,
             "pageNo": JSON.stringify(this.state.defaultPageNo)
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.setState({
@@ -211,7 +236,7 @@ export default class articleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByType(clearFlag, reslove) {
+    getArticleInfoListByType (clearFlag, reslove) {
         var _this = this;
         var param = {
             "method": 'getArticleInfoListByType',
@@ -219,7 +244,7 @@ export default class articleList extends React.Component {
             "getType": this.state.index,
             "pageNo": this.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
@@ -249,7 +274,7 @@ export default class articleList extends React.Component {
                         //         response: []
                         //     }
                         // })
-                        this.state.recommended_video = {response: []}
+                        this.state.recommended_video = { response: [] }
                     }
                     // Toast.info('设置数据之前');
                     this.setState({
@@ -285,16 +310,16 @@ export default class articleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getAllCircleOfFriendsByUid(clearFlag, reslove) {
+    getVillageVillageNewsByVillageId (clearFlag, reslove) {
         var _this = this;
         var param = {
-            "method": 'getAllCircleOfFriendsByUid',
-            "userId": this.state.userId,
+            "method": 'getVillageVillageNewsByVillageId',
+            "villageId": this.state.villageId,
             "pageNo": this.state.defaultPageNoForCircle,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'getAllCircleOfFriendsByUid')
+                console.log(result, 'getVillageVillageNewsByVillageId')
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -315,7 +340,7 @@ export default class articleList extends React.Component {
                             reslove();
                         }
                     })
-                    console.log(this.initDataSource.length,'asdjioasdkashdisahk');
+                    console.log(this.initDataSource.length, 'asdjioasdkashdisahk');
                     if ((this.initDataSource.length >= result.pager.rsCount)) {
                         this.setState({
                             hasMore: false,
@@ -335,12 +360,12 @@ export default class articleList extends React.Component {
     /**
      * 查询用户权限
      * **/
-    getLittleVideoUserById(reslove) {
+    getLittleVideoUserById (reslove) {
         var param = {
             "method": 'getLittleVideoUserById',
             "uid": this.state.userId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     var data = result.response;
@@ -400,9 +425,9 @@ export default class articleList extends React.Component {
         }, () => {
             if (this.state.index == 2) {
                 this.setState({
-                    defaultPageNoForCircle: this.state.defaultPageNoForCircle+1
-                },()=>{
-                    this.getAllCircleOfFriendsByUid();
+                    defaultPageNoForCircle: this.state.defaultPageNoForCircle + 1
+                }, () => {
+                    this.getVillageVillageNewsByVillageId();
 
                 })
             } else {
@@ -427,7 +452,7 @@ export default class articleList extends React.Component {
             this.setState({
                 defaultPageNoForCircle: 1, refreshing: true
             }, () => {
-                this.getAllCircleOfFriendsByUid(true);
+                this.getVillageVillageNewsByVillageId(true);
                 // this.getArticleRecommenLittleVideoList(true);
                 // Toast.info('重新绑定事件'+this.state.index);
 
@@ -446,7 +471,7 @@ export default class articleList extends React.Component {
 
     };
 
-    toDetail(id, articleTitle) {
+    toDetail (id, articleTitle) {
         if (id) {
             let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version + '&articleTitle=' + ((articleTitle)));
             var data = {
@@ -462,7 +487,7 @@ export default class articleList extends React.Component {
     }
 
     //tab栏切换事件
-    onChange(val) {
+    onChange (val) {
         this.initDataSource = [];
         this.setState({
             dataSource: dataSource.cloneWithRows(this.initDataSource),
@@ -477,7 +502,7 @@ export default class articleList extends React.Component {
             console.log(val.value)
             if (val.value == 2) {
                 console.log('切换到圈子');
-                this.getAllCircleOfFriendsByUid();
+                this.getVillageVillageNewsByVillageId()
             } else {
                 this.getArticleRecommenLittleVideoList(false, () => {
                     this.setState({
@@ -489,12 +514,12 @@ export default class articleList extends React.Component {
         })
     }
 
+
+
     //播放视频
-    toPlayVideo(videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
+    toPlayVideo (videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
 
 
-
-        
         var data = {
             method: 'playArticleVideo',
             videos: recommended_video,
@@ -508,7 +533,7 @@ export default class articleList extends React.Component {
     }
 
     //计算时间差
-    timeDifference(date) {
+    timeDifference (date) {
         var date1 = date;  //开始时间
         var date2 = new Date();    //结束时间
         var date3 = date2.getTime() - new Date(date1).getTime();   //时间差的毫秒数
@@ -567,7 +592,7 @@ export default class articleList extends React.Component {
         this.setState({
             scrollFlag: false,
         }, () => {
-            $(".am-list-view-scrollview").animate({scrollTop: 0}, 1000);
+            $(".am-list-view-scrollview").animate({ scrollTop: 0 }, 1000);
         })
         // }
     }
@@ -576,7 +601,7 @@ export default class articleList extends React.Component {
         console.log(type);
         if (type == 'article') {
             // var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-            var url = 'http://192.168.50.73:6443/richTextMobileEditorVillage/index.html?id='+ this.state.userId+"&village="+this.state.villageId+"&groupId="+this.state.groupId
+            var url = 'http://192.168.50.73:6443/richTextMobileEditorVillage/index.html?id=' + this.state.userId + "&village=" + this.state.villageId + "&groupId=" + this.state.groupId
             console.log(url);
             var data = {
                 method: 'openNewPage',
@@ -618,9 +643,9 @@ export default class articleList extends React.Component {
 
 
     //跳转至朋友圈详情
-    toThemeTaskDetail(cid,rowData){
+    toThemeTaskDetail (cid, rowData) {
         console.log(rowData.type);
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+rowData.type+"&hideType=youyang";
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + "&type=" + rowData.type + "&hideType=youyang";
         var data = {
             method: 'openNewPage',
             url: url
@@ -631,7 +656,7 @@ export default class articleList extends React.Component {
     }
 
 
-    playVideo(url,event){
+    playVideo (url, event) {
         event.stopPropagation();
         console.log(url);
         var data = {
@@ -648,11 +673,11 @@ export default class articleList extends React.Component {
 
 
     //客户端打开预览图片
-    showImage(rowData,url,event){
+    showImage (rowData, url, event) {
         event.stopPropagation();
         var images = [];
-        for(var k in rowData){
-            if(rowData[k].type == 0){
+        for (var k in rowData) {
+            if (rowData[k].type == 0) {
                 images.push(rowData[k].path);
             }
         }
@@ -663,15 +688,15 @@ export default class articleList extends React.Component {
         };
         window.parent.Bridge.callHandler(data, function () {
         }, function (error) {
-            Toast.info('打开图片失败!',1);
+            Toast.info('打开图片失败!', 1);
         });
     }
 
-    toShare = (cid,userName,event,type) => {
+    toShare = (cid, userName, event, type) => {
         event.stopPropagation();
         var data = {
             method: 'shareWechat',
-            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId+"&cfid="+cid+"&type="+type,
+            shareUrl: WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + "&type=" + type,
             shareTitle: $('.list_content').text(),
             shareUserName: userName,
         };
@@ -682,7 +707,7 @@ export default class articleList extends React.Component {
     /**
      * 挑战搜索页面
      */
-    toSearch=()=>{
+    toSearch = () => {
         var url = WebServiceUtil.mobileServiceURL + "searchHistory?userId=" + this.state.userId;
         // var url = 'https://www.maaee.com:6443/richTextMobileEditor/'
         var data = {
@@ -695,83 +720,48 @@ export default class articleList extends React.Component {
 
     }
 
-    closeUserGuide=()=>{
+    closeUserGuide = () => {
         console.log("dianjile")
         this.setState({
-            isDisPlay:0
+            isDisPlay: 0
         })
     }
 
 
-    render() {
+    render () {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             var tagClass = '';
-            switch(rowData.mastery){
+            switch (rowData.mastery) {
                 case 0:
-                    tagClass='tag-WrongTopic-red';
+                    tagClass = 'tag-WrongTopic-red';
                     break;
                 case 1:
-                    tagClass='tag-WrongTopic-yellow';
+                    tagClass = 'tag-WrongTopic-yellow';
                     break;
                 case 2:
-                    tagClass='tag-WrongTopic-blue';
+                    tagClass = 'tag-WrongTopic-blue';
                     break;
                 case 3:
-                    tagClass='tag-WrongTopic-green';
+                    tagClass = 'tag-WrongTopic-green';
                     break;
                 default:
-                    tagClass='未匹配到';
+                    tagClass = '未匹配到';
                     break;
             }
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             if (this.state.index == 2) {
-                var friendsAttachments = rowData.friendsAttachments;
-                for (var i = 0; i < friendsAttachments.length; i++) {
-                    if (friendsAttachments[i].fatherType == 1) {
-                        friendsAttachments.splice(i, 1);
-                    }
-                }
-                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this,rowData.cfid,rowData)}>
+                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
                     <div className="list_head">
-                        <div className="headPic">
-                            <img src={rowData.userInfo.avatar} alt=""/>
-                        </div>
-                        <div className="userName text_hidden">{rowData.userInfo.userName}</div>
-                        <div className="createTime">{WebServiceUtil.formatYMD(rowData.createTime)}</div>
+                        {/* <div className="headPic">
+                            <img src={rowData.userInfo.avatar} alt="" />
+                        </div> */}
+                        <div className="userName text_hidden">{rowData.title}</div>
+                        {/* <div className="userName text_hidden" dangerouslySetInnerHTML={{ __html: rowData.content }}></div> */}
 
                     </div>
-                    <div className="tags"><span className={rowData.type?"tag-ThemeTask":"tag-WrongTopic "+tagClass}>{rowData.type?'':''}</span></div>
-                    <div className="list_content">{rowData.type == 1?rowData.content:rowData.mark}</div>
-                    <div className="list_image" style={
-                        friendsAttachments.length == 0 ? {display: 'none'} : {display: 'block'}
-                    }>
-                        {friendsAttachments.map((value, index) => {
-                            if(value.type == 0){
-                                return <img style={
-                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
-                                        display: 'inline-block'
-                                    }
-                                } src={friendsAttachments.length > 1?value.path+'?size=300x300':value.path+'?size=500x500'} alt=""/>
-                            }else{
-                                return <div className="video_tag" style={
-                                    friendsAttachments.length == 1 ? {width: '200',height:'113'} : {
-                                        display: 'inline-block'
-                                    }
-                                } >
-                                    <video poster={value.coverPath} onClick={this.playVideo.bind(this,value.path)} style={{width:'100%',height:'100%'}} src={value.path} alt=""/>
-                                    <div onClick={this.playVideo.bind(this,value.path)} className="video_tag_play"></div>
-                                </div>
-                            }
-
-                        })}
-                    </div>
-                    <div className="list_bottom">
-                        <div className="list_bottom_item" onClick={this.toShare.bind(this,rowData.cfid,rowData.userInfo.userName,rowData.type)}><i className="i-share"></i></div>
-                        <div className="list_bottom_item"><i className="i-comments"></i><span>{rowData.disContent}</span></div>
-                        <div className="list_bottom_item"><i className={rowData.currentUserIsLike?"i-praise-active":"i-praise"}></i><span>{rowData.likeCount}</span></div>
-                    </div>
+                    <div className="tags"><span className={rowData.type ? "tag-ThemeTask" : "tag-WrongTopic " + tagClass}>{rowData.type ? '' : ''}</span></div>
                 </div>
             } else {
                 var image = rowData.articleImgArray ? rowData.articleImgArray : [];
@@ -782,10 +772,10 @@ export default class articleList extends React.Component {
                     for (var i = 0; i < rowData.response.length; i++) {
                         videoDom.push(
                             <div className="video_row"
-                                 onClick={this.toPlayVideo.bind(this, i, rowData.response, rowData.pager.pageCount, rowData.pager.pageNo)}>
+                                onClick={this.toPlayVideo.bind(this, i, rowData.response, rowData.pager.pageCount, rowData.pager.pageNo)}>
                                 <img className="video_firstImage"
-                                     src={rowData.response[i].coverPath == '' ? rowData.response[i].firstUrl : rowData.response[i].coverPath}
-                                     alt=""/>
+                                    src={rowData.response[i].coverPath == '' ? rowData.response[i].firstUrl : rowData.response[i].coverPath}
+                                    alt="" />
                                 <div className="gradient_bgT topText">
                                     <div className="video_content">{rowData.response[i].videoContent}</div>
                                 </div>
@@ -809,7 +799,7 @@ export default class articleList extends React.Component {
                                     <div className="time">{time}</div>
                                 </div>
                             </div>
-                            <div className="rightBox" style={{backgroundImage: 'url(' + image[0] + ')'}}>
+                            <div className="rightBox" style={{ backgroundImage: 'url(' + image[0] + ')' }}>
                                 {/*<img src={image[0]} alt=""/>*/}
                             </div>
                         </div>
@@ -817,7 +807,7 @@ export default class articleList extends React.Component {
                         var imageDom = [];
                         for (var i = 0; i < image.length; i++) {
                             imageDom.push(<div className='imageDiv'><span
-                                style={{backgroundImage: 'url(' + image[i] + ')'}}
+                                style={{ backgroundImage: 'url(' + image[i] + ')' }}
                                 className="image3"
                             ></span></div>)
                         }
@@ -838,10 +828,10 @@ export default class articleList extends React.Component {
                                 <div className="images">
                                     <div className="videoBox">
                                         <div onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
-                                             className="videoMask"></div>
+                                            className="videoMask"></div>
                                         <img onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
-                                             className="playImg"
-                                             src={require('../images/videoClick.png')} alt=""/>
+                                            className="playImg"
+                                            src={require('../images/videoClick.png')} alt="" />
                                         <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                                     </div>
                                 </div>
@@ -869,21 +859,21 @@ export default class articleList extends React.Component {
 
             return (
                 <div className={this.state.index == 2 ? 'list_item' : ''}
-                     onClick={this.state.index == 2 ? '' : rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}>
+                    onClick={this.state.index == 2 ? '' : rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}>
                     {dom}
                 </div>
             )
         };
         return (
-            <div id="articleList" style={{height: document.body.clientHeight}}>
-                <div  style={{display:this.state.isDisPlay == 1 ? "block" : "none"}}  className="UserGuide">
+            <div id="articleList" style={{ height: document.body.clientHeight }}>
+                <div style={{ display: this.state.isDisPlay == 1 ? "block" : "none" }} className="UserGuide">
                     <img className="userguide1" src={require('../images/UserGuide1.png')} width='54'></img>
                     <img onClick={this.closeUserGuide} className="userguide2" width="110" src={require('../images/UserGuide2.png')}></img>
-                    <img className="userguide3"  src={require('../images/UserGuide3.png')} width="270"></img>
+                    <img className="userguide3" src={require('../images/UserGuide3.png')} width="270"></img>
                 </div>
                 <div className='icon_search_top' onClick={this.toSearch}></div>
                 <div className='artEmptyDiv' style={
-                    this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? {display: 'none'} : {display: 'block'}
+                    this.state.userRoot || this.state.index == 1 || this.state.index == 2 ? { display: 'none' } : { display: 'block' }
                 }>
                     <div className='emptyIcon'></div>
                     <div className='text'>请完善基本信息，以获取本校动态消息</div>
@@ -893,7 +883,7 @@ export default class articleList extends React.Component {
                 {/*发布菜单*/}
                 <div onClick={this.showPubli_box} className="icon-release">
                     <div className="showPubli_box" style={
-                        this.state.showPubliFlag ? {display: 'block'} : {display: 'none'}
+                        this.state.showPubliFlag ? { display: 'block' } : { display: 'none' }
                     }>
                         <i className="showPubli_box-arrow"></i>
                         <div className="line_public" onClick={this.publishArt.bind(this, 'article')}><i className="i-WeMedia"></i>发布事迹</div>
@@ -902,26 +892,26 @@ export default class articleList extends React.Component {
                 </div>
                 {/*mask*/}
                 <div style={
-                    this.state.showPubliFlag ? {display: 'block'} : {display: 'none'}
+                    this.state.showPubliFlag ? { display: 'block' } : { display: 'none' }
                 } onClick={this.showPubli_box} className="mask"></div>
                 <Tabs tabs={tabs}
-                      initalPage={0}
-                      swipeable={false}
-                      animated={false}
-                      useOnPan={false}
-                      onChange={this.onChange.bind(this)}
+                    initalPage={0}
+                    swipeable={false}
+                    animated={false}
+                    useOnPan={false}
+                    onChange={this.onChange.bind(this)}
                 >
                     <div>
                         <div className="initImage" style={
-                            this.state.initLoading ? {display: 'block'} : {display: 'none'}
+                            this.state.initLoading ? { display: 'block' } : { display: 'none' }
                         }>
-                            <img src={require('../images/articleListLoading.png')} alt=""/>
+                            <img src={require('../images/articleListLoading.png')} alt="" />
                         </div>
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
+                                <div style={{ paddingTop: 5, paddingBottom: 46, textAlign: 'center' }}>
                                     {this.state.show_bottom_text ? this.state.isLoading ? '正在加载...' : '已经全部加载完毕' : ''}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -934,7 +924,7 @@ export default class articleList extends React.Component {
                             initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                             scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                             style={
-                                this.state.initLoading ? {display: 'none'} : {
+                                this.state.initLoading ? { display: 'none' } : {
                                     display: 'block',
                                     height: document.body.clientHeight
                                 }
@@ -948,15 +938,15 @@ export default class articleList extends React.Component {
 
                     <div>
                         <div className="initImage" style={
-                            this.state.initLoading ? {display: 'block'} : {display: 'none'}
+                            this.state.initLoading ? { display: 'block' } : { display: 'none' }
                         }>
-                            <img src={require('../images/articleListLoading.png')} alt=""/>
+                            <img src={require('../images/articleListLoading.png')} alt="" />
                         </div>
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
+                                <div style={{ paddingTop: 5, paddingBottom: 46, textAlign: 'center' }}>
                                     {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -972,7 +962,7 @@ export default class articleList extends React.Component {
                                 this.state.initLoading ? {
                                     display: 'none',
                                     height: document.body.clientHeight
-                                } : {display: 'block', height: document.body.clientHeight}
+                                } : { display: 'block', height: document.body.clientHeight }
                             }
                             pullToRefresh={<PullToRefresh
                                 onRefresh={this.onRefresh.bind(this, 'right')}
@@ -982,15 +972,15 @@ export default class articleList extends React.Component {
                     </div>
                     <div>
                         <div className="initImage" style={
-                            this.state.initLoading ? {display: 'block'} : {display: 'none'}
+                            this.state.initLoading ? { display: 'block' } : { display: 'none' }
                         }>
-                            <img src={require('../images/articleListLoading.png')} alt=""/>
+                            <img src={require('../images/articleListLoading.png')} alt="" />
                         </div>
                         <ListView
                             ref={el => this.lv = el}
                             dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                             renderFooter={() => (
-                                <div style={{paddingTop: 5, paddingBottom: 46, textAlign: 'center'}}>
+                                <div style={{ paddingTop: 5, paddingBottom: 46, textAlign: 'center' }}>
                                     {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                                 </div>)}
                             renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
@@ -1006,7 +996,7 @@ export default class articleList extends React.Component {
                                 this.state.initLoading ? {
                                     display: 'none',
                                     height: document.body.clientHeight
-                                } : {display: 'block', height: document.body.clientHeight}
+                                } : { display: 'block', height: document.body.clientHeight }
                             }
                             pullToRefresh={<PullToRefresh
                                 onRefresh={this.onRefresh.bind(this, 'rightright')}
@@ -1014,12 +1004,10 @@ export default class articleList extends React.Component {
                             />}
                         />
                     </div>
-
-
                 </Tabs>
                 <div className="toTop" style={
-                    this.state.scrollFlag ? {display: 'block'} : {display: 'none'}
-                } onClick={this.toTop.bind(this)}><img src={require('../images/toTop.png')}/></div>
+                    this.state.scrollFlag ? { display: 'block' } : { display: 'none' }
+                } onClick={this.toTop.bind(this)}><img src={require('../images/toTop.png')} /></div>
             </div>
         );
     }

@@ -150,6 +150,46 @@
     display: block !important;
     left: 420px !important;
     height: 100% !important;
+    #waitLookThrough{
+      height: calc(~"100% - 96px");
+      padding: 0 35px;
+      .isDangerArea.priority .am-list-item:first-child{
+        padding-left: 0;
+      }
+      .isDangerArea .am-list-header{
+        width: 60px;
+      }
+      .isDangerArea .am-list-header, .isDangerArea .am-list-content{
+        color: #333 !important;
+        font-size: 16px;
+      }
+      .audit-instructions{
+        padding: 0;
+        margin-top: 10px;
+        .audit-instructionsLeft{
+          width: 60px;
+          display: inline-block;
+        }
+        .audit-instructionsRight{
+          width: calc(~"100% - 62px");
+          display: inline-block;
+          border: 1px solid #BFBFBF;
+          border-radius: 4px;
+        }
+      }
+    }
+    .bottomBox{
+      padding: 20px 0;
+      justify-content: center;
+      span{
+        height: 56px;
+        line-height: 56px;
+        width: 240px;
+        flex: none;
+        font-size: 20px;
+        margin: 0 23px;
+      }
+    }
   }
   .tag-vedio{
     height: 250px;
@@ -195,6 +235,12 @@
   #waitLookThrough, #alreadyLookThrough{
     height: 425px;
     overflow-y: auto;
+    .isDangerArea{
+      margin: 0;
+    }
+    .am-list-header{
+      padding: 16px 0;
+    }
   }
   .reCont{
     display: inline-block;
@@ -217,7 +263,8 @@
     }
   }
   .audit-content{
-      padding: 0 35px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(36,36,36,0.1);
     .video_title{
       padding: 25px 0 60px 0;
       text-align: center;
@@ -225,6 +272,12 @@
     }
     .audit-info{
       font-size: 16px;
+      & div{
+        margin-bottom: 24px;
+        .time{
+          float: right;
+        }
+      }
     }
   }
 }

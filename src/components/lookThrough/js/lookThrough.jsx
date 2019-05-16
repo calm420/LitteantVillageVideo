@@ -551,9 +551,11 @@ export default class lookThrough extends React.Component {
                                     <div className="audit-content">
                                         <div className='title'>{calm.state.data.articleTitle}</div>
                                         <div className='audit-info'>
-                                            <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
-                                            <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                            <span className="type">内容：{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
+                                            <div>
+                                                <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                                <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                            </div>
+                                            <div className="type">内容：{/*类型：自媒体文章*/}</div>
                                         </div>
                                         <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
                                     </div>
@@ -562,9 +564,11 @@ export default class lookThrough extends React.Component {
                                         <div className="audit-content">
                                             <div className='video_title textOver2'>{calm.state.data.videoContent}</div>
                                             <div className='audit-info'>
-                                                <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
-                                                <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                                <span className="type">内容：{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                                <div>
+                                                    <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                                </div>
+                                                <div className="type">内容：{/*类型：短视频*/}</div>
                                             </div>
                                             <div className="textCont">
                                                 <video
@@ -585,9 +589,11 @@ export default class lookThrough extends React.Component {
                                         calm.state.type == 2 ?
                                             <div className="audit-content">
                                                 <div className='audit-info'>
-                                                    <span className='author'>作者名称：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
-                                                    <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                                    <span className="type">内容：{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                                    <div>
+                                                        <span className='author'>作者名称：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
+                                                        <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
+                                                    </div>
+                                                    <div className="type">内容：{/*类型：评论*/}</div>
                                                 </div>
                                                 <div className="textCont">
                                                     {calm.state.data.discussContent}
@@ -599,13 +605,13 @@ export default class lookThrough extends React.Component {
                                 calm.state.type == 0 ?
                                     <div className="calm">
                                         <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
-                                            <div className='line_public'>
+                                            <div className=''>
                                                 <span className='title'>审核人：</span>{calm.state.auditUser}
                                                 <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
 
                                             </div>
-                                            <div className='line_public'>
-                                                <span className='title'>审核说明：</span>
+                                            <div className=''>
+                                                <span className='title'>说明</span>
                                                 <div className='reCont'>
                                                     {calm.state.auditMark ? calm.state.auditMark : "无"}
                                                 </div>
@@ -621,7 +627,7 @@ export default class lookThrough extends React.Component {
                                         </div>
                                         <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                             <div className="isDangerArea">
-                                                <List className="line_public" renderHeader={() => '审核：'}>
+                                                <List className="" renderHeader={() => '审核'}>
                                                     {data2.map(i => (
                                                         <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
                                                             {i.label}
@@ -647,19 +653,22 @@ export default class lookThrough extends React.Component {
                                                     </List>
                                                 </div>
                                             </div>
-                                            <div className="sameBack description sameBackTop">审核说明:
-                                            <List>
-                                                    <TextareaItem
-                                                        rows={3}
-                                                        placeholder="请在此处输入审核的说明／不通过的原因"
-                                                        onChange={v => _this.setState({
-                                                            textareaValue: v
-                                                        })}
-                                                        value={calm.state.textareaValue}
+                                            <div className="audit-instructions">
+                                                <div className="audit-instructionsLeft">说明</div>
+                                                <div className="audit-instructionsRight">
+                                                    <List>
+                                                            <TextareaItem
+                                                                rows={3}
+                                                                placeholder="请在此处输入审核的说明／不通过的原因"
+                                                                onChange={v => _this.setState({
+                                                                    textareaValue: v
+                                                                })}
+                                                                value={calm.state.textareaValue}
 
-                                                        count={30}
-                                                    />
-                                                </List>
+                                                                count={30}
+                                                            />
+                                                        </List>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -669,13 +678,13 @@ export default class lookThrough extends React.Component {
                                     calm.state.type == 1 ?
                                         <div className="calm">
                                             <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
-                                                <div className='line_public'>
+                                                <div className=''>
                                                     <span className='title'>审核人：</span>{calm.state.auditUser}
                                                     <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
 
                                                 </div>
-                                                <div className='line_public'>
-                                                    <span className='title'>审核说明：</span>
+                                                <div className=''>
+                                                    <span className='title'>说明</span>
                                                     <div className='reCont'>
                                                         {calm.state.auditMark ? calm.state.auditMark : "无"}
                                                     </div>
@@ -694,7 +703,7 @@ export default class lookThrough extends React.Component {
                                             </div>
                                             <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                                 <div className="isDangerArea priority">
-                                                    <List className="line_public" renderHeader={() => '审核：'}>
+                                                    <List className="" renderHeader={() => '审核'}>
                                                         {data2.map(i => (
                                                             <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
                                                                 {i.label}
@@ -712,19 +721,22 @@ export default class lookThrough extends React.Component {
                                                     </List>
 
                                                 </div>
-                                                <div className="sameBack description sameBackTop">审核说明:
-                                            <List>
-                                                        <TextareaItem
-                                                            rows={3}
-                                                            placeholder="请在此处输入审核的说明／不通过的原因"
-                                                            onChange={v => _this.setState({
-                                                                textareaValue: v
-                                                            })}
-                                                            value={calm.state.textareaValue}
+                                                <div className="audit-instructions">
+                                                    <div className="audit-instructionsLeft">说明</div>
+                                                    <div className="audit-instructionsRight">
+                                                        <List>
+                                                            <TextareaItem
+                                                                rows={3}
+                                                                placeholder="请在此处输入审核的说明／不通过的原因"
+                                                                onChange={v => _this.setState({
+                                                                    textareaValue: v
+                                                                })}
+                                                                value={calm.state.textareaValue}
 
-                                                            count={30}
-                                                        />
-                                                    </List>
+                                                                count={30}
+                                                            />
+                                                        </List>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -732,13 +744,13 @@ export default class lookThrough extends React.Component {
                                         calm.state.type == 2 ?
                                             <div className="calm">
                                                 <div style={{ display: calm.state.showStatus ? "block" : "none" }} className="review">
-                                                    <div className='line_public'>
+                                                    <div className=''>
                                                         <span className='title'>审核人：</span>{calm.state.auditUser}
                                                         <span className='time'>{WebServiceUtil.formatYMD(calm.state.auditingTime)}</span>
 
                                                     </div>
-                                                    <div className='line_public'>
-                                                        <span className='title'>审核说明：</span>
+                                                    <div className=''>
+                                                        <span className='title'>说明</span>
                                                         <div className='reCont'>
                                                             {calm.state.auditMark ? calm.state.auditMark : "无"}
                                                         </div>
@@ -754,7 +766,7 @@ export default class lookThrough extends React.Component {
                                                         </div>
                                                         <div style={{ display: calm.state.showMark ? "block" : "none" }}>
                                                             <div className="isDangerArea">
-                                                                <List className="line_public" renderHeader={() => '审核：'}>
+                                                                <List className="" renderHeader={() => '审核'}>
                                                                     {data2.map(i => (
                                                                         <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.redioChange(i.value)}>
                                                                             {i.label}
@@ -763,18 +775,21 @@ export default class lookThrough extends React.Component {
                                                                     ))}
                                                                 </List>
                                                             </div>
-                                                            <div className="sameBack description sameBackTop">审核说明:
-                                                        <List>
-                                                                    <TextareaItem
-                                                                        rows={3}
-                                                                        placeholder="请在此处输入审核的说明／不通过的原因"
-                                                                        onChange={v => _this.setState({
-                                                                            textareaValue: v
-                                                                        })}
-                                                                        value={calm.state.textareaValue}
-                                                                        count={30}
-                                                                    />
-                                                                </List>
+                                                            <div className="audit-instructions">
+                                                                <div className="audit-instructionsLeft">说明</div>
+                                                                <div className="audit-instructionsRight">
+                                                                    <List>
+                                                                        <TextareaItem
+                                                                            rows={3}
+                                                                            placeholder="请在此处输入审核的说明／不通过的原因"
+                                                                            onChange={v => _this.setState({
+                                                                                textareaValue: v
+                                                                            })}
+                                                                            value={calm.state.textareaValue}
+                                                                            count={30}
+                                                                        />
+                                                                    </List>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -786,7 +801,7 @@ export default class lookThrough extends React.Component {
                         </div>
                     </div>
                     <div className="bottomBox">
-                        <span className="close" onClick={calm.cancle}>取消</span>
+                        <span className="bind" onClick={calm.cancle}>取消</span>
                         <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>

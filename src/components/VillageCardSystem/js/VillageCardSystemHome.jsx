@@ -1785,8 +1785,10 @@ export default class VillageCardSystemHome extends React.Component {
                 <div className='my_flex wrap'>
                     <div className='leftBox'>
                         <div className='myMsg my_flex'>
-                            <img src={require("../img/home-user.png")} alt=""/>
-                            <span>村村向上</span>
+                            <div className="villagelogo">
+                                <img src={require("../img/home-user.png")} alt=""/>
+                                <span>村村向上</span>
+                            </div>
                         </div>
                         <div className='leftAccordion'>
                             <div>

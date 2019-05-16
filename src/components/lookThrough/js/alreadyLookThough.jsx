@@ -398,14 +398,11 @@ export default class alreadyLookThough extends React.Component {
                     {
                         rowData.littleVideoInfo ?
                             <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowData.auditId, rowID)}>
-                                <img className='photo' src={rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.avatar : ""} alt="" />
                                 <div className="right">
                                     <div className="topMsg my_flex">
                                         <span className='author text_hidden'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
-                                        <span className='type'>{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                         {rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span className='toPriority'>优先</span>) : ""}
                                     </div>
-                                    <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                     <div className='title'>{rowData.littleVideoInfo.videoContent}</div>
                                     <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                                 </div>
@@ -413,14 +410,11 @@ export default class alreadyLookThough extends React.Component {
                             :
                             rowData.articleInfo ?
                                 <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowData.auditId, rowID)}>
-                                    <img className='photo' src={rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.avatar : ""} alt="" />
                                     <div className="right">
                                         <div className="topMsg my_flex">
                                             <span className='author text_hidden'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
-                                            <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                             {rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span className='toFirst'>置顶</span>) : ""}
                                         </div>
-                                        <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                         <div className='title'>{rowData.articleInfo.articleTitle}</div>
                                         <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                     </div>
@@ -428,13 +422,10 @@ export default class alreadyLookThough extends React.Component {
                                 :
                                 rowData.discussInfo ?
                                     <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowData.auditId, rowID)}>
-                                        <img className='photo' src={rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.avatar : ""} alt="" />
                                         <div className='right'>
                                             <div className="topMsg my_flex">
                                                 <span className='author text_hidden'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
-                                                <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
                                             </div>
-                                            <div className='status'>{rowData.auditInfo ? (rowData.auditInfo.isPass == 1 ? <i className='pass'>通过</i> : <i>未通过</i>) : ""}</div>
                                             <div className='title'>{rowData.discussInfo.discussContent}</div>
                                             <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
                                         </div>
@@ -453,7 +444,7 @@ export default class alreadyLookThough extends React.Component {
                     <div className='emptyIcon'></div>
                 </div>
                 <div className="To-auditLeft" style={{
-                    height: document.documentElement.clientHeight - 46,
+                    height: document.documentElement.clientHeight,
                     backgroundColor: '#f4f4f4'
                 }}>
                     {/* 已经审核 */}
@@ -474,7 +465,7 @@ export default class alreadyLookThough extends React.Component {
                         initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         style={{
-                            height: document.body.clientHeight - 46,
+                            height: document.body.clientHeight,
                         }}
                     />
                 </div>
@@ -491,13 +482,13 @@ export default class alreadyLookThough extends React.Component {
                                         {
                                             calm.state.data.articleInfo ?
                                                 <div>
-                                                    <div className='sameBack'>
+                                                    <div className='audit-content'>
                                                         <div className='title'>{calm.state.data.articleInfo.articleTitle}</div>
-                                                        <div className='topMsg'>
-                                                            <img className="photo" src={calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.avatar : ""} alt="" />
-                                                            <span className='author'>{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
-                                                            <span className='time'>{calm.state.data.articleInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime) : ""}</span>
-                                                            <span className='type'>{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
+                                                        <div className='audit-info'>
+                                                            <div>
+                                                                <span className='author'>作者名称：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
+                                                                <span className='time'>{calm.state.data.articleInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime) : ""}</span>
+                                                            </div>
                                                         </div>
                                                         <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleInfo.articleContent }}></div>
                                                     </div>
@@ -536,10 +527,8 @@ export default class alreadyLookThough extends React.Component {
                                                     <div>
                                                         <div className='sameBack  sameBackTop sameBackBottom'>
                                                             <div className='topMsg'>
-                                                                <img className="photo" src={calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.avatar : ""} alt="" />
                                                                 <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName : ""}</span>
                                                                 <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
-                                                                <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                                             </div>
                                                             <div className='textCont'>
                                                                 <div className='video_title textOver2'>{calm.state.data.littleVideoInfo.videoContent}</div>
@@ -589,10 +578,8 @@ export default class alreadyLookThough extends React.Component {
                                                         <div>
                                                             <div className="sameBack">
                                                                 <div className='topMsg'>
-                                                                    <img className="photo" src={calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.avatar : ""} alt="" />
                                                                     <span className='author'>{calm.state.data.discussInfo.discussUser ? calm.state.data.discussInfo.discussUser.userName : ""}</span>
                                                                     <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.discussInfo.createTime)}</span>
-                                                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
                                                                 </div>
                                                                 <div className='textCont'>
                                                                     {calm.state.data.discussInfo.discussContent}

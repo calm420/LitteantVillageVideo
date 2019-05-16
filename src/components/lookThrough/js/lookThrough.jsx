@@ -716,7 +716,7 @@ export default class lookThrough extends React.Component {
                                                             </RadioItem>
                                                         ))}
                                                     </List>
-                                                    <List className='toPriority' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                                    <List className='' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先'}>
                                                         {isRecData.map(i => (
                                                             <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                                 {i.label}

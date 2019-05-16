@@ -13,20 +13,28 @@
     position: relative;
     z-index: 2;
     .myMsg{
-      height: 60px;
+      height: 80px;
       align-items: center;
       font-size: 24px;
-      padding: 10px 0 0 20px;
+      padding: 0;
+      background: #2C70E7;
+      .villagelogo{
+        margin: 0 auto;
+        line-height: 46px;
+      }
       img{
         width: 46px;
         height: 41px;
         margin-right: 10px;
+        float: left;
       }
     }
     .leftAccordion{
-      padding-top: 40px;
+      padding-top: 20px;
       font-size: 18px;
       text-indent: 46px;
+      height: calc(~"100% - 168px");
+      overflow-y: auto;
       &>div{
         height: 56px;
         line-height: 56px;
@@ -102,10 +110,12 @@
         color: #4380EB;
         font-size: 16px;
         border-radius: 4px;
-        padding: 11px 17px;
+        padding: 11px 0;
         margin-left: 15px;
         border: 1px solid #4380EB;
         line-height: 1;
+        width: 100px;
+        text-align: center;
       }
     }
     .rightContent{
@@ -179,6 +189,12 @@
     background: #0044BA;
     text-align: center;
     text-indent: 0;
+    .haha, .hehe{
+      width: 100px;
+      margin: 0 auto;
+      text-align: left;
+      text-indent: 16px;
+    }
     .haha{
       color: #FFC80B;
       position: relative;
@@ -189,7 +205,7 @@
         background: #ffc80b;
         border-radius: 50%;
         position: absolute;
-        left: 70px;
+        left: 0;
         top: 24px;
       }
     }

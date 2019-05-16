@@ -68,6 +68,8 @@ export default class articleList extends React.Component {
         }
         this.setState({
             userId: userId,
+            villageId: 1,
+            groupId: 2,
             machineType: machineType,
             version: version,
             isDisPlay:isDisPlay
@@ -574,7 +576,7 @@ export default class articleList extends React.Component {
         console.log(type);
         if (type == 'article') {
             // var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-            var url = 'http://jiaoxue.maaee.com:8094/richTextMobileEditor/index.html?id='+ this.state.userId
+            var url = 'http://192.168.50.73:6443/richTextMobileEditorVillage/index.html?id='+ this.state.userId+"&village="+this.state.villageId+"&groupId="+this.state.groupId
             console.log(url);
             var data = {
                 method: 'openNewPage',

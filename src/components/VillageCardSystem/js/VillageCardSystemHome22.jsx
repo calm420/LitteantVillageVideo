@@ -1,5 +1,5 @@
 import React from "react";
-import { ListView, PullToRefresh, Toast, Accordion, List, InputItem, DatePicker, ImagePicker,TextareaItem } from 'antd-mobile';
+import { ListView, PullToRefresh, Toast, Accordion, List, InputItem, DatePicker, ImagePicker, TextareaItem } from 'antd-mobile';
 import Input from "antd-mobile/lib/input-item/Input";
 import '../css/VillageCardSystemHome.less'
 var calm;
@@ -82,10 +82,11 @@ export default class VillageCardSystemHome extends React.Component {
             VillCourse: {},
             villageNotifyList: [],
             honorVillagerList: [],
-            cardNameValue:"",
-            villageCradImg:"",
-            cardTitleValue:"",
-            cardContentValue:""
+            cardNameValue: "",
+            villageCradImg: "",
+            cardTitleValue: "",
+            cardContentValue: "",
+            uploadFileList: []
         }
     }
 
@@ -172,14 +173,23 @@ export default class VillageCardSystemHome extends React.Component {
             $(".rightBoxFirst").show();
             $(".lookThrough").hide();
             $(".cardEdit").hide();
+            $(".rightBoxVillageHistory").hide();
+
+        } else if (key == 3) {
+            $(".rightBox").hide();
+            $(".rightBoxVillageHistory").show();
+            $(".lookThrough").hide();
+            $(".cardEdit").hide();
 
         } else if (key == 1) {
             $(".rightBox").hide();
             $(".rightBoxSecond").show();
             $(".lookThrough").show();
-            var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId="+ this.state.accountData.uid;
+            var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=" + this.state.accountData.uid;
             $(".iframeDiv").attr("src", url)
+            $(".rightBoxVillageHistory").hide();
         } else if (key == 2) {
+            $(".rightBoxVillageHistory").hide();
             this.setState({
                 editCardType:
                     [
@@ -217,12 +227,12 @@ export default class VillageCardSystemHome extends React.Component {
     }
     clickArticalItem = (value) => {
         if (value.title == "待审核") {
-            var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId="+this.state.accountData.uid
+            var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=" + this.state.accountData.uid
             $(".iframeDiv").attr("src", url)
 
 
         } else if (value.title == "已审核") {
-            var url = WebServiceUtil.mobileServiceURL + "alreadyLookThough?auditorId="+this.state.accountData.uid
+            var url = WebServiceUtil.mobileServiceURL + "alreadyLookThough?auditorId=" + this.state.accountData.uid
             $(".iframeDiv").attr("src", url)
 
 
@@ -264,6 +274,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "乡村振兴") {
+            this.selectUploadFile()
             $(".villageImg").show();
             $(".dangke").hide();
             $(".dangkeAtt").hide();
@@ -532,12 +543,18 @@ export default class VillageCardSystemHome extends React.Component {
                                 villageHappyVideo: res
                             }, () => {
                                 calm.addUploadFile(1, calm.state.villageHappyVideo)
+                                setTimeout(() => {
+                                    calm.selectUploadFile();
+                                }, 300);
                             })
                         } else if (type == "jpg" || type == "JPG" || type == "png" || type == "PNG" || type == "JPEG" || type == "jpeg") {
                             calm.setState({
                                 villageHappyImg: res
                             }, () => {
                                 calm.addUploadFile(0, calm.state.villageHappyImg)
+                                setTimeout(() => {
+                                    calm.selectUploadFile();
+                                }, 300);
                             })
                         }
 
@@ -607,7 +624,7 @@ export default class VillageCardSystemHome extends React.Component {
     /**
     * 获取图片路径
     */
-   getImageCard () {
+    getImageCard () {
         $('#cradImg').unbind("change");
         $('.cradImg').bind('change', function (evt) {
             if (evt.target.files[0]) {
@@ -674,6 +691,41 @@ export default class VillageCardSystemHome extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+
+    selectUploadFile = () => {
+        var param = {
+            "method": 'selectUploadFile',
+            "villageId": this.state.accountData.villageId,
+        };
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+            onResponse: result => {
+                this.setState({
+                    uploadFileList: result.response
+                })
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    deleteUploadFile = (v) => {
+        var param = {
+            "method": 'deleteUploadFile',
+            "id": v.id,
+        };
+
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    Toast.info("删除成功", 1)
+                    this.selectUploadFile()
+                }
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -769,7 +821,7 @@ export default class VillageCardSystemHome extends React.Component {
                         value={this.state.addInputList[i].inputValue}
                     >
                     </InputItem>
-                    <span style={{ display: i == 0 ? "none" : "block" }}>删除</span>
+                    <span className="village-delete" style={{ display: i == 0 ? "none" : "inline-block" }}></span>
                 </div>
             </div>)
         })
@@ -1016,7 +1068,7 @@ export default class VillageCardSystemHome extends React.Component {
         $(".villageMask").hide();
     }
 
-    
+
     appendImage = (imagePath) => {
         var editorImageDiv = $('<image className="editor_image" />').attr('src', imagePath);
         editorImageDiv.attr('cover', imagePath);
@@ -1034,6 +1086,12 @@ export default class VillageCardSystemHome extends React.Component {
         $(".villageMask").show();
         var url = "http://192.168.50.73:6443/richTextEditorVillage/?loginUserId=" + this.state.accountData.villageId
         $(".pushNotify").attr("src", url)
+    }
+    pushNotifyDataArtical = () => {
+        $(".notifyArticalPop").show();
+        $(".villageArticalMask").show();
+        var url = "http://192.168.50.73:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        $(".pushArtical").attr("src", url)
     }
 
     updateGroupName = (v) => {
@@ -1380,11 +1438,11 @@ export default class VillageCardSystemHome extends React.Component {
 
     textareaOnChange = (value) => {
         this.setState({
-            cardContentValue:value
+            cardContentValue: value
         })
     }
 
-    updateCardInfo=()=>{
+    updateCardInfo = () => {
         var param = {
             "method": 'getLearningList',
             "cardNameValue": this.state.cardNameValue,
@@ -1394,13 +1452,13 @@ export default class VillageCardSystemHome extends React.Component {
             "villageCradImg": this.state.villageCradImg,
         };
 
-        console.log(param,"param")
+        console.log(param, "param")
         return
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result)
                 if (result.success) {
-                  
+
                 }
             },
             onError: function (error) {
@@ -1409,7 +1467,7 @@ export default class VillageCardSystemHome extends React.Component {
         });
     }
 
-    exitLogin=()=>{
+    exitLogin = () => {
         var url = WebServiceUtil.mobileServiceURL + "villageCardSystemLogin";
         window.location.href = url;
     }
@@ -1434,8 +1492,9 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='leftAccordion'>
                             <div>
-                                <div onClick={this.onChangeLeft.bind(this, 0)}>成员列表</div>
-                                <div onClick={this.onChangeLeft.bind(this, 1)}>文章审核</div>
+                                <div className="select" onClick={this.onChangeLeft.bind(this, 0)}><i className="home-Members"></i>成员列表</div>
+                                <div onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>村史村情</div>
+                                <div onClick={this.onChangeLeft.bind(this, 1)}><i className="home-audit"></i>文章审核</div>
                                 <div className="lookThrough" style={{ display: "none" }}>
                                     {
                                         this.state.articalType.map((v, i) => {
@@ -1443,7 +1502,7 @@ export default class VillageCardSystemHome extends React.Component {
                                         })
                                     }
                                 </div>
-                                <div onClick={this.onChangeLeft.bind(this, 2)}>班牌编辑</div>
+                                <div onClick={this.onChangeLeft.bind(this, 2)}><i className="home-editor"></i>班牌编辑</div>
                                 <div className="cardEdit" style={{ display: "none" }}>
                                     {
                                         this.state.editCardType.map((v, i) => {
@@ -1455,7 +1514,7 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='quiteBtn'>
                             管理员
-                            <span onClick={this.exitLogin}>退出登录</span>
+                            <span onClick={this.exitLogin}></span>
                         </div>
                     </div>
                     <div className='rightBox rightBoxFirst'>
@@ -1471,64 +1530,75 @@ export default class VillageCardSystemHome extends React.Component {
                             {
                                 this.state.villageGroupList.map((v, i) => {
                                     return (
-                                        <div>
+                                        <div className="right-item">
                                             {v.groupName}
-                                            <span onClick={this.updateGroupName.bind(this, v)}>修改</span>
-                                            <span onClick={this.deleteGroupName.bind(this, v)}>删除</span>
+                                            <span className="village-edit" onClick={this.updateGroupName.bind(this, v)}></span>
+                                            <span className="village-delete" onClick={this.deleteGroupName.bind(this, v)}></span>
                                         </div>
                                     )
                                 })
                             }
                         </div>
                     </div>
+                    <div className="rightBox rightBoxVillageHistory" style={{ display: "none" }}>
+                        <div className="rightHeader my_flex">hahhah</div>
+                    </div>
                     <div className="rightBox rightBoxSecond" style={{ display: "none" }}>
                         <iframe src="" className="iframeDiv" frameborder="0"></iframe>
                     </div>
                     <div className="rightBox rightBoxThird" style={{ display: "none" }}>
                         <div className="bindCard" >
-                            <InputItem
-                                placeholder="请输入名称"
-                                onChange={this.cardNameChange}
-                                value={this.state.cardNameValue}
-                            >
-                                <div>名称</div>
-                            </InputItem>
-                            <div className="parentDiv">
-                                    <button className="uploadBtn">上传</button>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">县级名称</div>
+                                <InputItem
+                                    placeholder="请输入名称"
+                                    onChange={this.cardNameChange}
+                                    value={this.state.cardNameValue}
+                                />
+                            </div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">上传照片</div>
+                                <div className="parentDiv">
+                                    <button className="editBtn"></button>
                                     <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                    <span className="photo-add">
+                                        <img src={this.state.villageCradImg} />
+                                    </span>
                                 </div>
-
-                                <div>
-                                    <img src={this.state.villageCradImg} />
-                                </div>
-                            <InputItem
-                                placeholder="村标题"
-                                onChange={this.cardTitleChange}
-                                value={this.state.cardTitleValue}
-                            >
-                                <div>村标题</div>
-                            </InputItem>
-                            <TextareaItem
-                                rows={1}
-                                className="add_element"
-                                style={{ 'margin-left': '-8px' }}
-                                placeholder="输入内容"
-                                labelNumber={2}
-                                value={this.state.cardContentValue}
-                                onChange={calm.textareaOnChange}
-                            />
-                              <InputItem
-                                placeholder="班牌序号"
-                                onChange={this.cardOrderChange}
-                                value={this.state.cardOrderValue}
-                            >
-                                <div>村标题</div>
-                            </InputItem>
-                            <div onClick={this.updateCardInfo}>修改</div>
+                            </div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">乡村标题</div>
+                                <InputItem
+                                    placeholder="村标题"
+                                    onChange={this.cardTitleChange}
+                                    value={this.state.cardTitleValue}
+                                />
+                            </div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">简介内容</div>
+                                <TextareaItem
+                                    rows={2}
+                                    placeholder="输入内容"
+                                    labelNumber={2}
+                                    value={this.state.cardContentValue}
+                                    onChange={calm.textareaOnChange}
+                                />
+                            </div>
+                            <div className="bindCard-item">
+                                <div className="bindCard-itemLeft">村牌序号</div>
+                                <InputItem
+                                    placeholder="村牌序号"
+                                    onChange={this.cardOrderChange}
+                                    value={this.state.cardOrderValue}
+                                />
+                            </div>
+                            <div className="submitBtn">
+                                <span onClick={this.updateCardInfo}>修改</span>
+                            </div>
                         </div>
                         <div className="villageImg" style={{ display: "none" }}>
-                            <div>
-                                <div>
+                            <div className="rightContent">
+                                <div className="right-item">
                                     {this.state.villageName}
                                 </div>
                                 <input type="file" id="upload" style={{ display: "none" }} />
@@ -1538,22 +1608,46 @@ export default class VillageCardSystemHome extends React.Component {
                                 </div>
 
                                 <div id="image_box">
-                                    <video src={this.state.villageHappyVideo}></video>
-                                    <img src={this.state.villageHappyImg} />
+                                    {
+                                        this.state.uploadFileList.map((v, i) => {
+                                            console.log(v, "V")
+                                            var arr = v.url.split(".");
+                                            var type = arr[arr.length - 1];
+                                            return (
+                                                <div>
+                                                    {
+                                                        type == "mp4" ?
+                                                            <div>
+                                                                <video src={v.url}></video>
+                                                                <span onClick={this.deleteUploadFile.bind(this,v)}>删除</span>
+                                                            </div>
+                                                            :
+                                                            <div>
+                                                                <img src={v.url} alt="" />
+                                                                <span onClick={this.deleteUploadFile.bind(this,v)}>删除</span>
+                                                            </div>
+                                                    }
+
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    {/* <video src={this.state.villageHappyVideo}></video>
+                                    <img src={this.state.villageHappyImg} /> */}
                                 </div>
                             </div>
                         </div>
                         <div className="dangke" style={{ display: "none" }}>
 
-                            <div>
-                                <div>
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <span onClick={this.addCourse}>
-                                    添加课程
                                 </span>
-
-
+                                <div className="btn">
+                                    <span onClick={this.addCourse}>
+                                        添加课程
+                                    </span>
+                                </div>
                             </div>
                             <div>
                                 {this.state.villageCourseList.map((v, i) => {
@@ -1575,13 +1669,15 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className="dangkeAtt" style={{ display: "none" }}>
 
-                            <div>
-                                <div>
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <span onClick={this.sumPeople}>
-                                    打卡
                                 </span>
+                                <div className="btn">
+                                    <span onClick={this.sumPeople}>
+                                        打卡
+                                    </span>
+                                </div>
                             </div>
                             <div>
                                 {this.state.villageAttendList.map((v, i) => {
@@ -1599,13 +1695,15 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="pushNotify" style={{ display: "none" }}>
-                            <div>
-                                <div>
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <span onClick={this.pushNotifyData}>
-                                    发布通知
                                 </span>
+                                <div className="btn">
+                                    <span onClick={this.pushNotifyData}>
+                                        发布通知
+                                    </span>
+                                </div>
                             </div>
                             <div>
                                 {
@@ -1621,8 +1719,8 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="hornorVillages" style={{ display: "none" }}>
-                            <div>
-                                <div>
+                            <div className="rightContent">
+                                <div className="right-item">
                                     {this.state.villageName}
                                 </div>
                                 <div>
@@ -1644,8 +1742,8 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className="learnList" style={{ display: "none" }}>
 
-                            <div>
-                                <div>
+                            <div className="rightContent">
+                                <div className="right-item">
                                     {this.state.villageName}
                                 </div>
                                 <div>
@@ -1681,7 +1779,6 @@ export default class VillageCardSystemHome extends React.Component {
                         <div>
                             {this.state.inputDivs}
                             <span className="editBtn" onClick={this.addInput}>
-                                添加
                             </span>
                             <div className='submitBtn btnGroup' style={{ display: "none" }}>
                                 <div className="my_flex">
@@ -1697,6 +1794,9 @@ export default class VillageCardSystemHome extends React.Component {
 
                 {/* 编辑名称 */}
                 <div className="editorPop villageMaskInner" style={{ display: "none" }}>
+                    <div className="editHeader">
+                        编辑名称
+                    </div>
                     <InputItem
                         placeholder="请输入村名称"
                         onChange={this.inputOnvillageNameChange}
@@ -1731,13 +1831,19 @@ export default class VillageCardSystemHome extends React.Component {
 
                 {/* 添加课程 */}
                 <div className="coursePop villageMaskInner" style={{ display: "none" }}>
-                    <InputItem
-                        placeholder="请输入组课程名称"
-                        onChange={this.inputOnCourseNameChange}
-                        value={this.state.courseNameChangeValue}
-                    >
-                        <div>课程名称</div>
-                    </InputItem>
+                    <div className="editHeader">
+                        添加课程
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">
+                            课程名称
+                        </div>
+                        <InputItem
+                            placeholder="请输入组课程名称"
+                            onChange={this.inputOnCourseNameChange}
+                            value={this.state.courseNameChangeValue}
+                        />
+                    </div>
                     <InputItem
                         placeholder="请输入授课教师"
                         onChange={this.inputOnTeacherChange}
@@ -1841,8 +1947,15 @@ export default class VillageCardSystemHome extends React.Component {
                 <div className="notifyPop villageMaskInner" style={{ display: "none" }}>
                     <iframe src="" className="pushNotify" frameborder="0"></iframe>
                 </div>
+                {/* 发布文章 */}
+                <div className="articalPop villageMaskInner" style={{ display: "none" }}>
+                    <iframe src="" className="pushArtical" frameborder="0"></iframe>
+                </div>
                 {/* 修改组名 */}
                 <div className="groupNamePop villageMaskInner" style={{ display: "none" }}>
+                    <div className="editHeader">
+                        编辑组名
+                    </div>
                     <InputItem
                         placeholder="请输入组名"
                         onChange={this.inputGroupNameChange}

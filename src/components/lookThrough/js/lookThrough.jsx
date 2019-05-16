@@ -554,7 +554,7 @@ export default class lookThrough extends React.Component {
                             {
                                 calm.state.type == 0 ?
                                     <div className="audit-content">
-                                        <div className='title'>{calm.state.data.articleTitle}</div>
+                                        <div className='video_title textOver2'>{calm.state.data.articleTitle}</div>
                                         <div className='audit-info'>
                                             <div>
                                                 <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>

@@ -397,38 +397,29 @@ export default class alreadyLookThough extends React.Component {
                 <div>
                     {
                         rowData.littleVideoInfo ?
-                            <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowData.auditId, rowID)}>
-                                <div className="right">
-                                    <div className="topMsg my_flex">
-                                        <span className='author text_hidden'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
+                            <div className="right-item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowData.auditId, rowID)}>
+                                    {/*<div className="topMsg my_flex">
                                         {rowData.littleVideoInfo.isRecommend == 1 ? (rowData.littleVideoInfo.isRecommend == 0 ? "" : <span className='toPriority'>优先</span>) : ""}
-                                    </div>
-                                    <div className='title'>{rowData.littleVideoInfo.videoContent}</div>
-                                    <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
-                                </div>
+                                    </div>*/}
+                                    <div className='item-left text_hidden'>{rowData.littleVideoInfo.videoContent}</div>
+                                    <div className='item-right'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowData.auditId, rowID)}>
-                                    <div className="right">
-                                        <div className="topMsg my_flex">
-                                            <span className='author text_hidden'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
+                                <div className="right-item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowData.auditId, rowID)}>
+                                        {/*<div className="topMsg my_flex">
                                             {rowData.articleInfo.isTop == 1 ? (rowData.articleInfo.isTop == 0 ? "" : <span className='toFirst'>置顶</span>) : ""}
-                                        </div>
-                                        <div className='title'>{rowData.articleInfo.articleTitle}</div>
-                                        <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
-                                    </div>
+                                        </div>*/}
+                                        <div className='item-left text_hidden'>{rowData.articleInfo.articleTitle}</div>
+                                        <div className='item-right'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                 </div>
                                 :
                                 rowData.discussInfo ?
-                                    <div className="item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowData.auditId, rowID)}>
-                                        <div className='right'>
-                                            <div className="topMsg my_flex">
-                                                <span className='author text_hidden'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
-                                            </div>
-                                            <div className='title'>{rowData.discussInfo.discussContent}</div>
-                                            <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
-                                        </div>
+                                    <div className="right-item my_flex" onClick={_this.toAlreadyLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowData.auditId, rowID)}>
+                                            {/*<div className="topMsg my_flex">
+                                            </div>*/}
+                                            <div className='item-left text_hidden'>{rowData.discussInfo.discussContent}</div>
+                                            <div className='item-right'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
                                     </div>
                                     :
                                     ""
@@ -483,7 +474,7 @@ export default class alreadyLookThough extends React.Component {
                                             calm.state.data.articleInfo ?
                                                 <div>
                                                     <div className='audit-content'>
-                                                        <div className='title'>{calm.state.data.articleInfo.articleTitle}</div>
+                                                        <div className='video_title textOver2'>{calm.state.data.articleInfo.articleTitle}</div>
                                                         <div className='audit-info'>
                                                             <div>
                                                                 <span className='author'>作者名称：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
@@ -493,11 +484,11 @@ export default class alreadyLookThough extends React.Component {
                                                         <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleInfo.articleContent }}></div>
                                                     </div>
                                                     <div className='review'>
-                                                        <div className='line_public'>
+                                                        <div className=''>
                                                             <span className='title'>审核人：</span>
                                                             {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
                                                             <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
-                                                        <div className='line_public'>
+                                                        <div className=''>
                                                             <span className='title'>审核说明：</span>
                                                             <div className='reCont'>
                                                                 {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
@@ -525,13 +516,16 @@ export default class alreadyLookThough extends React.Component {
                                             {
                                                 calm.state.data.littleVideoInfo ?
                                                     <div>
-                                                        <div className='sameBack  sameBackTop sameBackBottom'>
-                                                            <div className='topMsg'>
-                                                                <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName : ""}</span>
-                                                                <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
+                                                        <div className='audit-content'>
+                                                            <div className='video_title textOver2'>{calm.state.data.littleVideoInfo.videoContent}</div>
+                                                            <div className='audit-info'>
+                                                                <div>
+                                                                    <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName : ""}</span>
+                                                                    <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
+                                                                </div>
+                                                                <div>内容：</div>
                                                             </div>
                                                             <div className='textCont'>
-                                                                <div className='video_title textOver2'>{calm.state.data.littleVideoInfo.videoContent}</div>
                                                                 <video
                                                                     className="tag-vedio"
                                                                     poster={calm.state.data.littleVideoInfo.coverPath}
@@ -544,18 +538,18 @@ export default class alreadyLookThough extends React.Component {
                                                             </div>
                                                         </div>
                                                         <div className='review'>
-                                                            <div className='line_public'>
-                                                                <span className='title'>审核人：</span>
+                                                            <div className='audit-instructions'>
+                                                                <span className='audit-instructionsLeft'>审核人：</span>
                                                                 {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
                                                                 <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
-                                                            <div className='line_public'>
-                                                                <span className='title'>审核说明：</span>
+                                                            <div className='audit-instructions'>
+                                                                <span className='audit-instructionsLeft'>说明：</span>
                                                                 <div className='reCont'>
                                                                     {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                                 </div>
                                                             </div>
-                                                            <div className='result'>
-                                                                <span className='title'>审核结果：</span>
+                                                            <div className='audit-instructions'>
+                                                                <span className='audit-instructionsLeft'>结果：</span>
                                                                 {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                                 {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
                                                                 <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
@@ -586,11 +580,11 @@ export default class alreadyLookThough extends React.Component {
                                                                 </div>
                                                             </div>
                                                             <div className='review'>
-                                                                <div className='line_public'>
+                                                                <div className=''>
                                                                     <span className='title'>审核人：</span>
                                                                     {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
                                                                     <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
-                                                                <div className='line_public'>
+                                                                <div className=''>
                                                                     <span className='title'>审核说明：</span>
                                                                     <div className='reCont'>
                                                                         {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
@@ -615,7 +609,7 @@ export default class alreadyLookThough extends React.Component {
                                 calm.state.type == 0 ?
                                     <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                                         <div className="isDangerArea">
-                                            <List className="line_public reCheckCont" renderHeader={() => '审核：'}>
+                                            <List className=" reCheckCont" renderHeader={() => '审核：'}>
                                                 {passData.map(i => (
                                                     <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
                                                         {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
@@ -630,7 +624,7 @@ export default class alreadyLookThough extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List> */}
-                                                <List className='line_public' renderHeader={() => '置顶：'}>
+                                                <List className='' renderHeader={() => '置顶：'}>
                                                     {isTopData.map(i => (
                                                         <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
                                                             {i.label}
@@ -660,8 +654,8 @@ export default class alreadyLookThough extends React.Component {
                                     :
                                     calm.state.type == 1 ?
                                         <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
-                                            <div className="isDangerArea priority line_public reCheckCont">
-                                                <List className="line_public" renderHeader={() => '审核：'}>
+                                            <div className="isDangerArea priority  reCheckCont">
+                                                <List className="" renderHeader={() => '审核：'}>
                                                     {passData.map(i => (
                                                         <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
                                                             {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>
@@ -699,7 +693,7 @@ export default class alreadyLookThough extends React.Component {
                                         calm.state.type == 2 ?
                                             <div style={{ display: calm.state.flag == 1 ? "block" : "none" }}>
                                                 <div className="isDangerArea">
-                                                    <List className="line_public reCheckCont" renderHeader={() => '审核：'}>
+                                                    <List className=" reCheckCont" renderHeader={() => '审核：'}>
                                                         {passData.map(i => (
                                                             <RadioItem key={i.value} checked={isPass === i.value} onChange={() => this.radioChange(i.value)}>
                                                                 {i.label}<List.Item.Brief>{i.extra}</List.Item.Brief>

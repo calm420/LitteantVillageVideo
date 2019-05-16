@@ -962,6 +962,10 @@ video::-webkit-media-controls-fullscreen-button {
   border-radius: 4px;
   padding: 0 30px;
   box-sizing: border-box;
+  .am-list-item .am-input-label{
+    font-size: 18px !important;
+    color: #333 !important;
+  }
   .editCont{
     #textDiv2.InviteCode{
       width:300px;
@@ -982,7 +986,7 @@ video::-webkit-media-controls-fullscreen-button {
       margin-left: 10px;
     }
   }
-  .am-list-item  .am-input-control, #textDiv2.InviteCode, .am-textarea-control{
+  .am-list-item  .am-input-control, #textDiv2.InviteCode, .am-textarea-control, .Date-Picker .am-list-item{
     border: 1px solid #BFBFBF;
     border-radius: 4px;
     font-size: 16px !important;
@@ -992,6 +996,9 @@ video::-webkit-media-controls-fullscreen-button {
       padding:0;
       font-size: 16px !important;
     }
+  }
+  .Date-Picker .am-list-item{
+    padding: 0 18px ;
   }
   #textDiv2.InviteCode{
     padding: 13px 18px;
@@ -1131,4 +1138,11 @@ video::-webkit-media-controls-fullscreen-button {
     width: 100px;
     text-align: right;
   }
+}
+.am-picker-popup{
+  width: 570px !important;
+  border-radius: 4px;
+  margin: 0 auto;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }

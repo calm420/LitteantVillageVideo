@@ -1785,7 +1785,7 @@ export default class VillageCardSystemHome extends React.Component {
                 <div className='my_flex wrap'>
                     <div className='leftBox'>
                         <div className='myMsg my_flex'>
-                            <img src="http://60.205.86.217/upload9/2019-04-11/16/fa43bd1e-dc0c-42ad-930a-50d19a8bfe2f.png?size=100x100" alt="" />
+                            <img src={require("../img/home-user.png")} alt=""/>
                             <span>村村向上</span>
                         </div>
                         <div className='leftAccordion'>
@@ -2048,7 +2048,9 @@ export default class VillageCardSystemHome extends React.Component {
                                     this.state.villageNotifyList.map((v, i) => {
                                         return (
                                             <div className="right-item my_flex" onClick={this.seeNotifyDetail.bind(this, v)}>
-                                                <div className="item-left text_hidden">{v.noticeTitle}</div>
+                                                <div className="item-left text_hidden">
+                                                    <span className="Information-show">{v.noticeTitle}</span>
+                                                    </div>
                                                 <div className="operation">
                                                     <span className="village-delete" onClick={this.showNotifyAlert.bind(this, v)}></span>
                                                 </div>
@@ -2059,12 +2061,15 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="hornorVillages" style={{ display: "none" }}>
-                            <div className="rightContent">
-                                <div className="right-item">
+                            <div className="rightHeader my_flex">
+                                <span>
                                     {this.state.villageName}
-                                </div>
-                                <div>
+                                </span>
+                            </div>
+                            <div className="rightContent">
+                                <div className="emptyDiv">
                                     <div style={{ display: this.state.showHornerEmpty ? "block" : "none" }}>
+                                        <div className="emptyIcon"></div>
                                         暂无荣誉村名哟
                                     </div>
                                     <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
@@ -2084,13 +2089,18 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="learnList" style={{ display: "none" }}>
-
+                            <div className="rightHeader my_flex">
+                                <span>
+                                    {this.state.villageName}
+                                </span>
+                            </div>
                             <div className="rightContent">
                                 <div className="right-item">
-                                    {this.state.villageName}
+
                                 </div>
-                                <div>
+                                <div className="emptyDiv">
                                     <div style={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
+                                        <div className="emptyIcon"></div>
                                         暂无学习榜
                                     </div>
                                     <div display={{ display: this.state.showLearnEmpty ? "none" : "block" }}>
@@ -2205,12 +2215,14 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="bindCard-item">
                         <div className="bindCard-itemLeft">上课时间</div>
                         <div className="bindCard-itemRight">
-                            <DatePicker
-                                value={this.state.date}
-                                onChange={date => this.setState({ date })}
-                            >
-                                <List.Item arrow="horizontal"></List.Item>
-                            </DatePicker>
+                            <div className="Date-Picker">
+                                <DatePicker
+                                    value={this.state.date}
+                                    onChange={date => this.setState({ date })}
+                                >
+                                    <List.Item arrow="horizontal"></List.Item>
+                                </DatePicker>
+                            </div>
                         </div>
                     </div>
                     <div className="bindCard-item">
@@ -2265,13 +2277,15 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="bindCard-item">
                         <div className="bindCard-itemLeft">开课时间</div>
                         <div className="bindCard-itemRight">
-                            <DatePicker
-                                extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
-                                value={this.state.dateUpdate}
-                                onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
-                            >
-                                <List.Item arrow="horizontal">开课时间</List.Item>
-                            </DatePicker>
+                            <div className="Date-Picker">
+                                <DatePicker
+                                    extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
+                                    value={this.state.dateUpdate}
+                                    onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
+                                >
+                                    <List.Item arrow="horizontal"></List.Item>
+                                </DatePicker>
+                            </div>
                         </div>
                     </div>
                     <div className="bindCard-item">
@@ -2349,27 +2363,41 @@ export default class VillageCardSystemHome extends React.Component {
 
                 {/* 村史村情详情 */}
                 <div className="villageHistoryPop villageMaskInner" style={{ display: "none" }}>
-                    <div >
-                        文章标题：
-                        <div className="villageHeader">
+                    <div className="editHeader">
+                        文章详情
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">文章标题</div>
+                        <div className="bindCard-itemRight">
+                            <div className="villageHeader">
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        文章内容：
-                        <div className="villageContent">
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">文章内容</div>
+                        <div className="bindCard-itemRight">
+                            <div className="villageContent">
+                            </div>
                         </div>
                     </div>
                 </div>
                 {/* 通知详情 */}
                 <div className="villageNotifyPop villageMaskInner" style={{ display: "none" }}>
-                    <div >
-                        通知标题：
-                        <div className="notifyHeader">
+                    <div className="editHeader">
+                        通知详情
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">通知标题</div>
+                        <div className="bindCard-itemRight">
+                            <div className="notifyHeader">
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        通知内容：
-                        <div className="notifyContent">
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">通知内容</div>
+                        <div className="bindCard-itemRight">
+                            <div className="notifyContent">
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -37,6 +37,9 @@ export default class lookThrough extends React.Component {
         document.title = "审核列表";
     }
     componentDidMount () {
+        setTimeout(() => {
+            $(".item-left").eq(0).trigger("click");
+        }, 100);
         Bridge.setShareAble("false");
         document.title = "审核列表"
         var locationHref = window.location.href;
@@ -430,6 +433,8 @@ export default class lookThrough extends React.Component {
                     }
                     calm.setState({
                         initDataSource: calm.initDataSource.splice(calm.state.index, 1)
+                    },()=>{
+                        $(".item-left").eq(0).trigger("click");
                     })
                 }
             },

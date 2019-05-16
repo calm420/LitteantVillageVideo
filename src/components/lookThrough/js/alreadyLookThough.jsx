@@ -37,6 +37,9 @@ export default class alreadyLookThough extends React.Component {
     }
 
     componentDidMount () {
+        setTimeout(() => {
+            $(".item").eq(0).trigger("click");
+        }, 100);
         document.title = "审核列表"
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
@@ -129,7 +132,7 @@ export default class alreadyLookThough extends React.Component {
             flag: 0
         }, () => {
             $(".updateModel").slideDown()
-            $(".tagAddPanel_bg").show();
+            // $(".tagAddPanel_bg").show();
         })
         calm.setState({
             isShow: false
@@ -304,7 +307,7 @@ export default class alreadyLookThough extends React.Component {
                 if (result.success) {
                     Toast.success("成功", 1, "", false)
                     $(".updateModel").slideUp();
-                    $(".tagAddPanel_bg").hide();
+                    // $(".tagAddPanel_bg").hide();
                     if (calm.state.type == 1) {
                         $(".updateModel video")[0].pause()
                         $(".updateModel video")[0].currentTime = 0;
@@ -318,6 +321,8 @@ export default class alreadyLookThough extends React.Component {
                     })
                     calm.setState({
                         initDataSource: calm.initDataSource
+                    },()=>{
+                        $(".item").eq(0).trigger("click");
                     })
                 }
 
@@ -367,7 +372,7 @@ export default class alreadyLookThough extends React.Component {
             $(".updateModel video")[0].pause()
             $(".updateModel video")[0].currentTime = 0;
         }
-        $(".tagAddPanel_bg").hide();
+        // $(".tagAddPanel_bg").hide();
 
     }
 
@@ -741,7 +746,7 @@ export default class alreadyLookThough extends React.Component {
                         <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>
-                <div className="tagAddPanel_bg"></div>
+                {/* <div className="tagAddPanel_bg"></div> */}
             </div>
         )
     }

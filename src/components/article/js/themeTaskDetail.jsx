@@ -54,12 +54,20 @@ export default class articleList extends React.Component {
 
     render () {
         return (
-            <div id="themeTaskDetail" style={{ height: document.body.clientHeight }}>
-               <div>
-                   <span>{this.state.villNewsDetail.userName}</span>
-                   <span>{this.state.villNewsDetail.title}</span>
-                   <div  dangerouslySetInnerHTML={{ __html: this.state.villNewsDetail.content }}>{}</div>
-               </div>
+            <div id="articleDetail" style={{ height: document.body.clientHeight }}>
+                <div className="p15 villageDetail">
+                    <div className='title'>{this.state.villNewsDetail.title}</div>
+                    <div className='at'>
+                        <div className="author">
+                            {this.state.villNewsDetail.userName}
+                        </div>
+                    </div>
+                    <div className="content">
+                       <div  dangerouslySetInnerHTML={{ __html: this.state.villNewsDetail.content }}>{}</div>
+
+                    </div>
+                </div>
+
             </div>
         );
     }

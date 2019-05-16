@@ -264,8 +264,6 @@ export default class VillageCardSystemHome extends React.Component {
             })
             var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=" + this.state.accountData.uid
             $(".iframeDiv").attr("src", url)
-
-
         } else if (value.title == "已审核") {
             this.setState({
                 articalType: [

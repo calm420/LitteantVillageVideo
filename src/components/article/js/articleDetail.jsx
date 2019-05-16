@@ -57,8 +57,8 @@ export default class articleDetail extends React.Component {
             var machineType = searchArray[3] ? searchArray[3].split('=')[1] : '';
             var version = searchArray[4] ? searchArray[4].split('=')[1] : '';
             var articleTitle = searchArray[5] ? searchArray[5].split('=')[1] : '';
-            var villageId = villageId[6] ? villageId[6].split('=')[1] : '';
-            var groupId = groupId[7] ? groupId[7].split('=')[1] : '';
+            var villageId = searchArray[6] ? searchArray[6].split('=')[1] : '';
+            var groupId = searchArray[7] ? searchArray[7].split('=')[1] : '';
             console.log(articleTitle, 'articleTitle');
             console.log(decodeURI(articleTitle), 'decodeURI(articleTitle)');
             //阅读文章时存储分数
@@ -74,7 +74,8 @@ export default class articleDetail extends React.Component {
             var type = searchArray[2].split('=')[1];
             var machineType = searchArray[3] ? searchArray[3].split('=')[1] : '';
             var version = searchArray[4] ? searchArray[4].split('=')[1] : '';
-            var articleTitle = searchArray[5] ? searchArray[5].split('=')[1] : '';
+            var villageId = searchArray[6] ? searchArray[6].split('=')[1] : '';
+            var groupId = searchArray[7] ? searchArray[7].split('=')[1] : '';
             this.setState({
                 shareHidden: true,
             })

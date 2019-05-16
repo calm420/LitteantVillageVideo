@@ -116,7 +116,7 @@ export default class myArticleList extends React.Component {
                 "pageNo": this.state.defaultPageNo,
             };
         }
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
@@ -170,7 +170,7 @@ export default class myArticleList extends React.Component {
             "articleIds": articleIds,
             "status": status,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.getArticleInfoListByStatus(true, () => {

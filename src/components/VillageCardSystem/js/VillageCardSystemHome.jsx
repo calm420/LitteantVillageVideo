@@ -1688,11 +1688,13 @@ export default class VillageCardSystemHome extends React.Component {
                             {
                                 this.state.villageGroupList.map((v, i) => {
                                     return (
-                                        <div className="right-item">
-                                            {v.groupName}
+                                    <div className="right-item my_flex">
+                                        <div className="item-left text_hidden">{v.groupName}</div>
+                                        <div className="operation">
                                             <span className="village-edit" onClick={this.updateGroupName.bind(this, v)}></span>
-                                            <span className="village-delete" onClick={this.showListAlert.bind(this, v)}></span>
+                                            <span className="village-delete" onClick={this.deleteGroupName.bind(this, v)}></span>
                                         </div>
+                                    </div>
                                     )
                                 })
                             }
@@ -1783,16 +1785,19 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="villageImg" style={{ display: "none" }}>
+                            <div className="rightHeader my_flex">
+                                <span>{this.state.villageName}</span>
+                                <div className="btn">
+                                    <span>
+                                        上传
+                                        <input type="file" id="upload" style={{ display: "none" }} />
+                                        <div className="parentDiv file-input">
+                                            <input className="calm40 upload_image_" name="upload_image_" id="upload_image_" onClick={this.getImage} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
                             <div className="rightContent">
-                                <div className="right-item">
-                                    {this.state.villageName}
-                                </div>
-                                <input type="file" id="upload" style={{ display: "none" }} />
-                                <div className="parentDiv">
-                                    <button className="uploadBtn">上传</button>
-                                    <input className="calm40 upload_image_" name="upload_image_" id="upload_image_" onClick={this.getImage} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                </div>
-
                                 <div id="image_box">
                                     {
                                         calm.state.uploadFileList.map((v, i) => {
@@ -1800,17 +1805,17 @@ export default class VillageCardSystemHome extends React.Component {
                                             var arr = v.url.split(".");
                                             var type = arr[arr.length - 1];
                                             return (
-                                                <div>
+                                                <div className="item-imageBox">
                                                     {
                                                         type == "mp4" ?
-                                                            <div>
+                                                            <div className="item-imageBoxN">
                                                                 <video src={v.url}></video>
-                                                                <span onClick={this.deleteUploadFile.bind(this, v)}>删除</span>
+                                                                <span className="village-imgDelete" onClick={this.deleteUploadFile.bind(this, v)}></span>
                                                             </div>
                                                             :
-                                                            <div>
+                                                            <div className="item-imageBoxN">
                                                                 <img src={v.url} alt="" />
-                                                                <span onClick={this.deleteUploadFile.bind(this, v)}>删除</span>
+                                                                <span className="village-imgDelete" onClick={this.deleteUploadFile.bind(this, v)}></span>
                                                             </div>
                                                     }
 
@@ -1835,18 +1840,22 @@ export default class VillageCardSystemHome extends React.Component {
                                     </span>
                                 </div>
                             </div>
-                            <div>
+                            <div className="rightContent">
                                 {this.state.villageCourseList.map((v, i) => {
                                     return (
-                                        <div>
+                                        <div className="right-item my_flex">
                                             <img src={v.backgroundImg} alt="" />
-                                            <span>{v.courseName}</span>
-                                            <span>{v.teacherName}</span>
-                                            <span>{v.classAddress}</span>
-                                            <span>{WebServiceUtil.formatAllTime(v.classTime)}</span>
-                                            <div>
-                                                <span onClick={this.upDateVillCourse.bind(this, v)}>修改</span>
-                                                <span onClick={this.deleteVillCourse.bind(this, v)}>删除</span>
+                                            <div className="flex_1 content">
+                                                <div className="title text_hidden">{v.courseName}</div>
+                                                <div className="content-main text_hidden">{v.teacherName}</div>
+                                                <div className="time text_hidden">
+                                                    <span>{v.classAddress}</span>
+                                                    <span>{WebServiceUtil.formatAllTime(v.classTime)}</span>
+                                                </div>
+                                            </div>
+                                            <div className="operation">
+                                                <span className="village-edit" onClick={this.upDateVillCourse.bind(this, v)}></span>
+                                                <span className="village-delete" onClick={this.deleteVillCourse.bind(this, v)}></span>
                                             </div>
                                         </div>
                                     )
@@ -1865,14 +1874,14 @@ export default class VillageCardSystemHome extends React.Component {
                                     </span>
                                 </div>
                             </div>
-                            <div>
+                            <div className="rightContent">
                                 {this.state.villageAttendList.map((v, i) => {
                                     return (
-                                        <div>
-                                            <div>实到人数{v.peopleNumber}</div>
-                                            <div>
-                                                <span onClick={this.updateVillageAttend.bind(this, v)}>修改</span>
-                                                <span onClick={this.deleteVillageAttend.bind(this, v)}>删除</span>
+                                        <div className="right-item my_flex">
+                                            <div className="item-left text_hidden">实到人数{v.peopleNumber}</div>
+                                            <div className="operation">
+                                                <span className="village-edit" onClick={this.updateVillageAttend.bind(this, v)}></span>
+                                                <span className="village-delete" onClick={this.deleteVillageAttend.bind(this, v)}></span>
                                             </div>
                                         </div>
                                     )
@@ -1891,13 +1900,15 @@ export default class VillageCardSystemHome extends React.Component {
                                     </span>
                                 </div>
                             </div>
-                            <div>
+                            <div className="rightContent">
                                 {
                                     this.state.villageNotifyList.map((v, i) => {
                                         return (
-                                            <div>
-                                                {v.noticeTitle}
-                                                <span onClick={this.toDelectNotify.bind(this, v)}>删除</span>
+                                            <div className="right-item my_flex">
+                                                <div className="item-left text_hidden">{v.noticeTitle}</div>
+                                                <div className="operation">
+                                                    <span className="village-delete" onClick={this.toDelectNotify.bind(this, v)}></span>
+                                                </div>
                                             </div>
                                         )
                                     })
@@ -2018,39 +2029,52 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         添加课程
                     </div>
-                    <InputItem
-                        placeholder="请输入组课程名称"
-                        onChange={this.inputOnCourseNameChange}
-                        value={this.state.courseNameChangeValue}
-                    >
-                        <div>课程名称</div>
-                    </InputItem>
-                    <InputItem
-                        placeholder="请输入授课教师"
-                        onChange={this.inputOnTeacherChange}
-                        value={this.state.teacherChangeValue}
-                    >
-                        <div>授课教师</div>
-                    </InputItem>
-                    <InputItem
-                        placeholder="请输入上课地点"
-                        onChange={this.inputOnCoursePlaceChange}
-                        value={this.state.coursePlaceChangeValue}
-                    >
-                        <div>上课地点</div>
-                    </InputItem>
-                    <DatePicker
-                        value={this.state.date}
-                        onChange={date => this.setState({ date })}
-                    >
-                        <List.Item arrow="horizontal">Datetime</List.Item>
-                    </DatePicker>
-                    <div className="parentDiv">
-                        <button className="uploadBtn">添加图片</button>
-                        <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">课程名称</div>
+                        <InputItem
+                            placeholder="请输入组课程名称"
+                            onChange={this.inputOnCourseNameChange}
+                            value={this.state.courseNameChangeValue}
+                        />
                     </div>
-                    <div>
-                        <img src={this.state.courseImgUp} />
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">授课教师</div>
+                        <InputItem
+                            placeholder="请输入授课教师"
+                            onChange={this.inputOnTeacherChange}
+                            value={this.state.teacherChangeValue}
+                        />
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">上课地点</div>
+                        <InputItem
+                            placeholder="请输入上课地点"
+                            onChange={this.inputOnCoursePlaceChange}
+                            value={this.state.coursePlaceChangeValue}
+                        />
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">上课时间</div>
+                        <div className="bindCard-itemRight">
+                            <DatePicker
+                                value={this.state.date}
+                                onChange={date => this.setState({ date })}
+                            >
+                                <List.Item arrow="horizontal">Datetime</List.Item>
+                            </DatePicker>
+                        </div>
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">课程封面</div>
+                        <div className="bindCard-itemRight">
+                            <div className="parentDiv">
+                                <button className="editBtn"></button>
+                                <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                <span className="photo-add">
+                                    <img src={this.state.courseImgUp} />
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div className='submitBtn'>
                         <div className='my_flex'>
@@ -2062,42 +2086,57 @@ export default class VillageCardSystemHome extends React.Component {
 
                 {/* 编辑课程 */}
                 <div className="courseUpdatePop villageMaskInner" style={{ display: "none" }}>
-                    <InputItem
-                        placeholder="请输入组课程名称"
-                        onChange={this.updateCourseNameChange}
-                        value={this.state.updateCourseNameValue}
-                    >
-                        <div>课程名称</div>
-                    </InputItem>
-                    <InputItem
-                        placeholder="请输入授课教师"
-                        onChange={this.updateTeacherChange}
-                        value={this.state.updateTeacherValue}
-                    >
-                        <div>授课教师</div>
-                    </InputItem>
-                    <InputItem
-                        placeholder="请输入上课地点"
-                        onChange={this.updateCoursePlaceChange}
-                        value={this.state.updateCoursePlaceValue}
-                    >
-                        <div>上课地点</div>
-                    </InputItem>
-                    <DatePicker
-                        extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
-                        value={this.state.dateUpdate}
-                        onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
-                    >
-                        <List.Item arrow="horizontal">开课时间</List.Item>
-                    </DatePicker>
-                    <div className="parentDiv">
-                        <button className="uploadBtn">添加图片</button>
-                        <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                    <div className="editHeader">
+                        添加课程
                     </div>
-                    <div>
-                        <img src={this.state.courseImgUpdate} />
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">课程名称</div>
+                        <InputItem
+                            placeholder="请输入组课程名称"
+                            onChange={this.updateCourseNameChange}
+                            value={this.state.updateCourseNameValue}
+                        />
                     </div>
-
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">授课教师</div>
+                        <InputItem
+                            placeholder="请输入授课教师"
+                            onChange={this.updateTeacherChange}
+                            value={this.state.updateTeacherValue}
+                        />
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">上课地点</div>
+                        <InputItem
+                            placeholder="请输入上课地点"
+                            onChange={this.updateCoursePlaceChange}
+                            value={this.state.updateCoursePlaceValue}
+                        />
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">开课时间</div>
+                        <div className="bindCard-itemRight">
+                            <DatePicker
+                                extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
+                                value={this.state.dateUpdate}
+                                onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
+                            >
+                                <List.Item arrow="horizontal">开课时间</List.Item>
+                            </DatePicker>
+                        </div>
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">课程封面</div>
+                        <div className="bindCard-itemRight">
+                            <div className="parentDiv">
+                                <button className="editBtn"></button>
+                                <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                <span  className="photo-add">
+                                    <img src={this.state.courseImgUpdate} />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     <div className='submitBtn'>
                         <div className='my_flex'>
                             <span onClick={this.sureCourseDataUpdate}>确定</span>
@@ -2107,6 +2146,9 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
                 {/* 打卡*/}
                 <div className="attPop villageMaskInner" style={{ display: "none" }}>
+                    <div className="editHeader">
+                        打卡
+                    </div>
                     <div>
                         <InputItem
                             placeholder="请输入签到人数"

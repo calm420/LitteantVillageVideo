@@ -123,7 +123,7 @@ export default class lookThrough extends React.Component {
             index: index
         }, () => {
             $(".updateModel").slideDown()
-            $(".tagAddPanel_bg").show();
+            // $(".tagAddPanel_bg").show();
             console.log(calm.state.textareaValue, "calm.state.textareaValue")
         })
         calm.setState({
@@ -805,7 +805,7 @@ export default class lookThrough extends React.Component {
                         <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>
-                <div className="tagAddPanel_bg"></div>
+                <div className="tagAddPanel_bg" style={{display:"none"}}></div>
             </div >
         )
     }

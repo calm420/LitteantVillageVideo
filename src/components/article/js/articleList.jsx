@@ -919,7 +919,7 @@ export default class articleList extends React.Component {
 
 
             return (
-                <div className={this.state.index == 2 ? 'list_item' : ''}
+                <div className={this.state.index == 2 ? 'list_item line_public' : ''}
                     onClick={this.state.index == 2 ? '' : rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}>
                     {dom}
                 </div>

@@ -945,12 +945,14 @@ export default class VillageCardSystemHome extends React.Component {
         if (this.isIE()) {
             if (window.clipboardData) {
                 window.clipboardData.setData("Text", thisDiv.textContent);
+                Toast.info("复制成功",1)
                 // alert(window.clipboardData.getData("Text"));
             }
         } else {
             event.preventDefault();
             if (event.clipboardData) {
                 event.clipboardData.setData("text/plain", thisDiv.textContent);
+                Toast.info("复制成功",1)
                 // alert(event.clipboardData.getData("text"));
             }
         }
@@ -1031,18 +1033,39 @@ export default class VillageCardSystemHome extends React.Component {
 
     addCourse = () => {
         this.setState({
-            courseType: "add"
+            courseNameChangeValue:"",
+            teacherChangeValue: "",
+            coursePlaceChangeValue: "",
+            date: "",
+            courseImgUp: "",
         })
         $(".coursePop").show();
         $(".villageMask").show();
     }
 
     sureCourseData = () => {
-        if (this.state.courseType == "add") {
-            this.createVillageCourse()
-        } else {
-
+        if(this.state.courseNameChangeValue == "" || this.state.courseNameChangeValue == undefined ){
+            Toast.info("请输入课程名称",1)
+            return
         }
+        if(this.state.teacherChangeValue == "" || this.state.teacherChangeValue == undefined ){
+            Toast.info("请输入教师名称",1)
+            return
+        }
+        if(this.state.coursePlaceChangeValue == "" || this.state.coursePlaceChangeValue == undefined ){
+            Toast.info("请输入上课地点",1)
+            return
+        }
+        if(this.state.date == "" || this.state.date == undefined ){
+            Toast.info("请选择上课时间",1)
+            return
+        }
+        if(this.state.courseImgUp == "" || this.state.courseImgUp == undefined ){
+            Toast.info("请上传课程封面",1)
+            return
+        }
+            this.createVillageCourse()
+       
     }
 
     createVillageCourse = () => {
@@ -1606,10 +1629,15 @@ export default class VillageCardSystemHome extends React.Component {
             Toast.info("请输入县级名称", 1)
             return
         }
+        if (this.state.villageCradImg == "") {
+            Toast.info("请上传照片", 1)
+            return
+        }
         if (this.state.cardTitleValue == "") {
             Toast.info("请输入标题", 1)
             return
         }
+        
         if (this.state.cardContentValue == "") {
             Toast.info("请输入内容", 1)
             return
@@ -1647,6 +1675,24 @@ export default class VillageCardSystemHome extends React.Component {
             }
         });
     }
+
+
+    exitLoginAlert = () => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定退出登录吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.exitLogin() },
+
+        ], phone);
+    }
+   
 
     exitLogin = () => {
         var url = WebServiceUtil.mobileServiceURL + "villageCardSystemLogin";
@@ -1735,14 +1781,14 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='quiteBtn'>
                             管理员
-                            <span onClick={this.exitLogin}></span>
+                            <span onClick={this.exitLoginAlert}></span>
                         </div>
                     </div>
                     <div className='rightBox rightBoxFirst'>
                         <div className="rightHeader my_flex">
                             <span>{this.state.villageName}</span>
                             <div className='btn'>
-                                <span onClick={this.editorVillageName}>编辑名称</span>
+                                {/* <span onClick={this.editorVillageName}>编辑名称</span> */}
                                 <span onClick={this.editorGroupName}>编辑分组</span>
                                 <span onClick={this.editorCodeName}>邀请码</span>
                             </div>

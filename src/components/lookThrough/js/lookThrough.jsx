@@ -473,44 +473,21 @@ export default class lookThrough extends React.Component {
                 <div>
                     {
                         rowData.littleVideoInfo ?
-                            <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowID)}>
-                                <img className='photo' src={rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.avatar : ""} alt="" />
-                                <div className='right'>
-                                    <div className="topMsg my_flex">
-                                        <span className='author text_hidden'>{rowData.littleVideoInfo.userInfo ? rowData.littleVideoInfo.userInfo.userName : ""}</span>
-                                        <span className="type">{/*类型：短视频*/} <img src={require("../img/icon_video.png")} /></span>
-                                    </div>
-                                    <div className='title'>{rowData.littleVideoInfo.videoContent}</div>
-                                    <div className='time'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
-                                </div>
+                            <div className="right-item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowID)}>
+                                    <div className='item-left text_hidden'>{rowData.littleVideoInfo.videoContent}</div>
+                                    <div className='item-right'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                             </div>
                             :
                             rowData.articleInfo ?
-                                <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowID)}>
-                                    <img className='photo' src={rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.avatar : ""} alt="" />
-                                    <div className='right'>
-                                        <div className="topMsg my_flex">
-                                            <span className='author text_hidden'>{rowData.articleInfo.userInfo ? rowData.articleInfo.userInfo.userName : ""}</span>
-                                            <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
-                                        </div>
-                                        <div className='title'>{rowData.articleInfo.articleTitle}</div>
-                                        <div className='time'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
-
-                                    </div>
-
+                                <div className="right-item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowID)}>
+                                        <div className='item-left text_hidden'>{rowData.articleInfo.articleTitle}</div>
+                                        <div className='item-right'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                 </div>
                                 :
                                 rowData.discussInfo ?
-                                    <div className="item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowID)}>
-                                        <img className='photo' src={rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.avatar : ""} alt="" />
-                                        <div className='right'>
-                                            <div className="topMsg my_flex">
-                                                <span className='author text_hidden'>{rowData.discussInfo.discussUser ? rowData.discussInfo.discussUser.userName : ""}</span>
-                                                <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
-                                            </div>
-                                            <div className='title'>{rowData.discussInfo.discussContent}</div>
-                                            <div className='time'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
-                                        </div>
+                                    <div className="right-item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowID)}>
+                                            <div className='item-left text_hidden'>{rowData.discussInfo.discussContent}</div>
+                                            <div className='item-right'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
                                     </div> :
                                     ""
                     }
@@ -539,9 +516,8 @@ export default class lookThrough extends React.Component {
                 <div className='emptyDiv' style={{ display: calm.initDataSource.length == 0 ? "block" : 'none' }}>
                     <div className='emptyIcon'></div>
                 </div>
-                <div style={{
-                    height: document.documentElement.clientHeight - 46,
-                    backgroundColor: '#f4f4f4'
+                <div className="To-auditLeft"  style={{
+                    height: document.documentElement.clientHeight,
                 }}>
                     {/* 未审核 */}
                     <ListView
@@ -562,7 +538,7 @@ export default class lookThrough extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         onScroll={this.scroll}
                         style={{
-                            height: document.body.clientHeight - 46,
+                            height: document.body.clientHeight,
                         }}
                     />
                 </div>
@@ -572,27 +548,25 @@ export default class lookThrough extends React.Component {
                         <div className="content" ref="contentDOM">
                             {
                                 calm.state.type == 0 ?
-                                    <div className="sameBack sameBackNew">
+                                    <div className="audit-content">
                                         <div className='title'>{calm.state.data.articleTitle}</div>
-                                        <div className='topMsg'>
-                                            <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                            <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                        <div className='audit-info'>
+                                            <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
                                             <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                            <span className="type">{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
+                                            <span className="type">内容：{/*类型：自媒体文章*/}<img src={require("../img/icon_media.png")} /></span>
                                         </div>
                                         <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleContent }}></div>
                                     </div>
                                     :
                                     calm.state.type == 1 ?
-                                        <div className="sameBack sameBackTop sameBackBottom">
-                                            <div className='topMsg'>
-                                                <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                                <span className='author'>{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                        <div className="audit-content">
+                                            <div className='video_title textOver2'>{calm.state.data.videoContent}</div>
+                                            <div className='audit-info'>
+                                                <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
                                                 <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                                <span className="type">{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
+                                                <span className="type">内容：{/*类型：短视频*/}<img src={require("../img/icon_video.png")} /></span>
                                             </div>
                                             <div className="textCont">
-                                                <div className='video_title textOver2'>{calm.state.data.videoContent}</div>
                                                 <video
                                                     controls="controls"
                                                     preload="auto"
@@ -609,12 +583,11 @@ export default class lookThrough extends React.Component {
                                         </div>
                                         :
                                         calm.state.type == 2 ?
-                                            <div className="sameBack sameBackTop">
-                                                <div className='topMsg'>
-                                                    <img className="photo" src={calm.state.data.userInfo ? calm.state.data.userInfo.avatar : ""} alt="" />
-                                                    <span className='author'>{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
+                                            <div className="audit-content">
+                                                <div className='audit-info'>
+                                                    <span className='author'>作者名称：{calm.state.data.discussUser ? calm.state.data.discussUser.userName : ""}</span>
                                                     <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
-                                                    <span className="type">{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
+                                                    <span className="type">内容：{/*类型：评论*/}<img src={require("../img/icon_comment.png")} /></span>
                                                 </div>
                                                 <div className="textCont">
                                                     {calm.state.data.discussContent}

@@ -4,7 +4,7 @@
     overflow: hidden;
   }
   .am-list-body{
-    background-color: #f4f4f4;
+    background-color: #fff;
   }
   .list-view-section-body{
     &>div:last-child .item{
@@ -141,13 +141,15 @@
     }
   }
   .updateModel {
-    width: 100%;
+    width: calc(~"100% - 421px") !important;
     background-color: #fff;
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 999;
-    height: 349px;
+    display: block !important;
+    left: 420px !important;
+    height: 100% !important;
   }
   .tag-vedio{
     height: 250px;
@@ -202,5 +204,27 @@
   }
   .auditTOP{
     padding-top: 5px !important;
+  }
+  .To-auditLeft{
+      width: 420px;
+    height: 100%;
+  }
+  .noReviewed{
+    background: #fff;
+    border-right: 1px solid rgba(36,36,36,0.1);
+    .right-item{
+      margin-left: 20px;
+    }
+  }
+  .audit-content{
+      padding: 0 35px;
+    .video_title{
+      padding: 25px 0 60px 0;
+      text-align: center;
+      font-size: 18px;
+    }
+    .audit-info{
+      font-size: 16px;
+    }
   }
 }

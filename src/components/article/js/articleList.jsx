@@ -473,7 +473,7 @@ export default class articleList extends React.Component {
 
     toDetail (id, articleTitle) {
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version + '&articleTitle=' + ((articleTitle)));
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version + '&articleTitle=' + ((articleTitle))　+ '&villageId=' + this.state.villageId + '&groupId' + this.state.groupId);
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -484,6 +484,27 @@ export default class articleList extends React.Component {
         } else {
             Toast.fail('id参数有误', 2);
         }
+    }
+
+    //阅读文章时存储分数
+    addReadingScore() {
+        // alert(villageId+','+ villagerId+','+ groupId)
+        var param = {
+            "method": 'addReadingScore',
+            "type": 1,
+            "villageId": this.state.villageId,
+            "villagerId": this.state.userId,
+            "groupId": this.state.groupId,
+        };
+        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
     //tab栏切换事件
@@ -515,6 +536,7 @@ export default class articleList extends React.Component {
     }
 
 
+        this.addReadingScore();
 
     //播放视频
     toPlayVideo (videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {

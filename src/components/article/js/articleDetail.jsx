@@ -49,12 +49,6 @@ export default class articleDetail extends React.Component {
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
 
-        //阅读文章时存储分数
-        let villageId = 9;
-        let villagerId = 18;
-        let groupId = 1;
-        this.addReadingScore(villageId, villagerId, groupId);
-
         if (locationSearch.indexOf("?") == -1) {  //正常逻辑
             var searchArray = locationSearch.split("&");
             var artId = searchArray[0].split('=')[1];
@@ -63,8 +57,12 @@ export default class articleDetail extends React.Component {
             var machineType = searchArray[3] ? searchArray[3].split('=')[1] : '';
             var version = searchArray[4] ? searchArray[4].split('=')[1] : '';
             var articleTitle = searchArray[5] ? searchArray[5].split('=')[1] : '';
+            var villageId = villageId[6] ? villageId[6].split('=')[1] : '';
+            var groupId = groupId[7] ? groupId[7].split('=')[1] : '';
             console.log(articleTitle, 'articleTitle');
             console.log(decodeURI(articleTitle), 'decodeURI(articleTitle)');
+            //阅读文章时存储分数
+            this.addReadingScore(villageId, userId, groupId);
             this.setState({
                 shareHidden: false,
             })

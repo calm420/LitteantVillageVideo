@@ -489,6 +489,10 @@ export default class articleList extends React.Component {
 
     //播放视频
     toPlayVideo(videoIndex, recommended_video, recommended_pageCount, recommended_pageNo) {
+
+
+
+        
         var data = {
             method: 'playArticleVideo',
             videos: recommended_video,

@@ -42,7 +42,7 @@ export default class VillageCardSystemHome extends React.Component {
                     title: "待审核", active: false
                 },
                 {
-                    title: "已审核", active: true
+                    title: "已审核", active: false
                 },
             ],
             editCardType: [
@@ -122,6 +122,8 @@ export default class VillageCardSystemHome extends React.Component {
                 $(".notifyPop").hide();
                 $(".villageMask").hide();
                 $(".pushNotify").attr("src", "")
+                $(".pushArticalPop").hide();
+                $(".pushArtical").attr("src", "")
             }
         }
 
@@ -169,6 +171,8 @@ export default class VillageCardSystemHome extends React.Component {
     onChangeLeft = (key) => {
         console.log(key, "onChangeLeft");
         if (key == 0) {
+            $(".allClassName").removeClass("select")
+            $(".memberList").addClass("select")
             $(".rightBox").hide();
             $(".rightBoxFirst").show();
             $(".lookThrough").hide();
@@ -176,12 +180,27 @@ export default class VillageCardSystemHome extends React.Component {
             $(".rightBoxVillageHistory").hide();
 
         } else if (key == 3) {
+            $(".allClassName").removeClass("select")
+            $(".villageHistory").addClass("select")
             $(".rightBox").hide();
             $(".rightBoxVillageHistory").show();
             $(".lookThrough").hide();
             $(".cardEdit").hide();
 
         } else if (key == 1) {
+            $(".cardEdit").hide();
+            $(".allClassName").removeClass("select")
+            $(".articalLookThrough").addClass("select")
+            this.setState({
+                articalType: [
+                    {
+                        title: "待审核", active: true
+                    },
+                    {
+                        title: "已审核", active: false
+                    },
+                ],
+            })
             $(".rightBox").hide();
             $(".rightBoxSecond").show();
             $(".lookThrough").show();
@@ -189,6 +208,8 @@ export default class VillageCardSystemHome extends React.Component {
             $(".iframeDiv").attr("src", url)
             $(".rightBoxVillageHistory").hide();
         } else if (key == 2) {
+            $(".allClassName").removeClass("select")
+            $(".villageCardEdit").addClass("select")
             $(".rightBoxVillageHistory").hide();
             this.setState({
                 editCardType:
@@ -227,11 +248,31 @@ export default class VillageCardSystemHome extends React.Component {
     }
     clickArticalItem = (value) => {
         if (value.title == "待审核") {
+            this.setState({
+                articalType: [
+                    {
+                        title: "待审核", active: true
+                    },
+                    {
+                        title: "已审核", active: false
+                    },
+                ],
+            })
             var url = WebServiceUtil.mobileServiceURL + "lookThrough?auditorId=" + this.state.accountData.uid
             $(".iframeDiv").attr("src", url)
 
 
         } else if (value.title == "已审核") {
+            this.setState({
+                articalType: [
+                    {
+                        title: "待审核", active: false
+                    },
+                    {
+                        title: "已审核", active: true
+                    },
+                ],
+            })
             var url = WebServiceUtil.mobileServiceURL + "alreadyLookThough?auditorId=" + this.state.accountData.uid
             $(".iframeDiv").attr("src", url)
 
@@ -537,7 +578,7 @@ export default class VillageCardSystemHome extends React.Component {
                     },
                     success: function (res) {
 
-                        console.log(res,"res")
+                        console.log(res, "res")
                         var arr = res.split(".");
                         var type = arr[arr.length - 1];
                         if (type == "mp4") {
@@ -1448,22 +1489,44 @@ export default class VillageCardSystemHome extends React.Component {
     }
 
     updateCardInfo = () => {
-        var param = {
-            "method": 'getLearningList',
-            "cardNameValue": this.state.cardNameValue,
-            "cardContentValue": this.state.cardContentValue,
-            "cardOrderValue": this.state.cardOrderValue,
-            "cardTitleValue": this.state.cardTitleValue,
-            "villageCradImg": this.state.villageCradImg,
-        };
 
-        console.log(param, "param")
-        return
+        if(this.state.cardNameValue == ""){
+            Toast.info("请输入县级名称",1)
+            return
+        }
+        if(this.state.cardTitleValue == ""){
+            Toast.info("请输入标题",1)
+            return
+        }
+        if(this.state.cardContentValue == ""){
+            Toast.info("请输入内容",1)
+            return
+        }
+        if(this.state.cardOrderValue == ""){
+            Toast.info("请输入村牌序号",1)
+            return
+        }
+        var param = {
+            "method": 'createVillageBrand',
+            "villageId":this.state.accountData.villageId,
+            "countyName": this.state.cardNameValue,
+            "content": this.state.cardContentValue,
+            "brandMac": this.state.cardOrderValue,
+            "title": this.state.cardTitleValue,
+            "backgroundImg": this.state.villageCradImg,
+        };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result)
                 if (result.success) {
-
+                    Toast.info("绑定成功",1)
+                    this.setState({
+                        "cardNameValue":"",
+                        "cardContentValue":"",
+                        "cardOrderValue":"",
+                        "cardTitleValue":"",
+                        "villageCradImg":""
+                    })
                 }
             },
             onError: function (error) {
@@ -1477,6 +1540,13 @@ export default class VillageCardSystemHome extends React.Component {
         window.location.href = url;
     }
 
+    
+    addArtical=()=>{
+        $(".pushArticalPop").show();
+        $(".villageMask").show();
+        var url = "http://192.168.50.73:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        $(".pushArtical").attr("src", url)
+    }
     render () {
         return (
             <div id="VillageCardSystemHome" style={{
@@ -1497,17 +1567,17 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='leftAccordion'>
                             <div>
-                                <div className="select" onClick={this.onChangeLeft.bind(this, 0)}><i className="home-Members"></i>成员列表</div>
-                                <div onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>村史村情</div>
-                                <div onClick={this.onChangeLeft.bind(this, 1)}><i className="home-audit"></i>文章审核</div>
+                                <div className="select memberList allClassName" onClick={this.onChangeLeft.bind(this, 0)}><i className="home-Members"></i>成员列表</div>
+                                <div className="villageHistory allClassName" onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>村史村情</div>
+                                <div className="articalLookThrough allClassName" onClick={this.onChangeLeft.bind(this, 1)}><i className="home-audit"></i>文章审核</div>
                                 <div className="lookThrough" style={{ display: "none" }}>
                                     {
                                         this.state.articalType.map((v, i) => {
-                                            return <div onClick={this.clickArticalItem.bind(this, v)}>{v.title}</div>
+                                            return <div className = {v.active ? "haha":""} onClick={this.clickArticalItem.bind(this, v)}>{v.title}</div>
                                         })
                                     }
                                 </div>
-                                <div onClick={this.onChangeLeft.bind(this, 2)}><i className="home-editor"></i>班牌编辑</div>
+                                <div  className="villageCardEdit allClassName" onClick={this.onChangeLeft.bind(this, 2)}><i className="home-editor"></i>班牌编辑</div>
                                 <div className="cardEdit" style={{ display: "none" }}>
                                     {
                                         this.state.editCardType.map((v, i) => {
@@ -1546,7 +1616,19 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                     </div>
                     <div className="rightBox rightBoxVillageHistory" style={{ display: "none" }}>
-                        <div className="rightHeader my_flex">hahhah</div>
+                        <div className="rightHeader my_flex">
+                            <span>
+                                {this.state.villageName}
+                            </span>
+                            <div className="btn">
+                                <span onClick={this.addArtical}>
+                                    发布文章
+                                    </span>
+                            </div>
+                        </div>
+                        <div>
+                          
+                        </div>
                     </div>
                     <div className="rightBox rightBoxSecond" style={{ display: "none" }}>
                         <iframe src="" className="iframeDiv" frameborder="0"></iframe>
@@ -1566,7 +1648,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 <div className="parentDiv">
                                     <button className="editBtn"></button>
                                     <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                    <span className="photo-add">
+                                    <span style={{display:this.state.villageCradImg == "" ? "none" : "inline-block"}} className="photo-add">
                                         <img src={this.state.villageCradImg} />
                                     </span>
                                 </div>
@@ -1598,7 +1680,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 />
                             </div>
                             <div className="submitBtn">
-                                <span onClick={this.updateCardInfo}>修改</span>
+                                <span onClick={this.updateCardInfo}>绑定</span>
                             </div>
                         </div>
                         <div className="villageImg" style={{ display: "none" }}>
@@ -1624,12 +1706,12 @@ export default class VillageCardSystemHome extends React.Component {
                                                         type == "mp4" ?
                                                             <div>
                                                                 <video src={v.url}></video>
-                                                                <span onClick={this.deleteUploadFile.bind(this,v)}>删除</span>
+                                                                <span onClick={this.deleteUploadFile.bind(this, v)}>删除</span>
                                                             </div>
                                                             :
                                                             <div>
                                                                 <img src={v.url} alt="" />
-                                                                <span onClick={this.deleteUploadFile.bind(this,v)}>删除</span>
+                                                                <span onClick={this.deleteUploadFile.bind(this, v)}>删除</span>
                                                             </div>
                                                     }
 
@@ -1793,8 +1875,6 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 {/* 编辑名称 */}
@@ -1949,10 +2029,11 @@ export default class VillageCardSystemHome extends React.Component {
                 <div className="notifyPop villageMaskInner" style={{ display: "none" }}>
                     <iframe src="" className="pushNotify" frameborder="0"></iframe>
                 </div>
-                {/* 发布文章 */}
-                <div className="articalPop villageMaskInner" style={{ display: "none" }}>
-                    <iframe src="" className="pushArtical" frameborder="0"></iframe>
+                  {/* 发布文章 */}
+                <div className="pushArticalPop villageMaskInner" style={{ display: "none" }}>
+                  <iframe src="" className="pushArtical" frameborder="0"></iframe>
                 </div>
+
                 {/* 修改组名 */}
                 <div className="groupNamePop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">

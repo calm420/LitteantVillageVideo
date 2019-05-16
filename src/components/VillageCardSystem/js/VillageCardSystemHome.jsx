@@ -1870,6 +1870,11 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                     </div>
                     <div className="rightBox rightBoxSecond" style={{ display: "none" }}>
+                        <div className="rightHeader my_flex">
+                            <span>
+                                {this.state.villageName}
+                            </span>
+                        </div>
                         <iframe src="" className="iframeDiv" frameborder="0"></iframe>
                     </div>
                     <div className="rightBox rightBoxThird" style={{ display: "none" }}>
@@ -2316,6 +2321,7 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
                 {/* 发布文章 */}
                 <div className="pushArticalPop villageMaskInner" style={{ display: "none" }}>
+
                     <iframe src="" className="pushArtical" frameborder="0"></iframe>
                 </div>
 

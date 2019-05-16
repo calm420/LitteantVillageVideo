@@ -1113,6 +1113,7 @@ export default class VillageCardSystemHome extends React.Component {
     sumPeople = () => {
         this.setState({
             attType: "add",
+            sumPeopleNameValue:""
         }, () => {
             $(".attPop").show();
             $(".villageMask").show();
@@ -1121,6 +1122,10 @@ export default class VillageCardSystemHome extends React.Component {
     }
 
     sumPeopleName = () => {
+        if(this.state.sumPeopleNameValue == ""){
+            Toast.info("人数不能为空",1)
+            return
+        }
         if (this.state.attType == "add") {
             this.createVillageAttend()
         } else {

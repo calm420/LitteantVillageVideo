@@ -1,5 +1,5 @@
 var isDebug = true;
-var localDomain = "192.168.50.15";   //请求地址
+var localDomain = "192.168.50.71";   //请求地址
 var isDebugLocal = true;
 var localUrl = "192.168.50.163";    //跳转地址http:
 var isSafeDebug = true;     //false则为隐藏主页列表，本地调试改为true
@@ -16,12 +16,7 @@ var apiWebServiceURLApi = isDebug ? apiWebServiceURLOfLocalsApi : apiWebServiceU
 // var elearningWebserviceURLOfRemote = "http://www.maaee.com/elearning/elearningControl/";
 // var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
 
-// //小蚂蚁webService地址
-const apiWebServiceURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
 
-const apiWebServiceURLOfRemote = "http://www.maaee.com:6012/Excoord_LittleVideoApiServer/webservice";
-var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
-//小蚂蚁mobile地址
 const mobileURLOfLocal = "http://" + localUrl + ":7094/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8094/#/";
 
@@ -81,7 +76,7 @@ WebServiceUtil.requestLittleAntApi9006 = function (data, listener) {
  * @param data
  * @param listener
  */
-WebServiceUtil.requestLittleAntApi = function (data, listener) {
+WebServiceUtil.requestLittleAntApi6012 = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
@@ -124,6 +119,27 @@ WebServiceUtil.requestLittleAntApiWithHead = function (data, headObj, listener) 
     $.ajax({
         type: "post",
         url: apiWebServiceURL,
+        data: {params: data},
+        dataType: "json",
+        headers: JSON.parse(headObj),
+        success: function (result) {
+            listener.onResponse(result);
+        }, error: function (error) {
+            listener.onError(error);
+        }
+    });
+}
+
+/**
+ * 带有请求头的ajax
+ * @param data
+ * @param headObj
+ * @param listener
+ */
+WebServiceUtil.requestLittleAntApiWithHead6013 = function (data, headObj, listener) {
+    $.ajax({
+        type: "post",
+        url: apiWebServiceURLApi,
         data: {params: data},
         dataType: "json",
         headers: JSON.parse(headObj),

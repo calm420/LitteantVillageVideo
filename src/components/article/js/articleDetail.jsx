@@ -39,7 +39,7 @@ export default class articleDetail extends React.Component {
             scrollTo: '',  //评论完成后scroll滚动至,
             textareaFocus: false,
             isPhone: 'Android',
-            demoFlag:true,
+            demoFlag: true,
         }
     }
 
@@ -48,16 +48,21 @@ export default class articleDetail extends React.Component {
         // document.title = '校园自媒体';
         var locationHref = window.location.href;
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
+
         if (locationSearch.indexOf("?") == -1) {  //正常逻辑
             var searchArray = locationSearch.split("&");
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
             var type = searchArray[2].split('=')[1];
-            var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
-            var version = searchArray[4]?searchArray[4].split('=')[1]:'';
-            var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
-            console.log(articleTitle,'articleTitle');
-            console.log(decodeURI(articleTitle),'decodeURI(articleTitle)');
+            var machineType = searchArray[3] ? searchArray[3].split('=')[1] : '';
+            var version = searchArray[4] ? searchArray[4].split('=')[1] : '';
+            var articleTitle = searchArray[5] ? searchArray[5].split('=')[1] : '';
+            var villageId = villageId[6] ? villageId[6].split('=')[1] : '';
+            var groupId = groupId[7] ? groupId[7].split('=')[1] : '';
+            console.log(articleTitle, 'articleTitle');
+            console.log(decodeURI(articleTitle), 'decodeURI(articleTitle)');
+            //阅读文章时存储分数
+            this.addReadingScore(villageId, userId, groupId);
             this.setState({
                 shareHidden: false,
             })
@@ -67,9 +72,9 @@ export default class articleDetail extends React.Component {
             var artId = searchArray[0].split('=')[1];
             var userId = searchArray[1].split('=')[1];
             var type = searchArray[2].split('=')[1];
-            var machineType = searchArray[3]?searchArray[3].split('=')[1]:'';
-            var version = searchArray[4]?searchArray[4].split('=')[1]:'';
-            var articleTitle = searchArray[5]?searchArray[5].split('=')[1]:'';
+            var machineType = searchArray[3] ? searchArray[3].split('=')[1] : '';
+            var version = searchArray[4] ? searchArray[4].split('=')[1] : '';
+            var articleTitle = searchArray[5] ? searchArray[5].split('=')[1] : '';
             this.setState({
                 shareHidden: true,
             })
@@ -119,13 +124,13 @@ export default class articleDetail extends React.Component {
                 console.log(result);
                 //评论成功后要跳转的位置   向上偏移200
                 this.setState({
-                    scrollTo: $('.list-view-section-body')[0].offsetTop,
-                    initTextarea: $('#text')[0].clientHeight,
-                },
-                //     ()=>{
-                //     var top = $('.list-view-section-body')[0].offsetTop;
-                //     // Toast.info(top);
-                // }
+                        scrollTo: $('.list-view-section-body')[0].offsetTop,
+                        initTextarea: $('#text')[0].clientHeight,
+                    },
+                    //     ()=>{
+                    //     var top = $('.list-view-section-body')[0].offsetTop;
+                    //     // Toast.info(top);
+                    // }
                 );
 
             }).catch((error) => {
@@ -145,6 +150,28 @@ export default class articleDetail extends React.Component {
         // });
         window.addEventListener('resize', this.onWindwoResize);
 
+    }
+
+    //阅读文章时存储分数
+    addReadingScore(villageId, villagerId, groupId) {
+        // alert(villageId+','+ villagerId+','+ groupId)
+        var param = {
+            "method": 'addReadingScore',
+            "type": 0,
+            "villageId": villageId,
+            "villagerId": villagerId,
+            "groupId": groupId,
+        };
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
     }
 
     //监听窗口改变时间
@@ -214,7 +241,7 @@ export default class articleDetail extends React.Component {
             "type": 0,
             "pageNo": this.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, '评论列表');
                 if (result.pager.rsCount <= 0) {
@@ -329,7 +356,7 @@ export default class articleDetail extends React.Component {
             "method": 'getUserLikeLog',
             'JsonParameter': JsonParameter
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     var data = JSON.parse(result.response);
@@ -363,7 +390,7 @@ export default class articleDetail extends React.Component {
             "method": 'getArticleInfoById',
             "articleId": this.state.artId,
         };
-        WebServiceUtil.requestLittleAntApiWithHead(JSON.stringify(param), JSON.stringify(headers), {
+        WebServiceUtil.requestLittleAntApiWithHead6013(JSON.stringify(param), JSON.stringify(headers), {
             onResponse: result => {
                 console.log(result, "detail");
                 if (result.success) {
@@ -403,7 +430,7 @@ export default class articleDetail extends React.Component {
             "method": 'addArticleReadCount',
             "articleId": this.state.artId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     //文章阅读量+1
@@ -430,7 +457,7 @@ export default class articleDetail extends React.Component {
                 "articleId": this.state.artId,
                 "changeType": this.state.likeFlag ? 0 : 1,//  0点赞 1 取消
             };
-            WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+            WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
                 onResponse: result => {
                     if (result.success) {
                         // this.state.data.likeCount = result.response;
@@ -459,7 +486,7 @@ export default class articleDetail extends React.Component {
             "targetId": this.state.artId,
             "targetType": 0
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.setState({
@@ -491,7 +518,7 @@ export default class articleDetail extends React.Component {
             "userFavoriteInfoJson": userFavoriteInfoJson,
             "changeType": this.state.collection ? 1 : 0,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     this.setState({
@@ -511,14 +538,14 @@ export default class articleDetail extends React.Component {
     /**
      * 获取用户信息
      */
-    getLittleVideoUserById = (userId)=>{
+    getLittleVideoUserById = (userId) => {
         var param = {
             "method": 'getLittleVideoUserById',
             "uid": this.state.userId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result,"re")
+                console.log(result, "re")
                 if (result.msg == '调用成功' || result.success) {
                     this.setState({
                         user: result.response
@@ -548,25 +575,25 @@ export default class articleDetail extends React.Component {
             "discussContent": theLike.state.commitText,
             "userId": theLike.state.userId
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, "pinglun");
                 if (result.success) {
                     Toast.info('评论成功!', 1);
                     var commitObj = {
-                        discussUser:{
-                            userName:this.state.user.userName,
+                        discussUser: {
+                            userName: this.state.user.userName,
                             avatar: this.state.user.avatar,
                         },
                         discussContent: this.state.commitText,
                         createTime: new Date().getTime(),
                     }
-                    console.log(commitObj,'commitObj');
+                    console.log(commitObj, 'commitObj');
                     this.initDataSource.unshift(commitObj);
                     theLike.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         commitText: '',
-                        commit_count:(this.state.commit_count + 1),
+                        commit_count: (this.state.commit_count + 1),
                     }, () => {
                         $('#text').css({height: this.state.initTextarea});
                         $('#text').val('');
@@ -630,25 +657,25 @@ export default class articleDetail extends React.Component {
     }
 
     toShare = () => {
-        console.log($('.content').text(),"89")
+        console.log($('.content').text(), "89")
         var data = {
             method: 'shareWechat',
             shareUrl: window.location.href,
-            shareTitle:this.state.data.articleTitle,
+            shareTitle: this.state.data.articleTitle,
             shareUserName: this.state.data.articleTitle,
         };
-        console.log(data,"data")
+        console.log(data, "data")
         Bridge.callHandler(data, null, function (error) {
             Toast.info('分享文章失败')
         });
     }
 
-    downloadApp = ()=>{
+    downloadApp = () => {
         console.log('下载App');
         var url;
-        if(this.state.isPhone == 'ios'){
+        if (this.state.isPhone == 'ios') {
             url = "https://itunes.apple.com/cn/app/apple-store/id1423189213?mt=8";
-        }else{
+        } else {
             url = "http://60.205.86.217/upload7_app/2018-08-28/14/e9c3c09b-f9da-4d7e-8ad3-b810d17a1bf8.apk";
         }
 
@@ -694,7 +721,7 @@ export default class articleDetail extends React.Component {
 
                 <div className="inner">
                     <div className="download_box" style={
-                        this.state.shareHidden?{display:'inline-block'}:{display:'none'}
+                        this.state.shareHidden ? {display: 'inline-block'} : {display: 'none'}
                     }>
                         <div className='download_img_box'>
                             <img className="download_img" src={require("../images/youyangLogo.png")} alt=""/>
@@ -738,7 +765,7 @@ export default class articleDetail extends React.Component {
                                 this.state.textareaFocus ? {display: 'inline-block'} : {display: 'none'}
                             }>
                                 <a className='commit_button' type="primary"
-                                        onClick={this.saveDiscussInfo.bind(this)}><span>发送</span></a>
+                                   onClick={this.saveDiscussInfo.bind(this)}><span>发送</span></a>
                             </div>
 
                             {/*<div style={*/}

@@ -134,9 +134,9 @@ export default class villageCardSystemLogin extends React.Component {
      * 账户失去聚焦
      */
     accountOnBlur = () => {
-        setTimeout(function () {
-            $("#actData").css("display", "none");
-        }, 300)
+        // setTimeout(function () {
+        //     $("#actData").css("display", "none");
+        // }, 300)
     }
     /**
      * 账户聚焦
@@ -147,7 +147,7 @@ export default class villageCardSystemLogin extends React.Component {
         this.setState({
             accountArr: this.makeArr(accountArr, "account")
         }, () => {
-            $("#actData").css("display", "block");
+            // $("#actData").css("display", "block");
         })
     }
     /**

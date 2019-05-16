@@ -194,10 +194,10 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定班牌", active: true
                         },
                         {
-                            title: "乡村振兴", active: true
+                            title: "乡村振兴", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -491,7 +491,7 @@ export default class VillageCardSystemHome extends React.Component {
     * 获取图片路径
     */
     getImage () {
-        $('#upload_video_').unbind("change");
+        $('#upload_image_').unbind("change");
         $('.upload_image_').bind('change', function (evt) {
             if (evt.target.files[0]) {
                 var formData = new FormData();
@@ -536,6 +536,8 @@ export default class VillageCardSystemHome extends React.Component {
                         return xhr;
                     },
                     success: function (res) {
+
+                        console.log(res,"res")
                         var arr = res.split(".");
                         var type = arr[arr.length - 1];
                         if (type == "mp4") {
@@ -714,6 +716,9 @@ export default class VillageCardSystemHome extends React.Component {
             }
         });
     }
+
+
+    //删除上传图片
     deleteUploadFile = (v) => {
         var param = {
             "method": 'deleteUploadFile',
@@ -1609,7 +1614,7 @@ export default class VillageCardSystemHome extends React.Component {
 
                                 <div id="image_box">
                                     {
-                                        this.state.uploadFileList.map((v, i) => {
+                                        calm.state.uploadFileList.map((v, i) => {
                                             console.log(v, "V")
                                             var arr = v.url.split(".");
                                             var type = arr[arr.length - 1];

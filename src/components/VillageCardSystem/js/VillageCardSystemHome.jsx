@@ -1540,10 +1540,14 @@ export default class VillageCardSystemHome extends React.Component {
                 console.log(result)
                 if (result.success) {
                     if (result.response.length === 0) {
-                        Toast.info('该村暂无荣誉村民!', 2);
+                        // Toast.info('该村暂无荣誉村民!', 2);
+                        this.setState({ showHornerEmpty: true })
+                    } else {
+                        let honorVillagerList = result.response;
+                        this.setState({ honorVillagerList })
+                        this.setState({ showHornerEmpty: false })
                     }
-                    let honorVillagerList = result.response;
-                    this.setState({ honorVillagerList })
+
                 }
             },
             onError: function (error) {
@@ -1561,10 +1565,17 @@ export default class VillageCardSystemHome extends React.Component {
                 console.log(result)
                 if (result.success) {
                     if (result.response.length === 0) {
-                        Toast.info('该村暂无学习榜!', 2);
+                        this.setState({
+                            showLearnEmpty: true
+                        })
+                    } else {
+                        let learningList = result.response;
+                        this.setState({ learningList });
+                        this.setState({
+                            showLearnEmpty: false
+                        })
                     }
-                    let learningList = result.response;
-                    this.setState({ learningList });
+
                 }
             },
             onError: function (error) {
@@ -1753,7 +1764,7 @@ export default class VillageCardSystemHome extends React.Component {
         $(".villageNotifyPop").hide();
     }
 
-    seeNotifyDetail=(v)=>{
+    seeNotifyDetail = (v) => {
         $(".villageNotifyPop").show();
         $(".villageMask").show();
         $(".notifyHeader").html(v.noticeTitle)
@@ -1859,6 +1870,11 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                     </div>
                     <div className="rightBox rightBoxSecond" style={{ display: "none" }}>
+                        <div className="rightHeader my_flex">
+                            <span>
+                                {this.state.villageName}
+                            </span>
+                        </div>
                         <iframe src="" className="iframeDiv" frameborder="0"></iframe>
                     </div>
                     <div className="rightBox rightBoxThird" style={{ display: "none" }}>
@@ -2031,7 +2047,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 {
                                     this.state.villageNotifyList.map((v, i) => {
                                         return (
-                                            <div className="right-item my_flex" onClick={this.seeNotifyDetail.bind(this,v)}>
+                                            <div className="right-item my_flex" onClick={this.seeNotifyDetail.bind(this, v)}>
                                                 <div className="item-left text_hidden">{v.noticeTitle}</div>
                                                 <div className="operation">
                                                     <span className="village-delete" onClick={this.showNotifyAlert.bind(this, v)}></span>
@@ -2048,7 +2064,10 @@ export default class VillageCardSystemHome extends React.Component {
                                     {this.state.villageName}
                                 </div>
                                 <div>
-                                    <div>
+                                    <div display={{ display: this.state.showHornerEmpty ? "block" : "none" }}>
+                                        暂无荣誉村名哟
+                                    </div>
+                                    <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
                                         {
                                             this.state.honorVillagerList.map((v, i) => {
                                                 return (
@@ -2071,7 +2090,10 @@ export default class VillageCardSystemHome extends React.Component {
                                     {this.state.villageName}
                                 </div>
                                 <div>
-                                    <div>
+                                    <div display={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
+                                        暂无学习榜
+                                    </div>
+                                    <div display={{ display: this.state.showLearnEmpty ? "none" : "block" }}>
                                         {
                                             this.state.honorVillagerList.map((v, i) => {
                                                 return (
@@ -2299,6 +2321,7 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
                 {/* 发布文章 */}
                 <div className="pushArticalPop villageMaskInner" style={{ display: "none" }}>
+
                     <iframe src="" className="pushArtical" frameborder="0"></iframe>
                 </div>
 

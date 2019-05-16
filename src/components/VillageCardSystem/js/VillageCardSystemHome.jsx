@@ -1769,19 +1769,17 @@ export default class VillageCardSystemHome extends React.Component {
                                     </span>
                             </div>
                         </div>
-                        <div>
+                        <div className="rightContent">
                             {this.state.villageNewsHistory.map((v,i)=>{
                                 return (
-                                    <div>
-                                        <div>
-                                            {v.title}
+                                        <div className="right-item my_flex">
+                                            <div className="item-left text_hidden">{v.title}</div>
+                                            {/* <div dangerouslySetInnerHTML={{ __html:v.content }}>
+                                             </div> */}
+                                            <div className="operation">
+                                                <span className="village-delete" onClick={this.showAlertHistory.bind(this,v)}></span>
+                                            </div>
                                         </div>
-                                        {/* <div dangerouslySetInnerHTML={{ __html:v.content }}>
-                                        </div> */}
-                                        <div onClick={this.showAlertHistory.bind(this,v)}>
-                                            删除
-                                        </div>
-                                    </div>
                                 )
                             })}
                         </div>

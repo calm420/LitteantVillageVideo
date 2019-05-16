@@ -2064,7 +2064,7 @@ export default class VillageCardSystemHome extends React.Component {
                                     {this.state.villageName}
                                 </div>
                                 <div>
-                                    <div display={{ display: this.state.showHornerEmpty ? "block" : "none" }}>
+                                    <div style={{ display: this.state.showHornerEmpty ? "block" : "none" }}>
                                         暂无荣誉村名哟
                                     </div>
                                     <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
@@ -2090,7 +2090,7 @@ export default class VillageCardSystemHome extends React.Component {
                                     {this.state.villageName}
                                 </div>
                                 <div>
-                                    <div display={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
+                                    <div style={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
                                         暂无学习榜
                                     </div>
                                     <div display={{ display: this.state.showLearnEmpty ? "none" : "block" }}>

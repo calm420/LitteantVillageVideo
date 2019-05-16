@@ -1855,7 +1855,7 @@ export default class VillageCardSystemHome extends React.Component {
                             {this.state.villageNewsHistory.map((v, i) => {
                                 return (
                                     <div className="right-item my_flex" onClick={this.seeArticalDetail.bind(this, v)}>
-                                        <div className="item-left text_hidden">{v.title}</div>
+                                        <div className="item-left text_hidden"><span className="Information-show">{v.title}</span></div>
                                         {/* <div dangerouslySetInnerHTML={{ __html:v.content }}>
                                              </div> */}
                                         <div className="operation">

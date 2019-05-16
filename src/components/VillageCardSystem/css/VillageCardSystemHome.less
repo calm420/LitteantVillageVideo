@@ -210,6 +210,7 @@
   .village-delete, .village-edit, .village-imgDelete{
     width: 30px;
     height:30px;
+    vertical-align: middle;
   }
   .village-delete{
     background: url("../img/village-delete.png") no-repeat;
@@ -376,6 +377,12 @@
   .pushNotify, .rightBoxVillageHistory{
     .right-item .item-left{
       width: calc(~"100% - 50px") !important;
+      .Information-show{
+        cursor: pointer;
+        &:hover{
+          color: #4380EB;
+        }
+      }
     }
   }
   .notifyPop, .pushArticalPop{

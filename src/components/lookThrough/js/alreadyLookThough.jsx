@@ -447,7 +447,7 @@ export default class alreadyLookThough extends React.Component {
                 <div className='emptyDiv' style={{ display: calm.initDataSource.length == 0 ? "block" : 'none' }}>
                     <div className='emptyIcon'></div>
                 </div>
-                <div style={{
+                <div className="To-auditLeft" style={{
                     height: document.documentElement.clientHeight - 46,
                     backgroundColor: '#f4f4f4'
                 }}>

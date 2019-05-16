@@ -88,7 +88,8 @@ export default class VillageCardSystemHome extends React.Component {
             cardTitleValue: "",
             cardContentValue: "",
             uploadFileList: [],
-            villageNewsHistory:[]
+            villageNewsHistory:[],
+            courseImgUp:""
         }
     }
 
@@ -283,6 +284,13 @@ export default class VillageCardSystemHome extends React.Component {
     }
     clickCardItem = (v) => {
         if (v.title == "绑定班牌") {
+            this.setState({
+                "cardNameValue": "",
+                "cardContentValue": "",
+                "cardOrderValue": "",
+                "cardTitleValue": "",
+                "villageCradImg": ""
+            })
             $(".bindCard").show();
             $(".villageImg").hide();
             $(".dangke").hide();
@@ -1316,6 +1324,23 @@ export default class VillageCardSystemHome extends React.Component {
         });
     }
 
+    showCourseAlert = (v) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定删除该课程吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteVillCourse(v) },
+
+        ], phone);
+    }
+    
+
     deleteVillCourse = (v) => {
         var param = {
             "method": "deleteVillageCourse",
@@ -1407,6 +1432,23 @@ export default class VillageCardSystemHome extends React.Component {
             }
         });
     }
+
+    showAttAlert = (v) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定删除该考勤吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteVillageAttend(v) },
+
+        ], phone);
+    }
+   
     deleteVillageAttend = (v) => {
         var param = {
             "method": "deleteVillageAttend",
@@ -1423,6 +1465,22 @@ export default class VillageCardSystemHome extends React.Component {
                 // Toast.fail(error, 1);
             }
         });
+    }
+
+    showNotifyAlert = (v) => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定删除该通知吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.toDelectNotify(v) },
+
+        ], phone);
     }
 
     toDelectNotify = (v) => {
@@ -1608,7 +1666,7 @@ export default class VillageCardSystemHome extends React.Component {
             phone = 'android'
         }
         var _this = this;
-        const alertInstance = alert('您确定删除该组吗?', '', [
+        const alertInstance = alert('您确定删除该村史村情吗?', '', [
             { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
             { text: '确定', onPress: () => _this.deleteHistory(v) },
 
@@ -1692,7 +1750,7 @@ export default class VillageCardSystemHome extends React.Component {
                                         <div className="item-left text_hidden">{v.groupName}</div>
                                         <div className="operation">
                                             <span className="village-edit" onClick={this.updateGroupName.bind(this, v)}></span>
-                                            <span className="village-delete" onClick={this.deleteGroupName.bind(this, v)}></span>
+                                            <span className="village-delete" onClick={this.showListAlert.bind(this, v)}></span>
                                         </div>
                                     </div>
                                     )
@@ -1855,7 +1913,7 @@ export default class VillageCardSystemHome extends React.Component {
                                             </div>
                                             <div className="operation">
                                                 <span className="village-edit" onClick={this.upDateVillCourse.bind(this, v)}></span>
-                                                <span className="village-delete" onClick={this.deleteVillCourse.bind(this, v)}></span>
+                                                <span className="village-delete" onClick={this.showCourseAlert.bind(this, v)}></span>
                                             </div>
                                         </div>
                                     )
@@ -1881,7 +1939,7 @@ export default class VillageCardSystemHome extends React.Component {
                                             <div className="item-left text_hidden">实到人数{v.peopleNumber}</div>
                                             <div className="operation">
                                                 <span className="village-edit" onClick={this.updateVillageAttend.bind(this, v)}></span>
-                                                <span className="village-delete" onClick={this.deleteVillageAttend.bind(this, v)}></span>
+                                                <span className="village-delete" onClick={this.showAttAlert.bind(this, v)}></span>
                                             </div>
                                         </div>
                                     )
@@ -1907,7 +1965,7 @@ export default class VillageCardSystemHome extends React.Component {
                                             <div className="right-item my_flex">
                                                 <div className="item-left text_hidden">{v.noticeTitle}</div>
                                                 <div className="operation">
-                                                    <span className="village-delete" onClick={this.toDelectNotify.bind(this, v)}></span>
+                                                    <span className="village-delete" onClick={this.showNotifyAlert.bind(this, v)}></span>
                                                 </div>
                                             </div>
                                         )
@@ -2060,7 +2118,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 value={this.state.date}
                                 onChange={date => this.setState({ date })}
                             >
-                                <List.Item arrow="horizontal">Datetime</List.Item>
+                                <List.Item arrow="horizontal"></List.Item>
                             </DatePicker>
                         </div>
                     </div>
@@ -2070,7 +2128,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="parentDiv">
                                 <button className="editBtn"></button>
                                 <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span className="photo-add">
+                                <span style={{display:this.state.courseImgUp == "" ? "none" : "inline-block"}} className="photo-add">
                                     <img src={this.state.courseImgUp} />
                                 </span>
                             </div>
@@ -2131,7 +2189,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="parentDiv">
                                 <button className="editBtn"></button>
                                 <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span  className="photo-add">
+                                <span style={{display:this.state.courseImgUp == "" ? "none" : "inline-block"}}  className="photo-add">
                                     <img src={this.state.courseImgUpdate} />
                                 </span>
                             </div>

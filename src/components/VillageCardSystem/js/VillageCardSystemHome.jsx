@@ -2064,7 +2064,7 @@ export default class VillageCardSystemHome extends React.Component {
                                     {this.state.villageName}
                                 </div>
                                 <div>
-                                    <div display={{ display: this.state.showHornerEmpty ? "block" : "none" }}>
+                                    <div style={{ display: this.state.showHornerEmpty ? "block" : "none" }}>
                                         暂无荣誉村名哟
                                     </div>
                                     <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
@@ -2090,7 +2090,7 @@ export default class VillageCardSystemHome extends React.Component {
                                     {this.state.villageName}
                                 </div>
                                 <div>
-                                    <div display={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
+                                    <div style={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
                                         暂无学习榜
                                     </div>
                                     <div display={{ display: this.state.showLearnEmpty ? "none" : "block" }}>
@@ -2236,7 +2236,7 @@ export default class VillageCardSystemHome extends React.Component {
                 {/* 编辑课程 */}
                 <div className="courseUpdatePop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">
-                        添加课程
+                        编辑课程
                     </div>
                     <div className="bindCard-item">
                         <div className="bindCard-itemLeft">课程名称</div>
@@ -2280,7 +2280,9 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="parentDiv">
                                 <button className="editBtn"></button>
                                 <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span style={{ display: this.state.courseImgUp == "" ? "none" : "inline-block" }} className="photo-add">
+                                <span 
+                                    // style={{ display: this.state.courseImgUpdate == "" ? "none" : "inline-block" }} 
+                                    className="photo-add">
                                     <img src={this.state.courseImgUpdate} />
                                 </span>
                             </div>

@@ -16,12 +16,7 @@ var apiWebServiceURLApi = isDebug ? apiWebServiceURLOfLocalsApi : apiWebServiceU
 // var elearningWebserviceURLOfRemote = "http://www.maaee.com/elearning/elearningControl/";
 // var elearningWebserviceURL = isDebug ? elearningWebserviceURLOfLocal : elearningWebserviceURLOfRemote;
 
-// //小蚂蚁webService地址
-const apiWebServiceURLOfLocals = "http://" + localDomain + ":6012/Excoord_LittleVideoApiServer/webservice";
 
-const apiWebServiceURLOfRemote = "http://www.maaee.com:6012/Excoord_LittleVideoApiServer/webservice";
-var apiWebServiceURL = isDebug ? apiWebServiceURLOfLocals : apiWebServiceURLOfRemote;
-//小蚂蚁mobile地址
 const mobileURLOfLocal = "http://" + localUrl + ":7094/#/";
 const mobileURLOfRemote = "http://jiaoxue.maaee.com:8094/#/";
 
@@ -81,7 +76,7 @@ WebServiceUtil.requestLittleAntApi9006 = function (data, listener) {
  * @param data
  * @param listener
  */
-WebServiceUtil.requestLittleAntApi = function (data, listener) {
+WebServiceUtil.requestLittleAntApi6012 = function (data, listener) {
     $.ajax({
         type: "post",
         url: apiWebServiceURL,

@@ -140,7 +140,7 @@ export default class articleList extends React.Component {
             "method": 'getUserLikeLog',
             "JsonParameter": JSON.stringify(JsonParameter)
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, '判断用户是否点赞');
                 if (result.success) {
@@ -169,7 +169,7 @@ export default class articleList extends React.Component {
             "videoId": this.state.cid,
             "pageNo": this.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, 'getDiscussInfoList')
                 if (result.success) {
@@ -276,7 +276,7 @@ export default class articleList extends React.Component {
             "method": 'gitCircleOfFriendsById',
             "id": this.state.cid,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
@@ -318,14 +318,13 @@ export default class articleList extends React.Component {
      * 點贊
      * **/
     changeFriendLikeCount () {
-
         var param = {
             "method": 'changeFriendLikeCount',
             "friendId": this.state.detail.cfid,
             "userId": this.state.userId,
             "changeType": this.state.islike ? 1 : 0,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result, 'gitCircleOfFriendsById')
                 if (result.success) {
@@ -413,7 +412,7 @@ export default class articleList extends React.Component {
             "friendsAttachments": JSON.stringify(this.state.friendsAttachments)
         };
         console.log(param);
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     Toast.success('评论成功', 1);
@@ -696,60 +695,13 @@ export default class articleList extends React.Component {
     }
 
     render () {
-        console.log(this.state.hideType == "xmy", "this.state.hideType")
-        var tagClass = '';
-        switch (this.state.detail.mastery) {
-            case 0:
-                tagClass = 'tag-course-red';
-                break;
-            case 1:
-                tagClass = 'tag-course-orange';
-                break;
-            case 2:
-                tagClass = 'tag-course-blue-text';
-                break;
-            case 3:
-                tagClass = 'tag-course-green';
-                break;
-        }
         const row = (rowData, sectionID, rowID) => {
             var dom = '';
-            // console.log(rowData.type, 'rowData.type')
             if (rowData.type == '无数据') {
                 dom = <div></div>
             } else {
                 dom = <div className="list_item" style={{ marginTop: '0' }}>
-                    <div className="circleList circleList-comment circleList-comment-leftNo line_public">
-                        <div className="list_head">
-                            <div className="headPic">
-                                <img src={rowData.discussUser.avatar} alt="" />
-                            </div>
-                            <div className="courseList">
-                                <div className="userName text_hidden">{rowData.discussUser.userName}</div>
-                                {/*<span className="tag-course tag-course-blue">语文</span>*/}
-                            </div>
-                            <div className="createTime">{this.timeDifference(rowData.createTime)}</div>
-                        </div>
-                        <div className="list_content content_detail-comment">{rowData.discussContent}</div>
-                        <div className="list_image">
-                            {rowData.friendsAttachments.map(function (value, index) {
-                                if (value.type == 0) {
-                                    return <img
-                                        onClick={this.showImage.bind(this, rowData.friendsAttachments, value.path)}
-                                        src={rowData.friendsAttachments.length > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'}
-                                        alt="" />
-                                } else if (value.type == 1) {
-                                    return <div className="video_tag">
-                                        <video poster={value.coverPath} onClick={this.playVideo.bind(this, value.path)}
-                                            src={value.path} />
-                                        {/*<img src="" alt=""/>*/}
-                                        <div onClick={this.playVideo.bind(this, value.path)}
-                                            className="video_tag_play"></div>
-                                    </div>
-                                }
-                            }.bind(this))}
-                        </div>
-                    </div>
+                    3223
                 </div>
             }
             return dom
@@ -854,201 +806,7 @@ export default class articleList extends React.Component {
                             }}
                         />
                     </div>
-
-                    {/*错题本*/}
-                    <div style={
-                        this.state.detail.type == 0 ? { display: 'block' } : { display: 'none' }
-                    }>
-                        <ListView
-                            ref={el => this.lv = el}
-                            dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
-                            renderSectionHeader={sectionData => (
-                                <div className="list_item" style={{ marginTop: '0' }}>
-                                    <div className="circleList">
-                                        <div className="list_head">
-                                            <div className="headPic"><img src={this.state.detail.userInfo.avatar}
-                                                alt="" /></div>
-                                            <div className="courseList">
-
-                                                {/*<div className="userName">{this.state.detail.userInfo.userName}</div>*/}
-                                                {/*<span className="tag-course tag-course-blue">{this.state.detail.courseInfo.courseName}</span>*/}
-
-                                                <div
-                                                    className="userName text_hidden">{this.state.detail.userInfo.userName}</div>
-                                                <span style={
-                                                    this.state.detail.mastery || this.state.detail.mastery == 0 ? { display: 'block' } : { display: 'none' }
-                                                }
-                                                    className={"tag-course " + tagClass}>{this.state.detail.mastery == 0 ? '不懂' : this.state.detail.mastery == 1 ? '略懂' : this.state.detail.mastery == 2 ? '基本懂' : '完全懂'}</span>
-                                                <span style={
-                                                    this.state.detail.courseInfo ? { display: 'block' } : { display: 'none' }
-                                                }
-                                                    className="tag-course tag-course-blue">{this.state.detail.courseInfo ? this.state.detail.courseInfo.courseName : ''}</span>
-                                            </div>
-                                            <div
-                                                className="createTime">{WebServiceUtil.formatYMD(this.state.detail.createTime)}</div>
-
-                                        </div>
-                                        <div className="content_detail">
-                                            {this.state.detail.fTags.map((value, index) => {
-                                                return <span className="myTag">【{value.tagTitle}】</span>
-                                            })}
-                                            {this.state.detail.mark}</div>
-                                        <div className="image_detail">
-                                            <div>
-                                                <span>题干</span>
-                                                <div>
-                                                    {this.state.detail.friendsAttachments.map((value, index) => {
-                                                        if (value.fatherType == 0) {
-                                                            if (value.type == 0) {
-                                                                return <img
-                                                                    onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                                    src={this.state.detail.friendsAttachments.length > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'} alt=""
-                                                                    style={this.state.detailList.length <= 1 ? {
-                                                                        width: '200px',
-                                                                        height: '113px'
-                                                                    } : {}} />
-                                                            } else {
-                                                                return <div
-                                                                    onClick={this.playVideo.bind(this, value.path)}
-                                                                    className="video_tag"
-                                                                    style={this.state.detailList.length <= 1 ? {
-                                                                        width: '200px',
-                                                                        height: '113px'
-                                                                    } : {}}>
-                                                                    <video poster={value.coverPath} src={value.path}
-                                                                        alt="" />
-                                                                    <div className="video_tag_play"></div>
-                                                                </div>
-                                                            }
-                                                        }
-
-                                                    })}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <span>正解</span>
-                                                <div>
-                                                    {this.state.detail.friendsAttachments.map((value, index) => {
-                                                        if (value.fatherType == 1) {
-                                                            if (value.type == 0) {
-                                                                return <img
-                                                                    onClick={this.showImage.bind(this, this.state.detail.friendsAttachments, value.path)}
-                                                                    src={this.state.detail.friendsAttachments > 1 ? value.path + '?size=300x300' : value.path + '?size=500x500'} alt=""
-                                                                    style={this.state.detailList.length <= 1 ? {
-                                                                        width: '200px',
-                                                                        height: '113px'
-                                                                    } : {}} />
-                                                            } else {
-                                                                return <div
-                                                                    onClick={this.playVideo.bind(this, value.path)}
-                                                                    className="video_tag"
-                                                                    style={this.state.detailList.length <= 1 ? {
-                                                                        width: '200px',
-                                                                        height: '113px'
-                                                                    } : {}}>
-                                                                    <video poster={value.coverPath}
-                                                                        style={{ width: '200', height: '113' }}
-                                                                        src={value.path} alt="" />
-                                                                    <div className="video_tag_play"></div>
-                                                                </div>
-                                                            }
-                                                            themeTaskDetail
-                                                        }
-
-                                                    })}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {/*<div className="asOfDate">*/}
-                                        {/*截止时间:{WebServiceUtil.formatAllTime(this.state.detail.endTime)}</div>*/}
-                                        {
-                                            this.state.hideType == "xmy" ?
-                                                <div className="detail_bottom wrongQuestion_bottom" style={
-                                                    this.state.shareHidden ? { display: 'none' } : { display: 'flex' }
-                                                }>
-                                                    <div className="list_bottom_item"><i
-                                                        className={this.state.islike ? "i-praise-active" : "i-praise"}
-                                                        onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
-                                                    </div>
-                                                </div>
-                                                :
-                                                <div className="detail_bottom" style={
-                                                    this.state.shareHidden ? { display: 'none' } : { display: 'flex' }
-                                                }>
-                                                    <div className="list_bottom_item" onClick={this.toShare}><i
-                                                        className="i-share"></i></div>
-                                                    <div className="list_bottom_item"><i
-                                                        className={this.state.islike ? "i-praise-active" : "i-praise"}
-                                                        onClick={this.likeClick.bind(this, this.state.detail.cfid)}></i><span>{this.state.detail.likeCount}</span>
-                                                    </div>
-                                                </div>
-                                        }
-
-                                    </div>
-                                    <div className="commit_title">全部评论({this.state.commit_count})</div>
-                                </div>
-                            )}
-                            renderFooter={this.state.isLoadingHidden ? '' : () => (
-                                <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
-                                    {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
-                                </div>)}
-                            renderRow={row}   //需要的参数包括一行数据等,会返回一个可渲染的组件为这行数据渲染  返回renderable
-                            className="am-list commentList"
-                            pageSize={30}    //每次事件循环（每帧）渲染的行数
-                            //useBodyScroll  //使用 html 的 body 作为滚动容器   bool类型   不应这么写  否则无法下拉刷新
-                            scrollRenderAheadDistance={200}   //当一个行接近屏幕范围多少像素之内的时候，就开始渲染这一行
-                            onEndReached={this.onEndReached}  //当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用
-                            onEndReachedThreshold={10}  //调用onEndReached之前的临界值，单位是像素  number类型
-                            initialListSize={30}   //指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据
-                            scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
-                            // useBodyScroll={true}
-                            style={{
-                                height: document.body.clientHeight - 49,
-                            }}
-                        />
-                    </div>
-                    <div className="input_box" style={
-                        this.state.shareHidden ? { display: 'none' } : { display: 'block' }
-                    }>
-                        <div className="commit_line" onClick={this.setCommit}>
-                            <span className="commit_line-left"></span>
-                            <span className="commit_line-center"></span>
-                            <span className="commit_line-right"></span>
-                            <span className="commit_line-right-img"></span>
-                        </div>
-                    </div>
-                    <div className="commit_box" style={
-                        this.state.commitFlag ? { display: 'block' } : { display: 'none' }
-                    }>
-                        <div>
-                            <div className="import">
-                                <textarea
-                                    type="text"
-                                    id="commit"
-                                    placeholder="请输入评论内容"
-                                    value={this.state.inputValue}
-                                    onChange={this.inputOnChange}
-                                />
-                                <div id="appendImage">
-                                    {this.state.domImage}
-                                </div>
-                            </div>
-                            <div className="send">
-                                <div onClick={this.selectedImage}>
-                                    <img className="AddImage" src={require('../images/AddImage.png')} alt="" />
-                                </div>
-                                <span className="btn-blue" onClick={this.sendCommit}>发送</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mask" style={
-                        this.state.commitFlag ? { display: 'block' } : { display: 'none' }
-                    } onClick={this.closeCommitBox}></div>
                 </div>
-
-                <input style={
-                    { display: 'none' }
-                } id="upload" type="file" />
             </div>
         );
     }

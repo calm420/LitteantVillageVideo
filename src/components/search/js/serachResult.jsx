@@ -7,10 +7,10 @@ const dataSource = new ListView.DataSource({
 });
 
 const tabs = [
-    { title: '文章', value: "0" },
+    { title: '事迹', value: "0" },
     { title: '视频', value: "1" },
     { title: '用户', value: "2" },
-    { title: '圈子', value: "3" },
+    // { title: '圈子', value: "3" },
 ];
 export default class serachResult extends React.Component {
     constructor(props) {
@@ -114,7 +114,7 @@ export default class serachResult extends React.Component {
             "uid": userId,
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
@@ -159,7 +159,7 @@ export default class serachResult extends React.Component {
             "uid": userId,
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 // alert(JSON.stringify(result.response.littleVideoInfo.length))
                 if (result.success) {
@@ -204,7 +204,7 @@ export default class serachResult extends React.Component {
             "uid": userId,
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
 
                 if (result.success) {
@@ -248,7 +248,7 @@ export default class serachResult extends React.Component {
             "uid": userId,
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 console.log(result)
 
@@ -508,7 +508,7 @@ export default class serachResult extends React.Component {
             },
             "changeType": 0,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                     calm.initDataSource.forEach((v, i) => {

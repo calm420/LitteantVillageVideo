@@ -1,14 +1,16 @@
 import React from 'react';
-import { WhiteSpace, SearchBar, Button, WingBlank, Result, Toast, InputItem } from 'antd-mobile';
+import { WhiteSpace, Modal,SearchBar, Button, WingBlank, Result, Toast, InputItem } from 'antd-mobile';
 import '../css/villageReg.less'
 var calm;
+
+const alert = Modal.alert;
 export default class villageReg extends React.Component {
     constructor(props) {
         super(props);
         calm = this;
         this.state = {
-            schoolName:"请选择自己所在村子",
-            groupName:"请选择自己所在小组",
+            schoolName: "请选择自己所在村子",
+            groupName: "请选择自己所在小组",
         }
     }
     componentWillReceiveProps () {
@@ -46,7 +48,7 @@ export default class villageReg extends React.Component {
     * 根据学校名称搜索学校
     * getSchoolsBySchoolName(String schoolName,String pageNo)
     */
-   getVillageInfoByVillageName = () => {
+    getVillageInfoByVillageName = () => {
         var _this = this;
         if (this.state.inputValue === '') {
             Toast.fail('请输入内容', 1, null, false);
@@ -60,7 +62,7 @@ export default class villageReg extends React.Component {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.length === 0) {
-                        Toast.info('未找到相关学校', 1, null, false)
+                        Toast.info('未找到相关村', 1, null, false)
                     } else {
                         _this.buildSchoolList(result.response)
                     }
@@ -77,9 +79,9 @@ export default class villageReg extends React.Component {
     * 根据学校名称搜索学校
     * getSchoolsBySchoolName(String schoolName,String pageNo)
     */
-   getVillageInfoByVillageName2 = () => {
+    getVillageInfoByVillageName2 = () => {
         var _this = this;
-        
+
         if (this.state.inputValue2 === '') {
             Toast.fail('请输入内容', 1, null, false);
             return
@@ -87,13 +89,13 @@ export default class villageReg extends React.Component {
         var param = {
             "method": 'getVillageGroupByGroupName',
             "groupName": this.state.inputValue2,
-            "villageId":this.state.schoolId
+            "villageId": this.state.schoolId
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
                     if (result.response.length === 0) {
-                        Toast.info('未找到相关学校', 1, null, false)
+                        Toast.info('未找到相关组', 1, null, false)
                     } else {
                         _this.buildSchoolList2(result.response)
                     }
@@ -121,7 +123,7 @@ export default class villageReg extends React.Component {
     };
     schoolItemOnClick2 = (data) => {
 
-        console.log(data,"data")
+        console.log(data, "data")
         this.exitSchoolInput2();
         this.setState({ groupName: data.groupName, groupId: data.id, })
     };
@@ -149,7 +151,7 @@ export default class villageReg extends React.Component {
 
     schoolItemOnClick = (data) => {
 
-        console.log(data,"data")
+        console.log(data, "data")
         this.exitSchoolInput();
         this.setState({ schoolName: data.villageName, schoolId: data.villageId, schoolClassName: 'color_3' })
     };
@@ -200,38 +202,38 @@ export default class villageReg extends React.Component {
         this.setState({ inputValue2: e.target.value })
     };
 
-    submitReg=()=>{
-        if(this.state.schoolId == undefined){
+    submitReg = () => {
+        if (this.state.schoolId == undefined) {
             Toast.fail('请选择村', 1, null, false);
             return
-           }
-       if(this.state.groupId == undefined){
-        Toast.fail('请选择组', 1, null, false);
-        return
-       }
-       if(this.state.nameValue == undefined){
-        Toast.fail('请输入姓名', 1, null, false);
-        return
-       }
-       if(this.state.codeValue == undefined){
-        Toast.fail('请输入邀请码', 1, null, false);
-        return
-       }
+        }
+        if (this.state.groupId == undefined) {
+            Toast.fail('请选择组', 1, null, false);
+            return
+        }
+        if (this.state.nameValue == undefined) {
+            Toast.fail('请输入姓名', 1, null, false);
+            return
+        }
+        if (this.state.codeValue == undefined) {
+            Toast.fail('请输入邀请码', 1, null, false);
+            return
+        }
         var _this = this;
         var param = {
             "method": 'updateLittleVillageUser',
             "userId": calm.state.userId,
-            "groupId":this.state.groupId,
-            "villageId":this.state.schoolId,
-            "userName":this.state.nameValue,
-            "joinCode":this.state.codeValue
+            "groupId": this.state.groupId,
+            "villageId": this.state.schoolId,
+            "userName": this.state.nameValue,
+            "joinCode": this.state.codeValue
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
-                    Toast.info('注册完成',1);
+                    Toast.info('注册完成', 1);
                     var data = {
-                        method: 'backHome',
+                        method: 'finishRegist',
                     };
                     Bridge.callHandler(data, null, function (error) {
                     });
@@ -244,53 +246,77 @@ export default class villageReg extends React.Component {
             }
         });
     }
-    inputRefClick = ()=>{
+    inputRefClick = () => {
         this.inputRef.focus();
     }
-    
-    inputCodeClick = ()=>{
+
+    inputCodeClick = () => {
         this.inputCodeRef.focus();
     }
-    
+
+    showListAlert = () => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定放弃本次编辑?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.leaveRegist() },
+
+        ], phone);
+    }
+
+    leaveRegist = () => {
+        var data = {
+            method: 'leaveRegist',
+        };
+        Bridge.callHandler(data, null, function (error) {
+        });
+    }
+
     render () {
         return (
             <div id='villageReg'>
                 <div className="p20"></div>
                 <div className="topNav">
-                    <i className='icon_back'></i>
+                    <i className='icon_back' onClick={this.showListAlert}></i>
                     完善信息
                 </div>
                 <div className="regContent">
                     <div className={this.state.schoolName == '请选择自己所在村子' ? 'inputWrap activeDiv line_public' : 'inputWrap activeDiv line_public color_3'} onClick={this.schoolOnClick}>{this.state.schoolName}<i></i></div>
                     <div className={this.state.groupName == '请选择自己所在小组' ? 'inputWrap activeDiv line_public' : 'inputWrap activeDiv line_public color_3'} onClick={this.schoolOnClick2}>{this.state.groupName}<i></i></div>
                     <div onclick={this.inputRefClick}>
-                    <InputItem
-                        className="add_element"
-                        placeholder="请输入自己真实姓名"
-                        value={this.state.nameValue}
-                        onChange={this.inputOnNameChange}
-                        ref={el => this.inputRef = el}
-                    >
-                    </InputItem>
+                        <InputItem
+                            className="add_element"
+                            placeholder="请输入自己真实姓名"
+                            value={this.state.nameValue}
+                            onChange={this.inputOnNameChange}
+                            ref={el => this.inputRef = el}
+                        >
+                        </InputItem>
                     </div>
                     <div onClick={this.inputCodeClick}>
-                    <InputItem
-                        className="add_element"
-                        placeholder="请输入邀请码"
-                        value={this.state.codeValue}
-                        onChange={this.inputOnChange}
-                        ref={el => this.inputCodeRef = el}
-                    >
-                    </InputItem>
+                        <InputItem
+                            className="add_element"
+                            placeholder="请输入邀请码"
+                            value={this.state.codeValue}
+                            onChange={this.inputOnChange}
+                            ref={el => this.inputCodeRef = el}
+                        >
+                        </InputItem>
                     </div>
-                   
 
-                    
+
+
                     {/*<div className='codeBtn' onClick={this.showCode}>邀请码请联系村管理员</div>*/}
                     <div className='codeBtn'>邀请码请联系村管理员</div>
                 </div>
 
-                <div className="villageMask"  style={{ display: "none" }}></div>
+                <div className="villageMask" style={{ display: "none" }}></div>
                 {/*<div className="codeSource villageMaskInner" style={{ display: "none" }}>邀请码来源于布拉布拉布拉布拉</div>*/}
                 <div className="stuAccountRegist">
                     <div className="mask" onClick={this.exitSchoolInput} style={{ display: 'none' }}></div>

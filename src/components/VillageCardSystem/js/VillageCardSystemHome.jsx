@@ -1,5 +1,5 @@
 import React from "react";
-import { ListView, PullToRefresh, Modal,Toast, Accordion, List, InputItem, DatePicker, ImagePicker, TextareaItem } from 'antd-mobile';
+import { ListView, PullToRefresh, Modal, Toast, Accordion, List, InputItem, DatePicker, ImagePicker, TextareaItem } from 'antd-mobile';
 import Input from "antd-mobile/lib/input-item/Input";
 import '../css/VillageCardSystemHome.less'
 var calm;
@@ -88,8 +88,8 @@ export default class VillageCardSystemHome extends React.Component {
             cardTitleValue: "",
             cardContentValue: "",
             uploadFileList: [],
-            villageNewsHistory:[],
-            courseImgUp:""
+            villageNewsHistory: [],
+            courseImgUp: ""
         }
     }
 
@@ -862,9 +862,9 @@ export default class VillageCardSystemHome extends React.Component {
     }
 
 
-   
 
-    delList(index) {
+
+    delList (index) {
         this.state.addInputList.splice(index, 1);
         this.buildAddList()
     }
@@ -945,12 +945,14 @@ export default class VillageCardSystemHome extends React.Component {
         if (this.isIE()) {
             if (window.clipboardData) {
                 window.clipboardData.setData("Text", thisDiv.textContent);
+                Toast.info("复制成功", 1)
                 // alert(window.clipboardData.getData("Text"));
             }
         } else {
             event.preventDefault();
             if (event.clipboardData) {
                 event.clipboardData.setData("text/plain", thisDiv.textContent);
+                Toast.info("复制成功", 1)
                 // alert(event.clipboardData.getData("text"));
             }
         }
@@ -1031,18 +1033,39 @@ export default class VillageCardSystemHome extends React.Component {
 
     addCourse = () => {
         this.setState({
-            courseType: "add"
+            courseNameChangeValue: "",
+            teacherChangeValue: "",
+            coursePlaceChangeValue: "",
+            date: "",
+            courseImgUp: "",
         })
         $(".coursePop").show();
         $(".villageMask").show();
     }
 
     sureCourseData = () => {
-        if (this.state.courseType == "add") {
-            this.createVillageCourse()
-        } else {
-
+        if (this.state.courseNameChangeValue == "" || this.state.courseNameChangeValue == undefined) {
+            Toast.info("请输入课程名称", 1)
+            return
         }
+        if (this.state.teacherChangeValue == "" || this.state.teacherChangeValue == undefined) {
+            Toast.info("请输入教师名称", 1)
+            return
+        }
+        if (this.state.coursePlaceChangeValue == "" || this.state.coursePlaceChangeValue == undefined) {
+            Toast.info("请输入上课地点", 1)
+            return
+        }
+        if (this.state.date == "" || this.state.date == undefined) {
+            Toast.info("请选择上课时间", 1)
+            return
+        }
+        if (this.state.courseImgUp == "" || this.state.courseImgUp == undefined) {
+            Toast.info("请上传课程封面", 1)
+            return
+        }
+        this.createVillageCourse()
+
     }
 
     createVillageCourse = () => {
@@ -1113,7 +1136,7 @@ export default class VillageCardSystemHome extends React.Component {
     sumPeople = () => {
         this.setState({
             attType: "add",
-            sumPeopleNameValue:""
+            sumPeopleNameValue: ""
         }, () => {
             $(".attPop").show();
             $(".villageMask").show();
@@ -1122,8 +1145,8 @@ export default class VillageCardSystemHome extends React.Component {
     }
 
     sumPeopleName = () => {
-        if(this.state.sumPeopleNameValue == ""){
-            Toast.info("人数不能为空",1)
+        if (this.state.sumPeopleNameValue == "") {
+            Toast.info("人数不能为空", 1)
             return
         }
         if (this.state.attType == "add") {
@@ -1188,7 +1211,7 @@ export default class VillageCardSystemHome extends React.Component {
 
         ], phone);
     }
-   
+
     deleteGroupName = (v) => {
         this.setState({
             currentGroupId: v.id
@@ -1344,7 +1367,7 @@ export default class VillageCardSystemHome extends React.Component {
 
         ], phone);
     }
-    
+
 
     deleteVillCourse = (v) => {
         var param = {
@@ -1453,7 +1476,7 @@ export default class VillageCardSystemHome extends React.Component {
 
         ], phone);
     }
-   
+
     deleteVillageAttend = (v) => {
         var param = {
             "method": "deleteVillageAttend",
@@ -1606,10 +1629,15 @@ export default class VillageCardSystemHome extends React.Component {
             Toast.info("请输入县级名称", 1)
             return
         }
+        if (this.state.villageCradImg == "") {
+            Toast.info("请上传照片", 1)
+            return
+        }
         if (this.state.cardTitleValue == "") {
             Toast.info("请输入标题", 1)
             return
         }
+
         if (this.state.cardContentValue == "") {
             Toast.info("请输入内容", 1)
             return
@@ -1639,7 +1667,7 @@ export default class VillageCardSystemHome extends React.Component {
                         "cardTitleValue": "",
                         "villageCradImg": ""
                     })
-                   
+
                 }
             },
             onError: function (error) {
@@ -1647,6 +1675,24 @@ export default class VillageCardSystemHome extends React.Component {
             }
         });
     }
+
+
+    exitLoginAlert = () => {
+        var phoneType = navigator.userAgent;
+        var phone;
+        if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
+            phone = 'ios'
+        } else {
+            phone = 'android'
+        }
+        var _this = this;
+        const alertInstance = alert('您确定退出登录吗?', '', [
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.exitLogin() },
+
+        ], phone);
+    }
+
 
     exitLogin = () => {
         var url = WebServiceUtil.mobileServiceURL + "villageCardSystemLogin";
@@ -1677,7 +1723,7 @@ export default class VillageCardSystemHome extends React.Component {
 
         ], phone);
     }
-    deleteHistory=(v)=>{
+    deleteHistory = (v) => {
         var param = {
             "method": 'deleteVillageNews',
             "id": v.id,
@@ -1685,13 +1731,33 @@ export default class VillageCardSystemHome extends React.Component {
         console.log(param, "param")
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                Toast.info("删除成功",1)
+                Toast.info("删除成功", 1)
                 this.getVillageVillageNewsByVillageId()
             },
             onError: function (error) {
                 Toast.fail(error, 1);
             }
         });
+    }
+
+    seeArticalDetail = (v) => {
+        $(".villageHistoryPop").show();
+        $(".villageMask").show();
+        $(".villageHeader").html(v.title)
+        $(".villageContent").html(v.content)
+    }
+
+    closePop = () => {
+        $(".villageHistoryPop").hide();
+        $(".villageMask").hide();
+        $(".villageNotifyPop").hide();
+    }
+
+    seeNotifyDetail=(v)=>{
+        $(".villageNotifyPop").show();
+        $(".villageMask").show();
+        $(".notifyHeader").html(v.noticeTitle)
+        $(".notifyContent").html(v.noticeContent)
     }
     render () {
         return (
@@ -1735,14 +1801,14 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                         <div className='quiteBtn'>
                             管理员
-                            <span onClick={this.exitLogin}></span>
+                            <span onClick={this.exitLoginAlert}></span>
                         </div>
                     </div>
                     <div className='rightBox rightBoxFirst'>
                         <div className="rightHeader my_flex">
                             <span>{this.state.villageName}</span>
                             <div className='btn'>
-                                <span onClick={this.editorVillageName}>编辑名称</span>
+                                {/* <span onClick={this.editorVillageName}>编辑名称</span> */}
                                 <span onClick={this.editorGroupName}>编辑分组</span>
                                 <span onClick={this.editorCodeName}>邀请码</span>
                             </div>
@@ -1751,13 +1817,13 @@ export default class VillageCardSystemHome extends React.Component {
                             {
                                 this.state.villageGroupList.map((v, i) => {
                                     return (
-                                    <div className="right-item my_flex">
-                                        <div className="item-left text_hidden">{v.groupName}</div>
-                                        <div className="operation">
-                                            <span className="village-edit" onClick={this.updateGroupName.bind(this, v)}></span>
-                                            <span className="village-delete" onClick={this.showListAlert.bind(this, v)}></span>
+                                        <div className="right-item my_flex">
+                                            <div className="item-left text_hidden">{v.groupName}</div>
+                                            <div className="operation">
+                                                <span className="village-edit" onClick={this.updateGroupName.bind(this, v)}></span>
+                                                <span className="village-delete" onClick={this.showListAlert.bind(this, v)}></span>
+                                            </div>
                                         </div>
-                                    </div>
                                     )
                                 })
                             }
@@ -1775,16 +1841,16 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                         </div>
                         <div className="rightContent">
-                            {this.state.villageNewsHistory.map((v,i)=>{
+                            {this.state.villageNewsHistory.map((v, i) => {
                                 return (
-                                        <div className="right-item my_flex">
-                                            <div className="item-left text_hidden">{v.title}</div>
-                                            {/* <div dangerouslySetInnerHTML={{ __html:v.content }}>
+                                    <div className="right-item my_flex" onClick={this.seeArticalDetail.bind(this, v)}>
+                                        <div className="item-left text_hidden">{v.title}</div>
+                                        {/* <div dangerouslySetInnerHTML={{ __html:v.content }}>
                                              </div> */}
-                                            <div className="operation">
-                                                <span className="village-delete" onClick={this.showAlertHistory.bind(this,v)}></span>
-                                            </div>
+                                        <div className="operation">
+                                            <span className="village-delete" onClick={this.showAlertHistory.bind(this, v)}></span>
                                         </div>
+                                    </div>
                                 )
                             })}
                         </div>
@@ -1965,7 +2031,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 {
                                     this.state.villageNotifyList.map((v, i) => {
                                         return (
-                                            <div className="right-item my_flex">
+                                            <div className="right-item my_flex" onClick={this.seeNotifyDetail.bind(this,v)}>
                                                 <div className="item-left text_hidden">{v.noticeTitle}</div>
                                                 <div className="operation">
                                                     <span className="village-delete" onClick={this.showNotifyAlert.bind(this, v)}></span>
@@ -2025,7 +2091,7 @@ export default class VillageCardSystemHome extends React.Component {
                 </div>
 
 
-                <div className="villageMask" style={{ display: "none" }} ></div>
+                <div className="villageMask" onClick={this.closePop} style={{ display: "none" }} ></div>
                 {/* 编辑分组 */}
                 <div className='popBox villageMaskInner' style={{ display: "none" }} >
                     <div>
@@ -2131,7 +2197,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="parentDiv">
                                 <button className="editBtn"></button>
                                 <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span style={{display:this.state.courseImgUp == "" ? "none" : "inline-block"}} className="photo-add">
+                                <span style={{ display: this.state.courseImgUp == "" ? "none" : "inline-block" }} className="photo-add">
                                     <img src={this.state.courseImgUp} />
                                 </span>
                             </div>
@@ -2192,7 +2258,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="parentDiv">
                                 <button className="editBtn"></button>
                                 <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span style={{display:this.state.courseImgUp == "" ? "none" : "inline-block"}}  className="photo-add">
+                                <span style={{ display: this.state.courseImgUp == "" ? "none" : "inline-block" }} className="photo-add">
                                     <img src={this.state.courseImgUpdate} />
                                 </span>
                             </div>
@@ -2252,6 +2318,33 @@ export default class VillageCardSystemHome extends React.Component {
                         <div className='my_flex'>
                             <span onClick={this.sureGroupName}>确定</span>
                             <span onClick={this.cancelGroupName}>取消</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 村史村情详情 */}
+                <div className="villageHistoryPop villageMaskInner" style={{ display: "none" }}>
+                    <div >
+                        文章标题：
+                        <div className="villageHeader">
+                        </div>
+                    </div>
+                    <div>
+                        文章内容：
+                        <div className="villageContent">
+                        </div>
+                    </div>
+                </div>
+                {/* 通知详情 */}
+                <div className="villageNotifyPop villageMaskInner" style={{ display: "none" }}>
+                    <div >
+                        通知标题：
+                        <div className="notifyHeader">
+                        </div>
+                    </div>
+                    <div>
+                        通知内容：
+                        <div className="notifyContent">
                         </div>
                     </div>
                 </div>

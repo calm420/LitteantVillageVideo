@@ -110,6 +110,9 @@
     }
     .rightContent{
       padding-left: 20px;
+      height: calc(~"100% - 80px");
+      overflow-y: auto;
+      overflow-x: hidden;
       .am-accordion{
         border-top: none;
       }
@@ -121,12 +124,14 @@
         border-bottom: 1px solid rgba(36, 36, 36, 0.1);
         padding-left: 0;
         padding-right: 20px;
+        .item-left{
+          width: calc(~"100% - 100px");
+        }
         .village-delete, .village-edit{
           width: 20px;
           height: 20px;
-          float: right;
-          margin: 23px 15px 0 15px;
-          top:0;
+          margin: 0 15px;
+          display: inline-block;
         }
       }
     }
@@ -183,10 +188,6 @@
     width: 470px;
     height: 310px;
   }
-  .coursePop{
-    width: 570px;
-    height:614px;
-  }
   iframe{
     border: 0;
     width: 100%;
@@ -214,7 +215,7 @@
       line-height: 52px;
     }
   }
-  .bindCard, .coursePop{
+  .bindCard{
     width: 700px;
     height: 592px;
     border: 1px solid #BFBFBF;
@@ -223,60 +224,18 @@
       color: #333 !important;
       font-size: 18px !important;
     }
-    .bindCard-item{
-      margin-bottom: 26px;
-      .bindCard-itemLeft{
-        width: 100px;
-        display: inline-block;
-      }
-      .am-list-item.am-input-item, .parentDiv, .am-list-item{
-        width: 530px;
-        display: inline-block;
-        padding-left: 0;
-      }
-      .parentDiv{
-        position: relative;
-        & input{
-          opacity: 0;
-          position: absolute;
-          left: 0;
-          width: 46px;
-          height: 46px;
-          cursor: pointer;
-        }
-        .editBtn{
-          display: inline-block;
-        }
-        .photo-add{
-          width: 46px;
-          height: 46px;
-          display: inline-block;
-          position: relative;
-          top: 2px;
-          left: 5px;
-          background: #eee;
-          img{
-            width: 100%;
-            height:100%;
-            object-fit: cover;
-          }
-        }
-      }
-    }
+  }
+  .village-delete, .village-edit, .village-imgDelete{
+    width: 30px;
+    height:30px;
   }
   .village-delete{
     background: url("../img/village-delete.png") no-repeat;
-    width: 30px;
-    height:30px;
     background-size: cover;
     position: relative;
-    top: 10px;
-    display: inline-block;
   }
   .village-edit{
     background: url("../img/village-edit.png") no-repeat;
-    width: 30px;
-    height:30px;
     background-size: cover;
   }
   .editBtn{
@@ -289,7 +248,157 @@
     background: url("../img/village-add.png") no-repeat center;
     background-size: 21px 21px;
   }
-  .editBtn, .village-delete, .editBtn, .village-edit, .village-delete{
+  .editBtn, .village-delete, .editBtn, .village-edit, .village-delete, .village-imgDelete{
     cursor: pointer;
+  }
+  .bindCard-item{
+    margin-bottom: 26px;
+    .bindCard-itemLeft{
+      width: 100px;
+      display: inline-block;
+    }
+    .am-list-item.am-input-item, .parentDiv, .am-list-item{
+      width: 530px;
+      display: inline-block;
+      padding-left: 0;
+    }
+    .parentDiv{
+      position: relative;
+      & input{
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        width: 46px;
+        height: 46px;
+        cursor: pointer;
+      }
+      .editBtn{
+        display: inline-block;
+      }
+      .photo-add{
+        width: 46px;
+        height: 46px;
+        display: inline-block;
+        position: relative;
+        top: 2px;
+        left: 5px;
+        background: #eee;
+        img{
+          width: 100%;
+          height:100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+  /*弹窗大小*/
+  .coursePop, .courseUpdatePop, .attPop{
+    width: 570px;
+    height:614px;
+    .bindCard-item .am-list-item, .bindCard-itemRight{
+      width: 410px;
+      display: inline-block;
+      .am-list-line{
+        min-height: 52px;
+      }
+    }
+  }
+  .attPop{
+    height:310px;
+  }
+  /*党课预告*/
+  .dangke{
+    .rightContent .right-item{
+      height: 140px;
+      padding: 20px 20px 20px 0;
+      box-sizing: border-box;
+      img{
+        width: 130px;
+        height: 100px;
+        object-fit: cover;
+      }
+      .content{
+        margin-left: 20px;
+        padding-right: 20px;
+        width: calc(100% - 260px);
+        box-sizing: border-box;
+        & div{
+          line-height: 1;
+          display: block;
+        }
+        .title{
+          font-size: 20px;
+          padding-bottom: 20px;
+        }
+        .content-main, .time{
+          color: #666;
+        }
+        .content-main{
+          font-size: 18px;
+        }
+        .time{
+          font-size: 16px;
+          display: inline-flex;
+        }
+      }
+    }
+  }
+  /*操作*/
+    .operation{
+      display: inline-flex;
+      align-items: center;
+    }
+  /*乡村振兴*/
+  .file-input{
+    position: relative;
+    input{
+      position: absolute;
+      top: -28px;
+      left: -17px;
+      opacity: 0;
+      cursor: pointer;
+      height: 40px;
+      width: 67px;
+    }
+  }
+  .villageImg{
+    height: 100%;
+    .rightContent{
+      height: calc(~"100% - 80px");
+      overflow-y: auto;
+      overflow-x: hidden;
+      #image_box .item-imageBox{
+        width: 180px;
+        height: 180px;
+        display: inline-block;
+        margin: 45px 42px 0 0;
+        position: relative;
+        .item-imageBoxN, img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .village-imgDelete{
+          background: url("../img/village-imgDelete.png") no-repeat;
+          background-size: cover;
+          position: absolute;
+          top: -15px;
+          right: -15px;
+          z-index: 1;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  /*发布通知*/
+  .pushNotify{
+    .right-item .item-left{
+      width: calc(~"100% - 50px") !important;
+    }
+  }
+  .notifyPop{
+    height: 87%;
+    background: #f6f6f6;
+    width: 570px;
   }
 }

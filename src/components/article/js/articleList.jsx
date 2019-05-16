@@ -437,43 +437,77 @@ export default class articleList extends React.Component {
     };
 
     onRefresh = (str) => {
-        var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+        if (this.state.index == 2) {
+            var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
 
-        if (str == 'left') {
-            divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-            // divPull[0].style.height = document.body.clientHeight
-        } else if (str == 'right') {
-            divPull[1].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-            // divPull[1].style.height = document.body.clientHeight
-        } else if (str == 'rightright') {
-            //圈子的下拉刷新
-            divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
-            this.initDataSource = [];
+            if (str == 'left') {
+                divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+                // divPull[0].style.height = document.body.clientHeight
+            } else if (str == 'right') {
+                divPull[1].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+                // divPull[1].style.height = document.body.clientHeight
+            } else if (str == 'rightright') {
+                //圈子的下拉刷新
+                divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+                this.initDataSource = [];
+                this.setState({
+                    defaultPageNoForCircle: 1, refreshing: true
+                }, () => {
+                    this.getVillageVillageNewsByVillageId(true);
+                    // this.getArticleRecommenLittleVideoList(true);
+                    // Toast.info('重新绑定事件'+this.state.index);
+    
+                });
+                return;
+            }
             this.setState({
                 defaultPageNoForCircle: 1, refreshing: true
             }, () => {
+                // this.getLittleVideoUserById();
                 this.getVillageVillageNewsByVillageId(true);
-                // this.getArticleRecommenLittleVideoList(true);
+                // Toast.info('重新绑定事件'+this.state.index);
+    
+            });
+        } else {
+            var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
+
+            if (str == 'left') {
+                divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+                // divPull[0].style.height = document.body.clientHeight
+            } else if (str == 'right') {
+                divPull[1].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+                // divPull[1].style.height = document.body.clientHeight
+            } else if (str == 'rightright') {
+                //圈子的下拉刷新
+                divPull[2].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
+                this.initDataSource = [];
+                this.setState({
+                    defaultPageNoForCircle: 1, refreshing: true
+                }, () => {
+                    this.getVillageVillageNewsByVillageId(true);
+                    // this.getArticleRecommenLittleVideoList(true);
+                    // Toast.info('重新绑定事件'+this.state.index);
+
+                });
+                return;
+            }
+            this.setState({
+                defaultPageNo: 1, refreshing: true
+            }, () => {
+                // this.getLittleVideoUserById();
+                this.getArticleRecommenLittleVideoList(true);
                 // Toast.info('重新绑定事件'+this.state.index);
 
             });
-            return;
         }
-        this.setState({
-            defaultPageNo: 1, refreshing: true
-        }, () => {
-            // this.getLittleVideoUserById();
-            this.getArticleRecommenLittleVideoList(true);
-            // Toast.info('重新绑定事件'+this.state.index);
 
-        });
 
 
     };
 
     toDetail (id, articleTitle) {
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version + '&articleTitle=' + ((articleTitle))　+ '&villageId=' + this.state.villageId + '&groupId=' + this.state.groupId);
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=1&machineType=" + this.state.machineType + "&version=" + this.state.version + '&articleTitle=' + ((articleTitle)) + '&villageId=' + this.state.villageId + '&groupId=' + this.state.groupId);
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -487,7 +521,7 @@ export default class articleList extends React.Component {
     }
 
     //阅读文章时存储分数
-    addReadingScore() {
+    addReadingScore () {
         // alert(villageId+','+ villagerId+','+ groupId)
         var param = {
             "method": 'addReadingScore',
@@ -663,8 +697,8 @@ export default class articleList extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail (cid, rowData) {
-        console.log(rowData.type);
-        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid + "&type=" + rowData.type + "&hideType=youyang";
+        console.log(rowData);
+        var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid;
         var data = {
             method: 'openNewPage',
             url: url
@@ -771,7 +805,7 @@ export default class articleList extends React.Component {
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             if (this.state.index == 2) {
-                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.cfid, rowData)}>
+                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.id, rowData)}>
                     <div className="list_head">
                         {/* <div className="headPic">
                             <img src={rowData.userInfo.avatar} alt="" />
@@ -885,7 +919,10 @@ export default class articleList extends React.Component {
         };
         return (
             <div id="articleList" style={{ height: document.body.clientHeight }}>
-                <div style={{ display: this.state.isDisPlay == 1 ? "block" : "none" }} className="UserGuide">
+                <div
+                    style={{ display: "none" }}
+                    // style={{ display: this.state.isDisPlay == 1 ? "block" : "none" }} 
+                    className="UserGuide">
                     <img className="userguide1" src={require('../images/UserGuide1.png')} width='54'></img>
                     <img onClick={this.closeUserGuide} className="userguide2" width="110" src={require('../images/UserGuide2.png')}></img>
                     <img className="userguide3" src={require('../images/UserGuide3.png')} width="270"></img>

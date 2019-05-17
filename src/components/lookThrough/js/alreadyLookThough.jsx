@@ -467,7 +467,7 @@ export default class alreadyLookThough extends React.Component {
                         height: calm.state.clientHeight
                     }}>
                         {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                        <div className="content">
+                        <div className="content waitLookThrough-cont">
                             {
                                 // 自媒体文章
                                 calm.state.type == 0 ?

@@ -554,7 +554,7 @@ export default class lookThrough extends React.Component {
                 <div className="updateModel" style={{ display: 'none', width: "100%", height: "500px", position: "absolute", left: "0", padding: "10px 0 0 0", bottom: "0" }}>
                     <div id="waitLookThrough">
                         {/* <div className="goBack line_public"><Icon type="left" onClick={calm.goBack}/></div> */}
-                        <div className="content" ref="contentDOM">
+                        <div className="content waitLookThrough-cont" ref="contentDOM">
                             {
                                 calm.state.type == 0 ?
                                     <div className="audit-content">

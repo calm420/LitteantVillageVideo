@@ -960,8 +960,26 @@ video::-webkit-media-controls-fullscreen-button {
   background-color: white;
   transform: translate(-50%,-50%);
   border-radius: 4px;
-  padding: 0 30px;
+  padding: 0 ;
   box-sizing: border-box;
+  .editHeader{
+    text-align: center;
+    padding: 29px 0 60px 0;
+    font-size: 20px;
+    line-height: 1;
+  }
+  .editCont{
+    padding: 0 30px;
+    height: calc(~"100% - 215px");
+    overflow-y: auto;
+    overflow-x: hidden;
+    input{
+      width: 100%;
+    }
+  }
+  .editCont-Notitle{
+    height: calc(~"100% - 106px");
+  }
   .am-list-item .am-input-label{
     font-size: 18px !important;
     color: #333 !important;
@@ -1008,7 +1026,7 @@ video::-webkit-media-controls-fullscreen-button {
   .submitBtn{
     text-align: center;
     bottom: 30px;
-    width: calc(~"100% - 60px");
+    /*width: calc(~"100% - 60px");*/
     padding: 0;
     span, .my_flex span, .copyBtn{
       cursor: pointer;

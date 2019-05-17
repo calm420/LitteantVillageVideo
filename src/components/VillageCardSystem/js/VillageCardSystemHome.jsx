@@ -1961,50 +1961,53 @@ export default class VillageCardSystemHome extends React.Component {
                     </div>
                     <div className="rightBox rightBoxThird" style={{ display: "none" }}>
                         <div className="bindCard" >
-                            <div className="bindCard-item">
-                                <div className="bindCard-itemLeft">县级名称</div>
-                                <InputItem
-                                    placeholder="请输入名称"
-                                    onChange={this.cardNameChange}
-                                    value={this.state.cardNameValue}
-                                />
-                            </div>
-                            <div className="bindCard-item">
-                                <div className="bindCard-itemLeft">上传照片</div>
-                                <div className="parentDiv">
-                                    <button className="editBtn"></button>
-                                    <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                    <span style={{ display: this.state.villageCradImg == "" ? "none" : "inline-block" }} className="photo-add">
+                            <div className="editCont editCont-Notitle">
+                                <div className="bindCard-item">
+                                    <div className="bindCard-itemLeft">县级名称</div>
+                                    <InputItem
+                                        placeholder="请输入名称"
+                                        onChange={this.cardNameChange}
+                                        value={this.state.cardNameValue}
+                                    />
+                                </div>
+                                <div className="bindCard-item">
+                                    <div className="bindCard-itemLeft">上传照片</div>
+                                    <div className="parentDiv">
+                                        <button className="editBtn"></button>
+                                        <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                        <span style={{ display: this.state.villageCradImg == "" ? "none" : "inline-block" }} className="photo-add">
                                         <img src={this.state.villageCradImg} />
                                     </span>
+                                    </div>
+                                </div>
+                                <div className="bindCard-item">
+                                    <div className="bindCard-itemLeft">乡村标题</div>
+                                    <InputItem
+                                        placeholder="村标题"
+                                        onChange={this.cardTitleChange}
+                                        value={this.state.cardTitleValue}
+                                    />
+                                </div>
+                                <div className="bindCard-item">
+                                    <div className="bindCard-itemLeft">简介内容</div>
+                                    <TextareaItem
+                                        rows={2}
+                                        placeholder="输入内容"
+                                        labelNumber={2}
+                                        value={this.state.cardContentValue}
+                                        onChange={calm.textareaOnChange}
+                                    />
+                                </div>
+                                <div className="bindCard-item">
+                                    <div className="bindCard-itemLeft">村牌序号</div>
+                                    <InputItem
+                                        placeholder="村牌序号"
+                                        onChange={this.cardOrderChange}
+                                        value={this.state.cardOrderValue}
+                                    />
                                 </div>
                             </div>
-                            <div className="bindCard-item">
-                                <div className="bindCard-itemLeft">乡村标题</div>
-                                <InputItem
-                                    placeholder="村标题"
-                                    onChange={this.cardTitleChange}
-                                    value={this.state.cardTitleValue}
-                                />
-                            </div>
-                            <div className="bindCard-item">
-                                <div className="bindCard-itemLeft">简介内容</div>
-                                <TextareaItem
-                                    rows={2}
-                                    placeholder="输入内容"
-                                    labelNumber={2}
-                                    value={this.state.cardContentValue}
-                                    onChange={calm.textareaOnChange}
-                                />
-                            </div>
-                            <div className="bindCard-item">
-                                <div className="bindCard-itemLeft">村牌序号</div>
-                                <InputItem
-                                    placeholder="村牌序号"
-                                    onChange={this.cardOrderChange}
-                                    value={this.state.cardOrderValue}
-                                />
-                            </div>
+
                             <div className="submitBtn">
                                 <span onClick={this.updateCardInfo}>绑定</span>
                             </div>
@@ -2164,13 +2167,13 @@ export default class VillageCardSystemHome extends React.Component {
                                     {
                                         this.state.honorVillagerList.map((v, i) => {
                                             return (
-                                                <span className="item-imageBox">
+                                                <div className="item-imageBox">
                                                         <div className="item-imageBoxN">
                                                             <img src={v.avatar} />
                                                             <span className="ranking">{i + 1}</span>
                                                         </div>
-                                                        <span>{v.userName}</span>
-                                                    </span>
+                                                        <div className="hornor-name">{v.userName}</div>
+                                                    </div>
                                             );
                                         })
                                     }
@@ -2215,21 +2218,22 @@ export default class VillageCardSystemHome extends React.Component {
                 <div className="villageMask" onClick={this.closePop} style={{ display: "none" }} ></div>
                 {/* 编辑分组 */}
                 <div className='popBox villageMaskInner' style={{ display: "none" }} >
-                    <div>
+                    <div className="popBox-wrap">
                         <div className="editHeader">
                             编辑分组
                         </div>
                         <div className="editCont">
-                        </div>
-                        <div>
-                            {this.state.inputDivs}
-                            <span className="editBtn" onClick={this.addInput}>
+                            <div>
+                                {this.state.inputDivs}
+                                <span className="editBtn" onClick={this.addInput}>
                             </span>
-                            <div className='submitBtn btnGroup' style={{ display: "none" }}>
-                                <div className="my_flex">
-                                    <span onClick={this.submitInput}>确定</span>
-                                    <span onClick={this.cancelGroupInput}>取消</span>
-                                </div>
+
+                            </div>
+                        </div>
+                        <div className='submitBtn btnGroup' style={{ display: "none" }}>
+                            <div className="my_flex">
+                                <span onClick={this.submitInput}>确定</span>
+                                <span onClick={this.cancelGroupInput}>取消</span>
                             </div>
                         </div>
                     </div>
@@ -2277,68 +2281,72 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         添加课程
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">课程名称</div>
-                        <InputItem
-                            placeholder="请输入组课程名称"
-                            onChange={this.inputOnCourseNameChange}
-                            value={this.state.courseNameChangeValue}
-                        />
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">授课教师</div>
-                        <InputItem
-                            placeholder="请输入授课教师"
-                            onChange={this.inputOnTeacherChange}
-                            value={this.state.teacherChangeValue}
-                        />
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">上课地点</div>
-                        <InputItem
-                            placeholder="请输入上课地点"
-                            onChange={this.inputOnCoursePlaceChange}
-                            value={this.state.coursePlaceChangeValue}
-                        />
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">上课时间</div>
-                        <div className="bindCard-itemRight">
-                            <div className="Date-Picker">
-                                <DatePicker
-                                    value={this.state.date}
-                                    onChange={date => this.setState({ date })}
-                                >
-                                    <List.Item arrow="horizontal"></List.Item>
-                                </DatePicker>
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">课程名称</div>
+                            <InputItem
+                                placeholder="请输入组课程名称"
+                                onChange={this.inputOnCourseNameChange}
+                                value={this.state.courseNameChangeValue}
+                            />
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">授课教师</div>
+                            <InputItem
+                                placeholder="请输入授课教师"
+                                onChange={this.inputOnTeacherChange}
+                                value={this.state.teacherChangeValue}
+                            />
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">上课地点</div>
+                            <InputItem
+                                placeholder="请输入上课地点"
+                                onChange={this.inputOnCoursePlaceChange}
+                                value={this.state.coursePlaceChangeValue}
+                            />
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">上课时间</div>
+                            <div className="bindCard-itemRight">
+                                <div className="Date-Picker">
+                                    <DatePicker
+                                        value={this.state.date}
+                                        onChange={date => this.setState({ date })}
+                                    >
+                                        <List.Item arrow="horizontal"></List.Item>
+                                    </DatePicker>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">结束时间</div>
-                        <div className="bindCard-itemRight">
-                            <div className="Date-Picker">
-                                <DatePicker
-                                    value={this.state.dateEnd}
-                                    onChange={date => this.setState({ dateEnd:date })}
-                                >
-                                    <List.Item arrow="horizontal"></List.Item>
-                                </DatePicker>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">结束时间</div>
+                            <div className="bindCard-itemRight">
+                                <div className="Date-Picker">
+                                    <DatePicker
+                                        value={this.state.dateEnd}
+                                        onChange={date => this.setState({ dateEnd:date })}
+                                    >
+                                        <List.Item arrow="horizontal"></List.Item>
+                                    </DatePicker>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">课程封面</div>
-                        <div className="bindCard-itemRight">
-                            <div className="parentDiv">
-                                <button className="editBtn"></button>
-                                <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span style={{ display: this.state.courseImgUp == "" ? "none" : "inline-block" }} className="photo-add">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">课程封面</div>
+                            <div className="bindCard-itemRight">
+                                <div className="parentDiv">
+                                    <button className="editBtn"></button>
+                                    <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                    <span style={{ display: this.state.courseImgUp == "" ? "none" : "inline-block" }} className="photo-add">
                                     <img src={this.state.courseImgUp} />
                                 </span>
+                                </div>
                             </div>
                         </div>
+
                     </div>
+
                     <div className='submitBtn'>
                         <div className='my_flex'>
                             <span onClick={this.sureCourseData}>确定</span>
@@ -2352,69 +2360,71 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         编辑课程
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">课程名称</div>
-                        <InputItem
-                            placeholder="请输入组课程名称"
-                            onChange={this.updateCourseNameChange}
-                            value={this.state.updateCourseNameValue}
-                        />
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">授课教师</div>
-                        <InputItem
-                            placeholder="请输入授课教师"
-                            onChange={this.updateTeacherChange}
-                            value={this.state.updateTeacherValue}
-                        />
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">上课地点</div>
-                        <InputItem
-                            placeholder="请输入上课地点"
-                            onChange={this.updateCoursePlaceChange}
-                            value={this.state.updateCoursePlaceValue}
-                        />
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">开课时间</div>
-                        <div className="bindCard-itemRight">
-                            <div className="Date-Picker">
-                                <DatePicker
-                                    extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
-                                    value={this.state.dateUpdate}
-                                    onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
-                                >
-                                    <List.Item arrow="horizontal"></List.Item>
-                                </DatePicker>
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">课程名称</div>
+                            <InputItem
+                                placeholder="请输入组课程名称"
+                                onChange={this.updateCourseNameChange}
+                                value={this.state.updateCourseNameValue}
+                            />
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">授课教师</div>
+                            <InputItem
+                                placeholder="请输入授课教师"
+                                onChange={this.updateTeacherChange}
+                                value={this.state.updateTeacherValue}
+                            />
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">上课地点</div>
+                            <InputItem
+                                placeholder="请输入上课地点"
+                                onChange={this.updateCoursePlaceChange}
+                                value={this.state.updateCoursePlaceValue}
+                            />
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">开课时间</div>
+                            <div className="bindCard-itemRight">
+                                <div className="Date-Picker">
+                                    <DatePicker
+                                        extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
+                                        value={this.state.dateUpdate}
+                                        onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
+                                    >
+                                        <List.Item arrow="horizontal"></List.Item>
+                                    </DatePicker>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">结束时间</div>
-                        <div className="bindCard-itemRight">
-                            <div className="Date-Picker">
-                                <DatePicker
-                                    extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValueEnd)}
-                                    value={this.state.dateUpdateEnd}
-                                    onChange={date => this.setState({ dateUpdateEnd: date, dateUpdateValueEnd: formatTime(date, "yyyy-MM-dd HH:mm") })}
-                                >
-                                    <List.Item arrow="horizontal"></List.Item>
-                                </DatePicker>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">结束时间</div>
+                            <div className="bindCard-itemRight">
+                                <div className="Date-Picker">
+                                    <DatePicker
+                                        extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValueEnd)}
+                                        value={this.state.dateUpdateEnd}
+                                        onChange={date => this.setState({ dateUpdateEnd: date, dateUpdateValueEnd: formatTime(date, "yyyy-MM-dd HH:mm") })}
+                                    >
+                                        <List.Item arrow="horizontal"></List.Item>
+                                    </DatePicker>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">课程封面</div>
-                        <div className="bindCard-itemRight">
-                            <div className="parentDiv">
-                                <button className="editBtn"></button>
-                                <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span
-                                    // style={{ display: this.state.courseImgUpdate == "" ? "none" : "inline-block" }} 
-                                    className="photo-add">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">课程封面</div>
+                            <div className="bindCard-itemRight">
+                                <div className="parentDiv">
+                                    <button className="editBtn"></button>
+                                    <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                    <span
+                                        // style={{ display: this.state.courseImgUpdate == "" ? "none" : "inline-block" }}
+                                        className="photo-add">
                                     <img src={this.state.courseImgUpdate} />
                                 </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2430,14 +2440,15 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         打卡
                     </div>
-                    <div>
-                        <InputItem
-                            placeholder="请输入签到人数"
-                            onChange={this.inputSumPeopleNameChange}
-                            value={this.state.sumPeopleNameValue}
-                        >
-                            <div>实到人数</div>
-                        </InputItem>
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">实到人数</div>
+                            <InputItem
+                                placeholder="请输入签到人数"
+                                onChange={this.inputSumPeopleNameChange}
+                                value={this.state.sumPeopleNameValue}
+                            />
+                        </div>
                     </div>
                     <div className='submitBtn'>
                         <div className='my_flex'>
@@ -2462,13 +2473,16 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         编辑组名
                     </div>
-                    <InputItem
-                        placeholder="请输入组名"
-                        onChange={this.inputGroupNameChange}
-                        value={this.state.groupPeopleNameValue}
-                    >
-                        <div>组名</div>
-                    </InputItem>
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">组名</div>
+                            <InputItem
+                                placeholder="请输入组名"
+                                onChange={this.inputGroupNameChange}
+                                value={this.state.groupPeopleNameValue}
+                            />
+                        </div>
+                    </div>
                     <div className='submitBtn'>
                         <div className='my_flex'>
                             <span onClick={this.sureGroupName}>确定</span>
@@ -2482,37 +2496,42 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         文章详情
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">文章标题</div>
-                        <div className="bindCard-itemRight">
-                            <div className="villageHeader">
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">文章标题</div>
+                            <div className="bindCard-itemRight">
+                                <div className="villageHeader">
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">文章内容</div>
+                            <div className="bindCard-itemRight">
+                                <div className="villageContent">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">文章内容</div>
-                        <div className="bindCard-itemRight">
-                            <div className="villageContent">
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 {/* 通知详情 */}
                 <div className="villageNotifyPop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">
                         通知详情
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">通知标题</div>
-                        <div className="bindCard-itemRight">
-                            <div className="notifyHeader">
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">通知标题</div>
+                            <div className="bindCard-itemRight">
+                                <div className="notifyHeader">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">通知内容</div>
-                        <div className="bindCard-itemRight">
-                            <div className="notifyContent">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">通知内容</div>
+                            <div className="bindCard-itemRight">
+                                <div className="notifyContent">
+                                </div>
                             </div>
                         </div>
                     </div>

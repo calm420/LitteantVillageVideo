@@ -89,7 +89,8 @@ export default class VillageCardSystemHome extends React.Component {
             cardContentValue: "",
             uploadFileList: [],
             villageNewsHistory: [],
-            courseImgUp: ""
+            courseImgUp: "",
+            learningList: []
         }
     }
 
@@ -637,7 +638,7 @@ export default class VillageCardSystemHome extends React.Component {
                                                 calm.setState({
                                                     villageHappyVideo: classDemeanors
                                                 }, () => {
-                                                    console.log(calm.state.villageHappyVideo,"calm.state.villageHappyVideo")
+                                                    console.log(calm.state.villageHappyVideo, "calm.state.villageHappyVideo")
                                                     calm.addUploadFile(1, calm.state.villageHappyVideo)
                                                     setTimeout(() => {
                                                         calm.selectUploadFile();
@@ -650,13 +651,13 @@ export default class VillageCardSystemHome extends React.Component {
                                     });
                                 });
                                 promiseArray.push(cut);
-                              
+
                             } else {
                                 console.log("jpg")
                                 calm.setState({
                                     villageHappyImg: classDemeanors[0]
                                 }, () => {
-                                    calm.addUploadFile(0,classDemeanors[0])
+                                    calm.addUploadFile(0, classDemeanors[0])
                                     setTimeout(() => {
                                         calm.selectUploadFile();
                                     }, 300);
@@ -666,7 +667,7 @@ export default class VillageCardSystemHome extends React.Component {
                         // console.log(promiseArray,'promiseArray')
                         Promise.all(promiseArray).then(function (e) {
                             console.log("890-")
-                          
+
                         })
                     }
                 });
@@ -807,7 +808,7 @@ export default class VillageCardSystemHome extends React.Component {
 
     //添加乡村振兴图片
     addUploadFile = (type, url) => {
-        console.log(url,"uuuu")
+        console.log(url, "uuuu")
         var param = {
             "method": 'addUploadFile',
             "url": url,
@@ -1903,7 +1904,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className='btn'>
                                 {/* <span onClick={this.editorVillageName}>编辑名称</span> */}
                                 <span onClick={this.editorGroupName}>编辑分组</span>
-                                <span onClick={this.editorCodeName}>邀请码</span>
+                                <span style={{display:"none"}} onClick={this.editorCodeName}>邀请码</span>
                             </div>
                         </div>
                         <div className="rightContent">
@@ -1976,8 +1977,8 @@ export default class VillageCardSystemHome extends React.Component {
                                         <button className="editBtn"></button>
                                         <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
                                         <span style={{ display: this.state.villageCradImg == "" ? "none" : "inline-block" }} className="photo-add">
-                                        <img src={this.state.villageCradImg} />
-                                    </span>
+                                            <img src={this.state.villageCradImg} />
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="bindCard-item">
@@ -2034,7 +2035,7 @@ export default class VillageCardSystemHome extends React.Component {
                                             if (arr.length == 2) {
                                                 type = arr[0].split(".");
                                                 type = type[type.length - 1]
-                                            }else {
+                                            } else {
                                                 type = arr[0][arr.length - 1]
                                             }
                                             console.log(type, "V")
@@ -2168,12 +2169,12 @@ export default class VillageCardSystemHome extends React.Component {
                                         this.state.honorVillagerList.map((v, i) => {
                                             return (
                                                 <div className="item-imageBox">
-                                                        <div className="item-imageBoxN">
-                                                            <img src={v.avatar} />
-                                                            <span className="ranking">{i + 1}</span>
-                                                        </div>
-                                                        <div className="hornor-name">{v.userName}</div>
+                                                    <div className="item-imageBoxN">
+                                                        <img src={v.avatar} />
+                                                        <span className="ranking">{i + 1}</span>
                                                     </div>
+                                                    <div className="hornor-name">{v.userName}</div>
+                                                </div>
                                             );
                                         })
                                     }
@@ -2188,27 +2189,28 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                             <div className="rightContent">
                                 <div className="right-item">
-
+                                    {
+                                        this.state.learningList.map((v, i) => {
+                                            return (
+                                                <table>
+                                                    <tr>
+                                                        <td>{"第" + (i + 1) + "名"}</td>
+                                                        <td>{v.gradeName}</td>
+                                                        <td>{v.sum}</td>
+                                                    </tr>
+                                                </table>
+                                            );
+                                        })
+                                    }
                                 </div>
                                 <div className="emptyDiv">
                                     <div style={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
                                         <div className="emptyIcon"></div>
                                         暂无学习榜
                                     </div>
-                                    <div display={{ display: this.state.showLearnEmpty ? "none" : "block" }}>
-                                        {
-                                            this.state.honorVillagerList.map((v, i) => {
-                                                return (
-                                                    <span>
-                                                        <img src={v.avatar} />
-                                                        <span>{i + 1}</span>
-                                                        <span>{v.userName}</span>
-                                                    </span>
-                                                );
-                                            })
-                                        }
-                                    </div>
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -2226,7 +2228,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div>
                                 {this.state.inputDivs}
                                 <span className="editBtn" onClick={this.addInput}>
-                            </span>
+                                </span>
 
                             </div>
                         </div>
@@ -2325,7 +2327,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 <div className="Date-Picker">
                                     <DatePicker
                                         value={this.state.dateEnd}
-                                        onChange={date => this.setState({ dateEnd:date })}
+                                        onChange={date => this.setState({ dateEnd: date })}
                                     >
                                         <List.Item arrow="horizontal"></List.Item>
                                     </DatePicker>
@@ -2339,8 +2341,8 @@ export default class VillageCardSystemHome extends React.Component {
                                     <button className="editBtn"></button>
                                     <input className="calm40 upload_image_course" name="upload_image_" id="upload_image_course" onClick={this.courseImgUp} type="file" accept="image/jpg/png/jpeg" class="hidd" />
                                     <span style={{ display: this.state.courseImgUp == "" ? "none" : "inline-block" }} className="photo-add">
-                                    <img src={this.state.courseImgUp} />
-                                </span>
+                                        <img src={this.state.courseImgUp} />
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -2422,8 +2424,8 @@ export default class VillageCardSystemHome extends React.Component {
                                     <span
                                         // style={{ display: this.state.courseImgUpdate == "" ? "none" : "inline-block" }}
                                         className="photo-add">
-                                    <img src={this.state.courseImgUpdate} />
-                                </span>
+                                        <img src={this.state.courseImgUpdate} />
+                                    </span>
                                 </div>
                             </div>
                         </div>

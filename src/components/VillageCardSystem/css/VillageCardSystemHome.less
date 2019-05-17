@@ -70,6 +70,10 @@
           background-size: cover;
         }
       }
+      &::-webkit-scrollbar-thumb{
+        background: rgba(0,0,0,0.3);
+        //background: rgba(255,255,255,0.3);
+      }
     }
     .quiteBtn{
       position: absolute;
@@ -163,6 +167,15 @@
        }
     }
   }
+  .groupNamePop{
+    height: 300px;
+    .bindCard-itemLeft{
+      width: 60px !important;
+    }
+    .am-list-item{
+      width: calc(~"100% - 60px") !important;
+    }
+  }
   .codePop{
     width: 470px;
     height: 310px;
@@ -210,7 +223,12 @@
       font-size: 18px !important;
     }
   }
-  .village-delete, .village-edit, .village-imgDelete, .ranking{
+  .village-delete, .village-edit, .village-imgDelete{
+    width: 20px;
+    height:20px;
+    vertical-align: middle;
+  }
+  .ranking{
     width: 30px;
     height:30px;
     vertical-align: middle;
@@ -233,6 +251,7 @@
     text-align: center;
     background: url("../img/village-add.png") no-repeat center;
     background-size: 21px 21px;
+    box-sizing: border-box;
   }
   .editBtn, .village-delete, .editBtn, .village-edit, .village-delete, .village-imgDelete{
     cursor: pointer;
@@ -246,6 +265,7 @@
       display: inline-block;
       vertical-align: top;
       line-height: 46px;
+      font-size: 16px;
     }
     .am-list-item.am-input-item, .parentDiv, .am-list-item{
       width:calc(~"100% - 100px");
@@ -291,14 +311,14 @@
       display: inline-block;
       .Date-Picker{
         .am-list-line{
-          min-height: 50px;
+          min-height: 46px;
         }
         .am-list-item .am-list-line .am-list-extra{
           flex-basis:91%
         }
-      }
-      .notifyHeader, .notifyContent, .notifyContent .previewEditArea{
-        line-height: 46px !important;
+        .am-list-item{
+          width: 100%;
+        }
       }
     }
   }
@@ -420,11 +440,12 @@
   .pushNotify, .rightBoxVillageHistory{
     .right-item .item-left{
       width: calc(~"100% - 50px") !important;
-      .Information-show{
+      &.item-left:hover{
         cursor: pointer;
-        &:hover{
-          color: #4380EB;
-        }
+      }
+     &.item-left:hover .Information-show{
+        color: #4380EB;
+
       }
     }
   }
@@ -451,5 +472,20 @@
       width: 9%;
       text-align: right;
     }
+  }
+  /*详情*/
+  .villageContent, .previewEditArea{
+    font-size: 16px;
+    color: #333;
+  }
+  .notifyHeader, .villageHeader{
+    line-height: 1.5;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 }

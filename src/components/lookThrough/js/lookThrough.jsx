@@ -526,7 +526,7 @@ export default class lookThrough extends React.Component {
                     <div className='emptyIcon'></div>
                 </div>
                 <div className="To-auditLeft" style={{
-                    height: document.documentElement.clientHeight,
+                    height: document.documentElement.clientHeight - 80,
                 }}>
                     {/* 未审核 */}
                     <ListView
@@ -547,7 +547,7 @@ export default class lookThrough extends React.Component {
                         scrollEventThrottle={20}     //控制在滚动过程中，scroll事件被调用的频率
                         onScroll={this.scroll}
                         style={{
-                            height: document.body.clientHeight,
+                            height: document.body.clientHeight - 80,
                         }}
                     />
                 </div>

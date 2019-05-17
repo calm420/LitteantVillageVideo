@@ -89,12 +89,12 @@ export default class myCollection extends React.Component {
             "targetType": -1,
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 var videoList = [], videoObj = [];
                 if (result.success) {
+                    console.log(result.response.length,"result.response.length")
                     calm.state.rsCount = result.pager.rsCount;
-
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
                         calm.initDataSource.splice(0);
                         calm.state.dataSource = [];

@@ -7,7 +7,7 @@ const dataSource = new ListView.DataSource({
 });
 
 const tabs = [
-    { title: '事迹', value: "0" },
+    { title: '村貌', value: "0" },
     { title: '视频', value: "1" },
     { title: '用户', value: "2" },
     // { title: '圈子', value: "3" },

@@ -274,6 +274,11 @@ const learningList = (location, cb) => {
         cb(null, require('./components/VillageCardSystem/js/learningList/LearningList').default)
     })
 };
+const managePage = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('./components/managePage/managePage').default)
+    })
+};
 
 import './index.less';
 
@@ -359,6 +364,11 @@ class Index extends React.Component {
                             to="/villageReg?userId=31"
                             style={{ fontSize: '24px' }}>村民注册跳转</Link>
                     </li>
+                    <li>
+                        <Link
+                            to="/managePage?userId=31"
+                            style={{ fontSize: '24px' }}>managePage</Link>
+                    </li>
                 </ul>
             </div>
         );
@@ -418,6 +428,7 @@ ReactDOM.render(
             <Route path="welcome" getComponent={welcome} />
             <Route path="HonorVillager" getComponent={honorVillager} />
             <Route path="LearningList" getComponent={learningList} />
+            <Route path="managePage" getComponent={managePage} />
         </Route>
     </Router>
     ,

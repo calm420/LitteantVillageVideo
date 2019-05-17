@@ -8,8 +8,8 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const tabs = [
-    { title: '乡村热点', value: '1' },
     { title: '新村新貌', value: '2' },
+    { title: '乡村热点', value: '1' },
 ];
 var AscrollView;
 var BscrollView;
@@ -27,7 +27,7 @@ export default class articleList extends React.Component {
             clientHeight: document.body.clientHeight,
             isLoading: true,
             hasMore: true,
-            index: 1,
+            index: 2,
             userRoot: true,
             recommended_video: {
                 response: []
@@ -85,23 +85,7 @@ export default class articleList extends React.Component {
             version: version,
             // isDisPlay: isDisPlay
         }, () => {
-
-            var p1 = new Promise((reslove, reject) => {
-                this.getLittleVideoUserById(() => {
-                    reslove('getLittleVideoUserById');
-                });
-            })
-            var p2 = new Promise((reslove, reject) => {
-                this.getArticleRecommenLittleVideoList(false, () => {
-                    reslove('getArticleRecommenLittleVideoList');
-                });
-            })
-            Promise.all([p1, p2]).then((result) => {
-                //
-                this.setState({
-                    initLoading: false,
-                })
-            })
+            this.getVillageVillageNewsByVillageId()
         })
         // this.refurbishNoom()
 
@@ -916,8 +900,6 @@ export default class articleList extends React.Component {
                     }
                 }
             }
-
-
             return (
                 <div className={this.state.index == 2 ? 'list_item line_public' : ''}
                     onClick={this.state.index == 2 ? '' : rowData.response instanceof Array ? '' : this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}>

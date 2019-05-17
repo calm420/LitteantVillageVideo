@@ -305,9 +305,6 @@
           width: 100%;
         }
       }
-      .notifyHeader, .notifyContent, .notifyContent .previewEditArea, .villageHeader, .villageContent .previewEditArea{
-        line-height: 46px !important;
-      }
     }
   }
   .attPop{
@@ -428,11 +425,12 @@
   .pushNotify, .rightBoxVillageHistory{
     .right-item .item-left{
       width: calc(~"100% - 50px") !important;
-      .Information-show{
+      &.item-left:hover{
         cursor: pointer;
-        &:hover{
-          color: #4380EB;
-        }
+      }
+     &.item-left:hover .Information-show{
+        color: #4380EB;
+
       }
     }
   }
@@ -459,5 +457,13 @@
       width: 9%;
       text-align: right;
     }
+  }
+  /*详情*/
+  .villageContent, .previewEditArea{
+    font-size: 16px;
+    color: #333;
+  }
+  .notifyHeader, .notifyContent{
+    line-height: 1.5;
   }
 }

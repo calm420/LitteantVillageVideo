@@ -166,15 +166,20 @@
       .audit-instructions{
         padding: 0;
         margin-top: 10px;
+        min-height: 34px;
         .audit-instructionsLeft{
           width: 60px;
           display: inline-block;
+          line-height: 30px;
         }
         .audit-instructionsRight{
           width: calc(~"100% - 62px");
           display: inline-block;
           border: 1px solid #BFBFBF;
           border-radius: 4px;
+        }
+        .pass{
+          margin-right: 8px;
         }
       }
     }
@@ -192,6 +197,7 @@
         flex: none;
         font-size: 20px;
         margin: 0 23px;
+        box-sizing: border-box;
       }
     }
   }

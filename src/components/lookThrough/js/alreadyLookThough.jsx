@@ -38,7 +38,7 @@ export default class alreadyLookThough extends React.Component {
 
     componentDidMount () {
         setTimeout(() => {
-            $(".item").eq(0).trigger("click");
+            $(".item-left").eq(0).trigger("click");
         }, 100);
         document.title = "审核列表"
         var locationHref = window.location.href;
@@ -322,7 +322,7 @@ export default class alreadyLookThough extends React.Component {
                     calm.setState({
                         initDataSource: calm.initDataSource
                     },()=>{
-                        $(".item").eq(0).trigger("click");
+                        $(".item-left").eq(0).trigger("click");
                     })
                 }
 

@@ -2038,7 +2038,7 @@ export default class VillageCardSystemHome extends React.Component {
                                         上传
                                         <input type="file" id="upload" style={{ display: "none" }} />
                                         <div className="parentDiv file-input">
-                                            <input className="calm40 upload_image_" name="upload_image_" id="upload_image_" onClick={this.getImage} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                            <input className="calm40 upload_image_ upload-topBtn" name="upload_image_" id="upload_image_" onClick={this.getImage} type="file" accept="image/jpg/png/jpeg" class="hidd" />
                                         </div>
                                     </span>
                                 </div>
@@ -2101,7 +2101,7 @@ export default class VillageCardSystemHome extends React.Component {
                                                 <div className="content-main text_hidden">{v.teacherName}</div>
                                                 <div className="time text_hidden">
                                                     <span>{v.classAddress}</span>
-                                                    <span>{WebServiceUtil.formatAllTime(v.classTime)}</span>
+                                                    <span className="timeRight">{WebServiceUtil.formatAllTime(v.classTime)}</span>
                                                 </div>
                                             </div>
                                             <div className="operation">
@@ -2205,10 +2205,11 @@ export default class VillageCardSystemHome extends React.Component {
                                 </span>
                             </div>
                             <div className="rightContent">
-                                <div className="right-item">
+
                                     {
                                         this.state.learningList.map((v, i) => {
                                             return (
+                                                <div className="right-item">
                                                 <table className="learnListTable">
                                                     <tr>
                                                         <td className="learnListName text_hidden">{"第" + (i + 1) + "名"}</td>
@@ -2216,10 +2217,11 @@ export default class VillageCardSystemHome extends React.Component {
                                                         <td className="learnListNumber text_hidden">{v.sum}</td>
                                                     </tr>
                                                 </table>
+                                                </div>
                                             );
                                         })
                                     }
-                                </div>
+
                                 <div className="emptyDiv">
                                     <div style={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
                                         <div className="emptyIcon"></div>

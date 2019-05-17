@@ -2192,11 +2192,11 @@ export default class VillageCardSystemHome extends React.Component {
                                     {
                                         this.state.learningList.map((v, i) => {
                                             return (
-                                                <table>
+                                                <table className="learnListTable">
                                                     <tr>
-                                                        <td>{"第" + (i + 1) + "名"}</td>
-                                                        <td>{v.gradeName}</td>
-                                                        <td>{v.sum}</td>
+                                                        <td className="learnListName text_hidden">{"第" + (i + 1) + "名"}</td>
+                                                        <td className="learnListGroup text_hidden">{v.gradeName}</td>
+                                                        <td className="learnListNumber text_hidden">{v.sum}</td>
                                                     </tr>
                                                 </table>
                                             );

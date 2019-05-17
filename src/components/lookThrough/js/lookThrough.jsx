@@ -39,7 +39,7 @@ export default class lookThrough extends React.Component {
     componentDidMount () {
         setTimeout(() => {
             $(".item-left").eq(0).trigger("click");
-        }, 100);
+        }, 300);
         Bridge.setShareAble("false");
         document.title = "审核列表"
         var locationHref = window.location.href;
@@ -80,6 +80,8 @@ export default class lookThrough extends React.Component {
                     }
                     calm.setState({
                         waitLookThroughData: result.response
+                    }, () => {
+                        $(".item-left").eq(0).trigger("click");
                     })
                 }
             },
@@ -433,8 +435,10 @@ export default class lookThrough extends React.Component {
                     }
                     calm.setState({
                         initDataSource: calm.initDataSource.splice(calm.state.index, 1)
-                    },()=>{
-                        $(".item-left").eq(0).trigger("click");
+                    }, () => {
+                        setTimeout(() => {
+                            $(".item-left").eq(0).trigger("click");
+                        }, 300);
                     })
                 }
             },
@@ -479,20 +483,20 @@ export default class lookThrough extends React.Component {
                     {
                         rowData.littleVideoInfo ?
                             <div className="right-item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.littleVideoInfoID, rowData.type, rowID)}>
-                                    <div className='item-left text_hidden'>{rowData.littleVideoInfo.videoContent}</div>
-                                    <div className='item-right'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
+                                <div className='item-left text_hidden'>{rowData.littleVideoInfo.videoContent}</div>
+                                <div className='item-right'>{WebServiceUtil.formatYMD(rowData.littleVideoInfo.createTime)}</div>
                             </div>
                             :
                             rowData.articleInfo ?
                                 <div className="right-item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.articleInfoId, rowData.type, rowID)}>
-                                        <div className='item-left text_hidden'>{rowData.articleInfo.articleTitle}</div>
-                                        <div className='item-right'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
+                                    <div className='item-left text_hidden'>{rowData.articleInfo.articleTitle}</div>
+                                    <div className='item-right'>{WebServiceUtil.formatYMD(rowData.articleInfo.createTime)}</div>
                                 </div>
                                 :
                                 rowData.discussInfo ?
                                     <div className="right-item my_flex" onClick={_this.toWaitLookThrough.bind(this, rowData.discussInfoId, rowData.type, rowID)}>
-                                            <div className='item-left text_hidden'>{rowData.discussInfo.discussContent}</div>
-                                            <div className='item-right'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
+                                        <div className='item-left text_hidden'>{rowData.discussInfo.discussContent}</div>
+                                        <div className='item-right'>{WebServiceUtil.formatYMD(rowData.discussInfo.createTime)}</div>
                                     </div> :
                                     ""
                     }
@@ -521,7 +525,7 @@ export default class lookThrough extends React.Component {
                 <div className='emptyDiv' style={{ display: calm.initDataSource.length == 0 ? "block" : 'none' }}>
                     <div className='emptyIcon'></div>
                 </div>
-                <div className="To-auditLeft"  style={{
+                <div className="To-auditLeft" style={{
                     height: document.documentElement.clientHeight,
                 }}>
                     {/* 未审核 */}
@@ -662,17 +666,17 @@ export default class lookThrough extends React.Component {
                                                 <div className="audit-instructionsLeft">说明</div>
                                                 <div className="audit-instructionsRight">
                                                     <List>
-                                                            <TextareaItem
-                                                                rows={3}
-                                                                placeholder="请在此处输入审核的说明／不通过的原因"
-                                                                onChange={v => _this.setState({
-                                                                    textareaValue: v
-                                                                })}
-                                                                value={calm.state.textareaValue}
+                                                        <TextareaItem
+                                                            rows={3}
+                                                            placeholder="请在此处输入审核的说明／不通过的原因"
+                                                            onChange={v => _this.setState({
+                                                                textareaValue: v
+                                                            })}
+                                                            value={calm.state.textareaValue}
 
-                                                                count={30}
-                                                            />
-                                                        </List>
+                                                            count={30}
+                                                        />
+                                                    </List>
                                                 </div>
                                             </div>
                                         </div>
@@ -810,7 +814,7 @@ export default class lookThrough extends React.Component {
                         <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>
-                <div className="tagAddPanel_bg" style={{display:"none"}}></div>
+                <div className="tagAddPanel_bg" style={{ display: "none" }}></div>
             </div >
         )
     }

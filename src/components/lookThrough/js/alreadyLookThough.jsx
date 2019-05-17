@@ -479,7 +479,7 @@ export default class alreadyLookThough extends React.Component {
                                                         <div className='video_title textOver2'>{calm.state.data.articleInfo.articleTitle}</div>
                                                         <div className='audit-info'>
                                                             <div>
-                                                                <span className='author'>作者名称：{calm.state.data.articleInfo.userInfo ? calm.state.data.articleInfo.userInfo.userName : ""}</span>
+                                                                <span className='author'>作者名称：{calm.state.data.articleInfo ? calm.state.data.articleInfo.author : ""}</span>
                                                                 <span className='time'>{calm.state.data.articleInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.articleInfo.createTime) : ""}</span>
                                                             </div>
                                                         </div>
@@ -522,7 +522,7 @@ export default class alreadyLookThough extends React.Component {
                                                             <div className='video_title textOver2'>{calm.state.data.littleVideoInfo.videoContent}</div>
                                                             <div className='audit-info'>
                                                                 <div>
-                                                                    <span className='author'>{calm.state.data.littleVideoInfo.userInfo ? calm.state.data.littleVideoInfo.userInfo.userName : ""}</span>
+                                                                    <span className='author'>{calm.state.data.littleVideoInfo ? calm.state.data.littleVideoInfo.author : ""}</span>
                                                                     <span className='time'>{calm.state.data.littleVideoInfo.createTime ? WebServiceUtil.formatAllTime(calm.state.data.littleVideoInfo.createTime) : ""}</span>
                                                                 </div>
                                                                 <div>内容：</div>

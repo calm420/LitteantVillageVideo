@@ -561,7 +561,7 @@ export default class lookThrough extends React.Component {
                                         <div className='video_title textOver2'>{calm.state.data.articleTitle}</div>
                                         <div className='audit-info'>
                                             <div>
-                                                <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                                <span className='author'>作者名称：{calm.state.data ? calm.state.data.author : ""}</span>
                                                 <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
                                             </div>
                                             <div className="type">内容：{/*类型：自媒体文章*/}</div>
@@ -574,7 +574,7 @@ export default class lookThrough extends React.Component {
                                             <div className='video_title textOver2'>{calm.state.data.videoContent}</div>
                                             <div className='audit-info'>
                                                 <div>
-                                                    <span className='author'>作者名称：{calm.state.data.userInfo ? calm.state.data.userInfo.userName : ""}</span>
+                                                    <span className='author'>作者名称：{calm.state.data ? calm.state.data.author: ""}</span>
                                                     <span className='time'>{WebServiceUtil.formatYMD(calm.state.data.createTime)}</span>
                                                 </div>
                                                 <div className="type">内容：{/*类型：短视频*/}</div>

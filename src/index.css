@@ -40,6 +40,9 @@ li {
 hr {
   margin: 70px 10px;
 }
+.p20 {
+  padding-top: 20px;
+}
 .am-modal-content {
   height: auto;
   min-height: 100%;
@@ -334,10 +337,12 @@ hr {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-.line_public {
+.line_public,
+.line_public15 {
   position: relative;
 }
-.line_public:after {
+.line_public:after,
+.line_public15:after {
   content: '';
   position: absolute;
   background-color: #e5e5e5;
@@ -617,7 +622,7 @@ hr {
   border-radius: 2px;
 }
 .am-list-item {
-  min-height: 52px !important;
+  min-height: 46px !important;
 }
 .am-input-control {
   font-size: 15px !important;
@@ -858,4 +863,274 @@ video::-webkit-media-controls-fullscreen-button {
 .UserGuide img.userguide3 {
   right: 26px;
   top: 70px;
+}
+/*村牌管理员界面*/
+.villageMask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.villageMaskInner,
+.bindCard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 101;
+  background-color: white;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+  padding: 0 ;
+  box-sizing: border-box;
+}
+.villageMaskInner .editHeader,
+.bindCard .editHeader {
+  text-align: center;
+  padding: 29px 30px 60px 30px;
+  font-size: 20px;
+  line-height: 1;
+}
+.villageMaskInner .editCont,
+.bindCard .editCont {
+  padding: 0 30px;
+  height: calc(100% - 215px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.villageMaskInner .editCont input,
+.bindCard .editCont input {
+  width: 100%;
+}
+.villageMaskInner .editCont-Notitle,
+.bindCard .editCont-Notitle {
+  height: calc(100% - 106px);
+}
+.villageMaskInner .editCont-Nobottom,
+.bindCard .editCont-Nobottom {
+  max-height: calc(100% - 129px);
+  min-height: calc(100% - 149px);
+  height: auto;
+}
+.villageMaskInner .am-list-item .am-input-label,
+.bindCard .am-list-item .am-input-label {
+  font-size: 18px !important;
+  color: #333 !important;
+}
+.villageMaskInner .editCont #textDiv2.InviteCode,
+.bindCard .editCont #textDiv2.InviteCode {
+  width: 300px;
+  display: inline-block;
+  text-align: center;
+}
+.villageMaskInner .editCont .copyBtn,
+.bindCard .editCont .copyBtn {
+  cursor: pointer;
+  background-color: #4380EB;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  padding: 15px 34px;
+  border-radius: 4px;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  margin-left: 10px;
+}
+.villageMaskInner .am-list-item .am-input-control,
+.bindCard .am-list-item .am-input-control,
+.villageMaskInner #textDiv2.InviteCode,
+.bindCard #textDiv2.InviteCode,
+.villageMaskInner .am-textarea-control,
+.bindCard .am-textarea-control,
+.villageMaskInner .Date-Picker .am-list-item,
+.bindCard .Date-Picker .am-list-item {
+  border: 1px solid #BFBFBF;
+  border-radius: 4px;
+  font-size: 16px !important;
+  padding: 11px 18px;
+  box-sizing: border-box;
+}
+.villageMaskInner .am-list-item .am-input-control input,
+.bindCard .am-list-item .am-input-control input,
+.villageMaskInner #textDiv2.InviteCode input,
+.bindCard #textDiv2.InviteCode input,
+.villageMaskInner .am-textarea-control input,
+.bindCard .am-textarea-control input,
+.villageMaskInner .Date-Picker .am-list-item input,
+.bindCard .Date-Picker .am-list-item input {
+  padding: 0;
+  font-size: 16px !important;
+}
+.villageMaskInner .Date-Picker .am-list-item,
+.bindCard .Date-Picker .am-list-item {
+  padding: 0 18px ;
+}
+.villageMaskInner #textDiv2.InviteCode,
+.bindCard #textDiv2.InviteCode {
+  padding: 13px 18px;
+  height: 46px;
+  float: left;
+}
+.villageMaskInner .submitBtn,
+.bindCard .submitBtn {
+  text-align: center;
+  bottom: 30px;
+  /*width: calc(~"100% - 60px");*/
+  padding: 0;
+}
+.villageMaskInner .submitBtn span,
+.bindCard .submitBtn span,
+.villageMaskInner .submitBtn .my_flex span,
+.bindCard .submitBtn .my_flex span,
+.villageMaskInner .submitBtn .copyBtn,
+.bindCard .submitBtn .copyBtn {
+  cursor: pointer;
+  background-color: #4380EB;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  padding: 15px 0;
+  border-radius: 4px;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  margin: 0 0 0 30px !important;
+  width: 240px;
+}
+.villageMaskInner .submitBtn span:first-child,
+.bindCard .submitBtn span:first-child,
+.villageMaskInner .submitBtn .my_flex span:first-child,
+.bindCard .submitBtn .my_flex span:first-child,
+.villageMaskInner .submitBtn .copyBtn:first-child,
+.bindCard .submitBtn .copyBtn:first-child {
+  margin-left: 0 !important;
+}
+.villageMaskInner .submitBtn .my_flex,
+.bindCard .submitBtn .my_flex {
+  justify-content: center;
+}
+.villageMaskInner .submitBtn .my_flex span,
+.bindCard .submitBtn .my_flex span {
+  margin: 0 15px;
+}
+.villageMaskInner .am-list-item .am-input-control input::placeholder,
+.bindCard .am-list-item .am-input-control input::placeholder {
+  line-height: 1 !important;
+}
+.villageMaskInner .am-list-item.am-input-item,
+.bindCard .am-list-item.am-input-item {
+  padding-left: 0 !important;
+  height: 46px !important;
+  min-height: 46px !important;
+}
+.villageMaskInner .am-list-item .am-list-line,
+.bindCard .am-list-item .am-list-line {
+  padding-right: 0;
+}
+.villageMaskInner .villageAdd,
+.bindCard .villageAdd {
+  width: 46px;
+  height: 46px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  text-align: center;
+}
+/*村村App*/
+.topNav {
+  height: 44px;
+  line-height: 44px;
+  font-size: 17px;
+  color: #333;
+  text-align: center;
+  position: relative;
+}
+.topNav .icon_back {
+  background: url("components/villageReg/image/icon_back.png") no-repeat 15px center;
+  display: block;
+  background-size: 13px;
+  width: 43px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.line_public15::after {
+  content: '';
+  left: 15px;
+  width: calc(100% - 15px);
+}
+.grayBorder,
+.WhiteSpace {
+  height: 11px;
+  background: #ededed;
+  width: 100%;
+}
+.bg_white {
+  background-color: white;
+}
+.submitBtn_gradient {
+  padding: 0 38px;
+  position: absolute;
+  bottom: 75px;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.submitBtn_gradient.noPosition {
+  position: static;
+}
+.submitBtn_gradient span {
+  cursor: pointer;
+  background: -webkit-linear-gradient(left, #46A7EB, #4675EB);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #46A7EB, #4675EB);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #46A7EB, #4675EB);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #46A7EB, #4675EB);
+  /* 标准的语法 */
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  line-height: 49px;
+  height: 49px;
+  border-radius: 25px;
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+.right-item {
+  height: 66px;
+  line-height: 66px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid rgba(36, 36, 36, 0.1);
+  padding-left: 0;
+  padding-right: 20px;
+}
+.right-item .item-left {
+  width: calc(100% - 100px);
+}
+.right-item .village-delete,
+.right-item .village-edit {
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 15px;
+  display: inline-block;
+}
+.right-item .item-right {
+  width: 100px;
+  text-align: right;
+}
+.am-picker-popup {
+  width: 570px !important;
+  border-radius: 4px;
+  margin: 0 auto;
+  left: calc(50% - 285px ) !important;
+}
+.am-modal-wrap .am-modal-transparent {
+  border-radius: 4px;
 }

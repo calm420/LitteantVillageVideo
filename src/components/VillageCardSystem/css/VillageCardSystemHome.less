@@ -210,7 +210,12 @@
       font-size: 18px !important;
     }
   }
-  .village-delete, .village-edit, .village-imgDelete, .ranking{
+  .village-delete, .village-edit, .village-imgDelete{
+    width: 20px;
+    height:20px;
+    vertical-align: middle;
+  }
+  .ranking{
     width: 30px;
     height:30px;
     vertical-align: middle;
@@ -291,13 +296,16 @@
       display: inline-block;
       .Date-Picker{
         .am-list-line{
-          min-height: 50px;
+          min-height: 46px;
         }
         .am-list-item .am-list-line .am-list-extra{
           flex-basis:91%
         }
+        .am-list-item{
+          width: 100%;
+        }
       }
-      .notifyHeader, .notifyContent, .notifyContent .previewEditArea{
+      .notifyHeader, .notifyContent, .notifyContent .previewEditArea, .villageHeader, .villageContent .previewEditArea{
         line-height: 46px !important;
       }
     }

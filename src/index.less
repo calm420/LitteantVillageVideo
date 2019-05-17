@@ -960,8 +960,23 @@ video::-webkit-media-controls-fullscreen-button {
   background-color: white;
   transform: translate(-50%,-50%);
   border-radius: 4px;
-  padding: 0 30px;
+  padding: 0 ;
   box-sizing: border-box;
+  .editHeader{
+    text-align: center;
+    padding: 29px 0 60px 0;
+    font-size: 20px;
+    line-height: 1;
+  }
+  .editCont{
+    padding: 0 30px;
+    height: calc(~"100% - 215px");
+    overflow-y: auto;
+    overflow-x: hidden;
+    input{
+      width: 100%;
+    }
+  }
   .am-list-item .am-input-label{
     font-size: 18px !important;
     color: #333 !important;

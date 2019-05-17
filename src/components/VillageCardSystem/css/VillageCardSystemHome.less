@@ -157,28 +157,12 @@
     .listCont{
       margin-bottom: 40px;
        .am-list-item {
-         width: 600px;
+         width: calc(~"100% - 40px");
          display: inline-block;
          margin-right: 10px;
        }
     }
-    .editCont{
-      padding: 0 30px;
-      height: calc(~"100% - 185px");
-      overflow-y: auto;
-      overflow-x: hidden;
-      input{
-        width: 100%;
-      }
-    }
   }
-  .editHeader{
-    text-align: center;
-    padding: 29px 0 60px 0;
-    font-size: 20px;
-    line-height: 1;
-  }
-
   .codePop{
     width: 470px;
     height: 310px;
@@ -264,7 +248,7 @@
       line-height: 46px;
     }
     .am-list-item.am-input-item, .parentDiv, .am-list-item{
-      width: 530px;
+      width:calc(~"100% - 100px");
       display: inline-block;
       padding-left: 0;
     }
@@ -303,8 +287,9 @@
     width: 570px;
     height:614px;
     .bindCard-item .am-list-item, .bindCard-itemRight{
-      width: 410px;
+      width:calc(~"100% - 100px");
       display: inline-block;
+      line-height: 46px;
       .Date-Picker{
         .am-list-line{
           min-height: 50px;
@@ -438,7 +423,7 @@
     background: #f6f6f6;
     width: 570px;
   }
-  .hornorVillages, .learnList{
+  .hornorVillages, .learnList, .popBox-wrap{
     height: 100%;
   }
 }

@@ -2208,21 +2208,22 @@ export default class VillageCardSystemHome extends React.Component {
                 <div className="villageMask" onClick={this.closePop} style={{ display: "none" }} ></div>
                 {/* 编辑分组 */}
                 <div className='popBox villageMaskInner' style={{ display: "none" }} >
-                    <div>
+                    <div className="popBox-wrap">
                         <div className="editHeader">
                             编辑分组
                         </div>
                         <div className="editCont">
-                        </div>
-                        <div>
-                            {this.state.inputDivs}
-                            <span className="editBtn" onClick={this.addInput}>
+                            <div>
+                                {this.state.inputDivs}
+                                <span className="editBtn" onClick={this.addInput}>
                             </span>
-                            <div className='submitBtn btnGroup' style={{ display: "none" }}>
-                                <div className="my_flex">
-                                    <span onClick={this.submitInput}>确定</span>
-                                    <span onClick={this.cancelGroupInput}>取消</span>
-                                </div>
+
+                            </div>
+                        </div>
+                        <div className='submitBtn btnGroup' style={{ display: "none" }}>
+                            <div className="my_flex">
+                                <span onClick={this.submitInput}>确定</span>
+                                <span onClick={this.cancelGroupInput}>取消</span>
                             </div>
                         </div>
                     </div>
@@ -2428,13 +2429,16 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         编辑组名
                     </div>
-                    <InputItem
-                        placeholder="请输入组名"
-                        onChange={this.inputGroupNameChange}
-                        value={this.state.groupPeopleNameValue}
-                    >
-                        <div>组名</div>
-                    </InputItem>
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">组名</div>
+                            <InputItem
+                                placeholder="请输入组名"
+                                onChange={this.inputGroupNameChange}
+                                value={this.state.groupPeopleNameValue}
+                            />
+                        </div>
+                    </div>
                     <div className='submitBtn'>
                         <div className='my_flex'>
                             <span onClick={this.sureGroupName}>确定</span>
@@ -2448,20 +2452,23 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className="editHeader">
                         文章详情
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">文章标题</div>
-                        <div className="bindCard-itemRight">
-                            <div className="villageHeader">
+                    <div className="editCont">
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">文章标题</div>
+                            <div className="bindCard-itemRight">
+                                <div className="villageHeader">
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">文章内容</div>
+                            <div className="bindCard-itemRight">
+                                <div className="villageContent">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="bindCard-item">
-                        <div className="bindCard-itemLeft">文章内容</div>
-                        <div className="bindCard-itemRight">
-                            <div className="villageContent">
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 {/* 通知详情 */}
                 <div className="villageNotifyPop villageMaskInner" style={{ display: "none" }}>

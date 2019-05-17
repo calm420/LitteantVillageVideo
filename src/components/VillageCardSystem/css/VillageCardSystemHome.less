@@ -289,7 +289,6 @@
     .bindCard-item .am-list-item, .bindCard-itemRight{
       width:calc(~"100% - 100px");
       display: inline-block;
-      line-height: 46px;
       .Date-Picker{
         .am-list-line{
           min-height: 50px;
@@ -297,6 +296,9 @@
         .am-list-item .am-list-line .am-list-extra{
           flex-basis:91%
         }
+      }
+      .notifyHeader, .notifyContent, .notifyContent .previewEditArea{
+        line-height: 46px !important;
       }
     }
   }
@@ -373,6 +375,11 @@
           height: 100%;
           object-fit: cover;
           overflow: hidden;
+          background: #BFBFBF;
+        }
+        .hornor-name{
+          text-align: center;
+          padding-top: 15px;
         }
         .village-imgDelete{
           background: url("../img/village-imgDelete.png") no-repeat;
@@ -403,6 +410,9 @@
         bottom:0;
         right: 0;
         z-index: 1;
+        color: #4380EB;
+        text-align: center;
+        line-height: 35px;
       }
     }
   }

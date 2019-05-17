@@ -587,34 +587,106 @@ export default class VillageCardSystemHome extends React.Component {
                         return xhr;
                     },
                     success: function (res) {
-
-                        console.log(res, "res")
-                        var arr = res.split(".");
-                        var type = arr[arr.length - 1];
-                        if (type == "mp4") {
-                            calm.setState({
-                                villageHappyVideo: res
-                            }, () => {
-                                calm.addUploadFile(1, calm.state.villageHappyVideo)
-                                setTimeout(() => {
-                                    calm.selectUploadFile();
-                                }, 300);
-                            })
-                        } else if (type == "jpg" || type == "JPG" || type == "png" || type == "PNG" || type == "JPEG" || type == "jpeg") {
-                            calm.setState({
-                                villageHappyImg: res
-                            }, () => {
-                                calm.addUploadFile(0, calm.state.villageHappyImg)
-                                setTimeout(() => {
-                                    calm.selectUploadFile();
-                                }, 300);
-                            })
+                        var newArr = res.split('.');
+                        if (newArr[newArr.length - 1] == "JPG") {
+                            res = res.replace(/JPG/g, "jpg");;
                         }
-
+                        if (newArr[newArr.length - 1] == "JPEG") {
+                            res = res.replace(/JPEG/g, "jpeg");;
+                        }
+                        if (newArr[newArr.length - 1] == "MP4") {
+                            res = res.replace(/MP4/g, "mp4");;
+                        }
+                        //拿到图片地址,显示在页面等待上传
+                        var classDemeanors = res.split(',');
+                        var promiseArray = [];
+                        console.log(classDemeanors, '图片地址');
+                        for (var k = 0; k < classDemeanors.length; k++) {
+                            console.log(k);
+                            if (classDemeanors[k].substr(classDemeanors[k].length - 3, 3) == 'mp4') {
+                                console.log("mp4")
+                                console.log(k, '视频');
+                                var cut = new Promise(function (resolve, reject) {
+                                    let t = k;
+                                    let video = document.createElement("video");
+                                    let canvas = document.createElement("canvas");
+                                    video.src = classDemeanors[t];
+                                    video.crossOrigin = 'Anonymous';
+                                    video.addEventListener('loadeddata', function () {
+                                        console.log('执行');
+                                        canvas.width = video.videoWidth * 0.8;
+                                        canvas.height = video.videoHeight * 0.8;
+                                        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                                        // var $Blob = canvas.toDataURL("image/png");
+                                        var $Blob = calm.getBlobBydataURI(canvas.toDataURL("image/png"), 'image/jpeg');
+                                        var formData = new FormData();
+                                        formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                                            enctype: 'multipart/form-data',
+                                            data: formData,
+                                            // 告诉jQuery不要去处理发送的数据
+                                            processData: false,
+                                            // 告诉jQuery不要去设置Content-Type请求头
+                                            contentType: false,
+                                            success: function (res) {
+                                                var firstImg = res;
+                                                classDemeanors = classDemeanors + '&' + firstImg;
+                                                resolve('成功');
+                                                calm.setState({
+                                                    villageHappyVideo: classDemeanors
+                                                }, () => {
+                                                    console.log(calm.state.villageHappyVideo,"calm.state.villageHappyVideo")
+                                                    calm.addUploadFile(1, calm.state.villageHappyVideo)
+                                                    setTimeout(() => {
+                                                        calm.selectUploadFile();
+                                                    }, 300);
+                                                })
+                                            },
+                                            error: function (res) {
+                                            }
+                                        });
+                                    });
+                                });
+                                promiseArray.push(cut);
+                              
+                            } else {
+                                console.log("jpg")
+                                calm.setState({
+                                    villageHappyImg: classDemeanors[0]
+                                }, () => {
+                                    calm.addUploadFile(0,classDemeanors[0])
+                                    setTimeout(() => {
+                                        calm.selectUploadFile();
+                                    }, 300);
+                                })
+                            }
+                        }
+                        // console.log(promiseArray,'promiseArray')
+                        Promise.all(promiseArray).then(function (e) {
+                            console.log("890-")
+                          
+                        })
                     }
                 });
             }
         });
+    }
+
+    /**
+   * 首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
+   * @param dataURI
+   * @param type
+   * @returns {*}
+   */
+    getBlobBydataURI (dataURI, type) {
+        var binary = atob(dataURI.split(',')[1]);
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], { type: type });
     }
     /**
     * 获取图片路径
@@ -735,6 +807,7 @@ export default class VillageCardSystemHome extends React.Component {
 
     //添加乡村振兴图片
     addUploadFile = (type, url) => {
+        console.log(url,"uuuu")
         var param = {
             "method": 'addUploadFile',
             "url": url,
@@ -1786,7 +1859,7 @@ export default class VillageCardSystemHome extends React.Component {
                     <div className='leftBox'>
                         <div className='myMsg my_flex'>
                             <div className="villagelogo">
-                                <img src={require("../img/home-user.png")} alt=""/>
+                                <img src={require("../img/home-user.png")} alt="" />
                                 <span>村村向上</span>
                             </div>
                         </div>
@@ -1946,15 +2019,21 @@ export default class VillageCardSystemHome extends React.Component {
                                 <div id="image_box">
                                     {
                                         calm.state.uploadFileList.map((v, i) => {
-                                            console.log(v, "V")
-                                            var arr = v.url.split(".");
-                                            var type = arr[arr.length - 1];
+                                            var arr = v.url.split("&");
+                                            var type;
+                                            if (arr.length == 2) {
+                                                type = arr[0].split(".");
+                                                type = type[type.length - 1]
+                                            }else {
+                                                type = arr[0][arr.length - 1]
+                                            }
+                                            console.log(type, "V")
                                             return (
                                                 <div className="item-imageBox">
                                                     {
                                                         type == "mp4" ?
                                                             <div className="item-imageBoxN">
-                                                                <video src={v.url}></video>
+                                                                <video src={v.url.split("&")[0]}></video>
                                                                 <span className="village-imgDelete" onClick={this.deleteUploadFile.bind(this, v)}></span>
                                                             </div>
                                                             :
@@ -1968,8 +2047,7 @@ export default class VillageCardSystemHome extends React.Component {
                                             )
                                         })
                                     }
-                                    {/* <video src={this.state.villageHappyVideo}></video>
-                                    <img src={this.state.villageHappyImg} /> */}
+
                                 </div>
                             </div>
                         </div>
@@ -2052,7 +2130,7 @@ export default class VillageCardSystemHome extends React.Component {
                                             <div className="right-item my_flex" onClick={this.seeNotifyDetail.bind(this, v)}>
                                                 <div className="item-left text_hidden">
                                                     <span className="Information-show">{v.noticeTitle}</span>
-                                                    </div>
+                                                </div>
                                                 <div className="operation">
                                                     <span className="village-delete" onClick={this.showNotifyAlert.bind(this, v)}></span>
                                                 </div>
@@ -2296,7 +2374,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="parentDiv">
                                 <button className="editBtn"></button>
                                 <input className="calm40 courseImgUpdate" name="courseImgUpdate" id="courseImgUpdate" onClick={this.courseImgUpdate} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                                <span 
+                                <span
                                     // style={{ display: this.state.courseImgUpdate == "" ? "none" : "inline-block" }} 
                                     className="photo-add">
                                     <img src={this.state.courseImgUpdate} />

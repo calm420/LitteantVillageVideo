@@ -48,7 +48,7 @@ export default class VillageCardSystemHome extends React.Component {
             ],
             editCardType: [
                 {
-                    title: "绑定班牌", active: false
+                    title: "绑定村牌", active: false
                 },
                 {
                     title: "乡村振兴", active: false
@@ -221,7 +221,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: true
+                            title: "绑定村牌", active: true
                         },
                         {
                             title: "乡村振兴", active: false
@@ -284,7 +284,7 @@ export default class VillageCardSystemHome extends React.Component {
         }
     }
     clickCardItem = (v) => {
-        if (v.title == "绑定班牌") {
+        if (v.title == "绑定村牌") {
             this.setState({
                 "cardNameValue": "",
                 "cardContentValue": "",
@@ -303,7 +303,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: true
+                            title: "绑定村牌", active: true
                         },
                         {
                             title: "乡村振兴", active: false
@@ -338,7 +338,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定村牌", active: false
                         },
                         {
                             title: "乡村振兴", active: true
@@ -373,7 +373,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定村牌", active: false
                         },
                         {
                             title: "乡村振兴", active: false
@@ -408,7 +408,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定村牌", active: false
                         },
                         {
                             title: "乡村振兴", active: false
@@ -444,7 +444,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定村牌", active: false
                         },
                         {
                             title: "乡村振兴", active: false
@@ -479,7 +479,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定村牌", active: false
                         },
                         {
                             title: "乡村振兴", active: false
@@ -514,7 +514,7 @@ export default class VillageCardSystemHome extends React.Component {
                 editCardType:
                     [
                         {
-                            title: "绑定班牌", active: false
+                            title: "绑定村牌", active: false
                         },
                         {
                             title: "乡村振兴", active: false
@@ -1883,7 +1883,7 @@ export default class VillageCardSystemHome extends React.Component {
                                         })
                                     }
                                 </div>
-                                <div className="villageCardEdit allClassName" onClick={this.onChangeLeft.bind(this, 2)}><i className="home-editor"></i>班牌编辑</div>
+                                <div className="villageCardEdit allClassName" onClick={this.onChangeLeft.bind(this, 2)}><i className="home-editor"></i>村牌编辑</div>
                                 <div className="cardEdit" style={{ display: "none" }}>
                                     {
                                         this.state.editCardType.map((v, i) => {

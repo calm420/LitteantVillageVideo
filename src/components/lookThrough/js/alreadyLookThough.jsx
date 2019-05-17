@@ -77,6 +77,8 @@ export default class alreadyLookThough extends React.Component {
                     }
                     calm.setState({
                         alreadyLookThroudhData: result.response
+                    },()=>{
+                        $(".item-left").eq(0).trigger("click");
                     })
                 }
             },

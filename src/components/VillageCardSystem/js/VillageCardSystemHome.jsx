@@ -999,16 +999,16 @@ export default class VillageCardSystemHome extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                if(result.success){
+                if (result.success) {
                     this.getVillageGroupList(this.state.accountData.villageId)
                     $(".villageMask").hide();
                     $(".villageMaskInner").hide();
-                }else {
+                } else {
                     Toast.fail(result.msg, 1);
                 }
             },
             onError: function (error) {
-              
+
                 Toast.fail(error, 1);
             }
         });
@@ -1433,7 +1433,7 @@ export default class VillageCardSystemHome extends React.Component {
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
-                    Toast.info("修改成功",1);
+                    Toast.info("修改成功", 1);
                     this.getVillageCourseList(this.state.accountData.villageId)
                     $(".courseUpdatePop").hide();
                     $(".villageMask").hide();
@@ -2212,10 +2212,10 @@ export default class VillageCardSystemHome extends React.Component {
                             </div>
                             <div className="rightContent">
 
-                                    {
-                                        this.state.learningList.map((v, i) => {
-                                            return (
-                                                <div className="right-item">
+                                {
+                                    this.state.learningList.map((v, i) => {
+                                        return (
+                                            <div className="right-item">
                                                 <table className="learnListTable">
                                                     <tr>
                                                         <td className="learnListName text_hidden">{"第" + (i + 1) + "名"}</td>
@@ -2223,10 +2223,10 @@ export default class VillageCardSystemHome extends React.Component {
                                                         <td className="learnListNumber text_hidden">{v.sum}</td>
                                                     </tr>
                                                 </table>
-                                                </div>
-                                            );
-                                        })
-                                    }
+                                            </div>
+                                        );
+                                    })
+                                }
 
                                 <div className="emptyDiv">
                                     <div style={{ display: this.state.showLearnEmpty ? "block" : "none" }}>
@@ -2471,6 +2471,7 @@ export default class VillageCardSystemHome extends React.Component {
                         <div className="bindCard-item">
                             <div className="bindCard-itemLeft">实到人数</div>
                             <InputItem
+                                type="number"
                                 placeholder="请输入签到人数"
                                 onChange={this.inputSumPeopleNameChange}
                                 value={this.state.sumPeopleNameValue}

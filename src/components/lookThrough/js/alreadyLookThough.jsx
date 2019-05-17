@@ -484,18 +484,18 @@ export default class alreadyLookThough extends React.Component {
                                                         <div className='textCont' dangerouslySetInnerHTML={{ __html: calm.state.data.articleInfo.articleContent }}></div>
                                                     </div>
                                                     <div className='review'>
-                                                        <div className=''>
-                                                            <span className='title'>审核人：</span>
+                                                        <div className='audit-instructions'>
+                                                            <span className='audit-instructionsLeft'>审核人：</span>
                                                             {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
                                                             <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
-                                                        <div className=''>
-                                                            <span className='title'>审核说明：</span>
+                                                        <div className='audit-instructions'>
+                                                            <span className='audit-instructionsLeft'>说明：</span>
                                                             <div className='reCont'>
                                                                 {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                             </div>
                                                         </div>
-                                                        <div className='result'>
-                                                            <span className='title'>审核结果：</span>
+                                                        <div className='audit-instructions'>
+                                                            <span className='audit-instructionsLeft'>结果：</span>
                                                             {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                             {calm.state.data.auditInfo.istop == 1 ? <span className="pass">已置顶</span> : <span>未置顶</span>}
                                                             {/* {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已推荐</span> : <span>未推荐</span>} */}
@@ -580,18 +580,18 @@ export default class alreadyLookThough extends React.Component {
                                                                 </div>
                                                             </div>
                                                             <div className='review'>
-                                                                <div className=''>
-                                                                    <span className='title'>审核人：</span>
+                                                                <div className='audit-instructions'>
+                                                                    <span className='audit-instructionsLeft'>审核人：</span>
                                                                     {calm.state.data.auditInfo.auditorUser ? calm.state.data.auditInfo.auditorUser.userName : ""}
                                                                     <span className='time'>{calm.state.data.auditInfo.auditingTime ? WebServiceUtil.formatAllTime(calm.state.data.auditInfo.auditingTime) : ""}</span></div>
-                                                                <div className=''>
-                                                                    <span className='title'>审核说明：</span>
+                                                                <div className='audit-instructions'>
+                                                                    <span className='title'>说明：</span>
                                                                     <div className='reCont'>
                                                                         {calm.state.data.auditInfo.auditMark ? calm.state.data.auditInfo.auditMark : "无"}
                                                                     </div>
                                                                 </div>
-                                                                <div className='result'>
-                                                                    <span className='title'>审核结果：</span>
+                                                                <div className='audit-instructions'>
+                                                                    <span className='audit-instructionsLeft'>结果：</span>
                                                                     {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
                                                                     <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                                         重新审核
@@ -723,7 +723,7 @@ export default class alreadyLookThough extends React.Component {
                         </div>
                     </div>
                     <div className="bottomBox">
-                        <span className="close" onClick={calm.cancle}>取消</span>
+                        <span className="bind" onClick={calm.cancle}>取消</span>
                         <span className="bind" onClick={_this.submit}>确定</span>
                     </div>
                 </div>

@@ -648,7 +648,7 @@ export default class lookThrough extends React.Component {
                                                 </RadioItem>
                                             ))}
                                         </List> */}
-                                                    <List className='toFirst' renderHeader={() => '置顶：'}>
+                                                    <List className='' renderHeader={() => '置顶：'}>
                                                         {isTopData.map(i => (
                                                             <RadioItem key={i.value} checked={isTop === i.value} onChange={() => this.topChange(i.value)}>
                                                                 {i.label}

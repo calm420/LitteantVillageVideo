@@ -2152,19 +2152,21 @@ export default class VillageCardSystemHome extends React.Component {
                                         <div className="emptyIcon"></div>
                                         暂无荣誉村名哟
                                     </div>
-                                    <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
-                                        {
-                                            this.state.honorVillagerList.map((v, i) => {
-                                                return (
-                                                    <span>
-                                                        <img src={v.avatar} />
-                                                        <span>{i + 1}</span>
+                                </div>
+                                <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
+                                    {
+                                        this.state.honorVillagerList.map((v, i) => {
+                                            return (
+                                                <span className="item-imageBox">
+                                                        <div className="item-imageBoxN">
+                                                            <img src={v.avatar} />
+                                                            <span className="ranking">{i + 1}</span>
+                                                        </div>
                                                         <span>{v.userName}</span>
                                                     </span>
-                                                );
-                                            })
-                                        }
-                                    </div>
+                                            );
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>

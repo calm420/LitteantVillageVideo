@@ -146,47 +146,58 @@ export default class villageReg extends React.Component {
                     </div>
                     <div className="progressText">进度: 0%</div>
                 </div>
-                <div onClick={this.inputRefClick}>
-                    <InputItem
-                        className="add_element"
-                        placeholder="请设置管理员账号"
-                        value={this.state.nameValue}
-                        onChange={this.inputOnNameChange}
-                        ref={el => this.inputRef = el}
-                    >
-                    </InputItem>
-                </div>
-                <div onClick={this.inputCodeClick}>
-                    <InputItem
-                        className="add_element"
-                        placeholder="请设置管理员账号"
-                        value={this.state.codeValue}
-                        onChange={this.inputOnChange}
-                        ref={el => this.inputCodeRef = el}
-                    >
-                    </InputItem>
-                </div>
-                <div onClick={this.inputVillageCodeClick}>
-                    <InputItem
-                        className="add_element"
-                        placeholder="请输入该管理员所对应的村名"
-                        value={this.state.villageNameValue}
-                        onChange={this.inputOnChangeVillageName}
-                        ref={el => this.inputVillageCodeRef = el}
-                    >
-                    </InputItem>
-                </div>
-                <div className="bindCard-item">
-                <div className="bindCard-itemLeft">上传村图</div>
-                    <div className="parentDiv">
-                        <button className="editBtn"></button>
-                        <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
-                        <span style={{ display: this.state.villageCradImg == "" ? "none" : "inline-block" }} className="photo-add">
+                <div className="bindCard">
+                    <div className="editCont editCont-Notitle">
+                        <div className="bindCard-item" onClick={this.inputRefClick}>
+                            <div className="bindCard-itemLeft">管理员</div>
+                            <InputItem
+                                className="add_element"
+                                placeholder="请设置管理员账号"
+                                value={this.state.nameValue}
+                                onChange={this.inputOnNameChange}
+                                ref={el => this.inputRef = el}
+                            >
+                            </InputItem>
+                        </div>
+                        <div className="bindCard-item" onClick={this.inputCodeClick}>
+                            <div className="bindCard-itemLeft">管理员</div>
+                            <InputItem
+                                className="add_element"
+                                placeholder="请设置管理员账号"
+                                value={this.state.codeValue}
+                                onChange={this.inputOnChange}
+                                ref={el => this.inputCodeRef = el}
+                            >
+                            </InputItem>
+                        </div>
+                        <div className="bindCard-item" onClick={this.inputVillageCodeClick}>
+                            <div className="bindCard-itemLeft">村民</div>
+                            <InputItem
+                                className="add_element"
+                                placeholder="请输入该管理员所对应的村名"
+                                value={this.state.villageNameValue}
+                                onChange={this.inputOnChangeVillageName}
+                                ref={el => this.inputVillageCodeRef = el}
+                            >
+                            </InputItem>
+                        </div>
+                        <div className="bindCard-item">
+                            <div className="bindCard-itemLeft">上传村图</div>
+                            <div className="parentDiv">
+                                <button className="editBtn"></button>
+                                <input className="calm40 cradImg" name="cradImg" id="cradImg" onClick={this.getImageCard} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                <span style={{ display: this.state.villageCradImg == "" ? "none" : "inline-block" }} className="photo-add">
                             <img src={this.state.villageCradImg} />
                         </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="submitBtn">
+                        <Button onClick={this.submit}>提交</Button>
                     </div>
                 </div>
-                <Button onClick={this.submit}>提交</Button>
+
+
             </div>
         )
     }

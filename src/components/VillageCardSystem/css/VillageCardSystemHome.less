@@ -169,6 +169,12 @@
   }
   .groupNamePop{
     height: 300px;
+    .bindCard-itemLeft{
+      width: 60px !important;
+    }
+    .am-list-item{
+      width: calc(~"100% - 60px") !important;
+    }
   }
   .codePop{
     width: 470px;
@@ -245,6 +251,7 @@
     text-align: center;
     background: url("../img/village-add.png") no-repeat center;
     background-size: 21px 21px;
+    box-sizing: border-box;
   }
   .editBtn, .village-delete, .editBtn, .village-edit, .village-delete, .village-imgDelete{
     cursor: pointer;
@@ -258,6 +265,7 @@
       display: inline-block;
       vertical-align: top;
       line-height: 46px;
+      font-size: 16px;
     }
     .am-list-item.am-input-item, .parentDiv, .am-list-item{
       width:calc(~"100% - 100px");

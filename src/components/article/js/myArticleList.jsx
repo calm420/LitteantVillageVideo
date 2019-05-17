@@ -26,7 +26,7 @@ export default class myArticleList extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount () {
         // debugger
         Bridge.setShareAble("false");
         document.title = '我的文章列表';
@@ -34,27 +34,19 @@ export default class myArticleList extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
-        var toUserId = searchArray[1] ? searchArray[1].split('=')[1] : null;
-        var visitSelf = userId == toUserId ? true : false;
-        this.setState({visitSelf});
-        if (toUserId) {
-            if (userId != toUserId) {
-                //文章不是自己
-                userId = toUserId;
-                this.setState({
-                    isHidden: true,
-                })
-            }
-        }
+        var villageId = searchArray[1].split('=')[1];
+        var groupId = searchArray[2].split('=')[1];
         this.setState({
-            userId: userId
+            userId: userId,
+            villageId,
+            groupId
         }, () => {
             this.getArticleInfoListByStatus();
         })
         // this.refurbishNoom()
     }
 
-    refurbishNoom() {
+    refurbishNoom () {
         var _this = this;
         var touchstartNum;
         var touchFlag;
@@ -100,22 +92,15 @@ export default class myArticleList extends React.Component {
     /**
      * 按查询条件获取列表
      * **/
-    getArticleInfoListByStatus(clearFlag, callback) {
+    getArticleInfoListByStatus (clearFlag, callback) {
         var _this = this;
-        if (this.state.visitSelf) {
-            var param = {
-                "method": 'getMyArticleInfoListByStatus',
-                "userId": this.state.userId,
-                "pageNo": this.state.defaultPageNo,
-            };
-        } else {
-            var param = {
-                "method": 'getArticleInfoListByStatus',
-                "userId": this.state.userId,
-                "status": -1,
-                "pageNo": this.state.defaultPageNo,
-            };
-        }
+
+        var param = {
+            "method": 'getArticleInfoListByStatus',
+            "userId": this.state.userId,
+            "status": -1,
+            "pageNo": this.state.defaultPageNo,
+        };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
@@ -164,7 +149,7 @@ export default class myArticleList extends React.Component {
     /**
      * id删除文章
      * **/
-    deleteArticleInfoByType(articleIds, status) {
+    deleteArticleInfoByType (articleIds, status) {
         var param = {
             "method": 'deleteArticleInfoByType',
             "articleIds": articleIds,
@@ -204,13 +189,13 @@ export default class myArticleList extends React.Component {
         });
     };
 
-    toDetail(id, articleTitle, obj) {
+    toDetail (id, articleTitle, obj) {
         if (obj.auditInfo.isPass == 0) {
             Toast.fail('审核未通过，无法查看');
             return
         }
         if (id) {
-            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3&machineType=&version=&articleTitle=" + ((articleTitle)));
+            let url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.userId + "&type=3&machineType=&version=&articleTitle=" + ((articleTitle))+"&villageId="+this.state.villageId+"&groupId="+this.state.groupId);
             var data = {
                 method: 'openNewPage',
                 url: url
@@ -224,7 +209,7 @@ export default class myArticleList extends React.Component {
     }
 
     //计算时间差
-    timeDifference(date) {
+    timeDifference (date) {
         var date1 = date;  //开始时间
         var date2 = new Date();    //结束时间
         var date3 = date2.getTime() - new Date(date1).getTime();   //时间差的毫秒数
@@ -265,15 +250,15 @@ export default class myArticleList extends React.Component {
         // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
     }
 
-    listViewScroll(e) {
+    listViewScroll (e) {
         if (e.target.scrollTop == 0) {
-            this.setState({noomPullFlag: true})
+            this.setState({ noomPullFlag: true })
         } else {
-            this.setState({noomPullFlag: false})
+            this.setState({ noomPullFlag: false })
         }
     }
 
-    deleteItem(rowData, event) {
+    deleteItem (rowData, event) {
         event.stopPropagation();
         console.log(rowData);
         var phoneType = navigator.userAgent;
@@ -285,13 +270,13 @@ export default class myArticleList extends React.Component {
         }
         var _this = this;
         const alertInstance = alert('您确定删除此文章吗?', '', [
-            {text: '取消', onPress: () => console.log('cancel'), style: 'default'},
-            {text: '确定', onPress: () => _this.deleteArticleInfoByType(rowData.articleId, rowData.status)},
+            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+            { text: '确定', onPress: () => _this.deleteArticleInfoByType(rowData.articleId, rowData.status) },
         ], phone);
 
     }
 
-    render() {
+    render () {
         var _this = this;
         const row = (rowData, sectionID, rowID) => {
             var image = rowData.articleImgArray || [];
@@ -309,10 +294,10 @@ export default class myArticleList extends React.Component {
                         </div>
                     </div>
                     <div className="rightBox">
-                        <img src={image[0]} alt=""/>
+                        <img src={image[0]} alt="" />
                     </div>
                     <div style={
-                        this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                        this.state.isHidden ? { display: 'none' } : { display: 'block' }
                     } className="delete-item" onClick={this.deleteItem.bind(this, rowData)}>
                         <div className="icon-delete"></div>
                     </div>
@@ -321,8 +306,8 @@ export default class myArticleList extends React.Component {
                 var imageDom = [];
                 for (var i = 0; i < image.length; i++) {
                     imageDom.push(<img className="image3"
-                                       src={image[i]}
-                                       alt=""/>)
+                        src={image[i]}
+                        alt="" />)
                 }
                 dom = <div className="item line_public">
                     <div className="title">{rowData.articleTitle}</div>
@@ -333,7 +318,7 @@ export default class myArticleList extends React.Component {
                         <div className="time">{time}</div>
                     </div>
                     <div style={
-                        this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                        this.state.isHidden ? { display: 'none' } : { display: 'block' }
                     } className="delete-item" onClick={this.deleteItem.bind(this, rowData)}>
                         <div className="icon-delete"></div>
                     </div>
@@ -351,7 +336,7 @@ export default class myArticleList extends React.Component {
                                 <img
                                     onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle, rowData)}
                                     className="playImg"
-                                    src={require('../images/videoClick.png')} alt=""/>
+                                    src={require('../images/videoClick.png')} alt="" />
                                 <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
                             </div>
                         </div>
@@ -361,7 +346,7 @@ export default class myArticleList extends React.Component {
                             <div className="time">{time}</div>
                         </div>
                         <div style={
-                            this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                            this.state.isHidden ? { display: 'none' } : { display: 'block' }
                         } className="delete-item" onClick={this.deleteItem.bind(this, rowData)}>
                             <div className="icon-delete"></div>
                         </div>
@@ -375,7 +360,7 @@ export default class myArticleList extends React.Component {
                             <div className="time">{time}</div>
                         </div>
                         <div style={
-                            this.state.isHidden ? {display: 'none'} : {display: 'block'}
+                            this.state.isHidden ? { display: 'none' } : { display: 'block' }
                         } className="delete-item" onClick={this.deleteItem.bind(this, rowData)}>
                             <div className="icon-delete"></div>
                         </div>
@@ -394,8 +379,8 @@ export default class myArticleList extends React.Component {
                 height: document.body.clientHeight
             }}>
                 <div className='emptyDiv emptyImgBg'
-                     style={{display: this.initDataSource.length == 0 ? "block" : "none"}
-                     }>
+                    style={{ display: this.initDataSource.length == 0 ? "block" : "none" }
+                    }>
                     <div className='emptyIcon'></div>
                     <div className="emptyText">还没有发布文章，快去发布吧~</div>
                 </div>
@@ -403,7 +388,7 @@ export default class myArticleList extends React.Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}    //数据类型是 ListViewDataSource
                     renderFooter={() => (
-                        <div style={{paddingTop: 5, paddingBottom: 0, textAlign: 'center'}}>
+                        <div style={{ paddingTop: 5, paddingBottom: 0, textAlign: 'center' }}>
                             {/*{this.state.initLoading?'':this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}*/}
                             {this.state.isLoading ? '正在加载...' : '已经全部加载完毕'}
                         </div>)}

@@ -1268,13 +1268,13 @@ export default class VillageCardSystemHome extends React.Component {
     pushNotifyData = () => {
         $(".notifyPop").show();
         $(".villageMask").show();
-        var url = "http://192.168.50.73:6443/richTextEditorVillage/?loginUserId=" + this.state.accountData.villageId
+        var url = "http://maaee.com:6443/richTextEditorVillage/?loginUserId=" + this.state.accountData.villageId
         $(".pushNotify").attr("src", url)
     }
     pushNotifyDataArtical = () => {
         $(".notifyArticalPop").show();
         $(".villageArticalMask").show();
-        var url = "http://192.168.50.73:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        var url = "http://maaee.com:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
         $(".pushArtical").attr("src", url)
     }
 
@@ -1808,7 +1808,7 @@ export default class VillageCardSystemHome extends React.Component {
     addArtical = () => {
         $(".pushArticalPop").show();
         $(".villageMask").show();
-        var url = "http://192.168.50.73:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        var url = "http://maaee.com:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
         $(".pushArtical").attr("src", url)
     }
 
@@ -1897,7 +1897,7 @@ export default class VillageCardSystemHome extends React.Component {
                         <div className='leftAccordion'>
                             <div>
                                 <div className="select memberList allClassName" onClick={this.onChangeLeft.bind(this, 0)}><i className="home-Members"></i>成员列表</div>
-                                <div className="villageHistory allClassName" onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>新村新貌</div>
+                                <div className="villageHistory allClassName" onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>乡村热点</div>
                                 <div className="articalLookThrough allClassName" onClick={this.onChangeLeft.bind(this, 1)}><i className="home-audit"></i>文章审核</div>
                                 <div className="lookThrough" style={{ display: "none" }}>
                                     {
@@ -2190,15 +2190,28 @@ export default class VillageCardSystemHome extends React.Component {
                                 <div style={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
                                     {
                                         this.state.honorVillagerList.map((v, i) => {
-                                            return (
-                                                <div className="item-imageBox">
-                                                    <div className="item-imageBoxN">
-                                                        <img src={v.avatar} />
-                                                        <span className="ranking">{i + 1}</span>
+                                            if (v.avatar === undefined) {
+                                                v.avatar = "http://60.205.86.217/upload9/2019-05-17/22/c41d42d8-f726-4a22-8f08-21b61df0cbdc.jpg?size=300x300";
+                                                return (
+                                                    <div className="item-imageBox">
+                                                        <div className="item-imageBoxN">
+                                                            <img src={v.avatar} />
+                                                            <span className="ranking">{i + 1}</span>
+                                                        </div>
+                                                        <div className="hornor-name">{v.userName}</div>
                                                     </div>
-                                                    <div className="hornor-name">{v.userName}</div>
-                                                </div>
-                                            );
+                                                );
+                                            } else {
+                                                return (
+                                                    <div className="item-imageBox">
+                                                        <div className="item-imageBoxN">
+                                                            <img src={v.avatar} />
+                                                            <span className="ranking">{i + 1}</span>
+                                                        </div>
+                                                        <div className="hornor-name">{v.userName}</div>
+                                                    </div>
+                                                );
+                                            }
                                         })
                                     }
                                 </div>
@@ -2417,7 +2430,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="bindCard-itemRight">
                                 <div className="Date-Picker">
                                     <DatePicker
-                                        extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
+                                        extra={this.state.dateUpdateValue}
                                         value={this.state.dateUpdate}
                                         onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
                                     >
@@ -2431,7 +2444,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className="bindCard-itemRight">
                                 <div className="Date-Picker">
                                     <DatePicker
-                                        extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValueEnd)}
+                                        extra={this.state.dateUpdateValueEnd}
                                         value={this.state.dateUpdateEnd}
                                         onChange={date => this.setState({ dateUpdateEnd: date, dateUpdateValueEnd: formatTime(date, "yyyy-MM-dd HH:mm") })}
                                     >

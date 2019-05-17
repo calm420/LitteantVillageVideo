@@ -172,7 +172,7 @@ export default class villageReg extends React.Component {
                             </InputItem>
                         </div>
                         <div className="bindCard-item" onClick={this.inputVillageCodeClick}>
-                            <div className="bindCard-itemLeft">村民</div>
+                            <div className="bindCard-itemLeft">村名</div>
                             <InputItem
                                 className="add_element"
                                 placeholder="请输入该管理员所对应的村名"

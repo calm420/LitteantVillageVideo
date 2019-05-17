@@ -300,7 +300,7 @@ class Index extends React.Component {
                         style={{ fontSize: '24px' }}>发布主题</Link></li>
                     <li><Link to="/myThemeTask?userId=53&targetId=1"
                         style={{ fontSize: '24px' }}>我的主题列表</Link></li>
-                    <li><Link to="/myArticleList?userId=53"
+                    <li><Link to="/myArticleList?userId=53&villageId=1&groupId=1"
                               style={{fontSize: '24px'}}>我的文章列表</Link></li>
                     <li><Link to="/LoginScanner"
                               style={{fontSize: '24px'}}>扫一扫登录中间页LoginScanner</Link></li>
@@ -326,7 +326,7 @@ class Index extends React.Component {
 
                     <li>
                         <Link
-                            to="/myCollection?userId=6" style={{ fontSize: '24px' }}>我的收藏</Link>
+                            to="/myCollection?userId=6&villageId=1&groupId=1" style={{ fontSize: '24px' }}>我的收藏</Link>
                     </li>
                     <li>
                         <Link
@@ -402,7 +402,6 @@ ReactDOM.render(
             <Route path="addUploadVideo" getComponent={addUploadVideo} />
             <Route path="updateVideo" getComponent={updateVideo} />
             <Route path="uploadvideoList" getComponent={uploadvideoList} />
-            <Route path="myArticleList" getComponent={myArticleList} />
             <Route path="myCollection" getComponent={myCollection} />
             <Route path="powerList" getComponent={powerList} />
             <Route path="searchHistory" getComponent={searchHistory} />

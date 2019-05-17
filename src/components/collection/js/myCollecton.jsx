@@ -30,9 +30,13 @@ export default class myCollection extends React.Component {
         var locationSearch = locationHref.substr(locationHref.indexOf("?") + 1);
         var searchArray = locationSearch.split("&");
         var auditorId = searchArray[0].split('=')[1];
+        var villageId = searchArray[1].split('=')[1];
+        var groupId = searchArray[2].split('=')[1];
         console.log(auditorId)
         calm.setState({
-            auditorId: auditorId
+            auditorId: auditorId,
+            villageId,
+            groupId
         }, () => {
             calm.getUserFavoriteByUserId();
         })
@@ -159,7 +163,7 @@ export default class myCollection extends React.Component {
      * 跳转文章详情页面
      */
     toArticleDetail(id,articleTitle) {
-        var url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.auditorId + "&type=1&machineType=&version=&articleTitle=" + ((articleTitle)));
+        var url = encodeURI(WebServiceUtil.mobileServiceURL + "articleDetail?vId=" + id + "&userId=" + this.state.auditorId + "&type=1&machineType=&version=&articleTitle=" + ((articleTitle))+"&villageId="+this.state.villageId+"&groupId="+this.state.groupId);
         var data = {
             method: 'openNewPage',
             url: url

@@ -8,8 +8,8 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const tabs = [
-    { title: '新村新貌', value: '2' },
-    { title: '乡村热点', value: '1' },
+    { title: '乡村热点', value: '2' },
+    { title: '新村新貌', value: '1' },
 ];
 var AscrollView;
 var BscrollView;
@@ -233,7 +233,7 @@ export default class articleList extends React.Component {
         var param = {
             "method": 'getArticleInfoListByType',
             "userId": this.state.userId,
-            "getType": this.state.index,
+            "getType": 0,
             "pageNo": this.state.defaultPageNo,
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
@@ -646,7 +646,7 @@ export default class articleList extends React.Component {
         console.log(type);
         if (type == 'article') {
             // var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-            var url = 'http://192.168.50.73:6443/richTextMobileEditorVillage/index.html?id=' + this.state.userId + "&village=" + this.state.villageId + "&groupId=" + this.state.groupId
+            var url = 'http://maaee.com:6443/richTextMobileEditorVillage/index.html?id=' + this.state.userId + "&village=" + this.state.villageId + "&groupId=" + this.state.groupId
             console.log(url);
             var data = {
                 method: 'openNewPage',

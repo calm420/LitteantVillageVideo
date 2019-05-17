@@ -1874,7 +1874,7 @@ export default class VillageCardSystemHome extends React.Component {
                         <div className='leftAccordion'>
                             <div>
                                 <div className="select memberList allClassName" onClick={this.onChangeLeft.bind(this, 0)}><i className="home-Members"></i>成员列表</div>
-                                <div className="villageHistory allClassName" onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>村史村情</div>
+                                <div className="villageHistory allClassName" onClick={this.onChangeLeft.bind(this, 3)}><i className="home-history"></i>新村新貌</div>
                                 <div className="articalLookThrough allClassName" onClick={this.onChangeLeft.bind(this, 1)}><i className="home-audit"></i>文章审核</div>
                                 <div className="lookThrough" style={{ display: "none" }}>
                                     {
@@ -2493,7 +2493,7 @@ export default class VillageCardSystemHome extends React.Component {
                     </div>
                 </div>
 
-                {/* 村史村情详情 */}
+                {/* 新村新貌详情 */}
                 <div className="villageHistoryPop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">
                         <div className="villageHeader">

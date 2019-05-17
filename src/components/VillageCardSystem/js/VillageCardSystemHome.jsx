@@ -1888,7 +1888,7 @@ export default class VillageCardSystemHome extends React.Component {
                                 <div className="lookThrough" style={{ display: "none" }}>
                                     {
                                         this.state.articalType.map((v, i) => {
-                                            return <div className={v.active ? "haha" : ""} onClick={this.clickArticalItem.bind(this, v)}>{v.title}</div>
+                                            return <div className={v.active ? "haha" : "hehe"} onClick={this.clickArticalItem.bind(this, v)}>{v.title}</div>
                                         })
                                     }
                                 </div>
@@ -2505,22 +2505,11 @@ export default class VillageCardSystemHome extends React.Component {
                 {/* 村史村情详情 */}
                 <div className="villageHistoryPop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">
-                        文章详情
-                    </div>
-                    <div className="editCont">
-                        <div className="bindCard-item">
-                            <div className="bindCard-itemLeft">文章标题</div>
-                            <div className="bindCard-itemRight">
-                                <div className="villageHeader">
-                                </div>
-                            </div>
+                        <div className="villageHeader">
                         </div>
-                        <div className="bindCard-item">
-                            <div className="bindCard-itemLeft">文章内容</div>
-                            <div className="bindCard-itemRight">
-                                <div className="villageContent">
-                                </div>
-                            </div>
+                    </div>
+                    <div className="editCont editCont-Nobottom">
+                        <div className="villageContent">
                         </div>
                     </div>
 
@@ -2528,22 +2517,11 @@ export default class VillageCardSystemHome extends React.Component {
                 {/* 通知详情 */}
                 <div className="villageNotifyPop villageMaskInner" style={{ display: "none" }}>
                     <div className="editHeader">
-                        通知详情
-                    </div>
-                    <div className="editCont">
-                        <div className="bindCard-item">
-                            <div className="bindCard-itemLeft">通知标题</div>
-                            <div className="bindCard-itemRight">
-                                <div className="notifyHeader">
-                                </div>
-                            </div>
+                        <div className="notifyHeader">
                         </div>
-                        <div className="bindCard-item">
-                            <div className="bindCard-itemLeft">通知内容</div>
-                            <div className="bindCard-itemRight">
-                                <div className="notifyContent">
-                                </div>
-                            </div>
+                    </div>
+                    <div className="editCont editCont-Nobottom">
+                        <div className="notifyContent">
                         </div>
                     </div>
                 </div>

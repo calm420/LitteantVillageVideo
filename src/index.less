@@ -677,7 +677,7 @@ hr {
   }
 }
 .am-list-item {
-  min-height: 52px !important;
+  min-height: 46px !important;
 }
 .am-input-control{
   font-size: 15px !important;
@@ -964,7 +964,7 @@ video::-webkit-media-controls-fullscreen-button {
   box-sizing: border-box;
   .editHeader{
     text-align: center;
-    padding: 29px 0 60px 0;
+    padding: 29px 30px 60px 30px;
     font-size: 20px;
     line-height: 1;
   }
@@ -979,6 +979,11 @@ video::-webkit-media-controls-fullscreen-button {
   }
   .editCont-Notitle{
     height: calc(~"100% - 106px");
+  }
+  .editCont-Nobottom{
+    max-height: calc(~"100% - 109px");
+    min-height: calc(~"100% - 149px");
+    height: auto;
   }
   .am-list-item .am-input-label{
     font-size: 18px !important;
@@ -1163,6 +1168,5 @@ video::-webkit-media-controls-fullscreen-button {
   width: 570px !important;
   border-radius: 4px;
   margin: 0 auto;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
+  left: calc(~"50% - 285px ") !important;
 }

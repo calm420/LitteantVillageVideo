@@ -1110,6 +1110,7 @@ export default class VillageCardSystemHome extends React.Component {
             teacherChangeValue: "",
             coursePlaceChangeValue: "",
             date: "",
+            dateEnd: "",
             courseImgUp: "",
         })
         $(".coursePop").show();
@@ -1133,6 +1134,10 @@ export default class VillageCardSystemHome extends React.Component {
             Toast.info("请选择上课时间", 1)
             return
         }
+        if (this.state.dateEnd == "" || this.state.dateEnd == undefined) {
+            Toast.info("请选择下课时间", 1)
+            return
+        }
         if (this.state.courseImgUp == "" || this.state.courseImgUp == undefined) {
             Toast.info("请上传课程封面", 1)
             return
@@ -1148,10 +1153,10 @@ export default class VillageCardSystemHome extends React.Component {
             "courseName": this.state.courseNameChangeValue,
             "tearcherName": this.state.teacherChangeValue,
             "classTime": formatTime(this.state.date, "yyyy-MM-dd HH:mm"),
+            "endTime": formatTime(this.state.dateEnd, "yyyy-MM-dd HH:mm"),
             "classAddress": this.state.coursePlaceChangeValue,
             "backgroundImg": this.state.courseImgUp
         };
-        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 this.getVillageCourseList(this.state.accountData.villageId)
@@ -1365,6 +1370,7 @@ export default class VillageCardSystemHome extends React.Component {
             updateCoursePlaceValue: v.classAddress,
             courseImgUpdate: v.backgroundImg,
             dateUpdateValue: v.classTime,
+            dateUpdateValueEnd: v.endTime ? v.endTime : "",
             updateCourseNameValue: v.courseName,
             updateTeacherValue: v.teacherName,
         }, () => {
@@ -1406,6 +1412,7 @@ export default class VillageCardSystemHome extends React.Component {
             "courseName": this.state.updateCourseNameValue,
             "tearcherName": this.state.updateTeacherValue,
             "classTime": WebServiceUtil.formatAllTime(this.state.dateUpdateValue),
+            "endTime": WebServiceUtil.formatAllTime(this.state.dateUpdateValueEnd),
             "classAddress": this.state.updateCoursePlaceValue,
             "backgroundImg": this.state.courseImgUpdate,
         };
@@ -2152,19 +2159,21 @@ export default class VillageCardSystemHome extends React.Component {
                                         <div className="emptyIcon"></div>
                                         暂无荣誉村名哟
                                     </div>
-                                    <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
-                                        {
-                                            this.state.honorVillagerList.map((v, i) => {
-                                                return (
-                                                    <span>
-                                                        <img src={v.avatar} />
-                                                        <span>{i + 1}</span>
+                                </div>
+                                <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
+                                    {
+                                        this.state.honorVillagerList.map((v, i) => {
+                                            return (
+                                                <span className="item-imageBox">
+                                                        <div className="item-imageBoxN">
+                                                            <img src={v.avatar} />
+                                                            <span className="ranking">{i + 1}</span>
+                                                        </div>
                                                         <span>{v.userName}</span>
                                                     </span>
-                                                );
-                                            })
-                                        }
-                                    </div>
+                                            );
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -2306,6 +2315,19 @@ export default class VillageCardSystemHome extends React.Component {
                         </div>
                     </div>
                     <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">结束时间</div>
+                        <div className="bindCard-itemRight">
+                            <div className="Date-Picker">
+                                <DatePicker
+                                    value={this.state.dateEnd}
+                                    onChange={date => this.setState({ dateEnd:date })}
+                                >
+                                    <List.Item arrow="horizontal"></List.Item>
+                                </DatePicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bindCard-item">
                         <div className="bindCard-itemLeft">课程封面</div>
                         <div className="bindCard-itemRight">
                             <div className="parentDiv">
@@ -2362,6 +2384,20 @@ export default class VillageCardSystemHome extends React.Component {
                                     extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValue)}
                                     value={this.state.dateUpdate}
                                     onChange={date => this.setState({ dateUpdate: date, dateUpdateValue: formatTime(date, "yyyy-MM-dd HH:mm") })}
+                                >
+                                    <List.Item arrow="horizontal"></List.Item>
+                                </DatePicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bindCard-item">
+                        <div className="bindCard-itemLeft">结束时间</div>
+                        <div className="bindCard-itemRight">
+                            <div className="Date-Picker">
+                                <DatePicker
+                                    extra={WebServiceUtil.formatAllTime(this.state.dateUpdateValueEnd)}
+                                    value={this.state.dateUpdateEnd}
+                                    onChange={date => this.setState({ dateUpdateEnd: date, dateUpdateValueEnd: formatTime(date, "yyyy-MM-dd HH:mm") })}
                                 >
                                     <List.Item arrow="horizontal"></List.Item>
                                 </DatePicker>

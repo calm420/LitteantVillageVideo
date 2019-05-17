@@ -11,6 +11,7 @@ export default class villageReg extends React.Component {
         this.state = {
             schoolName: "请选择自己所在村子",
             groupName: "请选择自己所在小组",
+            codeValue:""
         }
     }
     componentWillReceiveProps () {
@@ -215,10 +216,10 @@ export default class villageReg extends React.Component {
             Toast.fail('请输入姓名', 1, null, false);
             return
         }
-        if (this.state.codeValue == undefined) {
-            Toast.fail('请输入邀请码', 1, null, false);
-            return
-        }
+        // if (this.state.codeValue == undefined) {
+        //     Toast.fail('请输入邀请码', 1, null, false);
+        //     return
+        // }
         var _this = this;
         var param = {
             "method": 'updateLittleVillageUser',
@@ -292,14 +293,14 @@ export default class villageReg extends React.Component {
                     <div onclick={this.inputRefClick}>
                         <InputItem
                             className="add_element"
-                            placeholder="请输入自己真实姓名"
+                            placeholder="请输入真实姓名以便审核"
                             value={this.state.nameValue}
                             onChange={this.inputOnNameChange}
                             ref={el => this.inputRef = el}
                         >
                         </InputItem>
                     </div>
-                    <div onClick={this.inputCodeClick}>
+                    <div style={{display:"none"}} onClick={this.inputCodeClick}>
                         <InputItem
                             className="add_element"
                             placeholder="请输入邀请码"

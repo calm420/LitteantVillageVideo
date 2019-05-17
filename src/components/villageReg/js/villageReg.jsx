@@ -11,7 +11,9 @@ export default class villageReg extends React.Component {
         this.state = {
             schoolName: "请选择自己所在村子",
             groupName: "请选择自己所在小组",
-            codeValue:""
+            codeValue:"",
+            inputValue2:""
+            
         }
     }
     componentWillReceiveProps () {
@@ -62,6 +64,7 @@ export default class villageReg extends React.Component {
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (result) => {
                 if (result.msg == '调用成功' || result.success == true) {
+                    
                     if (result.response.length === 0) {
                         Toast.info('未找到相关村', 1, null, false)
                     } else {
@@ -82,11 +85,6 @@ export default class villageReg extends React.Component {
     */
     getVillageInfoByVillageName2 = () => {
         var _this = this;
-
-        if (this.state.inputValue2 === '') {
-            Toast.fail('请输入内容', 1, null, false);
-            return
-        }
         var param = {
             "method": 'getVillageGroupByGroupName',
             "groupName": this.state.inputValue2,
@@ -154,7 +152,9 @@ export default class villageReg extends React.Component {
 
         console.log(data, "data")
         this.exitSchoolInput();
-        this.setState({ schoolName: data.villageName, schoolId: data.villageId, schoolClassName: 'color_3' })
+        this.setState({ schoolName: data.villageName, schoolId: data.villageId, schoolClassName: 'color_3' },()=>{
+            this.getVillageInfoByVillageName2();
+        })
     };
 
     schoolOnClick = () => {

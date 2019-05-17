@@ -1841,8 +1841,17 @@ export default class VillageCardSystemHome extends React.Component {
 
     closePop = () => {
         $(".villageHistoryPop").hide();
+        $(".popBox").hide();
+        $(".editorPop").hide();
+        $(".coursePop").hide();
+        $(".codePop").hide();
+        $(".courseUpdatePop").hide();
         $(".villageMask").hide();
         $(".villageNotifyPop").hide();
+        $(".attPop").hide();
+        $(".pushArticalPop").hide();
+        $(".groupNamePop").hide();
+        $(".villageHistoryPop").hide();
     }
 
     seeNotifyDetail = (v) => {
@@ -1937,8 +1946,8 @@ export default class VillageCardSystemHome extends React.Component {
                         <div className="rightContent">
                             {this.state.villageNewsHistory.map((v, i) => {
                                 return (
-                                    <div className="right-item my_flex" onClick={this.seeArticalDetail.bind(this, v)}>
-                                        <div className="item-left text_hidden"><span className="Information-show">{v.title}</span></div>
+                                    <div className="right-item my_flex" >
+                                        <div className="item-left text_hidden" onClick={this.seeArticalDetail.bind(this, v)}><span className="Information-show">{v.title}</span></div>
                                         {/* <div dangerouslySetInnerHTML={{ __html:v.content }}>
                                              </div> */}
                                         <div className="operation">
@@ -2138,8 +2147,8 @@ export default class VillageCardSystemHome extends React.Component {
                                 {
                                     this.state.villageNotifyList.map((v, i) => {
                                         return (
-                                            <div className="right-item my_flex" onClick={this.seeNotifyDetail.bind(this, v)}>
-                                                <div className="item-left text_hidden">
+                                            <div className="right-item my_flex" >
+                                                <div className="item-left text_hidden" onClick={this.seeNotifyDetail.bind(this, v)}>
                                                     <span className="Information-show">{v.noticeTitle}</span>
                                                 </div>
                                                 <div className="operation">
@@ -2164,7 +2173,7 @@ export default class VillageCardSystemHome extends React.Component {
                                         暂无荣誉村名哟
                                     </div>
                                 </div>
-                                <div display={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
+                                <div style={{ display: this.state.showHornerEmpty ? "none" : "block" }}>
                                     {
                                         this.state.honorVillagerList.map((v, i) => {
                                             return (

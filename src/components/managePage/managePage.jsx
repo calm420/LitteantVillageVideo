@@ -160,12 +160,13 @@ export default class villageReg extends React.Component {
                             </InputItem>
                         </div>
                         <div className="bindCard-item" onClick={this.inputCodeClick}>
-                            <div className="bindCard-itemLeft">管理员</div>
+                            <div className="bindCard-itemLeft">密码</div>
                             <InputItem
                                 className="add_element"
-                                placeholder="请设置管理员账号"
+                                placeholder="请设置管理员密码"
                                 value={this.state.codeValue}
                                 onChange={this.inputOnChange}
+                                type="password"
                                 ref={el => this.inputCodeRef = el}
                             >
                             </InputItem>

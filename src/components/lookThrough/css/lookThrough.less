@@ -151,8 +151,8 @@
     left: 420px !important;
     height: 100% !important;
     #waitLookThrough, #alreadyLookThrough{
-      height: calc(~"100% - 96px");
-      padding: 0 35px;
+      height: 100%;
+      padding: 0;
       .isDangerArea.priority .am-list-item:first-child{
         padding-left: 0;
       }
@@ -186,13 +186,13 @@
     .bottomBox{
       padding: 20px 0;
       justify-content: center;
-      bottom: 84px;
+      bottom: 0;
       &:after{
         background: transparent;
       }
       span{
-        height: 56px;
-        line-height: 56px;
+        height: 46px;
+        line-height: 46px;
         width: 240px;
         flex: none;
         font-size: 20px;
@@ -293,5 +293,9 @@
   .emptyDiv{
     height: 181px;
     width: 420px;
+  }
+  .waitLookThrough-cont{
+    height: calc(~"100% - 106px") !important;
+    padding: 0 35px;
   }
 }

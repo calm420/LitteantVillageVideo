@@ -1,0 +1,63 @@
+#managePage{
+    width: 500px;
+    margin: 0 auto;
+    .add_element {
+      border-bottom: 1px solid #ccc
+    }
+    .editBtn{
+        display: block;
+        width: 46px;
+        height: 46px;
+        border: 1px solid #BFBFBF;
+        border-radius: 4px;
+        text-align: center;
+        background: url("../../components/VillageCardSystem/img/village-add.png") no-repeat center;
+        background-size: 21px 21px;
+      }
+    .bindCard-item{
+        margin-top: 6px;
+        margin-bottom: 6px;
+        color: #333;
+        font-size: 18px;
+        .bindCard-itemLeft{
+          width: 100px;
+          display: inline-block;
+          vertical-align: top;
+          line-height: 46px;
+        }
+        .am-list-item.am-input-item, .parentDiv, .am-list-item{
+          width:calc(~"100% - 100px");
+          display: inline-block;
+          padding-left: 0;
+        }
+        .parentDiv{
+          position: relative;
+          vertical-align: middle;
+          & input{
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+          }
+          .editBtn{
+            display: inline-block;
+          }
+          .photo-add{
+            width: 46px;
+            height: 46px;
+            display: inline-block;
+            position: relative;
+            top: 2px;
+            left: 5px;
+            background: #eee;
+            img{
+              width: 100%;
+              height:100%;
+              object-fit: cover;
+            }
+          }
+        }
+      }
+}

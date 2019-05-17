@@ -1,0 +1,65 @@
+#managePage {
+  width: 500px;
+  margin: 0 auto;
+}
+#managePage .add_element {
+  border-bottom: 1px solid #ccc;
+}
+#managePage .editBtn {
+  display: block;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #BFBFBF;
+  border-radius: 4px;
+  text-align: center;
+  background: url("../../components/VillageCardSystem/img/village-add.png") no-repeat center;
+  background-size: 21px 21px;
+}
+#managePage .bindCard-item {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 18px;
+}
+#managePage .bindCard-item .bindCard-itemLeft {
+  width: 100px;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 46px;
+}
+#managePage .bindCard-item .am-list-item.am-input-item,
+#managePage .bindCard-item .parentDiv,
+#managePage .bindCard-item .am-list-item {
+  width: calc(100% - 100px);
+  display: inline-block;
+  padding-left: 0;
+}
+#managePage .bindCard-item .parentDiv {
+  position: relative;
+  vertical-align: middle;
+}
+#managePage .bindCard-item .parentDiv input {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  width: 46px;
+  height: 46px;
+  cursor: pointer;
+}
+#managePage .bindCard-item .parentDiv .editBtn {
+  display: inline-block;
+}
+#managePage .bindCard-item .parentDiv .photo-add {
+  width: 46px;
+  height: 46px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  left: 5px;
+  background: #eee;
+}
+#managePage .bindCard-item .parentDiv .photo-add img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

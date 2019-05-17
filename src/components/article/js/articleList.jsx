@@ -8,8 +8,8 @@ var dataSource = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 const tabs = [
-    { title: '乡村热点', value: '1' },
     { title: '新村新貌', value: '2' },
+    { title: '乡村热点', value: '1' },
 ];
 var AscrollView;
 var BscrollView;

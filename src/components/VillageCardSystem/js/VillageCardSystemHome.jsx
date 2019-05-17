@@ -113,6 +113,14 @@ export default class VillageCardSystemHome extends React.Component {
             this.onMessage(e);
         })
 
+        if (window.location.href.indexOf("/VillageCardSystemHome") > -1) {
+            //防止页面后退
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, document.URL);
+            });
+        }
+
     }
 
 
@@ -1912,7 +1920,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <span>{this.state.villageName}</span>
                             <div className='btn'>
                                 {/* <span onClick={this.editorVillageName}>编辑名称</span> */}
-                                <span onClick={this.editorGroupName}>编辑分组</span>
+                                <span onClick={this.editorGroupName}>新增小组</span>
                                 <span style={{display:"none"}} onClick={this.editorCodeName}>邀请码</span>
                             </div>
                         </div>

@@ -89,7 +89,7 @@ export default class myCollection extends React.Component {
             "targetType": -1,
             "pageNo": calm.state.defaultPageNo,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 var videoList = [], videoObj = [];
                 if (result.success) {

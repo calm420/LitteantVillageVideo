@@ -85,13 +85,13 @@ export default class villageCardSystemLogin extends React.Component {
      * 登录
      */
     login = () => {
-        // if ($('#act').val().trim() == '') {
-        //     // Toast.info('请输入账号');
-        //     return;
-        // } else if ($('#pwd').val().trim() == '') {
-        //     // Toast.info('请输入密码');
-        //     return;
-        // }
+        if ($('#act').val().trim() == '') {
+            // Toast.info('请输入账号');
+            return;
+        } else if ($('#pwd').val().trim() == '') {
+            // Toast.info('请输入密码');
+            return;
+        }
         var _this = this;
         var param = {
             "method": "LittleAntLogin",

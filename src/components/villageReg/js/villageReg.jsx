@@ -313,8 +313,7 @@ export default class villageReg extends React.Component {
 
 
 
-                    {/*<div className='codeBtn' onClick={this.showCode}>邀请码请联系村管理员</div>*/}
-                    <div className='codeBtn'>邀请码请联系村管理员</div>
+                    {/*<div className='codeBtn'>邀请码请联系村管理员</div>*/}
                 </div>
 
                 <div className="villageMask" style={{ display: "none" }}></div>

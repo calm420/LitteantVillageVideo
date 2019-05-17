@@ -999,11 +999,16 @@ export default class VillageCardSystemHome extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                this.getVillageGroupList(this.state.accountData.villageId)
-                $(".villageMask").hide();
-                $(".villageMaskInner").hide();
+                if(result.success){
+                    this.getVillageGroupList(this.state.accountData.villageId)
+                    $(".villageMask").hide();
+                    $(".villageMaskInner").hide();
+                }else {
+                    Toast.fail(result.msg, 1);
+                }
             },
             onError: function (error) {
+              
                 Toast.fail(error, 1);
             }
         });
@@ -1378,8 +1383,8 @@ export default class VillageCardSystemHome extends React.Component {
             VillCourse: v,
             updateCoursePlaceValue: v.classAddress,
             courseImgUpdate: v.backgroundImg,
-            dateUpdateValue: v.classTime,
-            dateUpdateValueEnd: v.endTime ? v.endTime : "",
+            dateUpdateValue: WebServiceUtil.formatAllTime(v.classTime),
+            dateUpdateValueEnd: WebServiceUtil.formatAllTime(v.endTime),
             updateCourseNameValue: v.courseName,
             updateTeacherValue: v.teacherName,
         }, () => {
@@ -1420,15 +1425,15 @@ export default class VillageCardSystemHome extends React.Component {
             "id": this.state.villCourseId,
             "courseName": this.state.updateCourseNameValue,
             "tearcherName": this.state.updateTeacherValue,
-            "classTime": WebServiceUtil.formatAllTime(this.state.dateUpdateValue),
-            "endTime": WebServiceUtil.formatAllTime(this.state.dateUpdateValueEnd),
+            "classTime": this.state.dateUpdateValue,
+            "endTime": this.state.dateUpdateValueEnd,
             "classAddress": this.state.updateCoursePlaceValue,
             "backgroundImg": this.state.courseImgUpdate,
         };
-        console.log(param, "param")
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: (res) => {
                 if (res.success) {
+                    Toast.info("修改成功",1);
                     this.getVillageCourseList(this.state.accountData.villageId)
                     $(".courseUpdatePop").hide();
                     $(".villageMask").hide();
@@ -1869,6 +1874,7 @@ export default class VillageCardSystemHome extends React.Component {
         $(".notifyContent").html(v.noticeContent)
     }
     render () {
+
         return (
             <div id="VillageCardSystemHome" style={{
                 height: document.body.clientHeight
@@ -1921,7 +1927,7 @@ export default class VillageCardSystemHome extends React.Component {
                             <div className='btn'>
                                 {/* <span onClick={this.editorVillageName}>编辑名称</span> */}
                                 <span onClick={this.editorGroupName}>新增小组</span>
-                                <span style={{display:"none"}} onClick={this.editorCodeName}>邀请码</span>
+                                <span style={{ display: "none" }} onClick={this.editorCodeName}>邀请码</span>
                             </div>
                         </div>
                         <div className="rightContent">

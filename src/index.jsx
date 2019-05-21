@@ -421,7 +421,6 @@ ReactDOM.render(
             <Route path="myThemeTask" getComponent={myThemeTask} />
             <Route path="VillageCardSystemHome" getComponent={VillageCardSystemHome} />
             <Route path="villageCardSystemLogin" getComponent={villageCardSystemLogin} />
-            <Route path="VillageCardSystemHome22" getComponent={VillageCardSystemHome22} />
             <Route path="villageReg" getComponent={villageReg} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />

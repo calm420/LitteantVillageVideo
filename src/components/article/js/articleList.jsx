@@ -128,26 +128,7 @@ export default class articleList extends React.Component {
         // });
     }
 
-    // getVillageVillageNewsByVillageId = () => {
-    //     var param = {
-    //         "method": 'getVillageVillageNewsByVillageId',
-    //         "villageId": this.state.villageId,
-    //         "pageNo": -1,
-    //     };
-    //     WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
-    //         onResponse: result => {
-    //             console.log(result)
-    //             if (result.success) {
-    //                 this.setState({
-    //                     villageNewsHistory: result.response
-    //                 })
-    //             }
-    //         },
-    //         onError: function (error) {
-    //             Toast.fail(error, 1);
-    //         }
-    //     });
-    // }
+
 
     refurbishNoom () {
         var _this = this;
@@ -548,7 +529,6 @@ export default class articleList extends React.Component {
         }, () => {
             console.log(val.value)
             if (val.value == 2) {
-                console.log('切换到圈子');
                 this.getVillageVillageNewsByVillageId()
             } else {
                 this.getArticleRecommenLittleVideoList(false, () => {
@@ -646,7 +626,8 @@ export default class articleList extends React.Component {
         console.log(type);
         if (type == 'article') {
             // var url = WebServiceUtil.mobileServiceURL + "mobileEditor?userId=" + this.state.userId;
-            var url = 'http://maaee.com:6443/richTextMobileEditorVillage/index.html?id=' + this.state.userId + "&village=" + this.state.villageId + "&groupId=" + this.state.groupId
+            // var url = 'http://maaee.com:6443/richTextMobileEditorVillage/index.html?id=' + this.state.userId + "&village=" + this.state.villageId + "&groupId=" + this.state.groupId
+            var url = 'http://192.168.50.73:6443/richTextMobileEditorVillage/index.html?id=' + this.state.userId + "&village=" + this.state.villageId + "&groupId=" + this.state.groupId
             console.log(url);
             var data = {
                 method: 'openNewPage',

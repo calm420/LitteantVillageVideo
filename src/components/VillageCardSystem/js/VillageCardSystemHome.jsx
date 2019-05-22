@@ -314,6 +314,7 @@ export default class VillageCardSystemHome extends React.Component {
             $(".pushNotify").hide();
             $(".hornorVillages").hide();
             $(".learnList").hide();
+            $(".villageImgXia").hide();
             this.setState({
                 editCardType:
                     [
@@ -344,6 +345,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "乡村振兴上") {
+            $(".villageImgXia").hide();
             this.selectUploadFile(0)
             $(".villageImg").show();
             $(".dangke").hide();
@@ -421,6 +423,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "党课预告") {
+            $(".villageImgXia").hide();
             this.getVillageCourseList(this.state.accountData.villageId)
             $(".villageImg").hide();
             $(".dangke").show();
@@ -459,6 +462,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "党课考勤") {
+            $(".villageImgXia").hide();
             this.getVillageAttendList(this.state.accountData.villageId)
             $(".villageImg").hide();
             $(".dangke").hide();
@@ -497,6 +501,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "发布通知") {
+            $(".villageImgXia").hide();
             this.getVillageNoticeList(this.state.accountData.villageId);
 
             $(".villageImg").hide();
@@ -536,6 +541,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "荣誉村民") {
+            $(".villageImgXia").hide();
             this.getHornerVillage(this.state.accountData.villageId)
             $(".villageImg").hide();
             $(".dangke").hide();
@@ -574,6 +580,7 @@ export default class VillageCardSystemHome extends React.Component {
                     ],
             })
         } else if (v.title == "学习榜") {
+            $(".villageImgXia").hide();
             this.getLearningList(this.state.accountData.villageId)
             $(".villageImg").hide();
             $(".dangke").hide();

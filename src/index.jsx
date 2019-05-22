@@ -247,11 +247,7 @@ const VillageCardSystemHome =  (location, cb) => {
         cb(null, require('./components/VillageCardSystem/js/VillageCardSystemHome.jsx').default)
     })
 };
-const VillageCardSystemHome22 =  (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/VillageCardSystem/js/VillageCardSystemHome22.jsx').default)
-    })
-};
+
 
 //村民注册页面跳转
 const villageReg = (location, cb) => {

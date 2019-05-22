@@ -60,7 +60,7 @@ export default class villageReg extends React.Component {
                 }
             },
             onError: function (error) {
-                Toast.warn('保存失败');
+                Toast.fail('保存失败');
             }
         });
     }

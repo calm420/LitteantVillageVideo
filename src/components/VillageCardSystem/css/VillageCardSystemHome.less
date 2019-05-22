@@ -192,7 +192,7 @@
     text-align: center;
     text-indent: 0;
     .haha, .hehe{
-      width: 100px;
+      width: 110px;
       margin: 0 auto;
       text-align: left;
       text-indent: 16px;
@@ -386,13 +386,13 @@
     }
   }
   /*乡村振兴、荣誉村民*/
-  .villageImg, .hornorVillages{
+  .villageImg, .hornorVillages, .villageImgXia{
     height: 100%;
     .rightContent{
       height: calc(~"100% - 80px");
       overflow-y: auto;
       overflow-x: hidden;
-      #image_box .item-imageBox, .item-imageBox{
+      #image_box .item-imageBox, .item-imageBox, #image_box_xia .item-imageBox{
         display: inline-block;
         position: relative;
         .item-imageBoxN, img, video{
@@ -414,11 +414,13 @@
           right: -15px;
           z-index: 1;
           border-radius: 50%;
+          width: 30px;
+          height: 30px;
         }
       }
     }
   }
-  .villageImg  #image_box .item-imageBox{
+  .villageImg  #image_box .item-imageBox, .villageImgXia  #image_box_xia .item-imageBox{
     width: 180px;
     height: 180px;
     margin: 45px 42px 0 0;

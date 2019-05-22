@@ -2354,12 +2354,12 @@ export default class VillageCardSystemHome extends React.Component {
                                                         type == "mp4" ?
                                                             <div className="item-imageBoxN">
                                                                 <video src={v.url.split("&")[0]}></video>
-                                                                <span className="village-imgDelete" onClick={this.deleteUploadFileXia.bind(this, v)}>删除</span>
+                                                                <span className="village-imgDelete" onClick={this.deleteUploadFileXia.bind(this, v)}></span>
                                                             </div>
                                                             :
                                                             <div className="item-imageBoxN">
                                                                 <img src={v.url} alt="" />
-                                                                <span className="village-imgDelete" onClick={this.deleteUploadFileXia.bind(this, v)}>删除</span>
+                                                                <span className="village-imgDelete" onClick={this.deleteUploadFileXia.bind(this, v)}></span>
                                                             </div>
                                                     }
 

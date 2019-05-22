@@ -51,7 +51,10 @@ export default class VillageCardSystemHome extends React.Component {
                     title: "绑定村牌", active: false
                 },
                 {
-                    title: "乡村振兴", active: false
+                    title: "乡村振兴上", active: false
+                },
+                {
+                    title: "乡村振兴下", active: false
                 },
                 {
                     title: "党课预告", active: false
@@ -88,6 +91,7 @@ export default class VillageCardSystemHome extends React.Component {
             cardTitleValue: "",
             cardContentValue: "",
             uploadFileList: [],
+            uploadFileListXia: [],
             villageNewsHistory: [],
             courseImgUp: "",
             learningList: []
@@ -232,7 +236,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: true
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -314,7 +321,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: true
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -333,8 +343,8 @@ export default class VillageCardSystemHome extends React.Component {
                         },
                     ],
             })
-        } else if (v.title == "乡村振兴") {
-            this.selectUploadFile()
+        } else if (v.title == "乡村振兴上") {
+            this.selectUploadFile(0)
             $(".villageImg").show();
             $(".dangke").hide();
             $(".dangkeAtt").hide();
@@ -349,7 +359,49 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: false
                         },
                         {
-                            title: "乡村振兴", active: true
+                            title: "乡村振兴上", active: true
+                        },
+                        {
+                            title: "乡村振兴下", active: false
+                        },
+                        {
+                            title: "党课预告", active: false
+                        },
+                        {
+                            title: "党课考勤", active: false
+                        },
+                        {
+                            title: "发布通知", active: false
+                        },
+                        {
+                            title: "荣誉村民", active: false
+                        },
+                        {
+                            title: "学习榜", active: false
+                        },
+                    ],
+            })
+        } else if (v.title == "乡村振兴下") {
+            this.selectUploadFile(1)
+            $(".villageImg").hide();
+            $(".villageImgXia").show();
+            $(".dangke").hide();
+            $(".dangkeAtt").hide();
+            $(".pushNotify").hide();
+            $(".hornorVillages").hide();
+            $(".learnList").hide();
+            $(".bindCard").hide();
+            this.setState({
+                editCardType:
+                    [
+                        {
+                            title: "绑定村牌", active: false
+                        },
+                        {
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: true
                         },
                         {
                             title: "党课预告", active: false
@@ -384,7 +436,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: false
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: true
@@ -419,7 +474,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: false
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -455,7 +513,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: false
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -490,7 +551,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: false
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -525,7 +589,10 @@ export default class VillageCardSystemHome extends React.Component {
                             title: "绑定村牌", active: false
                         },
                         {
-                            title: "乡村振兴", active: false
+                            title: "乡村振兴上", active: false
+                        },
+                        {
+                            title: "乡村振兴下", active: false
                         },
                         {
                             title: "党课预告", active: false
@@ -647,9 +714,9 @@ export default class VillageCardSystemHome extends React.Component {
                                                     villageHappyVideo: classDemeanors
                                                 }, () => {
                                                     console.log(calm.state.villageHappyVideo, "calm.state.villageHappyVideo")
-                                                    calm.addUploadFile(1, calm.state.villageHappyVideo)
+                                                    calm.addUploadFile(1, calm.state.villageHappyVideo,0)
                                                     setTimeout(() => {
-                                                        calm.selectUploadFile();
+                                                        calm.selectUploadFile(0);
                                                     }, 300);
                                                 })
                                             },
@@ -665,9 +732,9 @@ export default class VillageCardSystemHome extends React.Component {
                                 calm.setState({
                                     villageHappyImg: classDemeanors[0]
                                 }, () => {
-                                    calm.addUploadFile(0, classDemeanors[0])
+                                    calm.addUploadFile(0, classDemeanors[0],0)
                                     setTimeout(() => {
-                                        calm.selectUploadFile();
+                                        calm.selectUploadFile(0);
                                     }, 300);
                                 })
                             }
@@ -682,6 +749,143 @@ export default class VillageCardSystemHome extends React.Component {
             }
         });
     }
+
+     /**
+    * 获取图片路径
+    */
+   getImageXia () {
+    $('#upload_image_Xia').unbind("change");
+    $('.upload_image_Xia').bind('change', function (evt) {
+        if (evt.target.files[0]) {
+            var formData = new FormData();
+            formData.append("file" + 0, evt.target.files[0]);
+            formData.append("name" + 0, evt.target.files[0].name);
+            $.ajax({
+                type: "POST",
+                url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                enctype: 'multipart/form-data',
+                data: formData,
+                // 告诉jQuery不要去处理发送的数据
+                processData: false,
+                // 告诉jQuery不要去设置Content-Type请求头
+                contentType: false,
+                xhr: function () {        //这是关键  获取原生的xhr对象  做以前做的所有事情
+                    var xhr = jQuery.ajaxSettings.xhr();
+                    xhr.upload.onload = function () {
+                        // console.log('上传完成隐藏进度条');
+                        $('.progressText').text('上传完成')
+                        setTimeout(function () {
+                            $('#progress')[0].style.display = 'none';
+                            $('.progress-bar')[0].style.width = '0%';
+                            $('.progressText').text('进度: 0%');
+                        }, 500);
+                    };
+                    xhr.upload.onprogress = function (ev) {
+                        console.log(ev, "ev")
+                        if (ev.loaded == ev.total) {
+                            $('.progress-bar')[0].style.width = '100%';
+                        }
+                        if ($('#progress')[0].style.display == 'none') {
+                            $('#progress')[0].style.display = 'block';
+                        } else {
+                            console.log("jinlaile")
+                            // console.log(((ev.loaded / ev.total) * 100).toFixed(0) + '%', 'ev');
+                            //显示进度条
+                            $('.progress-bar')[0].style.width = ((ev.loaded / ev.total) * 100).toFixed(0) + '%';
+                            console.log($('.progress-bar')[0].style.width, "hhehehhe")
+                            $('.progressText').text('进度: ' + ((ev.loaded / ev.total) * 100).toFixed(0) + '%')
+                        }
+                    };
+                    return xhr;
+                },
+                success: function (res) {
+                    var newArr = res.split('.');
+                    if (newArr[newArr.length - 1] == "JPG") {
+                        res = res.replace(/JPG/g, "jpg");;
+                    }
+                    if (newArr[newArr.length - 1] == "JPEG") {
+                        res = res.replace(/JPEG/g, "jpeg");;
+                    }
+                    if (newArr[newArr.length - 1] == "MP4") {
+                        res = res.replace(/MP4/g, "mp4");;
+                    }
+                    //拿到图片地址,显示在页面等待上传
+                    var classDemeanors = res.split(',');
+                    var promiseArray = [];
+                    console.log(classDemeanors, '图片地址');
+                    for (var k = 0; k < classDemeanors.length; k++) {
+                        console.log(k);
+                        if (classDemeanors[k].substr(classDemeanors[k].length - 3, 3) == 'mp4') {
+                            console.log("mp4")
+                            console.log(k, '视频');
+                            var cut = new Promise(function (resolve, reject) {
+                                let t = k;
+                                let video = document.createElement("video");
+                                let canvas = document.createElement("canvas");
+                                video.src = classDemeanors[t];
+                                video.crossOrigin = 'Anonymous';
+                                video.addEventListener('loadeddata', function () {
+                                    console.log('执行');
+                                    canvas.width = video.videoWidth * 0.8;
+                                    canvas.height = video.videoHeight * 0.8;
+                                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                                    // var $Blob = canvas.toDataURL("image/png");
+                                    var $Blob = calm.getBlobBydataURI(canvas.toDataURL("image/png"), 'image/jpeg');
+                                    var formData = new FormData();
+                                    formData.append("filePath", $Blob, "file_" + Date.parse(new Date()) + ".png");
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "https://jiaoxue.maaee.com:8890/Excoord_Upload_Server/file/upload",
+                                        enctype: 'multipart/form-data',
+                                        data: formData,
+                                        // 告诉jQuery不要去处理发送的数据
+                                        processData: false,
+                                        // 告诉jQuery不要去设置Content-Type请求头
+                                        contentType: false,
+                                        success: function (res) {
+                                            var firstImg = res;
+                                            classDemeanors = classDemeanors + '&' + firstImg;
+                                            resolve('成功');
+                                            calm.setState({
+                                                villageHappyVideo: classDemeanors
+                                            }, () => {
+                                                console.log(calm.state.villageHappyVideo, "calm.state.villageHappyVideo")
+                                                calm.addUploadFile(1, calm.state.villageHappyVideo,1)
+                                                setTimeout(() => {
+                                                    calm.selectUploadFile(1);
+                                                }, 300);
+                                            })
+                                        },
+                                        error: function (res) {
+                                        }
+                                    });
+                                });
+                            });
+                            promiseArray.push(cut);
+
+                        } else {
+                            console.log("jpg")
+                            calm.setState({
+                                villageHappyImg: classDemeanors[0]
+                            }, () => {
+                                calm.addUploadFile(0, classDemeanors[0],1)
+                                setTimeout(() => {
+                                    calm.selectUploadFile(1);
+                                }, 300);
+                            })
+                        }
+                    }
+                    // console.log(promiseArray,'promiseArray')
+                    Promise.all(promiseArray).then(function (e) {
+                        console.log("890-")
+
+                    })
+                }
+            });
+        }
+    });
+}
+
 
     /**
    * 首先需要 吧 base64 流转换成 blob 对象，文件对象都继承它
@@ -815,14 +1019,15 @@ export default class VillageCardSystemHome extends React.Component {
     }
 
     //添加乡村振兴图片
-    addUploadFile = (type, url) => {
+    addUploadFile = (type, url,status) => {
         console.log(url, "uuuu")
         var param = {
             "method": 'addUploadFile',
             "url": url,
             "villageId": this.state.accountData.villageId,
             "uploaderId": this.state.accountData.uid,
-            "type": type == 0 ? 0 : 1
+            "type": type == 0 ? 0 : 1,
+            "status": status
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
@@ -833,16 +1038,25 @@ export default class VillageCardSystemHome extends React.Component {
         });
     }
 
-    selectUploadFile = () => {
+    selectUploadFile = (status) => {
         var param = {
             "method": 'selectUploadFile',
             "villageId": this.state.accountData.villageId,
+            "status": status
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                this.setState({
-                    uploadFileList: result.response
-                })
+                if (status == 0) {
+                    this.setState({
+                        uploadFileList: result.response
+                    })
+                } else {
+                    this.setState({
+                        uploadFileListXia: result.response
+                    })
+
+                }
+
             },
             onError: function (error) {
                 Toast.fail(error, 1);
@@ -862,7 +1076,26 @@ export default class VillageCardSystemHome extends React.Component {
             onResponse: result => {
                 if (result.success) {
                     Toast.info("删除成功", 1)
-                    this.selectUploadFile()
+                    this.selectUploadFile(0)
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    //删除上传图片
+    deleteUploadFileXia = (v) => {
+        var param = {
+            "method": 'deleteUploadFile',
+            "id": v.id,
+        };
+
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    Toast.info("删除成功", 1)
+                    this.selectUploadFile(1)
                 }
             },
             onError: function (error) {
@@ -1268,13 +1501,15 @@ export default class VillageCardSystemHome extends React.Component {
     pushNotifyData = () => {
         $(".notifyPop").show();
         $(".villageMask").show();
-        var url = "http://maaee.com:6443/richTextEditorVillage/?loginUserId=" + this.state.accountData.villageId
+        // var url = "http://maaee.com:6443/richTextEditorVillage/?loginUserId=" + this.state.accountData.villageId
+        var url = "http://192.168.50.73:6443/richTextEditorVillage/?loginUserId=" + this.state.accountData.villageId
         $(".pushNotify").attr("src", url)
     }
     pushNotifyDataArtical = () => {
         $(".notifyArticalPop").show();
         $(".villageArticalMask").show();
-        var url = "http://maaee.com:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        // var url = "http://maaee.com:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        var url = "http://192.168.50.73:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
         $(".pushArtical").attr("src", url)
     }
 
@@ -1808,7 +2043,8 @@ export default class VillageCardSystemHome extends React.Component {
     addArtical = () => {
         $(".pushArticalPop").show();
         $(".villageMask").show();
-        var url = "http://maaee.com:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        // var url = "http://maaee.com:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
+        var url = "http://192.168.50.73:6443/richTextEditorVillageArtical/?loginUserId=" + this.state.accountData.villageId
         $(".pushArtical").attr("src", url)
     }
 
@@ -2085,6 +2321,57 @@ export default class VillageCardSystemHome extends React.Component {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="villageImgXia" style={{ display: "none" }}>
+                            <div className="rightHeader my_flex">
+                                <span>{this.state.villageName}</span>
+                                <div className="btn">
+                                    <span>
+                                        上传
+                                        <input type="file" id="upload" style={{ display: "none" }} />
+                                        <div className="parentDiv file-input">
+                                            <input className="calm40 upload_image_Xia upload-topBtn" name="upload_image_Xia" id="upload_image_Xia" onClick={this.getImageXia} type="file" accept="image/jpg/png/jpeg" class="hidd" />
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="rightContent">
+                                <div id="image_box_xia">
+                                    {
+                                        calm.state.uploadFileListXia.map((v, i) => {
+                                            var arr = v.url.split("&");
+                                            var type;
+                                            if (arr.length == 2) {
+                                                type = arr[0].split(".");
+                                                type = type[type.length - 1]
+                                            } else {
+                                                type = arr[0][arr.length - 1]
+                                            }
+                                            console.log(type, "V")
+                                            return (
+                                                <div className="item-imageBox">
+                                                    {
+                                                        type == "mp4" ?
+                                                            <div className="item-imageBoxN">
+                                                                <video src={v.url.split("&")[0]}></video>
+                                                                <span className="village-imgDelete" onClick={this.deleteUploadFileXia.bind(this, v)}>删除</span>
+                                                            </div>
+                                                            :
+                                                            <div className="item-imageBoxN">
+                                                                <img src={v.url} alt="" />
+                                                                <span className="village-imgDelete" onClick={this.deleteUploadFileXia.bind(this, v)}>删除</span>
+                                                            </div>
+                                                    }
+
+                                                </div>
+                                            )
+                                        })
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="dangke" style={{ display: "none" }}>
 
                             <div className="rightHeader my_flex">

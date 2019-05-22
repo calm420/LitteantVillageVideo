@@ -247,11 +247,7 @@ const VillageCardSystemHome =  (location, cb) => {
         cb(null, require('./components/VillageCardSystem/js/VillageCardSystemHome.jsx').default)
     })
 };
-const VillageCardSystemHome22 =  (location, cb) => {
-    require.ensure([], require => {
-        cb(null, require('./components/VillageCardSystem/js/VillageCardSystemHome22.jsx').default)
-    })
-};
+
 
 //村民注册页面跳转
 const villageReg = (location, cb) => {
@@ -421,7 +417,6 @@ ReactDOM.render(
             <Route path="myThemeTask" getComponent={myThemeTask} />
             <Route path="VillageCardSystemHome" getComponent={VillageCardSystemHome} />
             <Route path="villageCardSystemLogin" getComponent={villageCardSystemLogin} />
-            <Route path="VillageCardSystemHome22" getComponent={VillageCardSystemHome22} />
             <Route path="villageReg" getComponent={villageReg} />
             <Route path="wxLogin" getComponent={wxLogin} />
             <Route path="welcome" getComponent={welcome} />

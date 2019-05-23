@@ -32,6 +32,9 @@ export default class articleList extends React.Component {
             recommended_video: {
                 response: []
             },
+            recommended_video_left: {
+                response: []
+            },
             refreshing: false,
             show_bottom_text: true,
             scrollFlag: false,
@@ -44,7 +47,6 @@ export default class articleList extends React.Component {
     }
 
     componentDidMount () {
-
         AscrollView = $('.am-list-view-scrollview').eq(0);
         BscrollView = $('.am-list-view-scrollview').eq(1);
         var _this = this;
@@ -57,9 +59,9 @@ export default class articleList extends React.Component {
         var searchArray = locationSearch.split("&");
         var userId = searchArray[0].split('=')[1];
         var machineType = searchArray[1].split('=')[1];
-        var version = searchArray[2].split('=')[1] ;
-        var villageId = searchArray[3].split('=')[1] ;
-        var groupId = searchArray[4].split('=')[1] ;
+        var version = searchArray[2].split('=')[1];
+        var villageId = searchArray[3].split('=')[1];
+        var groupId = searchArray[4].split('=')[1];
         if (phoneType.indexOf('iPhone') > -1 || phoneType.indexOf('iPad') > -1) {
             var phone = 'ios';
             // var locationHref = window.location.href;
@@ -85,12 +87,17 @@ export default class articleList extends React.Component {
             version: version,
             // isDisPlay: isDisPlay
         }, () => {
-            this.getVillageVillageNewsByVillageId()
+            var p2 = new Promise((reslove, reject) => {
+                this.getArticleRecommenLittleVideoListLeft(false, () => {
+                    reslove('getArticleRecommenLittleVideoListLeft');
+                });
+            })
+            Promise.all([p2]).then((result) => {
+                this.setState({
+                    initLoading: false,
+                })
+            })
         })
-        // this.refurbishNoom()
-
-        // console.log($('.am-list-view-scrollview').eq(0));
-        // console.log($('.am-list-view-scrollview').eq(1));
         $(document).on('scroll', '.am-list-view-scrollview', (e) => {
             if (e.target.scrollTop >= 200) {
                 if (this.state.scrollFlag) {
@@ -189,12 +196,39 @@ export default class articleList extends React.Component {
                         // random_index: this.getRandom(),
                     }, () => {
                         var obj = [];
-                        // obj[`recommended_video[${this.state.defaultPageNo-1}]`] = result.response;
-                        // this.setState(obj,()=>{
-                        //     console.log(this.state.recommended_video[0], 'recommended_video');
-                        // })
                         //获取文章列表
                         this.getArticleInfoListByType(clearFlag, reslove);
+                    })
+                } else {
+
+                }
+            },
+            onError: function (error) {
+                Toast.fail(error, 1);
+            }
+        });
+    }
+    /**
+     * 按页码获取短视频列表
+     * **/
+    getArticleRecommenLittleVideoListLeft (clearFlag, reslove) {
+        var param = {
+            "method": 'getArticleRecommenLittleVideoList',
+            "userId": this.state.userId,
+            "pageNo": JSON.stringify(this.state.defaultPageNo)
+        };
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
+            onResponse: result => {
+                if (result.success) {
+                    this.setState({
+                        recommended_video_left: result,
+                        recommended_pageCount: result.pager.pageCount,
+                        recommended_pageNo: result.pager.pageNo,
+                        // random_index: this.getRandom(),
+                    }, () => {
+                        var obj = [];
+                        //获取文章列表
+                        this.getVillageVillageNewsByVillageId(clearFlag);
                     })
                 } else {
 
@@ -236,20 +270,14 @@ export default class articleList extends React.Component {
 
                     var initLength = this.initDataSource.length;
                     this.initDataSource = this.initDataSource.concat(result.response);
-                    if (this.state.recommended_video.response.length > 0 && result.response.length > 0) {
-                        console.log(2);
+
+
+                    if (this.state.recommended_video.response.length > 0 && result.response.length >= 0) {
                         //往文章数组里面添加一组小视频数据
                         this.initDataSource.splice((result.response.length / 2) + initLength, 0, this.state.recommended_video);
                     } else {
-                        console.log(1);
-                        // this.setState({
-                        //     recommended_video: {
-                        //         response: []
-                        //     }
-                        // })
                         this.state.recommended_video = { response: [] }
                     }
-                    // Toast.info('设置数据之前');
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true,
@@ -292,7 +320,6 @@ export default class articleList extends React.Component {
         };
         WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
-                console.log(result, 'getVillageVillageNewsByVillageId')
                 if (result.success) {
                     this.state.rsCount = result.pager.rsCount;
                     if (clearFlag) {    //拉动刷新  获取数据之后再清除原有数据
@@ -302,7 +329,15 @@ export default class articleList extends React.Component {
                             rowHasChanged: (row1, row2) => row1 !== row2,
                         });
                     }
+                    var initLength = this.initDataSource.length;
                     this.initDataSource = this.initDataSource.concat(result.response);
+                    if (this.state.recommended_video_left.response.length > 0 && result.response.length >= 0) {
+                        //往文章数组里面添加一组小视频数据
+                        this.initDataSource.splice((result.response.length / 2) + initLength, 0, this.state.recommended_video_left);
+                    } else {
+                        this.state.recommended_video_left = { response: [] }
+                    }
+                    // Toast.info('设置数据之前');
                     this.setState({
                         dataSource: dataSource.cloneWithRows(this.initDataSource),
                         isLoading: true,
@@ -313,8 +348,7 @@ export default class articleList extends React.Component {
                             reslove();
                         }
                     })
-                    console.log(this.initDataSource.length, 'asdjioasdkashdisahk');
-                    if ((this.initDataSource.length >= result.pager.rsCount)) {
+                    if ((this.initDataSource.length - (this.state.recommended_video_left.response.length == 0 ? 0 : 1)) >= result.pager.rsCount) {
                         this.setState({
                             hasMore: false,
                             isLoading: false
@@ -400,8 +434,7 @@ export default class articleList extends React.Component {
                 this.setState({
                     defaultPageNoForCircle: this.state.defaultPageNoForCircle + 1
                 }, () => {
-                    this.getVillageVillageNewsByVillageId();
-
+                    this.getArticleRecommenLittleVideoListLeft();
                 })
             } else {
                 this.getArticleRecommenLittleVideoList();
@@ -412,7 +445,6 @@ export default class articleList extends React.Component {
     onRefresh = (str) => {
         if (this.state.index == 2) {
             var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-
             if (str == 'left') {
                 divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
                 // divPull[0].style.height = document.body.clientHeight
@@ -426,24 +458,19 @@ export default class articleList extends React.Component {
                 this.setState({
                     defaultPageNoForCircle: 1, refreshing: true
                 }, () => {
-                    this.getVillageVillageNewsByVillageId(true);
-                    // this.getArticleRecommenLittleVideoList(true);
-                    // Toast.info('重新绑定事件'+this.state.index);
-    
+                    this.getArticleRecommenLittleVideoListLeft(true);
+
                 });
                 return;
             }
             this.setState({
-                defaultPageNoForCircle: 1, refreshing: true
+                defaultPageNoForCircle: 1, refreshing: true,
             }, () => {
-                // this.getLittleVideoUserById();
-                this.getVillageVillageNewsByVillageId(true);
-                // Toast.info('重新绑定事件'+this.state.index);
-    
+                this.getArticleRecommenLittleVideoListLeft(true);
+
             });
         } else {
             var divPull = document.getElementsByClassName('am-pull-to-refresh-content');
-
             if (str == 'left') {
                 divPull[0].style.transform = "translate3d(0px, 30px, 0px)";   //设置拉动后回到的位置
                 // divPull[0].style.height = document.body.clientHeight
@@ -460,7 +487,6 @@ export default class articleList extends React.Component {
                     this.getVillageVillageNewsByVillageId(true);
                     // this.getArticleRecommenLittleVideoList(true);
                     // Toast.info('重新绑定事件'+this.state.index);
-
                 });
                 return;
             }
@@ -503,7 +529,7 @@ export default class articleList extends React.Component {
             "villagerId": this.state.userId,
             "groupId": this.state.groupId,
         };
-        WebServiceUtil.requestLittleAntApi(JSON.stringify(param), {
+        WebServiceUtil.requestLittleAntApi6013(JSON.stringify(param), {
             onResponse: result => {
                 if (result.success) {
                 }
@@ -520,16 +546,21 @@ export default class articleList extends React.Component {
         this.setState({
             dataSource: dataSource.cloneWithRows(this.initDataSource),
             defaultPageNo: 1,
+            defaultPageNoForCircle: 1,
             isLoading: true,
             hasMore: true,
             index: val.value,
             recommended_video: [],
+            recommended_video_left: { response: [] },
             initLoading: true,
             scrollFlag: false,
         }, () => {
-            console.log(val.value)
             if (val.value == 2) {
-                this.getVillageVillageNewsByVillageId()
+                this.getArticleRecommenLittleVideoListLeft(false, () => {
+                    this.setState({
+                        initLoading: false,
+                    })
+                })
             } else {
                 this.getArticleRecommenLittleVideoList(false, () => {
                     this.setState({
@@ -670,7 +701,6 @@ export default class articleList extends React.Component {
 
     //跳转至朋友圈详情
     toThemeTaskDetail (cid, rowData) {
-        console.log(rowData);
         var url = WebServiceUtil.mobileServiceURL + "themeTaskDetail?userId=" + this.state.userId + "&cfid=" + cid;
         var data = {
             method: 'openNewPage',
@@ -747,7 +777,6 @@ export default class articleList extends React.Component {
     }
 
     closeUserGuide = () => {
-        console.log("dianjile")
         this.setState({
             isDisPlay: 0
         })
@@ -778,23 +807,103 @@ export default class articleList extends React.Component {
             var dom = "";
             var time = this.timeDifference(rowData.createTime);
             if (this.state.index == 2) {
-                dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.id, rowData)}>
-                    <div className="list_head">
-                        {/* <div className="headPic">
-                            <img src={rowData.userInfo.avatar} alt="" />
-                        </div> */}
-                        <div className="userName text_hidden">{rowData.title}</div>
-                        {/* <div className="userName text_hidden" dangerouslySetInnerHTML={{ __html: rowData.content }}></div> */}
+                var image = rowData.articleImgArray ? rowData.articleImgArray : [];
+                if (rowData.response instanceof Array) {
+                    //视频
+                    var videoDom = [];
+                    for (var i = 0; i < rowData.response.length; i++) {
+                        videoDom.push(
+                            <div className="video_row"
+                                onClick={this.toPlayVideo.bind(this, i, rowData.response, rowData.pager.pageCount, rowData.pager.pageNo)}>
+                                <img className="video_firstImage"
+                                    src={rowData.response[i].coverPath == '' ? rowData.response[i].firstUrl : rowData.response[i].coverPath}
+                                    alt="" />
+                                <div className="gradient_bgT topText">
+                                    <div className="video_content">{rowData.response[i].videoContent}</div>
+                                </div>
+                                <div className='gradient_bgB bottomText'>
+                                    <div className="like">{rowData.response[i].likeCount}赞</div>
+                                    <div className="read">{rowData.response[i].readCount}</div>
+                                </div>
 
-                    </div>
-                    <div className="tags"><span className={rowData.type ? "tag-ThemeTask" : "tag-WrongTopic " + tagClass}>{rowData.type ? '' : ''}</span></div>
-                </div>
+                            </div>
+                        )
+                    }
+                    dom = <div className="video_box line_public">{videoDom}</div>
+                } else {
+                    if (image.length == 1) {  //图片一张
+                        console.log("5")
+                        dom = <div className="item line_public">
+                            <div className="leftBox">
+                                <div className="title minHeight">{rowData.articleTitle}</div>
+                                <div className="bottom">
+                                    <div className="read">{rowData.readCount}阅读</div>
+                                    <div className="like">{rowData.likeCount}点赞</div>
+                                    <div className="time">{time}</div>
+                                </div>
+                            </div>
+                            <div className="rightBox" style={{ backgroundImage: 'url(' + image[0] + ')' }}>
+                                {/*<img src={image[0]} alt=""/>*/}
+                            </div>
+                        </div>
+                    } else if (image.length > 1) {    //图片大于一张
+                        console.log("6")
+                        var imageDom = [];
+                        for (var i = 0; i < image.length; i++) {
+                            imageDom.push(<div className='imageDiv'><span
+                                style={{ backgroundImage: 'url(' + image[i] + ')' }}
+                                className="image3"
+                            ></span></div>)
+                        }
+                        dom = <div className="item line_public">
+                            <div className="title">{rowData.articleTitle}</div>
+                            <div className="images">{imageDom}</div>
+                            <div className="bottom">
+                                <div className="read">{rowData.readCount}阅读</div>
+                                <div className="like">{rowData.likeCount}点赞</div>
+                                <div className="time">{time}</div>
+                            </div>
+                        </div>
+                    } else {
+                        console.log("7")         //图片没有
+                        var videoFlag = false;
+                        if (videoFlag) { //有视频
+                            console.log("8")
+                            dom = <div className="item line_public">
+                                <div className="title">{rowData.articleTitle}</div>
+                                <div className="images">
+                                    <div className="videoBox">
+                                        <div onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
+                                            className="videoMask"></div>
+                                        <img onClick={this.toDetail.bind(this, rowData.articleId, rowData.articleTitle)}
+                                            className="playImg"
+                                            src={require('../images/videoClick.png')} alt="" />
+                                        <video src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4"></video>
+                                    </div>
+                                </div>
+                                <div className="bottom">
+                                    <div className="read">{rowData.readCount}阅读</div>
+                                    <div className="like">{rowData.likeCount}点赞</div>
+                                    <div className="time">{time}</div>
+                                </div>
+                            </div>
+                        } else {  //图片没有 视频也没有
+                            console.log("9")
+                            dom = <div className="circleList" onClick={this.toThemeTaskDetail.bind(this, rowData.id, rowData)}>
+                                <div className="list_head">
+                                    <div className="userName text_hidden">{rowData.title}</div>
+                                </div>
+                                <div className="tags"><span className={rowData.type ? "tag-ThemeTask" : "tag-WrongTopic " + tagClass}>{rowData.type ? '' : ''}</span></div>
+                            </div>
+                        }
+
+                    }
+                }
             } else {
                 var image = rowData.articleImgArray ? rowData.articleImgArray : [];
-                // console.log(rowData,'整体循环中的rowData')
                 if (rowData.response instanceof Array) {  //为自媒体推荐视频
+                    console.log("3")
                     var videoDom = [];
-                    // console.log(rowData,'自媒体视频循环中listVideoInfo')
                     for (var i = 0; i < rowData.response.length; i++) {
                         videoDom.push(
                             <div className="video_row"
@@ -815,7 +924,9 @@ export default class articleList extends React.Component {
                     }
                     dom = <div className="video_box line_public">{videoDom}</div>;
                 } else {
+                    console.log("4")
                     if (image.length == 1) {  //图片一张
+                        console.log("5")
                         dom = <div className="item line_public">
                             <div className="leftBox">
                                 <div className="title minHeight">{rowData.articleTitle}</div>
@@ -830,6 +941,7 @@ export default class articleList extends React.Component {
                             </div>
                         </div>
                     } else if (image.length > 1) {    //图片大于一张
+                        console.log("6")
                         var imageDom = [];
                         for (var i = 0; i < image.length; i++) {
                             imageDom.push(<div className='imageDiv'><span
@@ -846,9 +958,11 @@ export default class articleList extends React.Component {
                                 <div className="time">{time}</div>
                             </div>
                         </div>
-                    } else {                //图片没有
+                    } else {
+                        console.log("7")         //图片没有
                         var videoFlag = false;
                         if (videoFlag) { //有视频
+                            console.log("8")
                             dom = <div className="item line_public">
                                 <div className="title">{rowData.articleTitle}</div>
                                 <div className="images">
@@ -868,6 +982,7 @@ export default class articleList extends React.Component {
                                 </div>
                             </div>
                         } else {  //图片没有 视频也没有
+                            console.log("9")
                             dom = <div className="item line_public">
                                 <div className="title">{rowData.articleTitle}</div>
                                 <div className="bottom">

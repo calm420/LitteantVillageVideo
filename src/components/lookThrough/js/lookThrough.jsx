@@ -701,7 +701,7 @@ export default class lookThrough extends React.Component {
                                                 <div className='result'>
                                                     <span className='title'>审核结果：</span>
                                                     {calm.state.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                                    {calm.state.isRec == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
+                                                    {calm.state.isRec == 1 ? <span className="pass">已推至App</span> : <span>未推至App</span>}
                                                     <div className="reBtn" onClick={calm.showAlert}>
                                                         重新审核
                                             </div>
@@ -720,7 +720,7 @@ export default class lookThrough extends React.Component {
                                                             </RadioItem>
                                                         ))}
                                                     </List>
-                                                    <List className='' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先'}>
+                                                    <List className='' style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '推至App'}>
                                                         {isRecData.map(i => (
                                                             <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                                 {i.label}

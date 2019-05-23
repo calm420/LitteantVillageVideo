@@ -553,7 +553,7 @@ export default class alreadyLookThough extends React.Component {
                                                             <div className='audit-instructions'>
                                                                 <span className='audit-instructionsLeft'>结果：</span>
                                                                 {calm.state.data.auditInfo.isPass == 1 ? <span className="pass">已通过</span> : <span>未通过</span>}
-                                                                {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已优先</span> : <span>未优先</span>}
+                                                                {calm.state.data.auditInfo.isRecommend == 1 ? <span className="pass">已推至App</span> : <span>未推至App</span>}
                                                                 <div className="reBtn" onClick={calm.showAlert} style={{ display: calm.state.flag == 0 ? "block" : "none" }}>
                                                                     重新审核
                                                         </div>
@@ -664,7 +664,7 @@ export default class alreadyLookThough extends React.Component {
                                                         </RadioItem>
                                                     ))}
                                                 </List>
-                                                <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '优先展示：'}>
+                                                <List style={{ display: calm.state.isShow ? "block" : "none" }} renderHeader={() => '推至App：'}>
                                                     {isRecData.map(i => (
                                                         <RadioItem key={i.value} checked={isRec === i.value} onChange={() => this.recChange(i.value)}>
                                                             {i.label}
